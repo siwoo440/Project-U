@@ -21,6 +21,7 @@ Recordings/
 *.booproj
 *.sln
 *.csproj
+*.slnx
 
 # Unity 자동 생성 파일
 sysinfo.txt
