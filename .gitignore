@@ -1,0 +1,43 @@
+# Unity 자동 생성 폴더
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+
+# Unity 기록 및 캡처 파일
+MemoryCaptures/
+Recordings/
+
+# Visual Studio 및 Rider 개인 설정
+.vs/
+.idea/
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.sln
+*.csproj
+
+# Unity 자동 생성 파일
+sysinfo.txt
+*.stacktrace
+*.unityproj
+
+# Unity Asset Store 도구
+[Aa]ssets/AssetStoreTools*
+
+# 빌드 및 배포 출력 폴더
+ExportedObj/
+ExportedObj-*/
+
+# 패키지 도구 캐시
+.gradle/
+
+# 운영체제 파일
+.DS_Store
+Thumbs.db
+desktop.ini
