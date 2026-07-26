@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement; // Scene 관리 기능
 
 public sealed class SceneFlowManager : MonoBehaviour // Scene 전환 관리자
 {
+    public const string BootstrapSceneName = "00_Bootstrap"; // 초기화 Scene 이름
     public const string MainMenuSceneName = "10_MainMenu"; // 메인 메뉴 Scene 이름
     public const string GameplaySceneName = "20_Gameplay"; // 게임 플레이 Scene 이름
 
