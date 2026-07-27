@@ -18,6 +18,9 @@ public sealed class PlayerInventory : MonoBehaviour // 플레이어 인벤토리
     public int HotbarSlotCount => Mathf.Min(hotbarSlotCount, slotCapacity); // 실제 핫바 슬롯 개수
     public int SelectedHotbarIndex => selectedHotbarIndex; // 선택 핫바 번호
     public int SelectedInventoryIndex => selectedInventoryIndex; // 클릭한 인벤토리 번호
+    public InventorySlot SelectedHotbarSlot => GetSlot(selectedHotbarIndex); // 선택 핫바 슬롯 제공
+    public ItemData SelectedHotbarItem => SelectedHotbarSlot == null ? null : SelectedHotbarSlot.ItemData; // 선택 아이템 제공
+
 
     public event Action HotbarSelectionChanged; // 핫바 선택 변경 알림
     public event Action InventorySelectionChanged; // 인벤토리 선택 변경 알림

@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: fa74acbb6f1ac9b44bab6b4fd80b48bf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -156,7 +156,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 9dd2874f01e251c4eb265f4e8641858f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -248,9 +248,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2689a6fbba5bd3f40a5bf24dbfd8c052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GatherableResource
-  promptMessage: F - GATHER WOOD
+  promptMessage: F - CHOP TREE
   resourceItem: {fileID: 11400000, guid: b9e78781ff8b2aa4bae6df0fa3d2e1c9, type: 2}
   totalQuantity: 5
   quantityPerInteraction: 1
+  requiredToolType: 1
   respawnEnabled: 1
   respawnDelay: 10

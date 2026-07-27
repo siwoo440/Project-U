@@ -46,10 +46,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2689a6fbba5bd3f40a5bf24dbfd8c052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GatherableResource
-  promptMessage: F - GATHER STONE
+  promptMessage: F - MINE STONE
   resourceItem: {fileID: 11400000, guid: 479a7e7a5dbb8df4a9ea663d4e582a1b, type: 2}
   totalQuantity: 5
   quantityPerInteraction: 1
+  requiredToolType: 2
   respawnEnabled: 1
   respawnDelay: 10
 --- !u!65 &5260379090579862011
@@ -139,7 +140,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 6f6d9e14581fe5f44be09af2082bfe01, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

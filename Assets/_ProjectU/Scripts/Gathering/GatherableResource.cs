@@ -7,6 +7,8 @@ public sealed class GatherableResource : InteractableBase // 반복 채집 자�
     [SerializeField] private ItemData resourceItem; // 획득할 아이템 데이터
     [SerializeField] private int totalQuantity = 5; // 전체 보유 자원 수량
     [SerializeField] private int quantityPerInteraction = 1; // 한 번에 획득할 수량
+    [SerializeField] private ToolType requiredToolType = ToolType.None; // 채집에 필요한 도구
+
 
     [Header("Respawn")] // 재생성 설정 묶음
     [SerializeField] private bool respawnEnabled = true; // 재생성 사용 여부
@@ -59,6 +61,11 @@ public sealed class GatherableResource : InteractableBase // 반복 채집 자�
             return; // 채집 처리 중단
         }
 
+        if (!CanGatherWithSelectedTool(inventory)) // 현재 도구 확인
+        {
+            return; // 잘못된 도구 채집 차단
+        }
+
         int requestedQuantity = Mathf.Min(quantityPerInteraction, remainingQuantity); // 이번 채집 요청 수량
         int leftoverQuantity = inventory.AddItem(resourceItem, requestedQuantity); // 인벤토리 추가 후 남은 수량
         int gatheredQuantity = requestedQuantity - leftoverQuantity; // 실제 획득 수량
@@ -78,6 +85,36 @@ public sealed class GatherableResource : InteractableBase // 반복 채집 자�
         }
 
         HandleDepleted(); // 자원 소진 처리
+    }
+
+    private bool CanGatherWithSelectedTool(PlayerInventory inventory) // 선택 도구 채집 가능 여부
+    {
+        if (requiredToolType == ToolType.None) // 도구가 필요 없는 자원 확인
+        {
+            return true; // 맨손 채집 허용
+        }
+
+        ItemData selectedItem = inventory.SelectedHotbarItem; // 현재 핫바 아이템 조회
+
+        if (selectedItem == null) // 선택 아이템 존재 확인
+        {
+            Debug.Log($"{gameObject.name} 채집에는 {requiredToolType} 도구가 필요합니다.", this); // 도구 미장착 안내
+            return false; // 맨손 채집 차단
+        }
+
+        if (!selectedItem.IsTool) // 선택 아이템 분류 확인
+        {
+            Debug.Log($"{selectedItem.DisplayName}은 채집 도구가 아닙니다.", this); // 일반 아이템 안내
+            return false; // 일반 아이템 채집 차단
+        }
+
+        if (selectedItem.ToolType != requiredToolType) // 필요 도구 일치 확인
+        {
+            Debug.Log($"{gameObject.name} 채집에는 {requiredToolType} 도구가 필요합니다.", this); // 잘못된 도구 안내
+            return false; // 잘못된 도구 채집 차단
+        }
+
+        return true; // 올바른 도구 채집 허용
     }
 
     private void HandleDepleted() // 자원 소진 상태 처리
