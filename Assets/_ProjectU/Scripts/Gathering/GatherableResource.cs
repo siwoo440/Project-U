@@ -9,6 +9,9 @@ public sealed class GatherableResource : InteractableBase // 반복 채집 자�
     [SerializeField] private int quantityPerInteraction = 1; // 한 번에 획득할 수량
     [SerializeField] private ToolType requiredToolType = ToolType.None; // 채집에 필요한 도구
 
+    [Header("Feedback")] // 채집 반응 설정 묶음
+    [SerializeField] private ResourceHitFeedback hitFeedback; // 자원 타격 반응
+    [SerializeField] private float gatherCooldown = 0.45f; // 연속 채집 최소 간격
 
     [Header("Respawn")] // 재생성 설정 묶음
     [SerializeField] private bool respawnEnabled = true; // 재생성 사용 여부
@@ -18,11 +21,17 @@ public sealed class GatherableResource : InteractableBase // 반복 채집 자�
     private Collider[] resourceColliders; // 자원 충돌체 목록
     private int remainingQuantity; // 현재 남은 자원 수량
     private bool isDepleted; // 자원 소진 상태
+    private float nextGatherAllowedTime; // 다음 채집 허용 시간
 
     private void Awake() // 자원 초기화
     {
         resourceRenderers = GetComponentsInChildren<Renderer>(true); // 하위 외형 검색
         resourceColliders = GetComponentsInChildren<Collider>(true); // 하위 충돌체 검색
+        if (hitFeedback == null) // 타격 반응 연결 확인
+        {
+            hitFeedback = GetComponent<ResourceHitFeedback>(); // 같은 오브젝트에서 반응 검색
+        }
+
         remainingQuantity = Mathf.Max(1, totalQuantity); // 시작 자원 수량 설정
 
         if (resourceItem == null) // 아이템 데이터 확인
@@ -44,6 +53,7 @@ public sealed class GatherableResource : InteractableBase // 반복 채집 자�
         totalQuantity = Mathf.Max(1, totalQuantity); // 전체 수량 최소값 보정
         quantityPerInteraction = Mathf.Max(1, quantityPerInteraction); // 획득 수량 최소값 보정
         respawnDelay = Mathf.Max(0.1f, respawnDelay); // 재생성 시간 최소값 보정
+        gatherCooldown = Mathf.Max(0.1f, gatherCooldown); // 채집 간격 최소값 보정
     }
 
     public override void Interact(GameObject interactor) // 자원 채집 실행
@@ -51,6 +61,11 @@ public sealed class GatherableResource : InteractableBase // 반복 채집 자�
         if (isDepleted || resourceItem == null) // 채집 가능 상태 확인
         {
             return; // 채집 처리 중단
+        }
+
+        if (Time.time < nextGatherAllowedTime) // 채집 대기 시간 확인
+        {
+            return; // 빠른 연속 채집 차단
         }
 
         PlayerInventory inventory = interactor.GetComponent<PlayerInventory>(); // 플레이어 인벤토리 검색
@@ -77,6 +92,8 @@ public sealed class GatherableResource : InteractableBase // 반복 채집 자�
         }
 
         remainingQuantity -= gatheredQuantity; // 남은 자원 수량 감소
+        nextGatherAllowedTime = Time.time + gatherCooldown; // 다음 채집 가능 시간 설정
+        PlayGatheringFeedback(); // 자원 타격 반응 실행
         Debug.Log($"{resourceItem.DisplayName} {gatheredQuantity}개 획득 / 남은 자원 {remainingQuantity}개", this); // 채집 결과 출력
 
         if (remainingQuantity > 0) // 남은 자원 확인
@@ -85,6 +102,15 @@ public sealed class GatherableResource : InteractableBase // 반복 채집 자�
         }
 
         HandleDepleted(); // 자원 소진 처리
+    }
+    private void PlayGatheringFeedback() // 채집 성공 반응 실행
+    {
+        if (hitFeedback == null) // 자원 반응 존재 확인
+        {
+            return; // 반응 처리 중단
+        }
+
+        hitFeedback.PlayHit(); // 자원 타격 반응 실행
     }
 
     private bool CanGatherWithSelectedTool(PlayerInventory inventory) // 선택 도구 채집 가능 여부
@@ -136,6 +162,7 @@ public sealed class GatherableResource : InteractableBase // 반복 채집 자�
         yield return new WaitForSeconds(respawnDelay); // 재생성 시간 대기
 
         remainingQuantity = Mathf.Max(1, totalQuantity); // 자원 수량 복구
+        nextGatherAllowedTime = 0f; // 채집 대기 시간 초기화
         SetResourceComponentsEnabled(true); // 외형과 충돌체 복구
         isDepleted = false; // 소진 상태 해제
 

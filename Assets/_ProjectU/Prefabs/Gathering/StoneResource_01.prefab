@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7155205762351727549}
-  - component: {fileID: 7783610158600917720}
   - component: {fileID: 5260379090579862011}
+  - component: {fileID: 7783610158600917720}
   m_Layer: 3
   m_Name: StoneResource_01
   m_TagString: Untagged
@@ -31,28 +31,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1552356035896496812}
+  - {fileID: 374843155552916767}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7783610158600917720
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 769872257071488454}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2689a6fbba5bd3f40a5bf24dbfd8c052, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GatherableResource
-  promptMessage: F - MINE STONE
-  resourceItem: {fileID: 11400000, guid: 479a7e7a5dbb8df4a9ea663d4e582a1b, type: 2}
-  totalQuantity: 5
-  quantityPerInteraction: 1
-  requiredToolType: 2
-  respawnEnabled: 1
-  respawnDelay: 10
 --- !u!65 &5260379090579862011
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -74,6 +55,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3, y: 2, z: 3}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7783610158600917720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769872257071488454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2689a6fbba5bd3f40a5bf24dbfd8c052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GatherableResource
+  promptMessage: LMB - MINE STONE
+  resourceItem: {fileID: 11400000, guid: 479a7e7a5dbb8df4a9ea663d4e582a1b, type: 2}
+  totalQuantity: 5
+  quantityPerInteraction: 1
+  requiredToolType: 2
+  hitFeedback: {fileID: 1124024059115941329}
+  gatherCooldown: 0.45
+  respawnEnabled: 1
+  respawnDelay: 10
 --- !u!1 &3307413913750336772
 GameObject:
   m_ObjectHideFlags: 0
@@ -100,12 +102,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3307413913750336772}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 2, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7155205762351727549}
+  m_Father: {fileID: 374843155552916767}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1957329058001186780
 MeshFilter:
@@ -164,3 +166,52 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &5720481381777852433
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 374843155552916767}
+  - component: {fileID: 1124024059115941329}
+  m_Layer: 3
+  m_Name: VisualRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &374843155552916767
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5720481381777852433}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1552356035896496812}
+  m_Father: {fileID: 7155205762351727549}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1124024059115941329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5720481381777852433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4a2699496ae2ff439aa5f2cec1139f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ResourceHitFeedback
+  visualRoot: {fileID: 374843155552916767}
+  compressedScaleMultiplier: 0.9
+  compressDuration: 0.08
+  recoverDuration: 0.12
