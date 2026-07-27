@@ -78,7 +78,9 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 상호작�
 
         if (interactActionReference.action.WasPressedThisFrame()) // F 키 입력 확인
         {
-            currentInteractable.Interact(gameObject); // 현재 대상과 상호작용
+            InteractableBase interactedObject = currentInteractable; // 실행할 대상 임시 저장
+            ClearInteractable(); // 현재 대상과 안내 UI 초기화
+            interactedObject.Interact(gameObject); // 저장된 대상과 상호작용
         }
     }
 
