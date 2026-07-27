@@ -44,18 +44,24 @@ public sealed class InventoryStatusUI : MonoBehaviour // 인벤토리 상태 UI
     {
         textBuilder.Clear(); // 기존 문자열 제거
         textBuilder.AppendLine("INVENTORY"); // 제목 추가
-        textBuilder.AppendLine($"SLOTS {playerInventory.Slots.Count}/{playerInventory.SlotCapacity}"); // 슬롯 사용량 추가
+        textBuilder.AppendLine($"SLOTS {playerInventory.UsedSlotCount}/{playerInventory.SlotCapacity}"); // 실제 사용량 추가
 
-        if (playerInventory.Slots.Count == 0) // 빈 인벤토리 확인
+        if (playerInventory.UsedSlotCount == 0) // 빈 인벤토리 확인
         {
             textBuilder.Append("EMPTY"); // 빈 상태 문구 추가
             statusText.SetText(textBuilder.ToString()); // 빈 상태 화면 출력
             return; // 슬롯 출력 중단
         }
 
-        for (int index = 0; index < playerInventory.Slots.Count; index++) // 전체 슬롯 순회
+        for (int index = 0; index < playerInventory.SlotCapacity; index++) // 전체 슬롯 순회
         {
-            InventorySlot slot = playerInventory.Slots[index]; // 현재 슬롯 가져오기
+            InventorySlot slot = playerInventory.GetSlot(index); // 현재 슬롯 가져오기
+
+            if (slot == null) // 빈 슬롯 확인
+            {
+                continue; // 빈 슬롯 출력 생략
+            }
+
             textBuilder.AppendLine($"{index + 1}. {slot.ItemData.DisplayName} x{slot.Quantity}"); // 슬롯 정보 추가
         }
 
