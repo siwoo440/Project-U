@@ -2,6 +2,7 @@ using UnityEngine; // Unity 기본 기능
 using UnityEngine.InputSystem; // 새 Input System 기능
 
 [RequireComponent(typeof(CharacterController))] // 필수 이동 충돌 컴포넌트
+[RequireComponent(typeof(PlayerStamina))] // 필수 스태미나 컴포넌트
 public sealed class PlayerMovement : MonoBehaviour // 플레이어 이동 처리
 {
     [Header("References")] // 외부 참조 묶음
@@ -19,15 +20,24 @@ public sealed class PlayerMovement : MonoBehaviour // 플레이어 이동 처리
     [SerializeField] private InputActionReference jumpActionReference; // 점프 액션 참조
 
     private CharacterController characterController; // 캐릭터 충돌 이동기
+    private PlayerStamina playerStamina; // 플레이어 스태미나 관리기
     private float verticalVelocity; // 수직 이동 속도
 
     private void Awake() // 이동 컴포넌트 초기화
     {
         characterController = GetComponent<CharacterController>(); // CharacterController 가져오기
+        playerStamina = GetComponent<PlayerStamina>(); // PlayerStamina 가져오기
 
         if (cameraTransform == null || moveActionReference == null || sprintActionReference == null || jumpActionReference == null) // 필수 참조 연결 확인
         {
             Debug.LogError("Main Camera와 Move, Sprint, Jump Input Action을 연결해야 합니다.", this); // 참조 누락 오류
+            enabled = false; // 이동 스크립트 비활성화
+            return; // 초기화 처리 중단
+        }
+
+        if (playerStamina == null) // 스태미나 컴포넌트 확인
+        {
+            Debug.LogError("PlayerStamina 컴포넌트가 필요합니다.", this); // 스태미나 누락 오류
             enabled = false; // 이동 스크립트 비활성화
         }
     }
@@ -77,7 +87,9 @@ public sealed class PlayerMovement : MonoBehaviour // 플레이어 이동 처리
         Vector3 moveDirection = cameraForward * moveInput.y + cameraRight * moveInput.x; // 카메라 기준 이동 방향 계산
         moveDirection = Vector3.ClampMagnitude(moveDirection, 1f); // 대각선 이동 속도 제한
 
-        bool isSprinting = sprintActionReference.action.IsPressed(); // 달리기 입력 확인
+        bool hasMovementInput = moveDirection.sqrMagnitude > 0.01f; // 실제 이동 입력 존재 확인
+        bool wantsToSprint = sprintActionReference.action.IsPressed() && hasMovementInput; // 이동 중 달리기 입력 확인
+        bool isSprinting = playerStamina.UpdateSprint(wantsToSprint, Time.deltaTime); // 스태미나 기반 달리기 판정
         float currentSpeed = isSprinting ? runSpeed : walkSpeed; // 현재 이동 속도 결정
 
         UpdateVerticalVelocity(); // 점프와 중력 계산
