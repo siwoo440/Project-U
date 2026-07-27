@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: tool_axe
   displayName: AXE
+  description: A basic tool used for gathering wood.
+  icon: {fileID: 0}
   itemCategory: 1
   toolType: 1
   maximumStack: 1

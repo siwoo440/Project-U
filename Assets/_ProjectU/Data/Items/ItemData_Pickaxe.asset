@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: tool_pickaxe
   displayName: PICKAXE
+  description: A basic tool used for gathering stone.
+  icon: {fileID: 0}
   itemCategory: 1
   toolType: 2
   maximumStack: 1

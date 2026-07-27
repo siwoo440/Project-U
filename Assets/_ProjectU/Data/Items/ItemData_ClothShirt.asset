@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 08d47c1103dfc6548ac6257bf8d8a815, type: 3}
-  m_Name: ItemData_Stone
+  m_Name: ItemData_ClothShirt
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemId: resource_stone
-  displayName: STONE
-  description: Basic crafting material gathered from rocks.
+  itemId: equipment_cloth_shirt
+  displayName: CLOTH SHIRT
+  description: A simple shirt made from cloth.
   icon: {fileID: 0}
-  itemCategory: 0
+  itemCategory: 3
   toolType: 0
-  maximumStack: 20
+  maximumStack: 1

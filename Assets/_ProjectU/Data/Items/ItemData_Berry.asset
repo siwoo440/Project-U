@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 08d47c1103dfc6548ac6257bf8d8a815, type: 3}
-  m_Name: ItemData_Stone
+  m_Name: ItemData_Berry
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemId: resource_stone
-  displayName: STONE
-  description: Basic crafting material gathered from rocks.
+  itemId: food_berry
+  displayName: BERRY
+  description: A small edible berry.
   icon: {fileID: 0}
-  itemCategory: 0
+  itemCategory: 2
   toolType: 0
   maximumStack: 20

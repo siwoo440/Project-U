@@ -14,4 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: resource_wood
   displayName: WOOD
+  description: Basic crafting material gathered from trees.
+  icon: {fileID: 0}
+  itemCategory: 0
+  toolType: 0
   maximumStack: 20
