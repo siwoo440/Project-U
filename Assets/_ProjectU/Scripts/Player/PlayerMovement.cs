@@ -1,3 +1,4 @@
+using System; // C# 이벤트 기능
 using UnityEngine; // Unity 기본 기능
 using UnityEngine.InputSystem; // 새 Input System 기능
 
@@ -44,7 +45,7 @@ public sealed class PlayerMovement : MonoBehaviour // 플레이어 이동 처리
     public float CurrentSlopeAngle => currentSlopeAngle; // 현재 경사 각도 공개
     public float LastFallDistance => lastFallDistance; // 마지막 낙하 거리 공개
     public bool WasSignificantFall => wasSignificantFall; // 유효 낙하 여부 공개
-
+    public event Action<float> Landed; // 착지 거리 이벤트
     private void Awake() // 이동 컴포넌트 초기화
     {
         characterController = GetComponent<CharacterController>(); // CharacterController 가져오기
@@ -243,6 +244,13 @@ public sealed class PlayerMovement : MonoBehaviour // 플레이어 이동 처리
         lastFallDistance = Mathf.Max(0f, fallStartHeight - transform.position.y); // 실제 낙하 거리 계산
         wasSignificantFall = lastFallDistance >= minimumFallDistance; // 유효 낙하 기준 비교
         isFalling = false; // 낙하 상태 종료
+
+        if (!wasSignificantFall) // 유효 낙하 여부 확인
+        {
+            return; // 짧은 낙하 이벤트 제외
+        }
+
+        Landed?.Invoke(lastFallDistance); // 착지 거리 전달
     }
 
 

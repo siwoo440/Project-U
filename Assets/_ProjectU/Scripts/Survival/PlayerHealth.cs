@@ -1,3 +1,4 @@
+using System; // C# 이벤트 기능
 using UnityEngine; // Unity 기본 기능
 
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
@@ -14,7 +15,7 @@ public sealed class PlayerHealth : MonoBehaviour // 플레이어 체력 관리
     public float MaxHealth => maxHealth; // 최대 체력 제공
     public float NormalizedHealth => currentHealth / maxHealth; // 체력 비율 제공
     public bool IsDead => isDead; // 사망 여부 제공
-
+    public event Action<float> Damaged; // 실제 피해량 이벤트
     private void Awake() // 체력 초기화
     {
         ClampSettings(); // 설정값 범위 보정
@@ -46,7 +47,9 @@ public sealed class PlayerHealth : MonoBehaviour // 플레이어 체력 관리
             return false; // 추가 피해 차단
         }
 
+        float previousHealth = currentHealth; // 피해 전 체력 저장
         currentHealth = Mathf.Max(0f, currentHealth - damageAmount); // 체력 감소 적용
+        float appliedDamage = previousHealth - currentHealth; // 실제 피해량 계산
 
         if (currentHealth <= 0f) // 체력 소진 확인
         {
@@ -54,6 +57,7 @@ public sealed class PlayerHealth : MonoBehaviour // 플레이어 체력 관리
             isDead = true; // 사망 상태 적용
         }
 
+        Damaged?.Invoke(appliedDamage); // 실제 피해량 전달
         return true; // 피해 처리 성공
     }
 
