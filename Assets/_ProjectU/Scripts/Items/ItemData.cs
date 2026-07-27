@@ -19,6 +19,9 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
     [Header("Food")] // 음식 효과 묶음
     [SerializeField] private float hungerRestoreAmount = 0f; // 허기 회복량
 
+    [Header("Drink")] // 음료 효과 묶음
+    [SerializeField] private float thirstRestoreAmount = 0f; // 갈증 회복량
+
     [Header("Stack")] // 중첩 정보 묶음
     [SerializeField] private int maximumStack = 20; // 최대 중첩 수량
 
@@ -31,9 +34,11 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
     public ToolType ToolType => toolType; // 도구 종류 제공
 
     public float HungerRestoreAmount => IsFood ? Mathf.Max(0f, hungerRestoreAmount) : 0f; // 음식 허기 회복량 제공
+    public float ThirstRestoreAmount => IsDrink ? Mathf.Max(0f, thirstRestoreAmount) : 0f; // 음료 갈증 회복량 제공
     public bool IsCraftingMaterial => itemCategory == ItemCategory.CraftingMaterial; // 제작 재료 여부 제공
     public bool IsTool => itemCategory == ItemCategory.Tool; // 도구 여부 제공
     public bool IsFood => itemCategory == ItemCategory.Food; // 음식 여부 제공
+    public bool IsDrink => itemCategory == ItemCategory.Drink; // 음료 여부 제공
     public bool IsEquipment => itemCategory == ItemCategory.Equipment; // 장비 여부 제공
 
 
@@ -63,6 +68,15 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
         else // 음식 분류 확인
         {
             hungerRestoreAmount = Mathf.Max(0f, hungerRestoreAmount); // 회복량 음수 방지
+        }
+
+        if (itemCategory != ItemCategory.Drink) // 음료가 아닌 분류 확인
+        {
+            thirstRestoreAmount = 0f; // 갈증 회복량 제거
+        }
+        else // 음료 분류 확인
+        {
+            thirstRestoreAmount = Mathf.Max(0f, thirstRestoreAmount); // 회복량 음수 방지
         }
     }
 }
