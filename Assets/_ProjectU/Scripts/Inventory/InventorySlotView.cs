@@ -7,6 +7,7 @@ using UnityEngine.UI; // Unity UI 기능
 public sealed class InventorySlotView : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler // 슬롯 클릭과 드래그 처리
 {
     [SerializeField] private TMP_Text shortcutText; // 숫자키 표시 Text
+    [SerializeField] private Image itemIconImage; // 아이템 아이콘 Image
     [SerializeField] private TMP_Text itemNameText; // 아이템 이름 Text
     [SerializeField] private TMP_Text quantityText; // 아이템 수량 Text
     [SerializeField] private Outline selectionOutline; // 선택 테두리
@@ -24,7 +25,12 @@ public sealed class InventorySlotView : MonoBehaviour, IPointerClickHandler, IBe
 
     private void Awake() // UI 참조 검사
     {
-        referencesValid = shortcutText != null && itemNameText != null && quantityText != null && selectionOutline != null; // 필수 참조 검사
+        referencesValid = shortcutText 
+            != null && itemIconImage 
+            != null && itemNameText 
+            != null && quantityText 
+            != null && selectionOutline 
+            != null; // 필수 참조 검사
 
         if (!referencesValid) // 참조 누락 확인
         {
@@ -59,12 +65,19 @@ public sealed class InventorySlotView : MonoBehaviour, IPointerClickHandler, IBe
 
         if (slot == null) // 빈 슬롯 확인
         {
+            itemIconImage.gameObject.SetActive(false); // 아이콘 숨김
             itemNameText.SetText(string.Empty); // 아이템 이름 제거
             quantityText.SetText(string.Empty); // 아이템 수량 제거
             return; // 빈 슬롯 처리 종료
         }
 
-        itemNameText.SetText(slot.ItemData.DisplayName); // 아이템 이름 출력
+        ItemData itemData = slot.ItemData; // 현재 아이템 데이터 조회
+        Sprite itemIcon = itemData.Icon; // 아이템 아이콘 조회
+
+        itemIconImage.gameObject.SetActive(true); // 아이콘 오브젝트 표시
+        itemIconImage.sprite = itemIcon; // 등록된 아이콘 적용
+        itemIconImage.color = itemIcon == null ? ItemIconUtility.GetFallbackColor(itemData.ItemCategory) : Color.white; // 실제 또는 대체 색상 적용
+        itemNameText.SetText(itemData.DisplayName); // 아이템 이름 출력
         quantityText.SetText($"x{slot.Quantity}"); // 아이템 수량 출력
     }
 

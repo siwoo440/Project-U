@@ -38,17 +38,23 @@ public sealed class InventoryPopupController : MonoBehaviour // 인벤토리 팝
             return; // 입력 검사 중단
         }
 
-        if (keyboard.iKey.wasPressedThisFrame) // I 키 입력 확인
-        {
-            SetOpen(!IsOpen); // 팝업 상태 반전
-        }
-
         bool currentAltState = keyboard.leftAltKey.isPressed || keyboard.rightAltKey.isPressed; // 현재 Alt 입력 확인
 
         if (isAltCursorActive != currentAltState) // Alt 상태 변경 확인
         {
             isAltCursorActive = currentAltState; // 새로운 Alt 상태 저장
             RefreshInteractionState(); // 커서와 게임 조작 상태 갱신
+        }
+
+        if (IsOpen && keyboard.escapeKey.wasPressedThisFrame) // 열린 상태의 ESC 입력 확인
+        {
+            SetOpen(false); // 인벤토리 팝업 닫기
+            return; // 같은 프레임의 추가 입력 차단
+        }
+
+        if (keyboard.iKey.wasPressedThisFrame) // I 키 입력 확인
+        {
+            SetOpen(!IsOpen); // 팝업 상태 반전
         }
     }
 

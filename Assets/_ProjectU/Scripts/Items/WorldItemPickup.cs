@@ -10,6 +10,11 @@ public sealed class WorldItemPickup : InteractableBase // 월드 아이템 획�
     {
         quantity = Mathf.Max(1, quantity); // 수량 최소값 보정
     }
+    public void Initialize(ItemData newItemData, int newQuantity) // 생성된 월드 아이템 초기화
+    {
+        itemData = newItemData; // 아이템 데이터 적용
+        quantity = Mathf.Max(1, newQuantity); // 최소 한 개 수량 적용
+    }
 
     public override void Interact(GameObject interactor) // 아이템 획득 실행
     {

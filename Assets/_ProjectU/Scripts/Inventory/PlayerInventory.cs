@@ -5,7 +5,7 @@ using UnityEngine; // Unity 기본 기능
 public sealed class PlayerInventory : MonoBehaviour // 플레이어 인벤토리 관리
 {
     [Header("Capacity")] // 용량 설정 묶음
-    [SerializeField] private int slotCapacity = 24; // 전체 슬롯 개수
+    [SerializeField] private int slotCapacity = 32; // 전체 슬롯 개수
     [SerializeField] private int hotbarSlotCount = 8; // 핫바 슬롯 개수
 
     private int selectedHotbarIndex; // 현재 선택 핫바 번호
@@ -183,6 +183,29 @@ public sealed class PlayerInventory : MonoBehaviour // 플레이어 인벤토리
         slots[targetIndex] = sourceSlot; // 출발 아이템 대상 위치 배치
         InventoryChanged?.Invoke(); // 인벤토리 변경 알림
         return true; // 교환 성공 반환
+    }
+    public int RemoveItemFromSlot(int index, int amount) // 지정 슬롯 아이템 제거
+    {
+        InventorySlot slot = GetSlot(index); // 제거 대상 슬롯 조회
+
+        if (slot == null || amount <= 0) // 제거 요청 유효성 확인
+        {
+            return 0; // 제거 수량 없음 반환
+        }
+
+        int removedQuantity = slot.RemoveQuantity(amount); // 슬롯 수량 감소
+
+        if (slot.Quantity <= 0) // 슬롯 아이템 소진 확인
+        {
+            slots[index] = null; // 소진 슬롯 비우기
+        }
+
+        if (removedQuantity > 0) // 실제 제거 확인
+        {
+            InventoryChanged?.Invoke(); // 인벤토리 변경 알림
+        }
+
+        return removedQuantity; // 실제 제거 수량 반환
     }
 
     public int AddItem(ItemData itemData, int amount) // 아이템 추가
