@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b0e46b0956bcf479f2754564f5cfa9, type: 3}
+  m_Name: BuildRecipe_WoodFloor
+  m_EditorClassIdentifier: Assembly-CSharp::BuildRecipeData
+  recipeId: structure_wood_floor
+  displayName: WOOD FLOOR
+  placementType: 0
+  rotationStep: 45
+  previewOffset: {x: 0, y: 0, z: 0}
+  placedPrefab: {fileID: 6841630739043241179, guid: 2dc00036a5d83714bacc857900c78925, type: 3}
+  previewPrefab: {fileID: 6841630739043241179, guid: 8656d1ee6e0a4044da6b701b05d3294e, type: 3}
+  placementCheckCenter: {x: 0, y: 0.5, z: 0}
+  placementCheckHalfExtents: {x: 0.48, y: 0.01, z: 0.01}
+  maximumSlopeAngle: 12
+  maximumHeightDifference: 0.1
+  ingredients:
+  - itemData: {fileID: 11400000, guid: b9e78781ff8b2aa4bae6df0fa3d2e1c9, type: 2}
+    amount: 2

@@ -10,6 +10,8 @@ public sealed class HotbarItemUse : MonoBehaviour // 핫바 아이템 사용 처
     [SerializeField] private PlayerThirst playerThirst; // 플레이어 갈증
     [SerializeField] private PlayerHealth playerHealth; // 플레이어 체력
     [SerializeField] private InventoryPopupController popupController; // 인벤토리 팝업 관리자
+    [SerializeField] private BuildPlacementController buildPlacementController; // 건축 배치 관리자
+
 
     private void Awake() // 필수 참조 검사
     {
@@ -17,7 +19,8 @@ public sealed class HotbarItemUse : MonoBehaviour // 핫바 아이템 사용 처
             || playerHunger == null 
             || playerThirst == null 
             || playerHealth == null 
-            || popupController == null) // 참조 누락 확인
+            || popupController == null
+            || buildPlacementController == null) // 참조 누락 확인
         {
             Debug.LogError($"{gameObject.name}의 핫바 아이템 사용 참조가 누락되었습니다.", this); // 참조 오류 출력
             enabled = false; // 아이템 사용 기능 비활성화
@@ -26,6 +29,11 @@ public sealed class HotbarItemUse : MonoBehaviour // 핫바 아이템 사용 처
 
     private void Update() // 아이템 사용 입력 검사
     {
+        if (buildPlacementController.BlocksGameplayInput) // 건축 입력 차단 상태 확인
+        {
+            return; // 건축 중 핫바 아이템 사용 차단
+        }
+
         if (popupController.IsOpen) // 인벤토리 팝업 확인
         {
             return; // 팝업 중 아이템 사용 차단

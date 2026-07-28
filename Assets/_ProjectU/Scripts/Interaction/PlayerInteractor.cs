@@ -17,6 +17,7 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격 상�
 
     [Header("Attack")] // 공격 연출 설정 묶음
     [SerializeField] private ToolSwingAnimation toolSwingAnimation; // 도구 휘두르기 연출
+    [SerializeField] private BuildPlacementController buildPlacementController; // 건축 배치 관리자
 
     [Header("UI")] // 안내 UI 설정 묶음
     [SerializeField] private GameObject promptRoot; // 안내 UI 루트
@@ -30,9 +31,10 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격 상�
             interactionOrigin == null 
             || viewTransform == null 
             || interactActionReference == null 
-            || attackActionReference == null 
-            || promptRoot == null 
-            || promptText == null; // 필수 참조 누락 확인
+            || attackActionReference == null
+            || promptRoot == null
+            || promptText == null
+            || buildPlacementController == null; // 필수 참조 누락 확인
 
         if (hasMissingReference) // 참조 누락 여부 확인
         {
@@ -87,6 +89,12 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격 상�
 
     private void Update() // 매 프레임 입력과 상호작용 처리
     {
+        if (buildPlacementController.BlocksGameplayInput) // 건축 입력 차단 상태 확인
+        {
+            ClearInteractable(); // 상호작용 대상과 안내 UI 제거
+            return; // 공격과 상호작용 차단
+        }
+
         DetectInteractable(); // 전방 상호작용 대상 탐지
 
         if (Cursor.lockState != CursorLockMode.Locked) // 게임 조작 상태 확인
