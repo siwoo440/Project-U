@@ -18,6 +18,9 @@ public static class ItemIconUtility // 아이템 아이콘 보조 기능
             case ItemCategory.Drink: // 음료 분기
                 return new Color(0.2f, 0.65f, 0.9f, 1f); // 물빛 반환
 
+            case ItemCategory.Medicine: // 의약품 분기
+                return new Color(0.35f, 0.8f, 0.45f, 1f); // 초록색 반환
+
             case ItemCategory.Equipment: // 장비 분기
                 return new Color(0.25f, 0.45f, 0.8f, 1f); // 푸른색 반환
 

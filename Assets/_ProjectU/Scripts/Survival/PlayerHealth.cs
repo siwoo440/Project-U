@@ -16,6 +16,8 @@ public sealed class PlayerHealth : MonoBehaviour // 플레이어 체력 관리
     public float NormalizedHealth => currentHealth / maxHealth; // 체력 비율 제공
     public bool IsDead => isDead; // 사망 여부 제공
     public event Action<float> Damaged; // 실제 피해량 이벤트
+    public event Action<float> Healed; // 실제 회복량 이벤트
+
     private void Awake() // 체력 초기화
     {
         ClampSettings(); // 설정값 범위 보정
@@ -78,7 +80,11 @@ public sealed class PlayerHealth : MonoBehaviour // 플레이어 체력 관리
             return false; // 불필요한 회복 차단
         }
 
+        float previousHealth = currentHealth; // 회복 전 체력 저장
         currentHealth = Mathf.Min(maxHealth, currentHealth + healAmount); // 체력 회복 적용
+        float appliedHealing = currentHealth - previousHealth; // 실제 회복량 계산
+
+        Healed?.Invoke(appliedHealing); // 실제 회복량 전달
         return true; // 회복 처리 성공
     }
 

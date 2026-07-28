@@ -118,6 +118,9 @@ public sealed class InventoryDetailUI : MonoBehaviour // 아이템 상세 정보
             case ItemCategory.Drink: // 음료 분기
                 return "DRINK"; // 음료 문구 반환
 
+            case ItemCategory.Medicine: // 의약품 분기
+                return "MEDICINE"; // 의약품 문구 반환
+
             case ItemCategory.Equipment: // 장비 분기
                 return "EQUIPMENT"; // 장비 문구 반환
 
