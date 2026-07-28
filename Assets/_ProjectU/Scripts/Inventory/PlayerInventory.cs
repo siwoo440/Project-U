@@ -121,6 +121,109 @@ public sealed class PlayerInventory : MonoBehaviour // 플레이어 인벤토리
         return slots[index]; // 해당 슬롯 반환
     }
 
+    public int GetItemQuantity(ItemData targetItemData) // 지정 아이템 전체 수량 조회
+    { 
+        if (targetItemData == null) // 아이템 데이터 확인
+        { 
+            return 0; // 보유 수량 없음 반환
+        } 
+
+        int totalQuantity = 0; // 전체 수량 초기화
+
+        for (int index = 0; index < slots.Count; index++) // 전체 인벤토리 슬롯 순회
+        { 
+            InventorySlot slot = slots[index]; // 현재 슬롯 조회
+
+            if (slot == null || !slot.Contains(targetItemData)) // 동일 아이템 여부 확인
+            { 
+                continue; // 다음 슬롯 검사
+            } 
+
+            totalQuantity += slot.Quantity; // 현재 슬롯 수량 합산
+        } 
+
+        return totalQuantity; // 전체 보유 수량 반환
+    }
+
+    public bool HasItem(ItemData targetItemData, int requiredAmount) // 지정 아이템 보유 여부 확인
+    { 
+        if (targetItemData == null || requiredAmount <= 0) // 요청값 유효성 확인
+        { 
+            return false; // 보유 실패 반환
+        } 
+
+        return GetItemQuantity(targetItemData) >= requiredAmount; // 필요 수량 충족 여부 반환
+    } 
+
+    public bool CanAddItem(ItemData targetItemData, int amount) // 아이템 추가 공간 확인
+    { 
+        if (targetItemData == null || amount <= 0) // 요청값 유효성 확인
+        {
+            return false; // 추가 불가능 반환
+        } 
+
+        EnsureSlotCapacity(); // 현재 인벤토리 용량 확인
+        int remainingAmount = amount; // 배치해야 할 수량 저장
+
+        for (int index = 0; index < slots.Count; index++) // 전체 슬롯 순회
+        { 
+            InventorySlot slot = slots[index]; // 현재 슬롯 조회
+
+            if (slot == null) // 빈 슬롯 확인
+            { 
+                remainingAmount -= targetItemData.MaximumStack; // 빈 슬롯 수용량 차감
+            } 
+            else if (slot.Contains(targetItemData) && !slot.IsFull) // 기존 중첩 슬롯 확인
+            { 
+                remainingAmount -= targetItemData.MaximumStack - slot.Quantity; // 남은 중첩 공간 차감
+            } 
+
+            if (remainingAmount <= 0) // 전체 수량 배치 가능 확인
+            { 
+                return true; // 추가 가능 반환
+            } 
+        } 
+
+        return false; // 공간 부족 반환
+    } 
+
+    public int RemoveItem(ItemData targetItemData, int amount) // 동일 아이템 전체 슬롯 제거
+    { 
+        if (targetItemData == null || amount <= 0) // 요청값 유효성 확인
+        { 
+            return 0; // 제거 수량 없음 반환
+        } 
+
+        int remainingAmount = amount; // 아직 제거할 수량
+        int removedTotal = 0; // 실제 제거된 전체 수량
+
+        for (int index = 0; index < slots.Count && remainingAmount > 0; index++) // 전체 슬롯 순회
+        { 
+            InventorySlot slot = slots[index]; // 현재 슬롯 조회
+
+            if (slot == null || !slot.Contains(targetItemData)) // 제거 대상 여부 확인
+            { 
+                continue; // 다음 슬롯 검사
+            } 
+
+            int removedAmount = slot.RemoveQuantity(remainingAmount); // 현재 슬롯 수량 제거
+            removedTotal += removedAmount; // 실제 제거 수량 합산
+            remainingAmount -= removedAmount; // 남은 제거 수량 감소
+
+            if (slot.Quantity <= 0) // 현재 슬롯 소진 확인
+            { 
+                slots[index] = null; // 소진된 슬롯 비우기
+            } 
+        } 
+
+        if (removedTotal > 0) // 실제 변경 여부 확인
+        { 
+            InventoryChanged?.Invoke(); // 인벤토리 변경 알림
+        } 
+
+        return removedTotal; // 실제 제거된 수량 반환
+    } 
+
     public void SelectHotbarSlot(int index) // 핫바 슬롯 선택
     {
         if (index < 0 || index >= HotbarSlotCount) // 핫바 범위 확인
