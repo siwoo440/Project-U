@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 08d47c1103dfc6548ac6257bf8d8a815, type: 3}
-  m_Name: ItemData_ClothShirt
+  m_Name: ItemData_WorkHat
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemId: equipment_cloth_shirt
-  displayName: CLOTH SHIRT
-  description: A simple shirt made from cloth.
+  itemId: equipment_work_hat
+  displayName: WORK HAT
+  description: A WORN WORK HAT
   icon: {fileID: 0}
   itemCategory: 3
   toolType: 0
-  equipmentSlotType: 2
+  equipmentSlotType: 1
   hungerRestoreAmount: 0
   thirstRestoreAmount: 0
   healthRestoreAmount: 0

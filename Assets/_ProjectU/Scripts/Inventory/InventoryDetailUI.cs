@@ -7,6 +7,7 @@ public sealed class InventoryDetailUI : MonoBehaviour // 아이템 상세 정보
     [Header("References")] // 기능 참조 묶음
     [SerializeField] private PlayerInventory playerInventory; // 플레이어 인벤토리
     [SerializeField] private InventoryItemDropper itemDropper; // 아이템 버리기 기능
+    [SerializeField] private PlayerEquipment playerEquipment; // 플레이어 장비 관리자
 
     [Header("State")] // 상태 화면 묶음
     [SerializeField] private GameObject emptyStateRoot; // 미선택 화면
@@ -22,12 +23,26 @@ public sealed class InventoryDetailUI : MonoBehaviour // 아이템 상세 정보
     [Header("Actions")] // 동작 버튼 묶음
     [SerializeField] private Button removeOneButton; // 한 개 제거 버튼
     [SerializeField] private Button dropOneButton; // 한 개 버리기 버튼
+    [SerializeField] private Button equipButton; // 선택 장비 장착 버튼
 
     private bool referencesValid; // 참조 연결 상태
 
     private void Awake() // 상세 UI 초기화
     {
-        referencesValid = playerInventory != null && itemDropper != null && emptyStateRoot != null && detailContentRoot != null && itemIconImage != null && itemNameText != null && categoryText != null && descriptionText != null && quantityText != null && removeOneButton != null && dropOneButton != null; // 필수 참조 검사
+        referencesValid = playerInventory 
+            != null && itemDropper 
+            != null && playerEquipment 
+            != null && emptyStateRoot 
+            != null && detailContentRoot 
+            != null && itemIconImage 
+            != null && itemNameText 
+            != null && categoryText 
+            != null && descriptionText 
+            != null && quantityText 
+            != null && removeOneButton 
+            != null && dropOneButton 
+            != null && equipButton 
+            != null; // 필수 참조 검사
 
         if (!referencesValid) // 참조 누락 확인
         {
@@ -38,6 +53,7 @@ public sealed class InventoryDetailUI : MonoBehaviour // 아이템 상세 정보
 
         removeOneButton.onClick.AddListener(RemoveSelectedItem); // 제거 버튼 기능 연결
         dropOneButton.onClick.AddListener(DropSelectedItem); // 버리기 버튼 기능 연결
+        equipButton.onClick.AddListener(EquipSelectedItem); // 장비 장착 기능 연결
     }
 
     private void OnEnable() // 변경 이벤트 연결
@@ -72,6 +88,7 @@ public sealed class InventoryDetailUI : MonoBehaviour // 아이템 상세 정보
         {
             emptyStateRoot.SetActive(true); // 미선택 화면 표시
             detailContentRoot.SetActive(false); // 상세 정보 숨김
+            equipButton.interactable = false; // 장비 장착 버튼 비활성화
             return; // 갱신 종료
         }
 
@@ -88,6 +105,9 @@ public sealed class InventoryDetailUI : MonoBehaviour // 아이템 상세 정보
         quantityText.SetText($"QUANTITY: {selectedSlot.Quantity} / {itemData.MaximumStack}"); // 아이템 수량 출력
         removeOneButton.interactable = true; // 제거 버튼 활성화
         dropOneButton.interactable = true; // 버리기 버튼 활성화
+
+        equipButton.interactable = itemData.IsEquipment && itemData.EquipmentSlotType 
+            != EquipmentSlotType.None; // 장착 가능한 장비 여부 적용
     }
 
     private void RemoveSelectedItem() // 선택 아이템 한 개 제거
@@ -101,7 +121,35 @@ public sealed class InventoryDetailUI : MonoBehaviour // 아이템 상세 정보
         int selectedIndex = playerInventory.SelectedInventoryIndex; // 선택 슬롯 번호 조회
         itemDropper.DropFromSlot(selectedIndex, 1); // 아이템 한 개 월드 생성
     }
+    private void EquipSelectedItem() // 선택 장비 장착
+    {
+        int selectedIndex = playerInventory.SelectedInventoryIndex; // 선택 슬롯 번호 조회
 
+        if (selectedIndex < 0) // 선택 슬롯 존재 확인
+        {
+            return; // 장착 처리 중단
+        }
+
+        playerEquipment.TryEquipFromInventory(selectedIndex); // 선택 장비 장착 시도
+        Refresh(); // 상세 화면 갱신
+    }
+    private void OnDestroy() // 버튼 이벤트 연결 정리
+    {
+        if (removeOneButton != null) // 제거 버튼 존재 확인
+        { 
+            removeOneButton.onClick.RemoveListener(RemoveSelectedItem); // 제거 이벤트 해제
+        } 
+
+        if (dropOneButton != null) // 버리기 버튼 존재 확인
+        { 
+            dropOneButton.onClick.RemoveListener(DropSelectedItem); // 버리기 이벤트 해제
+        } 
+
+        if (equipButton != null) // 장착 버튼 존재 확인
+        { 
+            equipButton.onClick.RemoveListener(EquipSelectedItem); // 장착 이벤트 해제
+        } 
+    } 
     private string GetCategoryLabel(ItemCategory itemCategory) // 분류 표시 문구 반환
     {
         switch (itemCategory) // 아이템 분류 확인
