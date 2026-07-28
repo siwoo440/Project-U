@@ -10397,7 +10397,7 @@ MonoBehaviour:
   gravity: -20
   groundLayerMask:
     serializedVersion: 2
-    m_Bits: 63
+    m_Bits: 777
   groundCheckDistance: 0.15
   groundProbeRadiusOffset: 0.05
   groundedVerticalVelocity: -2
@@ -10695,12 +10695,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7c4d83f54b0ba9f48b4f04f89462d0f6, type: 2}
   validPreviewMaterial: {fileID: 2100000, guid: 575eeba1a98fc994f9dd258bfa6decd7, type: 2}
   invalidPreviewMaterial: {fileID: 2100000, guid: 439962ca014ff5d41a3a0023d48746db, type: 2}
+  removalTargetMaterial: {fileID: 2100000, guid: be932b1cb342cbe4999472acc9354643, type: 2}
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 256
   obstructionLayerMask:
     serializedVersion: 2
     m_Bits: 1608
+  structureLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
   maximumBuildDistance: 6
   terrainProbeHeight: 5
   terrainProbeDistance: 12
@@ -13272,12 +13276,14 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'B / RMB / ESC - CLOSE
 
-    LMB - PLACE
+    LMB - PLACE / REMOVE
+
+    R - PLACE / REMOVE
+    MODE
 
     Q / E - ROTATE
 
-    Z / X
-    - SELECT'
+    Z / X - SELECT'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

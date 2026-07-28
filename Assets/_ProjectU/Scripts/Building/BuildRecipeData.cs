@@ -27,6 +27,9 @@ public sealed class BuildRecipeData : ScriptableObject // 건축물 제작과 �
 
     [Header("Ingredients")] // 필요 재료 설정 묶음
     [SerializeField] private CraftingIngredient[] ingredients = new CraftingIngredient[0]; // 설치 필요 재료 목록
+    
+    [Header("Removal")] // 철거 설정 묶음
+    [SerializeField, Range(0f, 1f)] private float demolitionRefundRatio = 0.5f; // 철거 재료 반환 비율
 
     public string RecipeId => recipeId; // 건축 데이터 ID 제공
     public string DisplayName => displayName; // 건축물 이름 제공
@@ -40,7 +43,7 @@ public sealed class BuildRecipeData : ScriptableObject // 건축물 제작과 �
     public float MaximumSlopeAngle => maximumSlopeAngle; // 최대 경사 제공
     public float MaximumHeightDifference => maximumHeightDifference; // 최대 높이 차이 제공
     public IReadOnlyList<CraftingIngredient> Ingredients => ingredients; // 필요 재료 제공
-
+    public float DemolitionRefundRatio => demolitionRefundRatio; // 철거 반환 비율 제공
     private void OnValidate() // Inspector 설정값 검증
     {
         recipeId = string.IsNullOrWhiteSpace(recipeId) ? string.Empty : recipeId.Trim(); // ID 공백 제거
@@ -51,6 +54,7 @@ public sealed class BuildRecipeData : ScriptableObject // 건축물 제작과 �
         placementCheckHalfExtents.z = Mathf.Max(0.01f, placementCheckHalfExtents.z); // Z 충돌 크기 최소값
         maximumSlopeAngle = Mathf.Clamp(maximumSlopeAngle, 0f, 60f); // 최대 경사 범위 제한
         maximumHeightDifference = Mathf.Max(0f, maximumHeightDifference); // 높이 차이 음수 방지
+        demolitionRefundRatio = Mathf.Clamp01(demolitionRefundRatio); // 반환 비율 범위 제한
 
         if (ingredients == null) // 재료 배열 존재 확인
         {

@@ -1,4 +1,4 @@
-using System.Collections.Generic; // 임시 재료 목록 기능
+using System.Collections.Generic; // 목록 기능
 using System.Text; // 상태 문자열 조합 기능
 using TMPro; // TextMeshPro 기능
 using UnityEngine; // Unity 기본 기능
@@ -19,13 +19,15 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
     [Header("Recipes")] // 건축 데이터 묶음
     [SerializeField] private BuildRecipeData[] buildRecipes = new BuildRecipeData[0]; // 선택 가능한 건축물 목록
 
-    [Header("Materials")] // 미리보기 재질 묶음
+    [Header("Materials")] // 건축 재질 묶음
     [SerializeField] private Material validPreviewMaterial; // 설치 가능 재질
     [SerializeField] private Material invalidPreviewMaterial; // 설치 불가능 재질
+    [SerializeField] private Material removalTargetMaterial; // 철거 대상 강조 재질
 
     [Header("Detection")] // 배치 탐지 설정 묶음
     [SerializeField] private LayerMask groundLayerMask; // Terrain 레이어
     [SerializeField] private LayerMask obstructionLayerMask; // 설치 방해 레이어
+    [SerializeField] private LayerMask structureLayerMask; // 철거 가능한 건축물 레이어
     [SerializeField] private float maximumBuildDistance = 6f; // 최대 건축 거리
     [SerializeField] private float terrainProbeHeight = 5f; // Terrain 표본 시작 높이
     [SerializeField] private float terrainProbeDistance = 12f; // Terrain 표본 탐지 거리
@@ -43,6 +45,8 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
     private bool isBuildMode; // 건축 모드 상태
     private bool canPlace; // 현재 설치 가능 상태
     private int lastBuildInputFrame = -1; // 마지막 건축 입력 프레임
+    private bool isRemovalMode; // 철거 모드 상태
+    private PlacedBuildObject currentRemovalTarget; // 현재 철거 대상
 
     public bool IsBuildMode => isBuildMode; // 건축 모드 상태 제공
     public bool BlocksGameplayInput => isBuildMode || Time.frameCount == lastBuildInputFrame; // 현재 프레임 일반 입력 차단 상태
@@ -59,6 +63,7 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
             || placedObjectRoot == null
             || validPreviewMaterial == null
             || invalidPreviewMaterial == null
+            || removalTargetMaterial == null
             || buildHudRoot == null
             || buildStatusText == null
             || buildRecipes == null
@@ -71,9 +76,9 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
             return; // 초기화 중단
         }
 
-        if (groundLayerMask.value == 0 || obstructionLayerMask.value == 0) // 레이어 마스크 설정 확인
+        if (groundLayerMask.value == 0 || obstructionLayerMask.value == 0 || structureLayerMask.value == 0) // 건축 레이어 설정 확인
         {
-            Debug.LogError("건축 Ground와 Obstruction Layer Mask를 설정해야 합니다.", this); // 레이어 오류 출력
+            Debug.LogError("건축 Ground, Obstruction, Structure Layer Mask를 설정해야 합니다.", this); // 레이어 오류 출력
             enabled = false; // 건축 기능 비활성화
             return; // 초기화 중단
         }
@@ -134,6 +139,24 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
             return; // 같은 프레임 설치 차단
         }
 
+        if (keyboard.rKey.wasPressedThisFrame) // 설치와 철거 전환 입력 확인
+        {
+            SetRemovalMode(!isRemovalMode); // 현재 모드 반대로 전환
+            return; // 전환 프레임 추가 입력 차단
+        }
+
+        if (isRemovalMode) // 철거 모드 확인
+        {
+            UpdateRemovalTarget(); // 화면 중앙 철거 대상 갱신
+
+            if (mouse.leftButton.wasPressedThisFrame) // 철거 입력 확인
+            {
+                TryRemoveCurrentTarget(); // 현재 건축물 철거 시도
+            }
+
+            return; // 설치 입력 처리 차단
+        }
+
         if (keyboard.zKey.wasPressedThisFrame) // 이전 건축물 입력 확인
         {
             ChangeRecipe(-1); // 이전 건축물 선택
@@ -176,6 +199,8 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
         float rotationStep = GetCurrentRotationStep(); // 현재 건축물 회전 단위 조회
         currentLocalYaw = Mathf.Round(relativePlayerYaw / rotationStep) * rotationStep; // 시작 회전값 정렬
         isBuildMode = true; // 건축 모드 활성화
+        isRemovalMode = false; // 시작 모드를 설치 모드로 설정
+        currentRemovalTarget = null; // 기존 철거 대상 제거
         canPlace = false; // 초기 설치 가능 상태 해제
         lastBuildInputFrame = Time.frameCount; // 현재 프레임 일반 입력 차단
         CreatePreview(); // 현재 건축물 미리보기 생성
@@ -186,6 +211,8 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
 
     private void ExitBuildMode() // 건축 모드 종료
     {
+        ClearRemovalTarget(); // 철거 대상 강조 해제
+        isRemovalMode = false; // 철거 모드 비활성화
         isBuildMode = false; // 건축 모드 비활성화
         canPlace = false; // 설치 가능 상태 해제
         lastBuildInputFrame = Time.frameCount; // 종료 프레임 일반 입력 차단
@@ -614,9 +641,174 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
             placedBuildObject = placedStructure.AddComponent<PlacedBuildObject>(); // 설치 정보 컴포넌트 자동 추가
         }
 
-        placedBuildObject.Initialize(currentRecipe.PlacementType); // 실제 배치 종류 저장
+        placedBuildObject.Initialize(currentRecipe); // 실제 건축 데이터와 배치 종류 저장
         lastBuildInputFrame = Time.frameCount; // 설치 프레임 일반 입력 차단
         UpdatePreview(); // 남은 재료와 충돌 상태 갱신
+    }
+
+    private void SetRemovalMode(bool shouldEnable) // 설치와 철거 모드 전환
+    {
+        ClearRemovalTarget(); // 기존 철거 대상 강조 해제
+        isRemovalMode = shouldEnable; // 새로운 철거 모드 상태 저장
+        canPlace = false; // 설치 가능 상태 해제
+        lastBuildInputFrame = Time.frameCount; // 전환 프레임 일반 입력 차단
+
+        if (previewInstance != null) // 기존 미리보기 확인
+        {
+            Destroy(previewInstance); // 기존 미리보기 제거
+        }
+
+        previewInstance = null; // 미리보기 참조 제거
+        previewRenderers = null; // 미리보기 렌더러 참조 제거
+
+        if (isRemovalMode) // 철거 모드 진입 확인
+        {
+            gridArea.SetGridVisible(false); // 철거 중 그리드 숨김
+            RefreshRemovalStatus("REMOVE MODE"); // 철거 상태 표시
+            return; // 설치 미리보기 생성 차단
+        }
+
+        CreatePreview(); // 설치 미리보기 재생성
+        gridArea.SetGridVisible(true); // 설치 그리드 표시
+        RefreshStatus("SEARCHING GROUND"); // 설치 상태 표시
+    }
+
+    private void UpdateRemovalTarget() // 화면 중앙 철거 대상 갱신
+    {
+        Vector2 screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f); // 화면 중앙 좌표 계산
+        Ray removalRay = mainCamera.ScreenPointToRay(screenCenter); // 화면 중앙 광선 생성
+
+        bool hasTarget = Physics.Raycast(
+            removalRay,
+            out RaycastHit removalHit,
+            maximumBuildDistance,
+            structureLayerMask,
+            QueryTriggerInteraction.Ignore); // Structure 레이어 탐지
+
+        if (!hasTarget) // 건축물 미탐지 확인
+        {
+            SetRemovalTarget(null); // 기존 철거 대상 해제
+            RefreshRemovalStatus("LOOK AT STRUCTURE"); // 대상 탐색 문구 표시
+            return; // 갱신 중단
+        }
+
+        PlacedBuildObject targetObject = removalHit.collider.GetComponentInParent<PlacedBuildObject>(); // 설치 건축물 정보 조회
+
+        if (targetObject == null || targetObject.RecipeData == null) // 유효한 건축물 데이터 확인
+        {
+            SetRemovalTarget(null); // 기존 철거 대상 해제
+            RefreshRemovalStatus("INVALID STRUCTURE"); // 철거 불가능 문구 표시
+            return; // 갱신 중단
+        }
+
+        SetRemovalTarget(targetObject); // 새로운 철거 대상 적용
+        RefreshRemovalStatus("READY TO REMOVE"); // 철거 가능 문구 표시
+    }
+
+    private void SetRemovalTarget(PlacedBuildObject newTarget) // 현재 철거 대상 변경
+    {
+        if (currentRemovalTarget == newTarget) // 동일 철거 대상 확인
+        {
+            return; // 중복 변경 차단
+        }
+
+        if (currentRemovalTarget != null) // 기존 철거 대상 확인
+        {
+            currentRemovalTarget.SetRemovalHighlight(false, removalTargetMaterial); // 기존 대상 강조 해제
+        }
+
+        currentRemovalTarget = newTarget; // 새로운 철거 대상 저장
+
+        if (currentRemovalTarget != null) // 새로운 대상 존재 확인
+        {
+            currentRemovalTarget.SetRemovalHighlight(true, removalTargetMaterial); // 새로운 대상 강조 적용
+        }
+    }
+
+    private void ClearRemovalTarget() // 현재 철거 대상 제거
+    {
+        if (currentRemovalTarget != null) // 기존 철거 대상 확인
+        {
+            currentRemovalTarget.SetRemovalHighlight(false, removalTargetMaterial); // 기존 대상 강조 해제
+        }
+
+        currentRemovalTarget = null; // 철거 대상 참조 제거
+    }
+
+    private void TryRemoveCurrentTarget() // 현재 건축물 철거 시도
+    {
+        if (currentRemovalTarget == null) // 철거 대상 존재 확인
+        {
+            RefreshRemovalStatus("NO STRUCTURE"); // 철거 대상 없음 표시
+            return; // 철거 처리 중단
+        }
+
+        BuildRecipeData targetRecipe = currentRemovalTarget.RecipeData; // 철거 대상 건축 데이터 조회
+
+        if (!TryRefundMaterials(targetRecipe, out string failureStatus)) // 재료 반환 가능 여부 확인
+        {
+            RefreshRemovalStatus(failureStatus); // 반환 실패 원인 표시
+            return; // 건축물 제거 차단
+        }
+
+        PlacedBuildObject removedObject = currentRemovalTarget; // 제거할 건축물 참조 저장
+        ClearRemovalTarget(); // 제거 전 강조 상태 해제
+        Destroy(removedObject.gameObject); // 실제 건축물 제거
+        lastBuildInputFrame = Time.frameCount; // 철거 프레임 일반 입력 차단
+        RefreshRemovalStatus("STRUCTURE REMOVED"); // 철거 완료 문구 표시
+    }
+
+    private bool TryRefundMaterials(BuildRecipeData targetRecipe, out string failureStatus) // 철거 재료 반환 시도
+    {
+        failureStatus = string.Empty; // 기본 실패 문구 제거
+        List<ItemData> refundedItems = new List<ItemData>(); // 반환 완료 아이템 목록
+        List<int> refundedAmounts = new List<int>(); // 반환 완료 수량 목록
+        IReadOnlyList<CraftingIngredient> ingredients = targetRecipe.Ingredients; // 기존 설치 재료 목록 조회
+
+        for (int index = 0; index < ingredients.Count; index++) // 전체 설치 재료 순회
+        {
+            CraftingIngredient ingredient = ingredients[index]; // 현재 설치 재료 조회
+
+            if (ingredient == null || ingredient.ItemData == null) // 재료 데이터 연결 확인
+            {
+                RollbackRefund(refundedItems, refundedAmounts); // 이미 반환한 재료 회수
+                failureStatus = "REFUND DATA ERROR"; // 데이터 오류 문구 설정
+                return false; // 재료 반환 실패
+            }
+
+            int refundAmount = Mathf.FloorToInt(ingredient.Amount * targetRecipe.DemolitionRefundRatio); // 반환 수량 계산
+
+            if (refundAmount <= 0) // 반환할 수량 확인
+            {
+                continue; // 반환 없는 재료 제외
+            }
+
+            int remainingAmount = playerInventory.AddItem(ingredient.ItemData, refundAmount); // 인벤토리에 반환 재료 추가
+            int addedAmount = refundAmount - remainingAmount; // 실제 추가 수량 계산
+
+            if (addedAmount > 0) // 실제 반환 여부 확인
+            {
+                refundedItems.Add(ingredient.ItemData); // 반환 아이템 기록
+                refundedAmounts.Add(addedAmount); // 반환 수량 기록
+            }
+
+            if (remainingAmount > 0) // 인벤토리 공간 부족 확인
+            {
+                RollbackRefund(refundedItems, refundedAmounts); // 전체 반환 처리 취소
+                failureStatus = "INVENTORY FULL"; // 공간 부족 문구 설정
+                return false; // 재료 반환 실패
+            }
+        }
+
+        return true; // 전체 재료 반환 성공
+    }
+
+    private void RollbackRefund(List<ItemData> refundedItems, List<int> refundedAmounts) // 반환된 재료 복구 취소
+    {
+        for (int index = 0; index < refundedItems.Count; index++) // 반환 완료 목록 순회
+        {
+            playerInventory.RemoveItem(refundedItems[index], refundedAmounts[index]); // 반환한 재료 다시 제거
+        }
     }
 
     private void SetPreviewUnavailable(string status) // 미리보기 사용 불가 상태 적용
@@ -676,6 +868,48 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
         }
 
         buildStatusText.SetText(statusBuilder.ToString()); // 완성된 상태 문구 표시
+    }
+
+    private void RefreshRemovalStatus(string headline) // 철거 상태 문구 갱신
+    {
+        StringBuilder statusBuilder = new StringBuilder(); // 상태 문구 조합기 생성
+        statusBuilder.AppendLine(headline); // 현재 철거 상태 추가
+
+        if (currentRemovalTarget == null || currentRemovalTarget.RecipeData == null) // 유효한 철거 대상 확인
+        {
+            statusBuilder.AppendLine("R - PLACEMENT MODE"); // 설치 모드 전환 안내 추가
+            buildStatusText.SetText(statusBuilder.ToString()); // 철거 대기 문구 표시
+            return; // 대상 정보 처리 중단
+        }
+
+        BuildRecipeData targetRecipe = currentRemovalTarget.RecipeData; // 철거 대상 데이터 조회
+        statusBuilder.AppendLine(targetRecipe.DisplayName); // 건축물 이름 추가
+        statusBuilder.AppendLine("REFUND"); // 반환 재료 제목 추가
+
+        IReadOnlyList<CraftingIngredient> ingredients = targetRecipe.Ingredients; // 설치 재료 목록 조회
+
+        for (int index = 0; index < ingredients.Count; index++) // 전체 설치 재료 순회
+        {
+            CraftingIngredient ingredient = ingredients[index]; // 현재 설치 재료 조회
+
+            if (ingredient == null || ingredient.ItemData == null) // 재료 연결 확인
+            {
+                continue; // 잘못된 재료 제외
+            }
+
+            int refundAmount = Mathf.FloorToInt(ingredient.Amount * targetRecipe.DemolitionRefundRatio); // 반환 수량 계산
+
+            if (refundAmount <= 0) // 반환 수량 확인
+            {
+                continue; // 반환 없는 재료 제외
+            }
+
+            statusBuilder.AppendLine($"{ingredient.ItemData.DisplayName}: +{refundAmount}"); // 반환 아이템 정보 추가
+        }
+
+        statusBuilder.AppendLine("LMB - REMOVE"); // 철거 입력 안내 추가
+        statusBuilder.AppendLine("R - PLACEMENT MODE"); // 설치 모드 전환 안내 추가
+        buildStatusText.SetText(statusBuilder.ToString()); // 완성된 철거 문구 표시
     }
 
     private void OnDisable() // 비활성화 상태 정리
