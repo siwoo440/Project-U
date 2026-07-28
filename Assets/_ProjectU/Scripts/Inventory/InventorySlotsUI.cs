@@ -1,7 +1,7 @@
+using System.Collections; // 코루틴 기능
 using System.Collections.Generic; // List 기능
 using UnityEngine; // Unity 기본 기능
 using UnityEngine.UI; // Unity UI 기능
-
 public sealed class InventorySlotsUI : MonoBehaviour // 여러 인벤토리 슬롯 표시
 {
     [SerializeField] private PlayerInventory playerInventory; // 표시할 플레이어 인벤토리
@@ -21,6 +21,8 @@ public sealed class InventorySlotsUI : MonoBehaviour // 여러 인벤토리 슬�
 
     private readonly List<InventorySlotView> slotViews = new List<InventorySlotView>(); // 생성된 슬롯 목록
     private readonly List<Transform> generatedSectionContainers = new List<Transform>(); // 생성된 분리 영역 목록
+    private Coroutine layoutRefreshCoroutine; // 레이아웃 갱신 코루틴
+
 
     private void Awake() // 슬롯 화면 생성
     {
@@ -71,14 +73,21 @@ public sealed class InventorySlotsUI : MonoBehaviour // 여러 인벤토리 슬�
         }
 
         Refresh(); // 현재 상태 즉시 표시
+        RequestLayoutRefresh(); // 스크롤 레이아웃 갱신 요청
     }
 
-    private void OnDisable() // 변경 이벤트 해제
+    private void OnDisable() // 변경 이벤트와 코루틴 해제
     {
+        if (layoutRefreshCoroutine != null) // 실행 중인 코루틴 확인
+        { 
+            StopCoroutine(layoutRefreshCoroutine); // 레이아웃 코루틴 중단
+            layoutRefreshCoroutine = null; // 코루틴 참조 초기화
+        } 
+
         if (playerInventory == null) // 인벤토리 연결 확인
         {
             return; // 이벤트 해제 중단
-        }
+        } 
 
         playerInventory.InventoryChanged -= Refresh; // 아이템 변경 이벤트 해제
         playerInventory.HotbarSelectionChanged -= Refresh; // 핫바 선택 이벤트 해제
@@ -130,6 +139,7 @@ public sealed class InventorySlotsUI : MonoBehaviour // 여러 인벤토리 슬�
 
         BuildSlotViews(); // 현재 용량 기준 슬롯 다시 생성
         Refresh(); // 인벤토리 화면 갱신
+        RequestLayoutRefresh(); // 변경된 Content 크기 갱신
     }
 
     private void Refresh() // 전체 슬롯 화면 갱신
@@ -229,6 +239,50 @@ public sealed class InventorySlotsUI : MonoBehaviour // 여러 인벤토리 슬�
         float spacingHeight = Mathf.Max(0, rowCount - 1) * sourceGrid.spacing.y; // 전체 세로 간격 계산
         return sourceGrid.padding.top + sourceGrid.padding.bottom + cellHeight + spacingHeight; // 최종 영역 높이 반환
     }
+
+    private void RequestLayoutRefresh() // 레이아웃 갱신 예약
+    { 
+        if (!isActiveAndEnabled) // UI 활성 상태 확인
+        { 
+            return; // 비활성 상태 처리 중단
+        } 
+
+        if (layoutRefreshCoroutine != null) // 기존 코루틴 확인
+        { 
+            StopCoroutine(layoutRefreshCoroutine); // 기존 코루틴 중단
+        }
+
+        layoutRefreshCoroutine = StartCoroutine(RefreshLayoutNextFrame()); // 다음 프레임 갱신 시작
+    }
+
+    private IEnumerator RefreshLayoutNextFrame() // 다음 프레임 스크롤 레이아웃 갱신
+    {
+        yield return null; // 슬롯 생성 완료 대기
+
+        RectTransform contentRect = slotContainer as RectTransform; // 슬롯 Content 위치 정보 조회
+
+        if (contentRect == null) // Content 연결 상태 확인
+        { 
+            Debug.LogError($"{gameObject.name}의 Slot Container를 찾을 수 없습니다.", this); // 실제 연결 오류 출력
+            layoutRefreshCoroutine = null; // 코루틴 참조 초기화
+            yield break; // 레이아웃 갱신 중단
+        }
+
+        ScrollRect parentScrollRect = contentRect.GetComponentInParent<ScrollRect>(); // Content 기준 상위 ScrollRect 조회
+
+        if (parentScrollRect == null) // 일반 핫바 영역 확인
+        { 
+            layoutRefreshCoroutine = null; // 코루틴 완료 처리
+            yield break; // 스크롤 갱신 생략
+        } 
+
+        Canvas.ForceUpdateCanvases(); // Canvas 크기 계산
+        LayoutRebuilder.ForceRebuildLayoutImmediate(contentRect); // Content 레이아웃 즉시 계산
+        Canvas.ForceUpdateCanvases(); // ScrollRect 이동 범위 계산
+        parentScrollRect.StopMovement(); // 기존 스크롤 이동 중단
+        parentScrollRect.verticalNormalizedPosition = 1f; // 스크롤 위치 맨 위 설정
+        layoutRefreshCoroutine = null; // 코루틴 완료 처리
+    } 
 
     private float CalculateSectionWidth(int columnCount, GridLayoutGroup sourceGrid) // 슬롯 영역 너비 계산
     {
