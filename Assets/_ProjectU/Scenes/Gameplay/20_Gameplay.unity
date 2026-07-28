@@ -10453,7 +10453,7 @@ MonoBehaviour:
   detectionRadius: 0.25
   interactableLayers:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 520
   interactActionReference: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   attackActionReference: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   toolSwingAnimation: {fileID: 310027315}

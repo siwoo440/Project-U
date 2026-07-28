@@ -164,9 +164,10 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격 상�
             detectedInteractable = hit.collider.GetComponentInParent<InteractableBase>(); // 상호작용 컴포넌트 검색
         }
 
-        if (detectedInteractable == currentInteractable) // 대상 변경 여부 확인
+        if (detectedInteractable == currentInteractable) // 동일 대상 유지 확인
         {
-            return; // UI 갱신 중단
+            RefreshPrompt(); // 변경된 상태 문구 갱신
+            return; // 대상 교체 처리 중단
         }
 
         currentInteractable = detectedInteractable; // 현재 대상 갱신

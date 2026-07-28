@@ -743,6 +743,15 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
             return; // 철거 처리 중단
         }
 
+        IBuildRemovalGuard removalGuard = currentRemovalTarget.GetComponent<IBuildRemovalGuard>(); // 철거 제한 규칙 조회
+
+        if (removalGuard != null && !removalGuard.CanRemove) // 철거 제한 상태 확인
+        {
+            RefreshRemovalStatus(removalGuard.RemovalBlockedMessage); // 철거 차단 원인 표시
+            return; // 건축물 제거 차단
+        }
+
+
         BuildRecipeData targetRecipe = currentRemovalTarget.RecipeData; // 철거 대상 건축 데이터 조회
 
         if (!TryRefundMaterials(targetRecipe, out string failureStatus)) // 재료 반환 가능 여부 확인
