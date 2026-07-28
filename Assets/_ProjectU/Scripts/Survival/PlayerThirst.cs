@@ -1,6 +1,7 @@
 using UnityEngine; // Unity 기본 기능
 
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
+[RequireComponent(typeof(PlayerEquipment))] // 필수 장비 컴포넌트
 public sealed class PlayerThirst : MonoBehaviour // 플레이어 갈증 관리
 {
     [Header("Thirst")] // 갈증 설정 묶음
@@ -10,6 +11,8 @@ public sealed class PlayerThirst : MonoBehaviour // 플레이어 갈증 관리
     [Header("Runtime")] // 실행 상태 묶음
     [SerializeField] private float currentThirst = 100f; // 현재 갈증
 
+    private PlayerEquipment playerEquipment; // 플레이어 장비 관리자
+
     public float CurrentThirst => currentThirst; // 현재 갈증 제공
     public float MaxThirst => maxThirst; // 최대 갈증 제공
     public float NormalizedThirst => currentThirst / maxThirst; // 갈증 비율 제공
@@ -17,13 +20,16 @@ public sealed class PlayerThirst : MonoBehaviour // 플레이어 갈증 관리
 
     private void Awake() // 갈증 초기화
     {
+        playerEquipment = GetComponent<PlayerEquipment>(); // 장비 관리자 가져오기
         ClampSettings(); // 설정값 범위 보정
         currentThirst = maxThirst; // 시작 갈증 최대 적용
     }
 
     private void Update() // 갈증 지속 감소
     {
-        float depletionAmount = depletionPerSecond * Time.deltaTime; // 현재 프레임 감소량
+        float reductionPercent = playerEquipment.TotalThirstReductionPercent; // 갈증 감소 방지량 조회
+        float depletionMultiplier = 1f - reductionPercent / 100f; // 갈증 감소 배율 계산
+        float depletionAmount = depletionPerSecond * depletionMultiplier * Time.deltaTime; // 장비 적용 갈증 감소량
         currentThirst = Mathf.Max(0f, currentThirst - depletionAmount); // 갈증 최소값 제한
     }
 

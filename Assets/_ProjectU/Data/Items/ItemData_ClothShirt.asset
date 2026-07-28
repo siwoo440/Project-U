@@ -19,6 +19,12 @@ MonoBehaviour:
   itemCategory: 3
   toolType: 0
   equipmentSlotType: 2
+  defensePercent: 12
+  maximumHealthBonus: 20
+  movementSpeedBonusPercent: 0
+  hungerDepletionReductionPercent: 10
+  thirstDepletionReductionPercent: 10
+  inventorySlotBonus: 0
   hungerRestoreAmount: 0
   thirstRestoreAmount: 0
   healthRestoreAmount: 0

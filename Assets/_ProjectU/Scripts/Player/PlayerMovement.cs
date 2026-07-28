@@ -4,6 +4,7 @@ using UnityEngine.InputSystem; // 새 Input System 기능
 
 [RequireComponent(typeof(CharacterController))] // 필수 이동 충돌 컴포넌트
 [RequireComponent(typeof(PlayerStamina))] // 필수 스태미나 컴포넌트
+[RequireComponent(typeof(PlayerEquipment))] // 필수 장비 컴포넌트
 public sealed class PlayerMovement : MonoBehaviour // 플레이어 이동 처리
 {
     [Header("References")] // 외부 참조 묶음
@@ -14,7 +15,7 @@ public sealed class PlayerMovement : MonoBehaviour // 플레이어 이동 처리
     [SerializeField] private float runSpeed = 7f; // 달리기 속도
     [SerializeField] private float jumpHeight = 1.2f; // 점프 높이
     [SerializeField] private float gravity = -20f; // 중력 가속도
-   
+
     [Header("Ground Detection")] // 지면 판정 설정 묶음
     [SerializeField] private LayerMask groundLayerMask = ~0; // 지면 검사 대상 레이어
     [SerializeField] private float groundCheckDistance = 0.15f; // 발밑 지면 검사 거리
@@ -36,6 +37,7 @@ public sealed class PlayerMovement : MonoBehaviour // 플레이어 이동 처리
 
     private CharacterController characterController; // 캐릭터 충돌 이동기
     private PlayerStamina playerStamina; // 플레이어 스태미나 관리기
+    private PlayerEquipment playerEquipment; // 플레이어 장비 관리자
     private float verticalVelocity; // 수직 이동 속도
     private Vector3 groundNormal = Vector3.up; // 현재 지면의 수직 방향
     private float fallStartHeight; // 낙하 시작 높이
@@ -50,6 +52,7 @@ public sealed class PlayerMovement : MonoBehaviour // 플레이어 이동 처리
     {
         characterController = GetComponent<CharacterController>(); // CharacterController 가져오기
         playerStamina = GetComponent<PlayerStamina>(); // PlayerStamina 가져오기
+        playerEquipment = GetComponent<PlayerEquipment>(); // PlayerEquipment 가져오기
 
         if (cameraTransform == null || moveActionReference == null || sprintActionReference == null || jumpActionReference == null) // 필수 참조 연결 확인
         {
@@ -121,7 +124,9 @@ public sealed class PlayerMovement : MonoBehaviour // 플레이어 이동 처리
         bool hasMovementInput = moveDirection.sqrMagnitude > 0.01f; // 실제 이동 입력 존재 확인
         bool wantsToSprint = sprintActionReference.action.IsPressed() && hasMovementInput; // 이동 중 달리기 입력 확인
         bool isSprinting = playerStamina.UpdateSprint(wantsToSprint, Time.deltaTime); // 스태미나 기반 달리기 판정
-        float currentSpeed = isSprinting ? runSpeed : walkSpeed; // 현재 이동 속도 결정
+        float baseMovementSpeed = isSprinting ? runSpeed : walkSpeed; // 기본 이동 속도 결정
+        float equipmentSpeedMultiplier = 1f + playerEquipment.TotalMovementSpeedBonusPercent / 100f; // 장비 이동 속도 배율 계산
+        float currentSpeed = baseMovementSpeed * equipmentSpeedMultiplier; // 장비 적용 이동 속도 계산
 
         UpdateVerticalVelocity(); // 점프와 중력 계산
         UpdateFallingState(); // 공중 하강 상태 검사

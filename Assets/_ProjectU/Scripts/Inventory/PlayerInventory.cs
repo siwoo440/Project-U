@@ -6,6 +6,7 @@ public sealed class PlayerInventory : MonoBehaviour // 플레이어 인벤토리
 {
     [Header("Capacity")] // 용량 설정 묶음
     [SerializeField] private int slotCapacity = 32; // 전체 슬롯 개수
+    [SerializeField] private int equipmentBonusSlotCapacity; // 가방 추가 슬롯 개수
     [SerializeField] private int hotbarSlotCount = 8; // 핫바 슬롯 개수
 
     private int selectedHotbarIndex; // 현재 선택 핫바 번호
@@ -14,8 +15,9 @@ public sealed class PlayerInventory : MonoBehaviour // 플레이어 인벤토리
     private readonly List<InventorySlot> slots = new List<InventorySlot>(); // 고정 슬롯 목록
 
     public IReadOnlyList<InventorySlot> Slots => slots; // 읽기 전용 슬롯 목록
-    public int SlotCapacity => slotCapacity; // 전체 슬롯 개수
-    public int HotbarSlotCount => Mathf.Min(hotbarSlotCount, slotCapacity); // 실제 핫바 슬롯 개수
+    public int BaseSlotCapacity => slotCapacity; // 기본 슬롯 개수
+    public int SlotCapacity => slotCapacity + equipmentBonusSlotCapacity; // 가방 적용 전체 슬롯 개수
+    public int HotbarSlotCount => Mathf.Min(hotbarSlotCount, SlotCapacity); // 실제 핫바 슬롯 개수
     public int SelectedHotbarIndex => selectedHotbarIndex; // 선택 핫바 번호
     public int SelectedInventoryIndex => selectedInventoryIndex; // 클릭한 인벤토리 번호
     public InventorySlot SelectedHotbarSlot => GetSlot(selectedHotbarIndex); // 선택 핫바 슬롯 제공
@@ -25,6 +27,7 @@ public sealed class PlayerInventory : MonoBehaviour // 플레이어 인벤토리
     public event Action HotbarSelectionChanged; // 핫바 선택 변경 알림
     public event Action InventorySelectionChanged; // 인벤토리 선택 변경 알림
     public event Action InventoryChanged; // 인벤토리 변경 알림
+    public event Action CapacityChanged; // 인벤토리 용량 변경 알림
 
     public int UsedSlotCount // 사용 중인 슬롯 개수
     {
@@ -52,22 +55,60 @@ public sealed class PlayerInventory : MonoBehaviour // 플레이어 인벤토리
     private void OnValidate() // Inspector 값 검증
     {
         slotCapacity = Mathf.Max(8, slotCapacity); // 전체 슬롯 최소값 보정
+        equipmentBonusSlotCapacity = Mathf.Max(0, equipmentBonusSlotCapacity); // 추가 슬롯 음수 방지
         hotbarSlotCount = Mathf.Clamp(hotbarSlotCount, 1, slotCapacity); // 핫바 슬롯 범위 보정
         selectedHotbarIndex = Mathf.Clamp(selectedHotbarIndex, 0, hotbarSlotCount - 1); // 선택 번호 범위 보정
-        selectedInventoryIndex = Mathf.Clamp(selectedInventoryIndex, -1, slotCapacity - 1); // 인벤토리 선택 범위 보정
+        selectedInventoryIndex = Mathf.Clamp(selectedInventoryIndex, -1, SlotCapacity - 1); // 인벤토리 선택 범위 보정
     }
 
     private void EnsureSlotCapacity() // 고정 슬롯 개수 확보
     {
-        while (slots.Count < slotCapacity) // 부족한 슬롯 확인
+        while (slots.Count < SlotCapacity) // 부족한 슬롯 확인
         {
             slots.Add(null); // 빈 슬롯 추가
         }
 
-        while (slots.Count > slotCapacity) // 초과 슬롯 확인
+        while (slots.Count > SlotCapacity) // 초과 슬롯 확인
         {
             slots.RemoveAt(slots.Count - 1); // 마지막 초과 슬롯 제거
         }
+    }
+
+    public bool TrySetEquipmentBonusSlotCapacity(int newBonusSlotCapacity) // 가방 슬롯 증가량 변경
+    {
+        int safeBonusSlotCapacity = Mathf.Max(0, newBonusSlotCapacity); // 새로운 증가량 보정
+
+        if (safeBonusSlotCapacity == equipmentBonusSlotCapacity) // 동일 증가량 확인
+        {
+            return true; // 변경 없이 성공 반환
+        }
+
+        int newTotalCapacity = slotCapacity + safeBonusSlotCapacity; // 변경 후 전체 용량 계산
+
+        if (newTotalCapacity < slots.Count) // 용량 감소 확인
+        {
+            for (int index = newTotalCapacity; index < slots.Count; index++) // 제거될 슬롯 순회
+            {
+                if (slots[index] != null) // 제거 대상 슬롯 아이템 확인
+                {
+                    return false; // 아이템 존재 시 용량 감소 차단
+                }
+            }
+        }
+
+        int previousSelectedInventoryIndex = selectedInventoryIndex; // 기존 선택 슬롯 저장
+        equipmentBonusSlotCapacity = safeBonusSlotCapacity; // 새로운 증가량 저장
+        EnsureSlotCapacity(); // 실제 슬롯 개수 갱신
+        selectedInventoryIndex = Mathf.Clamp(selectedInventoryIndex, -1, SlotCapacity - 1); // 선택 슬롯 범위 보정
+        CapacityChanged?.Invoke(); // 용량 변경 알림
+        InventoryChanged?.Invoke(); // 인벤토리 변경 알림
+
+        if (previousSelectedInventoryIndex != selectedInventoryIndex) // 선택 슬롯 보정 확인
+        {
+            InventorySelectionChanged?.Invoke(); // 선택 변경 알림
+        }
+
+        return true; // 용량 변경 성공
     }
 
     public InventorySlot GetSlot(int index) // 지정 슬롯 조회

@@ -20,6 +20,7 @@ public sealed class InventorySlotsUI : MonoBehaviour // 여러 인벤토리 슬�
     [SerializeField] private Color inventoryAreaColor = new Color(0.04f, 0.04f, 0.04f, 0.65f); // 일반 영역 배경색
 
     private readonly List<InventorySlotView> slotViews = new List<InventorySlotView>(); // 생성된 슬롯 목록
+    private readonly List<Transform> generatedSectionContainers = new List<Transform>(); // 생성된 분리 영역 목록
 
     private void Awake() // 슬롯 화면 생성
     {
@@ -31,7 +32,11 @@ public sealed class InventorySlotsUI : MonoBehaviour // 여러 인벤토리 슬�
         }
 
         slotTemplate.gameObject.SetActive(false); // 원본 슬롯 숨김
+        BuildSlotViews(); // 현재 용량 기준 슬롯 생성
+    }
 
+    private void BuildSlotViews() // 현재 용량 기준 슬롯 구성
+    {
         int safeStartIndex = Mathf.Clamp(startSlotIndex, 0, playerInventory.SlotCapacity); // 시작 슬롯 번호 보정
         int availableSlotCount = Mathf.Max(0, playerInventory.SlotCapacity - safeStartIndex); // 표시 가능한 슬롯 계산
         int targetSlotCount = visibleSlotCount <= 0 ? availableSlotCount : Mathf.Min(visibleSlotCount, availableSlotCount); // 실제 생성 개수 계산
@@ -57,6 +62,14 @@ public sealed class InventorySlotsUI : MonoBehaviour // 여러 인벤토리 슬�
         playerInventory.InventoryChanged += Refresh; // 아이템 변경 이벤트 구독
         playerInventory.HotbarSelectionChanged += Refresh; // 핫바 선택 이벤트 구독
         playerInventory.InventorySelectionChanged += Refresh; // 클릭 선택 이벤트 구독
+        playerInventory.CapacityChanged += RebuildSlotViews; // 용량 변경 이벤트 구독
+
+        if (slotViews.Count != GetTargetSlotCount()) // 비활성 중 용량 변경 확인
+        {
+            RebuildSlotViews(); // 현재 용량 기준 화면 재생성
+            return; // 중복 화면 갱신 생략
+        }
+
         Refresh(); // 현재 상태 즉시 표시
     }
 
@@ -70,6 +83,53 @@ public sealed class InventorySlotsUI : MonoBehaviour // 여러 인벤토리 슬�
         playerInventory.InventoryChanged -= Refresh; // 아이템 변경 이벤트 해제
         playerInventory.HotbarSelectionChanged -= Refresh; // 핫바 선택 이벤트 해제
         playerInventory.InventorySelectionChanged -= Refresh; // 클릭 선택 이벤트 해제
+        playerInventory.CapacityChanged -= RebuildSlotViews; // 용량 변경 이벤트 해제
+    }
+
+    private int GetTargetSlotCount() // 현재 표시 대상 슬롯 개수 계산
+    {
+        int safeStartIndex = Mathf.Clamp(startSlotIndex, 0, playerInventory.SlotCapacity); // 시작 슬롯 번호 보정
+        int availableSlotCount = Mathf.Max(0, playerInventory.SlotCapacity - safeStartIndex); // 표시 가능한 슬롯 계산
+        return visibleSlotCount <= 0 ? availableSlotCount : Mathf.Min(visibleSlotCount, availableSlotCount); // 실제 슬롯 개수 반환
+    }
+
+    private void RebuildSlotViews() // 인벤토리 용량 화면 재생성
+    {
+        for (int index = 0; index < slotViews.Count; index++) // 기존 슬롯 화면 순회
+        {
+            if (slotViews[index] == null) // 슬롯 화면 존재 확인
+            {
+                continue; // 제거 대상 제외
+            }
+
+            slotViews[index].gameObject.SetActive(false); // 기존 슬롯 즉시 숨김
+            Destroy(slotViews[index].gameObject); // 기존 슬롯 제거
+        }
+
+        slotViews.Clear(); // 슬롯 화면 목록 초기화
+
+        for (int index = 0; index < generatedSectionContainers.Count; index++) // 분리 영역 순회
+        {
+            if (generatedSectionContainers[index] == null) // 분리 영역 존재 확인
+            {
+                continue; // 제거 대상 제외
+            }
+
+            generatedSectionContainers[index].gameObject.SetActive(false); // 분리 영역 즉시 숨김
+            Destroy(generatedSectionContainers[index].gameObject); // 분리 영역 제거
+        }
+
+        generatedSectionContainers.Clear(); // 분리 영역 목록 초기화
+
+        GridLayoutGroup rootGrid = slotContainer.GetComponent<GridLayoutGroup>(); // 기본 격자 가져오기
+
+        if (rootGrid != null) // 기본 격자 존재 확인
+        {
+            rootGrid.enabled = true; // 기본 격자 다시 활성화
+        }
+
+        BuildSlotViews(); // 현재 용량 기준 슬롯 다시 생성
+        Refresh(); // 인벤토리 화면 갱신
     }
 
     private void Refresh() // 전체 슬롯 화면 갱신
@@ -112,6 +172,8 @@ public sealed class InventorySlotsUI : MonoBehaviour // 여러 인벤토리 슬�
 
         Transform hotbarContainer = CreateSectionContainer("InventoryHotbarArea", rootRect, sourceGrid, sectionWidth, hotbarHeight, totalHeight, true); // 핫바 영역 생성
         Transform inventoryContainer = CreateSectionContainer("InventoryStorageArea", rootRect, sourceGrid, sectionWidth, inventoryHeight, totalHeight, false); // 일반 영역 생성
+        generatedSectionContainers.Add(hotbarContainer); // 핫바 영역 목록 등록
+        generatedSectionContainers.Add(inventoryContainer); // 일반 영역 목록 등록
 
         CreateSlotViews(hotbarContainer, 0, hotbarViewCount); // 핫바 슬롯 생성
         CreateSlotViews(inventoryContainer, hotbarViewCount, inventoryViewCount); // 일반 슬롯 생성

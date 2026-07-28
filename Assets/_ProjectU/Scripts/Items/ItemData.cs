@@ -19,6 +19,14 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
     [Header("Equipment")] // 장비 설정 묶음
     [SerializeField] private EquipmentSlotType equipmentSlotType = EquipmentSlotType.None; // 장착 슬롯 종류
 
+    [Header("Equipment Stats")] // 장비 능력치 묶음
+    [SerializeField, Range(0f, 80f)] private float defensePercent; // 피해 감소 비율
+    [SerializeField] private float maximumHealthBonus; // 최대 체력 증가량
+    [SerializeField] private float movementSpeedBonusPercent; // 이동 속도 증가 비율
+    [SerializeField, Range(0f, 80f)] private float hungerDepletionReductionPercent; // 허기 감소 방지 비율
+    [SerializeField, Range(0f, 80f)] private float thirstDepletionReductionPercent; // 갈증 감소 방지 비율
+    [SerializeField] private int inventorySlotBonus; // 인벤토리 추가 슬롯
+
     [Header("Food")] // 음식 효과 묶음
     [SerializeField] private float hungerRestoreAmount = 0f; // 허기 회복량
 
@@ -39,6 +47,12 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
     public ItemCategory ItemCategory => itemCategory; // 아이템 분류 제공
     public ToolType ToolType => toolType; // 도구 종류 제공
     public EquipmentSlotType EquipmentSlotType => IsEquipment ? equipmentSlotType : EquipmentSlotType.None; // 장비 슬롯 종류 제공
+    public float DefensePercent => IsEquipment ? Mathf.Clamp(defensePercent, 0f, 80f) : 0f; // 방어력 제공
+    public float MaximumHealthBonus => IsEquipment ? Mathf.Max(0f, maximumHealthBonus) : 0f; // 최대 체력 증가량 제공
+    public float MovementSpeedBonusPercent => IsEquipment ? Mathf.Max(0f, movementSpeedBonusPercent) : 0f; // 이동 속도 증가량 제공
+    public float HungerDepletionReductionPercent => IsEquipment ? Mathf.Clamp(hungerDepletionReductionPercent, 0f, 80f) : 0f; // 허기 감소 방지량 제공
+    public float ThirstDepletionReductionPercent => IsEquipment ? Mathf.Clamp(thirstDepletionReductionPercent, 0f, 80f) : 0f; // 갈증 감소 방지량 제공
+    public int InventorySlotBonus => IsEquipment && equipmentSlotType == EquipmentSlotType.Backpack ? Mathf.Max(0, inventorySlotBonus) : 0; // 가방 슬롯 증가량 제공
     public float HungerRestoreAmount => IsFood ? Mathf.Max(0f, hungerRestoreAmount) : 0f; // 음식 허기 회복량 제공
     public float ThirstRestoreAmount => IsDrink ? Mathf.Max(0f, thirstRestoreAmount) : 0f; // 음료 갈증 회복량 제공
     public float HealthRestoreAmount => IsMedicine ? Mathf.Max(0f, healthRestoreAmount) : 0f; // 의약품 체력 회복량 제공
@@ -72,6 +86,29 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
         if (itemCategory != ItemCategory.Equipment) // 장비가 아닌 분류 확인
         {
             equipmentSlotType = EquipmentSlotType.None; // 장비 슬롯 종류 제거
+            defensePercent = 0f; // 방어력 제거
+            maximumHealthBonus = 0f; // 최대 체력 증가량 제거
+            movementSpeedBonusPercent = 0f; // 이동 속도 증가량 제거
+            hungerDepletionReductionPercent = 0f; // 허기 감소 방지량 제거
+            thirstDepletionReductionPercent = 0f; // 갈증 감소 방지량 제거
+            inventorySlotBonus = 0; // 인벤토리 증가량 제거
+        }
+        else // 장비 분류 확인
+        {
+            defensePercent = Mathf.Clamp(defensePercent, 0f, 80f); // 방어력 범위 제한
+            maximumHealthBonus = Mathf.Max(0f, maximumHealthBonus); // 체력 증가량 음수 방지
+            movementSpeedBonusPercent = Mathf.Max(0f, movementSpeedBonusPercent); // 이동 속도 증가량 음수 방지
+            hungerDepletionReductionPercent = Mathf.Clamp(hungerDepletionReductionPercent, 0f, 80f); // 허기 감소 방지 범위 제한
+            thirstDepletionReductionPercent = Mathf.Clamp(thirstDepletionReductionPercent, 0f, 80f); // 갈증 감소 방지 범위 제한
+
+            if (equipmentSlotType != EquipmentSlotType.Backpack) // 가방 외 장비 확인
+            {
+                inventorySlotBonus = 0; // 인벤토리 증가 제거
+            }
+            else // 가방 장비 확인
+            {
+                inventorySlotBonus = Mathf.Max(0, inventorySlotBonus); // 인벤토리 증가량 음수 방지
+            }
         }
 
         if (itemCategory != ItemCategory.Food) // 음식이 아닌 분류 확인
