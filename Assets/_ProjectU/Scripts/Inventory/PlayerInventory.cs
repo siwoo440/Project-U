@@ -351,6 +351,50 @@ public sealed class PlayerInventory : MonoBehaviour // 플레이어 인벤토리
 
         return removedQuantity; // 실제 제거 수량 반환
     }
+    public void ClearItemsForLoad() // 불러오기 전 전체 인벤토리 초기화
+    {
+        EnsureSlotCapacity(); // 현재 인벤토리 슬롯 구조 확인
+
+        for (int index = 0; index < slots.Count; index++) // 전체 슬롯 순회
+        {
+            slots[index] = null; // 현재 슬롯 아이템 제거
+        }
+
+        selectedHotbarIndex = 0; // 핫바 선택 번호 초기화
+        selectedInventoryIndex = -1; // 인벤토리 클릭 선택 초기화
+        InventoryChanged?.Invoke(); // 인벤토리 변경 알림
+        HotbarSelectionChanged?.Invoke(); // 핫바 선택 변경 알림
+        InventorySelectionChanged?.Invoke(); // 인벤토리 선택 변경 알림
+    }
+
+    public bool TrySetSlotForLoad(int index, ItemData itemData, int quantity) // 저장된 단일 슬롯 복원
+    {
+        EnsureSlotCapacity(); // 현재 인벤토리 슬롯 구조 확인
+
+        if (index < 0 || index >= slots.Count) // 슬롯 번호 범위 확인
+        {
+            return false; // 슬롯 복원 실패
+        }
+
+        if (itemData == null) // 아이템 데이터 존재 확인
+        {
+            return false; // 슬롯 복원 실패
+        }
+
+        if (quantity <= 0 || quantity > itemData.MaximumStack) // 저장 수량 범위 확인
+        {
+            return false; // 슬롯 복원 실패
+        }
+
+        if (slots[index] != null) // 기존 슬롯 사용 여부 확인
+        {
+            return false; // 중복 슬롯 복원 차단
+        }
+
+        slots[index] = new InventorySlot(itemData, quantity); // 지정 위치에 저장 아이템 배치
+        InventoryChanged?.Invoke(); // 인벤토리 변경 알림
+        return true; // 슬롯 복원 성공
+    }
 
     public int AddItem(ItemData itemData, int amount) // 아이템 추가
     {

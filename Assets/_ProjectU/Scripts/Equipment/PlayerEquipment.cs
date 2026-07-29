@@ -193,7 +193,61 @@ public sealed class PlayerEquipment : MonoBehaviour // 플레이어 장비 관�
         EquipmentChanged?.Invoke(); // 장비 변경 알림
         return true; // 해제 성공 반환
     }
+    public bool ClearEquipmentForLoad() // 불러오기 전 전체 장비 초기화
+    {
+        EnsureSlotCapacity(); // 장비 배열 크기 확인
 
+        if (!playerInventory.TrySetEquipmentBonusSlotCapacity(0)) // 가방 추가 용량 초기화
+        {
+            return false; // 장비 초기화 실패
+        }
+
+        for (int index = 0; index < equippedItems.Length; index++) // 전체 장비 슬롯 순회
+        {
+            equippedItems[index] = null; // 현재 장비 제거
+        }
+
+        RefreshTotalStats(); // 장비 능력치 초기화
+        EquipmentChanged?.Invoke(); // 장비 변경 알림
+        return true; // 장비 초기화 성공
+    }
+
+    public bool TrySetEquippedItemForLoad(ItemData itemData) // 저장된 장비 직접 복원
+    {
+        if (itemData == null || !itemData.IsEquipment) // 장비 데이터 여부 확인
+        {
+            return false; // 장비 복원 실패
+        }
+
+        EquipmentSlotType slotType = itemData.EquipmentSlotType; // 아이템 장비 슬롯 조회
+
+        if (!IsValidSlotType(slotType)) // 장비 슬롯 유효성 확인
+        {
+            return false; // 장비 복원 실패
+        }
+
+        int slotIndex = (int)slotType; // 장비 배열 번호 계산
+
+        if (equippedItems[slotIndex] != null) // 기존 장비 존재 확인
+        {
+            return false; // 동일 슬롯 중복 복원 차단
+        }
+
+        if (slotType == EquipmentSlotType.Backpack) // 가방 장비 여부 확인
+        {
+            bool capacityChanged = playerInventory.TrySetEquipmentBonusSlotCapacity(itemData.InventorySlotBonus); // 가방 추가 슬롯 적용
+
+            if (!capacityChanged) // 가방 용량 적용 결과 확인
+            {
+                return false; // 가방 복원 실패
+            }
+        }
+
+        equippedItems[slotIndex] = itemData; // 장비 슬롯에 아이템 적용
+        RefreshTotalStats(); // 전체 장비 능력치 재계산
+        EquipmentChanged?.Invoke(); // 장비 변경 알림
+        return true; // 장비 복원 성공
+    }
     private void RefreshTotalStats() // 장착 장비 능력치 합산
     {
         totalDefensePercent = 0f; // 방어력 초기화

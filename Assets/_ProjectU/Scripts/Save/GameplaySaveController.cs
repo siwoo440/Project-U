@@ -12,6 +12,7 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
     [SerializeField] private Transform playerTransform; // 플레이어 위치와 회전 대상
     [SerializeField] private ThirdPersonCameraFollow thirdPersonCameraFollow; // 플레이어 추적 카메라
     [SerializeField] private DayNightCycle dayNightCycle; // 날짜와 시간 시스템
+    [SerializeField] private InventorySaveBridge inventorySaveBridge; // 인벤토리와 장비 저장 연결
 
     private CharacterController characterController; // 플레이어 충돌 이동기
     private PlayerMovement playerMovement; // 플레이어 이동 관리기
@@ -26,8 +27,10 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
         bool hasPlayerReference = playerTransform != null; // 플레이어 참조 확인
         bool hasCameraReference = thirdPersonCameraFollow != null; // 카메라 참조 확인
         bool hasTimeReference = dayNightCycle != null; // 시간 시스템 참조 확인
+        bool hasInventorySaveBridge = inventorySaveBridge != null; // 인벤토리 저장 연결 확인
 
-        if (!hasPlayerReference || !hasCameraReference || !hasTimeReference) // 필수 Inspector 참조 확인
+        if (!hasPlayerReference || !hasCameraReference || !hasTimeReference || !hasInventorySaveBridge) 
+            // 필수 Inspector 참조 확인
         {
             Debug.LogError($"{gameObject.name}의 저장 시스템 참조가 누락되었습니다.", this); // 참조 누락 오류 출력
             enabled = false; // 저장 기능 비활성화
@@ -51,6 +54,13 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
         if (!hasCharacterController || !hasPlayerMovement || !hasPlayerHealth || !hasPlayerHunger || !hasPlayerThirst || !hasPlayerStamina) // 플레이어 필수 컴포넌트 확인
         {
             Debug.LogError("플레이어의 저장 대상 컴포넌트가 누락되었습니다.", playerTransform); // 플레이어 구성 오류 출력
+            enabled = false; // 저장 기능 비활성화
+            return; // 초기화 중단
+        }
+
+        if (!inventorySaveBridge.TryValidateSetup(out string inventorySetupError)) // 인벤토리 저장 연결 검사
+        {
+            Debug.LogError($"인벤토리 저장 시스템 초기화 실패\n{inventorySetupError}", this); // 연결 검사 오류 출력
             enabled = false; // 저장 기능 비활성화
             return; // 초기화 중단
         }
@@ -109,6 +119,12 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
             return; // 상태 적용 중단
         }
 
+        if (!inventorySaveBridge.TryRestore(saveData, out string inventoryRestoreError)) // 인벤토리와 장비 상태 복원
+        {
+            Debug.LogError($"인벤토리와 장비 불러오기 실패\n{inventoryRestoreError}", this); // 아이템 복원 오류 출력
+            return; // 전체 불러오기 중단
+        }
+
         ApplyLoadedState(saveData); // 불러온 게임 상태 적용
 
         string fileSource = loadedFromBackup ? "백업 파일" : "기본 파일"; // 불러온 파일 종류 결정
@@ -128,6 +144,7 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
         saveData.player.stamina = playerStamina.CurrentStamina; // 현재 스태미나 저장
         saveData.time.currentDay = dayNightCycle.CurrentDay; // 현재 날짜 저장
         saveData.time.currentHour = dayNightCycle.CurrentHour; // 현재 시간 저장
+        inventorySaveBridge.Capture(saveData); // 인벤토리와 장비 상태 저장
 
         return saveData; // 수집된 저장 데이터 반환
     }
