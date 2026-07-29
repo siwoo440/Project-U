@@ -68,6 +68,11 @@ public sealed class PlayerThirst : MonoBehaviour // 플레이어 갈증 관리
         currentThirst -= consumeAmount; // 갈증 수치 감소
         return true; // 갈증 소비 성공
     }
+    public void SetCurrentThirst(float thirstAmount) // 현재 갈증 직접 설정
+    {
+        currentThirst = Mathf.Clamp(thirstAmount, 0f, maxThirst); // 갈증 범위 적용
+    }
+
     private void ClampSettings() // 설정값 보정
     {
         maxThirst = Mathf.Max(1f, maxThirst); // 최대 갈증 최소값 적용

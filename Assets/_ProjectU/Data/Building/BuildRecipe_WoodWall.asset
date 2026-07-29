@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0b0e46b0956bcf479f2754564f5cfa9, type: 3}
   m_Name: BuildRecipe_WoodWall
   m_EditorClassIdentifier: Assembly-CSharp::BuildRecipeData
-  recipeId: structure_sleeping_bag
+  recipeId: structure_wood_wall
   displayName: WOOD WALL
   placementType: 1
   rotationStep: 45

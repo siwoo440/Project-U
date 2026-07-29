@@ -685,7 +685,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2054709328}
         m_TargetAssemblyTypeName: PlayerDeathUI, Assembly-CSharp
-        m_MethodName: RetryCurrentScene
+        m_MethodName: RespawnPlayer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2269,7 +2269,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &252674390
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5591,7 +5591,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Retry
+  m_text: RESPAWN
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -9463,7 +9463,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1381242280
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10761,6 +10761,7 @@ GameObject:
   - component: {fileID: 1491592335}
   - component: {fileID: 1491592336}
   - component: {fileID: 1491592337}
+  - component: {fileID: 1491592338}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -11121,6 +11122,25 @@ MonoBehaviour:
   collisionPadding: 0.02
   buildHudRoot: {fileID: 276407461}
   buildStatusText: {fileID: 160400866}
+--- !u!114 &1491592338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491592320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 441682aaec8fb2944ae72fbf7137d219, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerRespawnSystem
+  dayNightCycle: {fileID: 1122745316}
+  defaultRespawnPoint: {fileID: 1668650795}
+  respawnHealth: 50
+  respawnHunger: 50
+  respawnThirst: 50
+  respawnHour: 8
+  registeredRespawnPoint: {fileID: 0}
 --- !u!1 &1521979942
 GameObject:
   m_ObjectHideFlags: 0
@@ -12611,6 +12631,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1657404506}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1668650794
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1668650795}
+  m_Layer: 0
+  m_Name: DefaultRespawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1668650795
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1668650794}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.84886, y: -0.00001, z: 1.42845}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1697422278
 GameObject:
   m_ObjectHideFlags: 0
@@ -15385,7 +15436,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2054709327
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15419,6 +15470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDeathUI
   playerHealth: {fileID: 1491592331}
+  playerRespawnSystem: {fileID: 1491592338}
   inventoryPopupController: {fileID: 860548802}
   deathPanel: {fileID: 1181992199}
   blockedBehaviours:
@@ -16089,3 +16141,4 @@ SceneRoots:
   - {fileID: 1914875767}
   - {fileID: 1134701208}
   - {fileID: 1122745317}
+  - {fileID: 1668650795}

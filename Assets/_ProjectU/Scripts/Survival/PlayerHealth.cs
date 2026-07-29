@@ -123,7 +123,25 @@ public sealed class PlayerHealth : MonoBehaviour // 플레이어 체력 관리
         Healed?.Invoke(appliedHealing); // 실제 회복량 전달
         return true; // 회복 처리 성공
     }
+    public bool Revive(float reviveHealth) // 사망 상태 부활 처리
+    {
+        if (!isDead) // 현재 사망 여부 확인
+        {
+            return false; // 생존 상태 부활 차단
+        }
 
+        if (reviveHealth <= 0f) // 부활 체력 유효성 확인
+        {
+            return false; // 잘못된 부활 체력 차단
+        }
+
+        float previousHealth = currentHealth; // 부활 전 체력 저장
+        currentHealth = Mathf.Clamp(reviveHealth, 1f, currentMaximumHealth); // 부활 체력 적용
+        isDead = false; // 사망 상태 해제
+        float appliedHealing = currentHealth - previousHealth; // 실제 회복량 계산
+        Healed?.Invoke(appliedHealing); // 체력 회복 이벤트 전달
+        return true; // 부활 성공
+    }
     private void RefreshEquipmentStats() // 장비 최대 체력 적용
     {
         if (playerEquipment == null) // 장비 관리자 확인

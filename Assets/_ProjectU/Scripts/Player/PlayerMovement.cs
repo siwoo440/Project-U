@@ -258,7 +258,17 @@ public sealed class PlayerMovement : MonoBehaviour // 플레이어 이동 처리
         Landed?.Invoke(lastFallDistance); // 착지 거리 전달
     }
 
-
+    public void ResetMotionState() // 부활 후 이동 상태 초기화
+    {
+        verticalVelocity = groundedVerticalVelocity; // 수직 속도 초기화
+        isGrounded = false; // 접지 상태 재검사 준비
+        isFalling = false; // 낙하 상태 해제
+        lastFallDistance = 0f; // 이전 낙하 거리 제거
+        wasSignificantFall = false; // 유효 낙하 결과 제거
+        groundNormal = Vector3.up; // 지면 방향 초기화
+        currentSlopeAngle = 0f; // 경사 각도 초기화
+        fallStartHeight = transform.position.y; // 새로운 낙하 기준점 적용
+    }
     private void FaceCameraDirection(Vector3 cameraForward) // 카메라 방향으로 플레이어 회전
     {
         if (cameraForward.sqrMagnitude < 0.001f) // 유효한 방향 확인
