@@ -8,7 +8,7 @@ public sealed class SeasonCycle : MonoBehaviour // 계절 순환 관리
     [SerializeField] private TMP_Text seasonText; // 계절 표시 텍스트
 
     [Header("Season Length")] // 계절 길이 설정 묶음
-    [SerializeField][Min(1)] private int daysPerSeason = 7; // 계절당 날짜 수
+    [SerializeField][Min(1)] private int daysPerSeason = 28; // 계절당 날짜 수
 
     [Header("Spring")] // 봄 색상 설정 묶음
     [SerializeField] private Color springSunTint = new Color(1f, 0.97f, 0.92f); // 봄 태양광 색상
