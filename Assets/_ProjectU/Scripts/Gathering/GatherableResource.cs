@@ -1,6 +1,7 @@
 using System.Collections; // 코루틴 기능
 using UnityEngine; // Unity 기본 기능
 
+[RequireComponent(typeof(WorldObjectIdentity))] // 월드 고유 ID 컴포넌트 요구
 public sealed class GatherableResource : InteractableBase // 반복 채집 자원 관리
 {
     [Header("Resource")] // 자원 설정 묶음
@@ -23,8 +24,39 @@ public sealed class GatherableResource : InteractableBase // 반복 채집 자�
     private bool isDepleted; // 자원 소진 상태
     private float nextGatherAllowedTime; // 다음 채집 허용 시간
 
+    private WorldObjectIdentity worldObjectIdentity; // 월드 고유 ID 컴포넌트
+    private float respawnReadyTime; // 재생성 완료 예정 시각
+
+    public int TotalQuantity => Mathf.Max(1, totalQuantity); // 전체 자원 수량 제공
+    public int RemainingQuantity => remainingQuantity; // 현재 남은 수량 제공
+    public bool IsDepleted => isDepleted; // 현재 소진 상태 제공
+
+    public float RespawnRemainingSeconds // 재생성 남은 시간 제공
+    {
+        get
+        {
+            if (!isDepleted || !respawnEnabled) // 재생성 대기 상태 확인
+            {
+                return 0f; // 대기 시간 없음 반환
+            }
+
+            return Mathf.Max(0f, respawnReadyTime - Time.time); // 현재 기준 남은 시간 계산
+        }
+    }
+
+    public string WorldObjectId // 현재 월드 오브젝트 ID 제공
+    {
+        get
+        {
+            WorldObjectIdentity identity = ResolveWorldObjectIdentity(); // ID 컴포넌트 검색
+            return identity == null ? string.Empty : identity.WorldObjectId; // ID 또는 빈 값 반환
+        }
+    }
+
+
     private void Awake() // 자원 초기화
     {
+        worldObjectIdentity = GetComponent<WorldObjectIdentity>(); // 월드 고유 ID 컴포넌트 검색
         resourceRenderers = GetComponentsInChildren<Renderer>(true); // 하위 외형 검색
         resourceColliders = GetComponentsInChildren<Collider>(true); // 하위 충돌체 검색
         if (hitFeedback == null) // 타격 반응 연결 확인
@@ -145,29 +177,90 @@ public sealed class GatherableResource : InteractableBase // 반복 채집 자�
 
     private void HandleDepleted() // 자원 소진 상태 처리
     {
+        remainingQuantity = 0; // 남은 자원 수량 초기화
         isDepleted = true; // 소진 상태 활성화
         SetResourceComponentsEnabled(false); // 외형과 충돌체 숨김
 
         if (!respawnEnabled) // 재생성 사용 여부 확인
         {
-            Destroy(gameObject); // 자원 오브젝트 제거
-            return; // 소진 처리 종료
+            respawnReadyTime = 0f; // 재생성 시각 초기화
+            return; // 소진 상태 유지
         }
 
-        StartCoroutine(RespawnRoutine()); // 재생성 대기 시작
+        respawnReadyTime = Time.time + respawnDelay; // 재생성 완료 예정 시각 계산
+        StartCoroutine(RespawnRoutine(respawnDelay)); // 재생성 대기 시작
     }
 
-    private IEnumerator RespawnRoutine() // 자원 재생성 처리
+    private IEnumerator RespawnRoutine(float delaySeconds) // 지정 시간 후 자원 재생성
     {
-        yield return new WaitForSeconds(respawnDelay); // 재생성 시간 대기
+        yield return new WaitForSeconds(Mathf.Max(0f, delaySeconds)); // 저장된 재생성 시간 대기
+        RespawnNow(); // 자원 상태 즉시 복구
+    }
 
-        remainingQuantity = Mathf.Max(1, totalQuantity); // 자원 수량 복구
-        nextGatherAllowedTime = 0f; // 채집 대기 시간 초기화
-        SetResourceComponentsEnabled(true); // 외형과 충돌체 복구
+    public void ResetForLoad() // 저장 항목이 없는 자원 기본 상태 복구
+    {
+        StopAllCoroutines(); // 기존 재생성 대기 중단
+        remainingQuantity = Mathf.Max(1, totalQuantity); // 전체 자원 수량 복구
         isDepleted = false; // 소진 상태 해제
+        nextGatherAllowedTime = 0f; // 채집 대기 시간 초기화
+        respawnReadyTime = 0f; // 재생성 예정 시각 초기화
+        SetResourceComponentsEnabled(true); // 외형과 충돌체 활성화
+    }
 
+    public void RestoreFromSave(int savedRemainingQuantity, bool savedIsDepleted, float savedRespawnRemainingSeconds) // 저장 자원 상태 복원
+    {
+        StopAllCoroutines(); // 기존 재생성 대기 중단
+        remainingQuantity = Mathf.Clamp(savedRemainingQuantity, 0, TotalQuantity); // 저장 수량 범위 적용
+        isDepleted = savedIsDepleted || remainingQuantity <= 0; // 저장 소진 상태 적용
+        nextGatherAllowedTime = 0f; // 채집 대기 시간 초기화
+        respawnReadyTime = 0f; // 재생성 예정 시각 초기화
+
+        if (!isDepleted) // 채집 가능한 상태 확인
+        {
+            SetResourceComponentsEnabled(true); // 외형과 충돌체 활성화
+            return; // 복원 완료
+        }
+
+        remainingQuantity = 0; // 소진 수량 통일
+        SetResourceComponentsEnabled(false); // 외형과 충돌체 비활성화
+
+        if (!respawnEnabled) // 재생성 미사용 자원 확인
+        {
+            return; // 소진 상태 유지
+        }
+
+        float remainingSeconds = Mathf.Max(0f, savedRespawnRemainingSeconds); // 저장 대기 시간 보정
+
+        if (remainingSeconds <= 0f) // 재생성 시간이 지난 상태 확인
+        {
+            RespawnNow(); // 자원 즉시 복구
+            return; // 복원 완료
+        }
+
+        respawnReadyTime = Time.time + remainingSeconds; // 새로운 완료 예정 시각 계산
+        StartCoroutine(RespawnRoutine(remainingSeconds)); // 남은 시간만큼 재생성 대기
+    }
+
+    private void RespawnNow() // 자원 즉시 재생성
+    {
+        remainingQuantity = Mathf.Max(1, totalQuantity); // 전체 자원 수량 복구
+        nextGatherAllowedTime = 0f; // 채집 대기 시간 초기화
+        respawnReadyTime = 0f; // 재생성 예정 시각 초기화
+        isDepleted = false; // 소진 상태 해제
+        SetResourceComponentsEnabled(true); // 외형과 충돌체 복구
         Debug.Log($"{gameObject.name} 자원이 다시 생성되었습니다.", this); // 재생성 결과 출력
     }
+
+    private WorldObjectIdentity ResolveWorldObjectIdentity() // ID 컴포넌트 검색
+    {
+        if (worldObjectIdentity == null) // 캐시된 컴포넌트 확인
+        {
+            worldObjectIdentity = GetComponent<WorldObjectIdentity>(); // 같은 오브젝트에서 재검색
+        }
+
+        return worldObjectIdentity; // 검색 결과 반환
+    }
+
 
     private void SetResourceComponentsEnabled(bool shouldEnable) // 자원 표시 상태 변경
     {

@@ -745,6 +745,7 @@ GameObject:
   - component: {fileID: 85169109}
   - component: {fileID: 85169108}
   - component: {fileID: 85169107}
+  - component: {fileID: 85169110}
   m_Layer: 3
   m_Name: PickaxePickup
   m_TagString: Untagged
@@ -831,6 +832,19 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &85169110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85169105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16cea7f4306137b45a357b5b872ed657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
+  worldObjectId: 1cc8ca95f1dc474e8d4363651644f1cd
 --- !u!1 &96502017
 GameObject:
   m_ObjectHideFlags: 0
@@ -995,6 +1009,10 @@ PrefabInstance:
     - target: {fileID: 3763126060047310522, guid: 56d5b5a1dc5b2954fb0512dd2d3c83b4, type: 3}
       propertyPath: m_Name
       value: ClothShirtPickup
+      objectReference: {fileID: 0}
+    - target: {fileID: 7555745212318610381, guid: 56d5b5a1dc5b2954fb0512dd2d3c83b4, type: 3}
+      propertyPath: worldObjectId
+      value: feafbe805e0e4fbeaeccb00cb188cacf
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2165,6 +2183,7 @@ GameObject:
   - component: {fileID: 250881926}
   - component: {fileID: 250881925}
   - component: {fileID: 250881924}
+  - component: {fileID: 250881927}
   m_Layer: 3
   m_Name: AxePickup
   m_TagString: Untagged
@@ -2251,6 +2270,19 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &250881927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250881922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16cea7f4306137b45a357b5b872ed657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
+  worldObjectId: 68f7dfd733ab4b03b892d8a7bf97836d
 --- !u!1 &252674389
 GameObject:
   m_ObjectHideFlags: 0
@@ -2473,6 +2505,7 @@ GameObject:
   - component: {fileID: 297991406}
   - component: {fileID: 297991405}
   - component: {fileID: 297991404}
+  - component: {fileID: 297991409}
   m_Layer: 3
   m_Name: Cloth
   m_TagString: Untagged
@@ -2615,6 +2648,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 297991402}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &297991409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 297991402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16cea7f4306137b45a357b5b872ed657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
+  worldObjectId: c9f387f016624dd384ef86ff0ab9e334
 --- !u!1 &310027312
 GameObject:
   m_ObjectHideFlags: 0
@@ -3586,6 +3632,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ClothCapPickup
       objectReference: {fileID: 0}
+    - target: {fileID: 7555745212318610381, guid: d44714f24d281d746aaa182ff7dd83ce, type: 3}
+      propertyPath: worldObjectId
+      value: d20e4cb6b4994c869b9ff33dcd6f72d9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3894,6 +3944,7 @@ GameObject:
   - component: {fileID: 467601198}
   - component: {fileID: 467601197}
   - component: {fileID: 467601201}
+  - component: {fileID: 467601202}
   m_Layer: 3
   m_Name: WoodPickup (1)
   m_TagString: Untagged
@@ -4036,6 +4087,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &467601202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467601195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16cea7f4306137b45a357b5b872ed657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
+  worldObjectId: 7ee5674eab2640b0b4a3fd5cd341f722
 --- !u!1 &468600562
 GameObject:
   m_ObjectHideFlags: 0
@@ -8803,6 +8867,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BandagePickup
       objectReference: {fileID: 0}
+    - target: {fileID: 7555745212318610381, guid: 2a9797d2dca4a3b46956f9f43a8f5ebd, type: 3}
+      propertyPath: worldObjectId
+      value: 44a21c7b75b5482f84f0151b7fe60c61
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10205,6 +10273,7 @@ GameObject:
   - component: {fileID: 1434626767}
   - component: {fileID: 1434626766}
   - component: {fileID: 1434626770}
+  - component: {fileID: 1434626771}
   m_Layer: 3
   m_Name: WoodPickup (2)
   m_TagString: Untagged
@@ -10347,6 +10416,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1434626771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1434626764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16cea7f4306137b45a357b5b872ed657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
+  worldObjectId: 2e82abaf9ad146129b67a7a17467d08f
 --- !u!1 &1455697536
 GameObject:
   m_ObjectHideFlags: 0
@@ -12121,6 +12203,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WorkHatPickup
       objectReference: {fileID: 0}
+    - target: {fileID: 7555745212318610381, guid: cd573440740c3874aa419aba6ab7dfe1, type: 3}
+      propertyPath: worldObjectId
+      value: bdce65784c144491beea922243b76e40
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13162,6 +13248,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SmallBackpackPickup
       objectReference: {fileID: 0}
+    - target: {fileID: 7555745212318610381, guid: fa4ec994d520d5b4d9f12e0505123d2f, type: 3}
+      propertyPath: worldObjectId
+      value: 53d9457d88bc4e0ba6feecd868eb67a6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14196,6 +14286,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1951417610}
   - component: {fileID: 1951417609}
+  - component: {fileID: 1951417611}
+  - component: {fileID: 1951417612}
   m_Layer: 0
   m_Name: === SaveSystem ===
   m_TagString: Untagged
@@ -14219,6 +14311,8 @@ MonoBehaviour:
   playerTransform: {fileID: 1491592321}
   thirdPersonCameraFollow: {fileID: 454530119}
   dayNightCycle: {fileID: 1122745316}
+  inventorySaveBridge: {fileID: 1951417611}
+  worldSaveBridge: {fileID: 1951417612}
 --- !u!4 &1951417610
 Transform:
   m_ObjectHideFlags: 0
@@ -14234,6 +14328,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1951417611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951417608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3194dc9e924e04644ad4c6eeee6450b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventorySaveBridge
+  playerInventory: {fileID: 1491592325}
+  playerEquipment: {fileID: 1491592335}
+  itemDatabase: {fileID: 11400000, guid: cf3f70048e5538643a991804c404ab00, type: 2}
+--- !u!114 &1951417612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951417608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b872cd9f40fac949beb08a69066830f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldSaveBridge
+  itemDatabase: {fileID: 11400000, guid: cf3f70048e5538643a991804c404ab00, type: 2}
+  worldItemPrefab: {fileID: 3181927310554862687, guid: 412cfa676e9d187459d88d446f0cb9e1, type: 3}
+  worldItemParent: {fileID: 963744050}
 --- !u!1 &1953961344
 GameObject:
   m_ObjectHideFlags: 0
@@ -15827,6 +15951,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3427583946985288479, guid: 297ce24fcfb620841ba57df42990fa55, type: 3}
+      propertyPath: worldObjectId
+      value: 8b99d3708bc54795b29b4a30ddec4f90
+      objectReference: {fileID: 0}
     - target: {fileID: 4329052998640474941, guid: 297ce24fcfb620841ba57df42990fa55, type: 3}
       propertyPath: m_Name
       value: WoodPickup
@@ -15888,6 +16016,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ApplePickup
       objectReference: {fileID: 0}
+    - target: {fileID: 7555745212318610381, guid: 71484ee392b6ecf40bf5b7e877dded2e, type: 3}
+      propertyPath: worldObjectId
+      value: 00df8735ea7a4383809201c66506be38
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -15904,6 +16036,10 @@ PrefabInstance:
     - target: {fileID: 2861969144595680251, guid: b18ff2206dcf8d648895a0c8c7916f5a, type: 3}
       propertyPath: m_Name
       value: Berry
+      objectReference: {fileID: 0}
+    - target: {fileID: 4569334705584395592, guid: b18ff2206dcf8d648895a0c8c7916f5a, type: 3}
+      propertyPath: worldObjectId
+      value: f7f4f80842be482a9cff50e95ca6dcbf
       objectReference: {fileID: 0}
     - target: {fileID: 8491656780097183432, guid: b18ff2206dcf8d648895a0c8c7916f5a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16002,6 +16138,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8802025950628228665, guid: c6efe3c886911024e943838751b0f4bb, type: 3}
+      propertyPath: worldObjectId
+      value: a5e750886bd346e8baac5a6eaea7e2a8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16059,6 +16199,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WaterBottlePickup
       objectReference: {fileID: 0}
+    - target: {fileID: 7555745212318610381, guid: 3fcb02c11f8f3a3458930f79899b38e3, type: 3}
+      propertyPath: worldObjectId
+      value: c113e86aee4049eb9407ec50b253003c
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16075,6 +16219,10 @@ PrefabInstance:
     - target: {fileID: 1895633545792708911, guid: a072ccfe54d922c4cb7a4b0a01b8ccbf, type: 3}
       propertyPath: m_Name
       value: StonePickup
+      objectReference: {fileID: 0}
+    - target: {fileID: 7402557937816847414, guid: a072ccfe54d922c4cb7a4b0a01b8ccbf, type: 3}
+      propertyPath: worldObjectId
+      value: 38e12c498d4a4a2094155993d1d513c5
       objectReference: {fileID: 0}
     - target: {fileID: 8468700292403950899, guid: a072ccfe54d922c4cb7a4b0a01b8ccbf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16172,6 +16320,10 @@ PrefabInstance:
     - target: {fileID: 7155205762351727549, guid: d77b5c572e8eccf4792674b7485015cf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226708158024351563, guid: d77b5c572e8eccf4792674b7485015cf, type: 3}
+      propertyPath: worldObjectId
+      value: ba2ec641f84446caa9b494a3213b39c4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -77,6 +77,7 @@ public sealed class EquipmentSlotSaveData // 단일 장비 슬롯 데이터
 [Serializable] // JSON 직렬화 허용
 public sealed class WorldSaveData // 월드 진행 상태 저장 데이터
 {
+    public bool hasCapturedWorldState; // 월드 상태 저장 완료 여부
     public List<WorldItemSaveData> worldItems = new List<WorldItemSaveData>(); // 월드 아이템 목록
     public List<GatherableResourceSaveData> gatherableResources = new List<GatherableResourceSaveData>(); // 채집 자원 목록
     public List<PlacedStructureSaveData> placedStructures = new List<PlacedStructureSaveData>(); // 설치 건축물 목록

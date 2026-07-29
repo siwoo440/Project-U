@@ -13,6 +13,7 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
     [SerializeField] private ThirdPersonCameraFollow thirdPersonCameraFollow; // 플레이어 추적 카메라
     [SerializeField] private DayNightCycle dayNightCycle; // 날짜와 시간 시스템
     [SerializeField] private InventorySaveBridge inventorySaveBridge; // 인벤토리와 장비 저장 연결
+    [SerializeField] private WorldSaveBridge worldSaveBridge; // 월드 상태 저장 연결
 
     private CharacterController characterController; // 플레이어 충돌 이동기
     private PlayerMovement playerMovement; // 플레이어 이동 관리기
@@ -28,9 +29,11 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
         bool hasCameraReference = thirdPersonCameraFollow != null; // 카메라 참조 확인
         bool hasTimeReference = dayNightCycle != null; // 시간 시스템 참조 확인
         bool hasInventorySaveBridge = inventorySaveBridge != null; // 인벤토리 저장 연결 확인
+        bool hasWorldSaveBridge = worldSaveBridge != null; // 월드 저장 연결 확인
 
-        if (!hasPlayerReference || !hasCameraReference || !hasTimeReference || !hasInventorySaveBridge) 
-            // 필수 Inspector 참조 확인
+        if (!hasPlayerReference || !hasCameraReference 
+            || !hasTimeReference || !hasInventorySaveBridge || !hasWorldSaveBridge) // 필수 Inspector 참조 확인
+                                                                                                                              
         {
             Debug.LogError($"{gameObject.name}의 저장 시스템 참조가 누락되었습니다.", this); // 참조 누락 오류 출력
             enabled = false; // 저장 기능 비활성화
@@ -65,6 +68,13 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
             return; // 초기화 중단
         }
 
+        if (!worldSaveBridge.TryValidateSetup(out string worldSetupError)) // 월드 저장 연결 검사
+        {
+            Debug.LogError($"월드 저장 시스템 초기화 실패\n{worldSetupError}", this); // 월드 연결 오류 출력
+            enabled = false; // 저장 기능 비활성화
+            return; // 초기화 중단
+        }
+
         isReady = true; // 저장 기능 준비 완료
     }
 
@@ -77,6 +87,12 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
         }
 
         SaveGameData saveData = CaptureCurrentState(); // 현재 게임 상태 수집
+
+        if (!worldSaveBridge.TryCapture(saveData, out string worldCaptureError)) // 월드 상태 저장 데이터 수집
+        {
+            Debug.LogError($"월드 상태 저장 준비 실패\n{worldCaptureError}", this); // 월드 수집 오류 출력
+            return; // 파일 저장 중단
+        }
 
         if (!SaveFileService.TrySave(slotId, saveData, out string resultMessage)) // JSON 파일 저장 실행
         {
@@ -122,6 +138,12 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
         if (!inventorySaveBridge.TryRestore(saveData, out string inventoryRestoreError)) // 인벤토리와 장비 상태 복원
         {
             Debug.LogError($"인벤토리와 장비 불러오기 실패\n{inventoryRestoreError}", this); // 아이템 복원 오류 출력
+            return; // 전체 불러오기 중단
+        }
+
+        if (!worldSaveBridge.TryRestore(saveData, out string worldRestoreError)) // 월드 아이템과 채집 자원 복원
+        {
+            Debug.LogError($"월드 상태 불러오기 실패\n{worldRestoreError}", this); // 월드 복원 오류 출력
             return; // 전체 불러오기 중단
         }
 
