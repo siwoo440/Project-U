@@ -47,6 +47,14 @@ public sealed class DayNightCycle : MonoBehaviour // 낮과 밤 시간 순환 �
         currentHour = targetHour; // 목표 시간 적용
         ApplyCycleState(); // 조명과 시간 UI 즉시 갱신
     }
+
+    public void SetTime(int day, float hour) // 불러온 날짜와 시간 적용
+    {
+        currentDay = Mathf.Max(1, day); // 날짜 최소값 제한
+        currentHour = Mathf.Repeat(hour, 24f); // 시간을 하루 범위로 제한
+        ApplyCycleState(); // 조명과 시간 UI 즉시 갱신
+    }
+
     private void Awake() // 시간 시스템 초기화
     {
         ClampSettings(); // 설정값 범위 보정

@@ -40,7 +40,12 @@ public sealed class PlayerStamina : MonoBehaviour // 플레이어 스태미나 �
     {
         ClampSettings(); // 설정값 정상 범위 보정
     }
-
+    public void SetCurrentStamina(float staminaAmount) // 불러온 현재 스태미나 적용
+    {
+        currentStamina = Mathf.Clamp(staminaAmount, 0f, maxStamina); // 스태미나 범위 제한
+        isExhausted = currentStamina <= 0f; // 스태미나 기준 탈진 상태 적용
+        nextRecoveryTime = Time.time + recoveryDelay; // 불러오기 직후 회복 대기 적용
+    }
     public bool UpdateSprint(bool wantsToSprint, float deltaTime) // 달리기와 회복 상태 갱신
     {
         if (wantsToSprint && CanSprint) // 달리기 입력과 스태미나 확인

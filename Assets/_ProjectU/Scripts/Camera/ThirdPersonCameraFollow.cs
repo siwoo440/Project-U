@@ -65,6 +65,12 @@ public sealed class ThirdPersonCameraFollow : MonoBehaviour // 마우스 회전�
         SetCursorLocked(false); // 마우스 커서 잠금 해제
     }
 
+    public void SetYaw(float targetYaw) // 불러온 좌우 시점 적용
+    {
+        yaw = Mathf.Repeat(targetYaw, 360f); // 좌우 회전값 범위 제한
+        transform.rotation = Quaternion.Euler(pitch, yaw, 0f); // 카메라 회전 즉시 적용
+    }
+
     private void Update() // 커서와 줌 입력 처리
     {
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame) // Escape 입력 확인
