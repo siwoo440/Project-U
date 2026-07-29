@@ -14288,6 +14288,7 @@ GameObject:
   - component: {fileID: 1951417609}
   - component: {fileID: 1951417611}
   - component: {fileID: 1951417612}
+  - component: {fileID: 1951417613}
   m_Layer: 0
   m_Name: === SaveSystem ===
   m_TagString: Untagged
@@ -14313,6 +14314,7 @@ MonoBehaviour:
   dayNightCycle: {fileID: 1122745316}
   inventorySaveBridge: {fileID: 1951417611}
   worldSaveBridge: {fileID: 1951417612}
+  placedStructureSaveBridge: {fileID: 1951417613}
 --- !u!4 &1951417610
 Transform:
   m_ObjectHideFlags: 0
@@ -14358,6 +14360,24 @@ MonoBehaviour:
   itemDatabase: {fileID: 11400000, guid: cf3f70048e5538643a991804c404ab00, type: 2}
   worldItemPrefab: {fileID: 3181927310554862687, guid: 412cfa676e9d187459d88d446f0cb9e1, type: 3}
   worldItemParent: {fileID: 963744050}
+--- !u!114 &1951417613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951417608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe957358fa122634091350d49b329fbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlacedStructureSaveBridge
+  placedStructureParent: {fileID: 638049834}
+  buildRecipes:
+  - {fileID: 11400000, guid: 7c4d83f54b0ba9f48b4f04f89462d0f6, type: 2}
+  - {fileID: 11400000, guid: 75647e9ebdbadc744817782679190212, type: 2}
+  - {fileID: 11400000, guid: 81ca2d609af37d44ab59674459b7c242, type: 2}
+  - {fileID: 11400000, guid: 25aae37426e3a4d449bdd9f3942bffc8, type: 2}
 --- !u!1 &1953961344
 GameObject:
   m_ObjectHideFlags: 0

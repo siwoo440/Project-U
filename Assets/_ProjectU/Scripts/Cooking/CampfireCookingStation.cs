@@ -22,7 +22,10 @@ public sealed class CampfireCookingStation : InteractableBase, IBuildRemovalGuar
 
     private PlayerInventory lastPlayerInventory; // 최근 상호작용 인벤토리
     private bool isConfigured; // 필수 설정 완료 여부
-
+    public bool IsCooking => isCooking; // 현재 조리 진행 상태 제공
+    public bool HasReadyResult => hasReadyResult; // 완성 음식 보관 상태 제공
+    public float RemainingCookingTime => Mathf.Max(0f, remainingCookingTime); // 남은 조리 시간 제공
+    public float CookingDuration => cookingDuration; // 전체 조리 시간 제공
     public override string PromptMessage // 현재 조리 상태 안내 문구
     {
         get
@@ -96,10 +99,7 @@ public sealed class CampfireCookingStation : InteractableBase, IBuildRemovalGuar
         }
 
         isConfigured = true; // 필수 설정 완료
-        isCooking = false; // 초기 조리 상태 해제
-        hasReadyResult = false; // 초기 결과물 제거
-        remainingCookingTime = 0f; // 초기 남은 시간 제거
-        fireVisualRoot.SetActive(false); // 초기 불꽃 숨김
+        RestoreFromSave(false, false, 0f); // 초기 유휴 상태 적용
     }
 
     private void Update() // 조리 시간 진행
@@ -230,7 +230,45 @@ public sealed class CampfireCookingStation : InteractableBase, IBuildRemovalGuar
             playerInventory.AddItem(inputItem, removedInputAmount); // 조리 재료 복구
         }
     }
+    public void RestoreFromSave(
+    bool savedIsCooking,
+    bool savedHasReadyResult,
+    float savedRemainingCookingTime) // 저장 모닥불 상태 복원
+    {
+        float safeRemainingCookingTime = Mathf.Clamp(
+            savedRemainingCookingTime,
+            0f,
+            cookingDuration); // 저장 남은 시간 범위 보정
 
+        if (savedHasReadyResult) // 완성 음식 보관 상태 확인
+        {
+            isCooking = false; // 조리 진행 상태 해제
+            hasReadyResult = true; // 완성 음식 상태 적용
+            remainingCookingTime = 0f; // 남은 시간 초기화
+            fireVisualRoot.SetActive(false); // 불꽃 연출 비활성화
+            return; // 복원 완료
+        }
+
+        if (savedIsCooking) // 조리 진행 상태 확인
+        {
+            if (safeRemainingCookingTime <= 0f) // 조리 완료 시간 확인
+            {
+                CompleteCooking(); // 즉시 조리 완료
+                return; // 복원 완료
+            }
+
+            isCooking = true; // 조리 진행 상태 적용
+            hasReadyResult = false; // 완성 음식 상태 해제
+            remainingCookingTime = safeRemainingCookingTime; // 남은 조리 시간 적용
+            fireVisualRoot.SetActive(true); // 불꽃 연출 활성화
+            return; // 복원 완료
+        }
+
+        isCooking = false; // 조리 상태 해제
+        hasReadyResult = false; // 완성 음식 상태 해제
+        remainingCookingTime = 0f; // 남은 시간 초기화
+        fireVisualRoot.SetActive(false); // 불꽃 연출 비활성화
+    }
     private void ClampSettings() // 설정값 범위 보정
     {
         fuelAmount = Mathf.Max(1, fuelAmount); // 연료 수량 최소값 적용

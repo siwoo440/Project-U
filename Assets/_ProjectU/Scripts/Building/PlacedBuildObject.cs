@@ -1,10 +1,12 @@
 using UnityEngine; // Unity 기본 기능
 
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
+[RequireComponent(typeof(WorldObjectIdentity))] // 월드 고유 ID 컴포넌트 요구
 public sealed class PlacedBuildObject : MonoBehaviour // 설치된 건축물 정보
 {
     [SerializeField] private BuildRecipeData recipeData; // 설치에 사용된 건축 데이터
     [SerializeField] private BuildPlacementType placementType; // 설치된 건축물 종류
+    private WorldObjectIdentity worldObjectIdentity; // 월드 고유 ID 컴포넌트
 
     private Renderer[] cachedRenderers; // 건축물 렌더러 목록
     private Material[][] originalSharedMaterials; // 원래 재질 목록
@@ -12,7 +14,18 @@ public sealed class PlacedBuildObject : MonoBehaviour // 설치된 건축물 정
 
     public BuildRecipeData RecipeData => recipeData; // 건축 데이터 제공
     public BuildPlacementType PlacementType => placementType; // 건축물 종류 제공
-
+    public string StructureId // 설치 건축물 고유 ID 제공
+    {
+        get // ID 반환 접근자
+        {
+            WorldObjectIdentity identity = ResolveWorldObjectIdentity(); // ID 컴포넌트 검색
+            return identity == null ? string.Empty : identity.WorldObjectId; // ID 또는 빈 값 반환
+        }
+    }
+    private void Awake() // 설치 건축물 초기화
+    {
+        worldObjectIdentity = GetComponent<WorldObjectIdentity>(); // 월드 고유 ID 컴포넌트 검색
+    }
     public void Initialize(BuildRecipeData newRecipeData) // 설치 정보 초기화
     {
         if (newRecipeData == null) // 건축 데이터 존재 확인
@@ -21,10 +34,38 @@ public sealed class PlacedBuildObject : MonoBehaviour // 설치된 건축물 정
             return; // 초기화 중단
         }
 
+        WorldObjectIdentity identity = EnsureWorldObjectIdentity(); // 월드 고유 ID 준비
+
+        if (!identity.HasValidId) // 기존 고유 ID 존재 확인
+        {
+            identity.GenerateRuntimeId(); // 새 설치 건축물 ID 발급
+        }
         recipeData = newRecipeData; // 건축 데이터 저장
         placementType = newRecipeData.PlacementType; // 실제 배치 종류 저장
         CacheRenderers(); // 건축물 렌더러 저장
     }
+
+    public void RestoreFromSave(
+    BuildRecipeData savedRecipeData,
+    string savedStructureId,
+    Vector3 savedPosition,
+    Quaternion savedRotation) // 저장 건축물 상태 복원
+    {
+        if (savedRecipeData == null) // 건축 데이터 존재 확인
+        {
+            Debug.LogError($"{gameObject.name}의 복원 건축 데이터가 누락되었습니다.", this); // 건축 데이터 오류 출력
+            return; // 복원 중단
+        }
+
+        WorldObjectIdentity identity = EnsureWorldObjectIdentity(); // 월드 고유 ID 준비
+        identity.AssignWorldObjectId(savedStructureId); // 저장 고유 ID 적용
+        recipeData = savedRecipeData; // 저장 건축 데이터 적용
+        placementType = savedRecipeData.PlacementType; // 저장 건축 종류 적용
+        transform.SetPositionAndRotation(savedPosition, savedRotation); // 저장 위치와 회전 적용
+        gameObject.SetActive(true); // 건축물 활성화
+        CacheRenderers(); // 건축물 렌더러 저장
+    }
+
 
     public void SetRemovalHighlight(bool shouldHighlight, Material highlightMaterial) // 철거 대상 강조 변경
     {
@@ -132,5 +173,28 @@ public sealed class PlacedBuildObject : MonoBehaviour // 설치된 건축물 정
             RestoreOriginalMaterials(); // 비활성화 전 재질 복구
             isRemovalHighlighted = false; // 강조 상태 해제
         }
+    }
+
+    private WorldObjectIdentity ResolveWorldObjectIdentity() // 월드 ID 컴포넌트 검색
+    {
+        if (worldObjectIdentity == null) // 기존 캐시 확인
+        {
+            worldObjectIdentity = GetComponent<WorldObjectIdentity>(); // 같은 오브젝트에서 재검색
+        }
+
+        return worldObjectIdentity; // 검색 결과 반환
+    }
+
+    private WorldObjectIdentity EnsureWorldObjectIdentity() // 월드 ID 컴포넌트 준비
+    {
+        WorldObjectIdentity identity = ResolveWorldObjectIdentity(); // 기존 컴포넌트 검색
+
+        if (identity == null) // 기존 컴포넌트 없음 확인
+        {
+            identity = gameObject.AddComponent<WorldObjectIdentity>(); // 실행 중 ID 컴포넌트 추가
+            worldObjectIdentity = identity; // 추가 컴포넌트 캐시
+        }
+
+        return identity; // 준비된 컴포넌트 반환
     }
 }
