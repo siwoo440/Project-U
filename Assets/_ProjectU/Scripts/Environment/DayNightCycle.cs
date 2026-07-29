@@ -8,6 +8,7 @@ public sealed class DayNightCycle : MonoBehaviour // 낮과 밤 시간 순환 �
     [Header("References")] // 참조 설정 묶음
     [SerializeField] private Light sunLight; // 태양 역할 방향광
     [SerializeField] private TMP_Text timeText; // 날짜와 시간 표시 텍스트
+    [SerializeField] private SeasonCycle seasonCycle; // 계절 순환 관리자
 
     [Header("Time")] // 시간 설정 묶음
     [SerializeField] private float fullDayDurationSeconds = 600f; // 하루가 흐르는 현실 시간
@@ -59,7 +60,7 @@ public sealed class DayNightCycle : MonoBehaviour // 낮과 밤 시간 순환 �
     {
         ClampSettings(); // 설정값 범위 보정
 
-        if (sunLight == null || timeText == null) // 필수 참조 확인
+        if (sunLight == null || timeText == null || seasonCycle == null) // 필수 참조 확인
         {
             Debug.LogError($"{gameObject.name}의 낮과 밤 시스템 참조가 누락되었습니다.", this); // 참조 누락 오류 출력
             enabled = false; // 시간 시스템 비활성화
@@ -105,6 +106,7 @@ public sealed class DayNightCycle : MonoBehaviour // 낮과 밤 시간 순환 �
 
     private void ApplyCycleState() // 현재 시간의 환경 상태 적용
     {
+        seasonCycle.SetCurrentDay(currentDay); // 현재 날짜에 맞는 계절 적용
         float cycleRadians = ((currentHour - 6f) / 24f) * Mathf.PI * 2f; // 오전 6시 기준 회전값 계산
         float sunHeight = Mathf.Sin(cycleRadians); // 태양 높이 비율 계산
         daylightStrength = Mathf.Clamp01(sunHeight); // 낮 밝기 범위 보정
@@ -114,11 +116,14 @@ public sealed class DayNightCycle : MonoBehaviour // 낮과 밤 시간 순환 �
         sunLight.transform.rotation = Quaternion.Euler(sunPitch, sunYaw, 0f); // 태양 방향 회전
         Color currentSunColor = Color.Lerp(nightSunColor, daySunColor, daylightStrength); // 낮과 밤 태양색 혼합
         currentSunColor = Color.Lerp(currentSunColor, sunsetSunColor, twilightStrength * 0.65f); // 일출과 일몰 색상 혼합
+        currentSunColor *= seasonCycle.CurrentSunTint; // 현재 계절 태양광 색상 혼합
         sunLight.color = currentSunColor; // 방향광 색상 적용
         sunLight.intensity = Mathf.Lerp(nightSunIntensity, daySunIntensity, daylightStrength); // 방향광 밝기 적용
 
         RenderSettings.ambientMode = AmbientMode.Flat; // 단색 환경광 모드 적용
-        RenderSettings.ambientLight = Color.Lerp(nightAmbientColor, dayAmbientColor, daylightStrength); // 환경광 색상 적용
+        Color currentAmbientColor = Color.Lerp(nightAmbientColor, dayAmbientColor, daylightStrength); // 낮과 밤 환경광 혼합
+        currentAmbientColor *= seasonCycle.CurrentAmbientTint; // 현재 계절 환경광 색상 혼합
+        RenderSettings.ambientLight = currentAmbientColor; // 최종 환경광 색상 적용
 
         RefreshTimeText(); // 날짜와 시간 UI 갱신
     }

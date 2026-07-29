@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement; // 현재 Scene 확인 기능
 public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상태 저장과 불러오기 관리
 {
     [Header("Save Slot")] // 저장 슬롯 설정 묶음
-    [SerializeField] private string slotId = "slot_01"; // 현재 사용할 저장 슬롯 ID
+    [SerializeField] private string slotId = SaveFileService.DefaultSlotId; // 현재 사용할 저장 슬롯 ID
 
     [Header("References")] // 외부 참조 설정 묶음
     [SerializeField] private Transform playerTransform; // 플레이어 위치와 회전 대상

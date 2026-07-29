@@ -5,6 +5,7 @@ using UnityEngine; // Unity 저장 경로와 JSON 기능
 
 public static class SaveFileService // 저장 파일 입출력 관리
 {
+    public const string DefaultSlotId = "slot_01"; // 기본 저장 슬롯 ID
     private const string SaveFolderName = "ProjectU/Saves"; // 저장 폴더 이름
     private const string MainFileExtension = ".json"; // 기본 파일 확장자
     private const string BackupFileExtension = ".backup.json"; // 백업 파일 확장자
