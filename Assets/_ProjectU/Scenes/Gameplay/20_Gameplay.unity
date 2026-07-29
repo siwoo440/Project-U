@@ -2681,6 +2681,94 @@ MonoBehaviour:
   swingRotationOffset: {x: 65, y: 0, z: -25}
   swingDuration: 0.12
   returnDuration: 0.18
+--- !u!1 &312259265
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 312259269}
+  - component: {fileID: 312259268}
+  - component: {fileID: 312259267}
+  - component: {fileID: 312259266}
+  m_Layer: 5
+  m_Name: SleepFade
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!225 &312259266
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312259265}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
+--- !u!114 &312259267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312259265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &312259268
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312259265}
+  m_CullTransparentMesh: 1
+--- !u!224 &312259269
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312259265}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1731906373}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &315321658
 GameObject:
   m_ObjectHideFlags: 0
@@ -7555,6 +7643,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1122745317}
   - component: {fileID: 1122745316}
+  - component: {fileID: 1122745318}
   m_Layer: 0
   m_Name: === DayNightSystem ===
   m_TagString: Untagged
@@ -7606,6 +7695,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1122745318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122745315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e331a3b2cba8b648be72dfbb4a3fe39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SleepSystem
+  dayNightCycle: {fileID: 1122745316}
+  playerHealth: {fileID: 1491592331}
+  playerHunger: {fileID: 1491592328}
+  playerThirst: {fileID: 1491592332}
+  playerInteractor: {fileID: 1491592324}
+  buildPlacementController: {fileID: 1491592337}
+  fadeCanvasGroup: {fileID: 312259266}
+  wakeHour: 8
+  healthRestoreAmount: 30
+  hungerCost: 15
+  thirstCost: 20
+  fadeDuration: 0.75
+  blackScreenDuration: 0.25
+  isSleeping: 0
 --- !u!1 &1127749470
 GameObject:
   m_ObjectHideFlags: 0
@@ -10987,6 +11102,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 81ca2d609af37d44ab59674459b7c242, type: 2}
   - {fileID: 11400000, guid: 25aae37426e3a4d449bdd9f3942bffc8, type: 2}
   - {fileID: 11400000, guid: 7c4d83f54b0ba9f48b4f04f89462d0f6, type: 2}
+  - {fileID: 11400000, guid: 75647e9ebdbadc744817782679190212, type: 2}
   validPreviewMaterial: {fileID: 2100000, guid: 575eeba1a98fc994f9dd258bfa6decd7, type: 2}
   invalidPreviewMaterial: {fileID: 2100000, guid: 439962ca014ff5d41a3a0023d48746db, type: 2}
   removalTargetMaterial: {fileID: 2100000, guid: be932b1cb342cbe4999472acc9354643, type: 2}
@@ -12692,6 +12808,7 @@ RectTransform:
   - {fileID: 252674390}
   - {fileID: 1381242280}
   - {fileID: 1127749471}
+  - {fileID: 312259269}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

@@ -54,6 +54,22 @@ public sealed class PlayerHunger : MonoBehaviour // 플레이어 허기 관리
         return true; // 음식 사용 성공
     }
 
+    public bool TryConsume(float consumeAmount) // 허기 수치 소비
+    {
+        if (consumeAmount <= 0f) // 소비량 유효성 확인
+        {
+            return false; // 잘못된 소비 차단
+        }
+
+        if (currentHunger < consumeAmount) // 현재 허기 부족 확인
+        {
+            return false; // 허기 소비 실패
+        }
+
+        currentHunger -= consumeAmount; // 허기 수치 감소
+        return true; // 허기 소비 성공
+    }
+
     private void ClampSettings() // 설정값 보정
     {
         maxHunger = Mathf.Max(1f, maxHunger); // 최대 허기 최소값 적용

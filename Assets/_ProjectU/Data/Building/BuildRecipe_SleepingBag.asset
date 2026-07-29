@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c0b0e46b0956bcf479f2754564f5cfa9, type: 3}
-  m_Name: BuildRecipe_WoodWall
+  m_Name: BuildRecipe_SleepingBag
   m_EditorClassIdentifier: Assembly-CSharp::BuildRecipeData
   recipeId: structure_sleeping_bag
-  displayName: WOOD WALL
-  placementType: 1
+  displayName: SLEEPING BAG
+  placementType: 2
   rotationStep: 45
   previewOffset: {x: 0, y: 0, z: 0}
-  placedPrefab: {fileID: 6959754206177827809, guid: 1a922e90225ceb04fb64f54dd9fab98b, type: 3}
-  previewPrefab: {fileID: 6959754206177827809, guid: 5d59fd4ec470e524386d3d1b46b6dc72, type: 3}
-  placementCheckCenter: {x: 0, y: 0.75, z: 0}
-  placementCheckHalfExtents: {x: 0.47, y: 0.74, z: 0.035}
-  maximumSlopeAngle: 20
-  maximumHeightDifference: 0.15
+  placedPrefab: {fileID: 2152217460935451638, guid: 28f456585f4f48343813ed7c301454f1, type: 3}
+  previewPrefab: {fileID: 2152217460935451638, guid: 2074eb0e3e6bb7b41b22fac015d8ee39, type: 3}
+  placementCheckCenter: {x: 0, y: 0.225, z: 0}
+  placementCheckHalfExtents: {x: 0.6, y: 0.22, z: 1.1}
+  maximumSlopeAngle: 10
+  maximumHeightDifference: 0.1
   ingredients:
   - itemData: {fileID: 11400000, guid: b9e78781ff8b2aa4bae6df0fa3d2e1c9, type: 2}
-    amount: 3
+    amount: 8
   demolitionRefundRatio: 0.5

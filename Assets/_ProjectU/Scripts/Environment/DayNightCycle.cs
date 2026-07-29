@@ -35,7 +35,18 @@ public sealed class DayNightCycle : MonoBehaviour // 낮과 밤 시간 순환 �
     public int CurrentDay => currentDay; // 현재 날짜 제공
     public float CurrentHour => currentHour; // 현재 시간 제공
     public bool IsNight => currentHour >= 18f || currentHour < 6f; // 현재 야간 여부 제공
+    public void AdvanceToHour(float targetHour) // 지정 시간까지 시간 이동
+    {
+        targetHour = Mathf.Repeat(targetHour, 24f); // 목표 시간 하루 범위 보정
 
+        if (currentHour >= targetHour) // 목표 시간이 다음 날인지 확인
+        {
+            currentDay++; // 다음 날짜 적용
+        }
+
+        currentHour = targetHour; // 목표 시간 적용
+        ApplyCycleState(); // 조명과 시간 UI 즉시 갱신
+    }
     private void Awake() // 시간 시스템 초기화
     {
         ClampSettings(); // 설정값 범위 보정

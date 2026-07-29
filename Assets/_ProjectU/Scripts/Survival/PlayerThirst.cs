@@ -53,7 +53,21 @@ public sealed class PlayerThirst : MonoBehaviour // 플레이어 갈증 관리
         currentThirst = Mathf.Min(maxThirst, currentThirst + restoreAmount); // 갈증 회복 적용
         return true; // 음료 사용 성공
     }
+    public bool TryConsume(float consumeAmount) // 갈증 수치 소비
+    {
+        if (consumeAmount <= 0f) // 소비량 유효성 확인
+        {
+            return false; // 잘못된 소비 차단
+        }
 
+        if (currentThirst < consumeAmount) // 현재 갈증 부족 확인
+        {
+            return false; // 갈증 소비 실패
+        }
+
+        currentThirst -= consumeAmount; // 갈증 수치 감소
+        return true; // 갈증 소비 성공
+    }
     private void ClampSettings() // 설정값 보정
     {
         maxThirst = Mathf.Max(1f, maxThirst); // 최대 갈증 최소값 적용
