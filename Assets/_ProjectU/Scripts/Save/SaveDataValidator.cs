@@ -77,7 +77,76 @@ public static class SaveDataValidator // 저장 데이터 유효성 검사
             return false; // 검사 실패
         }
 
+        if (!TryValidateRespawnData(saveData, out errorMessage)) // 부활 지점 데이터 검사
+        {
+            return false; // 전체 검사 실패
+        }
+
         errorMessage = string.Empty; // 오류 내용 초기화
         return true; // 전체 검사 성공
+    }
+
+    private static bool TryValidateRespawnData(
+    SaveGameData saveData,
+    out string errorMessage) // 부활 지점과 건축물 연결 검사
+    {
+        bool hasRegisteredPoint = saveData.respawn.hasRegisteredPoint; // 침낭 등록 상태 조회
+        string registeredStructureId = saveData.respawn.registeredStructureId; // 저장 침낭 ID 조회
+
+        if (!hasRegisteredPoint) // 미등록 상태 확인
+        {
+            if (!string.IsNullOrWhiteSpace(registeredStructureId)) // 미등록 상태의 ID 존재 확인
+            {
+                errorMessage = "부활 지점이 미등록 상태지만 침낭 ID가 남아 있습니다."; // 상태 충돌 저장
+                return false; // 검사 실패
+            }
+
+            errorMessage = string.Empty; // 오류 내용 초기화
+            return true; // 미등록 데이터 정상
+        }
+
+        if (string.IsNullOrWhiteSpace(registeredStructureId)) // 등록 침낭 ID 존재 확인
+        {
+            errorMessage = "등록된 부활 지점의 침낭 ID가 비어 있습니다."; // ID 오류 저장
+            return false; // 검사 실패
+        }
+
+        bool hasMatchingStructure = false; // 일치 건축물 존재 여부 초기화
+
+        for (int index = 0; index < saveData.world.placedStructures.Count; index++) // 저장 건축물 순회
+        {
+            PlacedStructureSaveData structureSaveData = saveData.world.placedStructures[index]; // 현재 건축물 조회
+
+            if (structureSaveData == null) // 빈 건축물 항목 확인
+            {
+                errorMessage = "비어 있는 설치 건축물 저장 항목이 있습니다."; // 항목 오류 저장
+                return false; // 검사 실패
+            }
+
+            if (!string.Equals(
+                structureSaveData.structureId,
+                registeredStructureId,
+                System.StringComparison.Ordinal)) // 등록 침낭 ID 비교
+            {
+                continue; // 다른 건축물 건너뛰기
+            }
+
+            if (hasMatchingStructure) // 기존 일치 건축물 확인
+            {
+                errorMessage = $"부활 침낭 Structure ID가 중복되었습니다: {registeredStructureId}"; // 중복 오류 저장
+                return false; // 검사 실패
+            }
+
+            hasMatchingStructure = true; // 일치 건축물 존재 표시
+        }
+
+        if (!hasMatchingStructure) // 저장 침낭 누락 여부 확인
+        {
+            errorMessage = $"부활 지점과 일치하는 건축물이 없습니다: {registeredStructureId}"; // 참조 오류 저장
+            return false; // 검사 실패
+        }
+
+        errorMessage = string.Empty; // 오류 내용 초기화
+        return true; // 검사 성공
     }
 }

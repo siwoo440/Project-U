@@ -8,6 +8,7 @@ public sealed class SleepingBagInteractable : InteractableBase, IBuildRemovalGua
     [SerializeField] private Transform respawnPoint; // 침낭 부활 위치
 
     public override string PromptMessage => GetPromptMessage(); // 현재 침낭 안내 문구 제공
+    public Transform RespawnPoint => respawnPoint; // 침낭 부활 위치 제공
     public bool CanRemove => playerRespawnSystem == null || !playerRespawnSystem.IsRegisteredRespawnPoint(respawnPoint); // 활성 부활 침낭 철거 차단
     public string RemovalBlockedMessage => "ACTIVE RESPAWN POINT"; // 철거 차단 원인 제공
 

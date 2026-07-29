@@ -28,6 +28,7 @@ public sealed class PlayerRespawnSystem : MonoBehaviour // 플레이어 부활 �
     private PlayerThirst playerThirst; // 플레이어 갈증 관리자
 
     public bool HasRegisteredRespawnPoint => registeredRespawnPoint != null; // 침낭 부활 지점 등록 여부 제공
+    public Transform RegisteredRespawnPoint => registeredRespawnPoint; // 현재 등록 침낭 위치 제공
 
     private void Awake() // 부활 시스템 초기화
     {
@@ -58,6 +59,10 @@ public sealed class PlayerRespawnSystem : MonoBehaviour // 플레이어 부활 �
         }
 
         registeredRespawnPoint = newRespawnPoint; // 새로운 부활 지점 저장
+    }
+    public void ClearRegisteredRespawnPoint() // 저장 데이터에 따른 부활 지점 해제
+    {
+        registeredRespawnPoint = null; // 등록된 침낭 참조 제거
     }
 
     public bool IsRegisteredRespawnPoint(Transform targetPoint) // 지정 지점의 활성 상태 확인

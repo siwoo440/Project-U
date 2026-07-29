@@ -6399,7 +6399,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 867105410}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6407,7 +6407,7 @@ Transform:
   - {fileID: 1332470738}
   - {fileID: 1657404507}
   m_Father: {fileID: 310027313}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &898972805
 GameObject:
   m_ObjectHideFlags: 0
@@ -7778,6 +7778,7 @@ MonoBehaviour:
   playerInteractor: {fileID: 1491592324}
   buildPlacementController: {fileID: 1491592337}
   fadeCanvasGroup: {fileID: 312259266}
+  gameplaySaveController: {fileID: 1951417609}
   wakeHour: 8
   healthRestoreAmount: 30
   hungerCost: 15
@@ -10453,7 +10454,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1455697536}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10461,7 +10462,7 @@ Transform:
   - {fileID: 1184966895}
   - {fileID: 1797726973}
   m_Father: {fileID: 310027313}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &1479927156
 GameObject:
   m_ObjectHideFlags: 0
@@ -14289,6 +14290,7 @@ GameObject:
   - component: {fileID: 1951417611}
   - component: {fileID: 1951417612}
   - component: {fileID: 1951417613}
+  - component: {fileID: 1951417614}
   m_Layer: 0
   m_Name: === SaveSystem ===
   m_TagString: Untagged
@@ -14315,6 +14317,8 @@ MonoBehaviour:
   inventorySaveBridge: {fileID: 1951417611}
   worldSaveBridge: {fileID: 1951417612}
   placedStructureSaveBridge: {fileID: 1951417613}
+  respawnSaveBridge: {fileID: 1951417614}
+  sleepSystem: {fileID: 1122745318}
 --- !u!4 &1951417610
 Transform:
   m_ObjectHideFlags: 0
@@ -14378,6 +14382,19 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 75647e9ebdbadc744817782679190212, type: 2}
   - {fileID: 11400000, guid: 81ca2d609af37d44ab59674459b7c242, type: 2}
   - {fileID: 11400000, guid: 25aae37426e3a4d449bdd9f3942bffc8, type: 2}
+--- !u!114 &1951417614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951417608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e94d78c2c36894f4f8b77500328881ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RespawnSaveBridge
+  playerRespawnSystem: {fileID: 1491592338}
 --- !u!1 &1953961344
 GameObject:
   m_ObjectHideFlags: 0

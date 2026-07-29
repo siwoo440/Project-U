@@ -12,6 +12,7 @@ public sealed class SleepSystem : MonoBehaviour // 플레이어 수면 진행 �
     [SerializeField] private PlayerInteractor playerInteractor; // 플레이어 상호작용
     [SerializeField] private BuildPlacementController buildPlacementController; // 건축 배치 관리자
     [SerializeField] private CanvasGroup fadeCanvasGroup; // 수면 암전 화면
+    [SerializeField] private GameplaySaveController gameplaySaveController; // 게임 저장 관리자 참조
 
     [Header("Sleep")] // 수면 설정 묶음
     [SerializeField] private float wakeHour = 8f; // 수면 종료 시간
@@ -81,7 +82,8 @@ public sealed class SleepSystem : MonoBehaviour // 플레이어 수면 진행 �
             || playerThirst == null
             || playerInteractor == null
             || buildPlacementController == null
-            || fadeCanvasGroup == null; // 필수 참조 누락 확인
+            || fadeCanvasGroup == null
+            || gameplaySaveController == null; // 필수 참조 누락 확인
 
         if (hasMissingReference) // 필수 참조 누락 여부 확인
         {
@@ -164,6 +166,7 @@ public sealed class SleepSystem : MonoBehaviour // 플레이어 수면 진행 �
         yield return FadeCanvas(0f); // 화면 다시 표시
 
         RestoreGameplayState(); // 일반 플레이 상태 복구
+        gameplaySaveController.SaveCurrentGame(); // 기상 완료 상태 자동 저장
     }
 
     private IEnumerator FadeCanvas(float targetAlpha) // 암전 화면 투명도 전환
