@@ -92,7 +92,7 @@ public sealed class WeatherCycle : MonoBehaviour // 기본 날씨 순환 관리
     }
 
     [ContextMenu("Force Next Weather")] // Inspector 날씨 강제 변경 메뉴
-    public void ForceNextWeather() // 테스트용 다음 날씨 선택
+    public void ForceWeather(WeatherType weather) // 테스트용 특정 날씨 적용
     {
         if (!Application.isPlaying) // Play Mode 여부 확인
         {
@@ -100,9 +100,39 @@ public sealed class WeatherCycle : MonoBehaviour // 기본 날씨 순환 관리
             return; // 테스트 중단
         }
 
-        SelectNextWeather(); // 새로운 날씨 즉시 선택
+        ApplyWeather(weather); // 지정한 날씨 적용
         lastObservedTotalHours = GetTotalGameHours(); // 시간 비교 기준 갱신
         RefreshWeatherText(); // 날씨 HUD 즉시 갱신
+    }
+
+    [ContextMenu("Force Clear Weather")] // 맑음 강제 변경 메뉴
+    private void ForceClearWeather() // 맑음 테스트 실행
+    {
+        ForceWeather(WeatherType.Clear); // 맑음 강제 적용
+    }
+
+    [ContextMenu("Force Cloudy Weather")] // 흐림 강제 변경 메뉴
+    private void ForceCloudyWeather() // 흐림 테스트 실행
+    {
+        ForceWeather(WeatherType.Cloudy); // 흐림 강제 적용
+    }
+
+    [ContextMenu("Force Rain Weather")] // 비 강제 변경 메뉴
+    private void ForceRainWeather() // 비 테스트 실행
+    {
+        ForceWeather(WeatherType.Rain); // 비 강제 적용
+    }
+
+    [ContextMenu("Force Snow Weather")] // 눈 강제 변경 메뉴
+    private void ForceSnowWeather() // 눈 테스트 실행
+    {
+        ForceWeather(WeatherType.Snow); // 눈 강제 적용
+    }
+
+    [ContextMenu("Force Storm Weather")] // 폭풍 강제 변경 메뉴
+    private void ForceStormWeather() // 폭풍 테스트 실행
+    {
+        ForceWeather(WeatherType.Storm); // 폭풍 강제 적용
     }
 
     private void ConsumeElapsedHours(float elapsedHours) // 지난 게임 시간 처리
@@ -125,7 +155,11 @@ public sealed class WeatherCycle : MonoBehaviour // 기본 날씨 순환 관리
 
     private void SelectNextWeather() // 현재 계절에 맞는 날씨 선택
     {
-        currentWeather = RollWeather(seasonCycle.CurrentSeason); // 계절별 확률로 날씨 추첨
+        ApplyWeather(RollWeather(seasonCycle.CurrentSeason)); // 계절별 무작위 날씨 적용
+    }
+    private void ApplyWeather(WeatherType weather) // 선택된 날씨 상태 적용
+    {
+        currentWeather = weather; // 현재 날씨 적용
         remainingWeatherHours = GetRandomDuration(currentWeather); // 날씨 지속 시간 결정
         WeatherChanged?.Invoke(currentWeather); // 날씨 변경 이벤트 전달
 
@@ -134,7 +168,6 @@ public sealed class WeatherCycle : MonoBehaviour // 기본 날씨 순환 관리
             Debug.Log($"날씨 변경: {currentWeather} / 지속 시간: {remainingWeatherHours:F1}시간", this); // 날씨 변경 결과 출력
         }
     }
-
     private WeatherType RollWeather(SeasonType season) // 계절별 날씨 확률 계산
     {
         float randomValue = UnityEngine.Random.Range(0f, 100f); // 백분율 무작위 값 생성
