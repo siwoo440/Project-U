@@ -77,6 +77,11 @@ public static class SaveDataValidator // 저장 데이터 유효성 검사
             return false; // 검사 실패
         }
 
+        if (!TryValidateWeatherData(saveData, out errorMessage)) // 날씨 저장 데이터 검사
+        {
+            return false; // 전체 검사 실패
+        }
+
         if (!TryValidateRespawnData(saveData, out errorMessage)) // 부활 지점 데이터 검사
         {
             return false; // 전체 검사 실패
@@ -86,9 +91,40 @@ public static class SaveDataValidator // 저장 데이터 유효성 검사
         return true; // 전체 검사 성공
     }
 
+    private static bool TryValidateWeatherData(SaveGameData saveData, out string errorMessage) // 날씨 저장 데이터 검사
+    {
+        if (!saveData.time.hasWeatherData) // 이전 저장 파일 확인
+        {
+            errorMessage = string.Empty; // 오류 내용 초기화
+            return true; // 이전 저장 파일 허용
+        }
+
+        bool isWeatherDefined = System.Enum.IsDefined(typeof(WeatherType), saveData.time.currentWeather); // 날씨 숫자값 검사
+
+        if (!isWeatherDefined) // 잘못된 날씨 확인
+        {
+            errorMessage = $"저장된 날씨 값이 잘못되었습니다: {saveData.time.currentWeather}"; // 날씨 오류 저장
+            return false; // 검사 실패
+        }
+
+        float remainingHours = saveData.time.remainingWeatherHours; // 남은 날씨 시간 조회
+        bool hasInvalidDuration = float.IsNaN(remainingHours) // 숫자 아님 확인
+            || float.IsInfinity(remainingHours) // 무한대 확인
+            || remainingHours <= 0f; // 양수 여부 확인
+
+        if (hasInvalidDuration) // 잘못된 지속 시간 확인
+        {
+            errorMessage = $"날씨 남은 시간이 잘못되었습니다: {remainingHours}"; // 지속 시간 오류 저장
+            return false; // 검사 실패
+        }
+
+        errorMessage = string.Empty; // 오류 내용 초기화
+        return true; // 날씨 데이터 검사 성공
+    }
+
     private static bool TryValidateRespawnData(
-    SaveGameData saveData,
-    out string errorMessage) // 부활 지점과 건축물 연결 검사
+        SaveGameData saveData,
+        out string errorMessage) // 부활 지점과 건축물 연결 검사
     {
         bool hasRegisteredPoint = saveData.respawn.hasRegisteredPoint; // 침낭 등록 상태 조회
         string registeredStructureId = saveData.respawn.registeredStructureId; // 저장 침낭 ID 조회

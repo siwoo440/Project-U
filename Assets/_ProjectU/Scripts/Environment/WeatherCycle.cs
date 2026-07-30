@@ -39,6 +39,7 @@ public sealed class WeatherCycle : MonoBehaviour // 기본 날씨 순환 관리
 
     private float lastObservedTotalHours; // 마지막으로 확인한 전체 게임 시간
     private bool isInitialized; // 날씨 초기화 완료 여부
+    private bool hasRestoredWeatherState; // 저장 날씨 복원 여부
 
     public WeatherType CurrentWeather => currentWeather; // 현재 날씨 제공
     public float RemainingWeatherHours => remainingWeatherHours; // 남은 날씨 시간 제공
@@ -55,16 +56,25 @@ public sealed class WeatherCycle : MonoBehaviour // 기본 날씨 순환 관리
         }
     }
 
-    private void Start() // 첫 날씨 상태 생성
+    private void Start() // 첫 날씨 상태 준비
     {
         if (!enabled) // 컴포넌트 활성 상태 확인
         {
             return; // 초기화 중단
         }
 
-        lastObservedTotalHours = GetTotalGameHours(); // 시작 시점 전체 시간 저장
-        SelectNextWeather(); // 현재 계절 기준 첫 날씨 선택
-        isInitialized = true; // 초기화 완료 처리
+        lastObservedTotalHours = GetTotalGameHours(); // 시작 시간 기준 저장
+
+        if (!hasRestoredWeatherState) // 복원된 날씨 존재 여부 확인
+        {
+            SelectNextWeather(); // 새로운 무작위 날씨 선택
+        }
+        else // 복원 날씨 존재 상태
+        {
+            RefreshWeatherText(); // 복원 날씨 HUD 갱신
+        }
+
+        isInitialized = true; // 날씨 초기화 완료 처리
     }
 
     private void Update() // 게임 시간에 따른 날씨 진행
@@ -89,6 +99,40 @@ public sealed class WeatherCycle : MonoBehaviour // 기본 날씨 순환 관리
     private void OnValidate() // Inspector 설정값 검증
     {
         ClampSettings(); // 지속 시간 설정값 보정
+    }
+
+    public void RestoreWeatherState(WeatherType weather, float remainingHours) // 저장 날씨 상태 복원
+    {
+        bool isValidWeather = Enum.IsDefined(typeof(WeatherType), weather); // 날씨 숫자값 검사
+
+        if (!isValidWeather || remainingHours <= 0f) // 저장 날씨 유효성 확인
+        {
+            Debug.LogWarning("저장된 날씨 데이터가 잘못되어 새로운 날씨를 선택합니다.", this); // 잘못된 데이터 경고
+            InitializeRandomWeatherForLoadedTime(); // 대체 날씨 생성
+            return; // 복원 처리 종료
+        }
+
+        currentWeather = weather; // 저장 날씨 적용
+        remainingWeatherHours = Mathf.Max(0.1f, remainingHours); // 남은 시간 최소값 적용
+        lastObservedTotalHours = GetTotalGameHours(); // 복원 시간 기준 갱신
+        hasRestoredWeatherState = true; // 날씨 복원 상태 기록
+        isInitialized = true; // 날씨 진행 활성화
+        WeatherChanged?.Invoke(currentWeather); // 날씨 연출 갱신 이벤트 전달
+        RefreshWeatherText(); // 날씨 HUD 즉시 갱신
+
+        if (logWeatherChanges) // 날씨 로그 사용 여부 확인
+        {
+            Debug.Log($"날씨 복원: {currentWeather} / 남은 시간: {remainingWeatherHours:F1}시간", this); // 복원 결과 출력
+        }
+    }
+
+    public void InitializeRandomWeatherForLoadedTime() // 이전 저장 파일용 날씨 생성
+    {
+        lastObservedTotalHours = GetTotalGameHours(); // 불러온 시간 기준 갱신
+        hasRestoredWeatherState = true; // 날씨 초기화 상태 기록
+        SelectNextWeather(); // 현재 계절 기준 날씨 선택
+        isInitialized = true; // 날씨 진행 활성화
+        RefreshWeatherText(); // 날씨 HUD 갱신
     }
 
     public void ForceWeather(WeatherType weather) // 테스트용 특정 날씨 적용

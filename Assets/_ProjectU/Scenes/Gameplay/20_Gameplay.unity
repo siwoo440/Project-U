@@ -25502,6 +25502,7 @@ MonoBehaviour:
   playerTransform: {fileID: 1491592321}
   thirdPersonCameraFollow: {fileID: 454530119}
   dayNightCycle: {fileID: 1122745316}
+  weatherCycle: {fileID: 1122745320}
   inventorySaveBridge: {fileID: 1951417611}
   worldSaveBridge: {fileID: 1951417612}
   placedStructureSaveBridge: {fileID: 1951417613}

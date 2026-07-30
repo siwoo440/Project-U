@@ -12,6 +12,7 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
     [SerializeField] private Transform playerTransform; // 플레이어 위치와 회전 대상
     [SerializeField] private ThirdPersonCameraFollow thirdPersonCameraFollow; // 플레이어 추적 카메라
     [SerializeField] private DayNightCycle dayNightCycle; // 날짜와 시간 시스템
+    [SerializeField] private WeatherCycle weatherCycle; // 날씨 순환 시스템
     [SerializeField] private InventorySaveBridge inventorySaveBridge; // 인벤토리와 장비 저장 연결
     [SerializeField] private WorldSaveBridge worldSaveBridge; // 월드 상태 저장 연결
     [SerializeField] private PlacedStructureSaveBridge placedStructureSaveBridge; // 설치 건축물 저장 연결
@@ -33,16 +34,18 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
         bool hasPlayerReference = playerTransform != null; // 플레이어 참조 확인
         bool hasCameraReference = thirdPersonCameraFollow != null; // 카메라 참조 확인
         bool hasTimeReference = dayNightCycle != null; // 시간 시스템 참조 확인
+        bool hasWeatherReference = weatherCycle != null; // 날씨 시스템 참조 확인
         bool hasInventorySaveBridge = inventorySaveBridge != null; // 인벤토리 저장 연결 확인
         bool hasWorldSaveBridge = worldSaveBridge != null; // 월드 저장 연결 확인
         bool hasPlacedStructureSaveBridge = placedStructureSaveBridge != null; // 건축물 저장 연결 확인
         bool hasRespawnSaveBridge = respawnSaveBridge != null; // 부활 지점 저장 연결 확인
         bool hasSleepSystem = sleepSystem != null; // 수면 시스템 참조 확인
 
-        if (!hasPlayerReference || !hasCameraReference
-            || !hasTimeReference || !hasInventorySaveBridge
-            || !hasWorldSaveBridge || !hasPlacedStructureSaveBridge
-            || !hasRespawnSaveBridge || !hasSleepSystem) // 필수 Inspector 참조 확인
+        if (!hasPlayerReference || !hasCameraReference // 플레이어와 카메라 확인
+            || !hasTimeReference || !hasWeatherReference // 시간과 날씨 확인
+            || !hasInventorySaveBridge || !hasWorldSaveBridge // 인벤토리와 월드 확인
+            || !hasPlacedStructureSaveBridge || !hasRespawnSaveBridge // 건축물과 부활 지점 확인
+            || !hasSleepSystem) // 수면 시스템 확인
         {
             Debug.LogError($"{gameObject.name}의 저장 시스템 참조가 누락되었습니다.", this); // 참조 누락 오류 출력
             enabled = false; // 저장 기능 비활성화
@@ -223,6 +226,9 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
 
         saveData.time.currentDay = dayNightCycle.CurrentDay; // 현재 날짜 저장
         saveData.time.currentHour = dayNightCycle.CurrentHour; // 현재 시간 저장
+        saveData.time.hasWeatherData = true; // 날씨 데이터 존재 기록
+        saveData.time.currentWeather = (int)weatherCycle.CurrentWeather; // 현재 날씨 저장
+        saveData.time.remainingWeatherHours = Mathf.Max(0.1f, weatherCycle.RemainingWeatherHours); // 날씨 남은 시간 저장
 
         inventorySaveBridge.Capture(saveData); // 인벤토리와 장비 상태 저장
 
@@ -253,6 +259,7 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
         playerHunger.SetCurrentHunger(saveData.player.hunger); // 저장 허기 적용
         playerThirst.SetCurrentThirst(saveData.player.thirst); // 저장 갈증 적용
         playerStamina.SetCurrentStamina(saveData.player.stamina); // 저장 스태미나 적용
+        dayNightCycle.SetTime(saveData.time.currentDay, saveData.time.currentHour); // 저장 날짜와 시간 우선 적용
         playerWetness.SetCurrentWetness(saveData.player.wetness); // 저장 젖음 수치 적용
 
         float loadedTemperature = saveData.player.hasTemperatureData
@@ -261,7 +268,15 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
 
         playerTemperature.SetCurrentTemperature(loadedTemperature); // 저장 체온 수치 적용
 
-        dayNightCycle.SetTime(saveData.time.currentDay, saveData.time.currentHour); // 저장 날짜와 시간 적용
+        if (saveData.time.hasWeatherData) // 날씨 저장 데이터 존재 확인
+        {
+            WeatherType loadedWeather = (WeatherType)saveData.time.currentWeather; // 저장 숫자를 날씨로 변환
+            weatherCycle.RestoreWeatherState(loadedWeather, saveData.time.remainingWeatherHours); // 날씨와 남은 시간 복원
+        }
+        else // 이전 저장 파일 확인
+        {
+            weatherCycle.InitializeRandomWeatherForLoadedTime(); // 현재 계절 기준 새로운 날씨 생성
+        }
     }
 
     private bool CanUseSaveSystem() // 현재 저장 기능 사용 가능 여부 확인
@@ -287,4 +302,3 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
         return true; // 저장 기능 사용 허용
     }
 }
-

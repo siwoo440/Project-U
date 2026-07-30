@@ -15,6 +15,9 @@ public static class SaveSchemaValidator // 저장 구조 Editor 검사
 
         sampleSaveData.time.currentDay = 3; // 예제 날짜 적용
         sampleSaveData.time.currentHour = 14.5f; // 예제 시간 적용
+        sampleSaveData.time.hasWeatherData = true; // 예제 날씨 데이터 존재 적용
+        sampleSaveData.time.currentWeather = (int)WeatherType.Storm; // 예제 폭풍 날씨 적용
+        sampleSaveData.time.remainingWeatherHours = 2.5f; // 예제 날씨 남은 시간 적용
 
         InventorySlotSaveData sampleSlot = new InventorySlotSaveData(); // 예제 인벤토리 슬롯 생성
         sampleSlot.slotIndex = 0; // 예제 슬롯 번호 적용
@@ -55,6 +58,16 @@ public static class SaveSchemaValidator // 저장 구조 Editor 검사
         if (!temperatureRestored) // 체온 복원 실패 확인
         {
             Debug.LogError("저장 구조 검사 실패: 체온 데이터가 일치하지 않습니다."); // 체온 복원 오류 출력
+            return; // 검사 중단
+        }
+
+        bool weatherRestored = restoredSaveData.time.hasWeatherData // 날씨 데이터 존재 확인
+            && restoredSaveData.time.currentWeather == (int)WeatherType.Storm // 폭풍 날씨 복원 확인
+            && Mathf.Approximately(restoredSaveData.time.remainingWeatherHours, 2.5f); // 남은 시간 복원 확인
+
+        if (!weatherRestored) // 날씨 복원 실패 확인
+        {
+            Debug.LogError("저장 구조 검사 실패: 날씨 데이터가 일치하지 않습니다."); // 날씨 복원 오류 출력
             return; // 검사 중단
         }
 

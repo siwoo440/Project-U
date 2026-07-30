@@ -43,10 +43,13 @@ public sealed class PlayerSaveData // 플레이어 상태 저장 데이터
 }
 
 [Serializable] // JSON 직렬화 허용
-public sealed class TimeSaveData // 날짜와 시간 저장 데이터
+public sealed class TimeSaveData // 시간과 날씨 저장 데이터
 {
     public int currentDay = 1; // 현재 날짜
     public float currentHour = 8f; // 현재 시각
+    public bool hasWeatherData; // 날씨 저장 데이터 존재 여부
+    public int currentWeather = (int)WeatherType.Clear; // 현재 날씨 숫자값
+    public float remainingWeatherHours = 6f; // 현재 날씨 남은 시간
 }
 
 [Serializable] // JSON 직렬화 허용
