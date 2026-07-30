@@ -3,10 +3,15 @@ using UnityEngine; // Unity 기본 기능
 
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
 [RequireComponent(typeof(PlayerWetness))] // 필수 젖음 컴포넌트
+[RequireComponent(typeof(PlayerTemperature))] // 필수 체온 컴포넌트
+
 public sealed class PlayerWeatherExposure : MonoBehaviour // 플레이어 날씨 노출 판정
 {
     [Header("References")] // 필수 참조 묶음
     [SerializeField] private WeatherCycle weatherCycle; // 현재 날씨 관리자
+    [SerializeField] private SeasonCycle seasonCycle; // 현재 계절 관리자
+    [SerializeField] private DayNightCycle dayNightCycle; // 날짜와 시간 관리자
+    [SerializeField] private PlayerTemperature playerTemperature; // 플레이어 체온 관리자
     [SerializeField] private WeatherEffectsController weatherEffectsController; // 날씨 효과 관리자
     [SerializeField] private PlayerWetness playerWetness; // 플레이어 젖음 관리자
     [SerializeField] private TMP_Text exposureText; // 노출 상태 표시 문구
@@ -32,7 +37,14 @@ public sealed class PlayerWeatherExposure : MonoBehaviour // 플레이어 날씨
             playerWetness = GetComponent<PlayerWetness>(); // 같은 오브젝트에서 젖음 관리자 가져오기
         }
 
-        if (weatherCycle == null || weatherEffectsController == null || playerWetness == null || exposureText == null) // 필수 참조 확인
+        if (playerTemperature == null) // 체온 참조 확인
+        {
+            playerTemperature = GetComponent<PlayerTemperature>(); // 같은 오브젝트에서 체온 관리자 가져오기
+        }
+
+        if (weatherCycle == null || seasonCycle == null || dayNightCycle == null
+            || weatherEffectsController == null || playerWetness == null
+            || playerTemperature == null || exposureText == null) // 필수 참조 확인
         {
             Debug.LogError($"{gameObject.name}의 날씨 노출 참조가 누락되었습니다.", this); // 참조 누락 오류
             enabled = false; // 날씨 노출 기능 비활성화
@@ -58,6 +70,14 @@ public sealed class PlayerWeatherExposure : MonoBehaviour // 플레이어 날씨
         }
 
         playerWetness.UpdateWeatherExposure(weatherCycle.CurrentWeather, isSheltered, Time.deltaTime); // 현재 날씨 노출 적용
+
+        playerTemperature.UpdateEnvironment(
+            seasonCycle.CurrentSeason,
+            weatherCycle.CurrentWeather,
+            dayNightCycle.IsNight,
+            isSheltered,
+            playerWetness.NormalizedWetness,
+            Time.deltaTime); // 현재 환경에 따른 체온 갱신
     }
 
     private void OnValidate() // Inspector 설정값 검증
