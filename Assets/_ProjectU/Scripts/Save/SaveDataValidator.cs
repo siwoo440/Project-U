@@ -77,6 +77,11 @@ public static class SaveDataValidator // 저장 데이터 유효성 검사
             return false; // 검사 실패
         }
 
+        if (!TryValidateCraftingData(saveData, out errorMessage)) // 제작법 해금 데이터 검사
+        {
+            return false; // 전체 검사 실패
+        }
+
         if (!TryValidateWeatherData(saveData, out errorMessage)) // 날씨 저장 데이터 검사
         {
             return false; // 전체 검사 실패
@@ -89,6 +94,43 @@ public static class SaveDataValidator // 저장 데이터 유효성 검사
 
         errorMessage = string.Empty; // 오류 내용 초기화
         return true; // 전체 검사 성공
+    }
+
+    private static bool TryValidateCraftingData(SaveGameData saveData, out string errorMessage) // 제작법 해금 저장 데이터 검사
+    {
+        if (!saveData.hasCraftingData) // 이전 저장 파일 확인
+        {
+            errorMessage = string.Empty; // 오류 내용 초기화
+            return true; // 이전 저장 파일 허용
+        }
+
+        if (saveData.crafting == null || saveData.crafting.unlockedRecipeIds == null) // 제작 저장 묶음 확인
+        {
+            errorMessage = "제작법 해금 저장 데이터가 누락되었습니다."; // 누락 오류 저장
+            return false; // 검사 실패
+        }
+
+        System.Collections.Generic.HashSet<string> usedRecipeIds = new System.Collections.Generic.HashSet<string>(System.StringComparer.Ordinal); // 제작법 ID 중복 검사 목록
+
+        for (int index = 0; index < saveData.crafting.unlockedRecipeIds.Count; index++) // 해금 ID 목록 순회
+        {
+            string recipeId = saveData.crafting.unlockedRecipeIds[index]; // 현재 제작법 ID 조회
+
+            if (string.IsNullOrWhiteSpace(recipeId)) // 빈 제작법 ID 확인
+            {
+                errorMessage = "비어 있는 제작법 ID가 저장되어 있습니다."; // 빈 ID 오류 저장
+                return false; // 검사 실패
+            }
+
+            if (!usedRecipeIds.Add(recipeId)) // 중복 제작법 ID 확인
+            {
+                errorMessage = $"중복 제작법 ID가 저장되어 있습니다: {recipeId}"; // 중복 오류 저장
+                return false; // 검사 실패
+            }
+        }
+
+        errorMessage = string.Empty; // 오류 내용 초기화
+        return true; // 검사 성공
     }
 
     private static bool TryValidateWeatherData(SaveGameData saveData, out string errorMessage) // 날씨 저장 데이터 검사

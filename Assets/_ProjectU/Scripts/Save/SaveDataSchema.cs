@@ -15,6 +15,8 @@ public sealed class SaveGameData // 전체 저장 파일 최상위 데이터
     public EquipmentSaveData equipment = new EquipmentSaveData(); // 장비 데이터
     public WorldSaveData world = new WorldSaveData(); // 월드 데이터
     public RespawnSaveData respawn = new RespawnSaveData(); // 부활 지점 데이터
+    public bool hasCraftingData; // 제작법 해금 저장 데이터 존재 여부
+    public CraftingSaveData crafting = new CraftingSaveData(); // 제작법 해금 데이터
 
     public static SaveGameData CreateNew(string newSceneName) // 새로운 저장 데이터 생성
     {
@@ -133,6 +135,12 @@ public sealed class RespawnSaveData // 부활 지점 저장 데이터
 {
     public bool hasRegisteredPoint; // 침낭 등록 여부
     public string registeredStructureId = string.Empty; // 등록 침낭 건축물 ID
+}
+
+[Serializable] // JSON 직렬화 허용
+public sealed class CraftingSaveData // 제작법 해금 저장 데이터
+{
+    public List<string> unlockedRecipeIds = new List<string>(); // 해금된 제작법 ID 목록
 }
 
 [Serializable] // JSON 직렬화 허용

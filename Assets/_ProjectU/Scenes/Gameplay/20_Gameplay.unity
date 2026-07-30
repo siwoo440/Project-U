@@ -21565,6 +21565,8 @@ GameObject:
   - component: {fileID: 1491592339}
   - component: {fileID: 1491592340}
   - component: {fileID: 1491592341}
+  - component: {fileID: 1491592342}
+  - component: {fileID: 1491592343}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -21885,6 +21887,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CraftingManager
   playerInventory: {fileID: 1491592325}
+  craftingUnlockManager: {fileID: 1491592342}
+  activeFacility: 1
 --- !u!114 &1491592337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22043,6 +22047,35 @@ MonoBehaviour:
   hotThirstMultiplier: 1.5
   heatstrokeThirstMultiplier: 2
   currentTemperature: 2
+--- !u!114 &1491592342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491592320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c9dc4b59b26e7948806ce62017d7587, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CraftingUnlockManager
+  allRecipes:
+  - {fileID: 11400000, guid: 263c19dd4430aff4bb2ff8fd97c6a40e, type: 2}
+  - {fileID: 11400000, guid: 7e69f276b3f39af4788f2c31f54530b7, type: 2}
+  debugRecipe: {fileID: 11400000, guid: 7e69f276b3f39af4788f2c31f54530b7, type: 2}
+--- !u!114 &1491592343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491592320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3baab009102b763429a0331f415915b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CraftingUnlockSaveBridge
+  craftingUnlockManager: {fileID: 1491592342}
 --- !u!1 &1521979942
 GameObject:
   m_ObjectHideFlags: 0
@@ -25558,6 +25591,7 @@ MonoBehaviour:
   worldSaveBridge: {fileID: 1951417612}
   placedStructureSaveBridge: {fileID: 1951417613}
   respawnSaveBridge: {fileID: 1951417614}
+  craftingUnlockSaveBridge: {fileID: 1491592343}
   sleepSystem: {fileID: 1122745318}
 --- !u!4 &1951417610
 Transform:

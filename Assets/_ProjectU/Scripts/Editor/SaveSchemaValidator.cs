@@ -25,6 +25,10 @@ public static class SaveSchemaValidator // 저장 구조 Editor 검사
         sampleSlot.quantity = 5; // 예제 아이템 수량 적용
         sampleSaveData.inventory.slots.Add(sampleSlot); // 예제 슬롯 목록 추가
 
+        sampleSaveData.hasCraftingData = true; // 예제 제작법 해금 데이터 존재 적용
+        sampleSaveData.crafting.unlockedRecipeIds.Add("recipe_axe"); // 예제 도끼 제작법 해금 적용
+        sampleSaveData.crafting.unlockedRecipeIds.Add("recipe_pickaxe"); // 예제 곡괭이 제작법 해금 적용
+
         string json = JsonUtility.ToJson(sampleSaveData, true); // 저장 데이터를 JSON으로 변환
         SaveGameData restoredSaveData = JsonUtility.FromJson<SaveGameData>(json); // JSON을 저장 데이터로 복원
 
@@ -41,6 +45,18 @@ public static class SaveSchemaValidator // 저장 구조 Editor 검사
         if (!slotRestored) // 인벤토리 복원 실패 확인
         {
             Debug.LogError("저장 구조 검사 실패: 인벤토리 데이터가 일치하지 않습니다."); // 복원 오류 출력
+            return; // 검사 중단
+        }
+
+        bool craftingRestored = restoredSaveData.hasCraftingData // 제작 데이터 존재 확인
+            && restoredSaveData.crafting != null // 제작 저장 묶음 확인
+            && restoredSaveData.crafting.unlockedRecipeIds.Count == 2 // 해금 목록 수량 확인
+            && restoredSaveData.crafting.unlockedRecipeIds.Contains("recipe_axe") // 도끼 제작법 확인
+            && restoredSaveData.crafting.unlockedRecipeIds.Contains("recipe_pickaxe"); // 곡괭이 제작법 확인
+
+        if (!craftingRestored) // 제작법 해금 복원 실패 확인
+        {
+            Debug.LogError("저장 구조 검사 실패: 제작법 해금 데이터가 일치하지 않습니다."); // 복원 오류 출력
             return; // 검사 중단
         }
 

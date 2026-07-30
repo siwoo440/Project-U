@@ -1,3 +1,4 @@
+using System; // 문자열 비교 기능
 using System.Collections.Generic; // 제거된 재료 임시 목록 기능
 using UnityEngine; // Unity 기본 기능
 
@@ -6,6 +7,31 @@ public sealed class CraftingManager : MonoBehaviour // 플레이어 제작 관�
 {
     [Header("References")] // 외부 참조 묶음
     [SerializeField] private PlayerInventory playerInventory; // 플레이어 인벤토리
+    [SerializeField] private CraftingUnlockManager craftingUnlockManager; // 제작법 해금 관리자
+    [SerializeField] private CraftingFacilityType activeFacility = CraftingFacilityType.Hand; // 현재 제작 시설
+
+    public CraftingUnlockManager UnlockManager => craftingUnlockManager; // 해금 관리자 제공
+    public string ActiveFacilityId => CraftingFacilityIds.GetFacilityId(activeFacility); // 현재 시설 ID 제공
+
+    public bool IsRecipeUnlocked(CraftingRecipeData recipeData) // 제작법 해금 여부 확인
+    {
+        if (craftingUnlockManager == null) // 해금 관리자 확인
+        {
+            return false; // 잠금 상태 반환
+        }
+
+        return craftingUnlockManager.IsRecipeUnlocked(recipeData); // 실제 해금 상태 반환
+    }
+
+    public bool HasRequiredFacility(CraftingRecipeData recipeData) // 제작 시설 충족 여부 확인
+    {
+        if (recipeData == null) // 제작법 존재 확인
+        {
+            return false; // 시설 불일치 반환
+        }
+
+        return recipeData.RequiredFacility == activeFacility; // 필요 시설과 현재 시설 비교
+    }
 
     public bool HasRequiredMaterials(CraftingRecipeData recipeData) // 제작 재료 충족 여부 확인
     {
@@ -46,7 +72,11 @@ public sealed class CraftingManager : MonoBehaviour // 플레이어 제작 관�
 
     public bool CanCraft(CraftingRecipeData recipeData) // 최종 제작 가능 여부 확인
     {
-        return HasRequiredMaterials(recipeData) && HasOutputSpace(recipeData); // 재료와 공간 조건 반환
+        bool isUnlocked = IsRecipeUnlocked(recipeData); // 제작법 해금 여부
+        bool hasFacility = HasRequiredFacility(recipeData); // 제작 시설 충족 여부
+        bool hasMaterials = HasRequiredMaterials(recipeData); // 제작 재료 충족 여부
+        bool hasOutputSpace = HasOutputSpace(recipeData); // 결과 공간 충족 여부
+        return isUnlocked && hasFacility && hasMaterials && hasOutputSpace; // 전체 제작 조건 반환
     }
 
     public bool TryCraft(CraftingRecipeData recipeData) // 제작 실행 시도
