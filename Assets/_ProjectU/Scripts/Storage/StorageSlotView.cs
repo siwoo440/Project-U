@@ -8,6 +8,7 @@ public sealed class StorageSlotView : MonoBehaviour // 보관함 슬롯 화면
     [SerializeField] private Image itemIconImage; // 아이템 아이콘 Image
     [SerializeField] private TMP_Text itemNameText; // 아이템 이름 Text
     [SerializeField] private TMP_Text quantityText; // 아이템 수량 Text
+    [SerializeField] private ItemSlotDragHandler itemSlotDragHandler; // 공통 슬롯 드래그 처리기
 
     private bool referencesValid; // UI 참조 연결 상태
 
@@ -16,13 +17,29 @@ public sealed class StorageSlotView : MonoBehaviour // 보관함 슬롯 화면
         referencesValid = slotNumberText != null // 슬롯 번호 참조 확인
             && itemIconImage != null // 아이템 아이콘 참조 확인
             && itemNameText != null // 아이템 이름 참조 확인
-            && quantityText != null; // 아이템 수량 참조 확인
+            && quantityText != null // 아이템 수량 참조 확인
+            && itemSlotDragHandler != null; // 드래그 처리기 참조 확인
 
         if (!referencesValid) // 참조 누락 확인
         {
             Debug.LogError($"{gameObject.name}의 보관함 슬롯 UI 참조가 누락되었습니다.", this); // 연결 오류 출력
             enabled = false; // 슬롯 화면 비활성화
         }
+    }
+
+    public void Configure(StorageContainer storageContainer, int storageIndex) // 보관함 슬롯 기능 설정
+    {
+        if (itemSlotDragHandler == null) // 드래그 처리기 참조 확인
+        {
+            return; // 드래그 설정 중단
+        }
+
+        itemSlotDragHandler.Configure( // 공통 드래그 대상 설정
+            storageContainer, // 현재 보관함 컨테이너 전달
+            storageIndex, // 실제 보관함 슬롯 번호 전달
+            true, // 보관함 드래그 허용
+            false); // Alt 키 요구 비활성화
+        itemSlotDragHandler.SetRestingOutlineState(false); // 보관함 평상시 테두리 숨김
     }
 
     public void SetSlot(InventorySlot slot, int slotNumber) // 보관함 슬롯 화면 갱신
@@ -48,7 +65,9 @@ public sealed class StorageSlotView : MonoBehaviour // 보관함 슬롯 화면
 
         itemIconImage.gameObject.SetActive(true); // 아이템 아이콘 표시
         itemIconImage.sprite = itemIcon; // 아이템 아이콘 적용
-        itemIconImage.color = itemIcon == null ? ItemIconUtility.GetFallbackColor(itemData.ItemCategory) : Color.white; // 아이콘 색상 적용
+        itemIconImage.color = itemIcon == null // 실제 아이콘 존재 여부 확인
+            ? ItemIconUtility.GetFallbackColor(itemData.ItemCategory) // 분류별 대체 색상 적용
+            : Color.white; // 실제 아이콘 기본 색상 적용
         itemNameText.SetText(itemData.DisplayName); // 아이템 이름 표시
         quantityText.SetText($"x{slot.Quantity}"); // 아이템 수량 표시
     }

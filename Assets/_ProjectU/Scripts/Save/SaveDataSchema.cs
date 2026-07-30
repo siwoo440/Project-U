@@ -17,6 +17,8 @@ public sealed class SaveGameData // 전체 저장 파일 최상위 데이터
     public RespawnSaveData respawn = new RespawnSaveData(); // 부활 지점 데이터
     public bool hasCraftingData; // 제작법 해금 저장 데이터 존재 여부
     public CraftingSaveData crafting = new CraftingSaveData(); // 제작법 해금 데이터
+    public bool hasStorageData; // 보관함 저장 데이터 존재 여부
+    public StorageSaveData storage = new StorageSaveData(); // 전체 보관함 저장 데이터
 
     public static SaveGameData CreateNew(string newSceneName) // 새로운 저장 데이터 생성
     {
@@ -141,6 +143,28 @@ public sealed class RespawnSaveData // 부활 지점 저장 데이터
 public sealed class CraftingSaveData // 제작법 해금 저장 데이터
 {
     public List<string> unlockedRecipeIds = new List<string>(); // 해금된 제작법 ID 목록
+}
+
+[Serializable] // JSON 직렬화 허용
+public sealed class StorageSaveData // 전체 보관함 저장 데이터
+{
+    public List<StorageContainerSaveData> containers = new List<StorageContainerSaveData>(); // 전체 보관함 목록
+}
+
+[Serializable] // JSON 직렬화 허용
+public sealed class StorageContainerSaveData // 단일 보관함 저장 데이터
+{
+    public string structureId = string.Empty; // 보관함 건축물 고유 ID
+    public string storageTypeId = string.Empty; // 보관함 종류 고유 ID
+    public List<StorageSlotSaveData> slots = new List<StorageSlotSaveData>(); // 사용 중인 슬롯 목록
+}
+
+[Serializable] // JSON 직렬화 허용
+public sealed class StorageSlotSaveData // 단일 보관함 슬롯 저장 데이터
+{
+    public int slotIndex; // 실제 보관함 슬롯 번호
+    public string itemId = string.Empty; // 보관 아이템 고유 ID
+    public int quantity; // 보관 아이템 수량
 }
 
 [Serializable] // JSON 직렬화 허용

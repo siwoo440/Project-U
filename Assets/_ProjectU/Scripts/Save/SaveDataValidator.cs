@@ -82,6 +82,11 @@ public static class SaveDataValidator // 저장 데이터 유효성 검사
             return false; // 전체 검사 실패
         }
 
+        if (!TryValidateStorageData(saveData, out errorMessage)) // 보관함 저장 데이터 검사
+        {
+            return false; // 전체 검사 실패
+        }
+
         if (!TryValidateWeatherData(saveData, out errorMessage)) // 날씨 저장 데이터 검사
         {
             return false; // 전체 검사 실패
@@ -131,6 +136,98 @@ public static class SaveDataValidator // 저장 데이터 유효성 검사
 
         errorMessage = string.Empty; // 오류 내용 초기화
         return true; // 검사 성공
+    }
+
+    private static bool TryValidateStorageData(SaveGameData saveData, out string errorMessage) // 보관함 저장 데이터 구조 검사
+    {
+        if (!saveData.hasStorageData) // 이전 저장 파일 확인
+        {
+            errorMessage = string.Empty; // 오류 내용 초기화
+            return true; // 이전 저장 파일 허용
+        }
+
+        if (saveData.storage == null || saveData.storage.containers == null) // 보관함 저장 묶음 확인
+        {
+            errorMessage = "보관함 저장 데이터가 누락되었습니다."; // 누락 오류 저장
+            return false; // 검사 실패
+        }
+
+        System.Collections.Generic.HashSet<string> usedStructureIds = new System.Collections.Generic.HashSet<string>(System.StringComparer.Ordinal); // 보관함 ID 중복 검사 목록
+
+        for (int containerIndex = 0; containerIndex < saveData.storage.containers.Count; containerIndex++) // 전체 보관함 저장 목록 순회
+        {
+            StorageContainerSaveData containerSaveData = saveData.storage.containers[containerIndex]; // 현재 보관함 저장 항목 조회
+
+            if (containerSaveData == null) // 빈 보관함 저장 항목 확인
+            {
+                errorMessage = "비어 있는 보관함 저장 항목이 있습니다."; // 빈 항목 오류 저장
+                return false; // 검사 실패
+            }
+
+            if (string.IsNullOrWhiteSpace(containerSaveData.structureId)) // 보관함 고유 ID 존재 확인
+            {
+                errorMessage = "Structure ID가 비어 있는 보관함 저장 항목이 있습니다."; // 빈 ID 오류 저장
+                return false; // 검사 실패
+            }
+
+            if (!usedStructureIds.Add(containerSaveData.structureId)) // 보관함 고유 ID 중복 확인
+            {
+                errorMessage = $"중복 보관함 Structure ID가 저장되어 있습니다: {containerSaveData.structureId}"; // 중복 ID 오류 저장
+                return false; // 검사 실패
+            }
+
+            if (string.IsNullOrWhiteSpace(containerSaveData.storageTypeId)) // 보관함 종류 ID 존재 확인
+            {
+                errorMessage = $"Storage Type ID가 비어 있습니다: {containerSaveData.structureId}"; // 종류 ID 오류 저장
+                return false; // 검사 실패
+            }
+
+            if (containerSaveData.slots == null) // 보관함 슬롯 목록 존재 확인
+            {
+                errorMessage = $"보관함 슬롯 목록이 누락되었습니다: {containerSaveData.structureId}"; // 슬롯 목록 오류 저장
+                return false; // 검사 실패
+            }
+
+            System.Collections.Generic.HashSet<int> usedSlotIndices = new System.Collections.Generic.HashSet<int>(); // 현재 보관함 슬롯 중복 검사 목록
+
+            for (int slotIndex = 0; slotIndex < containerSaveData.slots.Count; slotIndex++) // 전체 저장 슬롯 순회
+            {
+                StorageSlotSaveData slotSaveData = containerSaveData.slots[slotIndex]; // 현재 저장 슬롯 조회
+
+                if (slotSaveData == null) // 빈 슬롯 저장 항목 확인
+                {
+                    errorMessage = $"비어 있는 보관함 슬롯 저장 항목이 있습니다: {containerSaveData.structureId}"; // 빈 슬롯 오류 저장
+                    return false; // 검사 실패
+                }
+
+                if (slotSaveData.slotIndex < 0) // 음수 슬롯 번호 확인
+                {
+                    errorMessage = $"보관함 슬롯 번호가 음수입니다: {containerSaveData.structureId} / {slotSaveData.slotIndex}"; // 슬롯 번호 오류 저장
+                    return false; // 검사 실패
+                }
+
+                if (!usedSlotIndices.Add(slotSaveData.slotIndex)) // 같은 보관함 슬롯 번호 중복 확인
+                {
+                    errorMessage = $"중복 보관함 슬롯 번호가 있습니다: {containerSaveData.structureId} / {slotSaveData.slotIndex}"; // 중복 슬롯 오류 저장
+                    return false; // 검사 실패
+                }
+
+                if (string.IsNullOrWhiteSpace(slotSaveData.itemId)) // 저장 아이템 ID 존재 확인
+                {
+                    errorMessage = $"보관함 Item ID가 비어 있습니다: {containerSaveData.structureId} / {slotSaveData.slotIndex}"; // 빈 아이템 ID 오류 저장
+                    return false; // 검사 실패
+                }
+
+                if (slotSaveData.quantity <= 0) // 저장 아이템 수량 확인
+                {
+                    errorMessage = $"보관함 아이템 수량이 잘못되었습니다: {containerSaveData.structureId} / {slotSaveData.slotIndex}"; // 수량 오류 저장
+                    return false; // 검사 실패
+                }
+            }
+        }
+
+        errorMessage = string.Empty; // 오류 내용 초기화
+        return true; // 보관함 구조 검사 성공
     }
 
     private static bool TryValidateWeatherData(SaveGameData saveData, out string errorMessage) // 날씨 저장 데이터 검사

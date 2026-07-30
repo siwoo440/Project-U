@@ -2,7 +2,7 @@ using System; // 기본 이벤트 기능
 using System.Collections.Generic; // List 기능
 using UnityEngine; // Unity 기본 기능
 
-public sealed class PlayerInventory : MonoBehaviour // 플레이어 인벤토리 관리
+public sealed class PlayerInventory : MonoBehaviour, IItemSlotContainer // 플레이어 인벤토리 관리
 {
     [Header("Capacity")] // 용량 설정 묶음
     [SerializeField] private int slotCapacity = 32; // 전체 슬롯 개수
@@ -119,6 +119,24 @@ public sealed class PlayerInventory : MonoBehaviour // 플레이어 인벤토리
         }
 
         return slots[index]; // 해당 슬롯 반환
+    }
+
+    public bool TrySetSlotDirect(int index, InventorySlot slot) // 공통 이동 처리용 슬롯 직접 변경
+    {
+        EnsureSlotCapacity(); // 현재 인벤토리 용량 확인
+
+        if (index < 0 || index >= slots.Count) // 슬롯 번호 범위 확인
+        {
+            return false; // 슬롯 변경 실패
+        }
+
+        slots[index] = slot; // 지정 슬롯 참조 적용
+        return true; // 슬롯 변경 성공
+    }
+
+    public void NotifyContentsChanged() // 공통 이동 처리 후 인벤토리 변경 알림
+    {
+        InventoryChanged?.Invoke(); // 인벤토리 UI 갱신 요청
     }
 
     public int GetItemQuantity(ItemData targetItemData) // 지정 아이템 전체 수량 조회
@@ -264,69 +282,11 @@ public sealed class PlayerInventory : MonoBehaviour // 플레이어 인벤토리
     public bool MoveOrMergeSlot(int sourceIndex, int targetIndex) // 슬롯 이동과 합치기
     {
         EnsureSlotCapacity(); // 고정 슬롯 구조 확인
-
-        if (sourceIndex < 0 || sourceIndex >= slots.Count) // 출발 슬롯 범위 확인
-        {
-            return false; // 이동 실패 반환
-        }
-
-        if (targetIndex < 0 || targetIndex >= slots.Count) // 대상 슬롯 범위 확인
-        {
-            return false; // 이동 실패 반환
-        }
-
-        if (sourceIndex == targetIndex) // 같은 슬롯 확인
-        {
-            return false; // 같은 위치 이동 차단
-        }
-
-        InventorySlot sourceSlot = slots[sourceIndex]; // 출발 슬롯 가져오기
-        InventorySlot targetSlot = slots[targetIndex]; // 대상 슬롯 가져오기
-
-        if (sourceSlot == null) // 출발 아이템 확인
-        {
-            return false; // 빈 슬롯 이동 차단
-        }
-
-        if (targetSlot == null) // 대상 빈 슬롯 확인
-        {
-            slots[targetIndex] = sourceSlot; // 대상 위치로 이동
-            slots[sourceIndex] = null; // 출발 위치 비우기
-            InventoryChanged?.Invoke(); // 인벤토리 변경 알림
-            return true; // 이동 성공 반환
-        }
-
-        if (targetSlot.Contains(sourceSlot.ItemData)) // 같은 아이템 확인
-        {
-            if (targetSlot.IsFull) // 대상 최대 중첩 확인
-            {
-                return false; // 중첩 이동 차단
-            }
-
-            int sourceQuantity = sourceSlot.Quantity; // 출발 수량 저장
-            int remainingQuantity = targetSlot.AddQuantity(sourceQuantity); // 대상 슬롯 수량 추가
-            int movedQuantity = sourceQuantity - remainingQuantity; // 실제 이동 수량 계산
-
-            if (movedQuantity <= 0) // 실제 이동 여부 확인
-            {
-                return false; // 변경 없음 반환
-            }
-
-            sourceSlot.RemoveQuantity(movedQuantity); // 출발 슬롯 수량 감소
-
-            if (sourceSlot.Quantity <= 0) // 출발 슬롯 소진 확인
-            {
-                slots[sourceIndex] = null; // 소진 슬롯 비우기
-            }
-
-            InventoryChanged?.Invoke(); // 인벤토리 변경 알림
-            return true; // 합치기 성공 반환
-        }
-
-        slots[sourceIndex] = targetSlot; // 대상 아이템 출발 위치 배치
-        slots[targetIndex] = sourceSlot; // 출발 아이템 대상 위치 배치
-        InventoryChanged?.Invoke(); // 인벤토리 변경 알림
-        return true; // 교환 성공 반환
+        return ItemSlotTransferUtility.TryMoveOrMerge( // 공통 이동 처리 결과 반환
+            this, // 출발 인벤토리 전달
+            sourceIndex, // 출발 슬롯 번호 전달
+            this, // 대상 인벤토리 전달
+            targetIndex); // 대상 슬롯 번호 전달
     }
     public int RemoveItemFromSlot(int index, int amount) // 지정 슬롯 아이템 제거
     {

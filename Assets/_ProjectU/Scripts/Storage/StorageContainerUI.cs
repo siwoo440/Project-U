@@ -135,6 +135,7 @@ public sealed class StorageContainerUI : MonoBehaviour // 보관함 화면 관�
         for (int index = 0; index < currentStorage.SlotCapacity; index++) // 필요한 슬롯 수만큼 반복
         {
             StorageSlotView newSlotView = Instantiate(storageSlotTemplate, storageSlotContainer); // 슬롯 화면 복제
+            newSlotView.Configure(currentStorage, index); // 보관함 컨테이너와 실제 슬롯 번호 연결
             newSlotView.gameObject.SetActive(true); // 복제 슬롯 표시
             slotViews.Add(newSlotView); // 생성 슬롯 목록 등록
         }

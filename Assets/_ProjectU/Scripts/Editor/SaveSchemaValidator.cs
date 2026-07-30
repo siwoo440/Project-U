@@ -29,6 +29,17 @@ public static class SaveSchemaValidator // 저장 구조 Editor 검사
         sampleSaveData.crafting.unlockedRecipeIds.Add("recipe_axe"); // 예제 도끼 제작법 해금 적용
         sampleSaveData.crafting.unlockedRecipeIds.Add("recipe_pickaxe"); // 예제 곡괭이 제작법 해금 적용
 
+        sampleSaveData.hasStorageData = true; // 예제 보관함 데이터 존재 적용
+        StorageContainerSaveData sampleStorage = new StorageContainerSaveData(); // 예제 보관함 저장 항목 생성
+        sampleStorage.structureId = "debug_storage_small_01"; // 예제 보관함 고유 ID 적용
+        sampleStorage.storageTypeId = StorageTypeIds.SmallChest; // 예제 소형 보관함 종류 적용
+        StorageSlotSaveData sampleStorageSlot = new StorageSlotSaveData(); // 예제 보관함 슬롯 생성
+        sampleStorageSlot.slotIndex = 2; // 예제 보관함 슬롯 번호 적용
+        sampleStorageSlot.itemId = "material_wood"; // 예제 보관 아이템 ID 적용
+        sampleStorageSlot.quantity = 5; // 예제 보관 아이템 수량 적용
+        sampleStorage.slots.Add(sampleStorageSlot); // 예제 보관함 슬롯 목록 추가
+        sampleSaveData.storage.containers.Add(sampleStorage); // 예제 전체 보관함 목록 추가
+
         string json = JsonUtility.ToJson(sampleSaveData, true); // 저장 데이터를 JSON으로 변환
         SaveGameData restoredSaveData = JsonUtility.FromJson<SaveGameData>(json); // JSON을 저장 데이터로 복원
 
@@ -57,6 +68,22 @@ public static class SaveSchemaValidator // 저장 구조 Editor 검사
         if (!craftingRestored) // 제작법 해금 복원 실패 확인
         {
             Debug.LogError("저장 구조 검사 실패: 제작법 해금 데이터가 일치하지 않습니다."); // 복원 오류 출력
+            return; // 검사 중단
+        }
+
+        bool storageRestored = restoredSaveData.hasStorageData // 보관함 데이터 존재 확인
+            && restoredSaveData.storage != null // 보관함 저장 묶음 확인
+            && restoredSaveData.storage.containers.Count == 1 // 보관함 개수 확인
+            && restoredSaveData.storage.containers[0].structureId == "debug_storage_small_01" // 보관함 고유 ID 확인
+            && restoredSaveData.storage.containers[0].storageTypeId == StorageTypeIds.SmallChest // 보관함 종류 ID 확인
+            && restoredSaveData.storage.containers[0].slots.Count == 1 // 보관함 슬롯 개수 확인
+            && restoredSaveData.storage.containers[0].slots[0].slotIndex == 2 // 보관함 슬롯 번호 확인
+            && restoredSaveData.storage.containers[0].slots[0].itemId == "material_wood" // 보관 아이템 ID 확인
+            && restoredSaveData.storage.containers[0].slots[0].quantity == 5; // 보관 아이템 수량 확인
+
+        if (!storageRestored) // 보관함 복원 실패 확인
+        {
+            Debug.LogError("저장 구조 검사 실패: 보관함 데이터가 일치하지 않습니다."); // 보관함 복원 오류 출력
             return; // 검사 중단
         }
 

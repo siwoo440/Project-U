@@ -1302,7 +1302,7 @@ MonoBehaviour:
   startSlotIndex: 8
   showShortcutNumbers: 0
   showSelection: 0
-  showClickedSelection: 1
+  showClickedSelection: 0
   allowItemDrag: 1
   requireAltKeyForDrag: 0
   separateHotbarArea: 0
@@ -3482,7 +3482,9 @@ GameObject:
   - component: {fileID: 275001776}
   - component: {fileID: 275001779}
   - component: {fileID: 275001778}
+  - component: {fileID: 275001781}
   - component: {fileID: 275001777}
+  - component: {fileID: 275001780}
   m_Layer: 5
   m_Name: StorageSlotTemplate
   m_TagString: Untagged
@@ -3529,6 +3531,7 @@ MonoBehaviour:
   itemIconImage: {fileID: 1500134349}
   itemNameText: {fileID: 1973258700}
   quantityText: {fileID: 54843389}
+  itemSlotDragHandler: {fileID: 275001780}
 --- !u!114 &275001778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3543,7 +3546,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0.19215687, g: 0.22745098, b: 0.28627452, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3567,6 +3570,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 275001775}
   m_CullTransparentMesh: 1
+--- !u!114 &275001780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275001775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ad847c27bc5ba641a8953f09ba061d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemSlotDragHandler
+  dragOutline: {fileID: 275001781}
+--- !u!114 &275001781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275001775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 1, g: 0.7269242, b: 0.009433806, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &276407461
 GameObject:
   m_ObjectHideFlags: 0
@@ -6766,7 +6797,7 @@ Transform:
   m_GameObject: {fileID: 581033797}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -5.52}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6834,6 +6865,8 @@ MonoBehaviour:
     quantity: 0
   - itemData: {fileID: 0}
     quantity: 0
+  placedBuildObject: {fileID: 0}
+  debugStructureId: debug_storage_large_01
 --- !u!1 &586531504
 GameObject:
   m_ObjectHideFlags: 0
@@ -6922,6 +6955,7 @@ GameObject:
   - component: {fileID: 589151436}
   - component: {fileID: 589151435}
   - component: {fileID: 589151438}
+  - component: {fileID: 589151439}
   m_Layer: 5
   m_Name: SlotTemplate
   m_TagString: Untagged
@@ -7022,6 +7056,20 @@ MonoBehaviour:
   itemNameText: {fileID: 1833650797}
   quantityText: {fileID: 1406773461}
   selectionOutline: {fileID: 589151435}
+  itemSlotDragHandler: {fileID: 589151439}
+--- !u!114 &589151439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 589151433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ad847c27bc5ba641a8953f09ba061d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemSlotDragHandler
+  dragOutline: {fileID: 589151435}
 --- !u!1 &605669180
 GameObject:
   m_ObjectHideFlags: 0
@@ -8517,9 +8565,9 @@ MonoBehaviour:
   slotTemplate: {fileID: 1993977233}
   visibleSlotCount: 8
   startSlotIndex: 0
-  showShortcutNumbers: 1
+  showShortcutNumbers: 0
   showSelection: 0
-  showClickedSelection: 1
+  showClickedSelection: 0
   allowItemDrag: 1
   requireAltKeyForDrag: 0
   separateHotbarArea: 0
@@ -25036,7 +25084,7 @@ Transform:
   m_GameObject: {fileID: 1602643781}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -5.52}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -25080,6 +25128,8 @@ MonoBehaviour:
     quantity: 0
   - itemData: {fileID: 0}
     quantity: 0
+  placedBuildObject: {fileID: 0}
+  debugStructureId: debug_storage_small_01
 --- !u!1 &1610852001
 GameObject:
   m_ObjectHideFlags: 0
@@ -28298,6 +28348,7 @@ GameObject:
   - component: {fileID: 1951417612}
   - component: {fileID: 1951417613}
   - component: {fileID: 1951417614}
+  - component: {fileID: 1951417615}
   m_Layer: 0
   m_Name: === SaveSystem ===
   m_TagString: Untagged
@@ -28327,6 +28378,8 @@ MonoBehaviour:
   placedStructureSaveBridge: {fileID: 1951417613}
   respawnSaveBridge: {fileID: 1951417614}
   craftingUnlockSaveBridge: {fileID: 1491592343}
+  storageSaveBridge: {fileID: 1951417615}
+  storageContainerUI: {fileID: 1669929588}
   sleepSystem: {fileID: 1122745318}
 --- !u!4 &1951417610
 Transform:
@@ -28404,6 +28457,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RespawnSaveBridge
   playerRespawnSystem: {fileID: 1491592338}
+--- !u!114 &1951417615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951417608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8858a31db38c4714885f37a942390987, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StorageSaveBridge
+  itemDatabase: {fileID: 11400000, guid: cf3f70048e5538643a991804c404ab00, type: 2}
 --- !u!1 &1953961344
 GameObject:
   m_ObjectHideFlags: 0
@@ -28869,6 +28935,7 @@ GameObject:
   - component: {fileID: 1969677847}
   - component: {fileID: 1969677846}
   - component: {fileID: 1969677845}
+  - component: {fileID: 1969677849}
   m_Layer: 5
   m_Name: HotbarSlotTemplate
   m_TagString: Untagged
@@ -28916,6 +28983,7 @@ MonoBehaviour:
   itemNameText: {fileID: 1610852003}
   quantityText: {fileID: 1967784050}
   selectionOutline: {fileID: 1969677846}
+  itemSlotDragHandler: {fileID: 1969677849}
 --- !u!114 &1969677846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28969,6 +29037,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1969677843}
   m_CullTransparentMesh: 1
+--- !u!114 &1969677849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969677843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ad847c27bc5ba641a8953f09ba061d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemSlotDragHandler
+  dragOutline: {fileID: 1969677846}
 --- !u!1 &1973258698
 GameObject:
   m_ObjectHideFlags: 0
@@ -29240,13 +29321,14 @@ GameObject:
   - component: {fileID: 1993977236}
   - component: {fileID: 1993977234}
   - component: {fileID: 1993977233}
+  - component: {fileID: 1993977238}
   m_Layer: 5
   m_Name: SlotTemplate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1993977233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29264,6 +29346,7 @@ MonoBehaviour:
   itemNameText: {fileID: 1361562313}
   quantityText: {fileID: 142042504}
   selectionOutline: {fileID: 1993977234}
+  itemSlotDragHandler: {fileID: 1993977238}
 --- !u!114 &1993977234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29340,6 +29423,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1993977232}
   m_CullTransparentMesh: 1
+--- !u!114 &1993977238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993977232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ad847c27bc5ba641a8953f09ba061d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemSlotDragHandler
+  dragOutline: {fileID: 1993977234}
 --- !u!1 &2005929885
 GameObject:
   m_ObjectHideFlags: 0
