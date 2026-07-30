@@ -2,12 +2,14 @@ using UnityEngine; // Unity 기본 기능
 
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
 [RequireComponent(typeof(PlayerHealth))] // 필수 체력 컴포넌트
+[RequireComponent(typeof(PlayerEquipment))] // 필수 장비 컴포넌트
 public sealed class PlayerTemperature : MonoBehaviour // 플레이어 체온 관리
 {
     [Header("Temperature")] // 체온 설정 묶음
     [SerializeField][Min(1f)] private float maxTemperature = 100f; // 최대 체온 수치
     [SerializeField][Min(0f)] private float recoveryPerSecond = 0.2f; // 초당 기본 체온 회복량
     [SerializeField][Range(0f, 1f)] private float shelteredColdMultiplier = 0.35f; // 실내 추위 적용 배율
+    [SerializeField][Min(0.05f)] private float heatIndicatorDuration = 0.25f; // 열기 수신 상태 유지 시간
 
     [Header("Season Cooling")] // 계절별 추위 설정 묶음
     [SerializeField][Min(0f)] private float springCoolingPerSecond = 0.02f; // 봄 초당 추위
@@ -33,17 +35,22 @@ public sealed class PlayerTemperature : MonoBehaviour // 플레이어 체온 관
     [SerializeField] private float currentTemperature = 100f; // 현재 체온 수치
 
     private PlayerHealth playerHealth; // 플레이어 체력 관리자
+    private PlayerEquipment playerEquipment; // 플레이어 장비 관리자
     private float nextDamageTime; // 다음 저체온 피해 시각
+    private float lastHeatReceivedTime; // 마지막 열기 수신 시각
 
     public float CurrentTemperature => currentTemperature; // 현재 체온 제공
     public float MaxTemperature => maxTemperature; // 최대 체온 제공
     public float NormalizedTemperature => currentTemperature / maxTemperature; // 체온 비율 제공
     public bool IsCold => currentTemperature <= coldThreshold; // 추위 상태 제공
     public bool IsHypothermic => currentTemperature <= hypothermiaThreshold; // 저체온 상태 제공
+    public bool IsReceivingHeat => Time.time - lastHeatReceivedTime <= heatIndicatorDuration; // 열기 수신 상태 제공
 
     private void Awake() // 체온 시스템 초기화
     {
         playerHealth = GetComponent<PlayerHealth>(); // 체력 관리자 가져오기
+        playerEquipment = GetComponent<PlayerEquipment>(); // 장비 관리자 가져오기
+        lastHeatReceivedTime = float.NegativeInfinity; // 시작 열기 수신 기록 제거
         ClampSettings(); // 설정값 범위 보정
         currentTemperature = maxTemperature; // 시작 체온 최대 적용
         nextDamageTime = Time.time + damageInterval; // 첫 피해 대기 시각 설정
@@ -78,6 +85,11 @@ public sealed class PlayerTemperature : MonoBehaviour // 플레이어 체온 관
             + nightCooling
             + wetnessCooling; // 전체 추위 계산
 
+        float coldResistanceMultiplier = 1f
+            - playerEquipment.TotalColdResistancePercent / 100f; // 방한 능력치 적용 배율 계산
+
+        totalCooling *= coldResistanceMultiplier; // 장비 방한 효과 적용
+
         if (isSheltered) // 실내 상태 확인
         {
             totalCooling *= shelteredColdMultiplier; // 실내 추위 감소
@@ -100,6 +112,21 @@ public sealed class PlayerTemperature : MonoBehaviour // 플레이어 체온 관
             maxTemperature); // 저장 체온 범위 적용
 
         nextDamageTime = Time.time + damageInterval; // 불러오기 직후 피해 대기
+    }
+
+    public void ReceiveHeat(float heatAmount) // 외부 열기로 체온 회복
+    {
+        if (heatAmount <= 0f) // 정상 열기 수치 확인
+        {
+            return; // 체온 회복 중단
+        }
+
+        currentTemperature = Mathf.Clamp(
+            currentTemperature + heatAmount,
+            0f,
+            maxTemperature); // 열기 체온 회복 적용
+
+        lastHeatReceivedTime = Time.time; // 마지막 열기 수신 시각 기록
     }
 
     [ContextMenu("Debug Set Cold Temperature")] // 추위 상태 테스트 메뉴
@@ -166,7 +193,7 @@ public sealed class PlayerTemperature : MonoBehaviour // 플레이어 체온 관
 
     private void UpdateHypothermiaDamage() // 저체온 체력 피해 처리
     {
-        if (!IsHypothermic || playerHealth.IsDead) // 저체온과 생존 상태 확인
+        if (!IsHypothermic || IsReceivingHeat || playerHealth.IsDead) // 저체온과 열기 및 생존 상태 확인
         {
             nextDamageTime = Time.time + damageInterval; // 다음 피해 시각 갱신
             return; // 피해 처리 중단
@@ -186,6 +213,7 @@ public sealed class PlayerTemperature : MonoBehaviour // 플레이어 체온 관
         maxTemperature = Mathf.Max(1f, maxTemperature); // 최대 체온 최소값 적용
         recoveryPerSecond = Mathf.Max(0f, recoveryPerSecond); // 회복량 음수 방지
         shelteredColdMultiplier = Mathf.Clamp01(shelteredColdMultiplier); // 실내 배율 범위 적용
+        heatIndicatorDuration = Mathf.Max(0.05f, heatIndicatorDuration); // 열기 표시 시간 최소값 적용
         coldThreshold = Mathf.Clamp(coldThreshold, 0f, maxTemperature); // 추위 기준 범위 적용
         hypothermiaThreshold = Mathf.Clamp(hypothermiaThreshold, 0f, coldThreshold); // 저체온 기준 범위 적용
         hypothermiaDamage = Mathf.Max(0f, hypothermiaDamage); // 저체온 피해 음수 방지

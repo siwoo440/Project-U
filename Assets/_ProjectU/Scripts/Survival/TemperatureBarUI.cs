@@ -11,6 +11,7 @@ public sealed class TemperatureBarUI : MonoBehaviour // 체온 화면 표시
     [SerializeField] private TMP_Text valueText; // 체온 수치 문구
 
     [Header("Colors")] // 상태별 색상 묶음
+    [SerializeField] private Color heatingColor = new Color(1f, 0.3f, 0.1f); // 열기 회복 색상
     [SerializeField] private Color warmColor = new Color(1f, 0.65f, 0.15f); // 정상 체온 색상
     [SerializeField] private Color coldColor = new Color(0.3f, 0.8f, 1f); // 추위 색상
     [SerializeField] private Color hypothermiaColor = new Color(0.1f, 0.3f, 1f); // 저체온 색상
@@ -38,6 +39,11 @@ public sealed class TemperatureBarUI : MonoBehaviour // 체온 화면 표시
 
     private string GetStateText() // 체온 상태 문구 조회
     {
+        if (playerTemperature.IsReceivingHeat) // 열기 수신 상태 확인
+        {
+            return "WARMING"; // 체온 회복 문구 반환
+        }
+
         if (playerTemperature.IsHypothermic) // 저체온 상태 확인
         {
             return "HYPOTHERMIA"; // 저체온 문구 반환
@@ -53,6 +59,11 @@ public sealed class TemperatureBarUI : MonoBehaviour // 체온 화면 표시
 
     private Color GetStateColor() // 체온 상태 색상 조회
     {
+        if (playerTemperature.IsReceivingHeat) // 열기 수신 상태 확인
+        {
+            return heatingColor; // 체온 회복 색상 반환
+        }
+
         if (playerTemperature.IsHypothermic) // 저체온 상태 확인
         {
             return hypothermiaColor; // 저체온 색상 반환

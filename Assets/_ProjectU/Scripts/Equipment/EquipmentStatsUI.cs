@@ -44,6 +44,6 @@ public sealed class EquipmentStatsUI : MonoBehaviour // 장비 능력치 화면 
 
     private void Refresh() // 장비 능력치 화면 갱신
     {
-        statsText.SetText($"DEFENSE {playerEquipment.TotalDefensePercent:0}%\nMAX HEALTH +{playerEquipment.TotalMaximumHealthBonus:0}\nMOVE SPEED +{playerEquipment.TotalMovementSpeedBonusPercent:0}%\nHUNGER USE -{playerEquipment.TotalHungerReductionPercent:0}%\nTHIRST USE -{playerEquipment.TotalThirstReductionPercent:0}%\nINVENTORY +{playerEquipment.TotalInventorySlotBonus}"); // 전체 장비 능력치 출력
+        statsText.SetText($"DEFENSE {playerEquipment.TotalDefensePercent:0}%\nMAX HEALTH +{playerEquipment.TotalMaximumHealthBonus:0}\nMOVE SPEED +{playerEquipment.TotalMovementSpeedBonusPercent:0}%\nHUNGER USE -{playerEquipment.TotalHungerReductionPercent:0}%\nTHIRST USE -{playerEquipment.TotalThirstReductionPercent:0}%\nCOLD RESIST {playerEquipment.TotalColdResistancePercent:0}%\nINVENTORY +{playerEquipment.TotalInventorySlotBonus}"); // 전체 장비 능력치 출력
     }
 }

@@ -24,6 +24,7 @@ MonoBehaviour:
   movementSpeedBonusPercent: 10
   hungerDepletionReductionPercent: 0
   thirstDepletionReductionPercent: 0
+  coldResistancePercent: 5
   inventorySlotBonus: 0
   hungerRestoreAmount: 0
   thirstRestoreAmount: 0

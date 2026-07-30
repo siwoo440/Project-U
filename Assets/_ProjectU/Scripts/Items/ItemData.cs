@@ -25,6 +25,7 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
     [SerializeField] private float movementSpeedBonusPercent; // 이동 속도 증가 비율
     [SerializeField, Range(0f, 80f)] private float hungerDepletionReductionPercent; // 허기 감소 방지 비율
     [SerializeField, Range(0f, 80f)] private float thirstDepletionReductionPercent; // 갈증 감소 방지 비율
+    [SerializeField, Range(0f, 80f)] private float coldResistancePercent; // 추위 감소 방지 비율
     [SerializeField] private int inventorySlotBonus; // 인벤토리 추가 슬롯
 
     [Header("Food")] // 음식 효과 묶음
@@ -52,6 +53,7 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
     public float MovementSpeedBonusPercent => IsEquipment ? Mathf.Max(0f, movementSpeedBonusPercent) : 0f; // 이동 속도 증가량 제공
     public float HungerDepletionReductionPercent => IsEquipment ? Mathf.Clamp(hungerDepletionReductionPercent, 0f, 80f) : 0f; // 허기 감소 방지량 제공
     public float ThirstDepletionReductionPercent => IsEquipment ? Mathf.Clamp(thirstDepletionReductionPercent, 0f, 80f) : 0f; // 갈증 감소 방지량 제공
+    public float ColdResistancePercent => IsEquipment ? Mathf.Clamp(coldResistancePercent, 0f, 80f) : 0f; // 장비 방한 능력치 제공
     public int InventorySlotBonus => IsEquipment && equipmentSlotType == EquipmentSlotType.Backpack ? Mathf.Max(0, inventorySlotBonus) : 0; // 가방 슬롯 증가량 제공
     public float HungerRestoreAmount => IsFood ? Mathf.Max(0f, hungerRestoreAmount) : 0f; // 음식 허기 회복량 제공
     public float ThirstRestoreAmount => IsDrink ? Mathf.Max(0f, thirstRestoreAmount) : 0f; // 음료 갈증 회복량 제공
@@ -91,6 +93,7 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
             movementSpeedBonusPercent = 0f; // 이동 속도 증가량 제거
             hungerDepletionReductionPercent = 0f; // 허기 감소 방지량 제거
             thirstDepletionReductionPercent = 0f; // 갈증 감소 방지량 제거
+            coldResistancePercent = 0f; // 방한 능력치 제거
             inventorySlotBonus = 0; // 인벤토리 증가량 제거
         }
         else // 장비 분류 확인
@@ -100,6 +103,7 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
             movementSpeedBonusPercent = Mathf.Max(0f, movementSpeedBonusPercent); // 이동 속도 증가량 음수 방지
             hungerDepletionReductionPercent = Mathf.Clamp(hungerDepletionReductionPercent, 0f, 80f); // 허기 감소 방지 범위 제한
             thirstDepletionReductionPercent = Mathf.Clamp(thirstDepletionReductionPercent, 0f, 80f); // 갈증 감소 방지 범위 제한
+            coldResistancePercent = Mathf.Clamp(coldResistancePercent, 0f, 80f); // 방한 능력치 범위 제한
 
             if (equipmentSlotType != EquipmentSlotType.Backpack) // 가방 외 장비 확인
             {

@@ -15,12 +15,17 @@ public sealed class CampfireCookingStation : InteractableBase, IBuildRemovalGuar
     [SerializeField] private float cookingDuration = 5f; // 조리 소요 시간
     [SerializeField] private GameObject fireVisualRoot; // 불꽃 연출 루트
 
+    [Header("Heat")] // 모닥불 열기 설정 묶음
+    [SerializeField][Min(0.1f)] private float heatRadius = 4f; // 열기 적용 반경
+    [SerializeField][Min(0f)] private float heatPerSecond = 4f; // 초당 체온 회복량
+
     [Header("Runtime")] // 실행 상태 묶음
     [SerializeField] private bool isCooking; // 현재 조리 상태
     [SerializeField] private bool hasReadyResult; // 완성 음식 보관 상태
     [SerializeField] private float remainingCookingTime; // 남은 조리 시간
 
     private PlayerInventory lastPlayerInventory; // 최근 상호작용 인벤토리
+    private PlayerTemperature playerTemperature; // 플레이어 체온 관리자
     private bool isConfigured; // 필수 설정 완료 여부
     public bool IsCooking => isCooking; // 현재 조리 진행 상태 제공
     public bool HasReadyResult => hasReadyResult; // 완성 음식 보관 상태 제공
@@ -102,13 +107,14 @@ public sealed class CampfireCookingStation : InteractableBase, IBuildRemovalGuar
         RestoreFromSave(false, false, 0f); // 초기 유휴 상태 적용
     }
 
-    private void Update() // 조리 시간 진행
+    private void Update() // 조리 시간과 열기 진행
     {
         if (!isCooking) // 조리 상태 확인
         {
-            return; // 시간 처리 중단
+            return; // 시간과 열기 처리 중단
         }
 
+        ApplyNearbyHeat(); // 조리 중 주변 플레이어 열기 적용
         remainingCookingTime -= Time.deltaTime; // 경과 시간 차감
 
         if (remainingCookingTime > 0f) // 남은 시간 확인
@@ -189,6 +195,38 @@ public sealed class CampfireCookingStation : InteractableBase, IBuildRemovalGuar
         hasReadyResult = true; // 완성 음식 보관
         remainingCookingTime = 0f; // 남은 시간 제거
         fireVisualRoot.SetActive(false); // 불꽃 연출 비활성화
+    }
+
+    private void ApplyNearbyHeat() // 주변 플레이어에게 모닥불 열기 적용
+    {
+        PlayerTemperature targetTemperature = ResolvePlayerTemperature(); // 플레이어 체온 관리자 조회
+
+        if (targetTemperature == null) // 플레이어 체온 관리자 확인
+        {
+            return; // 열기 처리 중단
+        }
+
+        Vector3 campfirePosition = transform.position; // 모닥불 위치 저장
+        Vector3 playerPosition = targetTemperature.transform.position; // 플레이어 위치 저장
+        float squaredDistance = (playerPosition - campfirePosition).sqrMagnitude; // 거리 제곱 계산
+        float squaredHeatRadius = heatRadius * heatRadius; // 열기 반경 제곱 계산
+
+        if (squaredDistance > squaredHeatRadius) // 열기 범위 밖 확인
+        {
+            return; // 체온 회복 중단
+        }
+
+        targetTemperature.ReceiveHeat(heatPerSecond * Time.deltaTime); // 현재 프레임 열기 적용
+    }
+
+    private PlayerTemperature ResolvePlayerTemperature() // 플레이어 체온 관리자 검색
+    {
+        if (playerTemperature == null) // 기존 체온 참조 확인
+        {
+            playerTemperature = FindFirstObjectByType<PlayerTemperature>(); // Scene의 플레이어 체온 검색
+        }
+
+        return playerTemperature; // 체온 관리자 반환
     }
 
     private void TryCollectResult(PlayerInventory playerInventory) // 완성 음식 회수 시도
@@ -276,6 +314,14 @@ public sealed class CampfireCookingStation : InteractableBase, IBuildRemovalGuar
         outputAmount = Mathf.Max(1, outputAmount); // 결과물 수량 최소값 적용
         cookingDuration = Mathf.Max(0.1f, cookingDuration); // 조리 시간 최소값 적용
         remainingCookingTime = Mathf.Max(0f, remainingCookingTime); // 남은 시간 음수 방지
+        heatRadius = Mathf.Max(0.1f, heatRadius); // 열기 반경 최소값 적용
+        heatPerSecond = Mathf.Max(0f, heatPerSecond); // 체온 회복량 음수 방지
+    }
+
+    private void OnDrawGizmosSelected() // 모닥불 열기 범위 표시
+    {
+        Gizmos.color = new Color(1f, 0.35f, 0.1f, 0.8f); // 열기 범위 색상 설정
+        Gizmos.DrawWireSphere(transform.position, heatRadius); // 열기 범위 원형 표시
     }
 
     private void OnDisable() // 모닥불 비활성화 정리

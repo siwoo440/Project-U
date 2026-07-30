@@ -16,6 +16,7 @@ public sealed class PlayerEquipment : MonoBehaviour // 플레이어 장비 관�
     [SerializeField] private float totalMovementSpeedBonusPercent; // 전체 이동 속도 증가량
     [SerializeField] private float totalHungerReductionPercent; // 전체 허기 감소 방지량
     [SerializeField] private float totalThirstReductionPercent; // 전체 갈증 감소 방지량
+    [SerializeField] private float totalColdResistancePercent; // 전체 방한 능력치
     [SerializeField] private int totalInventorySlotBonus; // 전체 인벤토리 추가 슬롯
 
     public float TotalDefensePercent => totalDefensePercent; // 전체 방어력 제공
@@ -23,6 +24,7 @@ public sealed class PlayerEquipment : MonoBehaviour // 플레이어 장비 관�
     public float TotalMovementSpeedBonusPercent => totalMovementSpeedBonusPercent; // 전체 이동 속도 증가량 제공
     public float TotalHungerReductionPercent => totalHungerReductionPercent; // 전체 허기 감소 방지량 제공
     public float TotalThirstReductionPercent => totalThirstReductionPercent; // 전체 갈증 감소 방지량 제공
+    public float TotalColdResistancePercent => totalColdResistancePercent; // 전체 방한 능력치 제공
     public int TotalInventorySlotBonus => totalInventorySlotBonus; // 전체 인벤토리 추가 슬롯 제공
     public event Action EquipmentChanged; // 장비 변경 알림
 
@@ -255,6 +257,7 @@ public sealed class PlayerEquipment : MonoBehaviour // 플레이어 장비 관�
         totalMovementSpeedBonusPercent = 0f; // 이동 속도 증가량 초기화
         totalHungerReductionPercent = 0f; // 허기 감소 방지량 초기화
         totalThirstReductionPercent = 0f; // 갈증 감소 방지량 초기화
+        totalColdResistancePercent = 0f; // 방한 능력치 초기화
         totalInventorySlotBonus = 0; // 인벤토리 증가량 초기화
 
         for (int index = 0; index < equippedItems.Length; index++) // 장비 슬롯 순회
@@ -271,6 +274,7 @@ public sealed class PlayerEquipment : MonoBehaviour // 플레이어 장비 관�
             totalMovementSpeedBonusPercent += equippedItem.MovementSpeedBonusPercent; // 이동 속도 증가량 합산
             totalHungerReductionPercent += equippedItem.HungerDepletionReductionPercent; // 허기 감소 방지량 합산
             totalThirstReductionPercent += equippedItem.ThirstDepletionReductionPercent; // 갈증 감소 방지량 합산
+            totalColdResistancePercent += equippedItem.ColdResistancePercent; // 방한 능력치 합산
             totalInventorySlotBonus += equippedItem.InventorySlotBonus; // 인벤토리 증가량 합산
         }
 
@@ -279,6 +283,7 @@ public sealed class PlayerEquipment : MonoBehaviour // 플레이어 장비 관�
         totalMovementSpeedBonusPercent = Mathf.Max(0f, totalMovementSpeedBonusPercent); // 전체 이동 속도 증가량 보정
         totalHungerReductionPercent = Mathf.Clamp(totalHungerReductionPercent, 0f, 80f); // 전체 허기 감소 방지 제한
         totalThirstReductionPercent = Mathf.Clamp(totalThirstReductionPercent, 0f, 80f); // 전체 갈증 감소 방지 제한
+        totalColdResistancePercent = Mathf.Clamp(totalColdResistancePercent, 0f, 80f); // 전체 방한 능력치 제한
         totalInventorySlotBonus = Mathf.Max(0, totalInventorySlotBonus); // 전체 인벤토리 증가량 보정
     }
 
