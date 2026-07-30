@@ -47,11 +47,16 @@ public sealed class WeatherEffectsController : MonoBehaviour // 날씨 시각과
     [SerializeField][Range(0f, 1f)] private float snowVolume = 0.25f; // 눈 바람 음량
     [SerializeField][Range(0f, 1f)] private float stormVolume = 0.7f; // 폭풍 음량
 
+    [Header("Shelter")] // 지붕 효과 설정 묶음
+    [SerializeField][Range(0f, 1f)] private float shelteredAudioMultiplier = 0.2f; // 지붕 아래 날씨 음량 배율
+    [SerializeField] private LayerMask precipitationCollisionMask; // 강수 충돌 대상 Layer
+
     [Header("Transition")] // 날씨 전환 설정 묶음
     [SerializeField][Min(0.1f)] private float transitionDuration = 2.5f; // 날씨 전환 시간
 
     [Header("Runtime")] // 실행 상태 묶음
     [SerializeField] private float currentSunMultiplier = 1f; // 현재 태양 밝기 배율
+    [SerializeField] private bool isPlayerSheltered; // 플레이어 지붕 아래 상태
 
     private Coroutine environmentTransitionRoutine; // 환경 전환 코루틴
     private Coroutine audioTransitionRoutine; // 음향 전환 코루틴
@@ -69,6 +74,7 @@ public sealed class WeatherEffectsController : MonoBehaviour // 날씨 시각과
 
         RenderSettings.fogMode = FogMode.ExponentialSquared; // 지수 제곱 안개 모드 적용
         ConfigureAudioSource(); // 날씨 음향 재생기 설정
+        ConfigurePrecipitationCollision(); // 강수 파티클 충돌 설정
     }
 
     private void OnEnable() // 날씨 변경 이벤트 연결
@@ -105,6 +111,17 @@ public sealed class WeatherEffectsController : MonoBehaviour // 날씨 시각과
     private void OnValidate() // Inspector 설정값 검증
     {
         ClampSettings(); // 설정값 범위 보정
+    }
+
+    public void SetPlayerSheltered(bool isSheltered) // 플레이어 지붕 상태 적용
+    {
+        if (isPlayerSheltered == isSheltered) // 기존 상태와 동일한지 확인
+        {
+            return; // 중복 효과 갱신 방지
+        }
+
+        isPlayerSheltered = isSheltered; // 현재 지붕 상태 저장
+        ApplyWeather(weatherCycle.CurrentWeather, false); // 현재 날씨 효과 다시 적용
     }
 
     private void HandleWeatherChanged(WeatherType weather) // 변경된 날씨 처리
@@ -161,6 +178,11 @@ public sealed class WeatherEffectsController : MonoBehaviour // 날씨 시각과
                 targetAudioClip = stormLoop; // 폭풍 음향 적용
                 targetAudioVolume = stormVolume; // 폭풍 음량 적용
                 break; // 폭풍 설정 완료
+        }
+
+        if (isPlayerSheltered) // 플레이어 지붕 아래 상태 확인
+        {
+            targetAudioVolume *= shelteredAudioMultiplier; // 지붕 아래 날씨 음량 감소
         }
 
         SetParticleEmission(rainParticles, targetRainRate); // 비 파티클 발생량 적용
@@ -317,6 +339,26 @@ public sealed class WeatherEffectsController : MonoBehaviour // 날씨 시각과
         weatherAudioSource.spatialBlend = 0f; // 이차원 환경음 적용
     }
 
+    private void ConfigurePrecipitationCollision() // 강수 파티클 충돌 설정
+    {
+        ConfigureParticleCollision(rainParticles); // 비 파티클 충돌 설정
+        ConfigureParticleCollision(snowParticles); // 눈 파티클 충돌 설정
+    }
+
+    private void ConfigureParticleCollision(ParticleSystem particles) // 개별 파티클 충돌 설정
+    {
+        ParticleSystem.CollisionModule collision = particles.collision; // 파티클 충돌 모듈 가져오기
+        collision.enabled = true; // 파티클 충돌 활성화
+        collision.type = ParticleSystemCollisionType.World; // 월드 Collider 충돌 적용
+        collision.mode = ParticleSystemCollisionMode.Collision3D; // 삼차원 충돌 방식 적용
+        collision.collidesWith = precipitationCollisionMask; // 지정 Layer 충돌 적용
+        collision.quality = ParticleSystemCollisionQuality.High; // 높은 충돌 정확도 적용
+        collision.bounce = 0f; // 충돌 반사 제거
+        collision.dampen = 0f; // 충돌 감속 제거
+        collision.lifetimeLoss = 1f; // 충돌 파티클 즉시 제거
+        collision.enableDynamicColliders = true; // 설치 건축물 충돌 허용
+    }
+
     private void ClampSettings() // Inspector 설정값 보정
     {
         cloudyFogDensity = Mathf.Max(0f, cloudyFogDensity); // 흐림 안개 밀도 보정
@@ -327,5 +369,6 @@ public sealed class WeatherEffectsController : MonoBehaviour // 날씨 시각과
         snowEmissionRate = Mathf.Max(0f, snowEmissionRate); // 눈 발생량 보정
         stormEmissionRate = Mathf.Max(0f, stormEmissionRate); // 폭풍 발생량 보정
         transitionDuration = Mathf.Max(0.1f, transitionDuration); // 전환 시간 최소값 보정
+        shelteredAudioMultiplier = Mathf.Clamp01(shelteredAudioMultiplier); // 지붕 음량 배율 범위 적용
     }
 }

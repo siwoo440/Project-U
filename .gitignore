@@ -1,3 +1,4 @@
+
 # Unity 자동 생성 폴더
 [Ll]ibrary/
 [Tt]emp/
@@ -42,3 +43,9 @@ ExportedObj-*/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# 외부 에셋 제외
+/Assets/_ProjectU/ThirdParty/
+/Assets/_ProjectU/ThirdParty.meta
+/Assets/_ProjectU/ThirdParty1/
+/Assets/_ProjectU/ThirdParty1.meta

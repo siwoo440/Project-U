@@ -9,6 +9,7 @@ public static class SaveSchemaValidator // 저장 구조 Editor 검사
         SaveGameData sampleSaveData = SaveGameData.CreateNew("20_Gameplay"); // 예제 저장 데이터 생성
         sampleSaveData.player.position = SaveVector3Data.FromVector3(new Vector3(5f, 1f, 3f)); // 예제 플레이어 위치 적용
         sampleSaveData.player.health = 75f; // 예제 체력 적용
+        sampleSaveData.player.wetness = 35f; // 예제 젖음 수치 적용
         sampleSaveData.time.currentDay = 3; // 예제 날짜 적용
         sampleSaveData.time.currentHour = 14.5f; // 예제 시간 적용
 
@@ -34,6 +35,14 @@ public static class SaveSchemaValidator // 저장 구조 Editor 검사
         if (!slotRestored) // 인벤토리 복원 실패 확인
         {
             Debug.LogError("저장 구조 검사 실패: 인벤토리 데이터가 일치하지 않습니다."); // 복원 오류 출력
+            return; // 검사 중단
+        }
+
+        bool wetnessRestored = Mathf.Approximately(restoredSaveData.player.wetness, 35f); // 젖음 복원 결과 확인
+
+        if (!wetnessRestored) // 젖음 복원 실패 확인
+        {
+            Debug.LogError("저장 구조 검사 실패: 젖음 데이터가 일치하지 않습니다."); // 젖음 복원 오류 출력
             return; // 검사 중단
         }
 

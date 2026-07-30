@@ -37,6 +37,7 @@ public sealed class PlayerSaveData // 플레이어 상태 저장 데이터
     public float hunger = 100f; // 현재 허기
     public float thirst = 100f; // 현재 갈증
     public float stamina = 100f; // 현재 스태미나
+    public float wetness; // 현재 젖음 수치
 }
 
 [Serializable] // JSON 직렬화 허용

@@ -24,6 +24,7 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
     private PlayerHunger playerHunger; // 플레이어 허기 관리기
     private PlayerThirst playerThirst; // 플레이어 갈증 관리기
     private PlayerStamina playerStamina; // 플레이어 스태미나 관리기
+    private PlayerWetness playerWetness; // 플레이어 젖음 관리기
     private bool isReady; // 저장 기능 준비 상태
 
     private void Awake() // 저장 기능 참조 초기화
@@ -53,6 +54,7 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
         playerHunger = playerTransform.GetComponent<PlayerHunger>(); // PlayerHunger 가져오기
         playerThirst = playerTransform.GetComponent<PlayerThirst>(); // PlayerThirst 가져오기
         playerStamina = playerTransform.GetComponent<PlayerStamina>(); // PlayerStamina 가져오기
+        playerWetness = playerTransform.GetComponent<PlayerWetness>(); // PlayerWetness 가져오기
 
         bool hasCharacterController = characterController != null; // 충돌 이동기 확인
         bool hasPlayerMovement = playerMovement != null; // 이동 관리기 확인
@@ -60,8 +62,11 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
         bool hasPlayerHunger = playerHunger != null; // 허기 관리기 확인
         bool hasPlayerThirst = playerThirst != null; // 갈증 관리기 확인
         bool hasPlayerStamina = playerStamina != null; // 스태미나 관리기 확인
+        bool hasPlayerWetness = playerWetness != null; // 젖음 관리기 확인
 
-        if (!hasCharacterController || !hasPlayerMovement || !hasPlayerHealth || !hasPlayerHunger || !hasPlayerThirst || !hasPlayerStamina) // 플레이어 필수 컴포넌트 확인
+        if (!hasCharacterController || !hasPlayerMovement || !hasPlayerHealth
+            || !hasPlayerHunger || !hasPlayerThirst || !hasPlayerStamina
+            || !hasPlayerWetness) // 플레이어 필수 컴포넌트 확인
         {
             Debug.LogError("플레이어의 저장 대상 컴포넌트가 누락되었습니다.", playerTransform); // 플레이어 구성 오류 출력
             enabled = false; // 저장 기능 비활성화
@@ -209,6 +214,7 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
         saveData.player.hunger = playerHunger.CurrentHunger; // 현재 허기 저장
         saveData.player.thirst = playerThirst.CurrentThirst; // 현재 갈증 저장
         saveData.player.stamina = playerStamina.CurrentStamina; // 현재 스태미나 저장
+        saveData.player.wetness = playerWetness.CurrentWetness; // 현재 젖음 수치 저장
         saveData.time.currentDay = dayNightCycle.CurrentDay; // 현재 날짜 저장
         saveData.time.currentHour = dayNightCycle.CurrentHour; // 현재 시간 저장
         inventorySaveBridge.Capture(saveData); // 인벤토리와 장비 상태 저장
@@ -240,6 +246,7 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
         playerHunger.SetCurrentHunger(saveData.player.hunger); // 저장 허기 적용
         playerThirst.SetCurrentThirst(saveData.player.thirst); // 저장 갈증 적용
         playerStamina.SetCurrentStamina(saveData.player.stamina); // 저장 스태미나 적용
+        playerWetness.SetCurrentWetness(saveData.player.wetness); // 저장 젖음 수치 적용
         dayNightCycle.SetTime(saveData.time.currentDay, saveData.time.currentHour); // 저장 날짜와 시간 적용
     }
 

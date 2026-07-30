@@ -91,7 +91,6 @@ public sealed class WeatherCycle : MonoBehaviour // 기본 날씨 순환 관리
         ClampSettings(); // 지속 시간 설정값 보정
     }
 
-    [ContextMenu("Force Next Weather")] // Inspector 날씨 강제 변경 메뉴
     public void ForceWeather(WeatherType weather) // 테스트용 특정 날씨 적용
     {
         if (!Application.isPlaying) // Play Mode 여부 확인
@@ -157,6 +156,7 @@ public sealed class WeatherCycle : MonoBehaviour // 기본 날씨 순환 관리
     {
         ApplyWeather(RollWeather(seasonCycle.CurrentSeason)); // 계절별 무작위 날씨 적용
     }
+
     private void ApplyWeather(WeatherType weather) // 선택된 날씨 상태 적용
     {
         currentWeather = weather; // 현재 날씨 적용
@@ -168,6 +168,7 @@ public sealed class WeatherCycle : MonoBehaviour // 기본 날씨 순환 관리
             Debug.Log($"날씨 변경: {currentWeather} / 지속 시간: {remainingWeatherHours:F1}시간", this); // 날씨 변경 결과 출력
         }
     }
+
     private WeatherType RollWeather(SeasonType season) // 계절별 날씨 확률 계산
     {
         float randomValue = UnityEngine.Random.Range(0f, 100f); // 백분율 무작위 값 생성
