@@ -1,6 +1,7 @@
 using UnityEngine; // Unity 기본 기능
 
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 추가 방지
+[RequireComponent(typeof(PlayerTemperature))] // 필수 체온 컴포넌트
 public sealed class PlayerStamina : MonoBehaviour // 플레이어 스태미나 관리
 {
     [Header("Stamina")] // 스태미나 설정 묶음
@@ -15,6 +16,7 @@ public sealed class PlayerStamina : MonoBehaviour // 플레이어 스태미나 �
     [SerializeField] private bool isExhausted; // 현재 탈진 상태
 
     private float nextRecoveryTime; // 회복 시작 가능 시각
+    private PlayerTemperature playerTemperature; // 플레이어 체온 관리자
 
     public float CurrentStamina => currentStamina; // 현재 스태미나 공개
     public float MaxStamina => maxStamina; // 최대 스태미나 공개
@@ -23,6 +25,7 @@ public sealed class PlayerStamina : MonoBehaviour // 플레이어 스태미나 �
 
     private void Awake() // 스태미나 실행 초기화
     {
+        playerTemperature = GetComponent<PlayerTemperature>(); // 체온 관리자 가져오기
         ClampSettings(); // 설정값 정상 범위 보정
         currentStamina = maxStamina; // 시작 스태미나 최대치 적용
         isExhausted = false; // 시작 탈진 상태 해제
@@ -60,7 +63,10 @@ public sealed class PlayerStamina : MonoBehaviour // 플레이어 스태미나 �
 
     private void ConsumeStamina(float deltaTime) // 달리기 스태미나 소비
     {
-        float drainAmount = sprintDrainPerSecond * deltaTime; // 현재 프레임 소비량 계산
+        float temperatureDrainMultiplier = playerTemperature.StaminaDrainMultiplier; // 온도 소비 배율 조회
+        float drainAmount = sprintDrainPerSecond
+            * temperatureDrainMultiplier
+            * deltaTime; // 체온 적용 스태미나 소비량 계산
         currentStamina = Mathf.Max(0f, currentStamina - drainAmount); // 스태미나 최소값 제한
         nextRecoveryTime = Time.time + recoveryDelay; // 회복 시작 시각 갱신
 
@@ -84,7 +90,10 @@ public sealed class PlayerStamina : MonoBehaviour // 플레이어 스태미나 �
             return; // 회복 처리 대기
         }
 
-        float recoveryAmount = recoveryPerSecond * deltaTime; // 현재 프레임 회복량 계산
+        float temperatureRecoveryMultiplier = playerTemperature.StaminaRecoveryMultiplier; // 온도 회복 배율 조회
+        float recoveryAmount = recoveryPerSecond
+            * temperatureRecoveryMultiplier
+            * deltaTime; // 체온 적용 스태미나 회복량 계산
         currentStamina = Mathf.Min(maxStamina, currentStamina + recoveryAmount); // 최대 수치 제한
 
         if (isExhausted && currentStamina >= staminaRequiredToResume) // 탈진 해제 수치 확인

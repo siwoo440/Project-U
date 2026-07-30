@@ -13782,9 +13782,12 @@ MonoBehaviour:
   playerTemperature: {fileID: 1491592341}
   fillImage: {fileID: 332701743}
   valueText: {fileID: 1318392271}
+  heatingColor: {r: 1, g: 0.3, b: 0.1, a: 1}
   warmColor: {r: 1, g: 0.65, b: 0.15, a: 1}
   coldColor: {r: 0.3, g: 0.8, b: 1, a: 1}
   hypothermiaColor: {r: 0.1, g: 0.3, b: 1, a: 1}
+  hotColor: {r: 1, g: 0.35, b: 0.05, a: 1}
+  heatstrokeColor: {r: 0.85, g: 0.05, b: 0.02, a: 1}
 --- !u!114 &1159046033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21867,6 +21870,7 @@ MonoBehaviour:
   totalMovementSpeedBonusPercent: 0
   totalHungerReductionPercent: 0
   totalThirstReductionPercent: 0
+  totalColdResistancePercent: 0
   totalInventorySlotBonus: 0
 --- !u!114 &1491592336
 MonoBehaviour:
@@ -21999,9 +22003,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cbed5db7b6c3064890d9c65b3030b20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerTemperature
-  maxTemperature: 100
+  maxTemperature: 200
+  normalTemperature: 100
   recoveryPerSecond: 0.2
   shelteredColdMultiplier: 0.35
+  heatIndicatorDuration: 0.25
   springCoolingPerSecond: 0.02
   summerCoolingPerSecond: 0
   autumnCoolingPerSecond: 0.06
@@ -22012,11 +22018,31 @@ MonoBehaviour:
   stormCoolingPerSecond: 0.3
   nightCoolingPerSecond: 0.08
   maximumWetnessCoolingPerSecond: 0.35
+  summerDayHeatingPerSecond: 0.22
+  clearDayHeatingPerSecond: 0.12
+  shelteredHeatMultiplier: 0.25
   coldThreshold: 50
   hypothermiaThreshold: 20
+  hotThreshold: 130
+  heatstrokeThreshold: 170
   hypothermiaDamage: 5
+  heatstrokeDamage: 5
   damageInterval: 3
-  currentTemperature: 100
+  coldMovementMultiplier: 0.9
+  hypothermiaMovementMultiplier: 0.65
+  coldStaminaDrainMultiplier: 1.15
+  hypothermiaStaminaDrainMultiplier: 1.5
+  coldStaminaRecoveryMultiplier: 0.9
+  hypothermiaStaminaRecoveryMultiplier: 0.5
+  hotMovementMultiplier: 0.9
+  heatstrokeMovementMultiplier: 0.7
+  hotStaminaDrainMultiplier: 1.25
+  heatstrokeStaminaDrainMultiplier: 1.75
+  hotStaminaRecoveryMultiplier: 0.75
+  heatstrokeStaminaRecoveryMultiplier: 0.4
+  hotThirstMultiplier: 1.5
+  heatstrokeThirstMultiplier: 2
+  currentTemperature: 2
 --- !u!1 &1521979942
 GameObject:
   m_ObjectHideFlags: 0

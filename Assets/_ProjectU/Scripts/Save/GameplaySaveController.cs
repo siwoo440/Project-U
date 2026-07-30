@@ -257,7 +257,7 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
 
         float loadedTemperature = saveData.player.hasTemperatureData
             ? saveData.player.temperature
-            : playerTemperature.MaxTemperature; // 기존 저장 파일 체온 결정
+            : playerTemperature.NormalTemperature; // 기존 저장 파일 정상 체온 결정
 
         playerTemperature.SetCurrentTemperature(loadedTemperature); // 저장 체온 수치 적용
 
@@ -287,3 +287,4 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
         return true; // 저장 기능 사용 허용
     }
 }
+

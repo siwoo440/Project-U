@@ -5,6 +5,7 @@ using UnityEngine.InputSystem; // 새 Input System 기능
 [RequireComponent(typeof(CharacterController))] // 필수 이동 충돌 컴포넌트
 [RequireComponent(typeof(PlayerStamina))] // 필수 스태미나 컴포넌트
 [RequireComponent(typeof(PlayerEquipment))] // 필수 장비 컴포넌트
+[RequireComponent(typeof(PlayerTemperature))] // 필수 체온 컴포넌트
 public sealed class PlayerMovement : MonoBehaviour // 플레이어 이동 처리
 {
     [Header("References")] // 외부 참조 묶음
@@ -38,6 +39,7 @@ public sealed class PlayerMovement : MonoBehaviour // 플레이어 이동 처리
     private CharacterController characterController; // 캐릭터 충돌 이동기
     private PlayerStamina playerStamina; // 플레이어 스태미나 관리기
     private PlayerEquipment playerEquipment; // 플레이어 장비 관리자
+    private PlayerTemperature playerTemperature; // 플레이어 체온 관리자
     private float verticalVelocity; // 수직 이동 속도
     private Vector3 groundNormal = Vector3.up; // 현재 지면의 수직 방향
     private float fallStartHeight; // 낙하 시작 높이
@@ -53,6 +55,7 @@ public sealed class PlayerMovement : MonoBehaviour // 플레이어 이동 처리
         characterController = GetComponent<CharacterController>(); // CharacterController 가져오기
         playerStamina = GetComponent<PlayerStamina>(); // PlayerStamina 가져오기
         playerEquipment = GetComponent<PlayerEquipment>(); // PlayerEquipment 가져오기
+        playerTemperature = GetComponent<PlayerTemperature>(); // PlayerTemperature 가져오기
 
         if (cameraTransform == null || moveActionReference == null || sprintActionReference == null || jumpActionReference == null) // 필수 참조 연결 확인
         {
@@ -126,7 +129,10 @@ public sealed class PlayerMovement : MonoBehaviour // 플레이어 이동 처리
         bool isSprinting = playerStamina.UpdateSprint(wantsToSprint, Time.deltaTime); // 스태미나 기반 달리기 판정
         float baseMovementSpeed = isSprinting ? runSpeed : walkSpeed; // 기본 이동 속도 결정
         float equipmentSpeedMultiplier = 1f + playerEquipment.TotalMovementSpeedBonusPercent / 100f; // 장비 이동 속도 배율 계산
-        float currentSpeed = baseMovementSpeed * equipmentSpeedMultiplier; // 장비 적용 이동 속도 계산
+        float temperatureSpeedMultiplier = playerTemperature.MovementSpeedMultiplier; // 온도 이동 속도 배율 조회
+        float currentSpeed = baseMovementSpeed
+            * equipmentSpeedMultiplier
+            * temperatureSpeedMultiplier; // 장비와 체온 적용 이동 속도 계산
 
         UpdateVerticalVelocity(); // 점프와 중력 계산
         UpdateFallingState(); // 공중 하강 상태 검사

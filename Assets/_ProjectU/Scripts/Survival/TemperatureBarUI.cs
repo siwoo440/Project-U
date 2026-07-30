@@ -15,6 +15,8 @@ public sealed class TemperatureBarUI : MonoBehaviour // 체온 화면 표시
     [SerializeField] private Color warmColor = new Color(1f, 0.65f, 0.15f); // 정상 체온 색상
     [SerializeField] private Color coldColor = new Color(0.3f, 0.8f, 1f); // 추위 색상
     [SerializeField] private Color hypothermiaColor = new Color(0.1f, 0.3f, 1f); // 저체온 색상
+    [SerializeField] private Color hotColor = new Color(1f, 0.35f, 0.05f); // 더위 상태 색상
+    [SerializeField] private Color heatstrokeColor = new Color(0.85f, 0.05f, 0.02f); // 열사병 상태 색상
 
     private void Awake() // 체온 UI 참조 검사
     {
@@ -39,6 +41,16 @@ public sealed class TemperatureBarUI : MonoBehaviour // 체온 화면 표시
 
     private string GetStateText() // 체온 상태 문구 조회
     {
+        if (playerTemperature.IsHeatstroke) // 열사병 상태 확인
+        {
+            return "HEATSTROKE"; // 열사병 문구 반환
+        }
+
+        if (playerTemperature.IsHot) // 더위 상태 확인
+        {
+            return "HOT"; // 더위 문구 반환
+        }
+
         if (playerTemperature.IsReceivingHeat) // 열기 수신 상태 확인
         {
             return "WARMING"; // 체온 회복 문구 반환
@@ -54,14 +66,24 @@ public sealed class TemperatureBarUI : MonoBehaviour // 체온 화면 표시
             return "COLD"; // 추위 문구 반환
         }
 
-        return "WARM"; // 정상 체온 문구 반환
+        return "COMFORTABLE"; // 쾌적 문구 반환
     }
 
     private Color GetStateColor() // 체온 상태 색상 조회
     {
+        if (playerTemperature.IsHeatstroke) // 열사병 상태 확인
+        {
+            return heatstrokeColor; // 열사병 색상 반환
+        }
+
+        if (playerTemperature.IsHot) // 더위 상태 확인
+        {
+            return hotColor; // 더위 색상 반환
+        }
+
         if (playerTemperature.IsReceivingHeat) // 열기 수신 상태 확인
         {
-            return heatingColor; // 체온 회복 색상 반환
+            return heatingColor; // 열기 회복 색상 반환
         }
 
         if (playerTemperature.IsHypothermic) // 저체온 상태 확인
@@ -74,6 +96,7 @@ public sealed class TemperatureBarUI : MonoBehaviour // 체온 화면 표시
             return coldColor; // 추위 색상 반환
         }
 
-        return warmColor; // 정상 체온 색상 반환
+        return warmColor; // 쾌적 색상 반환
     }
 }
+
