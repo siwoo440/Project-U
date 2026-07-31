@@ -5506,7 +5506,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WorldItemPickup
   promptMessage: F - PICK UP WOOD
   itemData: {fileID: 11400000, guid: b9e78781ff8b2aa4bae6df0fa3d2e1c9, type: 2}
-  quantity: 10
+  quantity: 100
 --- !u!65 &467601198
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6771,102 +6771,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 576511284}
   m_CullTransparentMesh: 1
---- !u!1 &581033797
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 581033798}
-  - component: {fileID: 581033799}
-  m_Layer: 0
-  m_Name: Debug_LargeChest
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &581033798
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 581033797}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -5.52}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1202073897}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &581033799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 581033797}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67dfe5465d50cf347a512ad2567b765d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StorageContainer
-  storageTypeData: {fileID: 11400000, guid: 538598bfa4147a04bafc51cd0cbc2611, type: 2}
-  slots:
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  placedBuildObject: {fileID: 0}
-  debugStructureId: debug_storage_large_01
 --- !u!1 &586531504
 GameObject:
   m_ObjectHideFlags: 0
@@ -16149,9 +16053,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1602643782}
-  - {fileID: 581033798}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1204800903 stripped
@@ -18622,7 +18524,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WorldItemPickup
   promptMessage: F - PICK UP WOOD
   itemData: {fileID: 11400000, guid: b9e78781ff8b2aa4bae6df0fa3d2e1c9, type: 2}
-  quantity: 10
+  quantity: 100
 --- !u!65 &1434626767
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24342,6 +24244,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: eeffeeefea03e854da70c7c324c7296d, type: 2}
   - {fileID: 11400000, guid: 81ca2d609af37d44ab59674459b7c242, type: 2}
   - {fileID: 11400000, guid: 25aae37426e3a4d449bdd9f3942bffc8, type: 2}
+  - {fileID: 11400000, guid: c0371b613f6d81a4abf89b41b8a28fe6, type: 2}
+  - {fileID: 11400000, guid: 098406d5796eada4395a9eed0df244c0, type: 2}
+  - {fileID: 11400000, guid: d0b44cbf98324944fb11b0ea4760283c, type: 2}
+  - {fileID: 11400000, guid: 1d0983db947779749a12fca4ce1da6f9, type: 2}
   - {fileID: 11400000, guid: 7c4d83f54b0ba9f48b4f04f89462d0f6, type: 2}
   - {fileID: 11400000, guid: 75647e9ebdbadc744817782679190212, type: 2}
   validPreviewMaterial: {fileID: 2100000, guid: 575eeba1a98fc994f9dd258bfa6decd7, type: 2}
@@ -25060,78 +24966,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1856969470326974002, guid: cd573440740c3874aa419aba6ab7dfe1, type: 3}
   m_PrefabInstance: {fileID: 1633250093}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1602643781
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1602643782}
-  - component: {fileID: 1602643783}
-  m_Layer: 0
-  m_Name: Debug_SmallChest
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1602643782
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1602643781}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -5.52}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1202073897}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1602643783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1602643781}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67dfe5465d50cf347a512ad2567b765d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StorageContainer
-  storageTypeData: {fileID: 11400000, guid: 5d130a4bd6495294ebefbfcc6dbef609, type: 2}
-  slots:
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  - itemData: {fileID: 0}
-    quantity: 0
-  placedBuildObject: {fileID: 0}
-  debugStructureId: debug_storage_small_01
 --- !u!1 &1610852001
 GameObject:
   m_ObjectHideFlags: 0
@@ -26448,7 +26282,7 @@ MonoBehaviour:
   storageSlotContainer: {fileID: 162412977}
   storageGridLayout: {fileID: 162412978}
   storageSlotTemplate: {fileID: 275001777}
-  debugStorageContainer: {fileID: 1602643783}
+  debugStorageContainer: {fileID: 0}
 --- !u!1 &1690422168
 GameObject:
   m_ObjectHideFlags: 0
@@ -28447,6 +28281,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 25aae37426e3a4d449bdd9f3942bffc8, type: 2}
   - {fileID: 11400000, guid: 7c4d83f54b0ba9f48b4f04f89462d0f6, type: 2}
   - {fileID: 11400000, guid: 75647e9ebdbadc744817782679190212, type: 2}
+  - {fileID: 11400000, guid: 098406d5796eada4395a9eed0df244c0, type: 2}
+  - {fileID: 11400000, guid: d0b44cbf98324944fb11b0ea4760283c, type: 2}
+  - {fileID: 11400000, guid: c0371b613f6d81a4abf89b41b8a28fe6, type: 2}
+  - {fileID: 11400000, guid: 1d0983db947779749a12fca4ce1da6f9, type: 2}
 --- !u!114 &1951417614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30658,6 +30496,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WoodPickup
       objectReference: {fileID: 0}
+    - target: {fileID: 6799736741069824352, guid: 297ce24fcfb620841ba57df42990fa55, type: 3}
+      propertyPath: quantity
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -30915,6 +30757,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 963744050}
     m_Modifications:
+    - target: {fileID: 583586894999323094, guid: a072ccfe54d922c4cb7a4b0a01b8ccbf, type: 3}
+      propertyPath: quantity
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 1895633545792708911, guid: a072ccfe54d922c4cb7a4b0a01b8ccbf, type: 3}
       propertyPath: m_Name
       value: StonePickup

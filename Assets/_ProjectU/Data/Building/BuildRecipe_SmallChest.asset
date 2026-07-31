@@ -10,24 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c0b0e46b0956bcf479f2754564f5cfa9, type: 3}
-  m_Name: BuildRecipe_Campfire
+  m_Name: BuildRecipe_SmallChest
   m_EditorClassIdentifier: Assembly-CSharp::BuildRecipeData
-  recipeId: structure_campfire
-  displayName: CAMPFIRE
+  recipeId: structure_small_chest
+  displayName: SMALL CHEST
   structureType: 4
-  allowGroundPlacement: 1
+  allowGroundPlacement: 0
   placementType: 2
-  rotationStep: 45
+  rotationStep: 90
   previewOffset: {x: 0, y: 0, z: 0}
-  placedPrefab: {fileID: 3384596410255654593, guid: 79da92104ff5cb24ca5455f9b3c1c457, type: 3}
-  previewPrefab: {fileID: 3384596410255654593, guid: 4c4a71fe4dd59634c9b303de0282a8de, type: 3}
-  placementCheckCenter: {x: 0, y: 0.3, z: 0}
-  placementCheckHalfExtents: {x: 0.35, y: 0.29, z: 0.35}
-  maximumSlopeAngle: 20
-  maximumHeightDifference: 0.12
+  placedPrefab: {fileID: 4593092955796640854, guid: 110da5a057f47b34c9b08f3334b991bd, type: 3}
+  previewPrefab: {fileID: 3738943124125729578, guid: 26eaf40dcfde9f248a6bdf20aea87416, type: 3}
+  placementCheckCenter: {x: 0, y: 0.35, z: 0}
+  placementCheckHalfExtents: {x: 0.4, y: 0.34, z: 0.3}
+  maximumSlopeAngle: 10
+  maximumHeightDifference: 0.1
   ingredients:
   - itemData: {fileID: 11400000, guid: b9e78781ff8b2aa4bae6df0fa3d2e1c9, type: 2}
-    amount: 5
-  - itemData: {fileID: 11400000, guid: 479a7e7a5dbb8df4a9ea663d4e582a1b, type: 2}
-    amount: 3
+    amount: 6
   demolitionRefundRatio: 0.5

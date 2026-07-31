@@ -1,5 +1,5 @@
-using System; // 문자열 비교 기능
-using System.Collections.Generic; // 제거된 재료 임시 목록 기능
+using System; // 이벤트 기능
+using System.Collections.Generic; // 재료 목록 기능
 using UnityEngine; // Unity 기본 기능
 
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
@@ -11,7 +11,25 @@ public sealed class CraftingManager : MonoBehaviour // 플레이어 제작 관�
     [SerializeField] private CraftingFacilityType activeFacility = CraftingFacilityType.Hand; // 현재 제작 시설
 
     public CraftingUnlockManager UnlockManager => craftingUnlockManager; // 해금 관리자 제공
+    public CraftingFacilityType ActiveFacilityType => activeFacility; // 현재 시설 종류 제공
     public string ActiveFacilityId => CraftingFacilityIds.GetFacilityId(activeFacility); // 현재 시설 ID 제공
+    public event Action ActiveFacilityChanged; // 현재 제작 시설 변경 알림
+
+    public void SetActiveFacility(CraftingFacilityType facilityType) // 현재 제작 시설 변경
+    {
+        if (activeFacility == facilityType) // 동일 시설 확인
+        {
+            return; // 중복 변경 차단
+        }
+
+        activeFacility = facilityType; // 새로운 제작 시설 저장
+        ActiveFacilityChanged?.Invoke(); // 제작 시설 변경 알림
+    }
+
+    public void ResetToHand() // 맨손 제작 시설 복귀
+    {
+        SetActiveFacility(CraftingFacilityType.Hand); // 맨손 제작 시설 적용
+    }
 
     public bool IsRecipeUnlocked(CraftingRecipeData recipeData) // 제작법 해금 여부 확인
     {
@@ -90,7 +108,7 @@ public sealed class CraftingManager : MonoBehaviour // 플레이어 제작 관�
 
         if (remainingResult > 0) // 결과 아이템 추가 실패 확인
         {
-            int addedResult = recipeData.ResultQuantity - remainingResult; // 실제 추가된 결과 수량 계산
+            int addedResult = recipeData.ResultQuantity - remainingResult; // 실제 추가 수량 계산
 
             if (addedResult > 0) // 일부 결과 추가 여부 확인
             {
@@ -113,16 +131,16 @@ public sealed class CraftingManager : MonoBehaviour // 플레이어 제작 관�
 
                 for (int restoreIndex = 0; restoreIndex < removedIngredients.Count; restoreIndex++) // 제거 완료 재료 순회
                 {
-                    CraftingIngredient removedIngredient = removedIngredients[restoreIndex]; // 복구할 재료 조회
-                    playerInventory.AddItem(removedIngredient.ItemData, removedIngredient.Amount); // 제거된 재료 복구
+                    CraftingIngredient removedIngredient = removedIngredients[restoreIndex]; // 복구 재료 조회
+                    playerInventory.AddItem(removedIngredient.ItemData, removedIngredient.Amount); // 제거 재료 복구
                 }
 
-                if (removedAmount > 0) // 현재 재료 일부 제거 여부 확인
+                if (removedAmount > 0) // 현재 재료 일부 제거 확인
                 {
-                    playerInventory.AddItem(ingredient.ItemData, removedAmount); // 일부 제거된 재료 복구
+                    playerInventory.AddItem(ingredient.ItemData, removedAmount); // 일부 제거 재료 복구
                 }
 
-                Debug.LogError($"{recipeData.DisplayName} 제작 중 재료 수량이 변경되어 제작을 취소했습니다.", this); // 제작 동기화 오류 출력
+                Debug.LogError($"{recipeData.DisplayName} 제작 중 재료 수량이 변경되어 제작을 취소했습니다.", this); // 제작 오류 출력
                 return false; // 제작 실패 반환
             }
 

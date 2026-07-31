@@ -8,7 +8,7 @@ public sealed class CraftingRecipeButton : MonoBehaviour // 제작법 UI 항목
     [Header("References")] // 기능 참조 묶음
     [SerializeField] private PlayerInventory playerInventory; // 플레이어 인벤토리
     [SerializeField] private CraftingManager craftingManager; // 제작 관리자
-    [SerializeField] private CraftingRecipeData recipeData; // 표시할 제작법
+    [SerializeField] private CraftingRecipeData recipeData; // 표시 제작법
     [SerializeField] private TMP_Text recipeNameText; // 제작법 이름 Text
     [SerializeField] private TMP_Text ingredientText; // 제작 재료 Text
     [SerializeField] private TMP_Text statusText; // 제작 상태 Text
@@ -18,14 +18,15 @@ public sealed class CraftingRecipeButton : MonoBehaviour // 제작법 UI 항목
 
     private void Awake() // 제작법 UI 초기화
     {
-        referencesValid = playerInventory != null // 인벤토리 참조 확인
-            && craftingManager != null // 제작 관리자 참조 확인
-            && craftingManager.UnlockManager != null // 해금 관리자 참조 확인
-            && recipeData != null // 제작법 참조 확인
-            && recipeNameText != null // 제작법 이름 Text 확인
-            && ingredientText != null // 재료 Text 확인
-            && statusText != null // 상태 Text 확인
-            && craftButton != null; // 제작 버튼 확인
+        referencesValid =
+            playerInventory != null
+            && craftingManager != null
+            && craftingManager.UnlockManager != null
+            && recipeData != null
+            && recipeNameText != null
+            && ingredientText != null
+            && statusText != null
+            && craftButton != null; // 필수 참조 확인
 
         if (!referencesValid) // 참조 누락 확인
         {
@@ -45,7 +46,8 @@ public sealed class CraftingRecipeButton : MonoBehaviour // 제작법 UI 항목
         }
 
         playerInventory.InventoryChanged += Refresh; // 인벤토리 변경 구독
-        craftingManager.UnlockManager.UnlockStateChanged += Refresh; // 해금 변경 이벤트 구독
+        craftingManager.UnlockManager.UnlockStateChanged += Refresh; // 해금 변경 구독
+        craftingManager.ActiveFacilityChanged += Refresh; // 제작 시설 변경 구독
         Refresh(); // 현재 제작 상태 표시
     }
 
@@ -57,7 +59,8 @@ public sealed class CraftingRecipeButton : MonoBehaviour // 제작법 UI 항목
         }
 
         playerInventory.InventoryChanged -= Refresh; // 인벤토리 변경 구독 해제
-        craftingManager.UnlockManager.UnlockStateChanged -= Refresh; // 해금 변경 이벤트 해제
+        craftingManager.UnlockManager.UnlockStateChanged -= Refresh; // 해금 변경 구독 해제
+        craftingManager.ActiveFacilityChanged -= Refresh; // 제작 시설 변경 구독 해제
     }
 
     private void OnDestroy() // 버튼 이벤트 정리
@@ -89,16 +92,16 @@ public sealed class CraftingRecipeButton : MonoBehaviour // 제작법 UI 항목
             }
 
             int ownedQuantity = playerInventory.GetItemQuantity(ingredient.ItemData); // 현재 보유량 조회
-            ingredientBuilder.Append($"{ingredient.ItemData.DisplayName}: {ownedQuantity} / {ingredient.Amount}"); // 보유량과 필요량 표시
+            ingredientBuilder.Append($"{ingredient.ItemData.DisplayName}: {ownedQuantity} / {ingredient.Amount}"); // 보유량 표시
         }
 
-        ingredientText.SetText(ingredientBuilder.ToString()); // 완성된 재료 문구 표시
+        ingredientText.SetText(ingredientBuilder.ToString()); // 완성 재료 문구 표시
 
         bool isUnlocked = craftingManager.IsRecipeUnlocked(recipeData); // 제작법 해금 여부 확인
         bool hasFacility = craftingManager.HasRequiredFacility(recipeData); // 제작 시설 충족 여부 확인
         bool hasMaterials = craftingManager.HasRequiredMaterials(recipeData); // 재료 충족 여부 확인
         bool hasOutputSpace = craftingManager.HasOutputSpace(recipeData); // 결과 공간 여부 확인
-        craftButton.interactable = isUnlocked && hasFacility && hasMaterials && hasOutputSpace; // 전체 조건에 따른 버튼 상태 적용
+        craftButton.interactable = isUnlocked && hasFacility && hasMaterials && hasOutputSpace; // 제작 버튼 상태 적용
 
         if (!isUnlocked) // 제작법 잠금 확인
         {
@@ -137,7 +140,7 @@ public sealed class CraftingRecipeButton : MonoBehaviour // 제작법 UI 항목
             return; // 제작 처리 종료
         }
 
-        Refresh(); // 제작 후 재료 수량 갱신
+        Refresh(); // 제작 후 수량 갱신
         statusText.SetText("CRAFTED"); // 제작 완료 문구 표시
     }
 }

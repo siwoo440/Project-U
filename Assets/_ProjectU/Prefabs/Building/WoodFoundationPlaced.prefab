@@ -364,7 +364,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuildConnectionPoint
   connectionPointId: floor_top
-  acceptedStructureTypes: 02000000
+  acceptedStructureTypes: 0200000004000000
 --- !u!1 &9159630068720667852
 GameObject:
   m_ObjectHideFlags: 0
