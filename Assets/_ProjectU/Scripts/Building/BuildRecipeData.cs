@@ -7,6 +7,9 @@ public sealed class BuildRecipeData : ScriptableObject // 건축물 제작과 �
     [Header("Identity")] // 식별 정보 묶음
     [SerializeField] private string recipeId = "structure_new"; // 건축 데이터 고유 ID
     [SerializeField] private string displayName = "NEW STRUCTURE"; // 건축물 표시 이름
+   
+    [Header("Structure")] // 구조 설정 묶음
+    [SerializeField] private BuildStructureType structureType = BuildStructureType.None; // 건축 구조 역할
 
     [Header("Placement")] // 배치 설정 묶음
     [SerializeField] private BuildPlacementType placementType = BuildPlacementType.Free; // 건축물 배치 종류
@@ -33,6 +36,7 @@ public sealed class BuildRecipeData : ScriptableObject // 건축물 제작과 �
 
     public string RecipeId => recipeId; // 건축 데이터 ID 제공
     public string DisplayName => displayName; // 건축물 이름 제공
+    public BuildStructureType StructureType => structureType; // 건축 구조 역할 제공
     public BuildPlacementType PlacementType => placementType; // 배치 종류 제공
     public float RotationStep => rotationStep; // 회전 단위 제공
     public Vector3 PreviewOffset => previewOffset; // 위치 보정 제공

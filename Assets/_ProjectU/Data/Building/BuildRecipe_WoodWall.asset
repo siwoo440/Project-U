@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BuildRecipeData
   recipeId: structure_wood_wall
   displayName: WOOD WALL
+  structureType: 3
   placementType: 1
   rotationStep: 45
   previewOffset: {x: 0, y: 0, z: 0}

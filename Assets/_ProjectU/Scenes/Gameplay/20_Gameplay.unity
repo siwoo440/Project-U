@@ -24339,6 +24339,7 @@ MonoBehaviour:
   gridArea: {fileID: 1134701207}
   placedObjectRoot: {fileID: 638049834}
   buildRecipes:
+  - {fileID: 11400000, guid: eeffeeefea03e854da70c7c324c7296d, type: 2}
   - {fileID: 11400000, guid: 81ca2d609af37d44ab59674459b7c242, type: 2}
   - {fileID: 11400000, guid: 25aae37426e3a4d449bdd9f3942bffc8, type: 2}
   - {fileID: 11400000, guid: 7c4d83f54b0ba9f48b4f04f89462d0f6, type: 2}
@@ -24359,6 +24360,7 @@ MonoBehaviour:
   terrainProbeHeight: 5
   terrainProbeDistance: 12
   collisionPadding: 0.02
+  connectionSnapDistance: 0.8
   buildHudRoot: {fileID: 276407461}
   buildStatusText: {fileID: 160400866}
 --- !u!114 &1491592338
@@ -28440,10 +28442,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlacedStructureSaveBridge
   placedStructureParent: {fileID: 638049834}
   buildRecipes:
-  - {fileID: 11400000, guid: 7c4d83f54b0ba9f48b4f04f89462d0f6, type: 2}
-  - {fileID: 11400000, guid: 75647e9ebdbadc744817782679190212, type: 2}
+  - {fileID: 11400000, guid: eeffeeefea03e854da70c7c324c7296d, type: 2}
   - {fileID: 11400000, guid: 81ca2d609af37d44ab59674459b7c242, type: 2}
   - {fileID: 11400000, guid: 25aae37426e3a4d449bdd9f3942bffc8, type: 2}
+  - {fileID: 11400000, guid: 7c4d83f54b0ba9f48b4f04f89462d0f6, type: 2}
+  - {fileID: 11400000, guid: 75647e9ebdbadc744817782679190212, type: 2}
 --- !u!114 &1951417614
 MonoBehaviour:
   m_ObjectHideFlags: 0

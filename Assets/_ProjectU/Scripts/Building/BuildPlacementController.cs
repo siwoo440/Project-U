@@ -32,6 +32,7 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
     [SerializeField] private float terrainProbeHeight = 5f; // Terrain 표본 시작 높이
     [SerializeField] private float terrainProbeDistance = 12f; // Terrain 표본 탐지 거리
     [SerializeField] private float collisionPadding = 0.02f; // 충돌 검사 여유값
+    [SerializeField] private float connectionSnapDistance = 0.8f; // 연결점 탐지 최대 거리
 
     [Header("UI")] // 건축 UI 참조 묶음
     [SerializeField] private GameObject buildHudRoot; // 건축 HUD 루트
@@ -47,6 +48,7 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
     private int lastBuildInputFrame = -1; // 마지막 건축 입력 프레임
     private bool isRemovalMode; // 철거 모드 상태
     private PlacedBuildObject currentRemovalTarget; // 현재 철거 대상
+    private BuildConnectionPoint currentConnectionPoint; // 현재 선택된 구조 연결점
 
     public bool IsBuildMode => isBuildMode; // 건축 모드 상태 제공
     public bool BlocksGameplayInput => isBuildMode || Time.frameCount == lastBuildInputFrame; // 현재 프레임 일반 입력 차단 상태
@@ -215,6 +217,7 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
         isRemovalMode = false; // 철거 모드 비활성화
         isBuildMode = false; // 건축 모드 비활성화
         canPlace = false; // 설치 가능 상태 해제
+        currentConnectionPoint = null; // 현재 연결점 선택 해제
         lastBuildInputFrame = Time.frameCount; // 종료 프레임 일반 입력 차단
 
         if (previewInstance != null) // 미리보기 존재 확인
@@ -243,6 +246,7 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
         }
 
         currentRecipe = buildRecipes[currentRecipeIndex]; // 새로운 건축 데이터 저장
+        currentConnectionPoint = null; // 이전 건축물 연결점 선택 해제
 
         if (currentRecipe == null) // 새로운 건축 데이터 연결 확인
         {
@@ -304,121 +308,44 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
     {
         Vector2 screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f); // 화면 중앙 좌표 계산
         Ray placementRay = mainCamera.ScreenPointToRay(screenCenter); // 화면 중앙 광선 생성
+        Vector3 previewPosition; // 최종 미리보기 위치
+        Quaternion previewRotation; // 최종 미리보기 회전
+        string failureStatus; // 배치 실패 상태 문구
+        bool placementResolved; // 배치 위치 계산 성공 여부
 
-        bool hasGround = Physics.Raycast(
-            placementRay,
-            out RaycastHit groundHit,
-            maximumBuildDistance + 3f,
-            groundLayerMask,
-            QueryTriggerInteraction.Ignore); // Terrain 탐지
+        currentConnectionPoint = null; // 이전 연결점 선택 해제
 
-        if (!hasGround) // Terrain 미탐지 확인
+        if (RequiresStructureConnection()) // 구조 연결 필요 여부 확인
         {
-            SetPreviewUnavailable("NO BUILDABLE GROUND"); // 지면 없음 상태 적용
-            return; // 갱신 중단
+            placementResolved = TryResolveConnectionPlacement( // 구조 연결 배치 위치 계산
+                placementRay, // 화면 중앙 광선
+                out previewPosition, // 계산된 위치
+                out previewRotation, // 계산된 회전
+                out failureStatus); // 실패 문구
+        }
+        else // Terrain 배치 처리
+        {
+            placementResolved = TryResolveGroundPlacement( // 지면 배치 위치 계산
+                placementRay, // 화면 중앙 광선
+                out previewPosition, // 계산된 위치
+                out previewRotation, // 계산된 회전
+                out failureStatus); // 실패 문구
         }
 
-        if (!gridArea.ContainsWorldPoint(groundHit.point)) // 건축 구역 포함 여부 확인
+        if (!placementResolved) // 배치 위치 계산 실패 확인
         {
-            SetPreviewUnavailable("OUTSIDE BUILD AREA"); // 건축 구역 밖 상태 적용
-            return; // 갱신 중단
+            SetPreviewUnavailable(failureStatus); // 실패 상태 적용
+            return; // 미리보기 갱신 중단
         }
-
-        float playerDistance = Vector3.Distance(playerTransform.position, groundHit.point); // 플레이어와 설치 지점 거리 계산
-
-        if (playerDistance > maximumBuildDistance) // 최대 거리 초과 확인
-        {
-            SetPreviewUnavailable("TOO FAR"); // 거리 초과 상태 적용
-            return; // 갱신 중단
-        }
-
-        Vector3 basePosition; // 배치 기준 위치 선언
-        Quaternion previewRotation; // 배치 기준 회전 선언
-
-        if (currentRecipe.PlacementType == BuildPlacementType.Floor) // 바닥 배치 확인
-        {
-            if (!gridArea.TryGetCell(groundHit.point, out Vector2Int cell)) // 대상 타일 계산
-            {
-                SetPreviewUnavailable("OUTSIDE BUILD AREA"); // 구역 밖 상태 적용
-                return; // 갱신 중단
-            }
-
-            basePosition = gridArea.GetCellCenter(cell); // 타일 중앙 위치 계산
-            previewRotation = gridArea.transform.rotation * Quaternion.Euler(0f, currentLocalYaw, 0f); // 바닥 회전 계산
-        }
-        else if (currentRecipe.PlacementType == BuildPlacementType.Wall) // 벽 배치 확인
-        {
-            bool wallSnapSucceeded = gridArea.TryGetWallSnap(
-                groundHit.point,
-                currentLocalYaw,
-                out basePosition,
-                out previewRotation); // 가까운 타일 경계 계산
-
-            if (!wallSnapSucceeded) // 벽 경계 계산 실패 확인
-            {
-                SetPreviewUnavailable("OUTSIDE BUILD AREA"); // 구역 밖 상태 적용
-                return; // 갱신 중단
-            }
-        }
-        else // 자유 배치 처리
-        {
-            basePosition = groundHit.point; // 바라본 실제 지면 위치 사용
-            previewRotation = gridArea.transform.rotation * Quaternion.Euler(0f, currentLocalYaw, 0f); // 자유 배치 회전 계산
-        }
-
-        Vector3 horizontalOffset = previewRotation * new Vector3(
-            currentRecipe.PreviewOffset.x,
-            0f,
-            currentRecipe.PreviewOffset.z); // 회전 적용 수평 보정 계산
-
-        basePosition += horizontalOffset; // 수평 위치 보정 적용
-
-        bool terrainValid = TrySampleTerrain(
-            basePosition,
-            previewRotation,
-            currentRecipe.PlacementCheckHalfExtents,
-            out float maximumTerrainY,
-            out float maximumSlope,
-            out float terrainHeightDifference); // 배치 영역 Terrain 검사
-
-        if (!terrainValid) // Terrain 표본 실패 확인
-        {
-            SetPreviewUnavailable("UNSUPPORTED TERRAIN"); // Terrain 미지원 상태 적용
-            return; // 갱신 중단
-        }
-
-        Vector3 previewPosition = new Vector3(
-            basePosition.x,
-            maximumTerrainY + currentRecipe.PreviewOffset.y,
-            basePosition.z); // Terrain 위 최종 위치 계산
 
         previewInstance.SetActive(true); // 미리보기 표시
         previewInstance.transform.SetPositionAndRotation(previewPosition, previewRotation); // 미리보기 위치와 회전 적용
 
-        bool hasValidSlope = maximumSlope <= currentRecipe.MaximumSlopeAngle; // 경사 허용 여부 계산
-        bool hasValidHeightDifference = terrainHeightDifference <= currentRecipe.MaximumHeightDifference; // 높이 차이 허용 여부 계산
         bool hasObstruction = HasBlockingOverlap(previewPosition, previewRotation); // 배치 공간 장애물 검사
         bool hasMaterials = HasRequiredMaterials(); // 필요 재료 보유 여부 확인
 
-        canPlace =
-            hasValidSlope
-            && hasValidHeightDifference
-            && !hasObstruction
-            && hasMaterials; // 최종 설치 가능 상태 계산
-
-        SetPreviewMaterial(canPlace); // 설치 상태 미리보기 재질 적용
-
-        if (!hasValidSlope) // 경사 초과 확인
-        {
-            RefreshStatus("SLOPE TOO STEEP"); // 경사 초과 문구 표시
-            return; // 상태 처리 종료
-        }
-
-        if (!hasValidHeightDifference) // Terrain 높이 차이 초과 확인
-        {
-            RefreshStatus("UNEVEN TERRAIN"); // 지형 불균형 문구 표시
-            return; // 상태 처리 종료
-        }
+        canPlace = !hasObstruction && hasMaterials; // 최종 설치 가능 상태 계산
+        SetPreviewMaterial(canPlace); // 설치 상태 재질 적용
 
         if (hasObstruction) // 장애물 존재 확인
         {
@@ -434,7 +361,232 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
 
         RefreshStatus("READY"); // 설치 가능 문구 표시
     }
+    private bool RequiresStructureConnection() // 현재 구조 연결 필요 여부 확인
+    {
+        BuildStructureType structureType = currentRecipe.StructureType; // 현재 구조 역할 조회
 
+        return structureType == BuildStructureType.Floor // 바닥 구조 확인
+            || structureType == BuildStructureType.Wall; // 벽 구조 확인
+    }
+
+    private bool TryResolveConnectionPlacement(
+        Ray placementRay,
+        out Vector3 previewPosition,
+        out Quaternion previewRotation,
+        out string failureStatus) // 구조 연결 배치 위치 계산
+    {
+        previewPosition = Vector3.zero; // 기본 위치 초기화
+        previewRotation = Quaternion.identity; // 기본 회전 초기화
+        failureStatus = string.Empty; // 기본 실패 문구 초기화
+
+        bool hasStructure = Physics.Raycast(
+            placementRay,
+            out RaycastHit structureHit,
+            maximumBuildDistance + 1f,
+            structureLayerMask,
+            QueryTriggerInteraction.Ignore); // 화면 중앙 구조물 탐지
+
+        if (!hasStructure) // 구조물 미탐지 확인
+        {
+            failureStatus = "LOOK AT SUPPORT"; // 지지 구조 안내 문구
+            return false; // 배치 계산 실패 반환
+        }
+
+        float playerDistance = Vector3.Distance(playerTransform.position, structureHit.point); // 플레이어 거리 계산
+
+        if (playerDistance > maximumBuildDistance) // 최대 건축 거리 확인
+        {
+            failureStatus = "TOO FAR"; // 거리 초과 문구
+            return false; // 배치 계산 실패 반환
+        }
+
+        PlacedBuildObject supportObject = structureHit.collider.GetComponentInParent<PlacedBuildObject>(); // 지지 건축물 검색
+
+        if (supportObject == null) // 지지 건축물 정보 확인
+        {
+            failureStatus = "INVALID SUPPORT"; // 잘못된 지지 구조 문구
+            return false; // 배치 계산 실패 반환
+        }
+
+        if (!TryFindNearestConnectionPoint( // 가장 가까운 연결점 검색
+            supportObject, // 지지 건축물
+            structureHit.point, // 광선 충돌 위치
+            out BuildConnectionPoint connectionPoint)) // 검색된 연결점
+        {
+            failureStatus = "NO FREE CONNECTION"; // 빈 연결점 없음 문구
+            return false; // 배치 계산 실패 반환
+        }
+
+        currentConnectionPoint = connectionPoint; // 현재 연결점 저장
+        previewRotation = connectionPoint.SnapRotation; // 연결점 기준 회전 적용
+
+        if (currentRecipe.StructureType == BuildStructureType.Floor) // 바닥 구조 확인
+        {
+            previewRotation *= Quaternion.Euler(0f, currentLocalYaw, 0f); // 바닥 추가 회전 적용
+        }
+
+        Vector3 rotatedOffset = previewRotation * currentRecipe.PreviewOffset; // 회전 적용 위치 보정
+        previewPosition = connectionPoint.SnapPosition + rotatedOffset; // 연결점 기준 위치 적용
+        return true; // 배치 계산 성공 반환
+    }
+
+    private bool TryFindNearestConnectionPoint(
+        PlacedBuildObject supportObject,
+        Vector3 hitPoint,
+        out BuildConnectionPoint nearestConnectionPoint) // 가장 가까운 빈 연결점 검색
+    {
+        nearestConnectionPoint = null; // 기본 검색 결과 초기화
+        float nearestDistance = float.MaxValue; // 최소 거리 초기화
+        IReadOnlyList<BuildConnectionPoint> connectionPoints = supportObject.ConnectionPoints; // 지지 구조 연결점 조회
+
+        for (int index = 0; index < connectionPoints.Count; index++) // 전체 연결점 순회
+        {
+            BuildConnectionPoint connectionPoint = connectionPoints[index]; // 현재 연결점 조회
+
+            if (connectionPoint == null) // 연결점 존재 확인
+            {
+                continue; // 빈 연결점 제외
+            }
+
+            if (connectionPoint.IsOccupied) // 연결점 사용 여부 확인
+            {
+                continue; // 사용 중인 연결점 제외
+            }
+
+            if (!connectionPoint.Accepts(currentRecipe.StructureType)) // 구조 종류 허용 여부 확인
+            {
+                continue; // 연결 불가능 지점 제외
+            }
+
+            float connectionDistance = Vector3.Distance(hitPoint, connectionPoint.SnapPosition); // 충돌 위치와 연결점 거리 계산
+
+            if (connectionDistance > connectionSnapDistance) // 최대 탐지 거리 확인
+            {
+                continue; // 너무 먼 연결점 제외
+            }
+
+            if (connectionDistance >= nearestDistance) // 기존 연결점보다 가까운지 확인
+            {
+                continue; // 더 먼 연결점 제외
+            }
+
+            nearestDistance = connectionDistance; // 최소 거리 갱신
+            nearestConnectionPoint = connectionPoint; // 가장 가까운 연결점 저장
+        }
+
+        return nearestConnectionPoint != null; // 검색 성공 여부 반환
+    }
+
+    private bool TryResolveGroundPlacement(
+        Ray placementRay,
+        out Vector3 previewPosition,
+        out Quaternion previewRotation,
+        out string failureStatus) // Terrain 배치 위치 계산
+    {
+        previewPosition = Vector3.zero; // 기본 위치 초기화
+        previewRotation = Quaternion.identity; // 기본 회전 초기화
+        failureStatus = string.Empty; // 기본 실패 문구 초기화
+
+        bool hasGround = Physics.Raycast(
+            placementRay,
+            out RaycastHit groundHit,
+            maximumBuildDistance + 3f,
+            groundLayerMask,
+            QueryTriggerInteraction.Ignore); // Terrain 탐지
+
+        if (!hasGround) // Terrain 미탐지 확인
+        {
+            failureStatus = "NO BUILDABLE GROUND"; // 지면 없음 문구
+            return false; // 배치 계산 실패 반환
+        }
+
+        if (!gridArea.ContainsWorldPoint(groundHit.point)) // 건축 구역 포함 여부 확인
+        {
+            failureStatus = "OUTSIDE BUILD AREA"; // 구역 밖 문구
+            return false; // 배치 계산 실패 반환
+        }
+
+        float playerDistance = Vector3.Distance(playerTransform.position, groundHit.point); // 플레이어 거리 계산
+
+        if (playerDistance > maximumBuildDistance) // 최대 건축 거리 확인
+        {
+            failureStatus = "TOO FAR"; // 거리 초과 문구
+            return false; // 배치 계산 실패 반환
+        }
+
+        Vector3 basePosition; // 배치 기준 위치
+
+        if (currentRecipe.PlacementType == BuildPlacementType.Floor) // 타일 중앙 배치 확인
+        {
+            if (!gridArea.TryGetCell(groundHit.point, out Vector2Int cell)) // 대상 타일 계산
+            {
+                failureStatus = "OUTSIDE BUILD AREA"; // 구역 밖 문구
+                return false; // 배치 계산 실패 반환
+            }
+
+            basePosition = gridArea.GetCellCenter(cell); // 타일 중앙 위치 계산
+            previewRotation = gridArea.transform.rotation * Quaternion.Euler(0f, currentLocalYaw, 0f); // 타일 회전 계산
+        }
+        else if (currentRecipe.PlacementType == BuildPlacementType.Wall) // 기존 벽 배치 호환 확인
+        {
+            bool wallSnapSucceeded = gridArea.TryGetWallSnap(
+                groundHit.point,
+                currentLocalYaw,
+                out basePosition,
+                out previewRotation); // 기존 벽 경계 계산
+
+            if (!wallSnapSucceeded) // 벽 경계 계산 실패 확인
+            {
+                failureStatus = "OUTSIDE BUILD AREA"; // 구역 밖 문구
+                return false; // 배치 계산 실패 반환
+            }
+        }
+        else // 자유 배치 처리
+        {
+            basePosition = groundHit.point; // 실제 지면 위치 적용
+            previewRotation = gridArea.transform.rotation * Quaternion.Euler(0f, currentLocalYaw, 0f); // 자유 배치 회전 계산
+        }
+
+        Vector3 horizontalOffset = previewRotation * new Vector3(
+            currentRecipe.PreviewOffset.x,
+            0f,
+            currentRecipe.PreviewOffset.z); // 수평 위치 보정 계산
+
+        basePosition += horizontalOffset; // 수평 위치 보정 적용
+
+        bool terrainValid = TrySampleTerrain(
+            basePosition,
+            previewRotation,
+            currentRecipe.PlacementCheckHalfExtents,
+            out float maximumTerrainY,
+            out float maximumSlope,
+            out float terrainHeightDifference); // Terrain 표본 검사
+
+        if (!terrainValid) // Terrain 표본 실패 확인
+        {
+            failureStatus = "UNSUPPORTED TERRAIN"; // Terrain 미지원 문구
+            return false; // 배치 계산 실패 반환
+        }
+
+        if (maximumSlope > currentRecipe.MaximumSlopeAngle) // 최대 경사 확인
+        {
+            failureStatus = "SLOPE TOO STEEP"; // 경사 초과 문구
+            return false; // 배치 계산 실패 반환
+        }
+
+        if (terrainHeightDifference > currentRecipe.MaximumHeightDifference) // 지형 높이 차이 확인
+        {
+            failureStatus = "UNEVEN TERRAIN"; // 지형 불균형 문구
+            return false; // 배치 계산 실패 반환
+        }
+
+        previewPosition = new Vector3(
+            basePosition.x,
+            maximumTerrainY + currentRecipe.PreviewOffset.y,
+            basePosition.z); // Terrain 위 최종 위치 계산
+
+        return true; // 배치 계산 성공 반환
+    }
     private bool TrySampleTerrain(
         Vector3 center,
         Quaternion rotation,
@@ -532,6 +684,12 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
         Quaternion targetRotation,
         PlacedBuildObject existingObject) // 건축물 종류별 공간 공유 확인
     {
+        if (currentConnectionPoint != null // 현재 연결점 존재 확인
+            && existingObject == currentConnectionPoint.Owner) // 충돌 대상이 지지 구조인지 확인
+        {
+            return true; // 지지 구조와 설치 공간 공유 허용
+        }
+
         BuildPlacementType existingType = existingObject.PlacementType; // 기존 건축물 종류 조회
 
         if (targetType == BuildPlacementType.Floor && existingType == BuildPlacementType.Wall) // 바닥과 벽 조합 확인
@@ -642,15 +800,53 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
         }
 
         placedBuildObject.Initialize(currentRecipe); // 실제 건축 데이터와 배치 종류 저장
+
+        if (RequiresStructureConnection()) // 구조 연결 필요 여부 확인
+        {
+            bool connectionSucceeded = currentConnectionPoint != null // 연결점 존재 확인
+                && placedBuildObject.TryAttachToConnection(currentConnectionPoint); // 구조 연결 시도
+
+            if (!connectionSucceeded) // 연결 처리 실패 확인
+            {
+                Destroy(placedStructure); // 생성된 건축물 제거
+                RestoreRemovedIngredients(removedIngredients); // 소비 재료 복구
+                canPlace = false; // 설치 불가능 상태 적용
+                SetPreviewMaterial(false); // 빨간 미리보기 적용
+                RefreshStatus("CONNECTION FAILED"); // 연결 실패 문구 표시
+                return; // 설치 처리 중단
+            }
+        }
+
+        currentConnectionPoint = null; // 설치 완료 연결점 선택 해제
         lastBuildInputFrame = Time.frameCount; // 설치 프레임 일반 입력 차단
         UpdatePreview(); // 남은 재료와 충돌 상태 갱신
     }
+    private void RestoreRemovedIngredients(List<CraftingIngredient> removedIngredients) // 설치 실패 재료 복구
+    {
+        for (int index = 0; index < removedIngredients.Count; index++) // 제거 완료 재료 순회
+        {
+            CraftingIngredient ingredient = removedIngredients[index]; // 현재 복구 재료 조회
 
+            if (ingredient == null || ingredient.ItemData == null) // 재료 데이터 확인
+            {
+                continue; // 잘못된 재료 제외
+            }
+
+            int remainingAmount = playerInventory.AddItem(ingredient.ItemData, ingredient.Amount); // 제거 재료 인벤토리 복구
+
+            if (remainingAmount > 0) // 복구 실패 수량 확인
+            {
+                Debug.LogError($"{ingredient.ItemData.DisplayName} 재료 복구에 실패했습니다.", this); // 복구 실패 오류 출력
+            }
+        }
+    }
     private void SetRemovalMode(bool shouldEnable) // 설치와 철거 모드 전환
     {
         ClearRemovalTarget(); // 기존 철거 대상 강조 해제
         isRemovalMode = shouldEnable; // 새로운 철거 모드 상태 저장
         canPlace = false; // 설치 가능 상태 해제
+        currentConnectionPoint = null; // 현재 연결점 선택 해제
+
         lastBuildInputFrame = Time.frameCount; // 전환 프레임 일반 입력 차단
 
         if (previewInstance != null) // 기존 미리보기 확인
@@ -743,12 +939,10 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
             return; // 철거 처리 중단
         }
 
-        IBuildRemovalGuard removalGuard = currentRemovalTarget.GetComponent<IBuildRemovalGuard>(); // 철거 제한 규칙 조회
-
-        if (removalGuard != null && !removalGuard.CanRemove) // 철거 제한 상태 확인
+        if (!TryValidateRemovalGuards(currentRemovalTarget, out string removalFailureStatus)) // 전체 철거 제한 검사
         {
-            RefreshRemovalStatus(removalGuard.RemovalBlockedMessage); // 철거 차단 원인 표시
-            return; // 건축물 제거 차단
+            RefreshRemovalStatus(removalFailureStatus); // 철거 차단 문구 표시
+            return; // 철거 처리 중단
         }
 
 
@@ -766,6 +960,38 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
         lastBuildInputFrame = Time.frameCount; // 철거 프레임 일반 입력 차단
         RefreshRemovalStatus("STRUCTURE REMOVED"); // 철거 완료 문구 표시
     }
+
+    private bool TryValidateRemovalGuards(
+    PlacedBuildObject targetObject,
+    out string failureStatus) // 전체 철거 제한 규칙 검사
+    {
+        failureStatus = string.Empty; // 기본 실패 문구 초기화
+        MonoBehaviour[] behaviours = targetObject.GetComponentsInChildren<MonoBehaviour>(true); // 하위 MonoBehaviour 검색
+
+        for (int index = 0; index < behaviours.Length; index++) // 전체 컴포넌트 순회
+        {
+            MonoBehaviour behaviour = behaviours[index]; // 현재 컴포넌트 조회
+
+            if (!(behaviour is IBuildRemovalGuard removalGuard)) // 철거 제한 인터페이스 확인
+            {
+                continue; // 일반 컴포넌트 제외
+            }
+
+            if (removalGuard.CanRemove) // 현재 철거 가능 여부 확인
+            {
+                continue; // 철거 가능 규칙 통과
+            }
+
+            failureStatus = string.IsNullOrWhiteSpace(removalGuard.RemovalBlockedMessage) // 차단 문구 존재 확인
+                ? "REMOVAL BLOCKED" // 기본 차단 문구
+                : removalGuard.RemovalBlockedMessage; // 기능별 차단 문구
+
+            return false; // 철거 차단 반환
+        }
+
+        return true; // 전체 철거 규칙 통과
+    }
+
 
     private bool TryRefundMaterials(BuildRecipeData targetRecipe, out string failureStatus) // 철거 재료 반환 시도
     {
@@ -823,6 +1049,7 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
     private void SetPreviewUnavailable(string status) // 미리보기 사용 불가 상태 적용
     {
         canPlace = false; // 설치 불가능 상태 적용
+        currentConnectionPoint = null; // 사용 불가 연결점 선택 해제
 
         if (previewInstance != null) // 미리보기 존재 확인
         {
@@ -935,5 +1162,6 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
         terrainProbeHeight = Mathf.Max(1f, terrainProbeHeight); // 표본 높이 최소값 적용
         terrainProbeDistance = Mathf.Max(terrainProbeHeight, terrainProbeDistance); // 표본 거리 보정
         collisionPadding = Mathf.Clamp(collisionPadding, 0f, 0.1f); // 충돌 여유값 범위 제한
+        connectionSnapDistance = Mathf.Max(0.1f, connectionSnapDistance); // 연결 탐지 거리 최소값 적용
     }
 }
