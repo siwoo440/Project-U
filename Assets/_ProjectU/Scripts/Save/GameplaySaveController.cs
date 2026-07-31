@@ -19,7 +19,7 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
     [SerializeField] private RespawnSaveBridge respawnSaveBridge; // 부활 지점 저장 연결
     [SerializeField] private CraftingUnlockSaveBridge craftingUnlockSaveBridge; // 제작법 해금 저장 연결
     [SerializeField] private StorageSaveBridge storageSaveBridge; // 보관함 내용 저장 연결
-    [SerializeField] private StorageContainerUI storageContainerUI; // 보관함 화면 관리자
+    [SerializeField] private GameUIManager gameUIManager; // 공통 게임 UI 관리자
     [SerializeField] private SleepSystem sleepSystem; // 수면 진행 상태 확인
 
     private CharacterController characterController; // 플레이어 충돌 이동기
@@ -34,6 +34,11 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
 
     private void Awake() // 저장 기능 참조 초기화
     {
+        if (gameUIManager == null) // 게임 UI 관리자 참조 확인
+        {
+            gameUIManager = FindFirstObjectByType<GameUIManager>(); // Scene 게임 UI 관리자 검색
+        }
+
         bool hasPlayerReference = playerTransform != null; // 플레이어 참조 확인
         bool hasCameraReference = thirdPersonCameraFollow != null; // 카메라 참조 확인
         bool hasTimeReference = dayNightCycle != null; // 시간 시스템 참조 확인
@@ -44,7 +49,7 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
         bool hasRespawnSaveBridge = respawnSaveBridge != null; // 부활 지점 저장 연결 확인
         bool hasCraftingUnlockSaveBridge = craftingUnlockSaveBridge != null; // 제작법 해금 저장 연결 확인
         bool hasStorageSaveBridge = storageSaveBridge != null; // 보관함 저장 연결 확인
-        bool hasStorageContainerUI = storageContainerUI != null; // 보관함 화면 관리자 확인
+        bool hasGameUIManager = gameUIManager != null; // 게임 UI 관리자 확인
         bool hasSleepSystem = sleepSystem != null; // 수면 시스템 참조 확인
 
         if (!hasPlayerReference || !hasCameraReference // 플레이어와 카메라 확인
@@ -52,7 +57,7 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
             || !hasInventorySaveBridge || !hasWorldSaveBridge // 인벤토리와 월드 확인
             || !hasPlacedStructureSaveBridge || !hasRespawnSaveBridge // 건축물과 부활 지점 확인
             || !hasCraftingUnlockSaveBridge || !hasStorageSaveBridge // 제작법 해금과 보관함 확인
-            || !hasStorageContainerUI || !hasSleepSystem) // 보관함 UI와 수면 확인
+            || !hasGameUIManager || !hasSleepSystem) // 게임 UI 관리자와 수면 확인
         {
             Debug.LogError($"{gameObject.name}의 저장 시스템 참조가 누락되었습니다.", this); // 참조 누락 오류 출력
             enabled = false; // 저장 기능 비활성화
@@ -206,7 +211,7 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
             return; // 상태 적용 중단
         }
 
-        storageContainerUI.Close(); // 보관함 화면과 현재 보관함 연결 해제
+        gameUIManager.CloseCurrentPopup(); // 열린 팝업과 입력 잠금 정리
 
         if (!craftingUnlockSaveBridge.TryRestore(saveData, out string craftingRestoreError)) // 제작법 해금 상태 복원
         {

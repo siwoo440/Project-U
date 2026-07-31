@@ -2,6 +2,8 @@ using System.Collections; // 코루틴 기능
 using System.Collections.Generic; // List 기능
 using UnityEngine; // Unity 기본 기능
 using UnityEngine.UI; // Unity UI 기능
+
+[DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
 public sealed class InventorySlotsUI : MonoBehaviour // 여러 인벤토리 슬롯 표시
 {
     [SerializeField] private PlayerInventory playerInventory; // 표시할 플레이어 인벤토리
@@ -22,23 +24,154 @@ public sealed class InventorySlotsUI : MonoBehaviour // 여러 인벤토리 슬�
     private readonly List<InventorySlotView> slotViews = new List<InventorySlotView>(); // 생성된 슬롯 목록
     private readonly List<Transform> generatedSectionContainers = new List<Transform>(); // 생성된 분리 영역 목록
     private Coroutine layoutRefreshCoroutine; // 레이아웃 갱신 코루틴
+    private bool internalReferencesValid; // 내부 UI 참조 연결 상태
+    private bool slotViewsBuilt; // 슬롯 화면 생성 상태
+    private bool eventsSubscribed; // 인벤토리 이벤트 구독 상태
 
+    public bool IsInitialized => internalReferencesValid && playerInventory != null && slotViewsBuilt; // 슬롯 UI 초기화 여부 제공
 
-    private void Awake() // 슬롯 화면 생성
+    private void Awake() // 슬롯 UI 내부 참조 초기화
     {
-        if (playerInventory == null || slotContainer == null || slotTemplate == null) // 필수 참조 확인
+        if (!EnsureInternalReferences()) // 내부 UI 참조 검사
         {
-            Debug.LogError($"{gameObject.name}의 인벤토리 UI 참조를 모두 연결해야 합니다.", this); // 참조 누락 오류
+            Debug.LogError($"{gameObject.name}의 인벤토리 UI 내부 참조를 연결해야 합니다.", this); // 참조 누락 오류 출력
             enabled = false; // UI 기능 비활성화
             return; // 초기화 중단
         }
 
+        if (playerInventory != null && !slotViewsBuilt) // Scene 인벤토리 참조와 슬롯 생성 상태 확인
+        {
+            BuildSlotViews(); // 현재 용량 기준 슬롯 생성
+            slotViewsBuilt = true; // 슬롯 생성 완료 기록
+        }
+    }
+
+    private bool EnsureInternalReferences() // 내부 UI 참조 검사와 템플릿 초기화
+    {
+        if (internalReferencesValid) // 기존 내부 참조 검사 완료 확인
+        {
+            return true; // 기존 검사 결과 반환
+        }
+
+        internalReferencesValid = slotContainer != null && slotTemplate != null; // 내부 UI 참조 검사
+
+        if (!internalReferencesValid) // 내부 참조 누락 확인
+        {
+            return false; // 내부 참조 검사 실패 반환
+        }
+
         slotTemplate.gameObject.SetActive(false); // 원본 슬롯 숨김
+        return true; // 내부 참조 검사 성공 반환
+    }
+
+    private void OnEnable() // 변경 이벤트 연결과 화면 갱신
+    {
+        if (!internalReferencesValid || playerInventory == null) // 초기화 상태 확인
+        {
+            return; // 이벤트 연결 중단
+        }
+
+        if (!slotViewsBuilt) // 슬롯 화면 생성 여부 확인
+        {
+            BuildSlotViews(); // 현재 용량 기준 슬롯 생성
+            slotViewsBuilt = true; // 슬롯 생성 완료 기록
+        }
+
+        SubscribeEvents(); // 인벤토리 변경 이벤트 연결
+
+        if (slotViews.Count != GetTargetSlotCount()) // 비활성 중 용량 변경 확인
+        {
+            RebuildSlotViews(); // 현재 용량 기준 화면 재생성
+            return; // 중복 화면 갱신 생략
+        }
+
+        Refresh(); // 현재 상태 즉시 표시
+        RequestLayoutRefresh(); // 스크롤 레이아웃 갱신 요청
+    }
+
+    private void OnDisable() // 변경 이벤트와 코루틴 해제
+    {
+        if (layoutRefreshCoroutine != null) // 실행 중인 코루틴 확인
+        {
+            StopCoroutine(layoutRefreshCoroutine); // 레이아웃 코루틴 중단
+            layoutRefreshCoroutine = null; // 코루틴 참조 초기화
+        }
+
+        UnsubscribeEvents(); // 인벤토리 변경 이벤트 해제
+    }
+
+    public bool Initialize(PlayerInventory inventory) // 런타임 플레이어 인벤토리 연결
+    {
+        if (!EnsureInternalReferences() || inventory == null) // 내부 UI와 인벤토리 참조 확인
+        {
+            Debug.LogError($"{gameObject.name}의 런타임 인벤토리 참조가 누락되었습니다.", this); // 런타임 참조 오류 출력
+            return false; // 초기화 실패 반환
+        }
+
+        if (playerInventory == inventory && slotViewsBuilt) // 동일 인벤토리 초기화 완료 확인
+        {
+            if (isActiveAndEnabled) // UI 활성 상태 확인
+            {
+                SubscribeEvents(); // 인벤토리 변경 이벤트 연결
+                Refresh(); // 현재 슬롯 상태 갱신
+                RequestLayoutRefresh(); // 레이아웃 갱신 요청
+            }
+
+            return true; // 기존 초기화 상태 반환
+        }
+
+        UnsubscribeEvents(); // 기존 인벤토리 이벤트 연결 해제
+        ClearGeneratedViews(); // 기존 생성 슬롯 제거
+        playerInventory = inventory; // 새로운 플레이어 인벤토리 저장
         BuildSlotViews(); // 현재 용량 기준 슬롯 생성
+        slotViewsBuilt = true; // 슬롯 생성 완료 기록
+
+        if (isActiveAndEnabled) // UI 활성 상태 확인
+        {
+            SubscribeEvents(); // 새로운 인벤토리 이벤트 연결
+            Refresh(); // 현재 슬롯 상태 갱신
+            RequestLayoutRefresh(); // 레이아웃 갱신 요청
+        }
+
+        return true; // 초기화 성공 반환
+    }
+
+    private void SubscribeEvents() // 인벤토리 변경 이벤트 연결
+    {
+        if (eventsSubscribed || playerInventory == null) // 기존 구독과 인벤토리 참조 확인
+        {
+            return; // 중복 이벤트 연결 생략
+        }
+
+        playerInventory.InventoryChanged += Refresh; // 아이템 변경 이벤트 구독
+        playerInventory.HotbarSelectionChanged += Refresh; // 핫바 선택 이벤트 구독
+        playerInventory.InventorySelectionChanged += Refresh; // 클릭 선택 이벤트 구독
+        playerInventory.CapacityChanged += RebuildSlotViews; // 용량 변경 이벤트 구독
+        eventsSubscribed = true; // 이벤트 구독 완료 기록
+    }
+
+    private void UnsubscribeEvents() // 인벤토리 변경 이벤트 해제
+    {
+        if (!eventsSubscribed || playerInventory == null) // 이벤트 구독과 인벤토리 참조 확인
+        {
+            eventsSubscribed = false; // 이벤트 구독 상태 초기화
+            return; // 이벤트 해제 생략
+        }
+
+        playerInventory.InventoryChanged -= Refresh; // 아이템 변경 이벤트 해제
+        playerInventory.HotbarSelectionChanged -= Refresh; // 핫바 선택 이벤트 해제
+        playerInventory.InventorySelectionChanged -= Refresh; // 클릭 선택 이벤트 해제
+        playerInventory.CapacityChanged -= RebuildSlotViews; // 용량 변경 이벤트 해제
+        eventsSubscribed = false; // 이벤트 구독 상태 초기화
     }
 
     private void BuildSlotViews() // 현재 용량 기준 슬롯 구성
     {
+        if (playerInventory == null) // 플레이어 인벤토리 참조 확인
+        {
+            return; // 슬롯 생성 중단
+        }
+
         int safeStartIndex = Mathf.Clamp(startSlotIndex, 0, playerInventory.SlotCapacity); // 시작 슬롯 번호 보정
         int availableSlotCount = Mathf.Max(0, playerInventory.SlotCapacity - safeStartIndex); // 표시 가능한 슬롯 계산
         int targetSlotCount = visibleSlotCount <= 0 ? availableSlotCount : Mathf.Min(visibleSlotCount, availableSlotCount); // 실제 생성 개수 계산
@@ -54,55 +187,33 @@ public sealed class InventorySlotsUI : MonoBehaviour // 여러 인벤토리 슬�
         CreateSlotViews(slotContainer, startSlotIndex, targetSlotCount); // 연속 슬롯 화면 생성
     }
 
-    private void OnEnable() // 변경 이벤트 연결
-    {
-        if (playerInventory == null) // 인벤토리 연결 확인
-        {
-            return; // 이벤트 연결 중단
-        }
-
-        playerInventory.InventoryChanged += Refresh; // 아이템 변경 이벤트 구독
-        playerInventory.HotbarSelectionChanged += Refresh; // 핫바 선택 이벤트 구독
-        playerInventory.InventorySelectionChanged += Refresh; // 클릭 선택 이벤트 구독
-        playerInventory.CapacityChanged += RebuildSlotViews; // 용량 변경 이벤트 구독
-
-        if (slotViews.Count != GetTargetSlotCount()) // 비활성 중 용량 변경 확인
-        {
-            RebuildSlotViews(); // 현재 용량 기준 화면 재생성
-            return; // 중복 화면 갱신 생략
-        }
-
-        Refresh(); // 현재 상태 즉시 표시
-        RequestLayoutRefresh(); // 스크롤 레이아웃 갱신 요청
-    }
-
-    private void OnDisable() // 변경 이벤트와 코루틴 해제
-    {
-        if (layoutRefreshCoroutine != null) // 실행 중인 코루틴 확인
-        { 
-            StopCoroutine(layoutRefreshCoroutine); // 레이아웃 코루틴 중단
-            layoutRefreshCoroutine = null; // 코루틴 참조 초기화
-        } 
-
-        if (playerInventory == null) // 인벤토리 연결 확인
-        {
-            return; // 이벤트 해제 중단
-        } 
-
-        playerInventory.InventoryChanged -= Refresh; // 아이템 변경 이벤트 해제
-        playerInventory.HotbarSelectionChanged -= Refresh; // 핫바 선택 이벤트 해제
-        playerInventory.InventorySelectionChanged -= Refresh; // 클릭 선택 이벤트 해제
-        playerInventory.CapacityChanged -= RebuildSlotViews; // 용량 변경 이벤트 해제
-    }
-
     private int GetTargetSlotCount() // 현재 표시 대상 슬롯 개수 계산
     {
+        if (playerInventory == null) // 플레이어 인벤토리 참조 확인
+        {
+            return 0; // 표시 슬롯 없음 반환
+        }
+
         int safeStartIndex = Mathf.Clamp(startSlotIndex, 0, playerInventory.SlotCapacity); // 시작 슬롯 번호 보정
         int availableSlotCount = Mathf.Max(0, playerInventory.SlotCapacity - safeStartIndex); // 표시 가능한 슬롯 계산
         return visibleSlotCount <= 0 ? availableSlotCount : Mathf.Min(visibleSlotCount, availableSlotCount); // 실제 슬롯 개수 반환
     }
 
     private void RebuildSlotViews() // 인벤토리 용량 화면 재생성
+    {
+        if (!internalReferencesValid || playerInventory == null) // 초기화 상태 확인
+        {
+            return; // 인벤토리 화면 재생성 중단
+        }
+
+        ClearGeneratedViews(); // 기존 생성 슬롯 제거
+        BuildSlotViews(); // 현재 용량 기준 슬롯 다시 생성
+        slotViewsBuilt = true; // 슬롯 생성 완료 기록
+        Refresh(); // 인벤토리 화면 갱신
+        RequestLayoutRefresh(); // 변경된 Content 크기 갱신
+    }
+
+    private void ClearGeneratedViews() // 생성된 슬롯과 분리 영역 제거
     {
         for (int index = 0; index < slotViews.Count; index++) // 기존 슬롯 화면 순회
         {
@@ -130,23 +241,35 @@ public sealed class InventorySlotsUI : MonoBehaviour // 여러 인벤토리 슬�
 
         generatedSectionContainers.Clear(); // 분리 영역 목록 초기화
 
-        GridLayoutGroup rootGrid = slotContainer.GetComponent<GridLayoutGroup>(); // 기본 격자 가져오기
-
-        if (rootGrid != null) // 기본 격자 존재 확인
+        if (slotContainer != null) // 슬롯 생성 부모 확인
         {
-            rootGrid.enabled = true; // 기본 격자 다시 활성화
+            GridLayoutGroup rootGrid = slotContainer.GetComponent<GridLayoutGroup>(); // 기본 격자 가져오기
+
+            if (rootGrid != null) // 기본 격자 존재 확인
+            {
+                rootGrid.enabled = true; // 기본 격자 다시 활성화
+            }
         }
 
-        BuildSlotViews(); // 현재 용량 기준 슬롯 다시 생성
-        Refresh(); // 인벤토리 화면 갱신
-        RequestLayoutRefresh(); // 변경된 Content 크기 갱신
+        slotViewsBuilt = false; // 슬롯 화면 생성 상태 초기화
     }
 
     private void Refresh() // 전체 슬롯 화면 갱신
     {
+        if (playerInventory == null) // 플레이어 인벤토리 참조 확인
+        {
+            return; // 슬롯 화면 갱신 중단
+        }
+
         for (int viewIndex = 0; viewIndex < slotViews.Count; viewIndex++) // 생성 슬롯 순회
         {
             int inventoryIndex = startSlotIndex + viewIndex; // 실제 인벤토리 번호 계산
+
+            if (inventoryIndex < 0 || inventoryIndex >= playerInventory.SlotCapacity) // 인벤토리 번호 범위 확인
+            {
+                continue; // 잘못된 슬롯 번호 제외
+            }
+
             InventorySlot slot = playerInventory.GetSlot(inventoryIndex); // 해당 슬롯 조회
             bool isHotbarSelected = showSelection && inventoryIndex == playerInventory.SelectedHotbarIndex; // 활성 핫바 상태 계산
             bool isClickedSelected = showClickedSelection && inventoryIndex == playerInventory.SelectedInventoryIndex; // 클릭 선택 상태 계산
@@ -163,7 +286,7 @@ public sealed class InventorySlotsUI : MonoBehaviour // 여러 인벤토리 슬�
 
         if (sourceGrid == null || rootRect == null) // 필수 레이아웃 확인
         {
-            Debug.LogError($"{gameObject.name}의 분리 슬롯 영역에는 GridLayoutGroup이 필요합니다.", this); // 레이아웃 누락 오류
+            Debug.LogError($"{gameObject.name}의 분리 슬롯 영역에는 GridLayoutGroup이 필요합니다.", this); // 레이아웃 누락 오류 출력
             CreateSlotViews(slotContainer, startSlotIndex, targetSlotCount); // 기존 방식 대체 생성
             return; // 분리 생성 중단
         }
@@ -241,14 +364,14 @@ public sealed class InventorySlotsUI : MonoBehaviour // 여러 인벤토리 슬�
     }
 
     private void RequestLayoutRefresh() // 레이아웃 갱신 예약
-    { 
+    {
         if (!isActiveAndEnabled) // UI 활성 상태 확인
-        { 
+        {
             return; // 비활성 상태 처리 중단
-        } 
+        }
 
         if (layoutRefreshCoroutine != null) // 기존 코루틴 확인
-        { 
+        {
             StopCoroutine(layoutRefreshCoroutine); // 기존 코루틴 중단
         }
 
@@ -262,7 +385,7 @@ public sealed class InventorySlotsUI : MonoBehaviour // 여러 인벤토리 슬�
         RectTransform contentRect = slotContainer as RectTransform; // 슬롯 Content 위치 정보 조회
 
         if (contentRect == null) // Content 연결 상태 확인
-        { 
+        {
             Debug.LogError($"{gameObject.name}의 Slot Container를 찾을 수 없습니다.", this); // 실제 연결 오류 출력
             layoutRefreshCoroutine = null; // 코루틴 참조 초기화
             yield break; // 레이아웃 갱신 중단
@@ -271,10 +394,10 @@ public sealed class InventorySlotsUI : MonoBehaviour // 여러 인벤토리 슬�
         ScrollRect parentScrollRect = contentRect.GetComponentInParent<ScrollRect>(); // Content 기준 상위 ScrollRect 조회
 
         if (parentScrollRect == null) // 일반 핫바 영역 확인
-        { 
+        {
             layoutRefreshCoroutine = null; // 코루틴 완료 처리
             yield break; // 스크롤 갱신 생략
-        } 
+        }
 
         Canvas.ForceUpdateCanvases(); // Canvas 크기 계산
         LayoutRebuilder.ForceRebuildLayoutImmediate(contentRect); // Content 레이아웃 즉시 계산
@@ -282,12 +405,17 @@ public sealed class InventorySlotsUI : MonoBehaviour // 여러 인벤토리 슬�
         parentScrollRect.StopMovement(); // 기존 스크롤 이동 중단
         parentScrollRect.verticalNormalizedPosition = 1f; // 스크롤 위치 맨 위 설정
         layoutRefreshCoroutine = null; // 코루틴 완료 처리
-    } 
+    }
 
     private float CalculateSectionWidth(int columnCount, GridLayoutGroup sourceGrid) // 슬롯 영역 너비 계산
     {
         float cellWidth = columnCount * sourceGrid.cellSize.x; // 전체 셀 너비 계산
         float spacingWidth = Mathf.Max(0, columnCount - 1) * sourceGrid.spacing.x; // 전체 가로 간격 계산
         return sourceGrid.padding.left + sourceGrid.padding.right + cellWidth + spacingWidth; // 최종 영역 너비 반환
+    }
+
+    private void OnDestroy() // 인벤토리 슬롯 UI 이벤트 정리
+    {
+        UnsubscribeEvents(); // 인벤토리 변경 이벤트 해제
     }
 }

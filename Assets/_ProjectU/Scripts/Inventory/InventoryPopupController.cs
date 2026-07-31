@@ -2,19 +2,23 @@ using System; // 이벤트 기능
 using UnityEngine; // Unity 기본 기능
 using UnityEngine.InputSystem; // 새로운 입력 시스템
 
+[DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
 public sealed class InventoryPopupController : MonoBehaviour // 인벤토리 팝업 관리자
 {
-    [SerializeField] private GameObject popupPanel; // 전체 인벤토리 팝업
-    [SerializeField] private Behaviour[] blockedBehaviours; // 팝업 중 정지 기능
+    private const string AltCursorLockId = "InventoryPopupController.AltCursor"; // Alt 커서 입력 잠금 ID
+    private const string FallbackPopupLockId = "InventoryPopupController.PopupFallback"; // 독립 실행 팝업 입력 잠금 ID
 
-    private bool[] previousBehaviourStates; // 기존 컴포넌트 활성 상태
+    [SerializeField] private GameObject popupPanel; // 전체 인벤토리 팝업
+
+    private GameUIManager gameUIManager; // 공통 게임 UI 관리자
+    private GameplayInputLock gameplayInputLock; // 공통 입력 잠금 관리자
     private bool isAltCursorActive; // Alt 커서 활성 상태
-    private bool isInteractionActive; // UI 상호작용 활성 상태
+    private bool isInitialized; // 공통 관리자 초기화 상태
 
     public bool IsOpen { get; private set; } // 팝업 열림 상태 제공
     public event Action<bool> OpenStateChanged; // 팝업 상태 변경 알림
 
-    private void Awake() // 팝업 초기화
+    private void Awake() // 인벤토리 팝업 초기화
     {
         if (popupPanel == null) // 팝업 연결 확인
         {
@@ -23,12 +27,14 @@ public sealed class InventoryPopupController : MonoBehaviour // 인벤토리 팝
             return; // 초기화 중단
         }
 
-        int behaviourCount = blockedBehaviours == null ? 0 : blockedBehaviours.Length; // 차단 컴포넌트 개수 계산
-        previousBehaviourStates = new bool[behaviourCount]; // 기존 상태 배열 생성
         popupPanel.SetActive(false); // 시작 팝업 숨김
-        IsOpen = false; // 시작 상태 저장
+        IsOpen = false; // 시작 팝업 상태 저장
         isAltCursorActive = false; // 시작 Alt 상태 저장
-        isInteractionActive = false; // 시작 상호작용 상태 저장
+    }
+
+    private void Start() // 공통 관리자 자동 검색
+    {
+        ResolveManagers(); // 게임 UI와 입력 잠금 관리자 검색
     }
 
     private void Update() // 팝업 입력 검사
@@ -45,7 +51,7 @@ public sealed class InventoryPopupController : MonoBehaviour // 인벤토리 팝
         if (isAltCursorActive != currentAltState) // Alt 상태 변경 확인
         {
             isAltCursorActive = currentAltState; // 새로운 Alt 상태 저장
-            RefreshInteractionState(); // 커서와 게임 조작 상태 갱신
+            RefreshAltCursorLock(); // Alt 커서 입력 잠금 갱신
         }
 
         if (IsOpen && keyboard.escapeKey.wasPressedThisFrame) // 열린 상태 ESC 입력 확인
@@ -56,110 +62,152 @@ public sealed class InventoryPopupController : MonoBehaviour // 인벤토리 팝
 
         if (keyboard.iKey.wasPressedThisFrame) // I 키 입력 확인
         {
-            SetOpen(!IsOpen); // 팝업 상태 반전
+            SetOpen(!IsOpen); // 인벤토리 팝업 상태 반전
         }
     }
 
-    public void SetOpen(bool shouldOpen) // 팝업 상태 변경
+    public void Initialize(GameUIManager manager, GameplayInputLock inputLock) // 공통 UI 시스템 참조 전달
     {
-        if (IsOpen == shouldOpen) // 동일 상태 확인
-        {
-            return; // 중복 변경 차단
-        }
-
-        IsOpen = shouldOpen; // 새로운 상태 저장
-        popupPanel.SetActive(IsOpen); // 팝업 화면 상태 적용
-        RefreshInteractionState(); // 커서와 게임 조작 상태 갱신
-        OpenStateChanged?.Invoke(IsOpen); // 팝업 상태 변경 알림
+        gameUIManager = manager; // 공통 게임 UI 관리자 저장
+        gameplayInputLock = inputLock; // 공통 입력 잠금 관리자 저장
+        isInitialized = gameUIManager != null && gameplayInputLock != null; // 공통 관리자 초기화 상태 저장
     }
 
-    private void OnDisable() // 비활성화 상태 정리
+    public void SetOpen(bool shouldOpen) // 외부 요청으로 팝업 상태 변경
     {
-        bool wasOpen = IsOpen; // 기존 팝업 상태 저장
+        ResolveManagers(); // 공통 관리자 참조 확인
 
-        if (isInteractionActive) // 상호작용 활성 상태 확인
+        if (gameUIManager != null) // 공통 게임 UI 관리자 확인
         {
-            RestoreBlockedBehaviours(); // 게임 조작 기능 복구
-            Cursor.lockState = CursorLockMode.Locked; // 마우스 게임 화면 고정
-            Cursor.visible = false; // 마우스 포인터 숨김
-            isInteractionActive = false; // 상호작용 상태 해제
+            if (shouldOpen) // 팝업 열기 요청 확인
+            {
+                gameUIManager.OpenInventory(); // 공통 관리자에서 인벤토리 열기
+            }
+            else // 팝업 닫기 요청
+            {
+                gameUIManager.CloseInventory(); // 공통 관리자에서 인벤토리 닫기
+            }
+
+            return; // 공통 관리자 처리 종료
         }
 
-        IsOpen = false; // 팝업 상태 해제
+        SetOpenWithoutManager(shouldOpen); // 공통 관리자 없는 상태에서 팝업 변경
+    }
+
+    public bool ShowFromManager() // 공통 관리자에서 인벤토리 표시
+    {
+        if (popupPanel == null) // 팝업 패널 확인
+        {
+            return false; // 팝업 표시 실패 반환
+        }
+
+        if (IsOpen) // 기존 열림 상태 확인
+        {
+            return true; // 기존 열림 상태 반환
+        }
+
+        IsOpen = true; // 팝업 열림 상태 저장
+        popupPanel.SetActive(true); // 팝업 화면 표시
+        OpenStateChanged?.Invoke(true); // 팝업 열림 알림
+        return true; // 팝업 표시 성공 반환
+    }
+
+    public void HideFromManager() // 공통 관리자에서 인벤토리 숨김
+    {
+        if (!IsOpen && (popupPanel == null || !popupPanel.activeSelf)) // 이미 닫힌 상태 확인
+        {
+            return; // 중복 숨김 처리 생략
+        }
+
+        IsOpen = false; // 팝업 닫힘 상태 저장
 
         if (popupPanel != null) // 팝업 패널 존재 확인
         {
             popupPanel.SetActive(false); // 팝업 화면 숨김
         }
 
+        OpenStateChanged?.Invoke(false); // 팝업 닫힘 알림
+    }
+
+    private void SetOpenWithoutManager(bool shouldOpen) // 공통 관리자 없는 상태의 팝업 변경
+    {
+        ResolveManagers(); // 입력 잠금 관리자 참조 확인
+
+        if (shouldOpen) // 팝업 열기 요청 확인
+        {
+            if (ShowFromManager() && gameplayInputLock != null) // 팝업 표시와 입력 잠금 관리자 확인
+            {
+                gameplayInputLock.Acquire(FallbackPopupLockId); // 독립 실행 팝업 입력 잠금 획득
+            }
+
+            return; // 팝업 열기 처리 종료
+        }
+
+        HideFromManager(); // 팝업 화면 숨김
+
+        if (gameplayInputLock != null) // 입력 잠금 관리자 확인
+        {
+            gameplayInputLock.Release(FallbackPopupLockId); // 독립 실행 팝업 입력 잠금 해제
+        }
+    }
+
+    private void RefreshAltCursorLock() // Alt 커서 입력 잠금 갱신
+    {
+        ResolveManagers(); // 입력 잠금 관리자 참조 확인
+
+        if (gameplayInputLock == null) // 입력 잠금 관리자 확인
+        {
+            Cursor.lockState = isAltCursorActive ? CursorLockMode.None : CursorLockMode.Locked; // Alt 상태에 맞는 커서 고정 적용
+            Cursor.visible = isAltCursorActive; // Alt 상태에 맞는 커서 표시 적용
+            return; // 입력 잠금 처리 종료
+        }
+
+        if (isAltCursorActive) // Alt 커서 활성 상태 확인
+        {
+            gameplayInputLock.Acquire(AltCursorLockId); // Alt 커서 입력 잠금 획득
+            return; // 입력 잠금 획득 처리 종료
+        }
+
+        gameplayInputLock.Release(AltCursorLockId); // Alt 커서 입력 잠금 해제
+    }
+
+    private void ResolveManagers() // 공통 관리자 자동 검색
+    {
+        if (gameUIManager == null) // 게임 UI 관리자 참조 확인
+        {
+            gameUIManager = FindFirstObjectByType<GameUIManager>(); // Scene 게임 UI 관리자 검색
+        }
+
+        if (gameplayInputLock == null) // 입력 잠금 관리자 참조 확인
+        {
+            gameplayInputLock = gameUIManager != null // 게임 UI 관리자 존재 여부 확인
+                ? gameUIManager.InputLock // 게임 UI 관리자에서 입력 잠금 조회
+                : FindFirstObjectByType<GameplayInputLock>(); // Scene 입력 잠금 관리자 검색
+        }
+
+        isInitialized = gameUIManager != null && gameplayInputLock != null; // 공통 관리자 초기화 상태 갱신
+    }
+
+    private void OnDisable() // 인벤토리 팝업 비활성화 정리
+    {
+        bool wasOpen = IsOpen; // 기존 팝업 열림 상태 저장
+        IsOpen = false; // 팝업 닫힘 상태 저장
+        isAltCursorActive = false; // Alt 커서 상태 해제
+
+        if (popupPanel != null) // 팝업 패널 존재 확인
+        {
+            popupPanel.SetActive(false); // 팝업 화면 숨김
+        }
+
+        if (gameplayInputLock != null) // 입력 잠금 관리자 확인
+        {
+            gameplayInputLock.Release(AltCursorLockId); // Alt 커서 입력 잠금 해제
+            gameplayInputLock.Release(FallbackPopupLockId); // 독립 실행 팝업 입력 잠금 해제
+        }
+
         if (wasOpen) // 기존 팝업 열림 확인
         {
-            OpenStateChanged?.Invoke(false); // 팝업 종료 알림
-        }
-    }
-
-    private void RefreshInteractionState() // UI 상호작용 상태 갱신
-    {
-        bool shouldActivateInteraction = IsOpen || isAltCursorActive; // 팝업과 Alt 활성 상태 계산
-
-        if (isInteractionActive == shouldActivateInteraction) // 동일 상태 확인
-        {
-            return; // 중복 변경 차단
-        }
-
-        isInteractionActive = shouldActivateInteraction; // 새로운 상호작용 상태 저장
-
-        if (isInteractionActive) // 상호작용 활성화 확인
-        {
-            DisableBlockedBehaviours(); // 게임 조작 기능 정지
-            Cursor.lockState = CursorLockMode.None; // 마우스 잠금 해제
-            Cursor.visible = true; // 마우스 포인터 표시
-            return; // 활성화 처리 종료
-        }
-
-        RestoreBlockedBehaviours(); // 게임 조작 기능 복구
-        Cursor.lockState = CursorLockMode.Locked; // 마우스 게임 화면 고정
-        Cursor.visible = false; // 마우스 포인터 숨김
-    }
-
-    private void DisableBlockedBehaviours() // 게임 조작 기능 정지
-    {
-        if (blockedBehaviours == null) // 차단 목록 확인
-        {
-            return; // 정지 처리 중단
-        }
-
-        for (int index = 0; index < blockedBehaviours.Length; index++) // 차단 목록 순회
-        {
-            Behaviour targetBehaviour = blockedBehaviours[index]; // 현재 대상 조회
-
-            if (targetBehaviour == null) // 대상 연결 확인
-            {
-                continue; // 빈 대상 제외
-            }
-
-            previousBehaviourStates[index] = targetBehaviour.enabled; // 기존 활성 상태 저장
-            targetBehaviour.enabled = false; // 대상 기능 정지
-        }
-    }
-
-    private void RestoreBlockedBehaviours() // 게임 조작 기능 복구
-    {
-        if (blockedBehaviours == null) // 차단 목록 확인
-        {
-            return; // 복구 처리 중단
-        }
-
-        for (int index = 0; index < blockedBehaviours.Length; index++) // 차단 목록 순회
-        {
-            Behaviour targetBehaviour = blockedBehaviours[index]; // 현재 대상 조회
-
-            if (targetBehaviour == null) // 대상 연결 확인
-            {
-                continue; // 빈 대상 제외
-            }
-
-            targetBehaviour.enabled = previousBehaviourStates[index]; // 기존 활성 상태 복구
+            OpenStateChanged?.Invoke(false); // 팝업 닫힘 알림
         }
     }
 }

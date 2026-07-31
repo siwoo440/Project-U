@@ -4,7 +4,7 @@ using UnityEngine; // Unity 기본 기능
 public sealed class StorageInteractable : InteractableBase // 설치 보관함 상호작용 처리
 {
     [SerializeField] private StorageContainer storageContainer; // 대상 보관함
-    [SerializeField] private StorageContainerUI storageContainerUI; // 보관함 화면 관리자
+    [SerializeField] private GameUIManager gameUIManager; // 공통 게임 UI 관리자
 
     public override string PromptMessage => storageContainer == null
         ? "STORAGE UNAVAILABLE"
@@ -17,12 +17,9 @@ public sealed class StorageInteractable : InteractableBase // 설치 보관함 �
             storageContainer = GetComponentInParent<StorageContainer>(); // 상위 보관함 검색
         }
 
-        if (storageContainerUI == null) // 보관함 UI 참조 확인
-        {
-            storageContainerUI = FindFirstObjectByType<StorageContainerUI>(); // Scene 보관함 UI 검색
-        }
+        ResolveGameUIManager(); // 공통 게임 UI 관리자 검색
 
-        if (storageContainer == null || storageContainerUI == null) // 필수 참조 확인
+        if (storageContainer == null || gameUIManager == null) // 필수 참조 확인
         {
             Debug.LogError($"{gameObject.name}의 보관함 상호작용 참조가 누락되었습니다.", this); // 참조 오류 출력
             enabled = false; // 보관함 상호작용 비활성화
@@ -36,11 +33,21 @@ public sealed class StorageInteractable : InteractableBase // 설치 보관함 �
             return; // 상호작용 중단
         }
 
-        if (storageContainer == null || storageContainerUI == null) // 보관함 참조 확인
+        ResolveGameUIManager(); // 공통 게임 UI 관리자 참조 확인
+
+        if (storageContainer == null || gameUIManager == null) // 보관함과 UI 관리자 확인
         {
             return; // 화면 열기 중단
         }
 
-        storageContainerUI.Open(storageContainer); // 지정 보관함 화면 열기
+        gameUIManager.OpenStorage(storageContainer); // 공통 관리자에서 지정 보관함 열기
+    }
+
+    private void ResolveGameUIManager() // 공통 게임 UI 관리자 자동 검색
+    {
+        if (gameUIManager == null) // 게임 UI 관리자 참조 확인
+        {
+            gameUIManager = FindFirstObjectByType<GameUIManager>(); // Scene 게임 UI 관리자 검색
+        }
     }
 }
