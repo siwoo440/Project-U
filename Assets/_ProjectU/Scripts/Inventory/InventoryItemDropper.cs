@@ -3,14 +3,21 @@ using UnityEngine; // Unity 기본 기능
 public sealed class InventoryItemDropper : MonoBehaviour // 인벤토리 아이템 버리기
 {
     [Header("References")] // 참조 설정 묶음
+    [Tooltip("플레이어 인벤토리.")]
     [SerializeField] private PlayerInventory playerInventory; // 플레이어 인벤토리
+    [Tooltip("버리기 방향 기준.")]
     [SerializeField] private Transform viewTransform; // 버리기 방향 기준
+    [Tooltip("월드 아이템 원본.")]
     [SerializeField] private WorldItemPickup worldItemPrefab; // 월드 아이템 원본
 
     [Header("Drop")] // 버리기 설정 묶음
+    [Tooltip("전방 생성 거리.")]
     [SerializeField] private float forwardDistance = 1.5f; // 전방 생성 거리
+    [Tooltip("생성 높이.")]
     [SerializeField] private float verticalOffset = 0.5f; // 생성 높이
+    [Tooltip("전방 힘.")]
     [SerializeField] private float forwardForce = 2f; // 전방 힘
+    [Tooltip("위쪽 힘.")]
     [SerializeField] private float upwardForce = 1f; // 위쪽 힘
 
     private void OnValidate() // Inspector 값 검증

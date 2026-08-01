@@ -5,6 +5,7 @@ using UnityEngine; // Unity 기본 기능
 public sealed class CraftingUnlockSaveBridge : MonoBehaviour // 제작법 해금 저장 연결
 {
     [Header("References")] // 외부 참조 묶음
+    [Tooltip("제작법 해금 관리자.")]
     [SerializeField] private CraftingUnlockManager craftingUnlockManager; // 제작법 해금 관리자
 
     public bool TryValidateSetup(out string errorMessage) // 저장 연결 설정 검사

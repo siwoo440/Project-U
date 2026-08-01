@@ -7,16 +7,25 @@ public sealed class PlayerEquipment : MonoBehaviour // 플레이어 장비 관�
     private const int EquipmentSlotArraySize = 6; // 장비 배열 전체 크기
 
     [Header("References")] // 외부 참조 묶음
+    [Tooltip("플레이어 인벤토리.")]
     [SerializeField] private PlayerInventory playerInventory; // 플레이어 인벤토리
 
     [Header("Runtime")] // 실행 상태 묶음
+    [Tooltip("장착 아이템 목록.")]
     [SerializeField] private ItemData[] equippedItems = new ItemData[EquipmentSlotArraySize]; // 장착 아이템 목록
+    [Tooltip("전체 방어력.")]
     [SerializeField] private float totalDefensePercent; // 전체 방어력
+    [Tooltip("전체 최대 체력 증가량.")]
     [SerializeField] private float totalMaximumHealthBonus; // 전체 최대 체력 증가량
+    [Tooltip("전체 이동 속도 증가량.")]
     [SerializeField] private float totalMovementSpeedBonusPercent; // 전체 이동 속도 증가량
+    [Tooltip("전체 허기 감소 방지량.")]
     [SerializeField] private float totalHungerReductionPercent; // 전체 허기 감소 방지량
+    [Tooltip("전체 갈증 감소 방지량.")]
     [SerializeField] private float totalThirstReductionPercent; // 전체 갈증 감소 방지량
+    [Tooltip("전체 방한 능력치.")]
     [SerializeField] private float totalColdResistancePercent; // 전체 방한 능력치
+    [Tooltip("전체 인벤토리 추가 슬롯.")]
     [SerializeField] private int totalInventorySlotBonus; // 전체 인벤토리 추가 슬롯
 
     public float TotalDefensePercent => totalDefensePercent; // 전체 방어력 제공

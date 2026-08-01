@@ -3,7 +3,9 @@ using UnityEngine; // Unity 기본 기능
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
 public sealed class StorageInteractable : InteractableBase // 설치 보관함 상호작용 처리
 {
+    [Tooltip("대상 보관함.")]
     [SerializeField] private StorageContainer storageContainer; // 대상 보관함
+    [Tooltip("공통 게임 UI 관리자.")]
     [SerializeField] private GameUIManager gameUIManager; // 공통 게임 UI 관리자
 
     public override string PromptMessage => storageContainer == null

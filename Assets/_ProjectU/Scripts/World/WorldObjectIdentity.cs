@@ -5,6 +5,7 @@ using UnityEngine; // Unity 기본 기능
 public sealed class WorldObjectIdentity : MonoBehaviour // 월드 오브젝트 고유 식별자
 {
     [Header("Identity")] // 식별 정보 묶음
+    [Tooltip("저장용 고유 ID.")]
     [SerializeField] private string worldObjectId = string.Empty; // 저장용 고유 ID
 
     public string WorldObjectId => worldObjectId; // 현재 고유 ID 제공

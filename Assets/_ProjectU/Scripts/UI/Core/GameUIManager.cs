@@ -16,17 +16,25 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
     private const string AltCursorLockId = "GameUIManager.AltCursor"; // Alt 커서 입력 잠금 ID
 
     [Header("Core")] // 핵심 관리자 참조 묶음
+    [Tooltip("게임 플레이 입력 잠금 관리자.")]
     [SerializeField] private GameplayInputLock gameplayInputLock; // 게임 플레이 입력 잠금 관리자
+    [Tooltip("플레이어 인벤토리.")]
     [SerializeField] private PlayerInventory playerInventory; // 플레이어 인벤토리
+    [Tooltip("아이템 버리기 관리자.")]
     [SerializeField] private InventoryItemDropper inventoryItemDropper; // 아이템 버리기 관리자
+    [Tooltip("플레이어 장비 관리자.")]
     [SerializeField] private PlayerEquipment playerEquipment; // 플레이어 장비 관리자
+    [Tooltip("플레이어 제작 관리자.")]
     [SerializeField] private CraftingManager craftingManager; // 플레이어 제작 관리자
 
     [Header("Runtime Popup Layer")] // 런타임 팝업 배치 설정 묶음
+    [Tooltip("동적 팝업 생성 부모.")]
     [SerializeField] private Transform popupLayer; // 동적 팝업 생성 부모
 
     [Header("Runtime Popup Prefabs")] // 런타임 팝업 프리팹 설정 묶음
+    [Tooltip("일반 인벤토리 팝업 프리팹.")]
     [SerializeField] private InventoryPopupController inventoryPopupPrefab; // 일반 인벤토리 팝업 프리팹
+    [Tooltip("보관함 팝업 프리팹.")]
     [SerializeField] private StorageContainerUI storagePopupPrefab; // 보관함 팝업 프리팹
 
     private InventoryPopupController inventoryPopupInstance; // 생성된 인벤토리 팝업 인스턴스

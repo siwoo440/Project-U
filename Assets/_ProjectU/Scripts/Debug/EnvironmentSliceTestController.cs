@@ -5,12 +5,19 @@ using UnityEngine; // Unity 기본 기능
 public sealed class EnvironmentSliceTestController : MonoBehaviour // 환경 생존 통합 테스트 관리
 {
     [Header("References")] // 테스트 참조 묶음
+    [Tooltip("날짜와 시간 시스템.")]
     [SerializeField] private DayNightCycle dayNightCycle; // 날짜와 시간 시스템
+    [Tooltip("계절 시스템.")]
     [SerializeField] private SeasonCycle seasonCycle; // 계절 시스템
+    [Tooltip("날씨 시스템.")]
     [SerializeField] private WeatherCycle weatherCycle; // 날씨 시스템
+    [Tooltip("플레이어 젖음 시스템.")]
     [SerializeField] private PlayerWetness playerWetness; // 플레이어 젖음 시스템
+    [Tooltip("플레이어 체온 시스템.")]
     [SerializeField] private PlayerTemperature playerTemperature; // 플레이어 체온 시스템
+    [Tooltip("플레이어 체력 시스템.")]
     [SerializeField] private PlayerHealth playerHealth; // 플레이어 체력 시스템
+    [Tooltip("게임 저장 시스템.")]
     [SerializeField] private GameplaySaveController gameplaySaveController; // 게임 저장 시스템
 
     private void Awake() // 테스트 참조 검사

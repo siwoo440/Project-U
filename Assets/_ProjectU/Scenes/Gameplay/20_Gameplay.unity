@@ -223,6 +223,7 @@ GameObject:
   - component: {fileID: 17714714}
   - component: {fileID: 17714713}
   - component: {fileID: 17714712}
+  - component: {fileID: 17714715}
   m_Layer: 0
   m_Name: === UIManagers ===
   m_TagString: Untagged
@@ -285,6 +286,31 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &17714715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17714711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31bb13ea2e0db4a4c9258ac8f603e207, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameplayUIRuntimeValidator
+  gameUIManager: {fileID: 17714712}
+  gameplayInputLock: {fileID: 17714713}
+  playerInventory: {fileID: 1491592325}
+  fixedHotbarSlotsUI: {fileID: 759280451}
+  buildPlacementController: {fileID: 1491592337}
+  popupLayer: {fileID: 389671134}
+  inventoryPopupPrefab: {fileID: 1033867957760452588, guid: 93ff48af9bd1ad14abcc1877388fbcd6, type: 3}
+  storagePopupPrefab: {fileID: 7755737863592508037, guid: 67e034078697a7e41ac81b594a8c9dee, type: 3}
+  validateOnStart: 1
+  monitorRuntimeState: 1
+  repairPopupStateMismatch: 1
+  monitorInterval: 0.5
+  logSuccessSummary: 1
 --- !u!4 &27137969 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2516878666505249027, guid: 297ce24fcfb620841ba57df42990fa55, type: 3}

@@ -6,8 +6,11 @@ using UnityEngine; // Unity 기본 기능
 public sealed class CraftingManager : MonoBehaviour // 플레이어 제작 관리자
 {
     [Header("References")] // 외부 참조 묶음
+    [Tooltip("플레이어 인벤토리.")]
     [SerializeField] private PlayerInventory playerInventory; // 플레이어 인벤토리
+    [Tooltip("제작법 해금 관리자.")]
     [SerializeField] private CraftingUnlockManager craftingUnlockManager; // 제작법 해금 관리자
+    [Tooltip("현재 제작 시설.")]
     [SerializeField] private CraftingFacilityType activeFacility = CraftingFacilityType.Hand; // 현재 제작 시설
 
     public CraftingUnlockManager UnlockManager => craftingUnlockManager; // 해금 관리자 제공

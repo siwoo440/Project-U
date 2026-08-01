@@ -6,7 +6,9 @@ using UnityEngine.UI; // 버튼 UI 기능
 public sealed class MainMenuContinueUI : MonoBehaviour // 메인 메뉴 이어하기 UI 관리
 {
     [Header("References")] // 외부 참조 묶음
+    [Tooltip("이어하기 버튼.")]
     [SerializeField] private Button continueButton; // 이어하기 버튼
+    [Tooltip("저장 정보 표시 문구.")]
     [SerializeField] private TMP_Text saveInfoText; // 저장 정보 표시 문구
 
     private void Awake() // 이어하기 UI 참조 초기화

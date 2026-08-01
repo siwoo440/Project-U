@@ -3,8 +3,11 @@ using UnityEngine; // Unity 기본 기능
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
 public sealed class SleepingBagInteractable : InteractableBase, IBuildRemovalGuard // 침낭 상호작용과 철거 제한 처리
 {
+    [Tooltip("수면 시스템 참조.")]
     [SerializeField] private SleepSystem sleepSystem; // 수면 시스템 참조
+    [Tooltip("플레이어 부활 시스템 참조.")]
     [SerializeField] private PlayerRespawnSystem playerRespawnSystem; // 플레이어 부활 시스템 참조
+    [Tooltip("침낭 부활 위치.")]
     [SerializeField] private Transform respawnPoint; // 침낭 부활 위치
 
     public override string PromptMessage => GetPromptMessage(); // 현재 침낭 안내 문구 제공

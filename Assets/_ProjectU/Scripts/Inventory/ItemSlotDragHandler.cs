@@ -7,6 +7,7 @@ using UnityEngine.UI; // Unity UI 기능
 public sealed class ItemSlotDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler // 공통 슬롯 드래그 처리
 {
     [Header("References")] // UI 참조 묶음
+    [Tooltip("드래그 출발 슬롯 테두리.")]
     [SerializeField] private Outline dragOutline; // 드래그 출발 슬롯 테두리
 
     private IItemSlotContainer slotContainer; // 현재 슬롯 소유 컨테이너

@@ -11,18 +11,27 @@ using UnityEngine; // Unity 기본 기능
 public sealed class PlayerRespawnSystem : MonoBehaviour // 플레이어 부활 지점 관리
 {
     [Header("References")] // 외부 참조 묶음
+    [Tooltip("낮과 밤 시간 관리자.")]
     [SerializeField] private DayNightCycle dayNightCycle; // 낮과 밤 시간 관리자
+    [Tooltip("기본 부활 지점.")]
     [SerializeField] private Transform defaultRespawnPoint; // 기본 부활 지점
 
     [Header("Respawn")] // 부활 설정 묶음
+    [Tooltip("부활 체력.")]
     [SerializeField] private float respawnHealth = 50f; // 부활 체력
+    [Tooltip("부활 허기.")]
     [SerializeField] private float respawnHunger = 50f; // 부활 허기
+    [Tooltip("부활 갈증.")]
     [SerializeField] private float respawnThirst = 50f; // 부활 갈증
+    [Tooltip("부활 젖음 수치.")]
     [SerializeField] private float respawnWetness = 0f; // 부활 젖음 수치
+    [Tooltip("부활 체온 수치.")]
     [SerializeField] private float respawnTemperature = 100f; // 부활 체온 수치
+    [Tooltip("부활 시간.")]
     [SerializeField] private float respawnHour = 8f; // 부활 시간
 
     [Header("Runtime")] // 실행 상태 묶음
+    [Tooltip("등록된 침낭 부활 지점.")]
     [SerializeField] private Transform registeredRespawnPoint; // 등록된 침낭 부활 지점
 
     private CharacterController characterController; // 캐릭터 이동 충돌기

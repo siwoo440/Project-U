@@ -5,11 +5,17 @@ using UnityEngine; // Unity 기본 기능
 [RequireComponent(typeof(WorldObjectIdentity))] // 월드 고유 ID 컴포넌트 요구
 public sealed class PlacedBuildObject : MonoBehaviour, IBuildRemovalGuard // 설치된 건축물 정보
 {
+    [Tooltip("설치에 사용된 건축 데이터.")]
     [SerializeField] private BuildRecipeData recipeData; // 설치에 사용된 건축 데이터
+    [Tooltip("설치된 건축물 종류.")]
     [SerializeField] private BuildPlacementType placementType; // 설치된 건축물 종류
+    [Tooltip("설치된 구조 역할.")]
     [SerializeField] private BuildStructureType structureType; // 설치된 구조 역할
+    [Tooltip("현재 지지 건축물.")]
     [SerializeField] private PlacedBuildObject supportStructure; // 현재 지지 건축물
+    [Tooltip("사용 중인 지지 연결점.")]
     [SerializeField] private BuildConnectionPoint supportConnectionPoint; // 사용 중인 지지 연결점
+    [Tooltip("현재 지지 중인 건축물 목록.")]
     [SerializeField] private List<PlacedBuildObject> supportedStructures = new List<PlacedBuildObject>(); // 현재 지지 중인 건축물 목록
 
     private BuildConnectionPoint[] connectionPoints; // 하위 연결점 목록

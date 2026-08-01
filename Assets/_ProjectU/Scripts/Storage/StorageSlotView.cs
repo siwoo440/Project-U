@@ -4,10 +4,15 @@ using UnityEngine.UI; // Unity UI 기능
 
 public sealed class StorageSlotView : MonoBehaviour // 보관함 슬롯 화면
 {
+    [Tooltip("슬롯 번호 Text.")]
     [SerializeField] private TMP_Text slotNumberText; // 슬롯 번호 Text
+    [Tooltip("아이템 아이콘 Image.")]
     [SerializeField] private Image itemIconImage; // 아이템 아이콘 Image
+    [Tooltip("아이템 이름 Text.")]
     [SerializeField] private TMP_Text itemNameText; // 아이템 이름 Text
+    [Tooltip("아이템 수량 Text.")]
     [SerializeField] private TMP_Text quantityText; // 아이템 수량 Text
+    [Tooltip("공통 슬롯 드래그 처리기.")]
     [SerializeField] private ItemSlotDragHandler itemSlotDragHandler; // 공통 슬롯 드래그 처리기
 
     private bool referencesValid; // UI 참조 연결 상태

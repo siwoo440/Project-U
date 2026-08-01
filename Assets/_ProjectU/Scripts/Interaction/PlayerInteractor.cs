@@ -5,22 +5,33 @@ using UnityEngine.InputSystem; // 새 Input System 기능
 public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격 상호작용 처리
 {
     [Header("Detection")] // 탐지 설정 묶음
+    [Tooltip("탐지 시작 위치.")]
     [SerializeField] private Transform interactionOrigin; // 탐지 시작 위치
+    [Tooltip("탐지 방향 기준.")]
     [SerializeField] private Transform viewTransform; // 탐지 방향 기준
+    [Tooltip("최대 상호작용 거리.")]
     [SerializeField] private float interactionDistance = 1.8f; // 최대 상호작용 거리
+    [Tooltip("탐지 구체 반지름.")]
     [SerializeField] private float detectionRadius = 0.35f; // 탐지 구체 반지름
+    [Tooltip("상호작용 대상 레이어.")]
     [SerializeField] private LayerMask interactableLayers; // 상호작용 대상 레이어
 
     [Header("Input")] // 입력 설정 묶음
+    [Tooltip("F키 상호작용 액션 참조.")]
     [SerializeField] private InputActionReference interactActionReference; // F키 상호작용 액션 참조
+    [Tooltip("좌클릭 공격 액션 참조.")]
     [SerializeField] private InputActionReference attackActionReference; // 좌클릭 공격 액션 참조
 
     [Header("Attack")] // 공격 연출 설정 묶음
+    [Tooltip("도구 휘두르기 연출.")]
     [SerializeField] private ToolSwingAnimation toolSwingAnimation; // 도구 휘두르기 연출
+    [Tooltip("건축 배치 관리자.")]
     [SerializeField] private BuildPlacementController buildPlacementController; // 건축 배치 관리자
 
     [Header("UI")] // 안내 UI 설정 묶음
+    [Tooltip("안내 UI 루트.")]
     [SerializeField] private GameObject promptRoot; // 안내 UI 루트
+    [Tooltip("안내 문구 텍스트.")]
     [SerializeField] private TMP_Text promptText; // 안내 문구 텍스트
 
     private InteractableBase currentInteractable; // 현재 탐지 대상

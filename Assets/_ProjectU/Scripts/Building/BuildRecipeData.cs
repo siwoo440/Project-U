@@ -5,34 +5,49 @@ using UnityEngine; // Unity 기본 기능
 public sealed class BuildRecipeData : ScriptableObject // 건축물 제작과 배치 데이터
 {
     [Header("Identity")] // 식별 정보 묶음
+    [Tooltip("건축 데이터 고유 ID.")]
     [SerializeField] private string recipeId = "structure_new"; // 건축 데이터 고유 ID
+    [Tooltip("건축물 표시 이름.")]
     [SerializeField] private string displayName = "NEW STRUCTURE"; // 건축물 표시 이름
 
     [Header("Structure")] // 구조 설정 묶음
+    [Tooltip("건축 구조 역할.")]
     [SerializeField] private BuildStructureType structureType = BuildStructureType.None; // 건축 구조 역할
+    [Tooltip("기능성 가구 Terrain 배치 허용.")]
     [SerializeField] private bool allowGroundPlacement; // 기능성 가구 Terrain 배치 허용
 
     [Header("Placement")] // 배치 설정 묶음
+    [Tooltip("건축물 배치 종류.")]
     [SerializeField] private BuildPlacementType placementType = BuildPlacementType.Free; // 건축물 배치 종류
+    [Tooltip("자유 배치 회전 단위.")]
     [SerializeField] private float rotationStep = 45f; // 자유 배치 회전 단위
+    [Tooltip("미리보기 위치 보정.")]
     [SerializeField] private Vector3 previewOffset; // 미리보기 위치 보정
 
     [Header("Prefabs")] // 프리팹 설정 묶음
+    [Tooltip("실제 설치 프리팹.")]
     [SerializeField] private GameObject placedPrefab; // 실제 설치 프리팹
+    [Tooltip("설치 미리보기 프리팹.")]
     [SerializeField] private GameObject previewPrefab; // 설치 미리보기 프리팹
 
     [Header("Collision")] // 충돌 검사 설정 묶음
+    [Tooltip("충돌 검사 중심.")]
     [SerializeField] private Vector3 placementCheckCenter = new Vector3(0f, 0.5f, 0f); // 충돌 검사 중심
+    [Tooltip("충돌 검사 절반 크기.")]
     [SerializeField] private Vector3 placementCheckHalfExtents = new Vector3(0.45f, 0.5f, 0.45f); // 충돌 검사 절반 크기
 
     [Header("Terrain")] // Terrain 검사 설정 묶음
+    [Tooltip("최대 허용 경사.")]
     [SerializeField] private float maximumSlopeAngle = 20f; // 최대 허용 경사
+    [Tooltip("배치 영역 최대 높이 차이.")]
     [SerializeField] private float maximumHeightDifference = 0.15f; // 배치 영역 최대 높이 차이
 
     [Header("Ingredients")] // 필요 재료 설정 묶음
+    [Tooltip("설치 필요 재료 목록.")]
     [SerializeField] private CraftingIngredient[] ingredients = new CraftingIngredient[0]; // 설치 필요 재료 목록
 
     [Header("Removal")] // 철거 설정 묶음
+    [Tooltip("철거 재료 반환 비율.")]
     [SerializeField, Range(0f, 1f)] private float demolitionRefundRatio = 0.5f; // 철거 재료 반환 비율
 
     public string RecipeId => recipeId; // 건축 데이터 ID 제공

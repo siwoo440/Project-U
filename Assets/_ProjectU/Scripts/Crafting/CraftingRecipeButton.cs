@@ -7,16 +7,23 @@ using UnityEngine.UI; // Unity UI 기능
 public sealed class CraftingRecipeButton : MonoBehaviour // 제작법 UI 항목
 {
     [Header("Runtime References")] // 런타임 기능 참조 묶음
+    [Tooltip("플레이어 인벤토리.")]
     [SerializeField] private PlayerInventory playerInventory; // 플레이어 인벤토리
+    [Tooltip("제작 관리자.")]
     [SerializeField] private CraftingManager craftingManager; // 제작 관리자
 
     [Header("Recipe")] // 제작법 데이터 묶음
+    [Tooltip("표시 제작법.")]
     [SerializeField] private CraftingRecipeData recipeData; // 표시 제작법
 
     [Header("Display")] // 화면 요소 참조 묶음
+    [Tooltip("제작법 이름 Text.")]
     [SerializeField] private TMP_Text recipeNameText; // 제작법 이름 Text
+    [Tooltip("제작 재료 Text.")]
     [SerializeField] private TMP_Text ingredientText; // 제작 재료 Text
+    [Tooltip("제작 상태 Text.")]
     [SerializeField] private TMP_Text statusText; // 제작 상태 Text
+    [Tooltip("제작 실행 버튼.")]
     [SerializeField] private Button craftButton; // 제작 실행 버튼
 
     private bool internalReferencesValid; // UI 내부 참조 상태

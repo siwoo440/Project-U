@@ -6,15 +6,21 @@ using UnityEngine.UI; // Unity UI 기능
 public sealed class EquipmentSlotUI : MonoBehaviour // 장비 슬롯 화면 관리
 {
     [Header("Runtime Reference")] // 런타임 외부 참조 묶음
+    [Tooltip("플레이어 장비 관리자.")]
     [SerializeField] private PlayerEquipment playerEquipment; // 플레이어 장비 관리자
 
     [Header("Display")] // 화면 요소 참조 묶음
+    [Tooltip("장비 아이콘 이미지.")]
     [SerializeField] private Image itemIconImage; // 장비 아이콘 이미지
+    [Tooltip("슬롯 이름 문구.")]
     [SerializeField] private TMP_Text slotNameText; // 슬롯 이름 문구
+    [Tooltip("장비 이름 문구.")]
     [SerializeField] private TMP_Text itemNameText; // 장비 이름 문구
+    [Tooltip("장비 해제 버튼.")]
     [SerializeField] private Button unequipButton; // 장비 해제 버튼
 
     [Header("Slot")] // 슬롯 설정 묶음
+    [Tooltip("담당 장비 슬롯.")]
     [SerializeField] private EquipmentSlotType slotType = EquipmentSlotType.None; // 담당 장비 슬롯
 
     private bool internalReferencesValid; // UI 내부 참조 상태

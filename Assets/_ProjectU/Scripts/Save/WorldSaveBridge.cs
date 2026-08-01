@@ -6,8 +6,11 @@ using UnityEngine; // Unity 기본 기능
 public sealed class WorldSaveBridge : MonoBehaviour // 월드 아이템과 채집 자원 저장 연결
 {
     [Header("References")] // 외부 참조 묶음
+    [Tooltip("아이템 ID 데이터베이스.")]
     [SerializeField] private ItemDatabase itemDatabase; // 아이템 ID 데이터베이스
+    [Tooltip("동적 월드 아이템 원본.")]
     [SerializeField] private WorldItemPickup worldItemPrefab; // 동적 월드 아이템 원본
+    [Tooltip("복원 월드 아이템 부모.")]
     [SerializeField] private Transform worldItemParent; // 복원 월드 아이템 부모
 
     public bool TryValidateSetup(out string errorMessage) // 월드 저장 구성 검사

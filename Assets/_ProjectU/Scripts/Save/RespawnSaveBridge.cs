@@ -5,6 +5,7 @@ using UnityEngine; // Unity 기본 기능
 public sealed class RespawnSaveBridge : MonoBehaviour // 침낭 부활 지점 저장 연결
 {
     [Header("References")] // 외부 참조 묶음
+    [Tooltip("플레이어 부활 시스템.")]
     [SerializeField] private PlayerRespawnSystem playerRespawnSystem; // 플레이어 부활 시스템
 
     public bool TryValidateSetup(out string errorMessage) // 저장 연결 설정 검사

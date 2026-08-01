@@ -6,8 +6,11 @@ using UnityEngine.UI; // Unity UI 기능
 public sealed class HealthBarUI : MonoBehaviour // 체력 화면 표시
 {
     [Header("References")] // UI 참조 묶음
+    [Tooltip("플레이어 체력.")]
     [SerializeField] private PlayerHealth playerHealth; // 플레이어 체력
+    [Tooltip("체력 채움 이미지.")]
     [SerializeField] private Image fillImage; // 체력 채움 이미지
+    [Tooltip("체력 수치 Text.")]
     [SerializeField] private TMP_Text valueText; // 체력 수치 Text
 
     private void Awake() // UI 참조 검사

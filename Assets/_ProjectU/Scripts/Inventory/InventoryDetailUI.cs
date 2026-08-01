@@ -6,24 +6,37 @@ using UnityEngine.UI; // Unity UI 기능
 public sealed class InventoryDetailUI : MonoBehaviour // 아이템 상세 정보 UI
 {
     [Header("Runtime References")] // 런타임 기능 참조 묶음
+    [Tooltip("플레이어 인벤토리.")]
     [SerializeField] private PlayerInventory playerInventory; // 플레이어 인벤토리
+    [Tooltip("아이템 버리기 기능.")]
     [SerializeField] private InventoryItemDropper itemDropper; // 아이템 버리기 기능
+    [Tooltip("플레이어 장비 관리자.")]
     [SerializeField] private PlayerEquipment playerEquipment; // 플레이어 장비 관리자
 
     [Header("State")] // 상태 화면 묶음
+    [Tooltip("미선택 화면.")]
     [SerializeField] private GameObject emptyStateRoot; // 미선택 화면
+    [Tooltip("상세 정보 화면.")]
     [SerializeField] private GameObject detailContentRoot; // 상세 정보 화면
 
     [Header("Display")] // 표시 요소 묶음
+    [Tooltip("아이템 아이콘.")]
     [SerializeField] private Image itemIconImage; // 아이템 아이콘
+    [Tooltip("아이템 이름.")]
     [SerializeField] private TMP_Text itemNameText; // 아이템 이름
+    [Tooltip("아이템 분류.")]
     [SerializeField] private TMP_Text categoryText; // 아이템 분류
+    [Tooltip("아이템 설명.")]
     [SerializeField] private TMP_Text descriptionText; // 아이템 설명
+    [Tooltip("아이템 수량.")]
     [SerializeField] private TMP_Text quantityText; // 아이템 수량
 
     [Header("Actions")] // 동작 버튼 묶음
+    [Tooltip("한 개 제거 버튼.")]
     [SerializeField] private Button removeOneButton; // 한 개 제거 버튼
+    [Tooltip("한 개 버리기 버튼.")]
     [SerializeField] private Button dropOneButton; // 한 개 버리기 버튼
+    [Tooltip("선택 장비 장착 버튼.")]
     [SerializeField] private Button equipButton; // 선택 장비 장착 버튼
 
     private bool internalReferencesValid; // UI 내부 참조 연결 상태

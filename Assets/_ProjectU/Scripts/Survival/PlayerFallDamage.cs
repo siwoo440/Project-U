@@ -6,16 +6,23 @@ using UnityEngine; // Unity 기본 기능
 public sealed class PlayerFallDamage : MonoBehaviour // 플레이어 낙하 피해 관리
 {
     [Header("References")] // 외부 참조 묶음
+    [Tooltip("플레이어 이동.")]
     [SerializeField] private PlayerMovement playerMovement; // 플레이어 이동
+    [Tooltip("플레이어 체력.")]
     [SerializeField] private PlayerHealth playerHealth; // 플레이어 체력
 
     [Header("Fall Damage")] // 낙하 피해 설정 묶음
+    [Tooltip("피해 없는 최대 거리.")]
     [SerializeField] private float safeFallDistance = 3f; // 피해 없는 최대 거리
+    [Tooltip("최대 피해 도달 거리.")]
     [SerializeField] private float fatalFallDistance = 12f; // 최대 피해 도달 거리
+    [Tooltip("최대 낙하 피해.")]
     [SerializeField] private float maximumDamage = 100f; // 최대 낙하 피해
 
     [Header("Runtime")] // 실행 상태 묶음
+    [Tooltip("마지막 낙하 거리.")]
     [SerializeField] private float lastFallDistance; // 마지막 낙하 거리
+    [Tooltip("마지막 적용 피해.")]
     [SerializeField] private float lastAppliedDamage; // 마지막 적용 피해
 
     private void Awake() // 낙하 피해 초기화

@@ -6,12 +6,17 @@ using UnityEngine; // Unity 기본 기능
 public sealed class PlayerHealth : MonoBehaviour // 플레이어 체력 관리
 {
     [Header("Health")] // 체력 설정 묶음
+    [Tooltip("최대 체력.")]
     [SerializeField] private float maxHealth = 100f; // 최대 체력
 
     [Header("Runtime")] // 실행 상태 묶음
+    [Tooltip("플레이어 장비 관리자.")]
     [SerializeField] private PlayerEquipment playerEquipment; // 플레이어 장비 관리자
+    [Tooltip("장비 적용 최대 체력.")]
     [SerializeField] private float currentMaximumHealth = 100f; // 장비 적용 최대 체력
+    [Tooltip("현재 체력.")]
     [SerializeField] private float currentHealth = 100f; // 현재 체력
+    [Tooltip("사망 상태.")]
     [SerializeField] private bool isDead; // 사망 상태
 
     public float CurrentHealth => currentHealth; // 현재 체력 제공

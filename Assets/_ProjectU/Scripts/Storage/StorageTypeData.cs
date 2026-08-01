@@ -4,11 +4,15 @@ using UnityEngine; // Unity 기본 기능
 public sealed class StorageTypeData : ScriptableObject // 보관함 종류 데이터
 {
     [Header("Identity")] // 식별 정보 묶음
+    [Tooltip("보관함 종류 고유 ID.")]
     [SerializeField] private string storageTypeId = "storage_new"; // 보관함 종류 고유 ID
+    [Tooltip("보관함 표시 이름.")]
     [SerializeField] private string displayName = "NEW STORAGE"; // 보관함 표시 이름
 
     [Header("Capacity")] // 용량 정보 묶음
+    [Tooltip("전체 슬롯 개수.")]
     [SerializeField] private int slotCapacity = 12; // 전체 슬롯 개수
+    [Tooltip("UI 가로 열 개수.")]
     [SerializeField] private int columnCount = 4; // UI 가로 열 개수
 
     public string StorageTypeId => storageTypeId; // 보관함 종류 ID 제공

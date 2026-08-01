@@ -6,16 +6,25 @@ using UnityEngine.UI; // Unity UI 기능
 public sealed class TemperatureBarUI : MonoBehaviour // 체온 화면 표시
 {
     [Header("References")] // UI 참조 묶음
+    [Tooltip("플레이어 체온 관리자.")]
     [SerializeField] private PlayerTemperature playerTemperature; // 플레이어 체온 관리자
+    [Tooltip("체온 채움 이미지.")]
     [SerializeField] private Image fillImage; // 체온 채움 이미지
+    [Tooltip("체온 수치 문구.")]
     [SerializeField] private TMP_Text valueText; // 체온 수치 문구
 
     [Header("Colors")] // 상태별 색상 묶음
+    [Tooltip("열기 회복 색상.")]
     [SerializeField] private Color heatingColor = new Color(1f, 0.3f, 0.1f); // 열기 회복 색상
+    [Tooltip("정상 체온 색상.")]
     [SerializeField] private Color warmColor = new Color(1f, 0.65f, 0.15f); // 정상 체온 색상
+    [Tooltip("추위 색상.")]
     [SerializeField] private Color coldColor = new Color(0.3f, 0.8f, 1f); // 추위 색상
+    [Tooltip("저체온 색상.")]
     [SerializeField] private Color hypothermiaColor = new Color(0.1f, 0.3f, 1f); // 저체온 색상
+    [Tooltip("더위 상태 색상.")]
     [SerializeField] private Color hotColor = new Color(1f, 0.35f, 0.05f); // 더위 상태 색상
+    [Tooltip("열사병 상태 색상.")]
     [SerializeField] private Color heatstrokeColor = new Color(0.85f, 0.05f, 0.02f); // 열사병 상태 색상
 
     private void Awake() // 체온 UI 참조 검사

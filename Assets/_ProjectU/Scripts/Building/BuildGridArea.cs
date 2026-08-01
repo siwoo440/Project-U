@@ -6,20 +6,31 @@ using UnityEngine.Rendering; // 그림자 설정 기능
 public sealed class BuildGridArea : MonoBehaviour // 가상 건축 그리드 구역
 {
     [Header("Grid")] // 그리드 설정 묶음
+    [Tooltip("한 타일 크기.")]
     [SerializeField] private float cellSize = 1f; // 한 타일 크기
+    [Tooltip("X 방향 타일 개수.")]
     [SerializeField] private int gridWidth = 30; // X 방향 타일 개수
+    [Tooltip("Z 방향 타일 개수.")]
     [SerializeField] private int gridDepth = 30; // Z 방향 타일 개수
 
     [Header("Terrain")] // Terrain 설정 묶음
+    [Tooltip("Terrain 레이어.")]
     [SerializeField] private LayerMask groundLayerMask; // Terrain 레이어
+    [Tooltip("높이 탐지 시작 거리.")]
     [SerializeField] private float terrainRayHeight = 25f; // 높이 탐지 시작 거리
+    [Tooltip("높이 탐지 전체 거리.")]
     [SerializeField] private float terrainRayDistance = 100f; // 높이 탐지 전체 거리
+    [Tooltip("그리드 지면 띄우기.")]
     [SerializeField] private float gridSurfaceOffset = 0.03f; // 그리드 지면 띄우기
 
     [Header("Visual")] // 그리드 표시 설정 묶음
+    [Tooltip("그리드 선 재질.")]
     [SerializeField] private Material gridLineMaterial; // 그리드 선 재질
+    [Tooltip("그리드 선 색상.")]
     [SerializeField] private Color gridLineColor = new Color(0f, 1f, 1f, 0.6f); // 그리드 선 색상
+    [Tooltip("그리드 선 굵기.")]
     [SerializeField] private float gridLineWidth = 0.02f; // 그리드 선 굵기
+    [Tooltip("Terrain 높이 표본 간격.")]
     [SerializeField] private float lineSampleSpacing = 0.5f; // Terrain 높이 표본 간격
 
     private GameObject gridRoot; // 실행 중 생성된 그리드 루트

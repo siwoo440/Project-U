@@ -8,34 +8,55 @@ using UnityEngine.InputSystem; // 새로운 입력 시스템
 public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축 배치 관리자
 {
     [Header("References")] // 외부 참조 묶음
+    [Tooltip("플레이어 카메라.")]
     [SerializeField] private Camera mainCamera; // 플레이어 카메라
+    [Tooltip("플레이어 위치.")]
     [SerializeField] private Transform playerTransform; // 플레이어 위치
+    [Tooltip("플레이어 인벤토리.")]
     [SerializeField] private PlayerInventory playerInventory; // 플레이어 인벤토리
+    [Tooltip("플레이어 체력.")]
     [SerializeField] private PlayerHealth playerHealth; // 플레이어 체력
+    [Tooltip("공통 게임 UI 관리자.")]
     [SerializeField] private GameUIManager gameUIManager; // 공통 게임 UI 관리자
+    [Tooltip("건축 그리드 구역.")]
     [SerializeField] private BuildGridArea gridArea; // 건축 그리드 구역
+    [Tooltip("설치 건축물 부모.")]
     [SerializeField] private Transform placedObjectRoot; // 설치 건축물 부모
 
     [Header("Recipes")] // 건축 데이터 묶음
+    [Tooltip("선택 건축물 목록.")]
     [SerializeField] private BuildRecipeData[] buildRecipes = new BuildRecipeData[0]; // 선택 건축물 목록
 
     [Header("Materials")] // 건축 재질 묶음
+    [Tooltip("설치 가능 재질.")]
     [SerializeField] private Material validPreviewMaterial; // 설치 가능 재질
+    [Tooltip("설치 불가능 재질.")]
     [SerializeField] private Material invalidPreviewMaterial; // 설치 불가능 재질
+    [Tooltip("철거 대상 재질.")]
     [SerializeField] private Material removalTargetMaterial; // 철거 대상 재질
 
     [Header("Detection")] // 배치 탐지 설정 묶음
+    [Tooltip("Terrain 레이어.")]
     [SerializeField] private LayerMask groundLayerMask; // Terrain 레이어
+    [Tooltip("설치 방해 레이어.")]
     [SerializeField] private LayerMask obstructionLayerMask; // 설치 방해 레이어
+    [Tooltip("건축물 레이어.")]
     [SerializeField] private LayerMask structureLayerMask; // 건축물 레이어
+    [Tooltip("최대 건축 거리.")]
     [SerializeField] private float maximumBuildDistance = 6f; // 최대 건축 거리
+    [Tooltip("Terrain 표본 시작 높이.")]
     [SerializeField] private float terrainProbeHeight = 5f; // Terrain 표본 시작 높이
+    [Tooltip("Terrain 표본 탐지 거리.")]
     [SerializeField] private float terrainProbeDistance = 12f; // Terrain 표본 탐지 거리
+    [Tooltip("충돌 검사 여유값.")]
     [SerializeField] private float collisionPadding = 0.02f; // 충돌 검사 여유값
+    [Tooltip("연결점 탐지 거리.")]
     [SerializeField] private float connectionSnapDistance = 0.8f; // 연결점 탐지 거리
 
     [Header("UI")] // 건축 UI 참조 묶음
+    [Tooltip("건축 HUD 루트.")]
     [SerializeField] private GameObject buildHudRoot; // 건축 HUD 루트
+    [Tooltip("건축 상태 Text.")]
     [SerializeField] private TMP_Text buildStatusText; // 건축 상태 Text
 
     private GameObject previewInstance; // 현재 미리보기 오브젝트

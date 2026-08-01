@@ -3,7 +3,9 @@ using UnityEngine.InputSystem; // 새로운 입력 시스템
 
 public sealed class HotbarInput : MonoBehaviour // 핫바 숫자키 입력 처리
 {
+    [Tooltip("선택 대상 인벤토리.")]
     [SerializeField] private PlayerInventory playerInventory; // 선택 대상 인벤토리
+    [Tooltip("인벤토리 팝업 관리자.")]
     [SerializeField] private InventoryPopupController popupController; // 인벤토리 팝업 관리자
 
     private void Awake() // 입력 참조 검사

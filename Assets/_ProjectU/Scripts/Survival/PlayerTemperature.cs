@@ -6,61 +6,101 @@ using UnityEngine; // Unity 기본 기능
 public sealed class PlayerTemperature : MonoBehaviour // 플레이어 체온 관리
 {
     [Header("Temperature")] // 체온 설정 묶음
+    [Tooltip("최대 체감 온도.")]
     [SerializeField][Min(1f)] private float maxTemperature = 200f; // 최대 체감 온도
+    [Tooltip("정상 체감 온도.")]
     [SerializeField][Min(0f)] private float normalTemperature = 100f; // 정상 체감 온도
+    [Tooltip("정상 온도 복귀 속도.")]
     [SerializeField][Min(0f)] private float recoveryPerSecond = 0.2f; // 정상 온도 복귀 속도
+    [Tooltip("실내 추위 적용 배율.")]
     [SerializeField][Range(0f, 1f)] private float shelteredColdMultiplier = 0.35f; // 실내 추위 적용 배율
+    [Tooltip("열기 수신 상태 유지 시간.")]
     [SerializeField][Min(0.05f)] private float heatIndicatorDuration = 0.25f; // 열기 수신 상태 유지 시간
 
     [Header("Season Cooling")] // 계절별 추위 설정 묶음
+    [Tooltip("봄 초당 추위.")]
     [SerializeField][Min(0f)] private float springCoolingPerSecond = 0.02f; // 봄 초당 추위
+    [Tooltip("여름 초당 추위.")]
     [SerializeField][Min(0f)] private float summerCoolingPerSecond = 0f; // 여름 초당 추위
+    [Tooltip("가을 초당 추위.")]
     [SerializeField][Min(0f)] private float autumnCoolingPerSecond = 0.06f; // 가을 초당 추위
+    [Tooltip("겨울 초당 추위.")]
     [SerializeField][Min(0f)] private float winterCoolingPerSecond = 0.18f; // 겨울 초당 추위
 
     [Header("Weather Cooling")] // 날씨별 추위 설정 묶음
+    [Tooltip("흐림 초당 추위.")]
     [SerializeField][Min(0f)] private float cloudyCoolingPerSecond = 0.02f; // 흐림 초당 추위
+    [Tooltip("비 초당 추위.")]
     [SerializeField][Min(0f)] private float rainCoolingPerSecond = 0.15f; // 비 초당 추위
+    [Tooltip("눈 초당 추위.")]
     [SerializeField][Min(0f)] private float snowCoolingPerSecond = 0.22f; // 눈 초당 추위
+    [Tooltip("폭풍 초당 추위.")]
     [SerializeField][Min(0f)] private float stormCoolingPerSecond = 0.3f; // 폭풍 초당 추위
+    [Tooltip("밤 초당 추위.")]
     [SerializeField][Min(0f)] private float nightCoolingPerSecond = 0.08f; // 밤 초당 추위
+    [Tooltip("최대 젖음 초당 추위.")]
     [SerializeField][Min(0f)] private float maximumWetnessCoolingPerSecond = 0.35f; // 최대 젖음 초당 추위
 
     [Header("Environment Heating")] // 환경 더위 설정 묶음
+    [Tooltip("여름 낮 초당 더위.")]
     [SerializeField][Min(0f)] private float summerDayHeatingPerSecond = 0.22f; // 여름 낮 초당 더위
+    [Tooltip("맑은 낮 초당 더위.")]
     [SerializeField][Min(0f)] private float clearDayHeatingPerSecond = 0.12f; // 맑은 낮 초당 더위
+    [Tooltip("실내 더위 적용 배율.")]
     [SerializeField][Range(0f, 1f)] private float shelteredHeatMultiplier = 0.25f; // 실내 더위 적용 배율
 
     [Header("Temperature States")] // 온도 상태 기준 묶음
+    [Tooltip("추위 진입 기준.")]
     [SerializeField][Range(0f, 200f)] private float coldThreshold = 50f; // 추위 진입 기준
+    [Tooltip("저체온 진입 기준.")]
     [SerializeField][Range(0f, 200f)] private float hypothermiaThreshold = 20f; // 저체온 진입 기준
+    [Tooltip("더위 진입 기준.")]
     [SerializeField][Range(0f, 200f)] private float hotThreshold = 130f; // 더위 진입 기준
+    [Tooltip("열사병 진입 기준.")]
     [SerializeField][Range(0f, 200f)] private float heatstrokeThreshold = 170f; // 열사병 진입 기준
 
     [Header("Temperature Damage")] // 온도 피해 설정 묶음
+    [Tooltip("저체온 피해량.")]
     [SerializeField][Min(0f)] private float hypothermiaDamage = 5f; // 저체온 피해량
+    [Tooltip("열사병 피해량.")]
     [SerializeField][Min(0f)] private float heatstrokeDamage = 5f; // 열사병 피해량
+    [Tooltip("온도 피해 주기.")]
     [SerializeField][Min(0.1f)] private float damageInterval = 3f; // 온도 피해 주기
 
     [Header("Cold Effects")] // 추위 상태 효과 묶음
+    [Tooltip("추위 이동 속도 배율.")]
     [SerializeField][Range(0.1f, 1f)] private float coldMovementMultiplier = 0.9f; // 추위 이동 속도 배율
+    [Tooltip("저체온 이동 속도 배율.")]
     [SerializeField][Range(0.1f, 1f)] private float hypothermiaMovementMultiplier = 0.65f; // 저체온 이동 속도 배율
+    [Tooltip("추위 스태미나 소비 배율.")]
     [SerializeField][Min(1f)] private float coldStaminaDrainMultiplier = 1.15f; // 추위 스태미나 소비 배율
+    [Tooltip("저체온 스태미나 소비 배율.")]
     [SerializeField][Min(1f)] private float hypothermiaStaminaDrainMultiplier = 1.5f; // 저체온 스태미나 소비 배율
+    [Tooltip("추위 스태미나 회복 배율.")]
     [SerializeField][Range(0f, 1f)] private float coldStaminaRecoveryMultiplier = 0.9f; // 추위 스태미나 회복 배율
+    [Tooltip("저체온 스태미나 회복 배율.")]
     [SerializeField][Range(0f, 1f)] private float hypothermiaStaminaRecoveryMultiplier = 0.5f; // 저체온 스태미나 회복 배율
 
     [Header("Heat Effects")] // 더위 상태 효과 묶음
+    [Tooltip("더위 이동 속도 배율.")]
     [SerializeField][Range(0.1f, 1f)] private float hotMovementMultiplier = 0.9f; // 더위 이동 속도 배율
+    [Tooltip("열사병 이동 속도 배율.")]
     [SerializeField][Range(0.1f, 1f)] private float heatstrokeMovementMultiplier = 0.7f; // 열사병 이동 속도 배율
+    [Tooltip("더위 스태미나 소비 배율.")]
     [SerializeField][Min(1f)] private float hotStaminaDrainMultiplier = 1.25f; // 더위 스태미나 소비 배율
+    [Tooltip("열사병 스태미나 소비 배율.")]
     [SerializeField][Min(1f)] private float heatstrokeStaminaDrainMultiplier = 1.75f; // 열사병 스태미나 소비 배율
+    [Tooltip("더위 스태미나 회복 배율.")]
     [SerializeField][Range(0f, 1f)] private float hotStaminaRecoveryMultiplier = 0.75f; // 더위 스태미나 회복 배율
+    [Tooltip("열사병 스태미나 회복 배율.")]
     [SerializeField][Range(0f, 1f)] private float heatstrokeStaminaRecoveryMultiplier = 0.4f; // 열사병 스태미나 회복 배율
+    [Tooltip("더위 갈증 감소 배율.")]
     [SerializeField][Min(1f)] private float hotThirstMultiplier = 1.5f; // 더위 갈증 감소 배율
+    [Tooltip("열사병 갈증 감소 배율.")]
     [SerializeField][Min(1f)] private float heatstrokeThirstMultiplier = 2f; // 열사병 갈증 감소 배율
 
     [Header("Runtime")] // 실행 상태 묶음
+    [Tooltip("현재 체온 수치.")]
     [SerializeField] private float currentTemperature = 100f; // 현재 체온 수치
 
     private PlayerHealth playerHealth; // 플레이어 체력 관리자

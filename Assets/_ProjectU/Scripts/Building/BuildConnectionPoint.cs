@@ -4,7 +4,9 @@ using UnityEngine; // Unity 기본 기능
 public sealed class BuildConnectionPoint : MonoBehaviour // 건축 구조 연결점
 {
     [Header("Connection")] // 연결 설정 묶음
+    [Tooltip("연결점 고유 ID.")]
     [SerializeField] private string connectionPointId = "connection_new"; // 연결점 고유 ID
+    [Tooltip("연결 가능한 구조 종류.")]
     [SerializeField] private BuildStructureType[] acceptedStructureTypes = new BuildStructureType[0]; // 연결 가능한 구조 종류
 
     private PlacedBuildObject owner; // 연결점 소유 건축물

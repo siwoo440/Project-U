@@ -3,7 +3,9 @@ using UnityEngine; // Unity 기본 기능
 [RequireComponent(typeof(Renderer))] // 필수 Renderer 컴포넌트
 public sealed class TestInteractable : InteractableBase // 테스트 상호작용 오브젝트
 {
+    [Tooltip("비활성 상태 색상.")]
     [SerializeField] private Color inactiveColor = Color.gray; // 비활성 상태 색상
+    [Tooltip("활성 상태 색상.")]
     [SerializeField] private Color activeColor = Color.green; // 활성 상태 색상
 
     private Renderer targetRenderer; // 색상 변경 대상 Renderer

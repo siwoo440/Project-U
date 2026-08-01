@@ -6,35 +6,51 @@ using UnityEngine; // Unity 기본 기능
 public sealed class WeatherCycle : MonoBehaviour // 기본 날씨 순환 관리
 {
     [Header("References")] // 참조 설정 묶음
+    [Tooltip("날짜와 시간 관리자.")]
     [SerializeField] private DayNightCycle dayNightCycle; // 날짜와 시간 관리자
+    [Tooltip("현재 계절 관리자.")]
     [SerializeField] private SeasonCycle seasonCycle; // 현재 계절 관리자
+    [Tooltip("날씨 표시 텍스트.")]
     [SerializeField] private TMP_Text weatherText; // 날씨 표시 텍스트
 
     [Header("Clear Duration")] // 맑음 지속 시간 묶음
+    [Tooltip("맑음 최소 지속 시간.")]
     [SerializeField][Min(0.1f)] private float clearMinHours = 6f; // 맑음 최소 지속 시간
+    [Tooltip("맑음 최대 지속 시간.")]
     [SerializeField][Min(0.1f)] private float clearMaxHours = 10f; // 맑음 최대 지속 시간
 
     [Header("Cloudy Duration")] // 흐림 지속 시간 묶음
+    [Tooltip("흐림 최소 지속 시간.")]
     [SerializeField][Min(0.1f)] private float cloudyMinHours = 4f; // 흐림 최소 지속 시간
+    [Tooltip("흐림 최대 지속 시간.")]
     [SerializeField][Min(0.1f)] private float cloudyMaxHours = 8f; // 흐림 최대 지속 시간
 
     [Header("Rain Duration")] // 비 지속 시간 묶음
+    [Tooltip("비 최소 지속 시간.")]
     [SerializeField][Min(0.1f)] private float rainMinHours = 3f; // 비 최소 지속 시간
+    [Tooltip("비 최대 지속 시간.")]
     [SerializeField][Min(0.1f)] private float rainMaxHours = 6f; // 비 최대 지속 시간
 
     [Header("Snow Duration")] // 눈 지속 시간 묶음
+    [Tooltip("눈 최소 지속 시간.")]
     [SerializeField][Min(0.1f)] private float snowMinHours = 4f; // 눈 최소 지속 시간
+    [Tooltip("눈 최대 지속 시간.")]
     [SerializeField][Min(0.1f)] private float snowMaxHours = 8f; // 눈 최대 지속 시간
 
     [Header("Storm Duration")] // 폭풍 지속 시간 묶음
+    [Tooltip("폭풍 최소 지속 시간.")]
     [SerializeField][Min(0.1f)] private float stormMinHours = 2f; // 폭풍 최소 지속 시간
+    [Tooltip("폭풍 최대 지속 시간.")]
     [SerializeField][Min(0.1f)] private float stormMaxHours = 4f; // 폭풍 최대 지속 시간
 
     [Header("Debug")] // 테스트 설정 묶음
+    [Tooltip("날씨 변경 로그 사용 여부.")]
     [SerializeField] private bool logWeatherChanges = true; // 날씨 변경 로그 사용 여부
 
     [Header("Runtime")] // 실행 상태 묶음
+    [Tooltip("현재 날씨.")]
     [SerializeField] private WeatherType currentWeather; // 현재 날씨
+    [Tooltip("남은 날씨 시간.")]
     [SerializeField] private float remainingWeatherHours; // 남은 날씨 시간
 
     private float lastObservedTotalHours; // 마지막으로 확인한 전체 게임 시간

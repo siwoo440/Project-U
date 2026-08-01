@@ -5,26 +5,41 @@ using UnityEngine; // Unity 기본 기능
 public sealed class SleepSystem : MonoBehaviour // 플레이어 수면 진행 관리
 {
     [Header("References")] // 외부 참조 묶음
+    [Tooltip("낮과 밤 시간 관리자.")]
     [SerializeField] private DayNightCycle dayNightCycle; // 낮과 밤 시간 관리자
+    [Tooltip("플레이어 체력.")]
     [SerializeField] private PlayerHealth playerHealth; // 플레이어 체력
+    [Tooltip("플레이어 허기.")]
     [SerializeField] private PlayerHunger playerHunger; // 플레이어 허기
+    [Tooltip("플레이어 갈증.")]
     [SerializeField] private PlayerThirst playerThirst; // 플레이어 갈증
+    [Tooltip("플레이어 상호작용.")]
     [SerializeField] private PlayerInteractor playerInteractor; // 플레이어 상호작용
+    [Tooltip("건축 배치 관리자.")]
     [SerializeField] private BuildPlacementController buildPlacementController; // 건축 배치 관리자
+    [Tooltip("수면 암전 화면.")]
     [SerializeField] private CanvasGroup fadeCanvasGroup; // 수면 암전 화면
+    [Tooltip("게임 저장 관리자 참조.")]
     [SerializeField] private GameplaySaveController gameplaySaveController; // 게임 저장 관리자 참조
 
     [Header("Sleep")] // 수면 설정 묶음
+    [Tooltip("수면 종료 시간.")]
     [SerializeField] private float wakeHour = 8f; // 수면 종료 시간
+    [Tooltip("수면 체력 회복량.")]
     [SerializeField] private float healthRestoreAmount = 30f; // 수면 체력 회복량
+    [Tooltip("수면 허기 소비량.")]
     [SerializeField] private float hungerCost = 15f; // 수면 허기 소비량
+    [Tooltip("수면 갈증 소비량.")]
     [SerializeField] private float thirstCost = 20f; // 수면 갈증 소비량
 
     [Header("Fade")] // 암전 설정 묶음
+    [Tooltip("암전 전환 시간.")]
     [SerializeField] private float fadeDuration = 0.75f; // 암전 전환 시간
+    [Tooltip("검은 화면 유지 시간.")]
     [SerializeField] private float blackScreenDuration = 0.25f; // 검은 화면 유지 시간
 
     [Header("Runtime")] // 실행 상태 묶음
+    [Tooltip("현재 수면 상태.")]
     [SerializeField] private bool isSleeping; // 현재 수면 상태
 
     private float storedTimeScale = 1f; // 수면 전 시간 배율

@@ -3,7 +3,9 @@ using UnityEngine; // Unity 기본 기능
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
 public sealed class ToggleLightInteractable : InteractableBase // 설치 조명 상호작용 처리
 {
+    [Tooltip("제어 대상 조명.")]
     [SerializeField] private Light targetLight; // 제어 대상 조명
+    [Tooltip("시작 점등 상태.")]
     [SerializeField] private bool startsEnabled = true; // 시작 점등 상태
 
     public bool IsLightEnabled => targetLight != null && targetLight.enabled; // 현재 점등 상태 제공

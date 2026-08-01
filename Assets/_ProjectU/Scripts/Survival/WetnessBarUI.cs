@@ -6,8 +6,11 @@ using UnityEngine.UI; // Unity UI 기능
 public sealed class WetnessBarUI : MonoBehaviour // 젖음 수치 화면 표시
 {
     [Header("References")] // UI 참조 묶음
+    [Tooltip("플레이어 젖음 관리자.")]
     [SerializeField] private PlayerWetness playerWetness; // 플레이어 젖음 관리자
+    [Tooltip("젖음 채움 이미지.")]
     [SerializeField] private Image fillImage; // 젖음 채움 이미지
+    [Tooltip("젖음 수치 문구.")]
     [SerializeField] private TMP_Text valueText; // 젖음 수치 문구
 
     private void Awake() // UI 참조 검사

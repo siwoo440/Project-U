@@ -3,6 +3,7 @@ using UnityEngine; // Unity 기본 기능
 
 public sealed class GameStateView : MonoBehaviour // 게임 상태 표시 UI
 {
+    [Tooltip("상태 표시 텍스트.")]
     [SerializeField] private TMP_Text stateText; // 상태 표시 텍스트
 
     private void OnEnable() // UI 활성화 처리

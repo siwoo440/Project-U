@@ -4,31 +4,47 @@ using UnityEngine.InputSystem; // 새 Input System 기능
 public sealed class ThirdPersonCameraFollow : MonoBehaviour // 마우스 회전식 추적 카메라
 {
     [Header("Target")] // 추적 대상 설정
+    [Tooltip("플레이어 Transform.")]
     [SerializeField] private Transform target; // 플레이어 Transform
+    [Tooltip("시선 중심 높이.")]
     [SerializeField] private float targetHeight = 1f; // 시선 중심 높이
 
     [Header("Camera")] // 카메라 위치 설정
+    [Tooltip("시작 상하 각도.")]
     [SerializeField] private float initialPitch = 30f; // 시작 상하 각도
+    [Tooltip("최소 상하 각도.")]
     [SerializeField] private float minimumPitch = -20f; // 최소 상하 각도
+    [Tooltip("최대 상하 각도.")]
     [SerializeField] private float maximumPitch = 65f; // 최대 상하 각도
 
     [Header("Zoom")] // 카메라 줌 설정
+    [Tooltip("목표 카메라 거리.")]
     [SerializeField] private float distance = 10f; // 목표 카메라 거리
+    [Tooltip("최소 카메라 거리.")]
     [SerializeField] private float minimumDistance = 3f; // 최소 카메라 거리
+    [Tooltip("최대 카메라 거리.")]
     [SerializeField] private float maximumDistance = 10f; // 최대 카메라 거리
+    [Tooltip("휠 한 단계 거리 변화량.")]
     [SerializeField] private float zoomStep = 1.5f; // 휠 한 단계 거리 변화량
+    [Tooltip("거리 변화 보간 시간.")]
     [SerializeField] private float zoomSmoothTime = 0.08f; // 거리 변화 보간 시간
 
     [Header("Collision")] // 카메라 충돌 설정
+    [Tooltip("카메라 충돌 대상 레이어.")]
     [SerializeField] private LayerMask collisionLayerMask; // 카메라 충돌 대상 레이어
+    [Tooltip("충돌 검사 구체 반지름.")]
     [SerializeField] private float collisionRadius = 0.3f; // 충돌 검사 구체 반지름
+    [Tooltip("벽과 카메라 사이 여유 거리.")]
     [SerializeField] private float collisionPadding = 0.15f; // 벽과 카메라 사이 여유 거리
 
     [Header("Runtime")] // 카메라 실행 상태
+    [Tooltip("현재 적용 카메라 거리.")]
     [SerializeField] private float currentDistance; // 현재 적용 카메라 거리
+    [Tooltip("현재 카메라 차단 여부.")]
     [SerializeField] private bool isCameraObstructed; // 현재 카메라 차단 여부
 
     [Header("Mouse")] // 마우스 설정
+    [Tooltip("마우스 감도.")]
     [SerializeField] private float mouseSensitivity = 0.1f; // 마우스 감도
 
     private float yaw; // 좌우 회전값

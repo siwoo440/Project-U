@@ -9,31 +9,49 @@ using UnityEngine.InputSystem; // 새 Input System 기능
 public sealed class PlayerMovement : MonoBehaviour // 플레이어 이동 처리
 {
     [Header("References")] // 외부 참조 묶음
+    [Tooltip("이동 기준 카메라.")]
     [SerializeField] private Transform cameraTransform; // 이동 기준 카메라
 
     [Header("Movement")] // 이동 설정 묶음
+    [Tooltip("걷기 속도.")]
     [SerializeField] private float walkSpeed = 4f; // 걷기 속도
+    [Tooltip("달리기 속도.")]
     [SerializeField] private float runSpeed = 7f; // 달리기 속도
+    [Tooltip("점프 높이.")]
     [SerializeField] private float jumpHeight = 1.2f; // 점프 높이
+    [Tooltip("중력 가속도.")]
     [SerializeField] private float gravity = -20f; // 중력 가속도
 
     [Header("Ground Detection")] // 지면 판정 설정 묶음
+    [Tooltip("지면 검사 대상 레이어.")]
     [SerializeField] private LayerMask groundLayerMask = ~0; // 지면 검사 대상 레이어
+    [Tooltip("발밑 지면 검사 거리.")]
     [SerializeField] private float groundCheckDistance = 0.15f; // 발밑 지면 검사 거리
+    [Tooltip("검사 구체 반지름 감소값.")]
     [SerializeField] private float groundProbeRadiusOffset = 0.05f; // 검사 구체 반지름 감소값
+    [Tooltip("지면 밀착용 하강 속도.")]
     [SerializeField] private float groundedVerticalVelocity = -2f; // 지면 밀착용 하강 속도
+    [Tooltip("유효 낙하 최소 거리.")]
     [SerializeField] private float minimumFallDistance = 1.5f; // 유효 낙하 최소 거리
 
     [Header("Ground Runtime")] // 지면 실행 상태 묶음
+    [Tooltip("현재 접지 상태.")]
     [SerializeField] private bool isGrounded; // 현재 접지 상태
+    [Tooltip("현재 지면 경사 각도.")]
     [SerializeField] private float currentSlopeAngle; // 현재 지면 경사 각도
+    [Tooltip("현재 낙하 상태.")]
     [SerializeField] private bool isFalling; // 현재 낙하 상태
+    [Tooltip("마지막 낙하 거리.")]
     [SerializeField] private float lastFallDistance; // 마지막 낙하 거리
+    [Tooltip("유효 낙하 발생 여부.")]
     [SerializeField] private bool wasSignificantFall; // 유효 낙하 발생 여부
 
     [Header("Input Actions")] // 입력 설정 묶음
+    [Tooltip("이동 액션 참조.")]
     [SerializeField] private InputActionReference moveActionReference; // 이동 액션 참조
+    [Tooltip("달리기 액션 참조.")]
     [SerializeField] private InputActionReference sprintActionReference; // 달리기 액션 참조
+    [Tooltip("점프 액션 참조.")]
     [SerializeField] private InputActionReference jumpActionReference; // 점프 액션 참조
 
     private CharacterController characterController; // 캐릭터 충돌 이동기

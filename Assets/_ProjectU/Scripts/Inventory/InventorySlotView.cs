@@ -5,11 +5,17 @@ using UnityEngine.UI; // Unity UI 기능
 
 public sealed class InventorySlotView : MonoBehaviour, IPointerClickHandler // 인벤토리 슬롯 표시와 클릭 처리
 {
+    [Tooltip("숫자키 표시 Text.")]
     [SerializeField] private TMP_Text shortcutText; // 숫자키 표시 Text
+    [Tooltip("아이템 아이콘 Image.")]
     [SerializeField] private Image itemIconImage; // 아이템 아이콘 Image
+    [Tooltip("아이템 이름 Text.")]
     [SerializeField] private TMP_Text itemNameText; // 아이템 이름 Text
+    [Tooltip("아이템 수량 Text.")]
     [SerializeField] private TMP_Text quantityText; // 아이템 수량 Text
+    [Tooltip("선택 테두리.")]
     [SerializeField] private Outline selectionOutline; // 선택 테두리
+    [Tooltip("공통 슬롯 드래그 처리기.")]
     [SerializeField] private ItemSlotDragHandler itemSlotDragHandler; // 공통 슬롯 드래그 처리기
 
     private PlayerInventory playerInventory; // 연결된 플레이어 인벤토리

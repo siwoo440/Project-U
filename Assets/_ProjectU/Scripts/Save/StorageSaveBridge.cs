@@ -6,6 +6,7 @@ using UnityEngine; // Unity 기본 기능
 public sealed class StorageSaveBridge : MonoBehaviour // 보관함 저장과 복원 연결
 {
     [Header("References")] // 외부 참조 묶음
+    [Tooltip("아이템 ID 데이터베이스.")]
     [SerializeField] private ItemDatabase itemDatabase; // 아이템 ID 데이터베이스
 
     public bool TryValidateSetup(out string errorMessage) // 보관함 저장 구성 검사

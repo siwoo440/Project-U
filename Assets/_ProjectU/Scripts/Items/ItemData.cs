@@ -4,40 +4,58 @@ using UnityEngine; // Unity 기본 기능
 public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
 {
     [Header("Identity")] // 식별 정보 묶음
+    [Tooltip("아이템 고유 ID.")]
     [SerializeField] private string itemId = "item_new"; // 아이템 고유 ID
 
     [Header("Display")] // 화면 표시 정보 묶음
+    [Tooltip("아이템 표시 이름.")]
     [SerializeField] private string displayName = "NEW ITEM"; // 아이템 표시 이름
+    [Tooltip("아이템 설명.")]
     [TextArea(2, 4)] // 여러 줄 설명 입력
     [SerializeField] private string description = "NO DESCRIPTION"; // 아이템 설명
+    [Tooltip("아이템 아이콘.")]
     [SerializeField] private Sprite icon; // 아이템 아이콘
 
     [Header("Category")] // 아이템 분류 묶음
+    [Tooltip("아이템 기본 분류.")]
     [SerializeField] private ItemCategory itemCategory = ItemCategory.CraftingMaterial; // 아이템 기본 분류
+    [Tooltip("도구 종류.")]
     [SerializeField] private ToolType toolType = ToolType.None; // 도구 종류
 
     [Header("Equipment")] // 장비 설정 묶음
+    [Tooltip("장착 슬롯 종류.")]
     [SerializeField] private EquipmentSlotType equipmentSlotType = EquipmentSlotType.None; // 장착 슬롯 종류
 
     [Header("Equipment Stats")] // 장비 능력치 묶음
+    [Tooltip("피해 감소 비율.")]
     [SerializeField, Range(0f, 80f)] private float defensePercent; // 피해 감소 비율
+    [Tooltip("최대 체력 증가량.")]
     [SerializeField] private float maximumHealthBonus; // 최대 체력 증가량
+    [Tooltip("이동 속도 증가 비율.")]
     [SerializeField] private float movementSpeedBonusPercent; // 이동 속도 증가 비율
+    [Tooltip("허기 감소 방지 비율.")]
     [SerializeField, Range(0f, 80f)] private float hungerDepletionReductionPercent; // 허기 감소 방지 비율
+    [Tooltip("갈증 감소 방지 비율.")]
     [SerializeField, Range(0f, 80f)] private float thirstDepletionReductionPercent; // 갈증 감소 방지 비율
+    [Tooltip("추위 감소 방지 비율.")]
     [SerializeField, Range(0f, 80f)] private float coldResistancePercent; // 추위 감소 방지 비율
+    [Tooltip("인벤토리 추가 슬롯.")]
     [SerializeField] private int inventorySlotBonus; // 인벤토리 추가 슬롯
 
     [Header("Food")] // 음식 효과 묶음
+    [Tooltip("허기 회복량.")]
     [SerializeField] private float hungerRestoreAmount = 0f; // 허기 회복량
 
     [Header("Drink")] // 음료 효과 묶음
+    [Tooltip("갈증 회복량.")]
     [SerializeField] private float thirstRestoreAmount = 0f; // 갈증 회복량
 
     [Header("Medicine")] // 의약품 효과 묶음
+    [Tooltip("체력 회복량.")]
     [SerializeField] private float healthRestoreAmount = 0f; // 체력 회복량
 
     [Header("Stack")] // 중첩 정보 묶음
+    [Tooltip("최대 중첩 수량.")]
     [SerializeField] private int maximumStack = 20; // 최대 중첩 수량
 
     public string ItemId => itemId; // 아이템 ID 제공

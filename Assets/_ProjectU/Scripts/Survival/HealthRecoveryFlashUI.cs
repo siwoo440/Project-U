@@ -5,16 +5,23 @@ using UnityEngine.UI; // Unity UI 기능
 public sealed class HealthRecoveryFlashUI : MonoBehaviour // 체력 회복 화면 효과
 {
     [Header("References")] // 외부 참조 묶음
+    [Tooltip("플레이어 체력.")]
     [SerializeField] private PlayerHealth playerHealth; // 플레이어 체력
+    [Tooltip("회복 화면 이미지.")]
     [SerializeField] private Image flashImage; // 회복 화면 이미지
 
     [Header("Flash")] // 회복 효과 설정 묶음
+    [Tooltip("효과 지속 시간.")]
     [SerializeField] private float flashDuration = 0.35f; // 효과 지속 시간
+    [Tooltip("최소 불투명도.")]
     [SerializeField] private float minimumAlpha = 0.1f; // 최소 불투명도
+    [Tooltip("최대 불투명도.")]
     [SerializeField] private float maximumAlpha = 0.3f; // 최대 불투명도
 
     [Header("Runtime")] // 실행 상태 묶음
+    [Tooltip("남은 효과 시간.")]
     [SerializeField] private float flashTimer; // 남은 효과 시간
+    [Tooltip("시작 불투명도.")]
     [SerializeField] private float flashStartAlpha; // 시작 불투명도
 
     private void Awake() // 회복 화면 초기화

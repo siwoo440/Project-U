@@ -4,14 +4,19 @@ using UnityEngine; // Unity 기본 기능
 public sealed class StarvationDamage : MonoBehaviour // 굶주림 피해 관리
 {
     [Header("References")] // 외부 참조 묶음
+    [Tooltip("플레이어 허기.")]
     [SerializeField] private PlayerHunger playerHunger; // 플레이어 허기
+    [Tooltip("플레이어 체력.")]
     [SerializeField] private PlayerHealth playerHealth; // 플레이어 체력
 
     [Header("Starvation Damage")] // 굶주림 피해 설정 묶음
+    [Tooltip("회당 피해량.")]
     [SerializeField] private float damagePerTick = 5f; // 회당 피해량
+    [Tooltip("피해 발생 간격.")]
     [SerializeField] private float damageInterval = 2f; // 피해 발생 간격
 
     [Header("Runtime")] // 실행 상태 묶음
+    [Tooltip("현재 피해 대기시간.")]
     [SerializeField] private float starvationTimer; // 현재 피해 대기시간
 
     private void Awake() // 굶주림 피해 초기화

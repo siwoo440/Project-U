@@ -5,6 +5,7 @@ using UnityEngine; // Unity 기본 기능
 [RequireComponent(typeof(TMP_Text))] // 필수 TextMeshPro 컴포넌트
 public sealed class InventoryStatusUI : MonoBehaviour // 인벤토리 상태 UI
 {
+    [Tooltip("표시할 플레이어 인벤토리.")]
     [SerializeField] private PlayerInventory playerInventory; // 표시할 플레이어 인벤토리
 
     private TMP_Text statusText; // 인벤토리 출력 Text

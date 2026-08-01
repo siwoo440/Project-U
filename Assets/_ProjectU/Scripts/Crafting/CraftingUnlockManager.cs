@@ -6,9 +6,11 @@ using UnityEngine; // Unity 기본 기능
 public sealed class CraftingUnlockManager : MonoBehaviour // 제작법 해금 관리자
 {
     [Header("Recipes")] // 제작법 설정 묶음
+    [Tooltip("전체 제작법 목록.")]
     [SerializeField] private CraftingRecipeData[] allRecipes = new CraftingRecipeData[0]; // 전체 제작법 목록
 
     [Header("Debug")] // 테스트 설정 묶음
+    [Tooltip("테스트 해금 제작법.")]
     [SerializeField] private CraftingRecipeData debugRecipe; // 테스트 해금 제작법
 
     private readonly HashSet<string> unlockedRecipeIds = new HashSet<string>(StringComparer.Ordinal); // 해금된 제작법 ID 목록

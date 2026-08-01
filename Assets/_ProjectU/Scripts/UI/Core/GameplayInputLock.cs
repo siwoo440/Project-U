@@ -5,9 +5,11 @@ using UnityEngine; // Unity 기본 기능
 public sealed class GameplayInputLock : MonoBehaviour // 게임 플레이 입력 잠금 관리자
 {
     [Header("Behaviours")] // 비활성화 대상 설정 묶음
+    [Tooltip("UI 사용 중 정지할 컴포넌트 목록.")]
     [SerializeField] private Behaviour[] behavioursToDisable = new Behaviour[0]; // UI 사용 중 정지할 컴포넌트 목록
 
     [Header("HUD Objects")] // 숨김 대상 설정 묶음
+    [Tooltip("UI 사용 중 숨길 HUD 오브젝트 목록.")]
     [SerializeField] private GameObject[] objectsToHide = new GameObject[0]; // UI 사용 중 숨길 HUD 오브젝트 목록
 
     private readonly HashSet<string> activeLockIds = new HashSet<string>(); // 현재 활성 입력 잠금 ID 목록

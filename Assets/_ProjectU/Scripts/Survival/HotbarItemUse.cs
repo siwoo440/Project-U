@@ -5,11 +5,17 @@ using UnityEngine.InputSystem; // 새로운 입력 시스템
 public sealed class HotbarItemUse : MonoBehaviour // 핫바 아이템 사용 처리
 {
     [Header("References")] // 기능 참조 묶음
+    [Tooltip("플레이어 인벤토리.")]
     [SerializeField] private PlayerInventory playerInventory; // 플레이어 인벤토리
+    [Tooltip("플레이어 허기.")]
     [SerializeField] private PlayerHunger playerHunger; // 플레이어 허기
+    [Tooltip("플레이어 갈증.")]
     [SerializeField] private PlayerThirst playerThirst; // 플레이어 갈증
+    [Tooltip("플레이어 체력.")]
     [SerializeField] private PlayerHealth playerHealth; // 플레이어 체력
+    [Tooltip("인벤토리 팝업 관리자.")]
     [SerializeField] private InventoryPopupController popupController; // 인벤토리 팝업 관리자
+    [Tooltip("건축 배치 관리자.")]
     [SerializeField] private BuildPlacementController buildPlacementController; // 건축 배치 관리자
 
 

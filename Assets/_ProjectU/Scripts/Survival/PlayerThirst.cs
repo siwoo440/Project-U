@@ -6,10 +6,13 @@ using UnityEngine; // Unity 기본 기능
 public sealed class PlayerThirst : MonoBehaviour // 플레이어 갈증 관리
 {
     [Header("Thirst")] // 갈증 설정 묶음
+    [Tooltip("최대 갈증.")]
     [SerializeField] private float maxThirst = 100f; // 최대 갈증
+    [Tooltip("초당 갈증 감소량.")]
     [SerializeField] private float depletionPerSecond = 0.15f; // 초당 갈증 감소량
 
     [Header("Runtime")] // 실행 상태 묶음
+    [Tooltip("현재 갈증.")]
     [SerializeField] private float currentThirst = 100f; // 현재 갈증
 
     private PlayerEquipment playerEquipment; // 플레이어 장비 관리자

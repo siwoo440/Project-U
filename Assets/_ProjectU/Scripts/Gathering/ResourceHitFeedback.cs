@@ -4,11 +4,15 @@ using UnityEngine; // Unity 기본 기능
 public sealed class ResourceHitFeedback : MonoBehaviour // 자원 타격 반응 연출
 {
     [Header("References")] // 참조 설정 묶음
+    [Tooltip("크기를 변경할 자원 외형.")]
     [SerializeField] private Transform visualRoot; // 크기를 변경할 자원 외형
 
     [Header("Feedback")] // 타격 반응 설정 묶음
+    [Tooltip("눌린 상태 크기 배율.")]
     [SerializeField] private float compressedScaleMultiplier = 0.9f; // 눌린 상태 크기 배율
+    [Tooltip("눌리는 시간.")]
     [SerializeField] private float compressDuration = 0.08f; // 눌리는 시간
+    [Tooltip("원래 크기 복귀 시간.")]
     [SerializeField] private float recoverDuration = 0.12f; // 원래 크기 복귀 시간
 
     private Vector3 idleLocalScale; // 기본 로컬 크기

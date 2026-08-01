@@ -5,8 +5,11 @@ using UnityEngine; // Unity 기본 기능
 public sealed class PlayerInventory : MonoBehaviour, IItemSlotContainer // 플레이어 인벤토리 관리
 {
     [Header("Capacity")] // 용량 설정 묶음
+    [Tooltip("전체 슬롯 개수.")]
     [SerializeField] private int slotCapacity = 32; // 전체 슬롯 개수
+    [Tooltip("가방 추가 슬롯 개수.")]
     [SerializeField] private int equipmentBonusSlotCapacity; // 가방 추가 슬롯 개수
+    [Tooltip("핫바 슬롯 개수.")]
     [SerializeField] private int hotbarSlotCount = 8; // 핫바 슬롯 개수
 
     private int selectedHotbarIndex; // 현재 선택 핫바 번호

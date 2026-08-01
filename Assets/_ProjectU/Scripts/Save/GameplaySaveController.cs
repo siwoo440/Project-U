@@ -6,20 +6,33 @@ using UnityEngine.SceneManagement; // 현재 Scene 확인 기능
 public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상태 저장과 불러오기 관리
 {
     [Header("Save Slot")] // 저장 슬롯 설정 묶음
+    [Tooltip("현재 사용할 저장 슬롯 ID.")]
     [SerializeField] private string slotId = SaveFileService.DefaultSlotId; // 현재 사용할 저장 슬롯 ID
 
     [Header("References")] // 외부 참조 설정 묶음
+    [Tooltip("플레이어 위치와 회전 대상.")]
     [SerializeField] private Transform playerTransform; // 플레이어 위치와 회전 대상
+    [Tooltip("플레이어 추적 카메라.")]
     [SerializeField] private ThirdPersonCameraFollow thirdPersonCameraFollow; // 플레이어 추적 카메라
+    [Tooltip("날짜와 시간 시스템.")]
     [SerializeField] private DayNightCycle dayNightCycle; // 날짜와 시간 시스템
+    [Tooltip("날씨 순환 시스템.")]
     [SerializeField] private WeatherCycle weatherCycle; // 날씨 순환 시스템
+    [Tooltip("인벤토리와 장비 저장 연결.")]
     [SerializeField] private InventorySaveBridge inventorySaveBridge; // 인벤토리와 장비 저장 연결
+    [Tooltip("월드 상태 저장 연결.")]
     [SerializeField] private WorldSaveBridge worldSaveBridge; // 월드 상태 저장 연결
+    [Tooltip("설치 건축물 저장 연결.")]
     [SerializeField] private PlacedStructureSaveBridge placedStructureSaveBridge; // 설치 건축물 저장 연결
+    [Tooltip("부활 지점 저장 연결.")]
     [SerializeField] private RespawnSaveBridge respawnSaveBridge; // 부활 지점 저장 연결
+    [Tooltip("제작법 해금 저장 연결.")]
     [SerializeField] private CraftingUnlockSaveBridge craftingUnlockSaveBridge; // 제작법 해금 저장 연결
+    [Tooltip("보관함 내용 저장 연결.")]
     [SerializeField] private StorageSaveBridge storageSaveBridge; // 보관함 내용 저장 연결
+    [Tooltip("공통 게임 UI 관리자.")]
     [SerializeField] private GameUIManager gameUIManager; // 공통 게임 UI 관리자
+    [Tooltip("수면 진행 상태 확인.")]
     [SerializeField] private SleepSystem sleepSystem; // 수면 진행 상태 확인
 
     private CharacterController characterController; // 플레이어 충돌 이동기

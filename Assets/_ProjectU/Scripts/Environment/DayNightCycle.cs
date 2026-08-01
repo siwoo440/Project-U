@@ -6,31 +6,49 @@ using UnityEngine.Rendering; // 환경광 모드 기능
 public sealed class DayNightCycle : MonoBehaviour // 낮과 밤 시간 순환 관리
 {
     [Header("References")] // 참조 설정 묶음
+    [Tooltip("태양 역할 방향광.")]
     [SerializeField] private Light sunLight; // 태양 역할 방향광
+    [Tooltip("날짜와 시간 표시 텍스트.")]
     [SerializeField] private TMP_Text timeText; // 날짜와 시간 표시 텍스트
+    [Tooltip("계절 순환 관리자.")]
     [SerializeField] private SeasonCycle seasonCycle; // 계절 순환 관리자
 
     [Header("Time")] // 시간 설정 묶음
+    [Tooltip("하루가 흐르는 현실 시간.")]
     [SerializeField] private float fullDayDurationSeconds = 600f; // 하루가 흐르는 현실 시간
+    [Tooltip("게임 시작 시간.")]
     [SerializeField] private float startingHour = 8f; // 게임 시작 시간
+    [Tooltip("게임 시작 날짜.")]
     [SerializeField] private int startingDay = 1; // 게임 시작 날짜
+    [Tooltip("시간 진행 배율.")]
     [SerializeField] private float cycleSpeedMultiplier = 1f; // 시간 진행 배율
 
     [Header("Sun")] // 태양 설정 묶음
+    [Tooltip("태양 좌우 회전값.")]
     [SerializeField] private float sunYaw = -30f; // 태양 좌우 회전값
+    [Tooltip("낮 방향광 밝기.")]
     [SerializeField] private float daySunIntensity = 1f; // 낮 방향광 밝기
+    [Tooltip("밤 방향광 밝기.")]
     [SerializeField] private float nightSunIntensity = 0.03f; // 밤 방향광 밝기
+    [Tooltip("낮 태양 색상.")]
     [SerializeField] private Color daySunColor = new Color(1f, 0.96f, 0.84f); // 낮 태양 색상
+    [Tooltip("일몰 태양 색상.")]
     [SerializeField] private Color sunsetSunColor = new Color(1f, 0.42f, 0.16f); // 일몰 태양 색상
+    [Tooltip("밤 태양 색상.")]
     [SerializeField] private Color nightSunColor = new Color(0.28f, 0.38f, 0.62f); // 밤 태양 색상
 
     [Header("Ambient")] // 환경광 설정 묶음
+    [Tooltip("낮 환경광 색상.")]
     [SerializeField] private Color dayAmbientColor = new Color(0.54f, 0.57f, 0.62f); // 낮 환경광 색상
+    [Tooltip("밤 환경광 색상.")]
     [SerializeField] private Color nightAmbientColor = new Color(0.04f, 0.06f, 0.11f); // 밤 환경광 색상
 
     [Header("Runtime")] // 실행 상태 묶음
+    [Tooltip("현재 날짜.")]
     [SerializeField] private int currentDay; // 현재 날짜
+    [Tooltip("현재 시간.")]
     [SerializeField] private float currentHour; // 현재 시간
+    [Tooltip("현재 일광 비율.")]
     [SerializeField] private float daylightStrength; // 현재 일광 비율
 
     public int CurrentDay => currentDay; // 현재 날짜 제공

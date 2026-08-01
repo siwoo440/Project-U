@@ -6,8 +6,11 @@ using UnityEngine.UI; // Unity UI 기능
 public sealed class ThirstBarUI : MonoBehaviour // 갈증 화면 표시
 {
     [Header("References")] // UI 참조 묶음
+    [Tooltip("플레이어 갈증.")]
     [SerializeField] private PlayerThirst playerThirst; // 플레이어 갈증
+    [Tooltip("갈증 채움 이미지.")]
     [SerializeField] private Image fillImage; // 갈증 채움 이미지
+    [Tooltip("갈증 수치 Text.")]
     [SerializeField] private TMP_Text valueText; // 갈증 수치 Text
 
     private void Awake() // UI 참조 검사

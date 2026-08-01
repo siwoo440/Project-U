@@ -3,7 +3,9 @@ using UnityEngine; // Unity 기본 기능
 public sealed class WorldItemPickup : InteractableBase // 월드 아이템 획득 처리
 {
     [Header("Item")] // 아이템 설정 묶음
+    [Tooltip("획득 아이템 데이터.")]
     [SerializeField] private ItemData itemData; // 획득 아이템 데이터
+    [Tooltip("월드 아이템 수량.")]
     [SerializeField] private int quantity = 1; // 월드 아이템 수량
 
     private WorldObjectIdentity worldObjectIdentity; // 월드 고유 ID 컴포넌트

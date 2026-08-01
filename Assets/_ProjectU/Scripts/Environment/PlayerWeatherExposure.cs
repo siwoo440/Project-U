@@ -8,21 +8,33 @@ using UnityEngine; // Unity 기본 기능
 public sealed class PlayerWeatherExposure : MonoBehaviour // 플레이어 날씨 노출 판정
 {
     [Header("References")] // 필수 참조 묶음
+    [Tooltip("현재 날씨 관리자.")]
     [SerializeField] private WeatherCycle weatherCycle; // 현재 날씨 관리자
+    [Tooltip("현재 계절 관리자.")]
     [SerializeField] private SeasonCycle seasonCycle; // 현재 계절 관리자
+    [Tooltip("날짜와 시간 관리자.")]
     [SerializeField] private DayNightCycle dayNightCycle; // 날짜와 시간 관리자
+    [Tooltip("플레이어 체온 관리자.")]
     [SerializeField] private PlayerTemperature playerTemperature; // 플레이어 체온 관리자
+    [Tooltip("날씨 효과 관리자.")]
     [SerializeField] private WeatherEffectsController weatherEffectsController; // 날씨 효과 관리자
+    [Tooltip("플레이어 젖음 관리자.")]
     [SerializeField] private PlayerWetness playerWetness; // 플레이어 젖음 관리자
+    [Tooltip("노출 상태 표시 문구.")]
     [SerializeField] private TMP_Text exposureText; // 노출 상태 표시 문구
 
     [Header("Shelter Detection")] // 지붕 판정 설정 묶음
+    [Tooltip("지붕 판정 Layer.")]
     [SerializeField] private LayerMask shelterMask; // 지붕 판정 Layer
+    [Tooltip("Ray 시작 높이.")]
     [SerializeField][Min(0f)] private float rayOriginHeight = 1.6f; // Ray 시작 높이
+    [Tooltip("지붕 검사 거리.")]
     [SerializeField][Min(0.1f)] private float shelterCheckDistance = 20f; // 지붕 검사 거리
+    [Tooltip("지붕 검사 주기.")]
     [SerializeField][Min(0.05f)] private float shelterCheckInterval = 0.2f; // 지붕 검사 주기
 
     [Header("Runtime")] // 실행 상태 묶음
+    [Tooltip("현재 지붕 아래 상태.")]
     [SerializeField] private bool isSheltered; // 현재 지붕 아래 상태
 
     private float nextShelterCheckTime; // 다음 지붕 검사 시각

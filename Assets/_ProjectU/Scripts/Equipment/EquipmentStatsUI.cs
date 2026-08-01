@@ -4,7 +4,9 @@ using UnityEngine; // Unity 기본 기능
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
 public sealed class EquipmentStatsUI : MonoBehaviour // 장비 능력치 화면 관리
 {
+    [Tooltip("플레이어 장비 관리자.")]
     [SerializeField] private PlayerEquipment playerEquipment; // 플레이어 장비 관리자
+    [Tooltip("능력치 표시 문구.")]
     [SerializeField] private TMP_Text statsText; // 능력치 표시 문구
 
     private bool internalReferencesValid; // UI 내부 참조 상태

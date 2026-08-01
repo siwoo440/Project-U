@@ -6,8 +6,11 @@ using UnityEngine; // Unity 기본 기능
 public sealed class InventorySaveBridge : MonoBehaviour // 인벤토리와 장비 저장 연결 관리
 {
     [Header("References")] // 외부 참조 묶음
+    [Tooltip("플레이어 인벤토리.")]
     [SerializeField] private PlayerInventory playerInventory; // 플레이어 인벤토리
+    [Tooltip("플레이어 장비 관리자.")]
     [SerializeField] private PlayerEquipment playerEquipment; // 플레이어 장비 관리자
+    [Tooltip("아이템 ID 데이터베이스.")]
     [SerializeField] private ItemDatabase itemDatabase; // 아이템 ID 데이터베이스
 
     public bool TryValidateSetup(out string errorMessage) // 저장 연결 참조 검사

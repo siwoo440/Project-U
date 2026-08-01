@@ -5,14 +5,21 @@ using UnityEngine; // Unity 기본 기능
 public sealed class PlayerStamina : MonoBehaviour // 플레이어 스태미나 관리
 {
     [Header("Stamina")] // 스태미나 설정 묶음
+    [Tooltip("최대 스태미나.")]
     [SerializeField] private float maxStamina = 100f; // 최대 스태미나
+    [Tooltip("초당 달리기 소비량.")]
     [SerializeField] private float sprintDrainPerSecond = 20f; // 초당 달리기 소비량
+    [Tooltip("초당 회복량.")]
     [SerializeField] private float recoveryPerSecond = 15f; // 초당 회복량
+    [Tooltip("회복 시작 대기 시간.")]
     [SerializeField] private float recoveryDelay = 1.5f; // 회복 시작 대기 시간
+    [Tooltip("탈진 해제 필요 수치.")]
     [SerializeField] private float staminaRequiredToResume = 20f; // 탈진 해제 필요 수치
 
     [Header("Runtime")] // 실행 상태 확인 묶음
+    [Tooltip("현재 스태미나.")]
     [SerializeField] private float currentStamina = 100f; // 현재 스태미나
+    [Tooltip("현재 탈진 상태.")]
     [SerializeField] private bool isExhausted; // 현재 탈진 상태
 
     private float nextRecoveryTime; // 회복 시작 가능 시각

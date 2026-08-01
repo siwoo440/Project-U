@@ -6,7 +6,9 @@ using UnityEngine; // Unity 기본 기능
 public sealed class PlacedStructureSaveBridge : MonoBehaviour // 설치 건축물 저장 연결
 {
     [Header("References")] // 외부 참조 묶음
+    [Tooltip("설치 건축물 부모.")]
     [SerializeField] private Transform placedStructureParent; // 설치 건축물 부모
+    [Tooltip("등록 건축 데이터 목록.")]
     [SerializeField] private BuildRecipeData[] buildRecipes = new BuildRecipeData[0]; // 등록 건축 데이터 목록
 
     public bool TryValidateSetup(out string errorMessage) // 건축물 저장 구성 검사

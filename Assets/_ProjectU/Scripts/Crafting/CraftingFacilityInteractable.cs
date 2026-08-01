@@ -4,11 +4,15 @@ using UnityEngine; // Unity 기본 기능
 public sealed class CraftingFacilityInteractable : InteractableBase // 제작 시설 상호작용 처리
 {
     [Header("Facility")] // 제작 시설 설정 묶음
+    [Tooltip("제공 제작 시설.")]
     [SerializeField] private CraftingFacilityType facilityType = CraftingFacilityType.Workbench; // 제공 제작 시설
+    [Tooltip("시설 표시 이름.")]
     [SerializeField] private string facilityDisplayName = "WORKBENCH"; // 시설 표시 이름
 
     [Header("Runtime References")] // 런타임 외부 참조 묶음
+    [Tooltip("플레이어 제작 관리자.")]
     [SerializeField] private CraftingManager craftingManager; // 플레이어 제작 관리자
+    [Tooltip("공통 게임 UI 관리자.")]
     [SerializeField] private GameUIManager gameUIManager; // 공통 게임 UI 관리자
 
     private bool ownsCurrentSession; // 현재 시설 세션 소유 상태

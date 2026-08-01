@@ -8,19 +8,29 @@ using UnityEngine.UI; // Unity UI 기능
 public sealed class StorageContainerUI : MonoBehaviour // 보관함 화면 관리자
 {
     [Header("References")] // UI 참조 묶음
+    [Tooltip("보관함 전체 패널.")]
     [SerializeField] private GameObject panelRoot; // 보관함 전체 패널
+    [Tooltip("보관함 제목 Text.")]
     [SerializeField] private TMP_Text titleText; // 보관함 제목 Text
+    [Tooltip("보관함 닫기 버튼.")]
     [SerializeField] private Button closeButton; // 보관함 닫기 버튼
+    [Tooltip("보관함 슬롯 생성 부모.")]
     [SerializeField] private Transform storageSlotContainer; // 보관함 슬롯 생성 부모
+    [Tooltip("보관함 슬롯 격자.")]
     [SerializeField] private GridLayoutGroup storageGridLayout; // 보관함 슬롯 격자
+    [Tooltip("보관함 슬롯 원본.")]
     [SerializeField] private StorageSlotView storageSlotTemplate; // 보관함 슬롯 원본
 
     [Header("Close Settings")] // 보관함 종료 설정 묶음
+    [Tooltip("F키 재입력 닫기 여부.")]
     [SerializeField] private bool closeWithInteractKey = true; // F키 재입력 닫기 여부
+    [Tooltip("최대 거리 초과 자동 닫기 여부.")]
     [SerializeField] private bool closeWhenTooFar = true; // 최대 거리 초과 자동 닫기 여부
+    [Tooltip("플레이어와 보관함의 최대 유지 거리.")]
     [SerializeField] private float maximumOpenDistance = 3f; // 플레이어와 보관함의 최대 유지 거리
 
     [Header("Debug")] // 임시 테스트 묶음
+    [Tooltip("테스트 대상 보관함.")]
     [SerializeField] private StorageContainer debugStorageContainer; // 테스트 대상 보관함
 
     private readonly List<StorageSlotView> slotViews = new List<StorageSlotView>(); // 생성된 슬롯 화면 목록

@@ -5,10 +5,13 @@ using UnityEngine; // Unity 기본 기능
 public sealed class PlayerHunger : MonoBehaviour // 플레이어 허기 관리
 {
     [Header("Hunger")] // 허기 설정 묶음
+    [Tooltip("최대 허기.")]
     [SerializeField] private float maxHunger = 100f; // 최대 허기
+    [Tooltip("초당 허기 감소량.")]
     [SerializeField] private float depletionPerSecond = 0.1f; // 초당 허기 감소량
 
     [Header("Runtime")] // 실행 상태 묶음
+    [Tooltip("현재 허기.")]
     [SerializeField] private float currentHunger = 100f; // 현재 허기
 
     private PlayerEquipment playerEquipment; // 플레이어 장비 관리자

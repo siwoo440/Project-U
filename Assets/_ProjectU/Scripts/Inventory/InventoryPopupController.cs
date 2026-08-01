@@ -4,6 +4,7 @@ using UnityEngine; // Unity 기본 기능
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
 public sealed class InventoryPopupController : MonoBehaviour // 인벤토리 팝업 관리자
 {
+    [Tooltip("전체 인벤토리 팝업.")]
     [SerializeField] private GameObject popupPanel; // 전체 인벤토리 팝업
 
     private GameUIManager gameUIManager; // 공통 게임 UI 관리자
@@ -16,7 +17,8 @@ public sealed class InventoryPopupController : MonoBehaviour // 인벤토리 팝
     private bool internalReferencesValid; // 프리팹 내부 참조 상태
     private bool runtimeInitialized; // 런타임 외부 참조 초기화 상태
 
-    public bool IsOpen { get; private set; } // 팝업 열림 상태 제공
+    public bool IsOpen { get; private set; } // 관리자 기준 팝업 열림 상태 제공
+    public bool IsVisible => popupPanel != null && popupPanel.activeSelf; // 실제 팝업 화면 표시 여부 제공
     public bool IsRuntimeInitialized => runtimeInitialized; // 런타임 초기화 여부 제공
     public event Action<bool> OpenStateChanged; // 팝업 상태 변경 알림
 

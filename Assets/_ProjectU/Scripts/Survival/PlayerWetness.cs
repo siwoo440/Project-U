@@ -4,12 +4,17 @@ using UnityEngine; // Unity 기본 기능
 public sealed class PlayerWetness : MonoBehaviour // 플레이어 젖음 수치 관리
 {
     [Header("Wetness")] // 젖음 설정 묶음
+    [Tooltip("최대 젖음 수치.")]
     [SerializeField][Min(1f)] private float maxWetness = 100f; // 최대 젖음 수치
+    [Tooltip("비 초당 젖음 증가량.")]
     [SerializeField][Min(0f)] private float rainWetnessPerSecond = 2f; // 비 초당 젖음 증가량
+    [Tooltip("폭풍 초당 젖음 증가량.")]
     [SerializeField][Min(0f)] private float stormWetnessPerSecond = 4f; // 폭풍 초당 젖음 증가량
+    [Tooltip("비노출 초당 건조량.")]
     [SerializeField][Min(0f)] private float dryingPerSecond = 1f; // 비노출 초당 건조량
 
     [Header("Runtime")] // 실행 상태 묶음
+    [Tooltip("현재 젖음 수치.")]
     [SerializeField] private float currentWetness; // 현재 젖음 수치
 
     public float CurrentWetness => currentWetness; // 현재 젖음 수치 제공

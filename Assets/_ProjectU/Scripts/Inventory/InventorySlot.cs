@@ -3,7 +3,9 @@ using UnityEngine; // Unity 기본 기능
 [System.Serializable] // Unity 직렬화 허용
 public sealed class InventorySlot // 인벤토리 슬롯 데이터
 {
+    [Tooltip("보관 아이템 데이터.")]
     [SerializeField] private ItemData itemData; // 보관 아이템 데이터
+    [Tooltip("현재 보관 수량.")]
     [SerializeField] private int quantity; // 현재 보관 수량
 
     public ItemData ItemData => itemData; // 아이템 데이터 제공

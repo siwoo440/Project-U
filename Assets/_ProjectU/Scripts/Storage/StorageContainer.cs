@@ -6,11 +6,15 @@ using UnityEngine; // Unity 기본 기능
 public sealed class StorageContainer : MonoBehaviour, IItemSlotContainer, IBuildRemovalGuard // 보관함 슬롯과 철거 제한 관리자
 {
     [Header("Storage")] // 보관함 설정 묶음
+    [Tooltip("보관함 종류 데이터.")]
     [SerializeField] private StorageTypeData storageTypeData; // 보관함 종류 데이터
+    [Tooltip("보관함 슬롯 목록.")]
     [SerializeField] private List<InventorySlot> slots = new List<InventorySlot>(); // 보관함 슬롯 목록
 
     [Header("Identity")] // 저장 고유 ID 설정 묶음
+    [Tooltip("실제 설치 건축물 정보.")]
     [SerializeField] private PlacedBuildObject placedBuildObject; // 실제 설치 건축물 정보
+    [Tooltip("Debug 보관함 임시 ID.")]
     [SerializeField] private string debugStructureId = string.Empty; // Debug 보관함 임시 ID
 
     public StorageTypeData StorageTypeData => storageTypeData; // 보관함 종류 데이터 제공

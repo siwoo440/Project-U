@@ -5,31 +5,45 @@ using UnityEngine; // Unity 기본 기능
 public sealed class SeasonCycle : MonoBehaviour // 계절 순환 관리
 {
     [Header("References")] // 참조 설정 묶음
+    [Tooltip("계절 표시 텍스트.")]
     [SerializeField] private TMP_Text seasonText; // 계절 표시 텍스트
 
     [Header("Season Length")] // 계절 길이 설정 묶음
+    [Tooltip("계절당 날짜 수.")]
     [SerializeField][Min(1)] private int daysPerSeason = 28; // 계절당 날짜 수
 
     [Header("Spring")] // 봄 색상 설정 묶음
+    [Tooltip("봄 태양광 색상.")]
     [SerializeField] private Color springSunTint = new Color(1f, 0.97f, 0.92f); // 봄 태양광 색상
+    [Tooltip("봄 환경광 색상.")]
     [SerializeField] private Color springAmbientTint = new Color(0.95f, 1f, 0.95f); // 봄 환경광 색상
 
     [Header("Summer")] // 여름 색상 설정 묶음
+    [Tooltip("여름 태양광 색상.")]
     [SerializeField] private Color summerSunTint = new Color(1f, 1f, 0.94f); // 여름 태양광 색상
+    [Tooltip("여름 환경광 색상.")]
     [SerializeField] private Color summerAmbientTint = new Color(1f, 1f, 0.92f); // 여름 환경광 색상
 
     [Header("Autumn")] // 가을 색상 설정 묶음
+    [Tooltip("가을 태양광 색상.")]
     [SerializeField] private Color autumnSunTint = new Color(1f, 0.88f, 0.72f); // 가을 태양광 색상
+    [Tooltip("가을 환경광 색상.")]
     [SerializeField] private Color autumnAmbientTint = new Color(1f, 0.9f, 0.8f); // 가을 환경광 색상
 
     [Header("Winter")] // 겨울 색상 설정 묶음
+    [Tooltip("겨울 태양광 색상.")]
     [SerializeField] private Color winterSunTint = new Color(0.82f, 0.91f, 1f); // 겨울 태양광 색상
+    [Tooltip("겨울 환경광 색상.")]
     [SerializeField] private Color winterAmbientTint = new Color(0.82f, 0.9f, 1f); // 겨울 환경광 색상
 
     [Header("Runtime")] // 실행 상태 묶음
+    [Tooltip("현재 계절.")]
     [SerializeField] private SeasonType currentSeason; // 현재 계절
+    [Tooltip("현재 계절 내부 날짜.")]
     [SerializeField] private int currentDayInSeason = 1; // 현재 계절 내부 날짜
+    [Tooltip("현재 태양광 색상.")]
     [SerializeField] private Color currentSunTint = Color.white; // 현재 태양광 색상
+    [Tooltip("현재 환경광 색상.")]
     [SerializeField] private Color currentAmbientTint = Color.white; // 현재 환경광 색상
 
     private int lastAppliedDay = -1; // 마지막으로 적용한 전체 날짜

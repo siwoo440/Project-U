@@ -5,57 +5,91 @@ using UnityEngine; // Unity 기본 기능
 public sealed class WeatherEffectsController : MonoBehaviour // 날씨 시각과 음향 효과 관리
 {
     [Header("References")] // 필수 참조 묶음
+    [Tooltip("날씨 순환 관리자.")]
     [SerializeField] private WeatherCycle weatherCycle; // 날씨 순환 관리자
+    [Tooltip("태양 방향광.")]
     [SerializeField] private Light sunLight; // 태양 방향광
+    [Tooltip("비 파티클.")]
     [SerializeField] private ParticleSystem rainParticles; // 비 파티클
+    [Tooltip("눈 파티클.")]
     [SerializeField] private ParticleSystem snowParticles; // 눈 파티클
+    [Tooltip("날씨 음향 재생기.")]
     [SerializeField] private AudioSource weatherAudioSource; // 날씨 음향 재생기
 
     [Header("Audio Clips")] // 날씨 음향 파일 묶음
+    [Tooltip("비 반복 음향.")]
     [SerializeField] private AudioClip rainLoop; // 비 반복 음향
+    [Tooltip("바람 반복 음향.")]
     [SerializeField] private AudioClip windLoop; // 바람 반복 음향
+    [Tooltip("폭풍 반복 음향.")]
     [SerializeField] private AudioClip stormLoop; // 폭풍 반복 음향
 
     [Header("Fog Colors")] // 날씨별 안개 색상 묶음
+    [Tooltip("맑음 안개 색상.")]
     [SerializeField] private Color clearFogColor = new Color(0.65f, 0.75f, 0.85f); // 맑음 안개 색상
+    [Tooltip("흐림 안개 색상.")]
     [SerializeField] private Color cloudyFogColor = new Color(0.55f, 0.60f, 0.65f); // 흐림 안개 색상
+    [Tooltip("비 안개 색상.")]
     [SerializeField] private Color rainFogColor = new Color(0.35f, 0.40f, 0.45f); // 비 안개 색상
+    [Tooltip("눈 안개 색상.")]
     [SerializeField] private Color snowFogColor = new Color(0.75f, 0.80f, 0.85f); // 눈 안개 색상
+    [Tooltip("폭풍 안개 색상.")]
     [SerializeField] private Color stormFogColor = new Color(0.18f, 0.22f, 0.28f); // 폭풍 안개 색상
 
     [Header("Fog Density")] // 날씨별 안개 밀도 묶음
+    [Tooltip("흐림 안개 밀도.")]
     [SerializeField][Min(0f)] private float cloudyFogDensity = 0.0015f; // 흐림 안개 밀도
+    [Tooltip("비 안개 밀도.")]
     [SerializeField][Min(0f)] private float rainFogDensity = 0.0025f; // 비 안개 밀도
+    [Tooltip("눈 안개 밀도.")]
     [SerializeField][Min(0f)] private float snowFogDensity = 0.003f; // 눈 안개 밀도
+    [Tooltip("폭풍 안개 밀도.")]
     [SerializeField][Min(0f)] private float stormFogDensity = 0.005f; // 폭풍 안개 밀도
 
     [Header("Sun Multipliers")] // 날씨별 태양 밝기 배율 묶음
+    [Tooltip("맑음 밝기 배율.")]
     [SerializeField][Range(0f, 1f)] private float clearSunMultiplier = 1f; // 맑음 밝기 배율
+    [Tooltip("흐림 밝기 배율.")]
     [SerializeField][Range(0f, 1f)] private float cloudySunMultiplier = 0.65f; // 흐림 밝기 배율
+    [Tooltip("비 밝기 배율.")]
     [SerializeField][Range(0f, 1f)] private float rainSunMultiplier = 0.5f; // 비 밝기 배율
+    [Tooltip("눈 밝기 배율.")]
     [SerializeField][Range(0f, 1f)] private float snowSunMultiplier = 0.75f; // 눈 밝기 배율
+    [Tooltip("폭풍 밝기 배율.")]
     [SerializeField][Range(0f, 1f)] private float stormSunMultiplier = 0.35f; // 폭풍 밝기 배율
 
     [Header("Particle Rates")] // 날씨별 파티클 발생량 묶음
+    [Tooltip("비 파티클 발생량.")]
     [SerializeField][Min(0f)] private float rainEmissionRate = 700f; // 비 파티클 발생량
+    [Tooltip("눈 파티클 발생량.")]
     [SerializeField][Min(0f)] private float snowEmissionRate = 300f; // 눈 파티클 발생량
+    [Tooltip("폭풍 파티클 발생량.")]
     [SerializeField][Min(0f)] private float stormEmissionRate = 1400f; // 폭풍 파티클 발생량
 
     [Header("Audio Volumes")] // 날씨별 음향 크기 묶음
+    [Tooltip("흐림 바람 음량.")]
     [SerializeField][Range(0f, 1f)] private float cloudyVolume = 0.15f; // 흐림 바람 음량
+    [Tooltip("비 음량.")]
     [SerializeField][Range(0f, 1f)] private float rainVolume = 0.45f; // 비 음량
+    [Tooltip("눈 바람 음량.")]
     [SerializeField][Range(0f, 1f)] private float snowVolume = 0.25f; // 눈 바람 음량
+    [Tooltip("폭풍 음량.")]
     [SerializeField][Range(0f, 1f)] private float stormVolume = 0.7f; // 폭풍 음량
 
     [Header("Shelter")] // 지붕 효과 설정 묶음
+    [Tooltip("지붕 아래 날씨 음량 배율.")]
     [SerializeField][Range(0f, 1f)] private float shelteredAudioMultiplier = 0.2f; // 지붕 아래 날씨 음량 배율
+    [Tooltip("강수 충돌 대상 Layer.")]
     [SerializeField] private LayerMask precipitationCollisionMask; // 강수 충돌 대상 Layer
 
     [Header("Transition")] // 날씨 전환 설정 묶음
+    [Tooltip("날씨 전환 시간.")]
     [SerializeField][Min(0.1f)] private float transitionDuration = 2.5f; // 날씨 전환 시간
 
     [Header("Runtime")] // 실행 상태 묶음
+    [Tooltip("현재 태양 밝기 배율.")]
     [SerializeField] private float currentSunMultiplier = 1f; // 현재 태양 밝기 배율
+    [Tooltip("플레이어 지붕 아래 상태.")]
     [SerializeField] private bool isPlayerSheltered; // 플레이어 지붕 아래 상태
 
     private Coroutine environmentTransitionRoutine; // 환경 전환 코루틴

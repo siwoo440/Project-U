@@ -6,19 +6,33 @@ using UnityEngine.UI; // Unity UI 기능
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
 public sealed class InventorySlotsUI : MonoBehaviour // 여러 인벤토리 슬롯 표시
 {
+    [Tooltip("표시할 플레이어 인벤토리.")]
     [SerializeField] private PlayerInventory playerInventory; // 표시할 플레이어 인벤토리
+    [Tooltip("슬롯 생성 부모.")]
     [SerializeField] private Transform slotContainer; // 슬롯 생성 부모
+    [Tooltip("복제할 슬롯 원본.")]
     [SerializeField] private InventorySlotView slotTemplate; // 복제할 슬롯 원본
+    [Tooltip("표시할 슬롯 개수.")]
     [SerializeField] private int visibleSlotCount = 8; // 표시할 슬롯 개수
+    [Tooltip("첫 번째 표시 슬롯 번호.")]
     [SerializeField] private int startSlotIndex; // 첫 번째 표시 슬롯 번호
+    [Tooltip("숫자키 표시 여부.")]
     [SerializeField] private bool showShortcutNumbers = true; // 숫자키 표시 여부
+    [Tooltip("활성 핫바 테두리 표시 여부.")]
     [SerializeField] private bool showSelection = true; // 활성 핫바 테두리 표시 여부
+    [Tooltip("클릭 슬롯 테두리 표시 여부.")]
     [SerializeField] private bool showClickedSelection; // 클릭 슬롯 테두리 표시 여부
+    [Tooltip("아이템 드래그 허용 여부.")]
     [SerializeField] private bool allowItemDrag; // 아이템 드래그 허용 여부
+    [Tooltip("Alt 드래그 요구 여부.")]
     [SerializeField] private bool requireAltKeyForDrag; // Alt 드래그 요구 여부
+    [Tooltip("핫바 영역 분리 여부.")]
     [SerializeField] private bool separateHotbarArea; // 핫바 영역 분리 여부
+    [Tooltip("분리 영역 사이 간격.")]
     [SerializeField] private float separatedAreaSpacing = 16f; // 분리 영역 사이 간격
+    [Tooltip("핫바 영역 배경색.")]
     [SerializeField] private Color hotbarAreaColor = new Color(0.22f, 0.18f, 0.04f, 0.65f); // 핫바 영역 배경색
+    [Tooltip("일반 영역 배경색.")]
     [SerializeField] private Color inventoryAreaColor = new Color(0.04f, 0.04f, 0.04f, 0.65f); // 일반 영역 배경색
 
     private readonly List<InventorySlotView> slotViews = new List<InventorySlotView>(); // 생성된 슬롯 목록

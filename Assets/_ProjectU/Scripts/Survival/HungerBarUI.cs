@@ -6,8 +6,11 @@ using UnityEngine.UI; // Unity UI 기능
 public sealed class HungerBarUI : MonoBehaviour // 허기 화면 표시
 {
     [Header("References")] // UI 참조 묶음
+    [Tooltip("플레이어 허기.")]
     [SerializeField] private PlayerHunger playerHunger; // 플레이어 허기
+    [Tooltip("허기 채움 이미지.")]
     [SerializeField] private Image fillImage; // 허기 채움 이미지
+    [Tooltip("허기 수치 Text.")]
     [SerializeField] private TMP_Text valueText; // 허기 수치 Text
 
     private void Awake() // UI 참조 검사

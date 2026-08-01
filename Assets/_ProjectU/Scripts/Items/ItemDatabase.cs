@@ -5,6 +5,7 @@ using UnityEngine; // Unity 기본 기능
 [CreateAssetMenu(fileName = "ItemDatabase", menuName = "Project U/Item Database")] // 아이템 데이터베이스 생성 메뉴
 public sealed class ItemDatabase : ScriptableObject // 전체 아이템 ID 조회 데이터베이스
 {
+    [Tooltip("등록 아이템 목록.")]
     [SerializeField] private List<ItemData> items = new List<ItemData>(); // 등록 아이템 목록
 
     public bool TryValidate(out string errorMessage) // 데이터베이스 등록 상태 검사

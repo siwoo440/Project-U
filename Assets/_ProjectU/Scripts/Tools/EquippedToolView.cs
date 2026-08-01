@@ -2,8 +2,11 @@ using UnityEngine; // Unity 기본 기능
 
 public sealed class EquippedToolView : MonoBehaviour // 장착 도구 외형 관리
 {
+    [Tooltip("확인할 플레이어 인벤토리.")]
     [SerializeField] private PlayerInventory playerInventory; // 확인할 플레이어 인벤토리
+    [Tooltip("도끼 외형.")]
     [SerializeField] private GameObject axeVisual; // 도끼 외형
+    [Tooltip("곡괭이 외형.")]
     [SerializeField] private GameObject pickaxeVisual; // 곡괭이 외형
 
     private void Awake() // 필수 참조 확인

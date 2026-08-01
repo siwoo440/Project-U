@@ -5,13 +5,19 @@ using UnityEngine.SceneManagement; // Scene 관리 기능
 public sealed class PlayerDeathUI : MonoBehaviour // 플레이어 사망 화면 관리
 {
     [Header("References")] // 외부 참조 묶음
+    [Tooltip("플레이어 체력.")]
     [SerializeField] private PlayerHealth playerHealth; // 플레이어 체력
+    [Tooltip("플레이어 부활 시스템.")]
     [SerializeField] private PlayerRespawnSystem playerRespawnSystem; // 플레이어 부활 시스템
+    [Tooltip("인벤토리 팝업 관리자.")]
     [SerializeField] private InventoryPopupController inventoryPopupController; // 인벤토리 팝업 관리자
+    [Tooltip("사망 화면 패널.")]
     [SerializeField] private GameObject deathPanel; // 사망 화면 패널
+    [Tooltip("사망 시 중지할 기능.")]
     [SerializeField] private Behaviour[] blockedBehaviours; // 사망 시 중지할 기능
 
     [Header("Runtime")] // 실행 상태 묶음
+    [Tooltip("사망 화면 표시 상태.")]
     [SerializeField] private bool isDeathScreenShown; // 사망 화면 표시 상태
     private bool[] blockedBehaviourStates; // 사망 전 기능 활성 상태 목록
 

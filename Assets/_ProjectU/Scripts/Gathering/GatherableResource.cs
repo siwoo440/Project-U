@@ -5,17 +5,25 @@ using UnityEngine; // Unity 기본 기능
 public sealed class GatherableResource : InteractableBase // 반복 채집 자원 관리
 {
     [Header("Resource")] // 자원 설정 묶음
+    [Tooltip("획득할 아이템 데이터.")]
     [SerializeField] private ItemData resourceItem; // 획득할 아이템 데이터
+    [Tooltip("전체 보유 자원 수량.")]
     [SerializeField] private int totalQuantity = 5; // 전체 보유 자원 수량
+    [Tooltip("한 번에 획득할 수량.")]
     [SerializeField] private int quantityPerInteraction = 1; // 한 번에 획득할 수량
+    [Tooltip("채집에 필요한 도구.")]
     [SerializeField] private ToolType requiredToolType = ToolType.None; // 채집에 필요한 도구
 
     [Header("Feedback")] // 채집 반응 설정 묶음
+    [Tooltip("자원 타격 반응.")]
     [SerializeField] private ResourceHitFeedback hitFeedback; // 자원 타격 반응
+    [Tooltip("연속 채집 최소 간격.")]
     [SerializeField] private float gatherCooldown = 0.45f; // 연속 채집 최소 간격
 
     [Header("Respawn")] // 재생성 설정 묶음
+    [Tooltip("재생성 사용 여부.")]
     [SerializeField] private bool respawnEnabled = true; // 재생성 사용 여부
+    [Tooltip("재생성 대기 시간.")]
     [SerializeField] private float respawnDelay = 10f; // 재생성 대기 시간
 
     private Renderer[] resourceRenderers; // 자원 외형 목록

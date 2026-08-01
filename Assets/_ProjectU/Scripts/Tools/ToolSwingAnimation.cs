@@ -4,11 +4,15 @@ using UnityEngine; // Unity 기본 기능
 public sealed class ToolSwingAnimation : MonoBehaviour // 도구 휘두르기 연출
 {
     [Header("References")] // 참조 설정 묶음
+    [Tooltip("회전할 도구 보관 위치.")]
     [SerializeField] private Transform toolHolder; // 회전할 도구 보관 위치
 
     [Header("Swing")] // 휘두르기 설정 묶음
+    [Tooltip("타격 회전 차이.")]
     [SerializeField] private Vector3 swingRotationOffset = new Vector3(65f, 0f, -25f); // 타격 회전 차이
+    [Tooltip("타격 방향 회전 시간.")]
     [SerializeField] private float swingDuration = 0.12f; // 타격 방향 회전 시간
+    [Tooltip("기본 자세 복귀 시간.")]
     [SerializeField] private float returnDuration = 0.18f; // 기본 자세 복귀 시간
 
     private Quaternion idleLocalRotation; // 기본 로컬 회전값

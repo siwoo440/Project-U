@@ -4,24 +4,37 @@ using UnityEngine; // Unity 기본 기능
 public sealed class CampfireCookingStation : InteractableBase, IBuildRemovalGuard // 모닥불 조리 처리
 {
     [Header("Recipe")] // 조리법 설정 묶음
+    [Tooltip("연료 아이템.")]
     [SerializeField] private ItemData fuelItem; // 연료 아이템
+    [Tooltip("필요 연료 수량.")]
     [SerializeField] private int fuelAmount = 1; // 필요 연료 수량
+    [Tooltip("조리 재료 아이템.")]
     [SerializeField] private ItemData inputItem; // 조리 재료 아이템
+    [Tooltip("필요 재료 수량.")]
     [SerializeField] private int inputAmount = 1; // 필요 재료 수량
+    [Tooltip("완성 음식 아이템.")]
     [SerializeField] private ItemData outputItem; // 완성 음식 아이템
+    [Tooltip("완성 음식 수량.")]
     [SerializeField] private int outputAmount = 1; // 완성 음식 수량
 
     [Header("Cooking")] // 조리 설정 묶음
+    [Tooltip("조리 소요 시간.")]
     [SerializeField] private float cookingDuration = 5f; // 조리 소요 시간
+    [Tooltip("불꽃 연출 루트.")]
     [SerializeField] private GameObject fireVisualRoot; // 불꽃 연출 루트
 
     [Header("Heat")] // 모닥불 열기 설정 묶음
+    [Tooltip("열기 적용 반경.")]
     [SerializeField][Min(0.1f)] private float heatRadius = 4f; // 열기 적용 반경
+    [Tooltip("초당 체온 회복량.")]
     [SerializeField][Min(0f)] private float heatPerSecond = 4f; // 초당 체온 회복량
 
     [Header("Runtime")] // 실행 상태 묶음
+    [Tooltip("현재 조리 상태.")]
     [SerializeField] private bool isCooking; // 현재 조리 상태
+    [Tooltip("완성 음식 보관 상태.")]
     [SerializeField] private bool hasReadyResult; // 완성 음식 보관 상태
+    [Tooltip("남은 조리 시간.")]
     [SerializeField] private float remainingCookingTime; // 남은 조리 시간
 
     private PlayerInventory lastPlayerInventory; // 최근 상호작용 인벤토리
