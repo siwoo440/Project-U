@@ -24,7 +24,7 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격 상�
     [SerializeField] private TMP_Text promptText; // 안내 문구 텍스트
 
     private InteractableBase currentInteractable; // 현재 탐지 대상
-
+    private readonly RaycastHit[] detectionHits = new RaycastHit[16]; // 상호작용 탐지 결과 배열
     private void Awake() // 필수 참조 검사
     {
         bool hasMissingReference = 
@@ -157,11 +157,42 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격 상�
     {
         InteractableBase detectedInteractable = null; // 이번 프레임 탐지 대상
         Vector3 detectionDirection = viewTransform.forward.normalized; // 카메라 시선 방향 계산
-        bool hasHit = Physics.SphereCast(interactionOrigin.position, detectionRadius, detectionDirection, out RaycastHit hit, interactionDistance, interactableLayers, QueryTriggerInteraction.Ignore); // 전방 구체 탐지
 
-        if (hasHit) // 충돌체 탐지 여부 확인
+        int hitCount = Physics.SphereCastNonAlloc(
+            interactionOrigin.position,
+            detectionRadius,
+            detectionDirection,
+            detectionHits,
+            interactionDistance,
+            interactableLayers,
+            QueryTriggerInteraction.Ignore); // 전방 범위의 전체 충돌체 탐지
+
+        float nearestDistance = float.MaxValue; // 가장 가까운 상호작용 거리
+
+        for (int index = 0; index < hitCount; index++) // 탐지된 충돌체 순회
         {
-            detectedInteractable = hit.collider.GetComponentInParent<InteractableBase>(); // 상호작용 컴포넌트 검색
+            RaycastHit currentHit = detectionHits[index]; // 현재 충돌 정보
+
+            if (currentHit.collider == null) // 충돌체 존재 확인
+            {
+                continue; // 잘못된 결과 제외
+            }
+
+            InteractableBase candidate =
+                currentHit.collider.GetComponentInParent<InteractableBase>(); // 상호작용 대상 검색
+
+            if (candidate == null || !candidate.isActiveAndEnabled) // 사용 가능한 대상 확인
+            {
+                continue; // 바닥과 일반 건축 Collider 제외
+            }
+
+            if (currentHit.distance >= nearestDistance) // 기존 대상보다 가까운지 확인
+            {
+                continue; // 더 먼 대상 제외
+            }
+
+            nearestDistance = currentHit.distance; // 가장 가까운 거리 갱신
+            detectedInteractable = candidate; // 가장 가까운 상호작용 대상 저장
         }
 
         if (detectedInteractable == currentInteractable) // 동일 대상 유지 확인

@@ -142,28 +142,72 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
 
     public void CloseInventory() // 인벤토리 팝업 닫기
     {
+        if (inventoryPopupController != null) // 인벤토리 팝업 참조 확인
+        {
+            inventoryPopupController.HideFromManager(); // 인벤토리 팝업 강제 숨김
+        }
+
         if (currentPopupType != GamePopupType.Inventory) // 현재 팝업 종류 확인
         {
-            return; // 닫기 처리 생략
+            return; // 다른 팝업의 입력 잠금 유지
         }
 
-        CloseCurrentPopup(); // 현재 팝업 종료
+        currentPopupType = GamePopupType.None; // 현재 팝업 상태 초기화
+        gameplayInputLock.Release(PopupLockId); // 공통 팝업 입력 잠금 해제
     }
 
-    public void CloseStorage() // 보관함 팝업 닫기
+    public void CloseStorage() // 보관함 팝업 강제 종료
     {
-        if (currentPopupType != GamePopupType.Storage) // 현재 팝업 종류 확인
+        bool wasStorageVisible =
+            storagePopupInstance != null
+            && storagePopupInstance.IsOpen; // 실제 보관함 화면 표시 여부 확인
+
+        if (storagePopupInstance != null) // 보관함 팝업 인스턴스 확인
         {
-            return; // 닫기 처리 생략
+            storagePopupInstance.HideFromManager(); // 관리자 상태와 관계없이 보관함 화면 숨김
         }
 
-        CloseCurrentPopup(); // 현재 팝업 종료
+        if (currentPopupType == GamePopupType.Inventory) // 일반 인벤토리 팝업 상태 확인
+        {
+            return; // 인벤토리 입력 잠금 유지
+        }
+
+        bool shouldReleasePopupLock =
+            currentPopupType == GamePopupType.Storage
+            || wasStorageVisible; // 보관함 종료에 따른 입력 잠금 해제 여부 계산
+
+        currentPopupType = GamePopupType.None; // 현재 팝업 상태 초기화
+
+        if (shouldReleasePopupLock) // 보관함 입력 잠금 보유 가능성 확인
+        {
+            gameplayInputLock.Release(PopupLockId); // 공통 팝업 입력 잠금 해제
+        }
     }
 
     public void CloseCurrentPopup() // 현재 열린 팝업 종료
     {
-        HideCurrentPopupWithoutUnlock(); // 현재 팝업 화면 숨김
-        gameplayInputLock.Release(PopupLockId); // 공통 팝업 입력 잠금 해제
+        switch (currentPopupType) // 현재 팝업 종류 분기
+        {
+            case GamePopupType.Inventory: // 인벤토리 팝업 상태
+                CloseInventory(); // 인벤토리 팝업 종료
+                return; // 종료 처리 완료
+
+            case GamePopupType.Storage: // 보관함 팝업 상태
+                CloseStorage(); // 보관함 팝업 종료
+                return; // 종료 처리 완료
+        }
+
+        if (storagePopupInstance != null && storagePopupInstance.IsOpen) // 관리자 상태와 실제 보관함 상태 불일치 확인
+        {
+            CloseStorage(); // 실제 보관함 화면 강제 종료
+            return; // 종료 처리 완료
+        }
+
+        if (inventoryPopupController != null && inventoryPopupController.IsOpen) // 관리자 상태와 실제 인벤토리 상태 불일치 확인
+        {
+            inventoryPopupController.HideFromManager(); // 실제 인벤토리 화면 강제 종료
+            gameplayInputLock.Release(PopupLockId); // 공통 팝업 입력 잠금 해제
+        }
     }
 
     private StorageContainerUI GetOrCreateStoragePopup() // 보관함 팝업 최초 생성 또는 기존 인스턴스 반환

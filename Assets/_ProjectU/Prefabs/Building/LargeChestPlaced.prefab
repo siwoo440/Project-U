@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5393758941815017875}
   - component: {fileID: 2149484878195205206}
   - component: {fileID: 579932955422310549}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LargeChestPlaced
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StorageInteractable
   promptMessage: F - INTERACT
   storageContainer: {fileID: 516693067307209039}
-  storageContainerUI: {fileID: 0}
+  gameUIManager: {fileID: 0}
 --- !u!65 &579932955422310549
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -15,6 +15,11 @@ public sealed class StorageContainerUI : MonoBehaviour // 보관함 화면 관�
     [SerializeField] private GridLayoutGroup storageGridLayout; // 보관함 슬롯 격자
     [SerializeField] private StorageSlotView storageSlotTemplate; // 보관함 슬롯 원본
 
+    [Header("Close Settings")] // 보관함 종료 설정 묶음
+    [SerializeField] private bool closeWithInteractKey = true; // F키 재입력 닫기 여부
+    [SerializeField] private bool closeWhenTooFar = true; // 최대 거리 초과 자동 닫기 여부
+    [SerializeField] private float maximumOpenDistance = 3f; // 플레이어와 보관함의 최대 유지 거리
+
     [Header("Debug")] // 임시 테스트 묶음
     [SerializeField] private StorageContainer debugStorageContainer; // 테스트 대상 보관함
 
@@ -22,8 +27,10 @@ public sealed class StorageContainerUI : MonoBehaviour // 보관함 화면 관�
     private InventorySlotsUI[] playerInventoryViews = new InventorySlotsUI[0]; // 팝업 내부 플레이어 인벤토리 화면 목록
     private GameUIManager gameUIManager; // 공통 게임 UI 관리자
     private StorageContainer currentStorage; // 현재 열린 보관함
+    private Transform playerTransform; // 플레이어 거리 검사 대상
     private bool referencesValid; // UI 내부 참조 연결 상태
     private bool runtimeInitialized; // 런타임 외부 참조 초기화 상태
+    private int openedFrame = -1; // 보관함이 열린 프레임
 
     public bool IsOpen => panelRoot != null && panelRoot.activeSelf; // 보관함 화면 표시 여부
     public bool IsRuntimeInitialized => runtimeInitialized; // 런타임 초기화 여부 제공
@@ -56,18 +63,40 @@ public sealed class StorageContainerUI : MonoBehaviour // 보관함 화면 관�
         ResolveManager(); // 게임 UI 관리자 검색
     }
 
-    private void Update() // 보관함 닫기 입력 처리
+    private void Update() // 보관함 종료 조건 처리
     {
         if (!IsOpen) // 보관함 화면 상태 확인
         {
-            return; // 입력 처리 중단
+            return; // 입력과 거리 검사 중단
+        }
+
+        if (ShouldCloseAutomatically()) // 자동 종료 조건 확인
+        {
+            Close(); // 보관함 화면 종료
+            return; // 같은 프레임 추가 처리 중단
         }
 
         Keyboard keyboard = Keyboard.current; // 현재 키보드 조회
 
-        if (keyboard != null && keyboard.escapeKey.wasPressedThisFrame) // ESC 입력 확인
+        if (keyboard == null) // 키보드 존재 확인
         {
-            Close(); // 보관함 화면 닫기
+            return; // 키 입력 검사 중단
+        }
+
+        if (keyboard.escapeKey.wasPressedThisFrame) // ESC 입력 확인
+        {
+            Close(); // 보관함 화면 종료
+            return; // 같은 프레임 추가 처리 중단
+        }
+
+        bool hasInteractCloseInput =
+            closeWithInteractKey
+            && Time.frameCount != openedFrame
+            && keyboard.fKey.wasPressedThisFrame; // 열기 프레임을 제외한 F키 닫기 조건 계산
+
+        if (hasInteractCloseInput) // F키 닫기 입력 확인
+        {
+            Close(); // 보관함 화면 종료
         }
     }
 
@@ -81,6 +110,7 @@ public sealed class StorageContainerUI : MonoBehaviour // 보관함 화면 관�
         }
 
         gameUIManager = manager; // 공통 게임 UI 관리자 저장
+        playerTransform = playerInventory.transform; // 플레이어 Transform 저장
 
         for (int index = 0; index < playerInventoryViews.Length; index++) // 팝업 내부 인벤토리 화면 순회
         {
@@ -116,17 +146,19 @@ public sealed class StorageContainerUI : MonoBehaviour // 보관함 화면 관�
         gameUIManager.OpenStorage(storageContainer); // 공통 관리자에서 보관함 팝업 열기
     }
 
-    public void Close() // 외부 요청으로 보관함 화면 닫기
+    public void Close() // 외부 요청으로 보관함 화면 강제 종료
     {
         ResolveManager(); // 게임 UI 관리자 참조 확인
 
         if (gameUIManager != null) // 게임 UI 관리자 확인
         {
-            gameUIManager.CloseStorage(); // 공통 관리자에서 보관함 팝업 닫기
-            return; // 공통 관리자 처리 종료
+            gameUIManager.CloseStorage(); // 관리자에서 보관함 화면과 입력 잠금 종료
         }
 
-        HideFromManager(); // 관리자 없는 상태에서 화면 숨김
+        if (IsOpen) // 관리자 상태 불일치로 화면이 남았는지 확인
+        {
+            HideFromManager(); // 보관함 패널 직접 숨김
+        }
     }
 
     public bool ShowFromManager(StorageContainer storageContainer) // 공통 관리자에서 지정 보관함 표시
@@ -145,6 +177,7 @@ public sealed class StorageContainerUI : MonoBehaviour // 보관함 화면 관�
         DetachCurrentStorage(); // 기존 보관함 이벤트 연결 해제
         currentStorage = storageContainer; // 새로운 보관함 저장
         currentStorage.StorageChanged += Refresh; // 보관함 변경 이벤트 연결
+        openedFrame = Time.frameCount; // 보관함 열기 프레임 저장
         panelRoot.SetActive(true); // 보관함 화면 표시
         titleText.SetText(currentStorage.DisplayName); // 보관함 이름 표시
         RebuildSlotViews(); // 보관함 용량에 맞는 슬롯 생성
@@ -155,11 +188,37 @@ public sealed class StorageContainerUI : MonoBehaviour // 보관함 화면 관�
     public void HideFromManager() // 공통 관리자에서 보관함 숨김
     {
         DetachCurrentStorage(); // 현재 보관함 이벤트 연결 해제
+        openedFrame = -1; // 보관함 열기 프레임 초기화
 
         if (panelRoot != null) // 전체 패널 존재 확인
         {
             panelRoot.SetActive(false); // 보관함 화면 숨김
         }
+    }
+
+    private bool ShouldCloseAutomatically() // 보관함 자동 종료 조건 확인
+    {
+        if (currentStorage == null) // 현재 보관함 존재 확인
+        {
+            return true; // 연결 대상 없음으로 종료
+        }
+
+        if (!currentStorage.isActiveAndEnabled || !currentStorage.gameObject.activeInHierarchy) // 보관함 활성 상태 확인
+        {
+            return true; // 보관함 제거 또는 비활성화로 종료
+        }
+
+        if (!closeWhenTooFar || playerTransform == null) // 거리 자동 종료 사용 여부 확인
+        {
+            return false; // 거리 검사 생략
+        }
+
+        float safeMaximumDistance = Mathf.Max(0.5f, maximumOpenDistance); // 최소 유지 거리 보정
+        float squaredMaximumDistance = safeMaximumDistance * safeMaximumDistance; // 최대 거리 제곱 계산
+        float squaredCurrentDistance =
+            (playerTransform.position - currentStorage.transform.position).sqrMagnitude; // 플레이어와 보관함 거리 제곱 계산
+
+        return squaredCurrentDistance > squaredMaximumDistance; // 최대 거리 초과 여부 반환
     }
 
     private void DetachCurrentStorage() // 현재 보관함 이벤트 연결 해제
@@ -249,6 +308,11 @@ public sealed class StorageContainerUI : MonoBehaviour // 보관함 화면 관�
     private void DebugCloseStorage() // 보관함 테스트 닫기
     {
         Close(); // 현재 보관함 화면 닫기
+    }
+
+    private void OnValidate() // Inspector 설정값 보정
+    {
+        maximumOpenDistance = Mathf.Max(0.5f, maximumOpenDistance); // 자동 종료 거리 최소값 적용
     }
 
     private void OnDestroy() // 보관함 UI 이벤트 정리

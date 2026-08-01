@@ -181,7 +181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StorageInteractable
   promptMessage: F - INTERACT
   storageContainer: {fileID: 5351723288125126595}
-  storageContainerUI: {fileID: 0}
+  gameUIManager: {fileID: 0}
 --- !u!114 &3866813816104264925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,5 +232,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.8, y: 0.7, z: 0.6}
-  m_Center: {x: 0, y: 0.35, z: 0}
+  m_Size: {x: 1, y: 0.9, z: 0.8}
+  m_Center: {x: 0, y: 0.4, z: 0}
