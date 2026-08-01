@@ -15,6 +15,9 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
     [Tooltip("일반 인벤토리와 보관함 팝업을 닫기 위한 공통 게임 UI 관리자입니다.")]
     [SerializeField] private GameUIManager gameUIManager; // 공통 게임 UI 관리자
 
+    [Tooltip("ESC로 전체 지도를 닫은 같은 프레임에 일시정지 메뉴가 열리지 않도록 확인할 지도 관리자입니다.")]
+    [SerializeField] private WorldMapController worldMapController; // 미니맵과 전체 지도 관리자
+
     [Tooltip("현재 게임 상태를 저장하고 불러오는 Gameplay 저장 관리자입니다.")]
     [SerializeField] private GameplaySaveController gameplaySaveController; // Gameplay 저장 관리자
 
@@ -39,6 +42,7 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
     private PauseMenuView pauseMenuInstance; // 런타임 생성 일시정지 메뉴 인스턴스
     private bool escapePressedThisFrame; // 현재 프레임 ESC 입력 여부
     private bool hadGamePopupAtFrameStart; // 현재 프레임 시작 시 게임 팝업 존재 여부
+    private bool hadWorldMapOpenAtFrameStart; // 현재 프레임 시작 시 전체 지도 열림 여부
     private float previousTimeScale = 1f; // 일시정지 이전 게임 시간 배율
     private bool initialized; // 필수 참조 초기화 완료 여부
     private bool isClosing; // 닫기 애니메이션 진행 여부
@@ -56,6 +60,7 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
         initialized =
             gameplayInputLock != null
             && gameUIManager != null
+            && worldMapController != null
             && gameplaySaveController != null
             && thirdPersonCameraFollow != null
             && popupLayer != null
@@ -81,6 +86,10 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
         hadGamePopupAtFrameStart =
             gameUIManager != null
             && gameUIManager.HasOpenPopup; // 현재 프레임 시작 팝업 상태 저장
+
+        hadWorldMapOpenAtFrameStart =
+            worldMapController != null
+            && worldMapController.IsFullMapOpen; // 현재 프레임 시작 전체 지도 상태 저장
 
         Keyboard keyboard = Keyboard.current; // 현재 키보드 장치 조회
 
@@ -112,9 +121,10 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
             return; // 일시정지 전환 생략
         }
 
-        if (hadGamePopupAtFrameStart) // ESC 입력 전 기존 게임 팝업 열림 확인
+        if (hadGamePopupAtFrameStart
+            || hadWorldMapOpenAtFrameStart) // ESC 입력 전 기존 게임 팝업 또는 전체 지도 확인
         {
-            return; // 기존 팝업 닫기만 수행하고 일시정지 메뉴는 열지 않음
+            return; // 기존 UI 닫기만 수행하고 일시정지 메뉴는 열지 않음
         }
 
         TogglePauseMenu(); // 일시정지 메뉴 상태 전환
@@ -149,6 +159,12 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
         if (!initialized || IsPaused || isClosing) // 초기화와 기존 전환 상태 확인
         {
             return; // 중복 열기 방지
+        }
+
+        if (worldMapController != null
+            && worldMapController.IsFullMapOpen) // 전체 지도 열림 여부 확인
+        {
+            worldMapController.CloseFullMapImmediate(); // 일시정지 메뉴 전 전체 지도 상태 정리
         }
 
         if (!EnsurePauseMenuInstance()) // 일시정지 메뉴 인스턴스 준비 확인
@@ -323,6 +339,13 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
                     FindObjectsInactive.Include); // Scene 게임 UI 관리자 검색
         }
 
+        if (worldMapController == null) // 지도 관리자 참조 확인
+        {
+            worldMapController =
+                FindFirstObjectByType<WorldMapController>(
+                    FindObjectsInactive.Include); // Scene 지도 관리자 검색
+        }
+
         if (gameplaySaveController == null) // 저장 관리자 참조 확인
         {
             gameplaySaveController =
@@ -374,6 +397,11 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
         if (pauseMenuInstance != null) // 일시정지 메뉴 인스턴스 존재 확인
         {
             pauseMenuInstance.HideImmediate(); // 메뉴 애니메이션 중단과 즉시 숨김
+        }
+
+        if (worldMapController != null) // 지도 관리자 존재 확인
+        {
+            worldMapController.CloseFullMapImmediate(); // Scene 이동 전 전체 지도 상태 정리
         }
 
         IsPaused = false; // 일시정지 상태 해제

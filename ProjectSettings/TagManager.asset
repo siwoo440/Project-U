@@ -17,10 +17,10 @@ TagManager:
   - Structure
   - WorldObstacle
   - WeatherShelter
-  - 
-  - 
-  - 
-  - 
+  - Effect
+  - Terrain
+  - Building
+  - PlacedBuildObject
   - 
   - 
   - 
