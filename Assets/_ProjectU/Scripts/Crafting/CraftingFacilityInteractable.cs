@@ -7,9 +7,9 @@ public sealed class CraftingFacilityInteractable : InteractableBase // 제작 �
     [SerializeField] private CraftingFacilityType facilityType = CraftingFacilityType.Workbench; // 제공 제작 시설
     [SerializeField] private string facilityDisplayName = "WORKBENCH"; // 시설 표시 이름
 
-    [Header("References")] // 외부 참조 묶음
+    [Header("Runtime References")] // 런타임 외부 참조 묶음
     [SerializeField] private CraftingManager craftingManager; // 플레이어 제작 관리자
-    [SerializeField] private InventoryPopupController inventoryPopupController; // 인벤토리 팝업 관리자
+    [SerializeField] private GameUIManager gameUIManager; // 공통 게임 UI 관리자
 
     private bool ownsCurrentSession; // 현재 시설 세션 소유 상태
 
@@ -21,17 +21,9 @@ public sealed class CraftingFacilityInteractable : InteractableBase // 제작 �
             ? facilityType.ToString().ToUpperInvariant()
             : facilityDisplayName.Trim(); // 시설 표시 이름 보정
 
-        if (craftingManager == null) // 제작 관리자 참조 확인
-        {
-            craftingManager = FindFirstObjectByType<CraftingManager>(); // Scene 제작 관리자 검색
-        }
+        ResolveManagers(); // 제작과 UI 관리자 자동 검색
 
-        if (inventoryPopupController == null) // 팝업 관리자 참조 확인
-        {
-            inventoryPopupController = FindFirstObjectByType<InventoryPopupController>(); // Scene 팝업 관리자 검색
-        }
-
-        if (craftingManager == null || inventoryPopupController == null) // 필수 참조 확인
+        if (craftingManager == null || gameUIManager == null) // 필수 참조 확인
         {
             Debug.LogError($"{gameObject.name}의 제작 시설 참조가 누락되었습니다.", this); // 참조 오류 출력
             enabled = false; // 제작 시설 상호작용 비활성화
@@ -40,19 +32,21 @@ public sealed class CraftingFacilityInteractable : InteractableBase // 제작 �
 
     private void OnEnable() // 팝업 상태 이벤트 연결
     {
-        if (inventoryPopupController == null) // 팝업 관리자 존재 확인
+        ResolveManagers(); // 공통 관리자 참조 확인
+
+        if (gameUIManager == null) // 게임 UI 관리자 존재 확인
         {
             return; // 이벤트 연결 중단
         }
 
-        inventoryPopupController.OpenStateChanged += HandlePopupStateChanged; // 팝업 상태 변경 구독
+        gameUIManager.PopupStateChanged += HandlePopupStateChanged; // 팝업 상태 변경 구독
     }
 
     private void OnDisable() // 팝업 상태 이벤트 해제
     {
-        if (inventoryPopupController != null) // 팝업 관리자 존재 확인
+        if (gameUIManager != null) // 게임 UI 관리자 존재 확인
         {
-            inventoryPopupController.OpenStateChanged -= HandlePopupStateChanged; // 팝업 상태 변경 구독 해제
+            gameUIManager.PopupStateChanged -= HandlePopupStateChanged; // 팝업 상태 변경 구독 해제
         }
 
         ReleaseFacilitySession(); // 현재 제작 시설 세션 해제
@@ -65,24 +59,32 @@ public sealed class CraftingFacilityInteractable : InteractableBase // 제작 �
             return; // 상호작용 중단
         }
 
-        if (craftingManager == null || inventoryPopupController == null) // 필수 참조 확인
+        ResolveManagers(); // 제작과 UI 관리자 참조 확인
+
+        if (craftingManager == null || gameUIManager == null) // 필수 참조 확인
         {
             return; // 시설 사용 중단
         }
 
         craftingManager.SetActiveFacility(facilityType); // 현재 제작 시설 적용
         ownsCurrentSession = true; // 시설 세션 소유 적용
-        inventoryPopupController.SetOpen(true); // 제작 UI가 포함된 팝업 열기
+
+        if (!gameUIManager.OpenInventory()) // 인벤토리 팝업 열기 시도
+        {
+            ReleaseFacilitySession(); // 팝업 열기 실패 시 시설 세션 해제
+        }
     }
 
-    private void HandlePopupStateChanged(bool isOpen) // 팝업 상태 변경 처리
+    private void HandlePopupStateChanged(
+        GamePopupType popupType,
+        bool isOpen) // 팝업 상태 변경 처리
     {
-        if (isOpen) // 팝업 열림 확인
+        if (popupType != GamePopupType.Inventory || isOpen) // 인벤토리 종료 여부 확인
         {
-            return; // 종료 처리 생략
+            return; // 시설 세션 종료 처리 생략
         }
 
-        ReleaseFacilitySession(); // 팝업 종료 후 시설 세션 해제
+        ReleaseFacilitySession(); // 인벤토리 팝업 종료 후 시설 세션 해제
     }
 
     private void ReleaseFacilitySession() // 현재 제작 시설 세션 해제
@@ -102,6 +104,19 @@ public sealed class CraftingFacilityInteractable : InteractableBase // 제작 �
         if (craftingManager.ActiveFacilityType == facilityType) // 현재 시설 일치 여부 확인
         {
             craftingManager.ResetToHand(); // 맨손 제작 시설 복귀
+        }
+    }
+
+    private void ResolveManagers() // 제작과 UI 관리자 자동 검색
+    {
+        if (craftingManager == null) // 제작 관리자 참조 확인
+        {
+            craftingManager = FindFirstObjectByType<CraftingManager>(); // Scene 제작 관리자 검색
+        }
+
+        if (gameUIManager == null) // 게임 UI 관리자 참조 확인
+        {
+            gameUIManager = FindFirstObjectByType<GameUIManager>(); // Scene 게임 UI 관리자 검색
         }
     }
 

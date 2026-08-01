@@ -12,7 +12,7 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
     [SerializeField] private Transform playerTransform; // 플레이어 위치
     [SerializeField] private PlayerInventory playerInventory; // 플레이어 인벤토리
     [SerializeField] private PlayerHealth playerHealth; // 플레이어 체력
-    [SerializeField] private InventoryPopupController popupController; // 인벤토리 팝업
+    [SerializeField] private GameUIManager gameUIManager; // 공통 게임 UI 관리자
     [SerializeField] private BuildGridArea gridArea; // 건축 그리드 구역
     [SerializeField] private Transform placedObjectRoot; // 설치 건축물 부모
 
@@ -55,12 +55,17 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
 
     private void Awake() // 건축 관리자 초기화
     {
+        if (gameUIManager == null) // 게임 UI 관리자 참조 확인
+        {
+            gameUIManager = FindFirstObjectByType<GameUIManager>(); // Scene 게임 UI 관리자 검색
+        }
+
         bool hasMissingReference =
             mainCamera == null
             || playerTransform == null
             || playerInventory == null
             || playerHealth == null
-            || popupController == null
+            || gameUIManager == null
             || gridArea == null
             || placedObjectRoot == null
             || validPreviewMaterial == null
@@ -78,7 +83,9 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
             return; // 초기화 중단
         }
 
-        if (groundLayerMask.value == 0 || obstructionLayerMask.value == 0 || structureLayerMask.value == 0) // 건축 레이어 설정 확인
+        if (groundLayerMask.value == 0
+            || obstructionLayerMask.value == 0
+            || structureLayerMask.value == 0) // 건축 레이어 설정 확인
         {
             Debug.LogError("건축 Ground, Obstruction, Structure Layer Mask를 설정해야 합니다.", this); // 레이어 오류 출력
             enabled = false; // 건축 기능 비활성화
@@ -102,7 +109,11 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
             return; // 입력 처리 중단
         }
 
-        if (isBuildMode && (popupController.IsOpen || playerHealth.IsDead)) // 건축 강제 종료 조건 확인
+        bool hasOpenPopup =
+    gameUIManager != null
+    && gameUIManager.HasOpenPopup; // 현재 공통 팝업 열림 상태 확인
+
+        if (isBuildMode && (hasOpenPopup || playerHealth.IsDead)) // 건축 강제 종료 조건 확인
         {
             ExitBuildMode(); // 건축 모드 종료
             return; // 같은 프레임 처리 중단
@@ -111,10 +122,10 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
         if (!isBuildMode) // 일반 플레이 상태 확인
         {
             bool canEnterBuildMode =
-                keyboard.bKey.wasPressedThisFrame
-                && Cursor.lockState == CursorLockMode.Locked
-                && !popupController.IsOpen
-                && !playerHealth.IsDead; // 건축 진입 조건 계산
+    keyboard.bKey.wasPressedThisFrame
+    && Cursor.lockState == CursorLockMode.Locked
+    && !hasOpenPopup
+    && !playerHealth.IsDead; // 건축 진입 조건 계산
 
             if (canEnterBuildMode) // 건축 진입 입력 확인
             {
