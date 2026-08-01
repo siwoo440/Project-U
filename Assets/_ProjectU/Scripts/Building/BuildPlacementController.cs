@@ -8,55 +8,80 @@ using UnityEngine.InputSystem; // 새로운 입력 시스템
 public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축 배치 관리자
 {
     [Header("References")] // 외부 참조 묶음
-    [Tooltip("플레이어 카메라.")]
-    [SerializeField] private Camera mainCamera; // 플레이어 카메라
-    [Tooltip("플레이어 위치.")]
+    [Tooltip("일반 플레이 중 사용하는 기본 플레이어 Camera입니다.")]
+    [SerializeField] private Camera mainCamera; // 기본 플레이어 Camera
+
+    [Tooltip("건축 모드 자유 Camera 전환과 마우스 포인터 위치를 제공하는 관리자입니다.")]
+    [SerializeField] private BuildModeCameraController buildModeCameraController; // 건축 자유 Camera 관리자
+
+    [Tooltip("플레이어 위치입니다.")]
     [SerializeField] private Transform playerTransform; // 플레이어 위치
-    [Tooltip("플레이어 인벤토리.")]
+
+    [Tooltip("플레이어 인벤토리입니다.")]
     [SerializeField] private PlayerInventory playerInventory; // 플레이어 인벤토리
-    [Tooltip("플레이어 체력.")]
+
+    [Tooltip("플레이어 체력입니다.")]
     [SerializeField] private PlayerHealth playerHealth; // 플레이어 체력
-    [Tooltip("공통 게임 UI 관리자.")]
+
+    [Tooltip("공통 게임 UI 관리자입니다.")]
     [SerializeField] private GameUIManager gameUIManager; // 공통 게임 UI 관리자
-    [Tooltip("건축 그리드 구역.")]
+
+    [Tooltip("전체 지도 상태를 확인할 지도 관리자입니다.")]
+    [SerializeField] private WorldMapController worldMapController; // 전체 지도 관리자
+
+    [Tooltip("건축 그리드 구역입니다.")]
     [SerializeField] private BuildGridArea gridArea; // 건축 그리드 구역
-    [Tooltip("설치 건축물 부모.")]
+
+    [Tooltip("설치된 건축물을 정리할 부모 Transform입니다.")]
     [SerializeField] private Transform placedObjectRoot; // 설치 건축물 부모
 
     [Header("Recipes")] // 건축 데이터 묶음
-    [Tooltip("선택 건축물 목록.")]
+    [Tooltip("선택 가능한 건축물 목록입니다.")]
     [SerializeField] private BuildRecipeData[] buildRecipes = new BuildRecipeData[0]; // 선택 건축물 목록
 
     [Header("Materials")] // 건축 재질 묶음
-    [Tooltip("설치 가능 재질.")]
+    [Tooltip("설치 가능한 Preview에 적용할 재질입니다.")]
     [SerializeField] private Material validPreviewMaterial; // 설치 가능 재질
-    [Tooltip("설치 불가능 재질.")]
+
+    [Tooltip("설치 불가능한 Preview에 적용할 재질입니다.")]
     [SerializeField] private Material invalidPreviewMaterial; // 설치 불가능 재질
-    [Tooltip("철거 대상 재질.")]
+
+    [Tooltip("철거 대상에 적용할 강조 재질입니다.")]
     [SerializeField] private Material removalTargetMaterial; // 철거 대상 재질
 
     [Header("Detection")] // 배치 탐지 설정 묶음
-    [Tooltip("Terrain 레이어.")]
+    [Tooltip("Terrain과 건축 가능한 지면 레이어입니다.")]
     [SerializeField] private LayerMask groundLayerMask; // Terrain 레이어
-    [Tooltip("설치 방해 레이어.")]
+
+    [Tooltip("설치를 막는 장애물 레이어입니다.")]
     [SerializeField] private LayerMask obstructionLayerMask; // 설치 방해 레이어
-    [Tooltip("건축물 레이어.")]
+
+    [Tooltip("설치된 건축물 레이어입니다.")]
     [SerializeField] private LayerMask structureLayerMask; // 건축물 레이어
-    [Tooltip("최대 건축 거리.")]
-    [SerializeField] private float maximumBuildDistance = 6f; // 최대 건축 거리
-    [Tooltip("Terrain 표본 시작 높이.")]
+
+    [Tooltip("Player 위치에서 Preview 또는 철거 대상까지 허용할 최대 거리입니다.")]
+    [SerializeField] private float maximumBuildDistance = 25f; // Player 기준 최대 건축 거리
+
+    [Tooltip("자유 건축 Camera에서 마우스 포인터 Ray를 탐색할 최대 거리입니다.")]
+    [SerializeField] private float maximumPlacementRayDistance = 200f; // Camera 기준 최대 Ray 거리
+
+    [Tooltip("Terrain 표본 검사를 시작할 높이입니다.")]
     [SerializeField] private float terrainProbeHeight = 5f; // Terrain 표본 시작 높이
-    [Tooltip("Terrain 표본 탐지 거리.")]
+
+    [Tooltip("Terrain 표본을 아래쪽으로 검사할 거리입니다.")]
     [SerializeField] private float terrainProbeDistance = 12f; // Terrain 표본 탐지 거리
-    [Tooltip("충돌 검사 여유값.")]
+
+    [Tooltip("배치 충돌 검사 Box 크기에서 줄일 여유값입니다.")]
     [SerializeField] private float collisionPadding = 0.02f; // 충돌 검사 여유값
-    [Tooltip("연결점 탐지 거리.")]
+
+    [Tooltip("마우스 포인터 충돌 지점에서 연결점을 찾을 최대 거리입니다.")]
     [SerializeField] private float connectionSnapDistance = 0.8f; // 연결점 탐지 거리
 
     [Header("UI")] // 건축 UI 참조 묶음
-    [Tooltip("건축 HUD 루트.")]
+    [Tooltip("건축 모드에서 표시할 HUD 루트입니다.")]
     [SerializeField] private GameObject buildHudRoot; // 건축 HUD 루트
-    [Tooltip("건축 상태 Text.")]
+
+    [Tooltip("건축 상태와 조작법을 표시할 Text입니다.")]
     [SerializeField] private TMP_Text buildStatusText; // 건축 상태 Text
 
     private GameObject previewInstance; // 현재 미리보기 오브젝트
@@ -76,13 +101,11 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
 
     private void Awake() // 건축 관리자 초기화
     {
-        if (gameUIManager == null) // 게임 UI 관리자 참조 확인
-        {
-            gameUIManager = FindFirstObjectByType<GameUIManager>(); // Scene 게임 UI 관리자 검색
-        }
+        ResolveReferences(); // 누락된 Scene 참조 자동 검색
 
         bool hasMissingReference =
             mainCamera == null
+            || buildModeCameraController == null
             || playerTransform == null
             || playerInventory == null
             || playerHealth == null
@@ -120,7 +143,7 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
         gridArea.SetGridVisible(false); // 시작 그리드 숨김
     }
 
-    private void Update() // 건축 입력과 미리보기 처리
+    private void Update() // 건축 입력과 포인터 기반 Preview 처리
     {
         Keyboard keyboard = Keyboard.current; // 현재 키보드 조회
         Mouse mouse = Mouse.current; // 현재 마우스 조회
@@ -130,11 +153,16 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
             return; // 입력 처리 중단
         }
 
-        bool hasOpenPopup =
-    gameUIManager != null
-    && gameUIManager.HasOpenPopup; // 현재 공통 팝업 열림 상태 확인
+        bool hasOpenPopup = gameUIManager != null && gameUIManager.HasOpenPopup; // 현재 공통 팝업 열림 상태 확인
+        bool hasOpenWorldMap = worldMapController != null && worldMapController.IsFullMapOpen; // 전체 지도 열림 상태 확인
+        bool hasOpenPauseMenu = PauseMenuController.IsPaused; // 일시정지 메뉴 열림 상태 확인
 
-        if (isBuildMode && (hasOpenPopup || playerHealth.IsDead)) // 건축 강제 종료 조건 확인
+        if (isBuildMode
+            && (hasOpenPopup
+                || hasOpenWorldMap
+                || hasOpenPauseMenu
+                || playerHealth.IsDead
+                || !buildModeCameraController.IsActive)) // 건축 강제 종료 조건 확인
         {
             ExitBuildMode(); // 건축 모드 종료
             return; // 같은 프레임 처리 중단
@@ -143,10 +171,12 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
         if (!isBuildMode) // 일반 플레이 상태 확인
         {
             bool canEnterBuildMode =
-    keyboard.bKey.wasPressedThisFrame
-    && Cursor.lockState == CursorLockMode.Locked
-    && !hasOpenPopup
-    && !playerHealth.IsDead; // 건축 진입 조건 계산
+                keyboard.bKey.wasPressedThisFrame
+                && Cursor.lockState == CursorLockMode.Locked
+                && !hasOpenPopup
+                && !hasOpenWorldMap
+                && !hasOpenPauseMenu
+                && !playerHealth.IsDead; // 건축 진입 조건 계산
 
             if (canEnterBuildMode) // 건축 진입 입력 확인
             {
@@ -156,18 +186,11 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
             return; // 일반 상태 처리 종료
         }
 
-        if (Cursor.lockState != CursorLockMode.Locked) // 커서 잠금 상태 확인
-        {
-            ExitBuildMode(); // 건축 모드 종료
-            return; // 건축 처리 중단
-        }
-
         bool cancelRequested =
             keyboard.bKey.wasPressedThisFrame
-            || keyboard.escapeKey.wasPressedThisFrame
-            || mouse.rightButton.wasPressedThisFrame; // 건축 취소 입력 계산
+            || keyboard.escapeKey.wasPressedThisFrame; // B 또는 ESC 건축 종료 입력 계산
 
-        if (cancelRequested) // 건축 취소 입력 확인
+        if (cancelRequested) // 건축 종료 입력 확인
         {
             ExitBuildMode(); // 건축 모드 종료
             return; // 같은 프레임 설치 차단
@@ -179,11 +202,16 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
             return; // 전환 프레임 입력 차단
         }
 
+        bool isCameraManipulation = buildModeCameraController.IsManipulatingCamera; // 우클릭 또는 휠 클릭 Camera 조작 상태 확인
+
         if (isRemovalMode) // 철거 모드 확인
         {
-            UpdateRemovalTarget(); // 철거 대상 갱신
+            if (!isCameraManipulation) // Camera 조작 중이 아닌지 확인
+            {
+                UpdateRemovalTarget(); // 마우스 포인터 위치의 철거 대상 갱신
+            }
 
-            if (mouse.leftButton.wasPressedThisFrame) // 철거 입력 확인
+            if (!isCameraManipulation && mouse.leftButton.wasPressedThisFrame) // 철거 입력 가능 여부 확인
             {
                 TryRemoveCurrentTarget(); // 현재 대상 철거 시도
             }
@@ -211,9 +239,12 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
             RotatePreview(1f); // 미리보기 오른쪽 회전
         }
 
-        UpdatePreview(); // 미리보기 상태 갱신
+        if (!isCameraManipulation) // Camera 드래그 조작 상태 확인
+        {
+            UpdatePreview(); // 마우스 포인터 위치의 미리보기 상태 갱신
+        }
 
-        if (mouse.leftButton.wasPressedThisFrame) // 설치 입력 확인
+        if (!isCameraManipulation && mouse.leftButton.wasPressedThisFrame) // 설치 입력 가능 여부 확인
         {
             TryPlaceStructure(); // 건축물 설치 시도
         }
@@ -229,6 +260,12 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
             return; // 건축 모드 시작 중단
         }
 
+        if (!buildModeCameraController.BeginBuildMode()) // 자유 건축 Camera 시작 시도
+        {
+            Debug.LogError("자유 건축 Camera 시작에 실패했습니다.", this); // 자유 Camera 시작 오류 출력
+            return; // 건축 모드 시작 중단
+        }
+
         float relativePlayerYaw = playerTransform.eulerAngles.y - gridArea.transform.eulerAngles.y; // 그리드 기준 플레이어 회전 계산
         float rotationStep = GetCurrentRotationStep(); // 현재 회전 단위 조회
         currentLocalYaw = Mathf.Round(relativePlayerYaw / rotationStep) * rotationStep; // 시작 회전값 정렬
@@ -241,7 +278,7 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
         CreatePreview(); // 미리보기 생성
         gridArea.SetGridVisible(true); // 건축 그리드 표시
         buildHudRoot.SetActive(true); // 건축 HUD 표시
-        RefreshStatus("SEARCHING GROUND"); // 초기 상태 표시
+        RefreshStatus("SEARCHING POINTER"); // 초기 포인터 탐색 상태 표시
     }
 
     private void ExitBuildMode() // 건축 모드 종료
@@ -263,6 +300,21 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
         gridArea.SetGridVisible(false); // 건축 그리드 숨김
         buildHudRoot.SetActive(false); // 건축 HUD 숨김
         buildStatusText.SetText(string.Empty); // 상태 문구 제거
+
+        if (buildModeCameraController != null) // 자유 건축 Camera 관리자 존재 확인
+        {
+            buildModeCameraController.EndBuildMode(); // 진입 전 플레이어 시점과 Gameplay 상태 복구
+        }
+    }
+
+    public void ExitBuildModeFromExternal() // 일시정지 메뉴와 다른 시스템의 건축 모드 종료 요청
+    {
+        if (!isBuildMode) // 현재 건축 모드 확인
+        {
+            return; // 종료할 건축 모드 없음
+        }
+
+        ExitBuildMode(); // 건축 Preview와 자유 Camera 전체 정리
     }
 
     private void ChangeRecipe(int direction) // 선택 건축물 변경
@@ -337,10 +389,9 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
         SetPreviewMaterial(false); // 시작 불가능 재질 적용
     }
 
-    private void UpdatePreview() // 건축 미리보기 갱신
+    private void UpdatePreview() // 마우스 포인터 건축 미리보기 갱신
     {
-        Vector2 screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f); // 화면 중앙 좌표 계산
-        Ray placementRay = mainCamera.ScreenPointToRay(screenCenter); // 화면 중앙 광선 생성
+        Ray placementRay = GetPointerRay(); // 현재 마우스 포인터 위치의 Camera 광선 생성
         Vector3 previewPosition; // 최종 미리보기 위치
         Quaternion previewRotation; // 최종 미리보기 회전
         string failureStatus; // 배치 실패 문구
@@ -350,15 +401,27 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
 
         if (currentRecipe.StructureType == BuildStructureType.Furniture) // 기능성 가구 배치 확인
         {
-            placementResolved = TryResolveFurniturePlacement(placementRay, out previewPosition, out previewRotation, out failureStatus); // 가구 배치 계산
+            placementResolved = TryResolveFurniturePlacement(
+                placementRay,
+                out previewPosition,
+                out previewRotation,
+                out failureStatus); // 가구 배치 계산
         }
         else if (RequiresStructureConnection()) // 필수 구조 연결 여부 확인
         {
-            placementResolved = TryResolveConnectionPlacement(placementRay, out previewPosition, out previewRotation, out failureStatus); // 연결점 배치 계산
+            placementResolved = TryResolveConnectionPlacement(
+                placementRay,
+                out previewPosition,
+                out previewRotation,
+                out failureStatus); // 연결점 배치 계산
         }
         else // Terrain 배치 처리
         {
-            placementResolved = TryResolveGroundPlacement(placementRay, out previewPosition, out previewRotation, out failureStatus); // 지면 배치 계산
+            placementResolved = TryResolveGroundPlacement(
+                placementRay,
+                out previewPosition,
+                out previewRotation,
+                out failureStatus); // 지면 배치 계산
         }
 
         if (!placementResolved) // 배치 위치 계산 실패 확인
@@ -391,6 +454,24 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
         RefreshStatus("READY"); // 설치 가능 문구 표시
     }
 
+    private Ray GetPointerRay() // 현재 활성 건축 Camera와 마우스 포인터로 Ray 생성
+    {
+        Camera placementCamera = buildModeCameraController != null
+            ? buildModeCameraController.ActiveCamera
+            : null; // 자유 건축 Camera 조회
+
+        if (placementCamera == null) // 자유 Camera 참조 확인
+        {
+            placementCamera = mainCamera; // 기본 플레이어 Camera 사용
+        }
+
+        Vector2 pointerPosition = buildModeCameraController != null
+            ? buildModeCameraController.PointerScreenPosition
+            : new Vector2(Screen.width * 0.5f, Screen.height * 0.5f); // 마우스 포인터 또는 화면 중앙 좌표 조회
+
+        return placementCamera.ScreenPointToRay(pointerPosition); // 포인터 위치 기준 월드 Ray 반환
+    }
+
     private bool RequiresStructureConnection() // 구조 연결 필요 여부 확인
     {
         BuildStructureType structureType = currentRecipe.StructureType; // 현재 구조 역할 조회
@@ -407,9 +488,9 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
     {
         bool hasStructure = Physics.Raycast(
             placementRay,
-            maximumBuildDistance + 1f,
+            maximumPlacementRayDistance,
             structureLayerMask,
-            QueryTriggerInteraction.Ignore); // 화면 중앙 구조물 존재 확인
+            QueryTriggerInteraction.Ignore); // 포인터 위치 구조물 존재 확인
 
         if (hasStructure) // 구조물 탐지 확인
         {
@@ -431,7 +512,7 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
 
         previewPosition = Vector3.zero; // 실패 위치 초기화
         previewRotation = Quaternion.identity; // 실패 회전 초기화
-        failureStatus = "LOOK AT SUPPORT"; // 지지 구조 안내 문구
+        failureStatus = "POINT AT SUPPORT"; // 지지 구조 안내 문구
         return false; // 가구 배치 계산 실패
     }
 
@@ -448,13 +529,13 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
         bool hasStructure = Physics.Raycast(
             placementRay,
             out RaycastHit structureHit,
-            maximumBuildDistance + 1f,
+            maximumPlacementRayDistance,
             structureLayerMask,
-            QueryTriggerInteraction.Ignore); // 화면 중앙 구조물 탐지
+            QueryTriggerInteraction.Ignore); // 포인터 위치 구조물 탐지
 
         if (!hasStructure) // 구조물 미탐지 확인
         {
-            failureStatus = "LOOK AT SUPPORT"; // 지지 구조 안내 문구
+            failureStatus = "POINT AT SUPPORT"; // 지지 구조 안내 문구
             return false; // 배치 계산 실패 반환
         }
 
@@ -462,7 +543,7 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
 
         if (playerDistance > maximumBuildDistance) // 최대 건축 거리 확인
         {
-            failureStatus = "TOO FAR"; // 거리 초과 문구
+            failureStatus = "TOO FAR FROM PLAYER"; // 거리 초과 문구
             return false; // 배치 계산 실패 반환
         }
 
@@ -474,7 +555,10 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
             return false; // 배치 계산 실패 반환
         }
 
-        if (!TryFindNearestConnectionPoint(supportObject, structureHit.point, out BuildConnectionPoint connectionPoint)) // 가장 가까운 연결점 검색
+        if (!TryFindNearestConnectionPoint(
+            supportObject,
+            structureHit.point,
+            out BuildConnectionPoint connectionPoint)) // 가장 가까운 연결점 검색
         {
             failureStatus = "NO FREE CONNECTION"; // 빈 연결점 없음 문구
             return false; // 배치 계산 실패 반환
@@ -557,9 +641,9 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
         bool hasGround = Physics.Raycast(
             placementRay,
             out RaycastHit groundHit,
-            maximumBuildDistance + 3f,
+            maximumPlacementRayDistance,
             groundLayerMask,
-            QueryTriggerInteraction.Ignore); // Terrain 탐지
+            QueryTriggerInteraction.Ignore); // 포인터 위치 Terrain 탐지
 
         if (!hasGround) // Terrain 미탐지 확인
         {
@@ -577,7 +661,7 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
 
         if (playerDistance > maximumBuildDistance) // 최대 건축 거리 확인
         {
-            failureStatus = "TOO FAR"; // 거리 초과 문구
+            failureStatus = "TOO FAR FROM PLAYER"; // 거리 초과 문구
             return false; // 배치 계산 실패 반환
         }
 
@@ -864,14 +948,11 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
 
         placedBuildObject.Initialize(currentRecipe); // 건축 데이터 초기화
 
-        bool shouldAttachToConnection =
-            RequiresStructureConnection()
-            || currentConnectionPoint != null; // 구조 연결 실행 여부 계산
+        bool shouldAttachToConnection = RequiresStructureConnection() || currentConnectionPoint != null; // 구조 연결 실행 여부 계산
 
         if (shouldAttachToConnection) // 구조 연결 실행 확인
         {
-            bool connectionSucceeded =
-                currentConnectionPoint != null
+            bool connectionSucceeded = currentConnectionPoint != null
                 && placedBuildObject.TryAttachToConnection(currentConnectionPoint); // 구조 연결 시도
 
             if (!connectionSucceeded) // 연결 처리 실패 확인
@@ -935,25 +1016,33 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
 
         CreatePreview(); // 설치 미리보기 재생성
         gridArea.SetGridVisible(true); // 설치 그리드 표시
-        RefreshStatus("SEARCHING GROUND"); // 설치 상태 표시
+        RefreshStatus("SEARCHING POINTER"); // 설치 상태 표시
     }
 
-    private void UpdateRemovalTarget() // 철거 대상 갱신
+    private void UpdateRemovalTarget() // 마우스 포인터 철거 대상 갱신
     {
-        Vector2 screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f); // 화면 중앙 좌표 계산
-        Ray removalRay = mainCamera.ScreenPointToRay(screenCenter); // 화면 중앙 광선 생성
+        Ray removalRay = GetPointerRay(); // 현재 마우스 포인터 위치의 Camera 광선 생성
 
         bool hasTarget = Physics.Raycast(
             removalRay,
             out RaycastHit removalHit,
-            maximumBuildDistance,
+            maximumPlacementRayDistance,
             structureLayerMask,
-            QueryTriggerInteraction.Ignore); // Structure 레이어 탐지
+            QueryTriggerInteraction.Ignore); // 포인터 위치 Structure 레이어 탐지
 
         if (!hasTarget) // 건축물 미탐지 확인
         {
             SetRemovalTarget(null); // 기존 철거 대상 해제
-            RefreshRemovalStatus("LOOK AT STRUCTURE"); // 대상 탐색 문구 표시
+            RefreshRemovalStatus("POINT AT STRUCTURE"); // 대상 탐색 문구 표시
+            return; // 갱신 중단
+        }
+
+        float playerDistance = Vector3.Distance(playerTransform.position, removalHit.point); // Player와 철거 지점 거리 계산
+
+        if (playerDistance > maximumBuildDistance) // 철거 허용 거리 확인
+        {
+            SetRemovalTarget(null); // 기존 철거 대상 해제
+            RefreshRemovalStatus("TOO FAR FROM PLAYER"); // 철거 거리 초과 문구 표시
             return; // 갱신 중단
         }
 
@@ -1171,6 +1260,11 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
             statusBuilder.AppendLine($"{ingredient.ItemData.DisplayName}: {ownedAmount} / {ingredient.Amount}"); // 보유량 표시
         }
 
+        AppendCameraControls(statusBuilder); // 자유 건축 Camera 공통 조작 안내 추가
+        statusBuilder.AppendLine("LMB - PLACE"); // 설치 입력 안내 추가
+        statusBuilder.AppendLine("Q / E - ROTATE"); // Preview 회전 안내 추가
+        statusBuilder.AppendLine("Z / X - CHANGE STRUCTURE"); // 건축물 선택 안내 추가
+        statusBuilder.AppendLine("R - REMOVE MODE"); // 철거 모드 안내 추가
         buildStatusText.SetText(statusBuilder.ToString()); // 완성 상태 문구 표시
     }
 
@@ -1181,6 +1275,8 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
 
         if (currentRemovalTarget == null || currentRemovalTarget.RecipeData == null) // 유효한 철거 대상 확인
         {
+            AppendCameraControls(statusBuilder); // 자유 Camera 조작 안내 추가
+            statusBuilder.AppendLine("LMB - REMOVE"); // 철거 입력 안내 추가
             statusBuilder.AppendLine("R - PLACEMENT MODE"); // 설치 모드 안내 추가
             buildStatusText.SetText(statusBuilder.ToString()); // 철거 대기 문구 표시
             return; // 대상 정보 처리 중단
@@ -1211,22 +1307,55 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
             statusBuilder.AppendLine($"{ingredient.ItemData.DisplayName}: +{refundAmount}"); // 반환 아이템 표시
         }
 
+        AppendCameraControls(statusBuilder); // 자유 Camera 조작 안내 추가
         statusBuilder.AppendLine("LMB - REMOVE"); // 철거 입력 안내 추가
         statusBuilder.AppendLine("R - PLACEMENT MODE"); // 설치 모드 안내 추가
         buildStatusText.SetText(statusBuilder.ToString()); // 완성 철거 문구 표시
+    }
+
+    private void AppendCameraControls(StringBuilder statusBuilder) // 자유 건축 Camera 공통 조작 안내 추가
+    {
+        statusBuilder.AppendLine("B / ESC - EXIT"); // 건축 종료 안내 추가
+        statusBuilder.AppendLine("RMB DRAG - LOOK"); // Camera 회전 안내 추가
+        statusBuilder.AppendLine("MMB DRAG - MOVE CAMERA"); // Camera 평행 이동 안내 추가
+        statusBuilder.AppendLine("WHEEL - FORWARD / BACK"); // Camera 전후 이동 안내 추가
+    }
+
+    private void ResolveReferences() // 누락된 건축 Scene 참조 자동 검색
+    {
+        if (gameUIManager == null) // 게임 UI 관리자 참조 확인
+        {
+            gameUIManager = FindFirstObjectByType<GameUIManager>(FindObjectsInactive.Include); // Scene 게임 UI 관리자 검색
+        }
+
+        if (worldMapController == null) // 전체 지도 관리자 참조 확인
+        {
+            worldMapController = FindFirstObjectByType<WorldMapController>(FindObjectsInactive.Include); // Scene 전체 지도 관리자 검색
+        }
+
+        if (buildModeCameraController == null) // 자유 건축 Camera 관리자 참조 확인
+        {
+            buildModeCameraController = FindFirstObjectByType<BuildModeCameraController>(FindObjectsInactive.Include); // Scene 자유 건축 Camera 검색
+        }
+
+        if (mainCamera == null) // 기본 플레이어 Camera 참조 확인
+        {
+            mainCamera = Camera.main; // MainCamera 태그 Camera 연결
+        }
     }
 
     private void OnDisable() // 비활성화 상태 정리
     {
         if (isBuildMode) // 건축 모드 실행 여부 확인
         {
-            ExitBuildMode(); // 미리보기와 그리드 정리
+            ExitBuildMode(); // 미리보기, 자유 Camera와 그리드 정리
         }
     }
 
     private void OnValidate() // Inspector 설정값 검증
     {
-        maximumBuildDistance = Mathf.Max(1f, maximumBuildDistance); // 최대 거리 최소값 적용
+        maximumBuildDistance = Mathf.Max(1f, maximumBuildDistance); // Player 기준 최대 건축 거리 최소값 적용
+        maximumPlacementRayDistance = Mathf.Max(maximumBuildDistance, maximumPlacementRayDistance); // Camera Ray 거리 최소값 적용
         terrainProbeHeight = Mathf.Max(1f, terrainProbeHeight); // 표본 높이 최소값 적용
         terrainProbeDistance = Mathf.Max(terrainProbeHeight, terrainProbeDistance); // 표본 거리 보정
         collisionPadding = Mathf.Clamp(collisionPadding, 0f, 0.1f); // 충돌 여유 범위 제한

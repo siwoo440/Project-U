@@ -328,6 +328,7 @@ MonoBehaviour:
   gameplayInputLock: {fileID: 17714713}
   gameUIManager: {fileID: 17714712}
   worldMapController: {fileID: 17714717}
+  buildPlacementController: {fileID: 1491592337}
   gameplaySaveController: {fileID: 1951417609}
   thirdPersonCameraFollow: {fileID: 454530119}
   popupLayer: {fileID: 389671134}
@@ -795,7 +796,7 @@ GameObject:
   - component: {fileID: 160400867}
   - component: {fileID: 160400866}
   m_Layer: 5
-  m_Name: StatusText
+  m_Name: BuildStatusText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -914,16 +915,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 160400865}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 276407462}
+  m_Father: {fileID: 1648965559}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 421.64}
+  m_AnchoredPosition: {x: 234, y: -1.8790283}
   m_SizeDelta: {x: 300, y: 181.71}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &202277315
@@ -1747,8 +1748,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1648965559}
-  - {fileID: 1892616894}
-  - {fileID: 160400868}
   m_Father: {fileID: 1902037242}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -2806,7 +2805,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ThirdPersonCameraFollow
   target: {fileID: 1491592321}
   targetHeight: 1
-  initialPitch: 30
+  firstPersonAnchor: {fileID: 1806658221}
+  firstPersonHeight: 1.65
+  firstPersonLocalOffset: {x: 0, y: 0, z: 0.05}
+  startViewMode: 1
+  viewToggleKey: 36
+  viewTransitionSmoothTime: 0.22
+  firstPersonFieldOfView: 70
+  thirdPersonFieldOfView: 60
+  firstPersonNearClipPlane: 0.03
+  thirdPersonNearClipPlane: 0.1
+  playerVisualRoot: {fileID: 1559436077}
+  visualHideBlendThreshold: 0.65
+  initialPitch: 15
   minimumPitch: -20
   maximumPitch: 65
   distance: 10
@@ -2819,9 +2830,12 @@ MonoBehaviour:
     m_Bits: 129
   collisionRadius: 0.3
   collisionPadding: 0.15
+  mouseSensitivity: 0.1
+  currentViewMode: 0
+  currentViewBlend: 0
   currentDistance: 0
   isCameraObstructed: 0
-  mouseSensitivity: 0.1
+  isExternalCameraControl: 0
 --- !u!114 &454530120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16073,10 +16087,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1491592321}
   - component: {fileID: 1491592323}
-  - component: {fileID: 1491592337}
+  - component: {fileID: 1491592329}
   - component: {fileID: 1491592324}
   - component: {fileID: 1491592322}
-  - component: {fileID: 1491592329}
+  - component: {fileID: 1491592337}
   - component: {fileID: 1491592325}
   - component: {fileID: 1491592326}
   - component: {fileID: 1491592327}
@@ -16094,6 +16108,7 @@ GameObject:
   - component: {fileID: 1491592341}
   - component: {fileID: 1491592342}
   - component: {fileID: 1491592343}
+  - component: {fileID: 1491592344}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -16116,6 +16131,7 @@ Transform:
   m_Children:
   - {fileID: 1559436077}
   - {fileID: 1772539305}
+  - {fileID: 1806658221}
   - {fileID: 860548800}
   - {fileID: 310027313}
   - {fileID: 1339321801}
@@ -16429,10 +16445,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuildPlacementController
   mainCamera: {fileID: 454530117}
+  buildModeCameraController: {fileID: 1491592344}
   playerTransform: {fileID: 1491592321}
   playerInventory: {fileID: 1491592325}
   playerHealth: {fileID: 1491592331}
   gameUIManager: {fileID: 17714712}
+  worldMapController: {fileID: 17714717}
   gridArea: {fileID: 1134701207}
   placedObjectRoot: {fileID: 638049834}
   buildRecipes:
@@ -16457,13 +16475,14 @@ MonoBehaviour:
   structureLayerMask:
     serializedVersion: 2
     m_Bits: 512
-  maximumBuildDistance: 6
+  maximumBuildDistance: 25
+  maximumPlacementRayDistance: 200
   terrainProbeHeight: 5
   terrainProbeDistance: 12
   collisionPadding: 0.02
   connectionSnapDistance: 0.8
   buildHudRoot: {fileID: 276407461}
-  buildStatusText: {fileID: 160400866}
+  buildStatusText: {fileID: 1892616895}
 --- !u!114 &1491592338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16609,6 +16628,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CraftingUnlockSaveBridge
   craftingUnlockManager: {fileID: 1491592342}
+--- !u!114 &1491592344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491592320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7715d3a929ff3c544b948b1f9de488ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BuildModeCameraController
+  preferredCamera: {fileID: 454530117}
+  thirdPersonCameraFollow: {fileID: 454530119}
+  playerTransform: {fileID: 1491592321}
+  gameplayBehavioursToDisable:
+  - {fileID: 1491592322}
+  - {fileID: 1491592324}
+  - {fileID: 1491592329}
+  - {fileID: 860548801}
+  additionalCameraBehavioursToSuspend: []
+  lockPlayerTransform: 1
+  lookSensitivity: 0.15
+  minimumPitch: -80
+  maximumPitch: 85
+  invertLookY: 0
+  panSensitivity: 0.015
+  invertPan: 0
+  wheelMoveStep: 2
+  invertWheel: 0
+  maximumDistanceFromPlayer: 200
+  minimumHeightFromPlayer: 1
+  maximumHeightFromPlayer: 30
+  collisionLayerMask:
+    serializedVersion: 2
+    m_Bits: 107265
+  collisionRadius: 0.3
+  collisionPadding: 0.2
+  confineCursor: 1
 --- !u!1 &1521979942
 GameObject:
   m_ObjectHideFlags: 0
@@ -17453,7 +17511,7 @@ GameObject:
   - component: {fileID: 1648965561}
   - component: {fileID: 1648965560}
   m_Layer: 5
-  m_Name: Background
+  m_Name: BuildPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17470,13 +17528,15 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1892616894}
+  - {fileID: 160400868}
   m_Father: {fileID: 276407462}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -234, y: 423.51904}
-  m_SizeDelta: {x: 768, y: 185.462}
+  m_AnchoredPosition: {x: -234, y: 334}
+  m_SizeDelta: {x: 768, y: 368.83}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1648965560
 MonoBehaviour:
@@ -18527,6 +18587,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1797726972}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1806658220
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1806658221}
+  m_Layer: 6
+  m_Name: FirstPersonCameraAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1806658221
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1806658220}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.65, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1491592321}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1834700673
 GameObject:
   m_ObjectHideFlags: 0
@@ -18705,16 +18796,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1892616893}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 276407462}
+  m_Father: {fileID: 1648965559}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -400, y: 421.64}
+  m_AnchoredPosition: {x: -166, y: -1.8790283}
   m_SizeDelta: {x: 420, y: 181.71}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1892616895
@@ -18737,16 +18828,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'B / RMB / ESC - CLOSE
-
-    LMB - PLACE / REMOVE
-
-    R - PLACE / REMOVE
-    MODE
-
-    Q / E - ROTATE
-
-    Z / X - SELECT'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

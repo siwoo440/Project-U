@@ -18,6 +18,9 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
     [Tooltip("ESC로 전체 지도를 닫은 같은 프레임에 일시정지 메뉴가 열리지 않도록 확인할 지도 관리자입니다.")]
     [SerializeField] private WorldMapController worldMapController; // 미니맵과 전체 지도 관리자
 
+    [Tooltip("ESC로 건축 모드를 종료한 같은 프레임에 일시정지 메뉴가 열리지 않도록 확인할 건축 관리자입니다.")]
+    [SerializeField] private BuildPlacementController buildPlacementController; // 건축 배치 관리자
+
     [Tooltip("현재 게임 상태를 저장하고 불러오는 Gameplay 저장 관리자입니다.")]
     [SerializeField] private GameplaySaveController gameplaySaveController; // Gameplay 저장 관리자
 
@@ -43,6 +46,7 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
     private bool escapePressedThisFrame; // 현재 프레임 ESC 입력 여부
     private bool hadGamePopupAtFrameStart; // 현재 프레임 시작 시 게임 팝업 존재 여부
     private bool hadWorldMapOpenAtFrameStart; // 현재 프레임 시작 시 전체 지도 열림 여부
+    private bool hadBuildModeAtFrameStart; // 현재 프레임 시작 시 건축 모드 실행 여부
     private float previousTimeScale = 1f; // 일시정지 이전 게임 시간 배율
     private bool initialized; // 필수 참조 초기화 완료 여부
     private bool isClosing; // 닫기 애니메이션 진행 여부
@@ -54,13 +58,13 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
     {
         IsPaused = false; // Scene 시작 일시정지 상태 초기화
         isClosing = false; // Scene 시작 닫기 상태 초기화
-
         ResolveSceneReferences(); // 누락된 Scene 참조 자동 검색
 
         initialized =
             gameplayInputLock != null
             && gameUIManager != null
             && worldMapController != null
+            && buildPlacementController != null
             && gameplaySaveController != null
             && thirdPersonCameraFollow != null
             && popupLayer != null
@@ -76,20 +80,15 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
             return; // 초기화 중단
         }
 
-        GameSettingsService.ApplyStoredSettings(
-            thirdPersonCameraFollow); // 저장된 게임 설정 시작 적용
+        GameSettingsService.ApplyStoredSettings(thirdPersonCameraFollow); // 저장된 게임 설정 시작 적용
     }
 
-    private void Update() // ESC 입력과 프레임 시작 팝업 상태 기록
+    private void Update() // ESC 입력과 프레임 시작 UI 상태 기록
     {
         escapePressedThisFrame = false; // 현재 프레임 ESC 입력 초기화
-        hadGamePopupAtFrameStart =
-            gameUIManager != null
-            && gameUIManager.HasOpenPopup; // 현재 프레임 시작 팝업 상태 저장
-
-        hadWorldMapOpenAtFrameStart =
-            worldMapController != null
-            && worldMapController.IsFullMapOpen; // 현재 프레임 시작 전체 지도 상태 저장
+        hadGamePopupAtFrameStart = gameUIManager != null && gameUIManager.HasOpenPopup; // 현재 프레임 시작 팝업 상태 저장
+        hadWorldMapOpenAtFrameStart = worldMapController != null && worldMapController.IsFullMapOpen; // 현재 프레임 시작 전체 지도 상태 저장
+        hadBuildModeAtFrameStart = buildPlacementController != null && buildPlacementController.IsBuildMode; // 현재 프레임 시작 건축 모드 상태 저장
 
         Keyboard keyboard = Keyboard.current; // 현재 키보드 장치 조회
 
@@ -98,20 +97,17 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
             return; // 입력 처리 중단
         }
 
-        escapePressedThisFrame =
-            keyboard.escapeKey.wasPressedThisFrame; // 현재 프레임 ESC 입력 저장
+        escapePressedThisFrame = keyboard.escapeKey.wasPressedThisFrame; // 현재 프레임 ESC 입력 저장
     }
 
-    private void LateUpdate() // 기존 팝업 처리 이후 일시정지 메뉴 입력 처리
+    private void LateUpdate() // 기존 UI와 건축 처리 이후 일시정지 메뉴 입력 처리
     {
         if (!initialized) // 초기화 상태 확인
         {
             return; // 일시정지 처리 중단
         }
 
-        if (IsPaused
-            && gameUIManager != null
-            && gameUIManager.HasOpenPopup) // 일시정지 중 다른 팝업 열림 확인
+        if (IsPaused && gameUIManager != null && gameUIManager.HasOpenPopup) // 일시정지 중 다른 팝업 열림 확인
         {
             CloseAllGamePopups(); // 일시정지와 충돌하는 게임 팝업 닫기
         }
@@ -122,9 +118,10 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
         }
 
         if (hadGamePopupAtFrameStart
-            || hadWorldMapOpenAtFrameStart) // ESC 입력 전 기존 게임 팝업 또는 전체 지도 확인
+            || hadWorldMapOpenAtFrameStart
+            || hadBuildModeAtFrameStart) // ESC 입력 전 기존 UI 또는 건축 모드 확인
         {
-            return; // 기존 UI 닫기만 수행하고 일시정지 메뉴는 열지 않음
+            return; // 기존 UI 또는 건축 모드 종료만 수행하고 일시정지 메뉴는 열지 않음
         }
 
         TogglePauseMenu(); // 일시정지 메뉴 상태 전환
@@ -137,9 +134,7 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
             return; // 애니메이션 중 중복 입력 방지
         }
 
-        if (IsPaused
-            && pauseMenuInstance != null
-            && pauseMenuInstance.IsSettingsPageOpen) // 설정 화면 표시 여부 확인
+        if (IsPaused && pauseMenuInstance != null && pauseMenuInstance.IsSettingsPageOpen) // 설정 화면 표시 여부 확인
         {
             pauseMenuInstance.ShowMainPage(); // ESC로 일시정지 메인 화면 복귀
             return; // 메뉴 자체는 유지
@@ -161,8 +156,12 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
             return; // 중복 열기 방지
         }
 
-        if (worldMapController != null
-            && worldMapController.IsFullMapOpen) // 전체 지도 열림 여부 확인
+        if (buildPlacementController != null && buildPlacementController.IsBuildMode) // 건축 모드 실행 여부 확인
+        {
+            buildPlacementController.ExitBuildModeFromExternal(); // 일시정지 전 자유 건축 Camera와 Preview 정리
+        }
+
+        if (worldMapController != null && worldMapController.IsFullMapOpen) // 전체 지도 열림 여부 확인
         {
             worldMapController.CloseFullMapImmediate(); // 일시정지 메뉴 전 전체 지도 상태 정리
         }
@@ -173,12 +172,7 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
         }
 
         CloseAllGamePopups(); // 인벤토리와 보관함 팝업 닫기
-
-        previousTimeScale =
-            Time.timeScale > 0f
-                ? Time.timeScale
-                : 1f; // 일시정지 이전 게임 시간 배율 저장
-
+        previousTimeScale = Time.timeScale > 0f ? Time.timeScale : 1f; // 일시정지 이전 게임 시간 배율 저장
         gameplayInputLock.Acquire(PauseLockId); // 플레이어 입력과 HUD 잠금 획득
 
         if (pauseGameTime) // 게임 시간 정지 사용 여부 확인
@@ -205,18 +199,14 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
             return; // 닫기 처리 종료
         }
 
-        pauseMenuInstance.Hide(
-            CompleteClosePauseMenu); // 좌측 슬라이드 종료 후 Gameplay 복구
+        pauseMenuInstance.Hide(CompleteClosePauseMenu); // 좌측 슬라이드 종료 후 Gameplay 복구
     }
 
     public void SaveCurrentGameFromPause() // 일시정지 메뉴에서 현재 게임 저장
     {
         if (gameplaySaveController == null) // 저장 관리자 존재 확인
         {
-            Debug.LogError(
-                "PauseMenuController에 GameplaySaveController가 연결되지 않았습니다.",
-                this); // 저장 관리자 누락 오류 출력
-
+            Debug.LogError("PauseMenuController에 GameplaySaveController가 연결되지 않았습니다.", this); // 저장 관리자 누락 오류 출력
             return; // 저장 처리 중단
         }
 
@@ -227,10 +217,7 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
     {
         if (gameplaySaveController == null) // 저장 관리자 존재 확인
         {
-            Debug.LogError(
-                "PauseMenuController에 GameplaySaveController가 연결되지 않았습니다.",
-                this); // 저장 관리자 누락 오류 출력
-
+            Debug.LogError("PauseMenuController에 GameplaySaveController가 연결되지 않았습니다.", this); // 저장 관리자 누락 오류 출력
             return; // 불러오기 처리 중단
         }
 
@@ -241,10 +228,7 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
     {
         if (string.IsNullOrWhiteSpace(mainMenuSceneName)) // 메인 메뉴 Scene 이름 확인
         {
-            Debug.LogError(
-                "PauseMenuController의 Main Menu Scene Name이 비어 있습니다.",
-                this); // Scene 이름 오류 출력
-
+            Debug.LogError("PauseMenuController의 Main Menu Scene Name이 비어 있습니다.", this); // Scene 이름 오류 출력
             return; // Scene 이동 중단
         }
 
@@ -257,9 +241,7 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
         PrepareForSceneExit(); // 게임 종료 전 일시정지 상태 정리
 
 #if UNITY_EDITOR
-        Debug.Log(
-            "Unity Editor에서는 Application.Quit이 실행 파일을 종료하지 않습니다.",
-            this); // Editor 종료 제한 안내
+        Debug.Log("Unity Editor에서는 Application.Quit이 실행 파일을 종료하지 않습니다.", this); // Editor 종료 제한 안내
 #endif
 
         Application.Quit(); // 실행 중인 게임 종료
@@ -272,25 +254,16 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
             return true; // 기존 인스턴스 재사용
         }
 
-        pauseMenuInstance = Instantiate(
-            pauseMenuPrefab,
-            popupLayer); // PopupLayer 아래 일시정지 메뉴 프리팹 생성
+        pauseMenuInstance = Instantiate(pauseMenuPrefab, popupLayer); // PopupLayer 아래 일시정지 메뉴 프리팹 생성
+        pauseMenuInstance.name = pauseMenuPrefab.name; // 런타임 Clone 접미사 제거
 
-        pauseMenuInstance.name =
-            pauseMenuPrefab.name; // 런타임 Clone 접미사 제거
-
-        if (pauseMenuInstance.Initialize(
-            this,
-            thirdPersonCameraFollow)) // 메뉴 버튼과 설정 화면 연결 시도
+        if (pauseMenuInstance.Initialize(this, thirdPersonCameraFollow)) // 메뉴 버튼과 설정 화면 연결 시도
         {
             pauseMenuInstance.HideImmediate(); // 최초 생성 메뉴 즉시 숨김
             return true; // 메뉴 생성 성공 반환
         }
 
-        Debug.LogError(
-            "PauseMenuView 초기화에 실패했습니다.",
-            pauseMenuInstance); // 메뉴 초기화 오류 출력
-
+        Debug.LogError("PauseMenuView 초기화에 실패했습니다.", pauseMenuInstance); // 메뉴 초기화 오류 출력
         Destroy(pauseMenuInstance.gameObject); // 잘못 생성된 메뉴 제거
         pauseMenuInstance = null; // 메뉴 인스턴스 참조 초기화
         return false; // 메뉴 생성 실패 반환
@@ -327,37 +300,32 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
     {
         if (gameplayInputLock == null) // 입력 잠금 관리자 참조 확인
         {
-            gameplayInputLock =
-                FindFirstObjectByType<GameplayInputLock>(
-                    FindObjectsInactive.Include); // Scene 입력 잠금 관리자 검색
+            gameplayInputLock = FindFirstObjectByType<GameplayInputLock>(FindObjectsInactive.Include); // Scene 입력 잠금 관리자 검색
         }
 
         if (gameUIManager == null) // 게임 UI 관리자 참조 확인
         {
-            gameUIManager =
-                FindFirstObjectByType<GameUIManager>(
-                    FindObjectsInactive.Include); // Scene 게임 UI 관리자 검색
+            gameUIManager = FindFirstObjectByType<GameUIManager>(FindObjectsInactive.Include); // Scene 게임 UI 관리자 검색
         }
 
         if (worldMapController == null) // 지도 관리자 참조 확인
         {
-            worldMapController =
-                FindFirstObjectByType<WorldMapController>(
-                    FindObjectsInactive.Include); // Scene 지도 관리자 검색
+            worldMapController = FindFirstObjectByType<WorldMapController>(FindObjectsInactive.Include); // Scene 지도 관리자 검색
+        }
+
+        if (buildPlacementController == null) // 건축 관리자 참조 확인
+        {
+            buildPlacementController = FindFirstObjectByType<BuildPlacementController>(FindObjectsInactive.Include); // Scene 건축 관리자 검색
         }
 
         if (gameplaySaveController == null) // 저장 관리자 참조 확인
         {
-            gameplaySaveController =
-                FindFirstObjectByType<GameplaySaveController>(
-                    FindObjectsInactive.Include); // Scene 저장 관리자 검색
+            gameplaySaveController = FindFirstObjectByType<GameplaySaveController>(FindObjectsInactive.Include); // Scene 저장 관리자 검색
         }
 
         if (thirdPersonCameraFollow == null) // 추적 카메라 참조 확인
         {
-            thirdPersonCameraFollow =
-                FindFirstObjectByType<ThirdPersonCameraFollow>(
-                    FindObjectsInactive.Include); // Scene 추적 카메라 검색
+            thirdPersonCameraFollow = FindFirstObjectByType<ThirdPersonCameraFollow>(FindObjectsInactive.Include); // Scene 추적 카메라 검색
         }
 
         if (popupLayer == null) // PopupLayer 참조 확인
@@ -368,17 +336,15 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
 
     private Transform FindPopupLayer() // Scene의 PopupLayer Transform 검색
     {
-        Transform[] transforms =
-            FindObjectsByType<Transform>(
-                FindObjectsInactive.Include,
-                FindObjectsSortMode.None); // Scene 전체 Transform 검색
+        Transform[] transforms = FindObjectsByType<Transform>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None); // Scene 전체 Transform 검색
 
         for (int index = 0; index < transforms.Length; index++) // 전체 Transform 순회
         {
             Transform candidate = transforms[index]; // 현재 Transform 조회
 
-            if (candidate == null
-                || !candidate.gameObject.scene.IsValid()) // Scene 오브젝트 여부 확인
+            if (candidate == null || !candidate.gameObject.scene.IsValid()) // Scene 오브젝트 여부 확인
             {
                 continue; // 프리팹 에셋과 빈 참조 제외
             }
@@ -397,6 +363,11 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
         if (pauseMenuInstance != null) // 일시정지 메뉴 인스턴스 존재 확인
         {
             pauseMenuInstance.HideImmediate(); // 메뉴 애니메이션 중단과 즉시 숨김
+        }
+
+        if (buildPlacementController != null && buildPlacementController.IsBuildMode) // 건축 모드 실행 여부 확인
+        {
+            buildPlacementController.ExitBuildModeFromExternal(); // Scene 이동 전 자유 건축 Camera와 Preview 정리
         }
 
         if (worldMapController != null) // 지도 관리자 존재 확인
