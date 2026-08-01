@@ -51,6 +51,9 @@ public sealed class ThirdPersonCameraFollow : MonoBehaviour // 마우스 회전�
     private float pitch; // 상하 회전값
     private float distanceSmoothVelocity; // 거리 보간용 변화 속도
 
+    public float MouseSensitivity =>
+        mouseSensitivity; // 현재 마우스 감도 제공
+
     private void Awake() // 카메라 참조 검사
     {
         if (target == null) // 추적 대상 확인
@@ -87,16 +90,21 @@ public sealed class ThirdPersonCameraFollow : MonoBehaviour // 마우스 회전�
         transform.rotation = Quaternion.Euler(pitch, yaw, 0f); // 카메라 회전 즉시 적용
     }
 
-    private void Update() // 커서와 줌 입력 처리
+    public void SetMouseSensitivity(
+        float targetSensitivity) // 외부 설정값으로 마우스 감도 변경
     {
-        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame) // Escape 입력 확인
-        {
-            bool shouldLock = Cursor.lockState != CursorLockMode.Locked; // 다음 잠금 상태 계산
-            SetCursorLocked(shouldLock); // 커서 상태 변경
-        }
+        mouseSensitivity =
+            Mathf.Clamp(
+                targetSensitivity,
+                GameSettingsService.MinimumMouseSensitivity,
+                GameSettingsService.MaximumMouseSensitivity); // 허용 범위 안에서 감도 적용
+    }
 
+    private void Update() // 카메라 줌 입력 처리
+    {
         HandleZoomInput(); // 마우스 휠 줌 입력 처리
     }
+
     private void HandleZoomInput() // 마우스 휠 줌 입력 처리
     {
         if (Cursor.lockState != CursorLockMode.Locked) // 플레이 커서 잠금 상태 확인
@@ -157,9 +165,20 @@ public sealed class ThirdPersonCameraFollow : MonoBehaviour // 마우스 회전�
         Vector3 cameraPosition = focusPosition + backwardDirection * currentDistance; // 충돌 거리 기반 카메라 위치 계산
         transform.SetPositionAndRotation(cameraPosition, cameraRotation); // 위치와 회전 동시 적용
     }
-    private float GetCollisionAdjustedDistance(Vector3 focusPosition, Vector3 backwardDirection, out bool hasCollision) // 벽 충돌 적용 거리 계산
+
+    private float GetCollisionAdjustedDistance(
+        Vector3 focusPosition,
+        Vector3 backwardDirection,
+        out bool hasCollision) // 벽 충돌 적용 거리 계산
     {
-        hasCollision = Physics.SphereCast(focusPosition, collisionRadius, backwardDirection, out RaycastHit collisionHit, distance, collisionLayerMask, QueryTriggerInteraction.Ignore); // 플레이어와 카메라 사이 구체 검사
+        hasCollision = Physics.SphereCast(
+            focusPosition,
+            collisionRadius,
+            backwardDirection,
+            out RaycastHit collisionHit,
+            distance,
+            collisionLayerMask,
+            QueryTriggerInteraction.Ignore); // 플레이어와 카메라 사이 구체 검사
 
         if (!hasCollision) // 충돌 대상 미검출 확인
         {
@@ -169,11 +188,16 @@ public sealed class ThirdPersonCameraFollow : MonoBehaviour // 마우스 회전�
         float safeDistance = collisionHit.distance - collisionPadding; // 벽 앞 안전 거리 계산
         return Mathf.Max(0.1f, safeDistance); // 지나치게 작은 거리 방지
     }
+
     private void SetCursorLocked(bool isLocked) // 마우스 커서 상태 설정
     {
-        Cursor.lockState = isLocked ? CursorLockMode.Locked : CursorLockMode.None; // 커서 잠금 방식 적용
+        Cursor.lockState = isLocked
+            ? CursorLockMode.Locked
+            : CursorLockMode.None; // 커서 잠금 방식 적용
+
         Cursor.visible = !isLocked; // 커서 표시 상태 적용
     }
+
     private void OnValidate() // Inspector 카메라 설정값 검증
     {
         minimumDistance = Mathf.Max(0.5f, minimumDistance); // 최소 거리 하한 적용
@@ -186,5 +210,9 @@ public sealed class ThirdPersonCameraFollow : MonoBehaviour // 마우스 회전�
         minimumPitch = Mathf.Clamp(minimumPitch, -89f, 89f); // 최소 상하 각도 제한
         maximumPitch = Mathf.Clamp(maximumPitch, minimumPitch, 89f); // 최대 상하 각도 제한
         initialPitch = Mathf.Clamp(initialPitch, minimumPitch, maximumPitch); // 시작 상하 각도 제한
+        mouseSensitivity = Mathf.Clamp(
+            mouseSensitivity,
+            GameSettingsService.MinimumMouseSensitivity,
+            GameSettingsService.MaximumMouseSensitivity); // 마우스 감도 범위 제한
     }
 }

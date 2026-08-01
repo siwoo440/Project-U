@@ -224,6 +224,7 @@ GameObject:
   - component: {fileID: 17714713}
   - component: {fileID: 17714712}
   - component: {fileID: 17714715}
+  - component: {fileID: 17714716}
   m_Layer: 0
   m_Name: === UIManagers ===
   m_TagString: Untagged
@@ -311,6 +312,26 @@ MonoBehaviour:
   repairPopupStateMismatch: 1
   monitorInterval: 0.5
   logSuccessSummary: 1
+--- !u!114 &17714716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17714711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfa1b7b600f11804b958292dad325fcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PauseMenuController
+  gameplayInputLock: {fileID: 17714713}
+  gameUIManager: {fileID: 17714712}
+  gameplaySaveController: {fileID: 1951417609}
+  thirdPersonCameraFollow: {fileID: 454530119}
+  popupLayer: {fileID: 389671134}
+  pauseMenuPrefab: {fileID: 8731348219821124192, guid: 39a2bf100ef75404ba01f08e42d3f81b, type: 3}
+  mainMenuSceneName: 10_MainMenu
+  pauseGameTime: 1
 --- !u!4 &27137969 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2516878666505249027, guid: 297ce24fcfb620841ba57df42990fa55, type: 3}
