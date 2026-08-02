@@ -10532,8 +10532,9 @@ GameObject:
   - component: {fileID: 1294672713}
   - component: {fileID: 1294672712}
   - component: {fileID: 1294672711}
-  - component: {fileID: 1294672717}
   - component: {fileID: 1294672716}
+  - component: {fileID: 1294672717}
+  - component: {fileID: 1294672718}
   m_Layer: 17
   m_Name: Enemy_Basic_Test
   m_TagString: Untagged
@@ -10580,8 +10581,13 @@ MonoBehaviour:
   currentState: 0
   currentTargetDistance: Infinity
   hasTargetLock: 0
-  attackCooldownRemaining: 0
   hitReactionRemaining: 0
+  currentAttackPhase: 0
+  attackPhaseNormalized: 0
+  isAttackSequenceRunning: 0
+  attackCooldownRemaining: 0
+  currentAttackSequenceId: 0
+  lastAttackHitApplied: 0
   performedAttackCount: 0
 --- !u!114 &1294672712
 MonoBehaviour:
@@ -10732,6 +10738,53 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1294672718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294672709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c0abda1670ee0b458cf20e9f9250fb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyCombatImpactMotor
+  enemyHealth: {fileID: 1294672712}
+  navMeshAgent: {fileID: 1294672717}
+  distancePerImpactForce: 0.12
+  impactDuration: 0.16
+  maximumImpactDistance: 1.5
+  impactDistanceCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  logImpactResults: 1
+  testImpactForce: 5
+  isApplyingImpact: 0
+  currentImpactDirection: {x: 0, y: 0, z: 0}
+  currentImpactDistance: 0
+  currentImpactNormalized: 0
 --- !u!1 &1300720815
 GameObject:
   m_ObjectHideFlags: 0
@@ -16659,6 +16712,7 @@ GameObject:
   - component: {fileID: 1491592345}
   - component: {fileID: 1491592346}
   - component: {fileID: 1491592347}
+  - component: {fileID: 1491592348}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -17350,6 +17404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCombatDamageReceiver
   playerHealth: {fileID: 1491592331}
+  impactMotor: {fileID: 1491592348}
   damageRoot: {fileID: 1491592321}
   rejectDuplicateAttackSequence: 1
   logDamageResults: 1
@@ -17358,7 +17413,55 @@ MonoBehaviour:
   debugDamageKey: 25
   appliedCombatHitCount: 0
   blockedCombatHitCount: 0
+  appliedImpactCount: 0
   lastAttackSequenceId: -1
+--- !u!114 &1491592348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491592320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f822f12a74e3444fac83dc6c721b54f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCombatImpactMotor
+  characterController: {fileID: 1491592323}
+  playerHealth: {fileID: 1491592331}
+  distancePerImpactForce: 0.35
+  impactDuration: 0.18
+  maximumImpactDistance: 1.5
+  impactDistanceCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  logImpactResults: 1
+  testImpactForce: 2
+  isApplyingImpact: 0
+  currentImpactDirection: {x: 0, y: 0, z: 0}
+  currentImpactDistance: 0
+  currentImpactNormalized: 0
 --- !u!1 &1505638020
 GameObject:
   m_ObjectHideFlags: 0

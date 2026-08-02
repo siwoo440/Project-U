@@ -20,7 +20,7 @@ public sealed class EnemyCombatData : ScriptableObject // 적 공통 전투 능�
     [SerializeField, Range(0f, 95f)] private float defensePercent; // 적 방어력 비율
 
     [Header("Movement")] // 적 이동 설정 묶음
-    [Tooltip("향후 NavMesh 추적 이동에 사용할 기본 이동 속도입니다.")] // Inspector 이동 속도 설명
+    [Tooltip("NavMesh 추적 이동에 사용할 기본 이동 속도입니다.")] // Inspector 이동 속도 설명
     [SerializeField, Min(0f)] private float moveSpeed = 3f; // 적 기본 이동 속도
 
     [Tooltip("플레이어 방향으로 회전할 때 사용할 초당 회전 각도입니다.")] // Inspector 회전 속도 설명
@@ -33,18 +33,31 @@ public sealed class EnemyCombatData : ScriptableObject // 적 공통 전투 능�
     [Tooltip("한 번 인식한 플레이어 추적을 포기하는 거리입니다.")] // Inspector 추적 해제 거리 설명
     [SerializeField, Min(0.1f)] private float loseTargetRange = 14f; // 플레이어 추적 해제 거리
 
-    [Header("Attack")] // 적 공격 설정 묶음
-    [Tooltip("플레이어에게 근접 공격을 시도할 거리입니다.")] // Inspector 공격 거리 설명
+    [Header("Attack")] // 적 공격 기본 설정 묶음
+    [Tooltip("플레이어에게 근접 공격을 시작할 거리입니다.")] // Inspector 공격 거리 설명
     [SerializeField, Min(0.1f)] private float attackRange = 1.8f; // 적 공격 거리
 
     [Tooltip("한 번의 공격으로 전달할 기본 전투 피해량입니다.")] // Inspector 공격 피해 설명
     [SerializeField, Min(0f)] private float attackDamage = 10f; // 적 기본 공격 피해량
 
-    [Tooltip("향후 피격 밀림에 사용할 공격 충격량입니다.")] // Inspector 공격 충격량 설명
+    [Tooltip("피해가 실제 적용되었을 때 전달할 밀림 충격량입니다.")] // Inspector 공격 충격량 설명
     [SerializeField, Min(0f)] private float attackImpactForce = 2f; // 적 공격 충격량
 
-    [Tooltip("공격 후 다음 공격까지 기다릴 시간입니다.")] // Inspector 공격 대기시간 설명
-    [SerializeField, Min(0.05f)] private float attackCooldown = 1.25f; // 적 공격 재사용 대기시간
+    [Tooltip("공격 후딜레이가 끝난 뒤 다음 공격까지 기다릴 시간입니다.")] // Inspector 공격 대기시간 설명
+    [SerializeField, Min(0f)] private float attackCooldown = 0.65f; // 적 공격 재사용 대기시간
+
+    [Header("Attack Timing")] // 적 공격 세부 시간 설정 묶음
+    [Tooltip("공격 시작 후 실제 피해 판정이 발생하기까지의 준비 시간입니다.")] // Inspector 공격 준비 시간 설명
+    [SerializeField, Min(0f)] private float attackWindupDuration = 0.45f; // 적 공격 준비 시간
+
+    [Tooltip("피해 판정 이후 다음 행동을 시작하기 전까지의 후딜레이입니다.")] // Inspector 공격 후딜레이 설명
+    [SerializeField, Min(0f)] private float attackRecoveryDuration = 0.35f; // 적 공격 후딜레이 시간
+
+    [Tooltip("준비 중 플레이어가 공격 거리에서 조금 벗어나도 판정을 허용할 추가 거리입니다.")] // Inspector 공격 거리 여유 설명
+    [SerializeField, Min(0f)] private float attackRangeGraceDistance = 0.35f; // 공격 판정 거리 여유값
+
+    [Tooltip("공격 준비 중에도 플레이어 방향으로 몸을 회전할지 설정합니다.")] // Inspector 준비 중 추적 회전 설명
+    [SerializeField] private bool trackTargetDuringWindup = true; // 공격 준비 중 플레이어 추적 회전 여부
 
     [Header("Reaction")] // 적 반응 설정 묶음
     [Tooltip("피해를 받은 뒤 Hit 상태를 유지할 시간입니다.")] // Inspector 피격 반응 시간 설명
@@ -72,6 +85,10 @@ public sealed class EnemyCombatData : ScriptableObject // 적 공통 전투 능�
     public float AttackDamage => attackDamage; // 적 공격 피해량 제공
     public float AttackImpactForce => attackImpactForce; // 적 공격 충격량 제공
     public float AttackCooldown => attackCooldown; // 적 공격 대기시간 제공
+    public float AttackWindupDuration => attackWindupDuration; // 적 공격 준비 시간 제공
+    public float AttackRecoveryDuration => attackRecoveryDuration; // 적 공격 후딜레이 제공
+    public float AttackRangeGraceDistance => attackRangeGraceDistance; // 적 공격 판정 거리 여유 제공
+    public bool TrackTargetDuringWindup => trackTargetDuringWindup; // 준비 중 플레이어 추적 회전 여부 제공
     public float HitReactionDuration => hitReactionDuration; // 적 피격 상태 시간 제공
     public bool DisableCollidersOnDeath => disableCollidersOnDeath; // 사망 Collider 비활성화 여부 제공
     public bool DestroyAfterDeath => destroyAfterDeath; // 사망 후 제거 여부 제공
@@ -96,7 +113,10 @@ public sealed class EnemyCombatData : ScriptableObject // 적 공통 전투 능�
         attackRange = Mathf.Clamp(attackRange, 0.1f, detectionRange); // 공격 거리를 탐지 거리 안으로 제한
         attackDamage = Mathf.Max(0f, attackDamage); // 공격 피해량 음수 방지
         attackImpactForce = Mathf.Max(0f, attackImpactForce); // 공격 충격량 음수 방지
-        attackCooldown = Mathf.Max(0.05f, attackCooldown); // 공격 대기시간 최소값 적용
+        attackCooldown = Mathf.Max(0f, attackCooldown); // 공격 대기시간 음수 방지
+        attackWindupDuration = Mathf.Max(0f, attackWindupDuration); // 공격 준비 시간 음수 방지
+        attackRecoveryDuration = Mathf.Max(0f, attackRecoveryDuration); // 공격 후딜레이 음수 방지
+        attackRangeGraceDistance = Mathf.Max(0f, attackRangeGraceDistance); // 공격 거리 여유 음수 방지
         hitReactionDuration = Mathf.Max(0f, hitReactionDuration); // 피격 상태 시간 음수 방지
         deathCleanupDelay = Mathf.Max(0f, deathCleanupDelay); // 사망 제거 시간 음수 방지
     }
