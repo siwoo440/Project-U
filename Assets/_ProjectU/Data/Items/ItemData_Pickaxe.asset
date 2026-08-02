@@ -18,4 +18,22 @@ MonoBehaviour:
   icon: {fileID: 0}
   itemCategory: 1
   toolType: 2
+  weaponAttackType: 1
+  baseDamage: 10
+  attackCooldown: 0.65
+  attackRange: 1.9
+  attackRadius: 0.4
+  staminaCost: 9
+  impactForce: 4
+  equipmentSlotType: 0
+  defensePercent: 0
+  maximumHealthBonus: 0
+  movementSpeedBonusPercent: 0
+  hungerDepletionReductionPercent: 0
+  thirstDepletionReductionPercent: 0
+  coldResistancePercent: 0
+  inventorySlotBonus: 0
+  hungerRestoreAmount: 0
+  thirstRestoreAmount: 0
+  healthRestoreAmount: 0
   maximumStack: 1

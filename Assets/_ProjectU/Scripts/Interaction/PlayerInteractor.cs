@@ -2,47 +2,61 @@ using TMPro; // TextMeshPro UI 기능
 using UnityEngine; // Unity 기본 기능
 using UnityEngine.InputSystem; // 새 Input System 기능
 
-public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격 상호작용 처리
+public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 상호작용 입력 처리
 {
     [Header("Detection")] // 탐지 설정 묶음
-    [Tooltip("탐지 시작 위치.")]
-    [SerializeField] private Transform interactionOrigin; // 탐지 시작 위치
-    [Tooltip("탐지 방향 기준.")]
-    [SerializeField] private Transform viewTransform; // 탐지 방향 기준
+    [Tooltip("상호작용 탐지 시작 위치.")]
+    [SerializeField] private Transform interactionOrigin; // 상호작용 탐지 시작 위치
+
+    [Tooltip("상호작용 탐지 방향 기준.")]
+    [SerializeField] private Transform viewTransform; // 상호작용 탐지 방향 기준
+
     [Tooltip("최대 상호작용 거리.")]
     [SerializeField] private float interactionDistance = 1.8f; // 최대 상호작용 거리
-    [Tooltip("탐지 구체 반지름.")]
-    [SerializeField] private float detectionRadius = 0.35f; // 탐지 구체 반지름
+
+    [Tooltip("상호작용 탐지 구체 반지름.")]
+    [SerializeField] private float detectionRadius = 0.35f; // 상호작용 탐지 구체 반지름
+
     [Tooltip("상호작용 대상 레이어.")]
     [SerializeField] private LayerMask interactableLayers; // 상호작용 대상 레이어
 
     [Header("Input")] // 입력 설정 묶음
     [Tooltip("F키 상호작용 액션 참조.")]
     [SerializeField] private InputActionReference interactActionReference; // F키 상호작용 액션 참조
+
     [Tooltip("좌클릭 공격 액션 참조.")]
     [SerializeField] private InputActionReference attackActionReference; // 좌클릭 공격 액션 참조
 
-    [Header("Attack")] // 공격 연출 설정 묶음
-    [Tooltip("도구 휘두르기 연출.")]
-    [SerializeField] private ToolSwingAnimation toolSwingAnimation; // 도구 휘두르기 연출
+    [Header("Attack")] // 공격 시스템 설정 묶음
+    [Tooltip("아이템 공격 능력치, 스태미나, 재사용 대기시간과 피해 판정을 관리합니다.")]
+    [SerializeField] private PlayerWeaponAttackController weaponAttackController; // 공통 무기 공격 관리자
+
     [Tooltip("건축 배치 관리자.")]
     [SerializeField] private BuildPlacementController buildPlacementController; // 건축 배치 관리자
 
     [Header("UI")] // 안내 UI 설정 묶음
     [Tooltip("안내 UI 루트.")]
     [SerializeField] private GameObject promptRoot; // 안내 UI 루트
+
     [Tooltip("안내 문구 텍스트.")]
     [SerializeField] private TMP_Text promptText; // 안내 문구 텍스트
 
-    private InteractableBase currentInteractable; // 현재 탐지 대상
     private readonly RaycastHit[] detectionHits = new RaycastHit[16]; // 상호작용 탐지 결과 배열
+    private InteractableBase currentInteractable; // 현재 탐지 대상
+
     private void Awake() // 필수 참조 검사
     {
-        bool hasMissingReference = 
-            interactionOrigin == null 
-            || viewTransform == null 
-            || interactActionReference == null 
+        if (weaponAttackController == null) // 공통 공격 관리자 참조 확인
+        {
+            weaponAttackController = GetComponent<PlayerWeaponAttackController>(); // 같은 Player에서 자동 검색
+        }
+
+        bool hasMissingReference =
+            interactionOrigin == null
+            || viewTransform == null
+            || interactActionReference == null
             || attackActionReference == null
+            || weaponAttackController == null
             || promptRoot == null
             || promptText == null
             || buildPlacementController == null; // 필수 참조 누락 확인
@@ -59,11 +73,6 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격 상�
             Debug.LogError("PlayerInteractor의 Interactable Layers를 설정해야 합니다.", this); // 레이어 누락 오류
             enabled = false; // 상호작용 기능 비활성화
             return; // 초기화 중단
-        }
-
-        if (toolSwingAnimation == null) // 휘두르기 연출 연결 확인
-        {
-            toolSwingAnimation = GetComponentInChildren<ToolSwingAnimation>(true); // 자식에서 휘두르기 연출 검색
         }
 
         promptRoot.SetActive(false); // 초기 안내 UI 숨김
@@ -115,7 +124,7 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격 상�
 
         if (attackActionReference.action.WasPressedThisFrame()) // 좌클릭 입력 확인
         {
-            HandleAttackInput(); // 공격 및 자원 채집 처리
+            HandleAttackInput(); // 무기 공격 또는 자원 채집 처리
         }
 
         if (interactActionReference.action.WasPressedThisFrame()) // F키 입력 확인
@@ -123,18 +132,21 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격 상�
             HandleInteractInput(); // 아이템 및 일반 상호작용 처리
         }
     }
-    private void HandleAttackInput() // 좌클릭 공격 처리
-    {
-        PlayAttackAnimation(); // 도구 휘두르기 실행
 
-        if (currentInteractable is not GatherableResource) // 채집 자원 여부 확인
+    private void HandleAttackInput() // 좌클릭 공통 공격 처리
+    {
+        GatherableResource gatherableTarget =
+            currentInteractable as GatherableResource; // 현재 시선의 채집 자원 변환
+
+        bool attackStarted =
+            weaponAttackController.TryAttack(gatherableTarget); // 공통 공격 관리자에 입력 전달
+
+        if (!attackStarted || gatherableTarget == null) // 공격 시작과 채집 대상 확인
         {
-            return; // 자원이 아닌 대상 상호작용 차단
+            return; // 상호작용 대상 초기화 생략
         }
 
-        InteractableBase resource = currentInteractable; // 채집 대상 임시 저장
-        ClearInteractable(); // 현재 대상과 안내 UI 초기화
-        resource.Interact(gameObject); // 자원 채집 실행
+        ClearInteractable(); // 채집 후 현재 대상과 안내 UI 초기화
     }
 
     private void HandleInteractInput() // F키 상호작용 처리
@@ -154,20 +166,10 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격 상�
         interactable.Interact(gameObject); // 아이템 획득 또는 일반 상호작용 실행
     }
 
-    private void PlayAttackAnimation() // 공격 휘두르기 실행
-    {
-        if (toolSwingAnimation == null) // 휘두르기 연출 존재 확인
-        {
-            return; // 연출 처리 중단
-        }
-
-        toolSwingAnimation.PlaySwing(); // 도구 휘두르기 시작
-    }
-
     private void DetectInteractable() // 전방 상호작용 대상 탐지
     {
         InteractableBase detectedInteractable = null; // 이번 프레임 탐지 대상
-        Vector3 detectionDirection = viewTransform.forward.normalized; // 카메라 시선 방향 계산
+        Vector3 detectionDirection = viewTransform.forward.normalized; // Camera 시선 방향 계산
 
         int hitCount = Physics.SphereCastNonAlloc(
             interactionOrigin.position,
@@ -176,15 +178,15 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격 상�
             detectionHits,
             interactionDistance,
             interactableLayers,
-            QueryTriggerInteraction.Ignore); // 전방 범위의 전체 충돌체 탐지
+            QueryTriggerInteraction.Ignore); // 전방 범위의 전체 상호작용 Collider 탐지
 
         float nearestDistance = float.MaxValue; // 가장 가까운 상호작용 거리
 
-        for (int index = 0; index < hitCount; index++) // 탐지된 충돌체 순회
+        for (int index = 0; index < hitCount; index++) // 탐지된 Collider 순회
         {
             RaycastHit currentHit = detectionHits[index]; // 현재 충돌 정보
 
-            if (currentHit.collider == null) // 충돌체 존재 확인
+            if (currentHit.collider == null) // Collider 존재 확인
             {
                 continue; // 잘못된 결과 제외
             }
@@ -245,7 +247,7 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격 상�
         }
     }
 
-    private void OnDrawGizmosSelected() // 탐지 범위 시각화
+    private void OnDrawGizmosSelected() // 상호작용 탐지 범위 시각화
     {
         if (interactionOrigin == null || viewTransform == null) // 탐지 기준 존재 확인
         {
@@ -254,7 +256,7 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격 상�
 
         Vector3 direction = viewTransform.forward.normalized; // 탐지 방향 계산
         Vector3 endPosition = interactionOrigin.position + direction * interactionDistance; // 탐지 종료 위치 계산
-        Gizmos.color = Color.red; // 공격 탐지 색상 설정
+        Gizmos.color = Color.cyan; // 상호작용 탐지 색상 설정
         Gizmos.DrawLine(interactionOrigin.position, endPosition); // 탐지 방향선 표시
         Gizmos.DrawWireSphere(endPosition, detectionRadius); // 탐지 끝 범위 표시
     }
