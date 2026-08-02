@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee0b813991221674a99c5d95f958b33a, type: 3}
+  m_Name: GameDataRegistry
+  m_EditorClassIdentifier: Assembly-CSharp::GameDataRegistry
+  registryVersion: 1
+  items:
+  - {fileID: 11400000, guid: 233c5c7467d9daa41bab4b59439b9465, type: 2}
+  - {fileID: 11400000, guid: ced6962cfb3b9a249aadbf41f4f53d78, type: 2}
+  - {fileID: 11400000, guid: 3a8d5e1739f820a40882f0ae4c0d09f4, type: 2}
+  - {fileID: 11400000, guid: f256d7e940b86444db7d46375d22f42c, type: 2}
+  - {fileID: 11400000, guid: 63a6ccd99ac6288459462be53a4919a5, type: 2}
+  - {fileID: 11400000, guid: eef1b375027259b42834d2262ce9dd96, type: 2}
+  - {fileID: 11400000, guid: 250b3288a0c4e7e428748a942a5f848a, type: 2}
+  - {fileID: 11400000, guid: 3a8ea9dc329d35c4b8b4c84410a7f15d, type: 2}
+  - {fileID: 11400000, guid: 1132e66db22cdae448d0dfb6dec7e8c1, type: 2}
+  - {fileID: 11400000, guid: 2e83945f5dda2f34bb4e993074cfc81c, type: 2}
+  - {fileID: 11400000, guid: 479a7e7a5dbb8df4a9ea663d4e582a1b, type: 2}
+  - {fileID: 11400000, guid: b9e78781ff8b2aa4bae6df0fa3d2e1c9, type: 2}
+  - {fileID: 11400000, guid: d801a65a4ac6aa9488b8fe9ba94ccb15, type: 2}
+  - {fileID: 11400000, guid: 34ed2068e680c3e47b192431c37799db, type: 2}
+  - {fileID: 11400000, guid: 39da177e19117c74f96b0718ec760b34, type: 2}
+  craftingRecipes:
+  - {fileID: 11400000, guid: 263c19dd4430aff4bb2ff8fd97c6a40e, type: 2}
+  - {fileID: 11400000, guid: 7e69f276b3f39af4788f2c31f54530b7, type: 2}
+  buildRecipes:
+  - {fileID: 11400000, guid: 7c4d83f54b0ba9f48b4f04f89462d0f6, type: 2}
+  - {fileID: 11400000, guid: d0b44cbf98324944fb11b0ea4760283c, type: 2}
+  - {fileID: 11400000, guid: 75647e9ebdbadc744817782679190212, type: 2}
+  - {fileID: 11400000, guid: 098406d5796eada4395a9eed0df244c0, type: 2}
+  - {fileID: 11400000, guid: 1d0983db947779749a12fca4ce1da6f9, type: 2}
+  - {fileID: 11400000, guid: 81ca2d609af37d44ab59674459b7c242, type: 2}
+  - {fileID: 11400000, guid: eeffeeefea03e854da70c7c324c7296d, type: 2}
+  - {fileID: 11400000, guid: 25aae37426e3a4d449bdd9f3942bffc8, type: 2}
+  - {fileID: 11400000, guid: c0371b613f6d81a4abf89b41b8a28fe6, type: 2}
+  enemies:
+  - {fileID: 11400000, guid: a73e00d0e530dfd41ac5b2e3249056c8, type: 2}
+  registeredItemCount: 15
+  registeredCraftingRecipeCount: 2
+  registeredBuildRecipeCount: 9
+  registeredEnemyCount: 1
+  duplicateIdCount: 0
+  crossCategoryDuplicateIdCount: 0
+  invalidIdCount: 0
