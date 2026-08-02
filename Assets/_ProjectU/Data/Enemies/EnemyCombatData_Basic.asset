@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71ab0eaa1f2e23b4390bc06c9f065e89, type: 3}
+  m_Name: EnemyCombatData_Basic
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyCombatData
+  enemyId: enemy_basic
+  displayName: Basic Enemy
+  maximumHealth: 50
+  defensePercent: 0
+  moveSpeed: 3
+  rotationSpeed: 360
+  detectionRange: 10
+  loseTargetRange: 14
+  attackRange: 1.8
+  attackDamage: 10
+  attackImpactForce: 2
+  attackCooldown: 1.25
+  hitReactionDuration: 0.2
+  disableCollidersOnDeath: 1
+  destroyAfterDeath: 0
+  deathCleanupDelay: 5
