@@ -28,6 +28,9 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
     [SerializeField] private InputActionReference attackActionReference; // 좌클릭 공격 액션 참조
 
     [Header("Attack")] // 공격 시스템 설정 묶음
+    [Tooltip("일반 이동과 회피 상태를 관리합니다.")] // Inspector 이동 관리자 설명
+    [SerializeField] private PlayerMovement playerMovement; // 플레이어 이동과 회피 관리자
+
     [Tooltip("근접 연속 공격, 스태미나, 공격 단계와 중복 피해 방지를 관리합니다.")] // Inspector 근접 공격 설명
     [SerializeField] private PlayerWeaponAttackController weaponAttackController; // 공통 무기 공격 관리자
 
@@ -49,6 +52,11 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
 
     private void Awake() // 필수 참조 검사
     {
+        if (playerMovement == null) // 이동 관리자 참조 확인
+        {
+            playerMovement = GetComponent<PlayerMovement>(); // 같은 Player에서 자동 검색
+        }
+
         if (weaponAttackController == null) // 공통 공격 관리자 참조 확인
         {
             weaponAttackController = GetComponent<PlayerWeaponAttackController>(); // 같은 Player에서 자동 검색
@@ -64,6 +72,7 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
             || viewTransform == null // 조건 추가
             || interactActionReference == null // 조건 추가
             || attackActionReference == null // 조건 추가
+            || playerMovement == null // 조건 추가
             || weaponAttackController == null // 조건 추가
             || bowChargeController == null // 조건 추가
             || promptRoot == null // 조건 추가
@@ -113,16 +122,7 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
             attackActionReference.action.Disable(); // 좌클릭 공격 비활성화
         }
 
-        if (weaponAttackController != null) // 공격 관리자 존재 확인
-        {
-            weaponAttackController.CancelCurrentAttack(); // UI와 건축 진입 시 진행 중인 근접 공격 즉시 취소
-        }
-
-        if (bowChargeController != null) // 활 공격 관리자 존재 확인
-        {
-            bowChargeController.CancelCharge(); // UI와 건축 진입 시 진행 중인 활 장전 즉시 취소
-        }
-
+        CancelAttackStates(); // 진행 중인 공격과 활 장전 취소
         ClearInteractable(); // 현재 대상 초기화
     }
 
@@ -130,10 +130,16 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
     {
         if (buildPlacementController.BlocksGameplayInput) // 건축 입력 차단 상태 확인
         {
-            weaponAttackController.CancelCurrentAttack(); // 건축 전환 프레임의 진행 중인 근접 공격 취소
-            bowChargeController.CancelCharge(); // 건축 전환 프레임의 진행 중인 활 장전 취소
+            CancelAttackStates(); // 건축 전환 프레임의 진행 중인 공격 취소
             ClearInteractable(); // 상호작용 대상과 안내 UI 제거
             return; // 공격과 상호작용 차단
+        }
+
+        if (playerMovement.IsDodging) // 현재 회피 이동 상태 확인
+        {
+            CancelAttackStates(); // 회피 중 공격과 활 장전 취소
+            ClearInteractable(); // 회피 중 상호작용 대상과 안내 UI 제거
+            return; // 회피 중 공격과 상호작용 입력 차단
         }
 
         DetectInteractable(); // 전방 상호작용 대상 탐지
@@ -267,6 +273,19 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
         }
 
         promptText.SetText(string.Empty); // 안내 문구 제거
+    }
+
+    private void CancelAttackStates() // 근접 공격과 활 장전 상태 취소
+    {
+        if (weaponAttackController != null) // 근접 공격 관리자 존재 확인
+        {
+            weaponAttackController.CancelCurrentAttack(); // 진행 중인 근접 공격 즉시 취소
+        }
+
+        if (bowChargeController != null) // 활 공격 관리자 존재 확인
+        {
+            bowChargeController.CancelCharge(); // 진행 중인 활 장전 즉시 취소
+        }
     }
 
     private void ClearInteractable() // 현재 대상 초기화
