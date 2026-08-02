@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e80af2cd6c0ef3c4593cd9201880fa91, type: 3}
+  m_Name: MeleeCombo_Axe
+  m_EditorClassIdentifier: Assembly-CSharp::MeleeComboData
+  comboName: AXE COMBO
+  comboResetDelay: 0.9
+  steps:
+  - stepName: AXE SLASH 1
+    windupDuration: 0.12
+    activeDuration: 0.08
+    recoveryDuration: 0.2
+    inputBufferStartNormalized: 0.4
+    damageMultiplier: 1
+    rangeMultiplier: 1
+    radiusMultiplier: 1
+    staminaCostMultiplier: 1
+    impactForceMultiplier: 1
+    maximumTargets: 1
+    animationSpeedMultiplier: 1
+  - stepName: AXE SLASH 2
+    windupDuration: 0.1
+    activeDuration: 0.08
+    recoveryDuration: 0.18
+    inputBufferStartNormalized: 0.38
+    damageMultiplier: 1.05
+    rangeMultiplier: 1
+    radiusMultiplier: 1.05
+    staminaCostMultiplier: 1
+    impactForceMultiplier: 1.1
+    maximumTargets: 1
+    animationSpeedMultiplier: 1.1
+  - stepName: AXE FINISH
+    windupDuration: 0.16
+    activeDuration: 0.1
+    recoveryDuration: 0.3
+    inputBufferStartNormalized: 0.45
+    damageMultiplier: 1.3
+    rangeMultiplier: 1.05
+    radiusMultiplier: 1.1
+    staminaCostMultiplier: 1.2
+    impactForceMultiplier: 1.4
+    maximumTargets: 2
+    animationSpeedMultiplier: 0.9

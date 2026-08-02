@@ -25,6 +25,7 @@ MonoBehaviour:
   attackRadius: 0.4
   staminaCost: 9
   impactForce: 4
+  meleeComboData: {fileID: 11400000, guid: e9ce24b1618019f40a6b9c807f44dc6c, type: 2}
   equipmentSlotType: 0
   defensePercent: 0
   maximumHealthBonus: 0

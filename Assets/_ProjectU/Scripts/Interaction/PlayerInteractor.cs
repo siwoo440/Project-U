@@ -28,7 +28,7 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
     [SerializeField] private InputActionReference attackActionReference; // 좌클릭 공격 액션 참조
 
     [Header("Attack")] // 공격 시스템 설정 묶음
-    [Tooltip("아이템 공격 능력치, 스태미나, 재사용 대기시간과 피해 판정을 관리합니다.")]
+    [Tooltip("근접 연속 공격, 스태미나, 공격 단계와 중복 피해 방지를 관리합니다.")]
     [SerializeField] private PlayerWeaponAttackController weaponAttackController; // 공통 무기 공격 관리자
 
     [Tooltip("건축 배치 관리자.")]
@@ -92,7 +92,7 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
         }
     }
 
-    private void OnDisable() // 입력 액션 비활성화
+    private void OnDisable() // 입력 액션과 진행 중인 공격 비활성화
     {
         if (interactActionReference != null) // 상호작용 액션 존재 확인
         {
@@ -104,6 +104,11 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
             attackActionReference.action.Disable(); // 좌클릭 공격 비활성화
         }
 
+        if (weaponAttackController != null) // 공격 관리자 존재 확인
+        {
+            weaponAttackController.CancelCurrentAttack(); // UI와 건축 진입 시 진행 중인 공격 즉시 취소
+        }
+
         ClearInteractable(); // 현재 대상 초기화
     }
 
@@ -111,6 +116,7 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
     {
         if (buildPlacementController.BlocksGameplayInput) // 건축 입력 차단 상태 확인
         {
+            weaponAttackController.CancelCurrentAttack(); // 건축 전환 프레임의 진행 중인 공격 취소
             ClearInteractable(); // 상호작용 대상과 안내 UI 제거
             return; // 공격과 상호작용 차단
         }
@@ -124,7 +130,7 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
 
         if (attackActionReference.action.WasPressedThisFrame()) // 좌클릭 입력 확인
         {
-            HandleAttackInput(); // 무기 공격 또는 자원 채집 처리
+            HandleAttackInput(); // 무기 연속 공격 또는 자원 채집 처리
         }
 
         if (interactActionReference.action.WasPressedThisFrame()) // F키 입력 확인
@@ -138,15 +144,15 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
         GatherableResource gatherableTarget =
             currentInteractable as GatherableResource; // 현재 시선의 채집 자원 변환
 
-        bool attackStarted =
-            weaponAttackController.TryAttack(gatherableTarget); // 공통 공격 관리자에 입력 전달
+        bool attackAccepted =
+            weaponAttackController.TryAttack(gatherableTarget); // 새 공격 시작 또는 다음 연속 입력 저장
 
-        if (!attackStarted || gatherableTarget == null) // 공격 시작과 채집 대상 확인
+        if (!attackAccepted || gatherableTarget == null) // 공격 입력 처리와 채집 대상 확인
         {
             return; // 상호작용 대상 초기화 생략
         }
 
-        ClearInteractable(); // 채집 후 현재 대상과 안내 UI 초기화
+        ClearInteractable(); // 채집 공격 입력 후 대상과 안내 UI 초기화
     }
 
     private void HandleInteractInput() // F키 상호작용 처리
@@ -255,7 +261,8 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
         }
 
         Vector3 direction = viewTransform.forward.normalized; // 탐지 방향 계산
-        Vector3 endPosition = interactionOrigin.position + direction * interactionDistance; // 탐지 종료 위치 계산
+        Vector3 endPosition =
+            interactionOrigin.position + direction * interactionDistance; // 탐지 종료 위치 계산
         Gizmos.color = Color.cyan; // 상호작용 탐지 색상 설정
         Gizmos.DrawLine(interactionOrigin.position, endPosition); // 탐지 방향선 표시
         Gizmos.DrawWireSphere(endPosition, detectionRadius); // 탐지 끝 범위 표시

@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e80af2cd6c0ef3c4593cd9201880fa91, type: 3}
+  m_Name: MeleeCombo_Pickaxe
+  m_EditorClassIdentifier: Assembly-CSharp::MeleeComboData
+  comboName: PICKAXE COMBO
+  comboResetDelay: 1
+  steps:
+  - stepName: PICKAXE SWING 1
+    windupDuration: 0.15
+    activeDuration: 0.08
+    recoveryDuration: 0.25
+    inputBufferStartNormalized: 0.42
+    damageMultiplier: 1
+    rangeMultiplier: 1
+    radiusMultiplier: 1
+    staminaCostMultiplier: 1
+    impactForceMultiplier: 1
+    maximumTargets: 1
+    animationSpeedMultiplier: 0.9
+  - stepName: PICKAXE SWING 2
+    windupDuration: 0.13
+    activeDuration: 0.08
+    recoveryDuration: 0.23
+    inputBufferStartNormalized: 0.4
+    damageMultiplier: 1
+    rangeMultiplier: 1
+    radiusMultiplier: 1
+    staminaCostMultiplier: 1.05
+    impactForceMultiplier: 1.2
+    maximumTargets: 1
+    animationSpeedMultiplier: 1
+  - stepName: PICKAXE SMASH
+    windupDuration: 0.2
+    activeDuration: 0.1
+    recoveryDuration: 0.34
+    inputBufferStartNormalized: 0.48
+    damageMultiplier: 1.4
+    rangeMultiplier: 1.05
+    radiusMultiplier: 1
+    staminaCostMultiplier: 1.25
+    impactForceMultiplier: 1.6
+    maximumTargets: 1
+    animationSpeedMultiplier: 0.8

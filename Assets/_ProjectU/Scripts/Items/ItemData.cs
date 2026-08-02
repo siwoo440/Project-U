@@ -32,20 +32,23 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
     [Tooltip("공격 한 번의 기본 피해량입니다.")]
     [SerializeField, Min(0f)] private float baseDamage = 10f; // 기본 피해량
 
-    [Tooltip("다음 공격까지 기다릴 최소 시간입니다.")]
-    [SerializeField, Min(0.05f)] private float attackCooldown = 0.6f; // 공격 재사용 대기시간
+    [Tooltip("근접 연속 공격 데이터가 없거나 원거리 공격일 때 사용할 기본 공격 간격입니다.")]
+    [SerializeField, Min(0.05f)] private float attackCooldown = 0.6f; // 기본 공격 재사용 대기시간
 
-    [Tooltip("Player 공격 시작 위치에서 적용할 근접 공격 거리입니다.")]
-    [SerializeField, Min(0.1f)] private float attackRange = 2f; // 공격 거리
+    [Tooltip("Player 공격 시작 위치에서 적용할 기본 근접 공격 거리입니다.")]
+    [SerializeField, Min(0.1f)] private float attackRange = 2f; // 기본 공격 거리
 
-    [Tooltip("근접 공격 SphereCast의 반지름입니다.")]
-    [SerializeField, Min(0.01f)] private float attackRadius = 0.4f; // 공격 반지름
+    [Tooltip("근접 공격 SphereCast의 기본 반지름입니다.")]
+    [SerializeField, Min(0.01f)] private float attackRadius = 0.4f; // 기본 공격 반지름
 
-    [Tooltip("공격 한 번에 소비할 스태미나입니다.")]
-    [SerializeField, Min(0f)] private float staminaCost = 5f; // 공격 스태미나 비용
+    [Tooltip("공격 한 번에 소비할 기본 스태미나입니다.")]
+    [SerializeField, Min(0f)] private float staminaCost = 5f; // 기본 공격 스태미나 비용
 
     [Tooltip("향후 넉백 계산에 사용할 기본 충격량입니다.")]
     [SerializeField, Min(0f)] private float impactForce = 2f; // 기본 충격량
+
+    [Tooltip("근접 공격의 준비·타격·복귀 시간과 단계별 배율을 정의한 데이터입니다.")]
+    [SerializeField] private MeleeComboData meleeComboData; // 근접 연속 공격 데이터
 
     [Header("Equipment")] // 장비 설정 묶음
     [Tooltip("장착 슬롯 종류.")]
@@ -98,11 +101,14 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
     public ToolType ToolType => toolType; // 도구 종류 제공
     public WeaponAttackType WeaponAttackType => CanAttack ? weaponAttackType : WeaponAttackType.None; // 공격 방식 제공
     public float BaseDamage => CanAttack ? Mathf.Max(0f, baseDamage) : 0f; // 기본 피해량 제공
-    public float AttackCooldown => CanAttack ? Mathf.Max(0.05f, attackCooldown) : 0f; // 공격 대기시간 제공
-    public float AttackRange => CanAttack ? Mathf.Max(0.1f, attackRange) : 0f; // 공격 거리 제공
-    public float AttackRadius => CanAttack ? Mathf.Max(0.01f, attackRadius) : 0f; // 공격 반지름 제공
-    public float StaminaCost => CanAttack ? Mathf.Max(0f, staminaCost) : 0f; // 공격 스태미나 비용 제공
-    public float ImpactForce => CanAttack ? Mathf.Max(0f, impactForce) : 0f; // 공격 충격량 제공
+    public float AttackCooldown => CanAttack ? Mathf.Max(0.05f, attackCooldown) : 0f; // 기본 공격 간격 제공
+    public float AttackRange => CanAttack ? Mathf.Max(0.1f, attackRange) : 0f; // 기본 공격 거리 제공
+    public float AttackRadius => CanAttack ? Mathf.Max(0.01f, attackRadius) : 0f; // 기본 공격 반지름 제공
+    public float StaminaCost => CanAttack ? Mathf.Max(0f, staminaCost) : 0f; // 기본 스태미나 비용 제공
+    public float ImpactForce => CanAttack ? Mathf.Max(0f, impactForce) : 0f; // 기본 충격량 제공
+    public MeleeComboData MeleeComboData => CanAttack && weaponAttackType == WeaponAttackType.Melee
+        ? meleeComboData
+        : null; // 근접 연속 공격 데이터 제공
     public EquipmentSlotType EquipmentSlotType => IsEquipment ? equipmentSlotType : EquipmentSlotType.None; // 장비 슬롯 종류 제공
     public float DefensePercent => IsEquipment ? Mathf.Clamp(defensePercent, 0f, 80f) : 0f; // 방어력 제공
     public float MaximumHealthBonus => IsEquipment ? Mathf.Max(0f, maximumHealthBonus) : 0f; // 최대 체력 증가량 제공
@@ -157,6 +163,7 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
             attackRadius = 0.4f; // 기본 공격 반지름 복구
             staminaCost = 0f; // 스태미나 비용 제거
             impactForce = 0f; // 충격량 제거
+            meleeComboData = null; // 근접 연속 공격 데이터 제거
         }
         else if (weaponAttackType != WeaponAttackType.None) // 공격 가능한 도구 또는 무기 확인
         {
@@ -166,6 +173,11 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
             attackRadius = Mathf.Max(0.01f, attackRadius); // 공격 반지름 최소값 적용
             staminaCost = Mathf.Max(0f, staminaCost); // 스태미나 비용 음수 방지
             impactForce = Mathf.Max(0f, impactForce); // 충격량 음수 방지
+
+            if (weaponAttackType != WeaponAttackType.Melee) // 근접 공격이 아닌지 확인
+            {
+                meleeComboData = null; // 근접 연속 공격 데이터 제거
+            }
         }
 
         if (itemCategory != ItemCategory.Equipment) // 장비가 아닌 분류 확인

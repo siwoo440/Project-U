@@ -7,7 +7,7 @@ public sealed class TrainingDamageTarget : MonoBehaviour, ICombatDamageReceiver 
 {
     [Header("Health")] // 훈련 표적 체력 설정 묶음
     [Tooltip("훈련 표적의 최대 체력입니다.")]
-    [SerializeField, Min(1f)] private float maximumHealth = 50f; // 최대 체력
+    [SerializeField, Min(1f)] private float maximumHealth = 100f; // 최대 체력
 
     [Header("Reset")] // 훈련 표적 복구 설정 묶음
     [Tooltip("체력이 0이 된 뒤 자동으로 최대 체력을 복구할지 설정합니다.")]
@@ -24,17 +24,30 @@ public sealed class TrainingDamageTarget : MonoBehaviour, ICombatDamageReceiver 
     [Tooltip("현재 훈련 표적 체력입니다.")]
     [SerializeField] private float currentHealth; // 현재 체력
 
+    [Tooltip("Play Mode 시작 후 받은 총 피해 횟수입니다.")]
+    [SerializeField] private int receivedHitCount; // 총 피해 수신 횟수
+
+    [Tooltip("마지막으로 받은 공격 단계 고유 번호입니다.")]
+    [SerializeField] private int lastAttackSequenceId; // 마지막 공격 고유 번호
+
+    [Tooltip("마지막으로 받은 연속 공격 단계 번호입니다.")]
+    [SerializeField] private int lastComboStepNumber; // 마지막 연속 공격 단계 번호
+
     private Coroutine resetCoroutine; // 실행 중인 복구 코루틴
 
     public Transform DamageRoot => transform; // 현재 오브젝트를 피해 대상 기준으로 제공
     public bool IsAlive => currentHealth > 0f; // 현재 생존 상태 제공
     public float CurrentHealth => currentHealth; // 현재 체력 제공
     public float MaximumHealth => maximumHealth; // 최대 체력 제공
+    public int ReceivedHitCount => receivedHitCount; // 총 피해 수신 횟수 제공
 
     private void Awake() // 훈련 표적 초기화
     {
         maximumHealth = Mathf.Max(1f, maximumHealth); // 최대 체력 최소값 적용
         currentHealth = maximumHealth; // 시작 체력 최대값 적용
+        receivedHitCount = 0; // 시작 피해 수신 횟수 초기화
+        lastAttackSequenceId = 0; // 시작 공격 고유 번호 초기화
+        lastComboStepNumber = 0; // 시작 연속 공격 단계 초기화
     }
 
     public bool ReceiveDamage(CombatHitData hitData) // 플레이어 무기 피해 수신
@@ -45,6 +58,9 @@ public sealed class TrainingDamageTarget : MonoBehaviour, ICombatDamageReceiver 
         }
 
         currentHealth = Mathf.Max(0f, currentHealth - hitData.Damage); // 현재 체력 감소
+        receivedHitCount++; // 총 피해 수신 횟수 증가
+        lastAttackSequenceId = hitData.AttackSequenceId; // 마지막 공격 고유 번호 저장
+        lastComboStepNumber = hitData.ComboStepNumber; // 마지막 연속 공격 단계 저장
 
         if (logDamage) // 피해 로그 사용 여부 확인
         {
@@ -53,8 +69,10 @@ public sealed class TrainingDamageTarget : MonoBehaviour, ICombatDamageReceiver 
                 : hitData.SourceItem.DisplayName; // 사용 아이템 이름 계산
 
             Debug.Log(
-                $"{gameObject.name} 피해 {hitData.Damage:0.##} / 남은 체력 {currentHealth:0.##} / 공격 {itemName}",
-                this); // 피해 결과 출력
+                $"{gameObject.name} / {itemName} {hitData.ComboStepNumber}단 / "
+                + $"피해 {hitData.Damage:0.##} / 남은 체력 {currentHealth:0.##} / "
+                + $"누적 명중 {receivedHitCount}",
+                this); // 연속 공격 피해 결과 출력
         }
 
         if (currentHealth > 0f) // 남은 체력 확인
