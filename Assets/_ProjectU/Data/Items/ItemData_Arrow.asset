@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08d47c1103dfc6548ac6257bf8d8a815, type: 3}
+  m_Name: ItemData_Arrow
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemId: item_arrow
+  displayName: ARROW
+  description: AMMUNITION FOR A BOW
+  icon: {fileID: 0}
+  itemCategory: 0
+  toolType: 0
+  weaponAttackType: 0
+  baseDamage: 0
+  attackCooldown: 0.6
+  attackRange: 2
+  attackRadius: 0.4
+  staminaCost: 0
+  impactForce: 0
+  meleeComboData: {fileID: 0}
+  rangedWeaponData: {fileID: 0}
+  equipmentSlotType: 0
+  defensePercent: 0
+  maximumHealthBonus: 0
+  movementSpeedBonusPercent: 0
+  hungerDepletionReductionPercent: 0
+  thirstDepletionReductionPercent: 0
+  coldResistancePercent: 0
+  inventorySlotBonus: 0
+  hungerRestoreAmount: 0
+  thirstRestoreAmount: 0
+  healthRestoreAmount: 0
+  maximumStack: 50

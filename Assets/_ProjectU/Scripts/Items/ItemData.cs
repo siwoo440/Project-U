@@ -4,92 +4,95 @@ using UnityEngine; // Unity 기본 기능
 public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
 {
     [Header("Identity")] // 식별 정보 묶음
-    [Tooltip("아이템 고유 ID.")]
+    [Tooltip("아이템 고유 ID.")] // Inspector ID 설명
     [SerializeField] private string itemId = "item_new"; // 아이템 고유 ID
 
     [Header("Display")] // 화면 표시 정보 묶음
-    [Tooltip("아이템 표시 이름.")]
+    [Tooltip("아이템 표시 이름.")] // Inspector 이름 설명
     [SerializeField] private string displayName = "NEW ITEM"; // 아이템 표시 이름
 
-    [Tooltip("아이템 설명.")]
+    [Tooltip("아이템 설명.")] // Inspector 설명 안내
     [TextArea(2, 4)] // 여러 줄 설명 입력
     [SerializeField] private string description = "NO DESCRIPTION"; // 아이템 설명
 
-    [Tooltip("아이템 아이콘.")]
+    [Tooltip("아이템 아이콘.")] // Inspector 아이콘 설명
     [SerializeField] private Sprite icon; // 아이템 아이콘
 
     [Header("Category")] // 아이템 분류 묶음
-    [Tooltip("아이템 기본 분류.")]
+    [Tooltip("아이템 기본 분류.")] // Inspector 분류 설명
     [SerializeField] private ItemCategory itemCategory = ItemCategory.CraftingMaterial; // 아이템 기본 분류
 
-    [Tooltip("도구 종류.")]
+    [Tooltip("도구 종류.")] // Inspector 도구 종류 설명
     [SerializeField] private ToolType toolType = ToolType.None; // 도구 종류
 
     [Header("Weapon Attack")] // 무기 공통 공격 능력치 묶음
-    [Tooltip("아이템의 공격 방식입니다. 도구 또는 무기 분류에서 사용합니다.")]
+    [Tooltip("아이템의 공격 방식입니다. 도구 또는 무기 분류에서 사용합니다.")] // Inspector 공격 방식 설명
     [SerializeField] private WeaponAttackType weaponAttackType = WeaponAttackType.None; // 공격 방식
 
-    [Tooltip("공격 한 번의 기본 피해량입니다.")]
+    [Tooltip("공격 한 번의 기본 피해량입니다.")] // Inspector 피해량 설명
     [SerializeField, Min(0f)] private float baseDamage = 10f; // 기본 피해량
 
-    [Tooltip("근접 연속 공격 데이터가 없거나 원거리 공격일 때 사용할 기본 공격 간격입니다.")]
+    [Tooltip("근접 연속 공격 데이터가 없거나 원거리 공격일 때 사용할 기본 공격 간격입니다.")] // Inspector 공격 간격 설명
     [SerializeField, Min(0.05f)] private float attackCooldown = 0.6f; // 기본 공격 재사용 대기시간
 
-    [Tooltip("Player 공격 시작 위치에서 적용할 기본 근접 공격 거리입니다.")]
+    [Tooltip("근접 공격 거리 또는 원거리 발사체 최대 이동 거리입니다.")] // Inspector 공격 거리 설명
     [SerializeField, Min(0.1f)] private float attackRange = 2f; // 기본 공격 거리
 
-    [Tooltip("근접 공격 SphereCast의 기본 반지름입니다.")]
+    [Tooltip("근접 공격 SphereCast의 기본 반지름입니다.")] // Inspector 공격 반지름 설명
     [SerializeField, Min(0.01f)] private float attackRadius = 0.4f; // 기본 공격 반지름
 
-    [Tooltip("공격 한 번에 소비할 기본 스태미나입니다.")]
+    [Tooltip("공격 한 번에 소비할 기본 스태미나입니다.")] // Inspector 스태미나 비용 설명
     [SerializeField, Min(0f)] private float staminaCost = 5f; // 기본 공격 스태미나 비용
 
-    [Tooltip("향후 넉백 계산에 사용할 기본 충격량입니다.")]
+    [Tooltip("향후 넉백 계산에 사용할 기본 충격량입니다.")] // Inspector 충격량 설명
     [SerializeField, Min(0f)] private float impactForce = 2f; // 기본 충격량
 
-    [Tooltip("근접 공격의 준비·타격·복귀 시간과 단계별 배율을 정의한 데이터입니다.")]
+    [Tooltip("근접 공격의 준비·타격·복귀 시간과 단계별 배율을 정의한 데이터입니다.")] // Inspector 근접 데이터 설명
     [SerializeField] private MeleeComboData meleeComboData; // 근접 연속 공격 데이터
 
+    [Tooltip("원거리 공격의 탄약과 발사체 설정을 정의한 데이터입니다.")] // Inspector 원거리 데이터 설명
+    [SerializeField] private RangedWeaponData rangedWeaponData; // 원거리 무기 데이터
+
     [Header("Equipment")] // 장비 설정 묶음
-    [Tooltip("장착 슬롯 종류.")]
-    [SerializeField] private EquipmentSlotType equipmentSlotType = EquipmentSlotType.None; // 장착 슬롯 종류
+    [Tooltip("장착 슬롯 종류.")] // Inspector 장비 슬롯 설명
+    [SerializeField] private EquipmentSlotType equipmentSlotType = EquipmentSlotType.None; // 장비 슬롯 종류
 
     [Header("Equipment Stats")] // 장비 능력치 묶음
-    [Tooltip("피해 감소 비율.")]
+    [Tooltip("피해 감소 비율.")] // Inspector 방어력 설명
     [SerializeField, Range(0f, 80f)] private float defensePercent; // 피해 감소 비율
 
-    [Tooltip("최대 체력 증가량.")]
+    [Tooltip("최대 체력 증가량.")] // Inspector 최대 체력 설명
     [SerializeField] private float maximumHealthBonus; // 최대 체력 증가량
 
-    [Tooltip("이동 속도 증가 비율.")]
+    [Tooltip("이동 속도 증가 비율.")] // Inspector 이동 속도 설명
     [SerializeField] private float movementSpeedBonusPercent; // 이동 속도 증가 비율
 
-    [Tooltip("허기 감소 방지 비율.")]
+    [Tooltip("허기 감소 방지 비율.")] // Inspector 허기 방지 설명
     [SerializeField, Range(0f, 80f)] private float hungerDepletionReductionPercent; // 허기 감소 방지 비율
 
-    [Tooltip("갈증 감소 방지 비율.")]
+    [Tooltip("갈증 감소 방지 비율.")] // Inspector 갈증 방지 설명
     [SerializeField, Range(0f, 80f)] private float thirstDepletionReductionPercent; // 갈증 감소 방지 비율
 
-    [Tooltip("추위 감소 방지 비율.")]
+    [Tooltip("추위 감소 방지 비율.")] // Inspector 방한 설명
     [SerializeField, Range(0f, 80f)] private float coldResistancePercent; // 추위 감소 방지 비율
 
-    [Tooltip("인벤토리 추가 슬롯.")]
+    [Tooltip("인벤토리 추가 슬롯.")] // Inspector 추가 슬롯 설명
     [SerializeField] private int inventorySlotBonus; // 인벤토리 추가 슬롯
 
     [Header("Food")] // 음식 효과 묶음
-    [Tooltip("허기 회복량.")]
+    [Tooltip("허기 회복량.")] // Inspector 허기 회복 설명
     [SerializeField] private float hungerRestoreAmount; // 허기 회복량
 
     [Header("Drink")] // 음료 효과 묶음
-    [Tooltip("갈증 회복량.")]
+    [Tooltip("갈증 회복량.")] // Inspector 갈증 회복 설명
     [SerializeField] private float thirstRestoreAmount; // 갈증 회복량
 
     [Header("Medicine")] // 의약품 효과 묶음
-    [Tooltip("체력 회복량.")]
+    [Tooltip("체력 회복량.")] // Inspector 체력 회복 설명
     [SerializeField] private float healthRestoreAmount; // 체력 회복량
 
     [Header("Stack")] // 중첩 정보 묶음
-    [Tooltip("최대 중첩 수량.")]
+    [Tooltip("최대 중첩 수량.")] // Inspector 최대 중첩 설명
     [SerializeField] private int maximumStack = 20; // 최대 중첩 수량
 
     public string ItemId => itemId; // 아이템 ID 제공
@@ -106,9 +109,12 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
     public float AttackRadius => CanAttack ? Mathf.Max(0.01f, attackRadius) : 0f; // 기본 공격 반지름 제공
     public float StaminaCost => CanAttack ? Mathf.Max(0f, staminaCost) : 0f; // 기본 스태미나 비용 제공
     public float ImpactForce => CanAttack ? Mathf.Max(0f, impactForce) : 0f; // 기본 충격량 제공
-    public MeleeComboData MeleeComboData => CanAttack && weaponAttackType == WeaponAttackType.Melee
-        ? meleeComboData
+    public MeleeComboData MeleeComboData => CanAttack && weaponAttackType == WeaponAttackType.Melee // 값 계산 시작
+        ? meleeComboData // 참 조건 값
         : null; // 근접 연속 공격 데이터 제공
+    public RangedWeaponData RangedWeaponData => CanAttack && weaponAttackType == WeaponAttackType.Ranged // 값 계산 시작
+        ? rangedWeaponData // 참 조건 값
+        : null; // 원거리 무기 데이터 제공
     public EquipmentSlotType EquipmentSlotType => IsEquipment ? equipmentSlotType : EquipmentSlotType.None; // 장비 슬롯 종류 제공
     public float DefensePercent => IsEquipment ? Mathf.Clamp(defensePercent, 0f, 80f) : 0f; // 방어력 제공
     public float MaximumHealthBonus => IsEquipment ? Mathf.Max(0f, maximumHealthBonus) : 0f; // 최대 체력 증가량 제공
@@ -128,8 +134,8 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
     public bool IsEquipment => itemCategory == ItemCategory.Equipment; // 장비 여부 제공
     public bool IsWeapon => itemCategory == ItemCategory.Weapon; // 전투 무기 여부 제공
     public bool SupportsCombat => IsTool || IsWeapon; // 공격 능력치를 사용할 수 있는 분류 여부 제공
-    public bool CanAttack => SupportsCombat
-        && weaponAttackType != WeaponAttackType.None
+    public bool CanAttack => SupportsCombat // 값 계산 시작
+        && weaponAttackType != WeaponAttackType.None // 조건 추가
         && baseDamage > 0f; // 실제 공격 가능한 아이템 여부 제공
 
     private void OnValidate() // Inspector 값 검증
@@ -139,9 +145,9 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
         description = string.IsNullOrWhiteSpace(description) ? string.Empty : description.Trim(); // 설명 양쪽 공백 제거
         maximumStack = Mathf.Max(1, maximumStack); // 최대 중첩 최소값 적용
 
-        bool requiresSingleStack =
-            itemCategory == ItemCategory.Tool
-            || itemCategory == ItemCategory.Equipment
+        bool requiresSingleStack = // 값 계산 시작
+            itemCategory == ItemCategory.Tool // 값 계산 시작
+            || itemCategory == ItemCategory.Equipment // 조건 추가
             || itemCategory == ItemCategory.Weapon; // 단일 보관 분류 확인
 
         if (requiresSingleStack) // 도구, 장비 또는 무기 확인
@@ -164,6 +170,7 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
             staminaCost = 0f; // 스태미나 비용 제거
             impactForce = 0f; // 충격량 제거
             meleeComboData = null; // 근접 연속 공격 데이터 제거
+            rangedWeaponData = null; // 원거리 무기 데이터 제거
         }
         else if (weaponAttackType != WeaponAttackType.None) // 공격 가능한 도구 또는 무기 확인
         {
@@ -174,10 +181,19 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
             staminaCost = Mathf.Max(0f, staminaCost); // 스태미나 비용 음수 방지
             impactForce = Mathf.Max(0f, impactForce); // 충격량 음수 방지
 
-            if (weaponAttackType != WeaponAttackType.Melee) // 근접 공격이 아닌지 확인
+            if (weaponAttackType == WeaponAttackType.Melee) // 근접 공격 방식 확인
+            {
+                rangedWeaponData = null; // 원거리 무기 데이터 제거
+            }
+            else if (weaponAttackType == WeaponAttackType.Ranged) // 원거리 공격 방식 확인
             {
                 meleeComboData = null; // 근접 연속 공격 데이터 제거
             }
+        }
+        else // 공격 방식 없음 확인
+        {
+            meleeComboData = null; // 근접 연속 공격 데이터 제거
+            rangedWeaponData = null; // 원거리 무기 데이터 제거
         }
 
         if (itemCategory != ItemCategory.Equipment) // 장비가 아닌 분류 확인
@@ -186,8 +202,8 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
             defensePercent = 0f; // 방어력 제거
             maximumHealthBonus = 0f; // 체력 증가량 제거
             movementSpeedBonusPercent = 0f; // 이동 속도 증가량 제거
-            hungerDepletionReductionPercent = 0f; // 허기 감소 방지량 제거
-            thirstDepletionReductionPercent = 0f; // 갈증 감소 방지량 제거
+            hungerDepletionReductionPercent = 0f; // 허기 감소 방지 비율 제거
+            thirstDepletionReductionPercent = 0f; // 갈증 감소 방지 비율 제거
             coldResistancePercent = 0f; // 방한 능력치 제거
             inventorySlotBonus = 0; // 인벤토리 증가량 제거
         }
