@@ -97,12 +97,18 @@ public sealed class GameDataRegistryEditor : Editor // Registry 자동 수집과
             .ThenBy(enemyData => enemyData.name) // 같은 ID는 Asset 이름 순서로 정렬
             .ToList(); // 정렬 결과를 List로 변환
 
+        List<ContentVisualProfile> visualProfileAssets = FindAssets<ContentVisualProfile>() // 프로젝트 전체 ContentVisualProfile 검색
+            .OrderBy(visualProfile => visualProfile.ProfileId) // Visual Profile ID 순서로 정렬
+            .ThenBy(visualProfile => visualProfile.name) // 같은 ID는 Asset 이름 순서로 정렬
+            .ToList(); // 정렬 결과를 List로 변환
+
         SerializedObject serializedRegistry = new SerializedObject(registry); // Registry private 배열 수정을 위한 SerializedObject 생성
         serializedRegistry.Update(); // 최신 Registry 직렬화 상태 읽기
         AssignAssetArray(serializedRegistry.FindProperty("items"), itemAssets); // 전체 아이템 Asset 배열 등록
         AssignAssetArray(serializedRegistry.FindProperty("craftingRecipes"), craftingRecipeAssets); // 전체 제작법 Asset 배열 등록
         AssignAssetArray(serializedRegistry.FindProperty("buildRecipes"), buildRecipeAssets); // 전체 건축법 Asset 배열 등록
         AssignAssetArray(serializedRegistry.FindProperty("enemies"), enemyAssets); // 전체 적 Asset 배열 등록
+        AssignAssetArray(serializedRegistry.FindProperty("visualProfiles"), visualProfileAssets); // 전체 Visual Profile Asset 배열 등록
         serializedRegistry.ApplyModifiedProperties(); // Registry 배열 변경 내용 적용
         EditorUtility.SetDirty(registry); // Registry Asset 변경 상태 표시
         AssetDatabase.SaveAssets(); // Registry 변경 내용 디스크 저장
@@ -113,7 +119,8 @@ public sealed class GameDataRegistryEditor : Editor // Registry 자동 수집과
             + $"아이템 {itemAssets.Count} / " // 수집 아이템 수 추가
             + $"제작법 {craftingRecipeAssets.Count} / " // 수집 제작법 수 추가
             + $"건축법 {buildRecipeAssets.Count} / " // 수집 건축법 수 추가
-            + $"적 {enemyAssets.Count}", // 수집 적 수 추가
+            + $"적 {enemyAssets.Count} / " // 수집 적 수 추가
+            + $"Visual Profile {visualProfileAssets.Count}", // 수집 Visual Profile 수 추가
             registry); // Registry Asset을 Log Context로 지정
     }
 
@@ -128,6 +135,7 @@ public sealed class GameDataRegistryEditor : Editor // Registry 자동 수집과
         registry.RebuildLookup(true); // Registry 자체 중복과 잘못된 ID 전체 검사
         ValidateRecommendedPrefixes(registry); // 데이터 종류별 권장 ID 접두사 검사
         ValidateCraftingResultRegistration(registry); // 제작 결과 아이템 Registry 등록 여부 검사
+        ValidateVisualProfiles(registry); // Visual Profile 외형 생성 정보 검사
         EditorUtility.SetDirty(registry); // Registry Runtime 검증값 변경 상태 표시
         AssetDatabase.SaveAssets(); // Registry 검증 실행값 디스크 저장
     }
@@ -157,6 +165,12 @@ public sealed class GameDataRegistryEditor : Editor // Registry 자동 수집과
             enemyData => enemyData.EnemyId, // EnemyCombatData에서 ID를 가져오는 함수
             "enemy_", // 적 권장 접두사
             "EnemyCombatData"); // 오류 출력용 데이터 종류 이름
+
+        ValidatePrefix( // Visual Profile ID 접두사 검사 시작
+            registry.VisualProfiles, // 전체 Visual Profile 목록
+            visualProfile => visualProfile.ProfileId, // ContentVisualProfile에서 ID를 가져오는 함수
+            "visual_", // Visual Profile 권장 접두사
+            "ContentVisualProfile"); // 오류 출력용 데이터 종류 이름
     }
 
     private static void ValidateCraftingResultRegistration(GameDataRegistry registry) // 제작법 결과 아이템이 Registry에 등록되었는지 검사
@@ -185,6 +199,27 @@ public sealed class GameDataRegistryEditor : Editor // Registry 자동 수집과
                 $"제작법 결과 아이템이 GameDataRegistry에 등록되지 않았습니다. " // 오류 원인 안내
                 + $"제작법: {recipeData.name} / 아이템: {recipeData.ResultItem.name}", // 누락된 제작법과 아이템 이름 추가
                 recipeData); // 현재 제작법 Asset을 Log Context로 지정
+        }
+    }
+
+    private static void ValidateVisualProfiles(GameDataRegistry registry) // Registry에 등록된 Visual Profile 외형 생성 정보 검사
+    {
+        for (int index = 0; index < registry.VisualProfiles.Count; index++) // 전체 Visual Profile 순회
+        {
+            ContentVisualProfile visualProfile = registry.VisualProfiles[index]; // 현재 Visual Profile 가져오기
+
+            if (visualProfile == null) // Visual Profile 참조 누락 여부 확인
+            {
+                continue; // Registry 기본 빈 참조 검사를 사용하므로 다음 Profile로 이동
+            }
+
+            if (!visualProfile.HasVisualSource) // 실제 또는 임시 외형 생성 가능 여부 확인
+            {
+                Debug.LogWarning( // Visual Profile 외형 정보 누락 경고 출력 시작
+                    $"{visualProfile.name}에는 Visual Prefab이 없고 " // 현재 Profile과 실제 Prefab 누락 안내
+                    + "임시 Placeholder 생성도 비활성화되어 있습니다.", // 임시 외형 비활성 안내
+                    visualProfile); // Visual Profile Asset을 Log Context로 지정
+            }
         }
     }
 

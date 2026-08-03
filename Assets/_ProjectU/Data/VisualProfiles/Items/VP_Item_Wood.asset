@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 510b0c83df47b36439aa53dce257a125, type: 3}
+  m_Name: VP_Item_Wood
+  m_EditorClassIdentifier: Assembly-CSharp::ContentVisualProfile
+  profileId: visual_item_wood
+  displayName: WOOD ITEM VISUAL
+  category: 1
+  visualPrefab: {fileID: 0}
+  icon: {fileID: 0}
+  materialOverride: {fileID: 0}
+  animatorController: {fileID: 0}
+  createPlaceholderWhenPrefabMissing: 1
+  placeholderPrimitive: 3
+  placeholderMaterial: {fileID: 2100000, guid: afcb74a3794ffd34987b570d0d480b99, type: 2}
+  placeholderColor: {r: 1, g: 1, b: 1, a: 1}
+  usePlaceholderColor: 0
+  visualLocalPosition: {x: 0, y: 0, z: 0}
+  visualLocalEulerAngles: {x: 0, y: 0, z: 0}
+  visualLocalScale: {x: 0.5, y: 0.25, z: 0.5}
+  interactionPointPosition: {x: 0, y: 0.3, z: 0}
+  effectOriginPosition: {x: 0, y: 0.3, z: 0}
+  uiAnchorPosition: {x: 0, y: 0.8, z: 0}
+  inheritRootLayer: 1
+  removeVisualColliders: 1
+  applyMaterialOverrideToVisualPrefab: 1
+  primaryAudioClip: {fileID: 0}
+  primaryVfxPrefab: {fileID: 0}

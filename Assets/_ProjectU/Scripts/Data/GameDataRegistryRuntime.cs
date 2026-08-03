@@ -116,6 +116,11 @@ public sealed class GameDataRegistryRuntime : MonoBehaviour // Scene에서 공�
         {
             TestEnemyId(registry.Enemies[0].EnemyId); // 첫 번째 등록 적 ID 검색 테스트
         }
+
+        if (registry.VisualProfiles.Count > 0 && registry.VisualProfiles[0] != null) // 첫 번째 Visual Profile 존재 여부 확인
+        {
+            TestVisualProfileId(registry.VisualProfiles[0].ProfileId); // 첫 번째 Visual Profile ID 검색 테스트
+        }
     }
 
     public bool TryGetItem(string itemId, out ItemData itemData) // 전역 Registry에서 아이템 ID 검색
@@ -166,6 +171,18 @@ public sealed class GameDataRegistryRuntime : MonoBehaviour // Scene에서 공�
         return registry.TryGetEnemy(enemyId, out enemyData); // GameDataRegistry 적 검색 결과 반환
     }
 
+    public bool TryGetVisualProfile(string profileId, out ContentVisualProfile visualProfile) // 전역 Registry에서 Visual Profile ID 검색
+    {
+        visualProfile = null; // 검색 실패 기본 반환값 설정
+
+        if (registry == null) // Registry Asset 연결 여부 확인
+        {
+            return false; // Registry가 없으면 Visual Profile 검색 실패 반환
+        }
+
+        return registry.TryGetVisualProfile(profileId, out visualProfile); // GameDataRegistry Visual Profile 검색 결과 반환
+    }
+
     private void TestItemId(string itemId) // 지정 아이템 ID 검색 결과 출력
     {
         if (TryGetItem(itemId, out ItemData itemData)) // 아이템 ID 검색 성공 여부 확인
@@ -208,5 +225,16 @@ public sealed class GameDataRegistryRuntime : MonoBehaviour // Scene에서 공�
         }
 
         Debug.LogWarning($"적 Registry 검색 실패 / ID: {enemyId}", this); // 적 검색 실패 결과 출력
+    }
+
+    private void TestVisualProfileId(string profileId) // 지정 Visual Profile ID 검색 결과 출력
+    {
+        if (TryGetVisualProfile(profileId, out ContentVisualProfile visualProfile)) // Visual Profile ID 검색 성공 여부 확인
+        {
+            Debug.Log($"Visual Profile Registry 검색 성공 / ID: {profileId} / Asset: {visualProfile.name}", visualProfile); // Visual Profile 검색 성공 결과 출력
+            return; // Visual Profile 검색 실패 로그 생략
+        }
+
+        Debug.LogWarning($"Visual Profile Registry 검색 실패 / ID: {profileId}", this); // Visual Profile 검색 실패 결과 출력
     }
 }
