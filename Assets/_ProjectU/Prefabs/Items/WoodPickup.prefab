@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &449094005605123303
+--- !u!1 &544524537909210515
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2609238216132774915}
-  - component: {fileID: 1446370382931073706}
-  - component: {fileID: 3710089506286446343}
+  - component: {fileID: 8621171540882777413}
+  - component: {fileID: 1813364955472447506}
+  - component: {fileID: 1191808599299413122}
   m_Layer: 3
   m_Name: TEMP_Cube_Visual
   m_TagString: Untagged
@@ -18,13 +18,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2609238216132774915
+--- !u!4 &8621171540882777413
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 449094005605123303}
+  m_GameObject: {fileID: 544524537909210515}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -33,21 +33,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3241847274735538368}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &1446370382931073706
+--- !u!33 &1813364955472447506
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 449094005605123303}
+  m_GameObject: {fileID: 544524537909210515}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &3710089506286446343
+--- !u!23 &1191808599299413122
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 449094005605123303}
+  m_GameObject: {fileID: 544524537909210515}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -170,6 +170,7 @@ GameObject:
   - component: {fileID: 3427583946985288479}
   - component: {fileID: 7218759072860487485}
   - component: {fileID: 8035423638293698903}
+  - component: {fileID: -5769753920573204998}
   m_Layer: 3
   m_Name: WoodPickup
   m_TagString: Untagged
@@ -366,7 +367,7 @@ MonoBehaviour:
   rebuildVisualOnAwake: 0
   inheritRootLayer: 1
   removeVisualColliders: 1
-  activeVisualObject: {fileID: 449094005605123303}
+  activeVisualObject: {fileID: 544524537909210515}
   isStructureReady: 1
 --- !u!114 &8035423638293698903
 MonoBehaviour:
@@ -382,6 +383,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ContentVisualProfileBinder
   visualRoot: {fileID: 7218759072860487485}
   visualProfile: {fileID: 11400000, guid: 1d079380262c135438299fb860a67faf, type: 2}
+  resolveFromContentIdentity: 1
+  contentIdentity: {fileID: -5769753920573204998}
   resolveFromRegistryById: 0
   visualProfileId: visual_item_wood
   applyOnAwake: 1
@@ -389,6 +392,24 @@ MonoBehaviour:
   disableLegacyRootRenderersAfterApply: 1
   appliedProfileId: visual_item_wood
   lastApplySucceeded: 1
+--- !u!114 &-5769753920573204998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4329052998640474941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b77acd122b5a59348a17ad9eb55e1613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ContentVisualIdentity
+  category: 0
+  contentId: item_wood
+  useExplicitVisualProfileId: 0
+  explicitVisualProfileId: 
+  resolvedVisualProfileId: visual_item_wood
+  isIdentityValid: 1
 --- !u!1 &4852890582905891150
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,7 +470,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2609238216132774915}
+  - {fileID: 8621171540882777413}
   m_Father: {fileID: 2130062767199443486}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9057610855860029836
