@@ -92,7 +92,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6031823643035695083}
+  - {fileID: 1770727450473591412}
   m_Father: {fileID: 2392635428445217127}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &665573939492824208
@@ -516,6 +516,7 @@ GameObject:
   - component: {fileID: 503154088414212478}
   - component: {fileID: -2350834813690536115}
   - component: {fileID: 8002427741189639663}
+  - component: {fileID: 5841378919823576793}
   m_Layer: 9
   m_Name: WoodFloorPlaced
   m_TagString: Untagged
@@ -581,7 +582,7 @@ MonoBehaviour:
   rebuildVisualOnAwake: 0
   inheritRootLayer: 1
   removeVisualColliders: 1
-  activeVisualObject: {fileID: 6901325854106334973}
+  activeVisualObject: {fileID: 7174857478322151922}
   isStructureReady: 1
 --- !u!114 &-2350834813690536115
 MonoBehaviour:
@@ -624,7 +625,39 @@ MonoBehaviour:
   explicitVisualProfileId: 
   resolvedVisualProfileId: visual_buildable_wood_floor
   isIdentityValid: 1
---- !u!1 &6901325854106334973
+--- !u!114 &5841378919823576793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6841630739043241179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3264393fb2163d45a6056d8fb2db1ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ContentVisualDataSourceBinder
+  visualIdentity: {fileID: 8002427741189639663}
+  visualProfileBinder: {fileID: -2350834813690536115}
+  sourceType: 3
+  worldItemPickup: {fileID: 0}
+  enemyHealth: {fileID: 0}
+  placedBuildObject: {fileID: 0}
+  itemDataOverride: {fileID: 0}
+  enemyCombatDataOverride: {fileID: 0}
+  buildRecipeDataOverride: {fileID: 11400000, guid: 81ca2d609af37d44ab59674459b7c242, type: 2}
+  synchronizeOnAwake: 1
+  synchronizeOnStart: 1
+  monitorRuntimeSourceChanges: 1
+  runtimeCheckInterval: 0.25
+  applyVisualWhenSourceChanges: 1
+  logSynchronizationResults: 1
+  resolvedSourceType: 3
+  resolvedContentId: structure_wood_floor
+  resolvedVisualProfileId: visual_buildable_wood_floor
+  resolvedDataAssetName: BuildRecipe_WoodFloor
+  lastSynchronizationSucceeded: 1
+--- !u!1 &7174857478322151922
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -632,9 +665,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6031823643035695083}
-  - component: {fileID: 6530574012027767297}
-  - component: {fileID: 6854875631295304625}
+  - component: {fileID: 1770727450473591412}
+  - component: {fileID: 8454383013243359783}
+  - component: {fileID: 2626460008047593694}
   m_Layer: 9
   m_Name: TEMP_Cube_Visual
   m_TagString: Untagged
@@ -642,13 +675,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6031823643035695083
+--- !u!4 &1770727450473591412
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6901325854106334973}
+  m_GameObject: {fileID: 7174857478322151922}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.05, z: 0}
@@ -657,21 +690,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2631302460903848075}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &6530574012027767297
+--- !u!33 &8454383013243359783
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6901325854106334973}
+  m_GameObject: {fileID: 7174857478322151922}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &6854875631295304625
+--- !u!23 &2626460008047593694
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6901325854106334973}
+  m_GameObject: {fileID: 7174857478322151922}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1

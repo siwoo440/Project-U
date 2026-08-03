@@ -12,10 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08d47c1103dfc6548ac6257bf8d8a815, type: 3}
   m_Name: ItemData_Wood
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemId: resource_wood
+  itemId: item_wood
   displayName: WOOD
   description: Basic crafting material gathered from trees.
   icon: {fileID: 0}
   itemCategory: 0
   toolType: 0
+  weaponAttackType: 0
+  baseDamage: 0
+  attackCooldown: 0.6
+  attackRange: 2
+  attackRadius: 0.4
+  staminaCost: 0
+  impactForce: 0
+  meleeComboData: {fileID: 0}
+  rangedWeaponData: {fileID: 0}
+  equipmentSlotType: 0
+  defensePercent: 0
+  maximumHealthBonus: 0
+  movementSpeedBonusPercent: 0
+  hungerDepletionReductionPercent: 0
+  thirstDepletionReductionPercent: 0
+  coldResistancePercent: 0
+  inventorySlotBonus: 0
+  hungerRestoreAmount: 0
+  thirstRestoreAmount: 0
+  healthRestoreAmount: 0
   maximumStack: 20

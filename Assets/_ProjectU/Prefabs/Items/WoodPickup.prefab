@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8621171540882777413
 Transform:
   m_ObjectHideFlags: 0
@@ -171,6 +171,7 @@ GameObject:
   - component: {fileID: 7218759072860487485}
   - component: {fileID: 8035423638293698903}
   - component: {fileID: -5769753920573204998}
+  - component: {fileID: 852307330317285642}
   m_Layer: 3
   m_Name: WoodPickup
   m_TagString: Untagged
@@ -367,7 +368,7 @@ MonoBehaviour:
   rebuildVisualOnAwake: 0
   inheritRootLayer: 1
   removeVisualColliders: 1
-  activeVisualObject: {fileID: 544524537909210515}
+  activeVisualObject: {fileID: 0}
   isStructureReady: 1
 --- !u!114 &8035423638293698903
 MonoBehaviour:
@@ -410,6 +411,38 @@ MonoBehaviour:
   explicitVisualProfileId: 
   resolvedVisualProfileId: visual_item_wood
   isIdentityValid: 1
+--- !u!114 &852307330317285642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4329052998640474941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3264393fb2163d45a6056d8fb2db1ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ContentVisualDataSourceBinder
+  visualIdentity: {fileID: -5769753920573204998}
+  visualProfileBinder: {fileID: 8035423638293698903}
+  sourceType: 1
+  worldItemPickup: {fileID: 6799736741069824352}
+  enemyHealth: {fileID: 0}
+  placedBuildObject: {fileID: 0}
+  itemDataOverride: {fileID: 0}
+  enemyCombatDataOverride: {fileID: 0}
+  buildRecipeDataOverride: {fileID: 0}
+  synchronizeOnAwake: 1
+  synchronizeOnStart: 1
+  monitorRuntimeSourceChanges: 1
+  runtimeCheckInterval: 0.25
+  applyVisualWhenSourceChanges: 1
+  logSynchronizationResults: 1
+  resolvedSourceType: 1
+  resolvedContentId: item_wood
+  resolvedVisualProfileId: visual_item_wood
+  resolvedDataAssetName: ItemData_Wood
+  lastSynchronizationSucceeded: 1
 --- !u!1 &4852890582905891150
 GameObject:
   m_ObjectHideFlags: 0
