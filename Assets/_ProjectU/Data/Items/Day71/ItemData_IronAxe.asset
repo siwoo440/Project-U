@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08d47c1103dfc6548ac6257bf8d8a815, type: 3}
+  m_Name: ItemData_IronAxe
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemId: item_iron_axe
+  displayName: IRON AXE
+  description: A sturdy axe used for gathering wood and close combat.
+  icon: {fileID: 0}
+  itemCategory: 1
+  toolType: 1
+  weaponAttackType: 1
+  baseDamage: 18
+  attackCooldown: 0.5
+  attackRange: 2.1
+  attackRadius: 0.5
+  staminaCost: 9
+  impactForce: 4
+  meleeComboData: {fileID: 11400000, guid: 78d93dbe8ec28b74896719f41ba93e4e, type: 2}
+  rangedWeaponData: {fileID: 0}
+  equipmentSlotType: 0
+  defensePercent: 0
+  maximumHealthBonus: 0
+  movementSpeedBonusPercent: 0
+  hungerDepletionReductionPercent: 0
+  thirstDepletionReductionPercent: 0
+  coldResistancePercent: 0
+  inventorySlotBonus: 0
+  hungerRestoreAmount: 0
+  thirstRestoreAmount: 0
+  healthRestoreAmount: 0
+  maximumStack: 1
