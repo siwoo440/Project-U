@@ -17546,6 +17546,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1d0983db947779749a12fca4ce1da6f9, type: 2}
   - {fileID: 11400000, guid: 7c4d83f54b0ba9f48b4f04f89462d0f6, type: 2}
   - {fileID: 11400000, guid: 75647e9ebdbadc744817782679190212, type: 2}
+  - {fileID: 11400000, guid: 90716cc4bfe46a2469f2053635618207, type: 2}
+  - {fileID: 11400000, guid: 1ec210642be3143419bd897871c56237, type: 2}
+  - {fileID: 11400000, guid: 92db43bcd9c3fe646a3b03b392d2638f, type: 2}
+  - {fileID: 11400000, guid: 3f5762230985cb847bc9ce41ee0d4c4d, type: 2}
+  - {fileID: 11400000, guid: 50e60322731994642bc3ec400f977538, type: 2}
+  - {fileID: 11400000, guid: 8c5687df03eee3940bcd35a8fb0d4ca9, type: 2}
   validPreviewMaterial: {fileID: 2100000, guid: 575eeba1a98fc994f9dd258bfa6decd7, type: 2}
   invalidPreviewMaterial: {fileID: 2100000, guid: 439962ca014ff5d41a3a0023d48746db, type: 2}
   removalTargetMaterial: {fileID: 2100000, guid: be932b1cb342cbe4999472acc9354643, type: 2}
@@ -20792,6 +20798,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d0b44cbf98324944fb11b0ea4760283c, type: 2}
   - {fileID: 11400000, guid: c0371b613f6d81a4abf89b41b8a28fe6, type: 2}
   - {fileID: 11400000, guid: 1d0983db947779749a12fca4ce1da6f9, type: 2}
+  - {fileID: 11400000, guid: 90716cc4bfe46a2469f2053635618207, type: 2}
+  - {fileID: 11400000, guid: 1ec210642be3143419bd897871c56237, type: 2}
+  - {fileID: 11400000, guid: 92db43bcd9c3fe646a3b03b392d2638f, type: 2}
+  - {fileID: 11400000, guid: 3f5762230985cb847bc9ce41ee0d4c4d, type: 2}
+  - {fileID: 11400000, guid: 50e60322731994642bc3ec400f977538, type: 2}
+  - {fileID: 11400000, guid: 8c5687df03eee3940bcd35a8fb0d4ca9, type: 2}
 --- !u!114 &1951417614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21610,6 +21622,10 @@ PrefabInstance:
     - target: {fileID: 4329052998640474941, guid: 297ce24fcfb620841ba57df42990fa55, type: 3}
       propertyPath: m_Name
       value: WoodPickup
+      objectReference: {fileID: 0}
+    - target: {fileID: 6799736741069824352, guid: 297ce24fcfb620841ba57df42990fa55, type: 3}
+      propertyPath: quantity
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b0e46b0956bcf479f2754564f5cfa9, type: 3}
+  m_Name: BuildRecipe_StoneFoundation
+  m_EditorClassIdentifier: Assembly-CSharp::BuildRecipeData
+  recipeId: structure_stone_foundation
+  displayName: STONE FOUNDATION
+  structureType: 1
+  allowGroundPlacement: 0
+  placementType: 0
+  rotationStep: 90
+  previewOffset: {x: 0, y: 0, z: 0}
+  placedPrefab: {fileID: 6841630739043241179, guid: db107e3d491d56a4aa34f936ec426194, type: 3}
+  previewPrefab: {fileID: 6841630739043241179, guid: 637c4ba917ae0e24189165bd5dfdbbef, type: 3}
+  placementCheckCenter: {x: 0, y: 0.5, z: 0}
+  placementCheckHalfExtents: {x: 0.48, y: 0.09, z: 0.48}
+  maximumSlopeAngle: 12
+  maximumHeightDifference: 0.1
+  ingredients:
+  - itemData: {fileID: 11400000, guid: 479a7e7a5dbb8df4a9ea663d4e582a1b, type: 2}
+    amount: 6
+  demolitionRefundRatio: 0.5
