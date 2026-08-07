@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b426187958ea0b844ac928c5fb67ebd4, type: 3}
+  m_Name: CraftingRecipe_Bandage
+  m_EditorClassIdentifier: Assembly-CSharp::CraftingRecipeData
+  recipeId: recipe_bandage
+  displayName: BANDAGE
+  requiredFacility: 0
+  unlockType: 0
+  unlockId: 
+  resultItem: {fileID: 11400000, guid: 2e83945f5dda2f34bb4e993074cfc81c, type: 2}
+  resultQuantity: 1
+  ingredients:
+  - itemData: {fileID: 11400000, guid: bc991e404803cba4292542d6a52ddd7a, type: 2}
+    amount: 3

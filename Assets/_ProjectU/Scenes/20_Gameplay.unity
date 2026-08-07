@@ -2559,6 +2559,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3181927310554862687, guid: 4c6185a1794e8554b8d53c608e4daec4, type: 3}
+      propertyPath: quantity
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3763126060047310522, guid: 4c6185a1794e8554b8d53c608e4daec4, type: 3}
       propertyPath: m_Name
       value: PlantFiberPickup
@@ -10236,6 +10240,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3181927310554862687, guid: e61a665b8bce61948b7b69c862f41150, type: 3}
+      propertyPath: quantity
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3763126060047310522, guid: e61a665b8bce61948b7b69c862f41150, type: 3}
       propertyPath: m_Name
       value: IronOrePickup
@@ -17689,6 +17697,8 @@ MonoBehaviour:
   allRecipes:
   - {fileID: 11400000, guid: 263c19dd4430aff4bb2ff8fd97c6a40e, type: 2}
   - {fileID: 11400000, guid: 7e69f276b3f39af4788f2c31f54530b7, type: 2}
+  - {fileID: 11400000, guid: ab1624f42b2517647bf71889128d3174, type: 2}
+  - {fileID: 11400000, guid: 8d0a40c64036cac4e8294093619954af, type: 2}
   debugRecipe: {fileID: 11400000, guid: 7e69f276b3f39af4788f2c31f54530b7, type: 2}
 --- !u!114 &1491592343
 MonoBehaviour:
