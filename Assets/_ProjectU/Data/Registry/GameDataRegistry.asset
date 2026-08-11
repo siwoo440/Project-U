@@ -57,6 +57,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c0371b613f6d81a4abf89b41b8a28fe6, type: 2}
   enemies:
   - {fileID: 11400000, guid: a73e00d0e530dfd41ac5b2e3249056c8, type: 2}
+  - {fileID: 11400000, guid: 3479f135053d5c6408f7569054501839, type: 2}
+  - {fileID: 11400000, guid: 5f9f386887c42d841bbcd7bda89f7aff, type: 2}
   visualProfiles:
   - {fileID: 11400000, guid: a2b63d4407ce3ba4487452a927419c7b, type: 2}
   - {fileID: 11400000, guid: af3263318ebcdf343866d5092de005c7, type: 2}
@@ -65,7 +67,7 @@ MonoBehaviour:
   registeredItemCount: 20
   registeredCraftingRecipeCount: 4
   registeredBuildRecipeCount: 15
-  registeredEnemyCount: 1
+  registeredEnemyCount: 3
   registeredVisualProfileCount: 4
   duplicateIdCount: 0
   crossCategoryDuplicateIdCount: 0
