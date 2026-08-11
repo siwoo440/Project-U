@@ -215,6 +215,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5625982256968697202}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5517415149332437694
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3902300589703150641}
+  m_Layer: 17
+  m_Name: LootDropOrigin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3902300589703150641
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5517415149332437694}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5625982256968697202}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5608398010641475087
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,6 +331,7 @@ GameObject:
   - component: {fileID: 4606644271746242657}
   - component: {fileID: 786029342277457333}
   - component: {fileID: 1946947927335748066}
+  - component: {fileID: 1226722717485935168}
   m_Layer: 17
   m_Name: Enemy_RangedSpitter
   m_TagString: Untagged
@@ -325,6 +357,7 @@ Transform:
   - {fileID: 5189518978586218525}
   - {fileID: 4591158733542805690}
   - {fileID: 5224260860445092634}
+  - {fileID: 3902300589703150641}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2638452985384535529
@@ -696,3 +729,26 @@ MonoBehaviour:
   attackCooldownRemaining: 0
   currentAttackSequenceId: 0
   performedShotCount: 0
+--- !u!114 &1226722717485935168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8463353821672121884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41ba2be786f334e47abcfab73d180eb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyLootDropper
+  enemyHealth: {fileID: 3580850875095873761}
+  lootTable: {fileID: 11400000, guid: 6076abac9d590fa4985e27406669d66b, type: 2}
+  dropOrigin: {fileID: 3902300589703150641}
+  dropContainer: {fileID: 0}
+  dropRadius: 0.55
+  dropHeight: 0.45
+  horizontalImpulse: 1.2
+  upwardImpulse: 1.8
+  torqueImpulse: 1
+  logDropResults: 1
+  hasDroppedLoot: 0
