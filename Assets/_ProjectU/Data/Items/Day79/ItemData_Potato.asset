@@ -15,7 +15,7 @@ MonoBehaviour:
   itemId: food_potato
   displayName: POTATO
   description: A starchy potato grown in a farm plot.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 86d87468a312a7b41b02a4ea9ce85cbf, type: 3}
   itemCategory: 2
   toolType: 0
   weaponAttackType: 0

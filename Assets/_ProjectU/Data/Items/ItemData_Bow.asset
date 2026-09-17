@@ -15,7 +15,7 @@ MonoBehaviour:
   itemId: weapon_bow
   displayName: BOW
   description: A SIMPLE RANGED WEAPON
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: d1ee321747c3a23489c4a376152301e1, type: 3}
   itemCategory: 6
   toolType: 0
   weaponAttackType: 2

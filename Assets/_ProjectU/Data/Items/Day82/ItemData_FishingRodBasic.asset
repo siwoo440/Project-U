@@ -15,7 +15,7 @@ MonoBehaviour:
   itemId: tool_fishing_rod_basic
   displayName: FISHING ROD
   description: A basic rod for fishing at ponds and rivers.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: bc297ee7241fce141be5cdeece8b43be, type: 3}
   itemCategory: 1
   toolType: 5
   weaponAttackType: 0

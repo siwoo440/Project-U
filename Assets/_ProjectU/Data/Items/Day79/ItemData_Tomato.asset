@@ -15,7 +15,7 @@ MonoBehaviour:
   itemId: food_tomato
   displayName: TOMATO
   description: A juicy summer tomato.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: c583b69604ab6d84080182fd1c908915, type: 3}
   itemCategory: 2
   toolType: 0
   weaponAttackType: 0

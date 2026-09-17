@@ -15,7 +15,7 @@ MonoBehaviour:
   itemId: item_wild_mushroom
   displayName: WILD MUSHROOM
   description: A common edible mushroom found in the wild.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 9714c836ff313804a90b6c6ce672d0a7, type: 3}
   itemCategory: 2
   toolType: 0
   weaponAttackType: 0

@@ -15,7 +15,7 @@ MonoBehaviour:
   itemId: tool_watering_can
   displayName: WATERING CAN
   description: A basic can for watering crops and farm plots.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 4324d81f314129d4aa7631cea6f833f7, type: 3}
   itemCategory: 1
   toolType: 4
   weaponAttackType: 0

@@ -15,7 +15,7 @@ MonoBehaviour:
   itemId: item_herbal_tea
   displayName: HERBAL TEA
   description: A warm herbal drink that restores thirst.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 55a1f6bd3f51282449895376cb0b35dd, type: 3}
   itemCategory: 4
   toolType: 0
   weaponAttackType: 0

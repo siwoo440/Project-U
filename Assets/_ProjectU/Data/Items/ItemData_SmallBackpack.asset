@@ -15,15 +15,25 @@ MonoBehaviour:
   itemId: equipment_small_backpack
   displayName: SMALL BACKPACK
   description: A SMALL TRAVEL BACKPACK
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 8681d9ff15222e64c90760f7e60b56f0, type: 3}
   itemCategory: 3
   toolType: 0
+  weaponAttackType: 0
+  baseDamage: 0
+  attackCooldown: 0.6
+  attackRange: 2
+  attackRadius: 0.4
+  staminaCost: 0
+  impactForce: 0
+  meleeComboData: {fileID: 0}
+  rangedWeaponData: {fileID: 0}
   equipmentSlotType: 5
   defensePercent: 0
   maximumHealthBonus: 0
   movementSpeedBonusPercent: 0
   hungerDepletionReductionPercent: 0
   thirstDepletionReductionPercent: 0
+  coldResistancePercent: 0
   inventorySlotBonus: 8
   hungerRestoreAmount: 0
   thirstRestoreAmount: 0

@@ -15,7 +15,7 @@ MonoBehaviour:
   itemId: seed_strawberry
   displayName: STRAWBERRY SEEDS
   description: Strawberry seeds. Plant them in a farm plot in spring.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: d072308e2d15c0244aabc9c4cc6cfb06, type: 3}
   itemCategory: 7
   toolType: 0
   weaponAttackType: 0

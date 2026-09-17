@@ -15,7 +15,7 @@ MonoBehaviour:
   itemId: resource_fish_catfish
   displayName: CATFISH
   description: A whiskered fish that comes out in the evening.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: c48e8ba5d8319764aad7e3341c4da308, type: 3}
   itemCategory: 0
   toolType: 0
   weaponAttackType: 0

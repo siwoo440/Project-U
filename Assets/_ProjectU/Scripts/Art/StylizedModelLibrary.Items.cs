@@ -26,6 +26,9 @@ public static partial class StylizedModelLibrary
         Register("tool_bow", FitMode.UniformLargest, BuildBow);
         Register("projectile_arrow", FitMode.UniformLargest, BuildArrow);
         Register("projectile_spit", FitMode.UniformLargest, BuildSpitGlob);
+        // 84일차: 줍기·아이콘용 아이템 모델
+        Register("item_baked_apple", FitMode.UniformLargest, BuildBakedApple);
+        Register("item_arrow_bundle", FitMode.UniformLargest, BuildArrowBundle);
     }
 
     private static void BuildWoodBundle(LowPolyMeshBuilder b)
@@ -270,6 +273,40 @@ public static partial class StylizedModelLibrary
             b.AddQuad(StylizedColor.ClothRed, new Vector3(0f, 0.012f, 0.09f), new Vector3(0f, 0.05f, 0.07f), new Vector3(0f, 0.05f, -0.03f), new Vector3(0f, 0.012f, -0.05f));
             b.Pop();
         }
+    }
+
+    // 나무 접시 위의 구운 사과 (캐러멜과 김)
+    private static void BuildBakedApple(LowPolyMeshBuilder b)
+    {
+        b.AddFrustum(StylizedColor.WoodLight, Vector3.zero, 0.27f, 0.25f, 0.035f, 12);
+        b.AddLowPolySphere(StylizedColor.Caramel, new Vector3(0.03f, 0.04f, 0.04f), new Vector3(0.15f, 0.012f, 0.12f), 0, 0.05f, 93);
+        b.AddLowPolySphere(StylizedColor.AppleBaked, new Vector3(0f, 0.2f, 0f), new Vector3(0.22f, 0.18f, 0.22f), 1, 0.12f, 87);
+        b.AddLowPolySphere(StylizedColor.Caramel, new Vector3(0f, 0.34f, 0f), new Vector3(0.13f, 0.035f, 0.13f), 0, 0.05f, 88);
+        b.AddLowPolySphere(StylizedColor.Caramel, new Vector3(0.15f, 0.21f, 0.08f), new Vector3(0.05f, 0.08f, 0.04f), 0, 0.1f, 89);
+        b.AddLowPolySphere(StylizedColor.Caramel, new Vector3(-0.12f, 0.19f, -0.13f), new Vector3(0.04f, 0.07f, 0.04f), 0, 0.1f, 90);
+        b.AddLimb(StylizedColor.BarkDark, new Vector3(0f, 0.35f, 0f), new Vector3(0.03f, 0.44f, 0.01f), 0.016f, 0.012f, 4);
+        b.AddLowPolySphere(StylizedColor.Snow, new Vector3(-0.07f, 0.47f, 0.02f), Vector3.one * 0.04f, 0, 0.1f, 91);
+        b.AddLowPolySphere(StylizedColor.Snow, new Vector3(-0.03f, 0.53f, -0.01f), Vector3.one * 0.032f, 0, 0.1f, 92);
+        b.AddLowPolySphere(StylizedColor.Snow, new Vector3(-0.06f, 0.58f, 0.01f), Vector3.one * 0.022f, 0, 0.1f, 94);
+    }
+
+    // 끈으로 묶은 화살 세 개 (+X 방향으로 누워 있음)
+    private static void BuildArrowBundle(LowPolyMeshBuilder b)
+    {
+        for (int index = 0; index < 3; index++)
+        {
+            float offset = (index - 1) * 0.045f;
+            b.Push(new Vector3(0f, 0.05f + (index == 1 ? 0.035f : 0f), offset), Euler(0f, 90f + (index - 1) * 5f, 0f), Vector3.one);
+            BuildArrow(b);
+            b.Pop();
+        }
+
+        b.Push(new Vector3(-0.04f, 0.065f, 0f), Euler(0f, 0f, 90f), Vector3.one);
+        b.AddTorus(StylizedColor.Rope, Vector3.zero, 0.07f, 0.012f, 10, 3);
+        b.Pop();
+        b.Push(new Vector3(0.12f, 0.065f, 0f), Euler(0f, 0f, 90f), Vector3.one);
+        b.AddTorus(StylizedColor.Leather, Vector3.zero, 0.068f, 0.01f, 10, 3);
+        b.Pop();
     }
 
     private static void BuildSpitGlob(LowPolyMeshBuilder b)

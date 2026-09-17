@@ -7,18 +7,20 @@ public sealed class InventoryItemDropper : MonoBehaviour // 인벤토리 아이�
     [SerializeField] private PlayerInventory playerInventory; // 플레이어 인벤토리
     [Tooltip("버리기 방향 기준.")]
     [SerializeField] private Transform viewTransform; // 버리기 방향 기준
-    [Tooltip("월드 아이템 원본.")]
+    [Tooltip("월드 아이템 원본. 아이템 전용 외형이 없을 때 사용합니다.")]
     [SerializeField] private WorldItemPickup worldItemPrefab; // 월드 아이템 원본
+    [Tooltip("아이템별 외형 Pickup Prefab 목록입니다. (84일차)")]
+    [SerializeField] private WorldItemPickupRegistry pickupRegistry; // 아이템별 Pickup Registry
 
     [Header("Drop")] // 버리기 설정 묶음
     [Tooltip("전방 생성 거리.")]
     [SerializeField] private float forwardDistance = 1.5f; // 전방 생성 거리
     [Tooltip("생성 높이.")]
     [SerializeField] private float verticalOffset = 0.5f; // 생성 높이
-    [Tooltip("전방 힘.")]
-    [SerializeField] private float forwardForce = 2f; // 전방 힘
-    [Tooltip("위쪽 힘.")]
-    [SerializeField] private float upwardForce = 1f; // 위쪽 힘
+    [Tooltip("전방으로 던지는 속도(m/s). 아이템 무게와 관계없이 같은 거리로 떨어집니다.")]
+    [SerializeField] private float forwardForce = 2f; // 전방 속도
+    [Tooltip("위쪽으로 던지는 속도(m/s).")]
+    [SerializeField] private float upwardForce = 1f; // 위쪽 속도
 
     private void OnValidate() // Inspector 값 검증
     {
@@ -53,8 +55,12 @@ public sealed class InventoryItemDropper : MonoBehaviour // 인벤토리 아이�
 
         flatForward.Normalize(); // 전방 방향 정규화
 
-        Vector3 spawnPosition = transform.position + flatForward * forwardDistance + Vector3.up * verticalOffset; // 생성 위치 계산
-        WorldItemPickup droppedItem = Instantiate(worldItemPrefab, spawnPosition, Quaternion.identity); // 월드 아이템 생성
+        Vector3 side = Vector3.Cross(Vector3.up, flatForward); // 옆 방향
+        Vector3 spawnPosition = transform.position + flatForward * forwardDistance + side * Random.Range(-0.25f, 0.25f) + Vector3.up * verticalOffset; // 생성 위치 계산 (연속으로 버려도 겹치지 않게 조금 흩뜨림)
+        WorldItemPickup prefab = pickupRegistry != null && pickupRegistry.TryGetPickup(slot.ItemData, out WorldItemPickup registered) && registered != null
+            ? registered
+            : worldItemPrefab; // 아이템 전용 외형 우선
+        WorldItemPickup droppedItem = Instantiate(prefab, spawnPosition, Quaternion.Euler(0f, Random.Range(0f, 360f), 0f)); // 월드 아이템 생성
         droppedItem.Initialize(slot.ItemData, dropQuantity); // 생성 아이템 데이터 적용
 
         int removedQuantity = playerInventory.RemoveItemFromSlot(slotIndex, dropQuantity); // 인벤토리 수량 차감
@@ -69,8 +75,9 @@ public sealed class InventoryItemDropper : MonoBehaviour // 인벤토리 아이�
 
         if (droppedRigidbody != null) // 물리 컴포넌트 확인
         {
+            droppedRigidbody.freezeRotation = true; // 구 모양 충돌체가 끝없이 굴러가지 않게 회전 고정
             Vector3 dropForce = flatForward * forwardForce + Vector3.up * upwardForce; // 투척 방향 계산
-            droppedRigidbody.AddForce(dropForce, ForceMode.Impulse); // 월드 아이템에 힘 적용
+            droppedRigidbody.AddForce(dropForce, ForceMode.VelocityChange); // 질량과 관계없이 같은 속도로 던지기 (84일차: 가벼운 아이템이 멀리 날아가던 문제 수정)
         }
 
         return true; // 버리기 성공 반환

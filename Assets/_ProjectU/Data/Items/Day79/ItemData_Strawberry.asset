@@ -15,7 +15,7 @@ MonoBehaviour:
   itemId: food_strawberry
   displayName: STRAWBERRY
   description: A sweet spring strawberry.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: c02191153da9dac468db53c07ccd44b4, type: 3}
   itemCategory: 2
   toolType: 0
   weaponAttackType: 0

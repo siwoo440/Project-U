@@ -281,7 +281,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 0}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -837,6 +837,7 @@ MonoBehaviour:
   quantityText: {fileID: 4784320445999855542}
   selectionOutline: {fileID: 3775456115889563359}
   itemSlotDragHandler: {fileID: 7621835288418134953}
+  hideNameWhenIconShown: 0
 --- !u!114 &7621835288418134953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1858,7 +1859,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 0}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1

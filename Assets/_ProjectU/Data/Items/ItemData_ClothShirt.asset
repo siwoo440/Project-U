@@ -15,9 +15,18 @@ MonoBehaviour:
   itemId: equipment_cloth_shirt
   displayName: CLOTH SHIRT
   description: A simple shirt made from cloth.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: e855c5343ab1e6547b7f2bce70e86aa9, type: 3}
   itemCategory: 3
   toolType: 0
+  weaponAttackType: 0
+  baseDamage: 0
+  attackCooldown: 0.6
+  attackRange: 2
+  attackRadius: 0.4
+  staminaCost: 0
+  impactForce: 0
+  meleeComboData: {fileID: 0}
+  rangedWeaponData: {fileID: 0}
   equipmentSlotType: 2
   defensePercent: 12
   maximumHealthBonus: 20

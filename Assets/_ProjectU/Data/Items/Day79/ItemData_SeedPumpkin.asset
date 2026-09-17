@@ -15,7 +15,7 @@ MonoBehaviour:
   itemId: seed_pumpkin
   displayName: PUMPKIN SEEDS
   description: Pumpkin seeds. Plant them in a farm plot in autumn.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 094f5956047e2414794606d3a138d60e, type: 3}
   itemCategory: 7
   toolType: 0
   weaponAttackType: 0

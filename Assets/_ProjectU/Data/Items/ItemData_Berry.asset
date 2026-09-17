@@ -15,8 +15,27 @@ MonoBehaviour:
   itemId: food_berry
   displayName: BERRY
   description: A small edible berry.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 7442e27092244c9408641da31feaf970, type: 3}
   itemCategory: 2
   toolType: 0
+  weaponAttackType: 0
+  baseDamage: 0
+  attackCooldown: 0.6
+  attackRange: 2
+  attackRadius: 0.4
+  staminaCost: 0
+  impactForce: 0
+  meleeComboData: {fileID: 0}
+  rangedWeaponData: {fileID: 0}
+  equipmentSlotType: 0
+  defensePercent: 0
+  maximumHealthBonus: 0
+  movementSpeedBonusPercent: 0
+  hungerDepletionReductionPercent: 0
+  thirstDepletionReductionPercent: 0
+  coldResistancePercent: 0
+  inventorySlotBonus: 0
   hungerRestoreAmount: 10
+  thirstRestoreAmount: 0
+  healthRestoreAmount: 0
   maximumStack: 20

@@ -15,7 +15,7 @@ MonoBehaviour:
   itemId: item_arrow
   displayName: ARROW
   description: AMMUNITION FOR A BOW
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 44e70e752ff571a4fbd6711e8abcb0b1, type: 3}
   itemCategory: 0
   toolType: 0
   weaponAttackType: 0

@@ -15,7 +15,7 @@ MonoBehaviour:
   itemId: tool_axe
   displayName: AXE
   description: A basic tool used for gathering wood.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 250f96d7ff28f7c41b8a03749eaf8961, type: 3}
   itemCategory: 1
   toolType: 1
   weaponAttackType: 1
@@ -26,6 +26,7 @@ MonoBehaviour:
   staminaCost: 8
   impactForce: 3
   meleeComboData: {fileID: 11400000, guid: 78d93dbe8ec28b74896719f41ba93e4e, type: 2}
+  rangedWeaponData: {fileID: 0}
   equipmentSlotType: 0
   defensePercent: 0
   maximumHealthBonus: 0

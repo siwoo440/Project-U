@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: WORM BAIT
   description: Basic bait that freshwater fish love. Sometimes found while tilling
     soil.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 0366b4ea08d14d8479baac00152b69bd, type: 3}
   itemCategory: 0
   toolType: 0
   weaponAttackType: 0

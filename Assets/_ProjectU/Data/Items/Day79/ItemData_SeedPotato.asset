@@ -15,7 +15,7 @@ MonoBehaviour:
   itemId: seed_potato
   displayName: POTATO SEEDS
   description: Seed potatoes. Plant them in a farm plot in spring.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 041bcfd071bbc424685683bca164d29d, type: 3}
   itemCategory: 7
   toolType: 0
   weaponAttackType: 0

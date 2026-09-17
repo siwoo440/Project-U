@@ -15,7 +15,7 @@ MonoBehaviour:
   itemId: resource_fish_crucian
   displayName: CRUCIAN CARP
   description: A common pond fish.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: e21b8bcb43e6c3545acc32e968f57458, type: 3}
   itemCategory: 0
   toolType: 0
   weaponAttackType: 0

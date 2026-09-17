@@ -17,6 +17,8 @@ public sealed class InventorySlotView : MonoBehaviour, IPointerClickHandler // �
     [SerializeField] private Outline selectionOutline; // 선택 테두리
     [Tooltip("공통 슬롯 드래그 처리기.")]
     [SerializeField] private ItemSlotDragHandler itemSlotDragHandler; // 공통 슬롯 드래그 처리기
+    [Tooltip("아이콘이 있으면 이름을 숨깁니다. (핫바처럼 작은 칸용)")]
+    [SerializeField] private bool hideNameWhenIconShown; // 아이콘 표시 시 이름 숨김
 
     private PlayerInventory playerInventory; // 연결된 플레이어 인벤토리
     private int inventoryIndex; // 실제 인벤토리 슬롯 번호
@@ -85,7 +87,7 @@ public sealed class InventorySlotView : MonoBehaviour, IPointerClickHandler // �
         itemIconImage.color = itemIcon == null // 실제 아이콘 존재 여부 확인
             ? ItemIconUtility.GetFallbackColor(itemData.ItemCategory) // 분류별 대체 색상 적용
             : Color.white; // 실제 아이콘 기본 색상 적용
-        itemNameText.SetText(itemData.DisplayName); // 아이템 이름 출력
+        itemNameText.SetText(hideNameWhenIconShown && itemIcon != null ? string.Empty : itemData.DisplayName); // 아이템 이름 출력 (작은 칸은 아이콘만)
         quantityText.SetText($"x{slot.Quantity}"); // 아이템 수량 출력
     }
 

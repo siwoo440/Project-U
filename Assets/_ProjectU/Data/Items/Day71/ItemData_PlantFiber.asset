@@ -15,7 +15,7 @@ MonoBehaviour:
   itemId: item_plant_fiber
   displayName: PLANT FIBER
   description: A flexible fiber used for basic crafting.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 1355debccad9ad045979489f50e8fe38, type: 3}
   itemCategory: 0
   toolType: 0
   weaponAttackType: 0

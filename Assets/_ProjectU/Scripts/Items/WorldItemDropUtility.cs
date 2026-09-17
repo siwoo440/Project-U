@@ -21,6 +21,13 @@ public static class WorldItemDropUtility
         Transform parent = dropContainer != null ? dropContainer.transform : null; // 드롭 부모
         WorldItemPickup pickup = Object.Instantiate(pickupPrefab, spawnPosition, Quaternion.Euler(0f, Random.Range(0f, 360f), 0f), parent); // 월드 아이템 생성
         pickup.Initialize(itemData, quantity); // 아이템과 수량 적용
+        Rigidbody body = pickup.GetComponent<Rigidbody>(); // 물리 검색
+
+        if (body != null) // 물리 확인
+        {
+            body.freezeRotation = true; // 경사에서 굴러가지 않게 회전 고정
+        }
+
         return true; // 드롭 성공
     }
 }

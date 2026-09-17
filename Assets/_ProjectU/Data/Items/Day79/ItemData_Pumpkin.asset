@@ -15,7 +15,7 @@ MonoBehaviour:
   itemId: food_pumpkin
   displayName: PUMPKIN
   description: A heavy autumn pumpkin. Great for cooking.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 556c65084894f474bbd12dc97517343d, type: 3}
   itemCategory: 2
   toolType: 0
   weaponAttackType: 0

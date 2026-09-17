@@ -76,7 +76,10 @@ public enum StylizedColor
     FishGold = 103,
     FishBlue = 104,
     PondDeep = 105,
-    Worm = 106
+    Worm = 106,
+    // 84일차: 아이템 모델 보강 색상
+    AppleBaked = 107,
+    Caramel = 108
 }
 
 public static class StylizedPalette
@@ -173,6 +176,8 @@ public static class StylizedPalette
             case StylizedColor.FishBlue: return new Entry(Hex(0x8DB6D6), 0.75f, 0.2f);
             case StylizedColor.PondDeep: return new Entry(Hex(0x1E3A40));
             case StylizedColor.Worm: return new Entry(Hex(0xC97A7A), 0.45f);
+            case StylizedColor.AppleBaked: return new Entry(Hex(0x9A3B26), 0.35f);
+            case StylizedColor.Caramel: return new Entry(Hex(0xD08A32), 0.65f);
             default: return new Entry(Color.magenta);
         }
     }

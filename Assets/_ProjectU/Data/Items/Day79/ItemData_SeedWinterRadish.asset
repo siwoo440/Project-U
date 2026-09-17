@@ -15,7 +15,7 @@ MonoBehaviour:
   itemId: seed_winter_radish
   displayName: WINTER RADISH SEEDS
   description: Winter radish seeds. Plant them in a farm plot in winter.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 7788d080bb6e73d459b1890675e85383, type: 3}
   itemCategory: 7
   toolType: 0
   weaponAttackType: 0

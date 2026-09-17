@@ -15,7 +15,7 @@ MonoBehaviour:
   itemId: resource_fish_trout
   displayName: TROUT
   description: A lively fish that bites in the morning and evening.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 5568fe8fba67ddd4b9305a3836612c2f, type: 3}
   itemCategory: 0
   toolType: 0
   weaponAttackType: 0

@@ -15,7 +15,7 @@ MonoBehaviour:
   itemId: seed_tomato
   displayName: TOMATO SEEDS
   description: Tomato seeds. Plant them in a farm plot in summer.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 0aeb3a066626c7546863a05825c080a0, type: 3}
   itemCategory: 7
   toolType: 0
   weaponAttackType: 0
