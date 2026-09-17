@@ -331,6 +331,7 @@ GameObject:
   - component: {fileID: 4606644271746242657}
   - component: {fileID: 786029342277457333}
   - component: {fileID: 5570609994678453973}
+  - component: {fileID: 2144791910253942449}
   m_Layer: 17
   m_Name: Enemy_MeleeGrunt
   m_TagString: Untagged
@@ -721,3 +722,16 @@ MonoBehaviour:
   torqueImpulse: 1
   logDropResults: 1
   hasDroppedLoot: 0
+--- !u!114 &2144791910253942449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8463353821672121884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8606014d4a784ccaaf373e3dfa3d8586, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyCombatFeedback
+  groundTelegraphMaterial: {fileID: 2100000, guid: f912fbb0e6bac9b48aa5c9bc12b92b0b, type: 2}
