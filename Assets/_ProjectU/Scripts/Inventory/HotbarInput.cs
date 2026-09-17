@@ -14,12 +14,12 @@ public sealed class HotbarInput : MonoBehaviour // 핫바 숫자키 입력 처�
 
     private float nextWheelStepTime; // 다음 휠 이동 가능 시각
 
-    public static bool IsZoomModifierPressed // 휠을 Camera 줌에 쓰는 보조키(Shift) 입력 여부 (Ctrl은 회피, Alt는 커서 모드)
+    public static bool IsZoomModifierPressed // 휠을 Camera 줌에 쓰는 보조키(Ctrl) 입력 여부
     {
         get // 보조키 상태 조회
         {
             Keyboard keyboard = Keyboard.current; // 현재 키보드
-            return keyboard != null && keyboard.shiftKey.isPressed; // Shift 입력 여부 반환
+            return keyboard != null && keyboard.ctrlKey.isPressed; // 좌우 Ctrl 입력 여부 반환
         }
     }
 
@@ -116,7 +116,7 @@ public sealed class HotbarInput : MonoBehaviour // 핫바 숫자키 입력 처�
             return; // 건축 Camera 휠과 충돌 방지
         }
 
-        if (IsZoomModifierPressed) // Shift + 휠은 Camera 줌
+        if (IsZoomModifierPressed) // Ctrl + 휠은 Camera 줌
         {
             return; // 핫바 이동 생략
         }

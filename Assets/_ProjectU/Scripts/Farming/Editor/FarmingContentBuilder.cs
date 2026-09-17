@@ -321,6 +321,7 @@ public static class FarmingContentBuilder
                 || modelId.StartsWith("item_seed_")
                 || modelId == "build_farm_plot"
                 || modelId == "fx_farm_plot_wet"
+                || modelId == "fx_ready_sparkle"
                 || modelId == "tool_hoe"
                 || modelId == "tool_watering_can"
                 || modelId == "prop_scarecrow"

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6269556682531801798}
-  - component: {fileID: 5814260311317662980}
+  - component: {fileID: 8322678548007146807}
   m_Layer: 9
   m_Name: FarmPlotPreview
   m_TagString: Untagged
@@ -31,10 +31,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9093338342564097370}
-  - {fileID: 8606781164031217693}
+  - {fileID: 1619222696148011491}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5814260311317662980
+--- !u!114 &8322678548007146807
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: build_farm_plot
-  generatedVisual: {fileID: 5584381053553116996}
+  generatedVisual: {fileID: 3203883784534040250}
   hiddenMeshFilters:
   - {fileID: 5249664595214734098}
   originalMeshes:
@@ -142,7 +142,7 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1001 &7924172854965895686
+--- !u!1001 &932700950340344824
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -203,13 +203,13 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c804b2d469f46d44291726dcdab44616, type: 3}
---- !u!1 &5584381053553116996 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2344094748773287234, guid: c804b2d469f46d44291726dcdab44616, type: 3}
-  m_PrefabInstance: {fileID: 7924172854965895686}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8606781164031217693 stripped
+--- !u!4 &1619222696148011491 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1912126466923139611, guid: c804b2d469f46d44291726dcdab44616, type: 3}
-  m_PrefabInstance: {fileID: 7924172854965895686}
+  m_PrefabInstance: {fileID: 932700950340344824}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3203883784534040250 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2344094748773287234, guid: c804b2d469f46d44291726dcdab44616, type: 3}
+  m_PrefabInstance: {fileID: 932700950340344824}
   m_PrefabAsset: {fileID: 0}

@@ -66,7 +66,9 @@ public enum StylizedColor
     Tomato = 94,
     Strawberry = 96,
     SeedPaper = 97,
-    CropGreen = 98
+    CropGreen = 98,
+    // 81일차: 수확 가능 표시
+    ReadyGlow = 99
 }
 
 public static class StylizedPalette
@@ -155,6 +157,7 @@ public static class StylizedPalette
             case StylizedColor.Strawberry: return new Entry(Hex(0xD92E45), 0.5f);
             case StylizedColor.SeedPaper: return new Entry(Hex(0xDCC7A1));
             case StylizedColor.CropGreen: return new Entry(Hex(0x5DB84A));
+            case StylizedColor.ReadyGlow: return new Entry(Hex(0xFFC93C), 0.4f, 0f, 0.9f);
             default: return new Entry(Color.magenta);
         }
     }

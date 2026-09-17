@@ -21,6 +21,7 @@ public static partial class StylizedModelLibrary
         // 밭
         Register("build_farm_plot", FitMode.Stretch, BuildFarmPlot);
         Register("fx_farm_plot_wet", FitMode.Stretch, BuildFarmPlotWetOverlay);
+        Register("fx_ready_sparkle", FitMode.UniformLargest, BuildReadySparkle);
 
         // 공통 성장 단계
         Register("crop_seeded", FitMode.UniformLargest, BuildCropSeeded);
@@ -99,6 +100,15 @@ public static partial class StylizedModelLibrary
         b.AddBox(StylizedColor.SoilWet, new Vector3(0f, 0.0815f, 0f), new Vector3(0.9f, 0.003f, 0.9f));
         b.AddWedge(StylizedColor.SoilWet, new Vector3(0f, 0.1115f, -0.22f), new Vector3(0.83f, 0.061f, 0.305f));
         b.AddWedge(StylizedColor.SoilWet, new Vector3(0f, 0.1115f, 0.22f), new Vector3(0.83f, 0.061f, 0.305f));
+    }
+
+    // 81일차: 수확 가능한 밭 위에 떠 있는 빛나는 마름모 (기준점이 중심)
+    private static void BuildReadySparkle(LowPolyMeshBuilder b)
+    {
+        b.AddCone(StylizedColor.ReadyGlow, Vector3.zero, 0.06f, 0.11f, 4);
+        b.Push(Vector3.zero, Quaternion.Euler(180f, 0f, 0f), Vector3.one);
+        b.AddCone(StylizedColor.ReadyGlow, Vector3.zero, 0.06f, 0.11f, 4);
+        b.Pop();
     }
 
     // ---------------------------------------------------------------- 공통 성장 단계

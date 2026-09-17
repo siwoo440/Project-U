@@ -22,6 +22,13 @@ public sealed class FarmManager : MonoBehaviour // 거점 밭 전체의 날짜·
     [Tooltip("밭·물주기·날씨 공통 규칙입니다.")]
     [SerializeField] private FarmingRulesData farmingRules; // 농사 규칙
 
+    [Header("Harvest Drop")] // 수확물 바닥 드롭 묶음
+    [Tooltip("인벤토리에 넣지 못한 수확물을 바닥에 떨어뜨릴 때 사용할 Pickup Registry입니다.")]
+    [SerializeField] private WorldItemPickupRegistry pickupRegistry; // 월드 아이템 Registry
+
+    [Tooltip("바닥에 떨어진 수확물을 모아 둘 부모입니다.")]
+    [SerializeField] private WorldItemDropContainer dropContainer; // 드롭 아이템 부모
+
     [Header("Watering Can")] // 물뿌리개 설정 묶음
     [Tooltip("새 게임을 시작할 때 물뿌리개를 가득 채운 상태로 시작합니다.")]
     [SerializeField] private bool startWithFullCan = true; // 시작 시 물 가득 채움
@@ -95,6 +102,11 @@ public sealed class FarmManager : MonoBehaviour // 거점 밭 전체의 날짜·
             Debug.LogError("FarmManager의 Farming Rules와 Game Data Registry를 연결해야 합니다.", this); // 참조 누락 오류
         }
 
+        if (dropContainer == null) // 드롭 부모 누락 확인
+        {
+            dropContainer = FindFirstObjectByType<WorldItemDropContainer>(); // Scene에서 검색 (없으면 최상위에 생성)
+        }
+
         if (startWithFullCan) // 시작 물 설정 확인
         {
             wateringCanWater = WateringCanCapacity; // 물뿌리개 가득 채움
@@ -139,7 +151,13 @@ public sealed class FarmManager : MonoBehaviour // 거점 밭 전체의 날짜·
         if (dayChanged) // 새 날짜 확인
         {
             lastKnownDay = day; // 새 날짜 기록
+            ProcessGrowth(day); // 지난 날짜들의 작물 성장 처리
             DayStarted?.Invoke(day); // 새 날짜 알림
+        }
+
+        if (farmingRules != null && CurrentWeather == farmingRules.DamagingWeather) // 폭풍 확인
+        {
+            ApplyStormDamage(day); // 하루 한 번 작물 피해 판정
         }
 
         // 시간을 건너뛸 때 지나간 중간 날씨가 아니라 현재 날씨로만 자동 물주기를 판단한다
@@ -166,6 +184,50 @@ public sealed class FarmManager : MonoBehaviour // 거점 밭 전체의 날짜·
         {
             activePlots[index].ReceiveWater(day); // 물 받은 날 기록
         }
+    }
+
+    public void ProcessGrowth(int today) // 전체 밭의 지난 날짜 성장 처리
+    {
+        for (int index = 0; index < activePlots.Count; index++) // 전체 밭 순회
+        {
+            activePlots[index].ProcessDays(this, today); // 날짜별 성장 계산
+        }
+    }
+
+    private void ApplyStormDamage(int today) // 폭풍 작물 피해 판정
+    {
+        for (int index = 0; index < activePlots.Count; index++) // 전체 밭 순회
+        {
+            activePlots[index].ApplyStormCheck(today, UnityEngine.Random.value); // 하루 한 번 피해 판정
+        }
+    }
+
+    public SeasonType GetSeasonForDay(int day) // 지정 날짜의 계절 계산 (SeasonCycle과 같은 규칙)
+    {
+        int daysPerSeason = seasonCycle != null ? Mathf.Max(1, seasonCycle.DaysPerSeason) : 28; // 계절 길이
+        int zeroBasedDay = Mathf.Max(1, day) - 1; // 0 기준 날짜
+        return (SeasonType)(zeroBasedDay / daysPerSeason % 4); // 계절 반환
+    }
+
+    public bool TryDropItem(ItemData itemData, int quantity, Vector3 position) // 수확물 바닥 드롭
+    {
+        if (itemData == null || quantity <= 0) // 요청 확인
+        {
+            return false; // 드롭 생략
+        }
+
+        if (pickupRegistry == null || !pickupRegistry.TryGetPickup(itemData, out WorldItemPickup pickupPrefab)) // Pickup Prefab 확인
+        {
+            Debug.LogWarning($"{itemData.DisplayName}의 월드 아이템 Prefab이 없어 바닥에 떨어뜨리지 못했습니다.", this); // 드롭 실패 경고
+            return false; // 드롭 실패
+        }
+
+        Vector2 offset = UnityEngine.Random.insideUnitCircle * 0.35f; // 흩어짐
+        Vector3 spawnPosition = position + new Vector3(offset.x, 0.5f, offset.y); // 생성 위치
+        Transform parent = dropContainer != null ? dropContainer.transform : null; // 드롭 부모
+        WorldItemPickup pickup = Instantiate(pickupPrefab, spawnPosition, Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 360f), 0f), parent); // 월드 아이템 생성
+        pickup.Initialize(itemData, quantity); // 아이템과 수량 적용
+        return true; // 드롭 성공
     }
 
     public void RefreshAllPlots() // 전체 밭 외형 갱신

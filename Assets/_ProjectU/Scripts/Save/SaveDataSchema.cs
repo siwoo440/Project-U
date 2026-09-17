@@ -288,6 +288,8 @@ public sealed class FarmPlotSaveData // 밭 한 칸 저장 데이터
     public int lastWateredDay = -1; // 물 받은 날짜
     [Tooltip("성장 계산을 마지막으로 처리한 날짜.")]
     public int lastGrowthDay; // 성장 처리 날짜
+    [Tooltip("폭풍 피해 판정을 마지막으로 한 날짜. 81일차 이전 저장 파일은 0.")]
+    public int lastStormCheckDay; // 폭풍 판정 날짜
 }
 
 [Serializable] // JSON 직렬화 허용

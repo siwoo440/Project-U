@@ -11,6 +11,7 @@ using UnityEngine.UI;
 public static class FarmingGameplaySetup
 {
     private const string RegistryPath = "Assets/_ProjectU/Data/Registry/GameDataRegistry.asset";
+    private const string PickupRegistryPath = "Assets/_ProjectU/Prefabs/Items/Day75/WorldItemPickupRegistry_Day75.asset";
     private const string HighlightMaterialPath = "Assets/_ProjectU/Art/Generated/Materials/M_FarmCellHighlight.mat";
     private const string ThemeFolder = "Assets/_ProjectU/UI/Themes";
     private const string ManagerName = "FarmManager";
@@ -23,6 +24,8 @@ public static class FarmingGameplaySetup
 
     public static void ConfigurePlotComponent(GameObject root, Transform cropAnchor, GameObject wetSoil)
     {
+        GameObject readyMarker = EnsureReadyMarker(root);
+
         FarmPlot plot = root.GetComponent<FarmPlot>();
 
         if (plot == null)
@@ -34,7 +37,36 @@ public static class FarmingGameplaySetup
         serialized.FindProperty("promptMessage").stringValue = "FARM PLOT";
         serialized.FindProperty("cropAnchor").objectReferenceValue = cropAnchor;
         serialized.FindProperty("wetSoilVisual").objectReferenceValue = wetSoil;
+        serialized.FindProperty("readyMarker").objectReferenceValue = readyMarker;
         serialized.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    // 81일차: 수확 가능할 때 밭 위에 떠오르는 반짝이 (기본 꺼짐)
+    private static GameObject EnsureReadyMarker(GameObject root)
+    {
+        Transform existing = root.transform.Find("ReadyMarker");
+
+        if (existing != null)
+        {
+            Object.DestroyImmediate(existing.gameObject, true);
+        }
+
+        GameObject prefab = StylizedArtAssetFactory.GetOrCreateModelPrefab("fx_ready_sparkle", false);
+
+        if (prefab == null)
+        {
+            return null;
+        }
+
+        GameObject marker = (GameObject)PrefabUtility.InstantiatePrefab(prefab, root.transform);
+        marker.name = "ReadyMarker";
+        marker.transform.localPosition = new Vector3(0f, 0.95f, 0f);
+        marker.transform.localRotation = Quaternion.identity;
+        marker.transform.localScale = Vector3.one * 1.2f;
+        StylizedVisualReplacer.SetLayerRecursively(marker.transform, root.layer);
+        marker.AddComponent<FarmReadyMarker>();
+        marker.SetActive(false);
+        return marker;
     }
 
     // ---------------------------------------------------------------- Scene
@@ -80,6 +112,9 @@ public static class FarmingGameplaySetup
         serialized.FindProperty("weatherCycle").objectReferenceValue = Object.FindFirstObjectByType<WeatherCycle>(FindObjectsInactive.Include);
         serialized.FindProperty("gameDataRegistry").objectReferenceValue = AssetDatabase.LoadAssetAtPath<GameDataRegistry>(RegistryPath);
         serialized.FindProperty("farmingRules").objectReferenceValue = rules;
+        // 81일차: 인벤토리가 가득 찼을 때 수확물을 떨어뜨릴 Registry와 부모
+        serialized.FindProperty("pickupRegistry").objectReferenceValue = AssetDatabase.LoadAssetAtPath<WorldItemPickupRegistry>(PickupRegistryPath);
+        serialized.FindProperty("dropContainer").objectReferenceValue = Object.FindFirstObjectByType<WorldItemDropContainer>(FindObjectsInactive.Include);
         serialized.ApplyModifiedProperties();
         return manager;
     }
@@ -497,9 +532,10 @@ public static class FarmingGameplaySetup
         SerializedObject serialized = new SerializedObject(plot);
 
         if (serialized.FindProperty("cropAnchor").objectReferenceValue == null
-            || serialized.FindProperty("wetSoilVisual").objectReferenceValue == null)
+            || serialized.FindProperty("wetSoilVisual").objectReferenceValue == null
+            || serialized.FindProperty("readyMarker").objectReferenceValue == null)
         {
-            error("FarmPlot의 CropAnchor 또는 WetSoil 연결이 비어 있습니다.");
+            error("FarmPlot의 CropAnchor, WetSoil 또는 ReadyMarker 연결이 비어 있습니다.");
         }
     }
 
@@ -515,7 +551,7 @@ public static class FarmingGameplaySetup
         {
             SerializedObject serialized = new SerializedObject(manager);
 
-            foreach (string property in new[] { "dayNightCycle", "seasonCycle", "weatherCycle", "gameDataRegistry", "farmingRules" })
+            foreach (string property in new[] { "dayNightCycle", "seasonCycle", "weatherCycle", "gameDataRegistry", "farmingRules", "pickupRegistry", "dropContainer" })
             {
                 if (serialized.FindProperty(property).objectReferenceValue == null)
                 {

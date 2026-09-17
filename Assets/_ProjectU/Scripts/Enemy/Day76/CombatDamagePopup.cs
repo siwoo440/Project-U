@@ -40,7 +40,31 @@ public sealed class CombatDamagePopup : MonoBehaviour
             popup = CreateNew();
         }
 
-        popup.Play(worldPosition, damage, color, size);
+        string text = damage >= 10f ? Mathf.RoundToInt(damage).ToString() : damage.ToString("0.#");
+        popup.Play(worldPosition, text, color, size);
+    }
+
+    // 81일차: 수확 알림처럼 숫자가 아닌 글자를 띄운다
+    public static void SpawnText(Vector3 worldPosition, string text, Color color, float size)
+    {
+        if (string.IsNullOrEmpty(text))
+        {
+            return;
+        }
+
+        CombatDamagePopup popup = null;
+
+        while (popup == null && Pool.Count > 0)
+        {
+            popup = Pool.Pop();
+        }
+
+        if (popup == null)
+        {
+            popup = CreateNew();
+        }
+
+        popup.Play(worldPosition, text, color, size);
     }
 
     private static CombatDamagePopup CreateNew()
@@ -57,7 +81,7 @@ public sealed class CombatDamagePopup : MonoBehaviour
         text.alignment = TextAlignmentOptions.Center;
         text.fontStyle = FontStyles.Bold;
         text.textWrappingMode = TextWrappingModes.NoWrap;
-        text.rectTransform.sizeDelta = new Vector2(3f, 1f);
+        text.rectTransform.sizeDelta = new Vector2(6f, 1f);
         text.outlineWidth = 0.25f;
         text.outlineColor = new Color32(0, 0, 0, 255);
 
@@ -66,10 +90,10 @@ public sealed class CombatDamagePopup : MonoBehaviour
         return popup;
     }
 
-    private void Play(Vector3 worldPosition, float damage, Color color, float size)
+    private void Play(Vector3 worldPosition, string text, Color color, float size)
     {
         gameObject.SetActive(true);
-        label.text = damage >= 10f ? Mathf.RoundToInt(damage).ToString() : damage.ToString("0.#");
+        label.text = text;
         baseColor = color;
         baseSize = size;
         label.fontSize = size;

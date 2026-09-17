@@ -249,7 +249,7 @@ public static class SaveDataValidator // 저장 데이터 유효성 검사
                 return false; // 검사 실패
             }
 
-            if (plotData.grownDays < 0 || plotData.lastWateredDay < -1) // 날짜 값 확인
+            if (plotData.grownDays < 0 || plotData.lastWateredDay < -1 || plotData.lastGrowthDay < 0 || plotData.lastStormCheckDay < 0) // 날짜 값 확인
             {
                 errorMessage = $"밭 성장 일수 또는 물 준 날짜가 잘못되었습니다: {plotData.structureId}"; // 날짜 오류 저장
                 return false; // 검사 실패

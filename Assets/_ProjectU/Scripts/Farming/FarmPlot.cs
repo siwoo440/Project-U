@@ -14,6 +14,9 @@ public sealed class FarmPlot : InteractableBase, IBuildRemovalGuard // 밭 한 �
     [Tooltip("물을 받은 날 켜는 젖은 흙 외형입니다.")]
     [SerializeField] private GameObject wetSoilVisual; // 젖은 흙 외형
 
+    [Tooltip("수확 가능할 때 켜는 반짝이 표시입니다.")]
+    [SerializeField] private GameObject readyMarker; // 수확 가능 표시
+
     [Header("Runtime - State")] // 칸별 상태 묶음
     [Tooltip("현재 작물 상태입니다.")]
     [SerializeField] private FarmPlotState state = FarmPlotState.Empty; // 작물 상태
@@ -33,10 +36,19 @@ public sealed class FarmPlot : InteractableBase, IBuildRemovalGuard // 밭 한 �
     [Tooltip("성장 계산을 마지막으로 처리한 날짜입니다.")]
     [SerializeField] private int lastGrowthDay; // 마지막 성장 처리 날짜
 
+    [Tooltip("폭풍 피해 판정을 마지막으로 한 날짜입니다.")]
+    [SerializeField] private int lastStormCheckDay; // 마지막 폭풍 판정 날짜
+
+    private static readonly int BaseColorId = Shader.PropertyToID("_BaseColor"); // URP 기본 색상 속성
+    private static readonly int ColorId = Shader.PropertyToID("_Color"); // 기본 색상 속성
+    private static readonly Color WitheredColor = new Color(0.46f, 0.36f, 0.22f, 1f); // 시든 작물 색상
+    private static readonly Color HarvestPopupColor = new Color(1f, 0.86f, 0.35f, 1f); // 수확 알림 색상
+
     private PlacedBuildObject placedBuildObject; // 설치 건축물 정보
     private GameObject cropVisual; // 현재 작물 외형
     private int cropVisualStage = -1; // 현재 외형 단계
     private CropData cropVisualSource; // 현재 외형 작물
+    private bool cropVisualWithered; // 현재 외형 시듦 여부
     private readonly StringBuilder promptBuilder = new StringBuilder(64); // 안내 문구 조립 버퍼
     private string cachedPrompt = string.Empty; // 마지막 안내 문구
     private int cachedPromptKey = int.MinValue; // 마지막 안내 문구 상태 키
@@ -47,6 +59,7 @@ public sealed class FarmPlot : InteractableBase, IBuildRemovalGuard // 밭 한 �
     public int GrownDays => grownDays; // 누적 성장 일수 제공
     public int LastWateredDay => lastWateredDay; // 마지막 물 받은 날짜 제공
     public int LastGrowthDay => lastGrowthDay; // 마지막 성장 처리 날짜 제공
+    public int LastStormCheckDay => lastStormCheckDay; // 마지막 폭풍 판정 날짜 제공
     public bool HasCrop => state != FarmPlotState.Empty && currentCrop != null; // 작물 존재 여부 제공
     public string StructureId => placedBuildObject != null ? placedBuildObject.StructureId : string.Empty; // 저장 ID 제공
     public bool CanRemove => !HasCrop; // 철거 가능 여부 제공
@@ -123,6 +136,12 @@ public sealed class FarmPlot : InteractableBase, IBuildRemovalGuard // 밭 한 �
         if (manager == null || manager.Rules == null || tools == null || !tools.CanAct) // 작업 가능 상태 확인
         {
             return; // 작업 중단
+        }
+
+        if (state == FarmPlotState.Ready) // 수확 가능 확인 (손에 든 아이템과 관계없이 수확 우선)
+        {
+            TryHarvest(manager, tools); // 수확 시도
+            return; // 처리 종료
         }
 
         ItemData held = tools.SelectedItem; // 손에 든 아이템
@@ -212,6 +231,110 @@ public sealed class FarmPlot : InteractableBase, IBuildRemovalGuard // 밭 한 �
         return true; // 물주기 성공
     }
 
+    public void ProcessDays(FarmManager manager, int today) // 지난 날짜들의 성장 처리 (새 날짜가 시작될 때 호출)
+    {
+        if (state != FarmPlotState.Growing || currentCrop == null) // 성장 중 작물 확인
+        {
+            lastGrowthDay = Mathf.Max(lastGrowthDay, today); // 처리 날짜만 갱신
+            RefreshVisuals(); // 날짜에 따른 외형 갱신
+            return; // 성장 처리 생략
+        }
+
+        FarmingRulesData rules = manager.Rules; // 농사 규칙
+        int firstDay = lastGrowthDay > 0 ? lastGrowthDay : plantedDay; // 처리 시작 날짜
+
+        // 물 기록은 마지막으로 받은 날 하나이므로, 건너뛴 여러 날 중 그날만 물 받은 날로 인정한다
+        for (int day = firstDay; day < today && state == FarmPlotState.Growing; day++) // 지난 날짜 순회
+        {
+            bool watered = !currentCrop.RequiresWater || lastWateredDay == day; // 그날 물 받음 여부
+
+            if (!watered && (rules == null || rules.PauseGrowthWhenDry)) // 물 부족 확인
+            {
+                continue; // 성장 정지
+            }
+
+            bool inSeason = currentCrop.CanGrowInSeason(manager.GetSeasonForDay(day)); // 그날 계절 확인
+
+            if (!inSeason && (rules == null || rules.PauseGrowthOutOfSeason)) // 계절 확인
+            {
+                continue; // 성장 정지
+            }
+
+            grownDays++; // 하루 성장
+
+            if (currentCrop.IsFullyGrown(grownDays)) // 완성 확인
+            {
+                grownDays = currentCrop.GrowthDays; // 성장 일수 고정
+                state = FarmPlotState.Ready; // 수확 가능
+            }
+        }
+
+        lastGrowthDay = Mathf.Max(lastGrowthDay, today); // 처리 날짜 기록
+        RefreshVisuals(); // 외형 갱신
+    }
+
+    public void ApplyStormCheck(int today, float normalizedRoll) // 폭풍 피해 판정 (하루 한 번)
+    {
+        if (state != FarmPlotState.Growing || currentCrop == null || lastStormCheckDay == today) // 판정 대상 확인
+        {
+            return; // 판정 생략
+        }
+
+        lastStormCheckDay = today; // 판정 날짜 기록
+
+        if (normalizedRoll < currentCrop.StormDamageChance) // 피해 확률 확인
+        {
+            state = FarmPlotState.Withered; // 시든 작물
+            RefreshVisuals(); // 외형 갱신
+        }
+    }
+
+    public bool TryHarvest(FarmManager manager, FarmingToolController tools) // 다 자란 작물 수확
+    {
+        if (state != FarmPlotState.Ready || currentCrop == null) // 수확 가능 확인
+        {
+            return false; // 수확 실패
+        }
+
+        CropData crop = currentCrop; // 수확 작물
+        int amount = crop.RollHarvestAmount(Random.value); // 수확량
+        bool returnSeed = crop.SeedItem != null && Random.value < crop.SeedReturnChance; // 씨앗 반환 여부
+        Vector3 popupPosition = transform.position + Vector3.up * 0.7f; // 알림 위치
+
+        GiveItem(manager, tools.Inventory, crop.HarvestItem, amount); // 수확물 지급
+        CombatDamagePopup.SpawnText(popupPosition, $"+{amount} {crop.HarvestItem.DisplayName}", HarvestPopupColor, 2.4f); // 수확 알림
+
+        if (returnSeed) // 씨앗 반환 확인
+        {
+            GiveItem(manager, tools.Inventory, crop.SeedItem, 1); // 씨앗 지급
+            CombatDamagePopup.SpawnText(popupPosition + Vector3.up * 0.35f, "+1 SEED", new Color(0.7f, 0.95f, 0.5f, 1f), 2f); // 씨앗 알림
+        }
+
+        ClearCrop(); // 빈 밭으로 되돌리기
+
+        if (manager.Rules != null && !manager.Rules.KeepPlotAfterHarvest) // 밭 제거 규칙 확인
+        {
+            RemovePlot(); // 밭 제거
+        }
+
+        return true; // 수확 성공
+    }
+
+    private void GiveItem(FarmManager manager, PlayerInventory inventory, ItemData itemData, int amount) // 인벤토리 지급, 넘치면 바닥 드롭
+    {
+        if (itemData == null || amount <= 0) // 요청 확인
+        {
+            return; // 지급 생략
+        }
+
+        int remaining = inventory != null ? inventory.AddItem(itemData, amount) : amount; // 인벤토리 추가
+
+        if (remaining > 0) // 넘친 수량 확인
+        {
+            manager.TryDropItem(itemData, remaining, transform.position); // 밭 옆에 떨어뜨리기
+        }
+    }
+
     public void ReceiveWater(int day) // 지정 날짜에 물 받은 상태 적용
     {
         lastWateredDay = day; // 날짜 기록
@@ -248,7 +371,8 @@ public sealed class FarmPlot : InteractableBase, IBuildRemovalGuard // 밭 한 �
             plantedDay = plantedDay, // 심은 날짜
             grownDays = grownDays, // 성장 일수
             lastWateredDay = lastWateredDay, // 물 받은 날짜
-            lastGrowthDay = lastGrowthDay // 성장 처리 날짜
+            lastGrowthDay = lastGrowthDay, // 성장 처리 날짜
+            lastStormCheckDay = lastStormCheckDay // 폭풍 판정 날짜
         };
     }
 
@@ -260,6 +384,7 @@ public sealed class FarmPlot : InteractableBase, IBuildRemovalGuard // 밭 한 �
         grownDays = Mathf.Max(0, data.grownDays); // 성장 일수 적용
         lastWateredDay = data.lastWateredDay; // 물 받은 날짜 적용
         lastGrowthDay = data.lastGrowthDay; // 성장 처리 날짜 적용
+        lastStormCheckDay = data.lastStormCheckDay; // 폭풍 판정 날짜 적용
         RefreshVisuals(); // 외형 갱신
     }
 
@@ -271,6 +396,7 @@ public sealed class FarmPlot : InteractableBase, IBuildRemovalGuard // 밭 한 �
         grownDays = 0; // 성장 일수 초기화
         lastWateredDay = NeverWatered; // 물 기록 초기화
         lastGrowthDay = 0; // 성장 기록 초기화
+        lastStormCheckDay = 0; // 폭풍 기록 초기화
         RefreshVisuals(); // 외형 갱신
     }
 
@@ -284,6 +410,13 @@ public sealed class FarmPlot : InteractableBase, IBuildRemovalGuard // 밭 한 �
             wetSoilVisual.SetActive(isWet); // 젖은 흙 표시 적용
         }
 
+        bool isReady = state == FarmPlotState.Ready; // 수확 가능 여부
+
+        if (readyMarker != null && readyMarker.activeSelf != isReady) // 표시 상태 변경 확인
+        {
+            readyMarker.SetActive(isReady); // 수확 가능 표시 적용
+        }
+
         int stage = -1; // 표시할 단계
 
         if (HasCrop) // 작물 존재 확인
@@ -293,7 +426,9 @@ public sealed class FarmPlot : InteractableBase, IBuildRemovalGuard // 밭 한 �
                 : currentCrop.GetStageIndex(grownDays); // 성장 일수 기준 단계
         }
 
-        if (stage == cropVisualStage && currentCrop == cropVisualSource) // 같은 외형 확인
+        bool withered = state == FarmPlotState.Withered; // 시듦 여부
+
+        if (stage == cropVisualStage && currentCrop == cropVisualSource && withered == cropVisualWithered) // 같은 외형 확인
         {
             return; // 외형 교체 생략
         }
@@ -306,6 +441,7 @@ public sealed class FarmPlot : InteractableBase, IBuildRemovalGuard // 밭 한 �
 
         cropVisualStage = stage; // 단계 기록
         cropVisualSource = currentCrop; // 작물 기록
+        cropVisualWithered = withered; // 시듦 기록
         CropGrowthStage growthStage = stage >= 0 ? currentCrop.GetStage(stage) : null; // 단계 데이터
 
         if (growthStage == null || growthStage.VisualPrefab == null) // 표시할 외형 확인
@@ -315,6 +451,24 @@ public sealed class FarmPlot : InteractableBase, IBuildRemovalGuard // 밭 한 �
 
         cropVisual = Instantiate(growthStage.VisualPrefab, cropAnchor, false); // 단계 외형 생성
         SetLayerRecursively(cropVisual.transform, gameObject.layer); // 밭과 같은 레이어 적용
+
+        if (withered) // 시든 작물 확인
+        {
+            ApplyWitheredLook(cropVisual); // 갈색으로 처진 외형 적용
+        }
+    }
+
+    private static void ApplyWitheredLook(GameObject visual) // 시든 작물 외형
+    {
+        visual.transform.localScale = new Vector3(1f, 0.7f, 1f); // 처진 모양
+        MaterialPropertyBlock block = new MaterialPropertyBlock(); // 색상 블록
+        block.SetColor(BaseColorId, WitheredColor); // URP 색상
+        block.SetColor(ColorId, WitheredColor); // 기본 색상
+
+        foreach (Renderer renderer in visual.GetComponentsInChildren<Renderer>()) // 전체 Renderer 순회
+        {
+            renderer.SetPropertyBlock(block); // 갈색 적용
+        }
     }
 
     private bool CanPlantInCurrentSeason(FarmManager manager, CropData crop) // 현재 계절 심기 가능 여부
@@ -341,6 +495,12 @@ public sealed class FarmPlot : InteractableBase, IBuildRemovalGuard // 밭 한 �
     {
         FarmingRulesData rules = manager.Rules; // 농사 규칙
         promptBuilder.Clear(); // 버퍼 초기화
+
+        if (state == FarmPlotState.Ready && currentCrop != null) // 수확 가능
+        {
+            promptBuilder.Append("F - HARVEST ").Append(currentCrop.DisplayName); // 수확 안내
+            return promptBuilder.ToString(); // 문구 반환
+        }
 
         if (held != null && held.IsTool && held.ToolType == rules.WateringTool) // 물뿌리개
         {

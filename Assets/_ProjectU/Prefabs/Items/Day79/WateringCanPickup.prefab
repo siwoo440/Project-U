@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 8549069249610308424}
+  - component: {fileID: 1867210207617205061}
   m_Layer: 3
   m_Name: WateringCanPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 3145336094161523364}
+  - {fileID: 936091218163846722}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &8549069249610308424
+--- !u!114 &1867210207617205061
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: tool_watering_can
-  generatedVisual: {fileID: 4776967270527459797}
+  generatedVisual: {fileID: 7282570117220039987}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &4744020331265597268
+--- !u!1001 &7389832874530407346
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1828428984a7a1c408352b800dc42cd7, type: 3}
---- !u!4 &3145336094161523364 stripped
+--- !u!4 &936091218163846722 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7669735548674067952, guid: 1828428984a7a1c408352b800dc42cd7, type: 3}
-  m_PrefabInstance: {fileID: 4744020331265597268}
+  m_PrefabInstance: {fileID: 7389832874530407346}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4776967270527459797 stripped
+--- !u!1 &7282570117220039987 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 260389880379866753, guid: 1828428984a7a1c408352b800dc42cd7, type: 3}
-  m_PrefabInstance: {fileID: 4744020331265597268}
+  m_PrefabInstance: {fileID: 7389832874530407346}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:
