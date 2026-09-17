@@ -31,7 +31,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5625982256968697202}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2117753439726597026
+--- !u!1 &910342880612851885
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -39,46 +39,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6049397069528876314}
-  - component: {fileID: 3853200413193244688}
-  - component: {fileID: 5004731093749576042}
+  - component: {fileID: 2705715606135918804}
+  - component: {fileID: 236844754800185472}
+  - component: {fileID: 8366466173768250895}
   m_Layer: 17
-  m_Name: TEMP_Capsule_Visual
+  m_Name: LP_enemy_grunt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6049397069528876314
+--- !u!4 &2705715606135918804
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2117753439726597026}
+  m_GameObject: {fileID: 910342880612851885}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.022347566, y: -1, z: -0.2977528}
+  m_LocalScale: {x: 1.0152284, y: 1.0152284, z: 1.0152284}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5385430433553520215}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &3853200413193244688
+--- !u!33 &236844754800185472
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2117753439726597026}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &5004731093749576042
+  m_GameObject: {fileID: 910342880612851885}
+  m_Mesh: {fileID: 4300000, guid: 73f399f900e758b428e7332dc4cbb608, type: 2}
+--- !u!23 &8366466173768250895
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2117753439726597026}
+  m_GameObject: {fileID: 910342880612851885}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -97,7 +97,16 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 34536df488b8f9041bf2df0f008e0d44, type: 2}
+  - {fileID: 2100000, guid: 6cb4c751e3eea8c4fa8b0e33532ed30d, type: 2}
+  - {fileID: 2100000, guid: 208efaf35d9a4484d8ab3be1a86a87aa, type: 2}
+  - {fileID: 2100000, guid: ac43aa2d14fb7db4e88cfb3cf52b2055, type: 2}
+  - {fileID: 2100000, guid: f67e53bf7d7c2f141abb41434d10d853, type: 2}
+  - {fileID: 2100000, guid: 4c0e3cccf816d44459eb0b48aaae9963, type: 2}
+  - {fileID: 2100000, guid: 3fbb695951c42614e9ca1f6f2acc703b, type: 2}
+  - {fileID: 2100000, guid: 11153e3288445cd4b983fe10c6bbde0b, type: 2}
+  - {fileID: 2100000, guid: 3af8665b99aa8b140b5e64e36aaf34da, type: 2}
+  - {fileID: 2100000, guid: 721b3e0121403dc4e91028bc723fceb6, type: 2}
+  - {fileID: 2100000, guid: 4a0109da3d363b040873b10596eaae7b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -106,7 +115,7 @@ MeshRenderer:
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_ReceiveGI: 1
-  m_PreserveUVs: 1
+  m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
@@ -275,7 +284,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6049397069528876314}
+  - {fileID: 2705715606135918804}
   m_Father: {fileID: 3995186267996727055}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7270564801062510998
@@ -604,8 +613,8 @@ MonoBehaviour:
   interactionPoint: {fileID: 5189518978586218525}
   effectOrigin: {fileID: 4591158733542805690}
   uiAnchor: {fileID: 5224260860445092634}
-  appliedProfile: {fileID: 11400000, guid: af3263318ebcdf343866d5092de005c7, type: 2}
-  configuredVisualPrefab: {fileID: 0}
+  appliedProfile: {fileID: 11400000, guid: 22fec522eda002541bc7f1a4a5619c64, type: 2}
+  configuredVisualPrefab: {fileID: 8122359426307237099, guid: 305eb2fddcacb74439afb82cb246f982, type: 3}
   createPlaceholderWhenPrefabMissing: 1
   placeholderPrimitive: 1
   placeholderMaterial: {fileID: 2100000, guid: 34536df488b8f9041bf2df0f008e0d44, type: 2}
@@ -614,9 +623,9 @@ MonoBehaviour:
   visualMaterialOverride: {fileID: 0}
   applyMaterialOverrideToVisualPrefab: 1
   animatorControllerOverride: {fileID: 0}
-  visualLocalPosition: {x: 0, y: 0, z: 0}
+  visualLocalPosition: {x: 0.022347566, y: -1, z: -0.2977528}
   visualLocalEulerAngles: {x: 0, y: 0, z: 0}
-  visualLocalScale: {x: 1, y: 1, z: 1}
+  visualLocalScale: {x: 1.0152284, y: 1.0152284, z: 1.0152284}
   defaultInteractionPointPosition: {x: 0, y: 1, z: 0}
   defaultEffectOriginPosition: {x: 0, y: 1, z: 0}
   defaultUiAnchorPosition: {x: 0, y: 2.2, z: 0}
@@ -624,7 +633,7 @@ MonoBehaviour:
   rebuildVisualOnAwake: 0
   inheritRootLayer: 1
   removeVisualColliders: 1
-  activeVisualObject: {fileID: 2117753439726597026}
+  activeVisualObject: {fileID: 910342880612851885}
   isStructureReady: 1
 --- !u!114 &1839917244321653897
 MonoBehaviour:
@@ -639,7 +648,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ContentVisualProfileBinder
   visualRoot: {fileID: 5396420306963920569}
-  visualProfile: {fileID: 11400000, guid: af3263318ebcdf343866d5092de005c7, type: 2}
+  visualProfile: {fileID: 11400000, guid: 22fec522eda002541bc7f1a4a5619c64, type: 2}
   resolveFromContentIdentity: 1
   contentIdentity: {fileID: 4606644271746242657}
   resolveFromRegistryById: 0
@@ -734,4 +743,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8606014d4a784ccaaf373e3dfa3d8586, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCombatFeedback
+  enemyHealth: {fileID: 0}
+  combatController: {fileID: 0}
+  rangedAttackController: {fileID: 0}
+  visualRoot: {fileID: 0}
+  showHealthBar: 1
+  fallbackBarHeight: 2.2
+  healthBarOffset: {x: 0, y: 0.35, z: 0}
+  healthBarVisibleDuration: 4
+  showHealthBarInCombat: 1
+  healthBarMaxDistance: 30
+  showDamageNumbers: 1
+  damageNumberColor: {r: 1, g: 0.95, b: 0.8, a: 1}
+  killingBlowColor: {r: 1, g: 0.35, b: 0.25, a: 1}
+  damageNumberSize: 4
+  useHitFlash: 1
+  hitFlashColor: {r: 1, g: 1, b: 1, a: 1}
+  hitFlashDuration: 0.12
+  hitPunchScale: 0.12
+  hitPunchDuration: 0.15
+  hitEffectPrefab: {fileID: 0}
+  hitSparkCount: 4
+  hitSparkColor: {r: 1, g: 0.85, b: 0.4, a: 1}
+  useDeathEffect: 1
+  deathEffectPrefab: {fileID: 0}
+  deathDebrisCount: 12
+  deathDebrisColor: {r: 0.55, g: 0.15, b: 0.15, a: 1}
+  deathShrinkDelay: 0.2
+  deathShrinkDuration: 0.6
+  deathSinkDistance: 0.4
+  showAttackWarningMarker: 1
+  warningStartColor: {r: 1, g: 0.8, b: 0.1, a: 1}
+  warningEndColor: {r: 1, g: 0.15, b: 0.1, a: 1}
   groundTelegraphMaterial: {fileID: 2100000, guid: f912fbb0e6bac9b48aa5c9bc12b92b0b, type: 2}
+  playSounds: 1
+  soundVolume: 0.7
+  hitClip: {fileID: 0}
+  killClip: {fileID: 0}
+  warningClip: {fileID: 0}
+  isHealthBarVisible: 0
+  observedPhase: 0

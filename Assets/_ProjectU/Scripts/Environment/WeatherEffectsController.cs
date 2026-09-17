@@ -37,6 +37,8 @@ public sealed class WeatherEffectsController : MonoBehaviour // 날씨 시각과
     [SerializeField] private Color stormFogColor = new Color(0.18f, 0.22f, 0.28f); // 폭풍 안개 색상
 
     [Header("Fog Density")] // 날씨별 안개 밀도 묶음
+    [Tooltip("맑음 안개 밀도. 먼 배경이 옅게 흐려져 공간감이 생깁니다.")]
+    [SerializeField][Min(0f)] private float clearFogDensity = 0.0012f; // 맑음 안개 밀도
     [Tooltip("흐림 안개 밀도.")]
     [SerializeField][Min(0f)] private float cloudyFogDensity = 0.0015f; // 흐림 안개 밀도
     [Tooltip("비 안개 밀도.")]
@@ -176,6 +178,7 @@ public sealed class WeatherEffectsController : MonoBehaviour // 날씨 시각과
         switch (weather) // 현재 날씨 비교
         {
             case WeatherType.Clear: // 맑음 확인
+                targetFogDensity = clearFogDensity; // 맑음 옅은 안개 적용
                 break; // 맑음 기본값 유지
 
             case WeatherType.Cloudy: // 흐림 확인

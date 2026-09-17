@@ -34,6 +34,8 @@ public sealed class InventorySlotsUI : MonoBehaviour // 여러 인벤토리 슬�
     [SerializeField] private Color hotbarAreaColor = new Color(0.22f, 0.18f, 0.04f, 0.65f); // 핫바 영역 배경색
     [Tooltip("일반 영역 배경색.")]
     [SerializeField] private Color inventoryAreaColor = new Color(0.04f, 0.04f, 0.04f, 0.65f); // 일반 영역 배경색
+    [Tooltip("영역 배경에 사용할 둥근 패널 Sprite입니다. 비워두면 사각형으로 표시합니다.")]
+    [SerializeField] private Sprite sectionSprite; // 영역 배경 Sprite
 
     private readonly List<InventorySlotView> slotViews = new List<InventorySlotView>(); // 생성된 슬롯 목록
     private readonly List<Transform> generatedSectionContainers = new List<Transform>(); // 생성된 분리 영역 목록
@@ -343,6 +345,12 @@ public sealed class InventorySlotsUI : MonoBehaviour // 여러 인벤토리 슬�
         sectionRect.anchoredPosition = new Vector2(0f, sectionY); // 영역 세로 위치 적용
 
         sectionImage.color = isHotbarArea ? hotbarAreaColor : inventoryAreaColor; // 영역별 배경색 적용
+
+        if (sectionSprite != null) // 테마 Sprite 연결 여부 확인
+        {
+            sectionImage.sprite = sectionSprite; // 둥근 패널 Sprite 적용
+            sectionImage.type = Image.Type.Sliced; // 모서리 유지 방식 적용
+        }
         sectionImage.raycastTarget = false; // 배경 입력 차단 해제
 
         sectionGrid.padding = new RectOffset(sourceGrid.padding.left, sourceGrid.padding.right, sourceGrid.padding.top, sourceGrid.padding.bottom); // 기존 여백 복사

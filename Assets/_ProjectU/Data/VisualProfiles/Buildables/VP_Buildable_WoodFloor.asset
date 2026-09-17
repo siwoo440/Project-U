@@ -15,7 +15,7 @@ MonoBehaviour:
   profileId: visual_buildable_wood_floor
   displayName: WOOD FLOOR VISUAL
   category: 4
-  visualPrefab: {fileID: 0}
+  visualPrefab: {fileID: 892432618750762017, guid: 59be8112b1b971a43b230ae705663854, type: 3}
   icon: {fileID: 0}
   materialOverride: {fileID: 0}
   animatorController: {fileID: 0}
@@ -24,9 +24,9 @@ MonoBehaviour:
   placeholderMaterial: {fileID: 2100000, guid: 7afeaae8934c3d747b3d57a1989ddc99, type: 2}
   placeholderColor: {r: 1, g: 1, b: 1, a: 1}
   usePlaceholderColor: 0
-  visualLocalPosition: {x: 0, y: 0.05, z: 0}
+  visualLocalPosition: {x: 0, y: 0, z: 0}
   visualLocalEulerAngles: {x: 0, y: 0, z: 0}
-  visualLocalScale: {x: 1, y: 0.1, z: 1}
+  visualLocalScale: {x: 1, y: 0.09910803, z: 1}
   interactionPointPosition: {x: 0, y: 0.2, z: 0}
   effectOriginPosition: {x: 0, y: 0.1, z: 0}
   uiAnchorPosition: {x: 0, y: 0.5, z: 0}

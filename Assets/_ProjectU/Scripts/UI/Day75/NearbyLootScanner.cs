@@ -36,6 +36,12 @@ public sealed class NearbyLootScanner : MonoBehaviour
     private readonly List<NearbyLootDisplayData> displayData =
         new List<NearbyLootDisplayData>();
 
+    // 검색마다 새로 만들지 않도록 재사용하는 집계 객체와 직전 표시 결과
+    private readonly Stack<LootAggregate> aggregatePool = new Stack<LootAggregate>();
+    private readonly List<NearbyLootDisplayData> previousDisplayData =
+        new List<NearbyLootDisplayData>();
+    private bool hasRefreshedOnce;
+
     private float nextScanTime;
 
     private void Start()
@@ -65,14 +71,23 @@ public sealed class NearbyLootScanner : MonoBehaviour
             return;
         }
 
+        foreach (LootAggregate pooledAggregate in aggregates.Values)
+        {
+            pooledAggregate.ItemData = null;
+            pooledAggregate.TotalQuantity = 0;
+            pooledAggregate.NearestDistance = float.PositiveInfinity;
+            aggregatePool.Push(pooledAggregate);
+        }
+
         aggregates.Clear();
         displayData.Clear();
 
-        WorldItemPickup[] pickups = FindObjectsByType<WorldItemPickup>(
-            FindObjectsInactive.Exclude,
-            FindObjectsSortMode.None);
+        // 매번 Scene 전체를 검색하지 않고 활성 월드 아이템 목록만 확인
+        IReadOnlyList<WorldItemPickup> pickups = WorldItemPickup.ActivePickups;
+        Vector3 playerPosition = playerTransform.position;
+        float scanRadiusSquared = scanRadius * scanRadius;
 
-        for (int index = 0; index < pickups.Length; index++)
+        for (int index = 0; index < pickups.Count; index++)
         {
             WorldItemPickup pickup = pickups[index];
 
@@ -84,14 +99,15 @@ public sealed class NearbyLootScanner : MonoBehaviour
                 continue;
             }
 
-            float distance = Vector3.Distance(
-                playerTransform.position,
-                pickup.transform.position);
+            float distanceSquared =
+                (pickup.transform.position - playerPosition).sqrMagnitude;
 
-            if (distance > scanRadius)
+            if (distanceSquared > scanRadiusSquared)
             {
                 continue;
             }
+
+            float distance = Mathf.Sqrt(distanceSquared);
 
             ItemData itemData = pickup.ItemData;
             string itemId = string.IsNullOrWhiteSpace(itemData.ItemId)
@@ -100,10 +116,10 @@ public sealed class NearbyLootScanner : MonoBehaviour
 
             if (!aggregates.TryGetValue(itemId, out LootAggregate aggregate))
             {
-                aggregate = new LootAggregate
-                {
-                    ItemData = itemData
-                };
+                aggregate = aggregatePool.Count > 0
+                    ? aggregatePool.Pop()
+                    : new LootAggregate();
+                aggregate.ItemData = itemData;
 
                 aggregates.Add(itemId, aggregate);
             }
@@ -123,6 +139,16 @@ public sealed class NearbyLootScanner : MonoBehaviour
         }
 
         displayData.Sort(CompareDisplayData);
+
+        // 표시 내용이 바뀌지 않았다면 UI 재구성 생략
+        if (hasRefreshedOnce && IsSameAsPreviousDisplay())
+        {
+            return;
+        }
+
+        hasRefreshedOnce = true;
+        previousDisplayData.Clear();
+        previousDisplayData.AddRange(displayData);
         nearbyLootUI.Refresh(displayData);
 
         if (logScanResults)
@@ -131,6 +157,33 @@ public sealed class NearbyLootScanner : MonoBehaviour
                 $"Nearby Loot 검색 완료 / 종류 {displayData.Count}개",
                 this);
         }
+    }
+
+    private bool IsSameAsPreviousDisplay()
+    {
+        if (previousDisplayData.Count != displayData.Count)
+        {
+            return false;
+        }
+
+        for (int index = 0; index < displayData.Count; index++)
+        {
+            NearbyLootDisplayData current = displayData[index];
+            NearbyLootDisplayData previous = previousDisplayData[index];
+
+            // 거리는 UI에 소수 첫째 자리까지 표시되므로 그 단위로 비교
+            bool isSame = current.ItemData == previous.ItemData
+                && current.TotalQuantity == previous.TotalQuantity
+                && Mathf.RoundToInt(current.NearestDistance * 10f)
+                    == Mathf.RoundToInt(previous.NearestDistance * 10f);
+
+            if (!isSame)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private int CompareDisplayData(

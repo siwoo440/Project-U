@@ -13,6 +13,10 @@ public sealed class TemperatureBarUI : MonoBehaviour // 체온 화면 표시
     [Tooltip("체온 수치 문구.")]
     [SerializeField] private TMP_Text valueText; // 체온 수치 문구
 
+    private int lastCurrentValue = int.MinValue; // 마지막 표시 현재값
+    private int lastMaximumValue = int.MinValue; // 마지막 표시 최대값
+    private string lastStateText; // 마지막 표시 상태 문구
+
     [Header("Colors")] // 상태별 색상 묶음
     [Tooltip("열기 회복 색상.")]
     [SerializeField] private Color heatingColor = new Color(1f, 0.3f, 0.1f); // 열기 회복 색상
@@ -44,7 +48,13 @@ public sealed class TemperatureBarUI : MonoBehaviour // 체온 화면 표시
         int maximumValue = Mathf.RoundToInt(playerTemperature.MaxTemperature); // 최대 체온 정수 변환
         string stateText = GetStateText(); // 현재 체온 상태 문구 조회
 
-        valueText.SetText($"TEMP {currentValue} / {maximumValue}  {stateText}"); // 체온 수치 출력
+        if (currentValue != lastCurrentValue || maximumValue != lastMaximumValue || !ReferenceEquals(stateText, lastStateText)) // 표시 값 변경 시에만 문자열 생성
+        {
+            lastCurrentValue = currentValue; // 마지막 표시 현재값 저장
+            lastMaximumValue = maximumValue; // 마지막 표시 최대값 저장
+            lastStateText = stateText; // 마지막 상태 문구 저장
+            valueText.SetText($"TEMP {currentValue} / {maximumValue}  {stateText}"); // 체온 수치 출력
+        }
         fillImage.color = GetStateColor(); // 현재 상태 색상 적용
     }
 

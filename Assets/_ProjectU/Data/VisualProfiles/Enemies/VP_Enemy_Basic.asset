@@ -15,7 +15,7 @@ MonoBehaviour:
   profileId: visual_enemy_basic
   displayName: BASIC ENEMY VISUAL
   category: 3
-  visualPrefab: {fileID: 0}
+  visualPrefab: {fileID: 1808709035192926578, guid: 771c3173d8d706b4f89b09eb03722104, type: 3}
   icon: {fileID: 0}
   materialOverride: {fileID: 0}
   animatorController: {fileID: 0}
@@ -24,9 +24,9 @@ MonoBehaviour:
   placeholderMaterial: {fileID: 2100000, guid: 34536df488b8f9041bf2df0f008e0d44, type: 2}
   placeholderColor: {r: 1, g: 1, b: 1, a: 1}
   usePlaceholderColor: 0
-  visualLocalPosition: {x: 0, y: 0, z: 0}
+  visualLocalPosition: {x: 0, y: -0.9883414, z: -0.000000038381778}
   visualLocalEulerAngles: {x: 0, y: 0, z: 0}
-  visualLocalScale: {x: 1, y: 1, z: 1}
+  visualLocalScale: {x: 1.2878788, y: 1.2878788, z: 1.2878788}
   interactionPointPosition: {x: 0, y: 1, z: 0}
   effectOriginPosition: {x: 0, y: 1, z: 0}
   uiAnchorPosition: {x: 0, y: 2.2, z: 0}

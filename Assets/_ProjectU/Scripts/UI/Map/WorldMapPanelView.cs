@@ -28,6 +28,8 @@ public sealed class WorldMapPanelView : MonoBehaviour // M과 Alt+N에서 공통
     private WorldMapController controller; // 전체 지도 입력과 상태 관리자
     private Transform playerTarget; // 좌표와 방향을 표시할 플레이어 Transform
     private bool internalReferencesValid; // 프리팹 내부 참조 상태
+    private int lastCoordinateX = int.MinValue; // 마지막 표시 X 좌표
+    private int lastCoordinateZ = int.MinValue; // 마지막 표시 Z 좌표
     private bool listenerRegistered; // 닫기 버튼 이벤트 등록 여부
 
     public bool IsVisible =>
@@ -124,8 +126,16 @@ public sealed class WorldMapPanelView : MonoBehaviour // M과 Alt+N에서 공통
         if (coordinateText != null) // 선택 좌표 Text 연결 여부 확인
         {
             Vector3 playerPosition = playerTarget.position; // 현재 플레이어 월드 위치 조회
-            coordinateText.SetText(
-                $"X {playerPosition.x:0.0}   Z {playerPosition.z:0.0}"); // 현재 X와 Z 좌표 표시
+            int roundedX = Mathf.RoundToInt(playerPosition.x * 10f); // 표시 단위 X 좌표
+            int roundedZ = Mathf.RoundToInt(playerPosition.z * 10f); // 표시 단위 Z 좌표
+
+            if (roundedX != lastCoordinateX || roundedZ != lastCoordinateZ) // 표시 값 변경 시에만 문자열 생성
+            {
+                lastCoordinateX = roundedX; // 마지막 X 좌표 저장
+                lastCoordinateZ = roundedZ; // 마지막 Z 좌표 저장
+                coordinateText.SetText(
+                    $"X {playerPosition.x:0.0}   Z {playerPosition.z:0.0}"); // 현재 X와 Z 좌표 표시
+            }
         }
     }
 

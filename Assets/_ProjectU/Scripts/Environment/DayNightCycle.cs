@@ -5,6 +5,8 @@ using UnityEngine.Rendering; // 환경광 모드 기능
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
 public sealed class DayNightCycle : MonoBehaviour // 낮과 밤 시간 순환 관리
 {
+    private int lastDisplayedTimeKey = -1; // 마지막으로 표시한 날짜·분 값
+
     [Header("References")] // 참조 설정 묶음
     [Tooltip("태양 역할 방향광.")]
     [SerializeField] private Light sunLight; // 태양 역할 방향광
@@ -149,6 +151,14 @@ public sealed class DayNightCycle : MonoBehaviour // 낮과 밤 시간 순환 �
     private void RefreshTimeText() // 날짜와 시간 문구 갱신
     {
         int totalMinutes = Mathf.FloorToInt(currentHour * 60f); // 현재 시간을 전체 분으로 변환
+        int displayKey = currentDay * 1440 + totalMinutes; // 화면 표시 기준 값
+
+        if (displayKey == lastDisplayedTimeKey) // 표시 분이 바뀌지 않았으면 문자열 생성 생략
+        {
+            return; // 문구 갱신 생략
+        }
+
+        lastDisplayedTimeKey = displayKey; // 마지막 표시 값 저장
         int displayHour = totalMinutes / 60 % 24; // 화면 표시 시 계산
         int displayMinute = totalMinutes % 60; // 화면 표시 분 계산
         timeText.text = $"DAY {currentDay}  {displayHour:00}:{displayMinute:00}"; // 날짜와 시간 문구 적용

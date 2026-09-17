@@ -75,6 +75,7 @@ public sealed class ContentVisualDataSourceBinder : MonoBehaviour // 실제 게�
 
     [Tooltip("마지막으로 사용한 ScriptableObject Asset 이름입니다.")] // Inspector 최종 데이터 Asset 이름 설명
     [SerializeField] private string resolvedDataAssetName = string.Empty; // 마지막 데이터 Asset 이름
+    private Object resolvedDataAssetReference; // 마지막 데이터 Asset 참조
 
     [Tooltip("마지막 Identity 및 Visual 동기화 성공 여부입니다.")] // Inspector 최종 동기화 결과 설명
     [SerializeField] private bool lastSynchronizationSucceeded; // 마지막 동기화 성공 여부
@@ -147,13 +148,9 @@ public sealed class ContentVisualDataSourceBinder : MonoBehaviour // 실제 게�
             return; // 아직 초기화되지 않은 데이터 원본이면 다음 검사까지 대기
         }
 
-        string currentAssetName = currentDataAsset == null // 현재 데이터 Asset 존재 여부 확인
-            ? string.Empty // Asset이 없으면 빈 이름 사용
-            : currentDataAsset.name; // Asset이 있으면 Asset 이름 사용
-
         bool hasSourceChanged = currentSourceType != resolvedSourceType // 데이터 원본 종류 변경 여부 확인
             || currentContentId != resolvedContentId // 콘텐츠 ID 변경 여부 확인
-            || currentAssetName != resolvedDataAssetName // 데이터 Asset 변경 여부 확인
+            || currentDataAsset != resolvedDataAssetReference // 데이터 Asset 변경 여부 확인 (이름 문자열 생성 없이 참조 비교)
             || visualIdentity == null // Identity 참조 누락 여부 확인
             || visualIdentity.Category != currentCategory; // Identity 분류 불일치 여부 확인
 
@@ -317,6 +314,7 @@ public sealed class ContentVisualDataSourceBinder : MonoBehaviour // 실제 게�
         resolvedSourceType = currentSourceType; // 마지막 실제 데이터 원본 종류 저장
         resolvedContentId = currentContentId; // 마지막 실제 콘텐츠 ID 저장
         resolvedVisualProfileId = visualIdentity.ResolvedVisualProfileId; // 마지막 계산 Visual Profile ID 저장
+        resolvedDataAssetReference = currentDataAsset; // 마지막 데이터 Asset 참조 저장
         resolvedDataAssetName = currentDataAsset == null // 데이터 Asset 존재 여부 확인
             ? string.Empty // 데이터 Asset이 없으면 빈 이름 저장
             : currentDataAsset.name; // 데이터 Asset이 있으면 Asset 이름 저장

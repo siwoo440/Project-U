@@ -13,6 +13,9 @@ public sealed class WetnessBarUI : MonoBehaviour // 젖음 수치 화면 표시
     [Tooltip("젖음 수치 문구.")]
     [SerializeField] private TMP_Text valueText; // 젖음 수치 문구
 
+    private int lastCurrentValue = int.MinValue; // 마지막 표시 현재값
+    private int lastMaximumValue = int.MinValue; // 마지막 표시 최대값
+
     private void Awake() // UI 참조 검사
     {
         if (playerWetness == null || fillImage == null || valueText == null) // 필수 참조 확인
@@ -29,6 +32,11 @@ public sealed class WetnessBarUI : MonoBehaviour // 젖음 수치 화면 표시
         int currentValue = Mathf.RoundToInt(playerWetness.CurrentWetness); // 현재 젖음 정수 변환
         int maximumValue = Mathf.RoundToInt(playerWetness.MaxWetness); // 최대 젖음 정수 변환
 
-        valueText.SetText($"WETNESS {currentValue} / {maximumValue}"); // 젖음 수치 출력
+        if (currentValue != lastCurrentValue || maximumValue != lastMaximumValue) // 표시 값 변경 시에만 문자열 생성
+        {
+            lastCurrentValue = currentValue; // 마지막 표시 현재값 저장
+            lastMaximumValue = maximumValue; // 마지막 표시 최대값 저장
+            valueText.SetText($"WETNESS {currentValue} / {maximumValue}"); // 젖음 수치 출력
+        }
     }
 }

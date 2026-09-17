@@ -3,6 +3,8 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public sealed class EnemyProjectile : MonoBehaviour
 {
+    private static readonly RaycastHit[] SharedHitBuffer = new RaycastHit[16];
+
     [Header("Runtime")]
     [SerializeField] private GameObject attacker;
     [SerializeField] private float damage;
@@ -71,15 +73,17 @@ public sealed class EnemyProjectile : MonoBehaviour
         }
 
         Vector3 startPosition = transform.position;
-        RaycastHit[] hits = Physics.SphereCastAll(
+        // 모든 투사체가 공유하는 버퍼로 매 프레임 배열 할당 제거
+        int hitCount = Physics.SphereCastNonAlloc(
             startPosition,
             hitRadius,
             moveDirection,
+            SharedHitBuffer,
             travelDistance,
             collisionMask,
             QueryTriggerInteraction.Ignore);
 
-        if (TryFindNearestValidHit(hits, out RaycastHit nearestHit))
+        if (TryFindNearestValidHit(SharedHitBuffer, hitCount, out RaycastHit nearestHit))
         {
             transform.position = startPosition + moveDirection * nearestHit.distance;
             ResolveHit(nearestHit);
@@ -89,13 +93,13 @@ public sealed class EnemyProjectile : MonoBehaviour
         transform.position = startPosition + moveDirection * travelDistance;
     }
 
-    private bool TryFindNearestValidHit(RaycastHit[] hits, out RaycastHit nearestHit)
+    private bool TryFindNearestValidHit(RaycastHit[] hits, int hitCount, out RaycastHit nearestHit)
     {
         nearestHit = default;
         bool foundHit = false;
         float nearestDistance = float.PositiveInfinity;
 
-        for (int index = 0; index < hits.Length; index++)
+        for (int index = 0; index < hitCount; index++)
         {
             RaycastHit currentHit = hits[index];
 

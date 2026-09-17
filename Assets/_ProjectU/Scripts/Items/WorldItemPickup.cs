@@ -8,7 +8,13 @@ public sealed class WorldItemPickup : InteractableBase // 월드 아이템 획�
     [Tooltip("월드 아이템 수량.")]
     [SerializeField] private int quantity = 1; // 월드 아이템 수량
 
+    private static readonly System.Collections.Generic.List<WorldItemPickup> activePickups =
+        new System.Collections.Generic.List<WorldItemPickup>(); // 활성 월드 아이템 목록 (전체 검색 대체)
+
     private WorldObjectIdentity worldObjectIdentity; // 월드 고유 ID 컴포넌트
+    private int activeIndex = -1; // 활성 목록 내 위치
+
+    public static System.Collections.Generic.IReadOnlyList<WorldItemPickup> ActivePickups => activePickups; // 활성 월드 아이템 목록 제공
 
     public ItemData ItemData => itemData; // 현재 아이템 데이터 제공
     public int Quantity => quantity; // 현재 월드 수량 제공
@@ -26,6 +32,39 @@ public sealed class WorldItemPickup : InteractableBase // 월드 아이템 획�
     private void Awake() // 월드 아이템 참조 초기화
     {
         worldObjectIdentity = GetComponent<WorldObjectIdentity>(); // 같은 오브젝트의 ID 검색
+    }
+
+    private void OnEnable() // 활성 월드 아이템 목록 등록
+    {
+        if (activeIndex >= 0) // 중복 등록 확인
+        {
+            return; // 등록 생략
+        }
+
+        activeIndex = activePickups.Count; // 목록 끝 위치 저장
+        activePickups.Add(this); // 활성 목록 추가
+    }
+
+    private void OnDisable() // 활성 월드 아이템 목록 해제
+    {
+        if (activeIndex < 0 || activeIndex >= activePickups.Count || activePickups[activeIndex] != this) // 등록 상태 확인
+        {
+            activeIndex = -1; // 등록 정보 초기화
+            return; // 해제 생략
+        }
+
+        int lastIndex = activePickups.Count - 1; // 마지막 항목 위치
+        WorldItemPickup lastPickup = activePickups[lastIndex]; // 마지막 항목 조회
+        activePickups[activeIndex] = lastPickup; // 마지막 항목을 현재 위치로 이동
+        lastPickup.activeIndex = activeIndex; // 이동한 항목 위치 갱신
+        activePickups.RemoveAt(lastIndex); // 마지막 칸 제거
+        activeIndex = -1; // 현재 항목 등록 해제
+    }
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)] // Domain Reload 비활성화 대비
+    private static void ResetActivePickups() // 정적 목록 초기화
+    {
+        activePickups.Clear(); // 활성 목록 비우기
     }
     private void OnValidate() // Inspector 값 검증
     {

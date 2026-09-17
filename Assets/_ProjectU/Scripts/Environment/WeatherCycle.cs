@@ -5,6 +5,8 @@ using UnityEngine; // Unity 기본 기능
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
 public sealed class WeatherCycle : MonoBehaviour // 기본 날씨 순환 관리
 {
+    private int lastDisplayedWeatherKey = -1; // 마지막으로 표시한 날씨·남은 시간 값
+
     [Header("References")] // 참조 설정 묶음
     [Tooltip("날짜와 시간 관리자.")]
     [SerializeField] private DayNightCycle dayNightCycle; // 날짜와 시간 관리자
@@ -352,6 +354,14 @@ public sealed class WeatherCycle : MonoBehaviour // 기본 날씨 순환 관리
         int totalMinutes = Mathf.CeilToInt(Mathf.Max(0f, remainingWeatherHours) * 60f); // 남은 시간을 전체 분으로 변환
         int displayHours = totalMinutes / 60; // 화면 표시 시간 계산
         int displayMinutes = totalMinutes % 60; // 화면 표시 분 계산
+        int displayKey = totalMinutes * 16 + (int)currentWeather; // 날씨와 남은 분 조합 값
+
+        if (displayKey == lastDisplayedWeatherKey) // 표시 내용이 같으면 문자열 생성 생략
+        {
+            return; // 문구 갱신 생략
+        }
+
+        lastDisplayedWeatherKey = displayKey; // 마지막 표시 값 저장
         weatherText.text = $"{GetWeatherLabel()}  {displayHours:00}:{displayMinutes:00}"; // 날씨와 남은 시간 표시
     }
 

@@ -77,7 +77,10 @@ public sealed class EnemyCombatFeedback : MonoBehaviour
     private readonly List<Renderer> flashRenderers = new List<Renderer>();
     private readonly List<Color> flashBaseColors = new List<Color>();
     private readonly List<bool> flashHadBlockColor = new List<bool>();
+    // 여러 Material 슬롯을 가진 저폴리 모델은 슬롯별 원래 색을 따로 기억
+    private readonly List<Color[]> flashSlotColors = new List<Color[]>();
     private MaterialPropertyBlock propertyBlock;
+    private MaterialPropertyBlock emptyBlock;
 
     private EnemyWorldHealthBar healthBar;
     private TextMeshPro warningMarker;
@@ -106,6 +109,7 @@ public sealed class EnemyCombatFeedback : MonoBehaviour
     {
         ResolveReferences();
         propertyBlock = new MaterialPropertyBlock();
+        emptyBlock = new MaterialPropertyBlock();
 
         if (enemyHealth == null)
         {
@@ -362,6 +366,7 @@ public sealed class EnemyCombatFeedback : MonoBehaviour
         flashRenderers.Clear();
         flashBaseColors.Clear();
         flashHadBlockColor.Clear();
+        flashSlotColors.Clear();
 
         Transform searchRoot = visualTransform != null ? visualTransform : transform;
         Renderer[] renderers = searchRoot.GetComponentsInChildren<Renderer>(false);
@@ -389,8 +394,28 @@ public sealed class EnemyCombatFeedback : MonoBehaviour
             flashRenderers.Add(current);
             flashBaseColors.Add(baseColor);
             flashHadBlockColor.Add(hasBlockColor);
+            flashSlotColors.Add(hasBlockColor ? null : GetSlotColors(current));
             propertyBlock.Clear();
         }
+    }
+
+    private static Color[] GetSlotColors(Renderer target)
+    {
+        Material[] materials = target.sharedMaterials;
+
+        if (materials.Length <= 1)
+        {
+            return null;
+        }
+
+        Color[] colors = new Color[materials.Length];
+
+        for (int index = 0; index < materials.Length; index++)
+        {
+            colors[index] = GetMaterialColor(materials[index]);
+        }
+
+        return colors;
     }
 
     private void ApplyFlashColor(float weight)
@@ -401,6 +426,23 @@ public sealed class EnemyCombatFeedback : MonoBehaviour
 
             if (current == null)
             {
+                continue;
+            }
+
+            Color[] slotColors = flashSlotColors[index];
+
+            if (slotColors != null)
+            {
+                for (int slot = 0; slot < slotColors.Length; slot++)
+                {
+                    Color slotColor = Color.Lerp(slotColors[slot], hitFlashColor, weight);
+                    propertyBlock.Clear();
+                    propertyBlock.SetColor(BaseColorId, slotColor);
+                    propertyBlock.SetColor(ColorId, slotColor);
+                    current.SetPropertyBlock(propertyBlock, slot);
+                }
+
+                propertyBlock.Clear();
                 continue;
             }
 
@@ -424,6 +466,18 @@ public sealed class EnemyCombatFeedback : MonoBehaviour
                 continue;
             }
 
+            Color[] slotColors = flashSlotColors[index];
+
+            if (slotColors != null)
+            {
+                for (int slot = 0; slot < slotColors.Length; slot++)
+                {
+                    current.SetPropertyBlock(emptyBlock, slot);
+                }
+
+                continue;
+            }
+
             if (flashHadBlockColor[index])
             {
                 current.GetPropertyBlock(propertyBlock);
@@ -442,6 +496,7 @@ public sealed class EnemyCombatFeedback : MonoBehaviour
         flashRenderers.Clear();
         flashBaseColors.Clear();
         flashHadBlockColor.Clear();
+        flashSlotColors.Clear();
         isFlashing = false;
     }
 

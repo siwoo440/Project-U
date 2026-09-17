@@ -15,7 +15,7 @@ MonoBehaviour:
   profileId: visual_item_wood
   displayName: WOOD ITEM VISUAL
   category: 1
-  visualPrefab: {fileID: 0}
+  visualPrefab: {fileID: 2654078869216910477, guid: cb7f510340a12dc468d3626b42fcb29a, type: 3}
   icon: {fileID: 0}
   materialOverride: {fileID: 0}
   animatorController: {fileID: 0}
@@ -24,9 +24,9 @@ MonoBehaviour:
   placeholderMaterial: {fileID: 2100000, guid: afcb74a3794ffd34987b570d0d480b99, type: 2}
   placeholderColor: {r: 1, g: 1, b: 1, a: 1}
   usePlaceholderColor: 0
-  visualLocalPosition: {x: 0, y: 0, z: 0}
+  visualLocalPosition: {x: -0.021279715, y: -0.39827198, z: -0.000000017833722}
   visualLocalEulerAngles: {x: 0, y: 0, z: 0}
-  visualLocalScale: {x: 0.5, y: 0.25, z: 0.5}
+  visualLocalScale: {x: 1.1968008, y: 1.1968008, z: 1.1968008}
   interactionPointPosition: {x: 0, y: 0.3, z: 0}
   effectOriginPosition: {x: 0, y: 0.3, z: 0}
   uiAnchorPosition: {x: 0, y: 0.8, z: 0}

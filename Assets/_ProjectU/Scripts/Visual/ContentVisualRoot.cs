@@ -453,7 +453,27 @@ public sealed class ContentVisualRoot : MonoBehaviour // 게임 로직 Root와 �
             return; // 외형 검색 처리 종료
         }
 
-        activeVisualObject = visualInstanceRoot.GetChild(0).gameObject; // 첫 번째 VisualInstance 자식을 현재 외형으로 연결
+        bool hasValidCurrent = activeVisualObject != null // 이미 연결된 외형 존재 확인
+            && activeVisualObject.activeSelf // 제거 대기 중(비활성) 외형 제외
+            && activeVisualObject.transform.parent == visualInstanceRoot; // VisualInstance 직속 자식 확인
+
+        if (hasValidCurrent) // Profile 적용으로 이미 새 외형이 연결된 경우
+        {
+            return; // 기존 연결 유지
+        }
+
+        activeVisualObject = null; // 현재 외형 참조 초기화
+
+        for (int index = visualInstanceRoot.childCount - 1; index >= 0; index--) // 가장 최근 자식부터 검색
+        {
+            GameObject child = visualInstanceRoot.GetChild(index).gameObject; // 현재 자식 조회
+
+            if (child.activeSelf) // 제거 대기 중인 비활성 외형 제외
+            {
+                activeVisualObject = child; // 활성 외형을 현재 외형으로 연결
+                return; // 검색 종료
+            }
+        }
     }
 
     private Transform GetOrCreateDirectChild(Transform parentTransform, string childName, Vector3 defaultLocalPosition) // 지정 부모 아래 표준 자식을 검색하거나 생성

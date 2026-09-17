@@ -1,0 +1,149 @@
+using UnityEngine;
+
+// 78일차: 저폴리 임시 모델에서 사용하는 공통 색상 목록
+// 색상마다 Material 하나를 만들어 모든 모델이 공유한다 (SRP Batcher 친화적).
+public enum StylizedColor
+{
+    BarkDark = 0,
+    Bark = 1,
+    WoodLight = 2,
+    WoodPlank = 3,
+    WoodDark = 4,
+    LeafDark = 10,
+    Leaf = 11,
+    LeafLight = 12,
+    LeafAutumn = 13,
+    Grass = 14,
+    StoneDark = 20,
+    Stone = 21,
+    StoneLight = 22,
+    Sand = 23,
+    Dirt = 24,
+    Iron = 30,
+    IronDark = 31,
+    Gold = 32,
+    Copper = 33,
+    ClothRed = 40,
+    ClothBlue = 41,
+    ClothGreen = 42,
+    ClothCream = 43,
+    Leather = 44,
+    Rope = 45,
+    Skin = 50,
+    Hair = 51,
+    Eye = 52,
+    White = 53,
+    Black = 54,
+    AppleRed = 60,
+    BerryPurple = 61,
+    MushroomCap = 62,
+    MushroomStem = 63,
+    Flower = 64,
+    FlowerYellow = 65,
+    Herb = 66,
+    Crystal = 67,
+    Ore = 68,
+    EnemySkin = 70,
+    EnemySkinDark = 71,
+    EnemyBelly = 72,
+    SpitterSkin = 73,
+    SpitterSac = 74,
+    Bone = 75,
+    Slime = 76,
+    Fire = 80,
+    FireCore = 81,
+    LampGlow = 82,
+    Water = 83,
+    Glass = 84,
+    Snow = 85,
+    Mountain = 86,
+    MountainDark = 87
+}
+
+public static class StylizedPalette
+{
+    public readonly struct Entry
+    {
+        public readonly Color Color;
+        public readonly float Smoothness;
+        public readonly float Metallic;
+        public readonly float Emission;
+        public readonly bool Transparent;
+
+        public Entry(Color color, float smoothness = 0.15f, float metallic = 0f, float emission = 0f, bool transparent = false)
+        {
+            Color = color;
+            Smoothness = smoothness;
+            Metallic = metallic;
+            Emission = emission;
+            Transparent = transparent;
+        }
+    }
+
+    public static Entry Get(StylizedColor color)
+    {
+        switch (color)
+        {
+            case StylizedColor.BarkDark: return new Entry(Hex(0x4A3322));
+            case StylizedColor.Bark: return new Entry(Hex(0x6B4A2F));
+            case StylizedColor.WoodLight: return new Entry(Hex(0xC39A63));
+            case StylizedColor.WoodPlank: return new Entry(Hex(0xA37848));
+            case StylizedColor.WoodDark: return new Entry(Hex(0x7A5433));
+            case StylizedColor.LeafDark: return new Entry(Hex(0x2F6B3A));
+            case StylizedColor.Leaf: return new Entry(Hex(0x4C9A45));
+            case StylizedColor.LeafLight: return new Entry(Hex(0x7FBF4F));
+            case StylizedColor.LeafAutumn: return new Entry(Hex(0xD98B2B));
+            case StylizedColor.Grass: return new Entry(Hex(0x6DAE45));
+            case StylizedColor.StoneDark: return new Entry(Hex(0x5E6268));
+            case StylizedColor.Stone: return new Entry(Hex(0x8A8F96));
+            case StylizedColor.StoneLight: return new Entry(Hex(0xB5B8BC));
+            case StylizedColor.Sand: return new Entry(Hex(0xD8C38F));
+            case StylizedColor.Dirt: return new Entry(Hex(0x8B6A45));
+            case StylizedColor.Iron: return new Entry(Hex(0xA7AFB8), 0.55f, 0.6f);
+            case StylizedColor.IronDark: return new Entry(Hex(0x565D66), 0.45f, 0.5f);
+            case StylizedColor.Gold: return new Entry(Hex(0xE3B341), 0.6f, 0.8f);
+            case StylizedColor.Copper: return new Entry(Hex(0xC0703A), 0.5f, 0.6f);
+            case StylizedColor.ClothRed: return new Entry(Hex(0xB8433A));
+            case StylizedColor.ClothBlue: return new Entry(Hex(0x3F6FA8));
+            case StylizedColor.ClothGreen: return new Entry(Hex(0x557A3C));
+            case StylizedColor.ClothCream: return new Entry(Hex(0xE9DDC0));
+            case StylizedColor.Leather: return new Entry(Hex(0x7B4F2C), 0.25f);
+            case StylizedColor.Rope: return new Entry(Hex(0xC9A86A));
+            case StylizedColor.Skin: return new Entry(Hex(0xF1C6A0));
+            case StylizedColor.Hair: return new Entry(Hex(0x5A3A26));
+            case StylizedColor.Eye: return new Entry(Hex(0x1E1E24), 0.6f);
+            case StylizedColor.White: return new Entry(Hex(0xF4F4F0));
+            case StylizedColor.Black: return new Entry(Hex(0x1C1C20));
+            case StylizedColor.AppleRed: return new Entry(Hex(0xD13A34), 0.45f);
+            case StylizedColor.BerryPurple: return new Entry(Hex(0x6B3FA0), 0.45f);
+            case StylizedColor.MushroomCap: return new Entry(Hex(0xC8453B), 0.3f);
+            case StylizedColor.MushroomStem: return new Entry(Hex(0xEFE6D2));
+            case StylizedColor.Flower: return new Entry(Hex(0xE86FA6));
+            case StylizedColor.FlowerYellow: return new Entry(Hex(0xF2CE3F));
+            case StylizedColor.Herb: return new Entry(Hex(0x8FBF6A));
+            case StylizedColor.Crystal: return new Entry(Hex(0x6FD3E8), 0.8f, 0f, 0.35f);
+            case StylizedColor.Ore: return new Entry(Hex(0xB07B55), 0.45f, 0.4f);
+            case StylizedColor.EnemySkin: return new Entry(Hex(0x6E8F3E), 0.2f);
+            case StylizedColor.EnemySkinDark: return new Entry(Hex(0x4A6329), 0.2f);
+            case StylizedColor.EnemyBelly: return new Entry(Hex(0xB9C27A), 0.2f);
+            case StylizedColor.SpitterSkin: return new Entry(Hex(0x7A4FA3), 0.35f);
+            case StylizedColor.SpitterSac: return new Entry(Hex(0xB6E35A), 0.55f, 0f, 0.45f);
+            case StylizedColor.Bone: return new Entry(Hex(0xE8DFC8));
+            case StylizedColor.Slime: return new Entry(Hex(0x9BE04F), 0.7f, 0f, 0.6f);
+            case StylizedColor.Fire: return new Entry(Hex(0xFF6A1A), 0f, 0f, 1.4f);
+            case StylizedColor.FireCore: return new Entry(Hex(0xFFC84A), 0f, 0f, 1.9f);
+            case StylizedColor.LampGlow: return new Entry(Hex(0xFFE3A1), 0f, 0f, 2.5f);
+            case StylizedColor.Water: return new Entry(new Color(0.24f, 0.56f, 0.75f, 0.72f), 0.85f, 0f, 0f, true);
+            case StylizedColor.Glass: return new Entry(new Color(0.75f, 0.9f, 1f, 0.45f), 0.9f, 0f, 0f, true);
+            case StylizedColor.Snow: return new Entry(Hex(0xF3F7FA));
+            case StylizedColor.Mountain: return new Entry(Hex(0x7C8C9E));
+            case StylizedColor.MountainDark: return new Entry(Hex(0x5A6878));
+            default: return new Entry(Color.magenta);
+        }
+    }
+
+    private static Color Hex(int rgb)
+    {
+        return new Color(((rgb >> 16) & 0xFF) / 255f, ((rgb >> 8) & 0xFF) / 255f, (rgb & 0xFF) / 255f, 1f);
+    }
+}

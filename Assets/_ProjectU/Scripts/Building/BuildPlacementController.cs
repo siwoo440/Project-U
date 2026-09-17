@@ -7,6 +7,17 @@ using UnityEngine.InputSystem; // 새로운 입력 시스템
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
 public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축 배치 관리자
 {
+    private readonly Collider[] overlapBuffer = new Collider[64]; // 배치 장애물 검사 재사용 버퍼
+    private readonly StringBuilder sharedStatusBuilder = new StringBuilder(256); // 상태 문구 재사용 조합기
+    private readonly List<int> statusAmountBuffer = new List<int>(); // 현재 재료 보유량 임시 목록
+    private readonly List<int> lastStatusAmounts = new List<int>(); // 마지막 표시 재료 보유량
+    private string lastStatusHeadline; // 마지막 표시 상태 문구
+    private BuildRecipeData lastStatusRecipe; // 마지막 표시 건축물
+    private Renderer[] previewMaterialCacheSource; // 재질 배열 캐시 기준 렌더러 목록
+    private Material[][] previewValidMaterialArrays; // 렌더러별 설치 가능 재질 배열
+    private Material[][] previewInvalidMaterialArrays; // 렌더러별 설치 불가능 재질 배열
+    private bool? lastPreviewMaterialValid; // 마지막으로 적용한 미리보기 상태
+
     [Header("References")] // 외부 참조 묶음
     [Tooltip("일반 플레이 중 사용하는 기본 플레이어 Camera입니다.")]
     [SerializeField] private Camera mainCamera; // 기본 플레이어 Camera
@@ -798,14 +809,28 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
         halfExtents.y = Mathf.Max(0.01f, halfExtents.y - collisionPadding); // Y 충돌 크기 축소
         halfExtents.z = Mathf.Max(0.01f, halfExtents.z - collisionPadding); // Z 충돌 크기 축소
 
-        Collider[] overlaps = Physics.OverlapBox(
+        int overlapCount = Physics.OverlapBoxNonAlloc(
             checkCenter,
             halfExtents,
+            overlapBuffer,
             previewRotation,
             obstructionLayerMask,
-            QueryTriggerInteraction.Ignore); // 주변 장애물 탐지
+            QueryTriggerInteraction.Ignore); // 재사용 버퍼로 주변 장애물 탐지
 
-        for (int index = 0; index < overlaps.Length; index++) // 탐지된 충돌체 순회
+        Collider[] overlaps = overlapBuffer; // 검사 대상 배열
+
+        if (overlapCount >= overlapBuffer.Length) // 버퍼가 가득 차 누락 가능성이 있는지 확인
+        {
+            overlaps = Physics.OverlapBox(
+                checkCenter,
+                halfExtents,
+                previewRotation,
+                obstructionLayerMask,
+                QueryTriggerInteraction.Ignore); // 누락 방지를 위한 전체 탐지
+            overlapCount = overlaps.Length; // 전체 탐지 개수 적용
+        }
+
+        for (int index = 0; index < overlapCount; index++) // 탐지된 충돌체 순회
         {
             Collider overlap = overlaps[index]; // 현재 충돌체 조회
             PlacedBuildObject existingBuildObject = overlap.GetComponentInParent<PlacedBuildObject>(); // 설치 건축물 조회
@@ -1224,6 +1249,18 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
             return; // 재질 처리 중단
         }
 
+        if (previewMaterialCacheSource != previewRenderers) // 새 미리보기 렌더러 목록 확인
+        {
+            RebuildPreviewMaterialCache(); // 재질 슬롯 배열 캐시 재구성
+        }
+        else if (lastPreviewMaterialValid == isValid) // 같은 상태 재적용 여부 확인
+        {
+            return; // 매 프레임 동일 재질 적용 생략
+        }
+
+        lastPreviewMaterialValid = isValid; // 마지막 적용 상태 저장
+        Material[][] cachedArrays = isValid ? previewValidMaterialArrays : previewInvalidMaterialArrays; // 상태별 재질 배열 선택
+
         for (int index = 0; index < previewRenderers.Length; index++) // 전체 렌더러 순회
         {
             Renderer targetRenderer = previewRenderers[index]; // 현재 렌더러 조회
@@ -1233,13 +1270,52 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
                 continue; // 빈 렌더러 제외
             }
 
-            targetRenderer.sharedMaterial = targetMaterial; // 설치 상태 재질 적용
+            Material[] materials = cachedArrays[index]; // 슬롯 수에 맞춘 재질 배열
+
+            if (materials == null || materials.Length <= 1) // 단일 재질 렌더러 확인
+            {
+                targetRenderer.sharedMaterial = targetMaterial; // 설치 상태 재질 적용
+                continue; // 다음 렌더러 처리
+            }
+
+            targetRenderer.sharedMaterials = materials; // 여러 색상 모델의 모든 슬롯에 설치 상태 재질 적용
+        }
+    }
+
+    private void RebuildPreviewMaterialCache() // 미리보기 렌더러별 재질 슬롯 배열 준비
+    {
+        previewMaterialCacheSource = previewRenderers; // 캐시 기준 목록 저장
+        lastPreviewMaterialValid = null; // 적용 상태 초기화
+        int count = previewRenderers == null ? 0 : previewRenderers.Length; // 렌더러 수
+        previewValidMaterialArrays = new Material[count][]; // 설치 가능 배열 목록
+        previewInvalidMaterialArrays = new Material[count][]; // 설치 불가능 배열 목록
+
+        for (int index = 0; index < count; index++) // 전체 렌더러 순회
+        {
+            Renderer targetRenderer = previewRenderers[index]; // 현재 렌더러 조회
+            int slotCount = targetRenderer == null ? 1 : Mathf.Max(1, targetRenderer.sharedMaterials.Length); // 재질 슬롯 수
+            Material[] validArray = new Material[slotCount]; // 설치 가능 재질 배열
+            Material[] invalidArray = new Material[slotCount]; // 설치 불가능 재질 배열
+
+            for (int slot = 0; slot < slotCount; slot++) // 전체 슬롯 순회
+            {
+                validArray[slot] = validPreviewMaterial; // 설치 가능 재질 채우기
+                invalidArray[slot] = invalidPreviewMaterial; // 설치 불가능 재질 채우기
+            }
+
+            previewValidMaterialArrays[index] = validArray; // 설치 가능 배열 저장
+            previewInvalidMaterialArrays[index] = invalidArray; // 설치 불가능 배열 저장
         }
     }
 
     private void RefreshStatus(string headline) // 건축 상태 문구 갱신
     {
-        StringBuilder statusBuilder = new StringBuilder(); // 상태 문구 조합기 생성
+        if (!HasStatusChanged(headline, currentRecipe)) // 같은 문구 반복 생성 확인
+        {
+            return; // 매 프레임 동일 문구 재생성 생략
+        }
+
+        StringBuilder statusBuilder = sharedStatusBuilder.Clear(); // 재사용 문구 조합기 초기화
         statusBuilder.AppendLine(headline); // 설치 상태 추가
         statusBuilder.AppendLine(currentRecipe.DisplayName); // 건축물 이름 추가
         statusBuilder.AppendLine($"TYPE: {currentRecipe.PlacementType}"); // 배치 종류 추가
@@ -1270,7 +1346,14 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
 
     private void RefreshRemovalStatus(string headline) // 철거 상태 문구 갱신
     {
-        StringBuilder statusBuilder = new StringBuilder(); // 상태 문구 조합기 생성
+        BuildRecipeData removalRecipe = currentRemovalTarget == null ? null : currentRemovalTarget.RecipeData; // 현재 철거 대상 데이터
+
+        if (!HasStatusChanged(headline, removalRecipe)) // 같은 문구 반복 생성 확인
+        {
+            return; // 매 프레임 동일 문구 재생성 생략
+        }
+
+        StringBuilder statusBuilder = sharedStatusBuilder.Clear(); // 재사용 문구 조합기 초기화
         statusBuilder.AppendLine(headline); // 현재 철거 상태 추가
 
         if (currentRemovalTarget == null || currentRemovalTarget.RecipeData == null) // 유효한 철거 대상 확인
@@ -1311,6 +1394,45 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
         statusBuilder.AppendLine("LMB - REMOVE"); // 철거 입력 안내 추가
         statusBuilder.AppendLine("R - PLACEMENT MODE"); // 설치 모드 안내 추가
         buildStatusText.SetText(statusBuilder.ToString()); // 완성 철거 문구 표시
+    }
+
+    // 상태 문구·대상 건축물·보유 재료 수가 이전과 같으면 false
+    private bool HasStatusChanged(string headline, BuildRecipeData recipe)
+    {
+        statusAmountBuffer.Clear(); // 현재 보유량 목록 초기화
+
+        if (recipe != null && playerInventory != null) // 재료 확인 가능 여부
+        {
+            IReadOnlyList<CraftingIngredient> ingredients = recipe.Ingredients; // 재료 목록 조회
+
+            for (int index = 0; index < ingredients.Count; index++) // 전체 재료 순회
+            {
+                CraftingIngredient ingredient = ingredients[index]; // 현재 재료 조회
+                statusAmountBuffer.Add(ingredient == null || ingredient.ItemData == null
+                    ? -1
+                    : playerInventory.GetItemQuantity(ingredient.ItemData)); // 보유량 저장
+            }
+        }
+
+        bool isSame = ReferenceEquals(headline, lastStatusHeadline) // 같은 문구 참조 확인
+            && recipe == lastStatusRecipe // 같은 건축물 확인
+            && statusAmountBuffer.Count == lastStatusAmounts.Count; // 재료 수 확인
+
+        for (int index = 0; isSame && index < statusAmountBuffer.Count; index++) // 보유량 비교
+        {
+            isSame = statusAmountBuffer[index] == lastStatusAmounts[index]; // 보유량 일치 여부
+        }
+
+        if (isSame) // 변화 없음 확인
+        {
+            return false; // 갱신 불필요 반환
+        }
+
+        lastStatusHeadline = headline; // 마지막 문구 저장
+        lastStatusRecipe = recipe; // 마지막 건축물 저장
+        lastStatusAmounts.Clear(); // 이전 보유량 초기화
+        lastStatusAmounts.AddRange(statusAmountBuffer); // 현재 보유량 저장
+        return true; // 갱신 필요 반환
     }
 
     private void AppendCameraControls(StringBuilder statusBuilder) // 자유 건축 Camera 공통 조작 안내 추가
