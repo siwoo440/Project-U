@@ -18760,6 +18760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dcf179b7b5964543af7b92d7daf70aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawnPoint
+  spawnPointId: enemy_spawn_meleegrunt_02
   enemyPrefab: {fileID: 8463353821672121884, guid: a78fb05c57bbd42448d691e31d899bde, type: 3}
   runtimeEnemyParent: {fileID: 1174986352}
   spawnOnStart: 1
@@ -18908,6 +18909,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dcf179b7b5964543af7b92d7daf70aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawnPoint
+  spawnPointId: enemy_spawn_meleegrunt_01
   enemyPrefab: {fileID: 8463353821672121884, guid: a78fb05c57bbd42448d691e31d899bde, type: 3}
   runtimeEnemyParent: {fileID: 1174986352}
   spawnOnStart: 1
@@ -22216,6 +22218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dcf179b7b5964543af7b92d7daf70aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawnPoint
+  spawnPointId: enemy_spawn_rangedspitter_01
   enemyPrefab: {fileID: 8463353821672121884, guid: 5aa57aa0f0644144192204353f832b62, type: 3}
   runtimeEnemyParent: {fileID: 1174986352}
   spawnOnStart: 1

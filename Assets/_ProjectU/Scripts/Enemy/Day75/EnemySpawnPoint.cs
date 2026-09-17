@@ -5,6 +5,10 @@ using UnityEngine.AI;
 [DisallowMultipleComponent]
 public sealed class EnemySpawnPoint : MonoBehaviour
 {
+    [Header("Save")]
+    [Tooltip("저장 파일에서 이 Spawn Point를 구분할 고유 ID입니다. Scene마다 서로 달라야 합니다.")]
+    [SerializeField] private string spawnPointId = string.Empty;
+
     [Header("Enemy")]
     [Tooltip("이 Spawn Point에서 생성할 적 Prefab입니다.")]
     [SerializeField] private GameObject enemyPrefab;
@@ -47,13 +51,21 @@ public sealed class EnemySpawnPoint : MonoBehaviour
     [SerializeField] private GameObject currentEnemy;
     [SerializeField] private EnemyHealth currentEnemyHealth;
     [SerializeField] private bool waitingForRespawn;
+    [SerializeField] private bool isPermanentlyCleared;
 
     private Coroutine spawnRoutine;
+    private float respawnAtTime;
 
     public GameObject CurrentEnemy => currentEnemy;
     public bool HasLivingEnemy =>
         currentEnemyHealth != null
         && !currentEnemyHealth.IsDead;
+    public string SpawnPointId => spawnPointId;
+    public bool HasValidSpawnPointId => !string.IsNullOrWhiteSpace(spawnPointId);
+    public bool IsDefeated => waitingForRespawn || isPermanentlyCleared;
+    public float RespawnRemainingSeconds => isPermanentlyCleared || (waitingForRespawn && !respawnEnabled)
+        ? -1f
+        : waitingForRespawn ? Mathf.Max(0f, respawnAtTime - Time.time) : 0f;
 
     private void Start()
     {
@@ -87,6 +99,87 @@ public sealed class EnemySpawnPoint : MonoBehaviour
         }
 
         return SpawnEnemy();
+    }
+
+    // 77일차: 저장 파일의 처치·재생성 대기 상태를 현재 Spawn Point에 적용
+    public void ApplySavedState(bool isDefeated, float respawnRemainingSeconds)
+    {
+        if (spawnRoutine != null)
+        {
+            StopCoroutine(spawnRoutine);
+            spawnRoutine = null;
+        }
+
+        if (!isDefeated)
+        {
+            waitingForRespawn = false;
+            isPermanentlyCleared = false;
+
+            // 재생성 루틴을 멈췄으므로 남아 있는 시체는 직접 정리
+            if (currentEnemy != null && !HasLivingEnemy)
+            {
+                RemoveCurrentEnemy();
+            }
+
+            if (currentEnemy == null)
+            {
+                SpawnEnemy();
+            }
+
+            return;
+        }
+
+        RemoveCurrentEnemy();
+
+        if (!respawnEnabled || respawnRemainingSeconds < 0f)
+        {
+            waitingForRespawn = false;
+            isPermanentlyCleared = true;
+            return;
+        }
+
+        float remaining = Mathf.Clamp(respawnRemainingSeconds, 0f, respawnDelay);
+        isPermanentlyCleared = false;
+        waitingForRespawn = true;
+        respawnAtTime = Time.time + remaining;
+        spawnRoutine = StartCoroutine(DelayedRespawnRoutine(remaining));
+
+        if (logSpawnResults)
+        {
+            Debug.Log($"{gameObject.name} 저장 상태 복원 / {remaining:0.#}초 후 재생성", this);
+        }
+    }
+
+    public void AssignSpawnPointId(string newSpawnPointId)
+    {
+        spawnPointId = string.IsNullOrWhiteSpace(newSpawnPointId)
+            ? string.Empty
+            : newSpawnPointId.Trim();
+    }
+
+    private void RemoveCurrentEnemy()
+    {
+        UnsubscribeCurrentEnemy();
+
+        if (currentEnemy != null)
+        {
+            Destroy(currentEnemy);
+        }
+
+        currentEnemy = null;
+        currentEnemyHealth = null;
+    }
+
+    private IEnumerator DelayedRespawnRoutine(float delay)
+    {
+        if (delay > 0f)
+        {
+            yield return new WaitForSeconds(delay);
+        }
+
+        waitingForRespawn = false;
+        spawnRoutine = null;
+        SpawnEnemy();
     }
 
     private void ScheduleInitialSpawn()
@@ -176,6 +269,7 @@ public sealed class EnemySpawnPoint : MonoBehaviour
         }
 
         waitingForRespawn = true;
+        respawnAtTime = Time.time + respawnDelay;
 
         if (spawnRoutine != null)
         {
@@ -207,6 +301,7 @@ public sealed class EnemySpawnPoint : MonoBehaviour
         if (!respawnEnabled)
         {
             waitingForRespawn = false;
+            isPermanentlyCleared = true;
             spawnRoutine = null;
             yield break;
         }

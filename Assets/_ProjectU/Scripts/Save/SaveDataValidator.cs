@@ -97,6 +97,11 @@ public static class SaveDataValidator // 저장 데이터 유효성 검사
             return false; // 전체 검사 실패
         }
 
+        if (!TryValidateEnemySpawnData(saveData, out errorMessage)) // 적 스폰 지점 데이터 검사
+        {
+            return false; // 전체 검사 실패
+        }
+
         errorMessage = string.Empty; // 오류 내용 초기화
         return true; // 전체 검사 성공
     }
@@ -130,6 +135,54 @@ public static class SaveDataValidator // 저장 데이터 유효성 검사
             if (!usedRecipeIds.Add(recipeId)) // 중복 제작법 ID 확인
             {
                 errorMessage = $"중복 제작법 ID가 저장되어 있습니다: {recipeId}"; // 중복 오류 저장
+                return false; // 검사 실패
+            }
+        }
+
+        errorMessage = string.Empty; // 오류 내용 초기화
+        return true; // 검사 성공
+    }
+
+    private static bool TryValidateEnemySpawnData(SaveGameData saveData, out string errorMessage) // 적 스폰 지점 저장 데이터 검사
+    {
+        if (!saveData.hasEnemySpawnData) // 이전 저장 파일 확인
+        {
+            errorMessage = string.Empty; // 오류 내용 초기화
+            return true; // 이전 저장 파일 허용
+        }
+
+        if (saveData.enemySpawns == null || saveData.enemySpawns.spawnPoints == null) // 적 스폰 저장 묶음 확인
+        {
+            errorMessage = "적 스폰 지점 저장 목록이 누락되었습니다."; // 목록 오류 저장
+            return false; // 검사 실패
+        }
+
+        System.Collections.Generic.HashSet<string> usedIds =
+            new System.Collections.Generic.HashSet<string>(System.StringComparer.Ordinal); // 중복 확인 ID 목록
+
+        for (int index = 0; index < saveData.enemySpawns.spawnPoints.Count; index++) // 전체 적 스폰 지점 순회
+        {
+            EnemySpawnPointSaveData spawnPointData = saveData.enemySpawns.spawnPoints[index]; // 현재 스폰 지점 조회
+
+            if (spawnPointData == null || string.IsNullOrWhiteSpace(spawnPointData.spawnPointId)) // 항목과 ID 확인
+            {
+                errorMessage = $"적 스폰 지점 저장 항목 {index}의 ID가 비어 있습니다."; // ID 오류 저장
+                return false; // 검사 실패
+            }
+
+            if (!usedIds.Add(spawnPointData.spawnPointId)) // ID 중복 확인
+            {
+                errorMessage = $"적 스폰 지점 ID가 중복되었습니다: {spawnPointData.spawnPointId}"; // 중복 오류 저장
+                return false; // 검사 실패
+            }
+
+            bool hasInvalidTime = float.IsNaN(spawnPointData.respawnRemainingSeconds)
+                || float.IsInfinity(spawnPointData.respawnRemainingSeconds)
+                || spawnPointData.respawnRemainingSeconds < -1f; // 남은 시간 유효성 계산
+
+            if (hasInvalidTime) // 남은 시간 오류 확인
+            {
+                errorMessage = $"적 스폰 지점 재생성 시간이 잘못되었습니다: {spawnPointData.spawnPointId}"; // 시간 오류 저장
                 return false; // 검사 실패
             }
         }

@@ -33,6 +33,10 @@ public sealed class SaveGameData // 전체 저장 파일 최상위 데이터
     public bool hasStorageData; // 보관함 저장 데이터 존재 여부
     [Tooltip("전체 보관함 저장 데이터.")]
     public StorageSaveData storage = new StorageSaveData(); // 전체 보관함 저장 데이터
+    [Tooltip("적 스폰 지점 저장 데이터 존재 여부.")]
+    public bool hasEnemySpawnData; // 적 스폰 지점 저장 데이터 존재 여부
+    [Tooltip("전체 적 스폰 지점 저장 데이터.")]
+    public EnemySpawnSaveData enemySpawns = new EnemySpawnSaveData(); // 전체 적 스폰 지점 저장 데이터
 
     public static SaveGameData CreateNew(string newSceneName) // 새로운 저장 데이터 생성
     {
@@ -234,6 +238,24 @@ public sealed class StorageSlotSaveData // 단일 보관함 슬롯 저장 데이
     public string itemId = string.Empty; // 보관 아이템 고유 ID
     [Tooltip("보관 아이템 수량.")]
     public int quantity; // 보관 아이템 수량
+}
+
+[Serializable] // JSON 직렬화 허용
+public sealed class EnemySpawnSaveData // 전체 적 스폰 지점 저장 데이터
+{
+    [Tooltip("적 스폰 지점 목록.")]
+    public List<EnemySpawnPointSaveData> spawnPoints = new List<EnemySpawnPointSaveData>(); // 적 스폰 지점 목록
+}
+
+[Serializable] // JSON 직렬화 허용
+public sealed class EnemySpawnPointSaveData // 단일 적 스폰 지점 저장 데이터
+{
+    [Tooltip("적 스폰 지점 고유 ID.")]
+    public string spawnPointId = string.Empty; // 적 스폰 지점 고유 ID
+    [Tooltip("적이 처치되어 비어 있는 상태.")]
+    public bool isDefeated; // 적 처치 상태
+    [Tooltip("다시 생성되기까지 남은 시간. 재생성하지 않는 지점은 -1.")]
+    public float respawnRemainingSeconds; // 재생성까지 남은 시간
 }
 
 [Serializable] // JSON 직렬화 허용

@@ -43,6 +43,7 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
     private PlayerStamina playerStamina; // 플레이어 스태미나 관리기
     private PlayerWetness playerWetness; // 플레이어 젖음 관리기
     private PlayerTemperature playerTemperature; // 플레이어 체온 관리기
+    private PlayerRespawnSystem playerRespawnSystem; // 불러온 사망 체력 보정용 부활 시스템
     private bool isReady; // 저장 기능 준비 상태
 
     private void Awake() // 저장 기능 참조 초기화
@@ -85,6 +86,7 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
         playerStamina = playerTransform.GetComponent<PlayerStamina>(); // PlayerStamina 가져오기
         playerWetness = playerTransform.GetComponent<PlayerWetness>(); // PlayerWetness 가져오기
         playerTemperature = playerTransform.GetComponent<PlayerTemperature>(); // PlayerTemperature 가져오기
+        playerRespawnSystem = playerTransform.GetComponent<PlayerRespawnSystem>(); // PlayerRespawnSystem 가져오기
 
         bool hasCharacterController = characterController != null; // 충돌 이동기 확인
         bool hasPlayerMovement = playerMovement != null; // 이동 관리기 확인
@@ -157,6 +159,12 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
             return; // 저장 중단
         }
 
+        if (playerHealth.IsDead) // 사망 상태 저장 여부 확인
+        {
+            Debug.LogWarning("플레이어가 사망한 상태에서는 저장할 수 없습니다. 부활 후 저장하세요.", this); // 사망 저장 차단 안내
+            return; // 저장 중단
+        }
+
         SaveGameData saveData = CaptureCurrentState(); // 현재 게임 상태 수집
 
         if (!worldSaveBridge.TryCapture(saveData, out string worldCaptureError)) // 월드 상태 저장 데이터 수집
@@ -180,6 +188,12 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
         if (!respawnSaveBridge.TryCapture(saveData, out string respawnCaptureError)) // 부활 지점 상태 수집
         {
             Debug.LogError($"부활 지점 저장 준비 실패\n{respawnCaptureError}", this); // 수집 오류 출력
+            return; // 파일 저장 중단
+        }
+
+        if (!EnemySpawnSaveBridge.TryCapture(saveData, out string enemySpawnCaptureError)) // 적 스폰 지점 상태 수집
+        {
+            Debug.LogError($"적 스폰 지점 저장 준비 실패\n{enemySpawnCaptureError}", this); // 수집 오류 출력
             return; // 파일 저장 중단
         }
 
@@ -262,6 +276,12 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
             return; // 전체 불러오기 중단
         }
 
+        if (!EnemySpawnSaveBridge.TryRestore(saveData, out string enemySpawnRestoreError)) // 적 스폰 지점 상태 복원
+        {
+            Debug.LogError($"적 스폰 지점 불러오기 실패\n{enemySpawnRestoreError}", this); // 복원 오류 출력
+            return; // 전체 불러오기 중단
+        }
+
         ApplyLoadedState(saveData); // 불러온 게임 상태 적용
 
         string fileSource = loadedFromBackup ? "백업 파일" : "기본 파일"; // 불러온 파일 종류 결정
@@ -315,7 +335,7 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
         }
 
         playerMovement.ResetMotionState(); // 낙하 속도와 접지 상태 초기화
-        playerHealth.SetCurrentHealth(saveData.player.health); // 저장 체력 적용
+        playerHealth.SetCurrentHealth(ResolveLoadedHealth(saveData.player.health)); // 저장 체력 적용
         playerHunger.SetCurrentHunger(saveData.player.hunger); // 저장 허기 적용
         playerThirst.SetCurrentThirst(saveData.player.thirst); // 저장 갈증 적용
         playerStamina.SetCurrentStamina(saveData.player.stamina); // 저장 스태미나 적용
@@ -337,6 +357,18 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
         {
             weatherCycle.InitializeRandomWeatherForLoadedTime(); // 현재 계절 기준 새로운 날씨 생성
         }
+    }
+
+    private float ResolveLoadedHealth(float savedHealth) // 사망 상태로 저장된 체력 보정
+    {
+        if (savedHealth > 0f) // 정상 생존 체력 확인
+        {
+            return savedHealth; // 저장 체력 그대로 사용
+        }
+
+        float fallbackHealth = playerRespawnSystem != null ? playerRespawnSystem.RespawnHealth : 1f; // 부활 체력 기준 보정값
+        Debug.LogWarning($"저장 체력이 0 이하라 부활 체력 {fallbackHealth:0.#}으로 보정합니다.", this); // 보정 안내 출력
+        return fallbackHealth; // 보정 체력 반환
     }
 
     private bool CanUseSaveSystem() // 현재 저장 기능 사용 가능 여부 확인

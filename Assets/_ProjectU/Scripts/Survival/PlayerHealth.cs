@@ -58,6 +58,8 @@ public sealed class PlayerHealth : MonoBehaviour // 플레이어 체력과 전�
     public event Action<float> Damaged; // 실제 피해량 이벤트
     public event Action<float> Healed; // 실제 회복량 이벤트
     public event Action<float> CombatDamageBlocked; // 무적으로 차단한 피해량 이벤트
+    public event Action Died; // 체력 소진 사망 이벤트
+    public event Action Revived; // 사망 상태 부활 완료 이벤트
 
     private void Awake() // 체력 초기화
     {
@@ -221,6 +223,17 @@ public sealed class PlayerHealth : MonoBehaviour // 플레이어 체력과 전�
         }
     }
 
+    public void BeginCombatInvulnerability(float duration) // 부활 보호 등 외부 요청 전투 무적 시작
+    {
+        if (isDead || duration <= 0f) // 사망 상태와 무적 시간 확인
+        {
+            return; // 무적 시작 차단
+        }
+
+        hitInvulnerableUntil = Mathf.Max(hitInvulnerableUntil, Time.time + duration); // 피격 무적 종료 시각 연장
+        RefreshCombatInvulnerabilityRuntime(); // Inspector 무적 상태 즉시 갱신
+    }
+
     public bool Revive(float reviveHealth) // 사망 상태 부활 처리
     {
         if (!isDead) // 현재 사망 여부 확인
@@ -240,6 +253,7 @@ public sealed class PlayerHealth : MonoBehaviour // 플레이어 체력과 전�
         ClearCombatInvulnerability(); // 부활 후 무적 상태 초기화
         float appliedHealing = currentHealth - previousHealth; // 실제 회복량 계산
         Healed?.Invoke(appliedHealing); // 체력 회복 이벤트 전달
+        Revived?.Invoke(); // 부활 완료 이벤트 전달
         return true; // 부활 성공
     }
 
@@ -272,6 +286,12 @@ public sealed class PlayerHealth : MonoBehaviour // 플레이어 체력과 전�
         }
 
         Damaged?.Invoke(appliedDamage); // 실제 피해량 전달
+
+        if (isDead) // 이번 피해로 사망했는지 확인
+        {
+            Died?.Invoke(); // 사망 이벤트 전달
+        }
+
         return true; // 피해 처리 성공
     }
 

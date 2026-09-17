@@ -29,6 +29,8 @@ public sealed class PlayerRespawnSystem : MonoBehaviour // 플레이어 부활 �
     [SerializeField] private float respawnTemperature = 100f; // 부활 체온 수치
     [Tooltip("부활 시간.")]
     [SerializeField] private float respawnHour = 8f; // 부활 시간
+    [Tooltip("부활 직후 전투 피해를 받지 않는 보호 시간.")]
+    [SerializeField, Min(0f)] private float respawnProtectionDuration = 2f; // 부활 보호 시간
 
     [Header("Runtime")] // 실행 상태 묶음
     [Tooltip("등록된 침낭 부활 지점.")]
@@ -44,6 +46,7 @@ public sealed class PlayerRespawnSystem : MonoBehaviour // 플레이어 부활 �
 
     public bool HasRegisteredRespawnPoint => registeredRespawnPoint != null; // 침낭 부활 지점 등록 여부 제공
     public Transform RegisteredRespawnPoint => registeredRespawnPoint; // 현재 등록 침낭 위치 제공
+    public float RespawnHealth => respawnHealth; // 부활 체력 제공
 
     private void Awake() // 부활 시스템 초기화
     {
@@ -124,7 +127,14 @@ public sealed class PlayerRespawnSystem : MonoBehaviour // 플레이어 부활 �
         playerTemperature.SetCurrentTemperature(respawnTemperature); // 부활 체온 수치 적용
 
         dayNightCycle.AdvanceToHour(respawnHour); // 부활 시간 적용
-        return playerHealth.Revive(respawnHealth); // 플레이어 체력과 사망 상태 복구
+
+        if (!playerHealth.Revive(respawnHealth)) // 플레이어 체력과 사망 상태 복구
+        {
+            return false; // 부활 실패 반환
+        }
+
+        playerHealth.BeginCombatInvulnerability(respawnProtectionDuration); // 부활 직후 전투 보호 적용
+        return true; // 부활 성공 반환
     }
 
     private void ClampSettings() // 부활 설정값 보정
