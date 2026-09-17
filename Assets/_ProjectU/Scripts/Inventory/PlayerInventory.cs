@@ -174,7 +174,27 @@ public sealed class PlayerInventory : MonoBehaviour, IItemSlotContainer // 플�
         } 
 
         return GetItemQuantity(targetItemData) >= requiredAmount; // 필요 수량 충족 여부 반환
-    } 
+    }
+
+    public bool HasTool(ToolType toolType) // 지정 종류 도구 보유 여부 확인
+    {
+        if (toolType == ToolType.None) // 도구 불필요 확인
+        {
+            return true; // 보유 조건 충족
+        }
+
+        for (int index = 0; index < slots.Count; index++) // 전체 슬롯 순회
+        {
+            ItemData itemData = slots[index] != null ? slots[index].ItemData : null; // 현재 아이템 조회
+
+            if (itemData != null && itemData.IsTool && itemData.ToolType == toolType) // 도구 종류 일치 확인
+            {
+                return true; // 보유 확인
+            }
+        }
+
+        return false; // 미보유 반환
+    }
 
     public bool CanAddItem(ItemData targetItemData, int amount) // 아이템 추가 공간 확인
     { 

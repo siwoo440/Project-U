@@ -229,6 +229,11 @@ public sealed class ThirdPersonCameraFollow : MonoBehaviour // 1인칭과 3인�
             return; // 마우스 입력 처리 중단
         }
 
+        if (!HotbarInput.IsZoomModifierPressed) // 휠 단독 입력은 핫바 칸 이동에 사용
+        {
+            return; // Shift + 휠일 때만 줌
+        }
+
         float scrollAmount = Mouse.current.scroll.ReadValue().y; // 현재 프레임 휠 입력 읽기
 
         if (Mathf.Abs(scrollAmount) < 0.01f) // 유효한 휠 입력 확인

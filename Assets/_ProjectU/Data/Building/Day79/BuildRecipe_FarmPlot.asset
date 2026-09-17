@@ -26,4 +26,5 @@ MonoBehaviour:
   maximumSlopeAngle: 15
   maximumHeightDifference: 0.12
   ingredients: []
+  requiredTool: 3
   demolitionRefundRatio: 0

@@ -40,6 +40,19 @@ public static class SaveSchemaValidator // 저장 구조 Editor 검사
         sampleStorage.slots.Add(sampleStorageSlot); // 예제 보관함 슬롯 목록 추가
         sampleSaveData.storage.containers.Add(sampleStorage); // 예제 전체 보관함 목록 추가
 
+        sampleSaveData.hasFarmData = true; // 예제 밭 데이터 존재 적용
+        sampleSaveData.farm.wateringCanWater = 7; // 예제 물뿌리개 남은 물 적용
+        sampleSaveData.farm.plots.Add(new FarmPlotSaveData
+        {
+            structureId = "debug_farm_plot_01", // 예제 밭 고유 ID
+            state = (int)FarmPlotState.Growing, // 예제 성장 상태
+            cropId = "crop_potato", // 예제 감자 작물
+            plantedDay = 2, // 예제 심은 날짜
+            grownDays = 1, // 예제 성장 일수
+            lastWateredDay = 3, // 예제 물 준 날짜
+            lastGrowthDay = 3 // 예제 성장 처리 날짜
+        }); // 예제 밭 목록 추가
+
         string json = JsonUtility.ToJson(sampleSaveData, true); // 저장 데이터를 JSON으로 변환
         SaveGameData restoredSaveData = JsonUtility.FromJson<SaveGameData>(json); // JSON을 저장 데이터로 복원
 
@@ -84,6 +97,20 @@ public static class SaveSchemaValidator // 저장 구조 Editor 검사
         if (!storageRestored) // 보관함 복원 실패 확인
         {
             Debug.LogError("저장 구조 검사 실패: 보관함 데이터가 일치하지 않습니다."); // 보관함 복원 오류 출력
+            return; // 검사 중단
+        }
+
+        bool farmRestored = restoredSaveData.hasFarmData // 밭 데이터 존재 확인
+            && restoredSaveData.farm != null // 밭 저장 묶음 확인
+            && restoredSaveData.farm.wateringCanWater == 7 // 물뿌리개 남은 물 확인
+            && restoredSaveData.farm.plots.Count == 1 // 밭 개수 확인
+            && restoredSaveData.farm.plots[0].cropId == "crop_potato" // 작물 ID 확인
+            && restoredSaveData.farm.plots[0].state == (int)FarmPlotState.Growing // 작물 상태 확인
+            && restoredSaveData.farm.plots[0].lastWateredDay == 3; // 물 준 날짜 확인
+
+        if (!farmRestored) // 밭 복원 실패 확인
+        {
+            Debug.LogError("저장 구조 검사 실패: 밭 데이터가 일치하지 않습니다."); // 밭 복원 오류 출력
             return; // 검사 중단
         }
 

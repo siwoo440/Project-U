@@ -46,6 +46,9 @@ public sealed class BuildRecipeData : ScriptableObject // 건축물 제작과 �
     [Tooltip("설치 필요 재료 목록.")]
     [SerializeField] private CraftingIngredient[] ingredients = new CraftingIngredient[0]; // 설치 필요 재료 목록
 
+    [Tooltip("설치할 때 인벤토리에 있어야 하는 도구입니다. None이면 도구가 필요 없습니다.")]
+    [SerializeField] private ToolType requiredTool = ToolType.None; // 설치 필요 도구
+
     [Header("Removal")] // 철거 설정 묶음
     [Tooltip("철거 재료 반환 비율.")]
     [SerializeField, Range(0f, 1f)] private float demolitionRefundRatio = 0.5f; // 철거 재료 반환 비율
@@ -64,6 +67,7 @@ public sealed class BuildRecipeData : ScriptableObject // 건축물 제작과 �
     public float MaximumSlopeAngle => maximumSlopeAngle; // 최대 경사 제공
     public float MaximumHeightDifference => maximumHeightDifference; // 최대 높이 차이 제공
     public IReadOnlyList<CraftingIngredient> Ingredients => ingredients; // 필요 재료 제공
+    public ToolType RequiredTool => requiredTool; // 설치 필요 도구 제공
     public float DemolitionRefundRatio => demolitionRefundRatio; // 철거 반환 비율 제공
 
     private void OnValidate() // Inspector 설정값 검증

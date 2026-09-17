@@ -40,6 +40,9 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
     [Tooltip("건축 배치 관리자.")] // Inspector 건축 관리자 설명
     [SerializeField] private BuildPlacementController buildPlacementController; // 건축 배치 관리자
 
+    [Tooltip("앞 칸의 밭·경작 대상을 찾는 농사 도구 관리자입니다. 비어 있으면 같은 Player에서 검색합니다.")] // Inspector 농사 도구 설명
+    [SerializeField] private FarmingToolController farmingToolController; // 농사 도구 관리자
+
     [Header("UI")] // 안내 UI 설정 묶음
     [Tooltip("안내 UI 루트.")] // Inspector UI 루트 설명
     [SerializeField] private GameObject promptRoot; // 안내 UI 루트
@@ -49,6 +52,7 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
 
     private readonly RaycastHit[] detectionHits = new RaycastHit[16]; // 상호작용 탐지 결과 배열
     private InteractableBase currentInteractable; // 현재 탐지 대상
+    private string lastPromptText; // 마지막 표시 안내 문구
 
     private void Awake() // 필수 참조 검사
     {
@@ -65,6 +69,11 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
         if (bowChargeController == null) // 활 공격 관리자 참조 확인
         {
             bowChargeController = GetComponent<PlayerBowChargeController>(); // 같은 Player에서 자동 검색
+        }
+
+        if (farmingToolController == null) // 농사 도구 관리자 참조 확인
+        {
+            farmingToolController = GetComponent<FarmingToolController>(); // 같은 Player에서 자동 검색 (없어도 동작)
         }
 
         bool hasMissingReference = // 값 계산 시작
@@ -251,6 +260,11 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
             detectedInteractable = candidate; // 가장 가까운 상호작용 대상 저장
         }
 
+        if (detectedInteractable == null && farmingToolController != null) // 시선 앞 대상이 없을 때 발밑 앞 칸 확인
+        {
+            detectedInteractable = farmingToolController.FindTargetInteractable(); // 밭 또는 경작 대상 검색
+        }
+
         if (detectedInteractable == currentInteractable) // 동일 대상 유지 확인
         {
             RefreshPrompt(); // 변경된 상태 문구 갱신
@@ -263,16 +277,19 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
 
     private void RefreshPrompt() // 안내 UI 갱신
     {
-        bool hasInteractable = currentInteractable != null; // 대상 존재 여부 확인
-        promptRoot.SetActive(hasInteractable); // 대상 존재에 따른 UI 표시
+        string prompt = currentInteractable != null ? currentInteractable.PromptMessage : string.Empty; // 대상 안내 문구 조회
+        bool hasPrompt = !string.IsNullOrEmpty(prompt); // 표시할 문구 존재 여부
 
-        if (hasInteractable) // 대상 존재 여부 확인
+        if (promptRoot.activeSelf != hasPrompt) // UI 표시 상태 변경 확인
         {
-            promptText.SetText(currentInteractable.PromptMessage); // 대상 안내 문구 표시
-            return; // 빈 문구 처리 생략
+            promptRoot.SetActive(hasPrompt); // 대상 존재에 따른 UI 표시
         }
 
-        promptText.SetText(string.Empty); // 안내 문구 제거
+        if (!string.Equals(prompt, lastPromptText, System.StringComparison.Ordinal)) // 문구 변경 확인
+        {
+            lastPromptText = prompt; // 표시 문구 저장
+            promptText.SetText(prompt); // 안내 문구 표시
+        }
     }
 
     private void CancelAttackStates() // 근접 공격과 활 장전 상태 취소
@@ -300,6 +317,7 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
         if (promptText != null) // 안내 텍스트 존재 확인
         {
             promptText.SetText(string.Empty); // 안내 문구 제거
+            lastPromptText = string.Empty; // 표시 문구 기록 초기화
         }
     }
 

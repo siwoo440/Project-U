@@ -37,6 +37,10 @@ public sealed class SaveGameData // 전체 저장 파일 최상위 데이터
     public bool hasEnemySpawnData; // 적 스폰 지점 저장 데이터 존재 여부
     [Tooltip("전체 적 스폰 지점 저장 데이터.")]
     public EnemySpawnSaveData enemySpawns = new EnemySpawnSaveData(); // 전체 적 스폰 지점 저장 데이터
+    [Tooltip("밭 저장 데이터 존재 여부.")]
+    public bool hasFarmData; // 밭 저장 데이터 존재 여부
+    [Tooltip("밭 칸별 상태와 물뿌리개 데이터.")]
+    public FarmSaveData farm = new FarmSaveData(); // 밭 저장 데이터
 
     public static SaveGameData CreateNew(string newSceneName) // 새로운 저장 데이터 생성
     {
@@ -256,6 +260,34 @@ public sealed class EnemySpawnPointSaveData // 단일 적 스폰 지점 저장 �
     public bool isDefeated; // 적 처치 상태
     [Tooltip("다시 생성되기까지 남은 시간. 재생성하지 않는 지점은 -1.")]
     public float respawnRemainingSeconds; // 재생성까지 남은 시간
+}
+
+[Serializable] // JSON 직렬화 허용
+public sealed class FarmSaveData // 밭 전체 저장 데이터
+{
+    [Tooltip("물뿌리개에 남은 물 사용 횟수.")]
+    public int wateringCanWater; // 물뿌리개 남은 물
+    [Tooltip("밭 칸별 상태 목록.")]
+    public List<FarmPlotSaveData> plots = new List<FarmPlotSaveData>(); // 밭 칸 목록
+}
+
+[Serializable] // JSON 직렬화 허용
+public sealed class FarmPlotSaveData // 밭 한 칸 저장 데이터
+{
+    [Tooltip("밭 건축물 고유 ID.")]
+    public string structureId = string.Empty; // 밭 건축물 ID
+    [Tooltip("작물 상태 (0 빈 밭, 1 성장, 2 수확 가능, 3 시듦).")]
+    public int state; // 작물 상태
+    [Tooltip("심은 작물 ID. 빈 밭은 빈 문자열.")]
+    public string cropId = string.Empty; // 작물 ID
+    [Tooltip("작물을 심은 날짜.")]
+    public int plantedDay; // 심은 날짜
+    [Tooltip("물을 받아 성장한 누적 일수.")]
+    public int grownDays; // 누적 성장 일수
+    [Tooltip("마지막으로 물을 받은 날짜. -1은 받은 적 없음.")]
+    public int lastWateredDay = -1; // 물 받은 날짜
+    [Tooltip("성장 계산을 마지막으로 처리한 날짜.")]
+    public int lastGrowthDay; // 성장 처리 날짜
 }
 
 [Serializable] // JSON 직렬화 허용

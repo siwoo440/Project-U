@@ -197,6 +197,12 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
             return; // 파일 저장 중단
         }
 
+        if (!FarmSaveBridge.TryCapture(saveData, out string farmCaptureError)) // 밭 상태 수집
+        {
+            Debug.LogError($"밭 상태 저장 준비 실패\n{farmCaptureError}", this); // 수집 오류 출력
+            return; // 파일 저장 중단
+        }
+
         if (!SaveFileService.TrySave(slotId, saveData, out string resultMessage)) // JSON 파일 저장 실행
         {
             Debug.LogError($"현재 게임 저장 실패\n{resultMessage}", this); // 저장 실패 내용 출력
@@ -279,6 +285,12 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
         if (!EnemySpawnSaveBridge.TryRestore(saveData, out string enemySpawnRestoreError)) // 적 스폰 지점 상태 복원
         {
             Debug.LogError($"적 스폰 지점 불러오기 실패\n{enemySpawnRestoreError}", this); // 복원 오류 출력
+            return; // 전체 불러오기 중단
+        }
+
+        if (!FarmSaveBridge.TryRestore(saveData, out string farmRestoreError)) // 밭 상태 복원 (건축물 복원 뒤)
+        {
+            Debug.LogError($"밭 상태 불러오기 실패\n{farmRestoreError}", this); // 복원 오류 출력
             return; // 전체 불러오기 중단
         }
 

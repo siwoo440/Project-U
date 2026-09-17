@@ -168,6 +168,7 @@ public static class FarmingContentBuilder
         bool confirmed = EditorUtility.DisplayDialog(
             DialogTitle,
             "씨앗·작물·수확물·괭이·물뿌리개 데이터와 Prefab, 밭 건축물, 제작법을 만들고\n"
+            + "밭 심기·물주기 기능(밭 관리자, 칸 표시, 우물, 물 게이지)까지\n"
             + "현재 열린 게임 Scene(20_Gameplay)에 연결합니다.\n\n"
             + "실행 전에 Scene을 저장해 두세요. 실행 후 Ctrl+S로 Scene을 저장해야 반영됩니다.",
             "실행",
@@ -281,7 +282,7 @@ public static class FarmingContentBuilder
             }
 
             Progress("게임 Scene 연결", 0.85f);
-            report.AppendLine(WireScene(craftingRecipes, plotRecipe, pickups));
+            report.AppendLine(WireScene(craftingRecipes, plotRecipe, rules, pickups));
         }
         finally
         {
@@ -565,6 +566,9 @@ public static class FarmingContentBuilder
         wet.transform.localScale = Vector3.one;
         StylizedVisualReplacer.SetLayerRecursively(wet.transform, layer);
         wet.SetActive(false);
+
+        // 80일차: 칸별 작물·물 상태 컴포넌트
+        FarmingGameplaySetup.ConfigurePlotComponent(root, root.transform.Find(CropAnchorName), wet);
     }
 
     private static BuildRecipeData CreateOrUpdatePlotRecipe(GameObject placed, GameObject preview)
@@ -586,6 +590,7 @@ public static class FarmingContentBuilder
         serialized.FindProperty("maximumHeightDifference").floatValue = 0.12f;
         // 기획서: 밭은 재료 제작이 아니라 괭이로 지면을 전환한다 (재료 없음, 철거 반환 없음)
         serialized.FindProperty("ingredients").arraySize = 0;
+        serialized.FindProperty("requiredTool").intValue = (int)ToolType.Hoe;
         serialized.FindProperty("demolitionRefundRatio").floatValue = 0f;
         serialized.ApplyModifiedPropertiesWithoutUndo();
         EditorUtility.SetDirty(recipe);
@@ -833,7 +838,7 @@ public static class FarmingContentBuilder
 
     // ---------------------------------------------------------------- Scene 연결
 
-    private static string WireScene(List<CraftingRecipeData> craftingRecipes, BuildRecipeData plotRecipe, Dictionary<string, WorldItemPickup> pickups)
+    private static string WireScene(List<CraftingRecipeData> craftingRecipes, BuildRecipeData plotRecipe, FarmingRulesData rules, Dictionary<string, WorldItemPickup> pickups)
     {
         BuildPlacementController buildController = Object.FindFirstObjectByType<BuildPlacementController>(FindObjectsInactive.Include);
 
@@ -854,6 +859,7 @@ public static class FarmingContentBuilder
 
         report.AppendLine(SetupToolVisuals());
         report.AppendLine(PlaceStarterKit(pickups));
+        report.AppendLine(FarmingGameplaySetup.SetupScene(rules));
 
         if (EditorApplication.ExecuteMenuItem(WorldIdMenuPath))
         {
@@ -1266,6 +1272,13 @@ public static class FarmingContentBuilder
                 Error("밭 설치 Prefab에 젖은 흙 외형이 없습니다.");
             }
 
+            FarmingGameplaySetup.ValidatePrefab(placed, Error);
+
+            if (plotRecipe.RequiredTool != ToolType.Hoe)
+            {
+                Error("밭 건축 데이터에 필요 도구(괭이)가 설정되지 않았습니다.");
+            }
+
             if (plotRecipe.PreviewPrefab.GetComponent<PlacedBuildObject>() != null)
             {
                 Error("밭 미리보기 Prefab에는 PlacedBuildObject가 없어야 합니다.");
@@ -1352,6 +1365,7 @@ public static class FarmingContentBuilder
         }
 
         report.AppendLine("Scene 연결 확인");
+        FarmingGameplaySetup.ValidateScene(report, error);
     }
 
     private static bool SceneListContains(Object target, string propertyName, Object reference)

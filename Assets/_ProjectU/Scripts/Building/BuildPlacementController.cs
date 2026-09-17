@@ -108,6 +108,7 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
     private BuildConnectionPoint currentConnectionPoint; // 현재 구조 연결점
 
     public bool IsBuildMode => isBuildMode; // 건축 모드 상태 제공
+    public const string OutsideBuildAreaStatus = "OUTSIDE BUILD AREA"; // 건축 구역 밖 문구
     public bool BlocksGameplayInput => isBuildMode || Time.frameCount == lastBuildInputFrame; // 일반 입력 차단 상태
 
     private void Awake() // 건축 관리자 초기화
@@ -444,10 +445,11 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
         previewInstance.SetActive(true); // 미리보기 표시
         previewInstance.transform.SetPositionAndRotation(previewPosition, previewRotation); // 미리보기 위치 적용
 
-        bool hasObstruction = HasBlockingOverlap(previewPosition, previewRotation); // 공간 장애물 검사
-        bool hasMaterials = HasRequiredMaterials(); // 필요 재료 검사
+        bool hasObstruction = HasBlockingOverlap(currentRecipe, previewPosition, previewRotation, currentConnectionPoint); // 공간 장애물 검사
+        bool hasMaterials = HasRequiredMaterials(currentRecipe); // 필요 재료 검사
+        bool hasTool = HasRequiredTool(currentRecipe); // 필요 도구 검사
 
-        canPlace = !hasObstruction && hasMaterials; // 최종 설치 가능 상태 계산
+        canPlace = !hasObstruction && hasMaterials && hasTool; // 최종 설치 가능 상태 계산
         SetPreviewMaterial(canPlace); // 설치 상태 재질 적용
 
         if (hasObstruction) // 장애물 존재 확인
@@ -459,6 +461,12 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
         if (!hasMaterials) // 재료 부족 확인
         {
             RefreshStatus("NEED MATERIALS"); // 재료 부족 문구 표시
+            return; // 상태 처리 종료
+        }
+
+        if (!hasTool) // 필요 도구 확인
+        {
+            RefreshStatus(GetRequiredToolStatus(currentRecipe)); // 도구 필요 문구 표시
             return; // 상태 처리 종료
         }
 
@@ -664,7 +672,7 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
 
         if (!gridArea.ContainsWorldPoint(groundHit.point)) // 건축 구역 포함 여부 확인
         {
-            failureStatus = "OUTSIDE BUILD AREA"; // 구역 밖 문구
+            failureStatus = OutsideBuildAreaStatus; // 구역 밖 문구
             return false; // 배치 계산 실패 반환
         }
 
@@ -682,7 +690,7 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
         {
             if (!gridArea.TryGetCell(groundHit.point, out Vector2Int cell)) // 대상 타일 계산
             {
-                failureStatus = "OUTSIDE BUILD AREA"; // 구역 밖 문구
+                failureStatus = OutsideBuildAreaStatus; // 구역 밖 문구
                 return false; // 배치 계산 실패 반환
             }
 
@@ -699,7 +707,7 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
 
             if (!wallSnapSucceeded) // 벽 경계 계산 실패 확인
             {
-                failureStatus = "OUTSIDE BUILD AREA"; // 구역 밖 문구
+                failureStatus = OutsideBuildAreaStatus; // 구역 밖 문구
                 return false; // 배치 계산 실패 반환
             }
         }
@@ -801,10 +809,14 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
         return true; // Terrain 검사 성공 반환
     }
 
-    private bool HasBlockingOverlap(Vector3 previewPosition, Quaternion previewRotation) // 배치 공간 장애물 검사
+    private bool HasBlockingOverlap(
+        BuildRecipeData recipe,
+        Vector3 previewPosition,
+        Quaternion previewRotation,
+        BuildConnectionPoint connectionPoint) // 배치 공간 장애물 검사
     {
-        Vector3 checkCenter = previewPosition + previewRotation * currentRecipe.PlacementCheckCenter; // 충돌 검사 중심 계산
-        Vector3 halfExtents = currentRecipe.PlacementCheckHalfExtents; // 기본 충돌 절반 크기 조회
+        Vector3 checkCenter = previewPosition + previewRotation * recipe.PlacementCheckCenter; // 충돌 검사 중심 계산
+        Vector3 halfExtents = recipe.PlacementCheckHalfExtents; // 기본 충돌 절반 크기 조회
         halfExtents.x = Mathf.Max(0.01f, halfExtents.x - collisionPadding); // X 충돌 크기 축소
         halfExtents.y = Mathf.Max(0.01f, halfExtents.y - collisionPadding); // Y 충돌 크기 축소
         halfExtents.z = Mathf.Max(0.01f, halfExtents.z - collisionPadding); // Z 충돌 크기 축소
@@ -841,10 +853,11 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
             }
 
             if (CanSharePlacementSpace(
-                currentRecipe.PlacementType,
+                recipe.PlacementType,
                 previewPosition,
                 previewRotation,
-                existingBuildObject)) // 건축물 공존 가능 여부 확인
+                existingBuildObject,
+                connectionPoint)) // 건축물 공존 가능 여부 확인
             {
                 continue; // 공존 가능한 건축물 제외
             }
@@ -859,9 +872,10 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
         BuildPlacementType targetType,
         Vector3 targetPosition,
         Quaternion targetRotation,
-        PlacedBuildObject existingObject) // 건축물 공간 공유 확인
+        PlacedBuildObject existingObject,
+        BuildConnectionPoint connectionPoint) // 건축물 공간 공유 확인
     {
-        if (currentConnectionPoint != null && existingObject == currentConnectionPoint.Owner) // 지지 구조물 확인
+        if (connectionPoint != null && existingObject == connectionPoint.Owner) // 지지 구조물 확인
         {
             return true; // 지지 구조물 공간 공유 허용
         }
@@ -896,9 +910,9 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
         return false; // 나머지 조합 차단
     }
 
-    private bool HasRequiredMaterials() // 전체 설치 재료 보유 여부 확인
+    private bool HasRequiredMaterials(BuildRecipeData recipe) // 전체 설치 재료 보유 여부 확인
     {
-        IReadOnlyList<CraftingIngredient> ingredients = currentRecipe.Ingredients; // 필요 재료 목록 조회
+        IReadOnlyList<CraftingIngredient> ingredients = recipe.Ingredients; // 필요 재료 목록 조회
 
         for (int index = 0; index < ingredients.Count; index++) // 전체 재료 순회
         {
@@ -918,23 +932,152 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
         return true; // 모든 재료 보유 반환
     }
 
-    private void TryPlaceStructure() // 건축물 실제 설치 시도
+    private bool HasRequiredTool(BuildRecipeData recipe) // 설치 필요 도구 보유 여부 확인
     {
-        if (!canPlace || previewInstance == null) // 현재 설치 조건 확인
+        return recipe.RequiredTool == ToolType.None || playerInventory.HasTool(recipe.RequiredTool); // 도구 조건 결과 반환
+    }
+
+    private static string GetRequiredToolStatus(BuildRecipeData recipe) // 필요 도구 안내 문구
+    {
+        switch (recipe.RequiredTool) // 도구 종류 확인
         {
-            return; // 설치 처리 중단
+            case ToolType.Axe: return "NEED AXE"; // 도끼
+            case ToolType.Pickaxe: return "NEED PICKAXE"; // 곡괭이
+            case ToolType.Hoe: return "NEED HOE"; // 괭이
+            case ToolType.WateringCan: return "NEED WATERING CAN"; // 물뿌리개
+            default: return "NEED TOOL"; // 기타 도구
+        }
+    }
+
+    public bool TryResolveGroundStructure(
+        BuildRecipeData recipe,
+        Vector3 worldPoint,
+        bool checkRequirements,
+        out Vector3 position,
+        out Quaternion rotation,
+        out string failureStatus) // 건축 모드 밖에서 타일 중앙 지면 설치 가능 여부 계산 (괭이 경작 등)
+    {
+        position = worldPoint; // 기본 위치
+        rotation = gridArea != null ? gridArea.transform.rotation : Quaternion.identity; // 기본 회전
+
+        if (recipe == null || recipe.PlacedPrefab == null) // 건축 데이터 확인
+        {
+            failureStatus = "INVALID STRUCTURE"; // 데이터 오류 문구
+            return false; // 계산 실패
         }
 
-        if (!HasRequiredMaterials()) // 설치 직전 재료 확인
+        bool isGroundTile = recipe.PlacementType == BuildPlacementType.Floor
+            && recipe.StructureType != BuildStructureType.Floor
+            && recipe.StructureType != BuildStructureType.Wall
+            && recipe.StructureType != BuildStructureType.Furniture; // 지면 타일 건축물 여부
+
+        if (!isGroundTile) // 지원 종류 확인
         {
-            canPlace = false; // 설치 불가능 상태 적용
-            SetPreviewMaterial(false); // 불가능 재질 적용
-            RefreshStatus("NEED MATERIALS"); // 재료 부족 문구 표시
-            return; // 설치 처리 중단
+            failureStatus = "UNSUPPORTED STRUCTURE"; // 미지원 문구
+            return false; // 계산 실패
+        }
+
+        if (!gridArea.TryGetCell(worldPoint, out Vector2Int cell)) // 건축 구역 타일 계산
+        {
+            failureStatus = OutsideBuildAreaStatus; // 구역 밖 문구
+            return false; // 계산 실패
+        }
+
+        Vector3 basePosition = gridArea.GetCellCenter(cell); // 타일 중앙 위치
+
+        bool terrainValid = TrySampleTerrain(
+            basePosition,
+            rotation,
+            recipe.PlacementCheckHalfExtents,
+            out float maximumTerrainY,
+            out float maximumSlope,
+            out float terrainHeightDifference); // 지형 표본 검사
+
+        if (!terrainValid) // 지형 확인
+        {
+            failureStatus = "UNSUPPORTED TERRAIN"; // 지형 미지원 문구
+            return false; // 계산 실패
+        }
+
+        position = new Vector3(basePosition.x, maximumTerrainY + recipe.PreviewOffset.y, basePosition.z); // 최종 위치
+
+        if (maximumSlope > recipe.MaximumSlopeAngle) // 경사 확인
+        {
+            failureStatus = "SLOPE TOO STEEP"; // 경사 초과 문구
+            return false; // 계산 실패
+        }
+
+        if (terrainHeightDifference > recipe.MaximumHeightDifference) // 높이 차이 확인
+        {
+            failureStatus = "UNEVEN TERRAIN"; // 지형 불균형 문구
+            return false; // 계산 실패
+        }
+
+        if (HasBlockingOverlap(recipe, position, rotation, null)) // 장애물 확인
+        {
+            failureStatus = "SPACE BLOCKED"; // 공간 차단 문구
+            return false; // 계산 실패
+        }
+
+        if (checkRequirements && !HasRequiredMaterials(recipe)) // 재료 확인
+        {
+            failureStatus = "NEED MATERIALS"; // 재료 부족 문구
+            return false; // 계산 실패
+        }
+
+        if (checkRequirements && !HasRequiredTool(recipe)) // 도구 확인
+        {
+            failureStatus = GetRequiredToolStatus(recipe); // 도구 필요 문구
+            return false; // 계산 실패
+        }
+
+        failureStatus = string.Empty; // 실패 문구 없음
+        return true; // 계산 성공
+    }
+
+    public bool TryPlaceGroundStructure(
+        BuildRecipeData recipe,
+        Vector3 worldPoint,
+        out PlacedBuildObject placedBuildObject,
+        out string failureStatus) // 건축 모드 밖에서 타일 중앙 지면 건축물 설치
+    {
+        placedBuildObject = null; // 기본 결과
+
+        if (isBuildMode) // 건축 모드 중복 사용 확인
+        {
+            failureStatus = "BUILD MODE ACTIVE"; // 건축 모드 문구
+            return false; // 설치 실패
+        }
+
+        if (!TryResolveGroundStructure(recipe, worldPoint, true, out Vector3 position, out Quaternion rotation, out failureStatus)) // 설치 가능 여부 계산
+        {
+            return false; // 설치 실패
         }
 
         List<CraftingIngredient> removedIngredients = new List<CraftingIngredient>(); // 제거 완료 재료 목록
-        IReadOnlyList<CraftingIngredient> ingredients = currentRecipe.Ingredients; // 제거 대상 재료 목록
+
+        if (!TryRemoveIngredients(recipe, removedIngredients)) // 재료 소비
+        {
+            failureStatus = "MATERIAL ERROR"; // 재료 오류 문구
+            return false; // 설치 실패
+        }
+
+        GameObject placedStructure = Instantiate(recipe.PlacedPrefab, position, rotation, placedObjectRoot); // 건축물 생성
+        placedBuildObject = placedStructure.GetComponent<PlacedBuildObject>(); // 설치 정보 조회
+
+        if (placedBuildObject == null) // 설치 정보 확인
+        {
+            placedBuildObject = placedStructure.AddComponent<PlacedBuildObject>(); // 설치 정보 추가
+        }
+
+        placedBuildObject.Initialize(recipe); // 건축 데이터 초기화
+        failureStatus = string.Empty; // 실패 문구 없음
+        return true; // 설치 성공
+    }
+
+    private bool TryRemoveIngredients(BuildRecipeData recipe, List<CraftingIngredient> removedIngredients) // 설치 재료 소비
+    {
+        IReadOnlyList<CraftingIngredient> ingredients = recipe.Ingredients; // 제거 대상 재료 목록
 
         for (int index = 0; index < ingredients.Count; index++) // 전체 재료 순회
         {
@@ -950,12 +1093,45 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
                     playerInventory.AddItem(ingredient.ItemData, removedAmount); // 일부 제거 재료 복구
                 }
 
-                Debug.LogError($"{currentRecipe.DisplayName} 설치 중 재료 수량 오류가 발생했습니다.", this); // 재료 오류 출력
-                RefreshStatus("MATERIAL ERROR"); // 재료 오류 문구 표시
-                return; // 설치 처리 중단
+                Debug.LogError($"{recipe.DisplayName} 설치 중 재료 수량 오류가 발생했습니다.", this); // 재료 오류 출력
+                return false; // 소비 실패
             }
 
             removedIngredients.Add(ingredient); // 제거 완료 재료 기록
+        }
+
+        return true; // 소비 성공
+    }
+
+    private void TryPlaceStructure() // 건축물 실제 설치 시도
+    {
+        if (!canPlace || previewInstance == null) // 현재 설치 조건 확인
+        {
+            return; // 설치 처리 중단
+        }
+
+        if (!HasRequiredMaterials(currentRecipe)) // 설치 직전 재료 확인
+        {
+            canPlace = false; // 설치 불가능 상태 적용
+            SetPreviewMaterial(false); // 불가능 재질 적용
+            RefreshStatus("NEED MATERIALS"); // 재료 부족 문구 표시
+            return; // 설치 처리 중단
+        }
+
+        if (!HasRequiredTool(currentRecipe)) // 설치 직전 도구 확인
+        {
+            canPlace = false; // 설치 불가능 상태 적용
+            SetPreviewMaterial(false); // 불가능 재질 적용
+            RefreshStatus(GetRequiredToolStatus(currentRecipe)); // 도구 필요 문구 표시
+            return; // 설치 처리 중단
+        }
+
+        List<CraftingIngredient> removedIngredients = new List<CraftingIngredient>(); // 제거 완료 재료 목록
+
+        if (!TryRemoveIngredients(currentRecipe, removedIngredients)) // 필요 재료 소비
+        {
+            RefreshStatus("MATERIAL ERROR"); // 재료 오류 문구 표시
+            return; // 설치 처리 중단
         }
 
         GameObject placedStructure = Instantiate(
