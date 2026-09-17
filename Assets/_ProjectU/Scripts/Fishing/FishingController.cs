@@ -1,8 +1,9 @@
 using System; // 이벤트 기능
+using System.Collections.Generic; // 읽기 전용 목록 기능
 using UnityEngine; // Unity 기본 기능
 
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
-public sealed class FishingController : MonoBehaviour // 플레이어 낚시 시작·대기·입질·취소 흐름
+public sealed class FishingController : MonoBehaviour // 플레이어 낚시 시작·대기·입질·끌어올리기·보상·취소 흐름
 {
     private const int LineSegments = 14; // 낚싯줄 점 개수
 
@@ -27,6 +28,28 @@ public sealed class FishingController : MonoBehaviour // 플레이어 낚시 시
 
     [Tooltip("낚시 공통 규칙입니다.")]
     [SerializeField] private FishingRulesData rules; // 낚시 규칙
+
+    [Header("World")] // 출현 조건·보상 참조 묶음 (83일차)
+    [Tooltip("물고기 목록을 제공하는 Registry입니다. 게임 Scene만 열어 실행해도 동작하도록 직접 연결합니다.")]
+    [SerializeField] private GameDataRegistry gameDataRegistry; // 물고기 목록 Registry
+
+    [Tooltip("현재 시각을 제공하는 낮밤 순환입니다.")]
+    [SerializeField] private DayNightCycle dayNightCycle; // 시각 제공
+
+    [Tooltip("현재 계절을 제공하는 계절 순환입니다.")]
+    [SerializeField] private SeasonCycle seasonCycle; // 계절 제공
+
+    [Tooltip("현재 날씨를 제공하는 날씨 순환입니다.")]
+    [SerializeField] private WeatherCycle weatherCycle; // 날씨 제공
+
+    [Tooltip("잡은 물고기를 기록할 도감입니다.")]
+    [SerializeField] private FishingJournal journal; // 잡은 기록
+
+    [Tooltip("가방이 가득 찼을 때 물고기를 바닥에 떨어뜨릴 Pickup Registry입니다.")]
+    [SerializeField] private WorldItemPickupRegistry pickupRegistry; // 월드 아이템 Registry
+
+    [Tooltip("바닥에 떨어진 물고기를 모아 둘 부모입니다.")]
+    [SerializeField] private WorldItemDropContainer dropContainer; // 드롭 아이템 부모
 
     [Header("Visual")] // 외형 묶음
     [Tooltip("찌를 던질 지점 표시와 F키 입력을 받는 대상입니다.")]
@@ -73,6 +96,9 @@ public sealed class FishingController : MonoBehaviour // 플레이어 낚시 시
     private float lastQueryTime = -10f; // 마지막 대상 요청 시각
     private ItemData lastSelectedItem; // 마지막 선택 아이템
     private bool usingBait; // 이번 던지기 미끼 사용 여부
+    private FishData hookedFish; // 입질한 물고기
+    private float reelProgress; // 끌어올린 정도 (0~1)
+    private Vector3 reelShorePoint; // 끌어올릴 때 찌가 다가올 물가 쪽 지점
     private GameObject bobber; // 현재 찌
     private Quaternion rodBaseLocalRotation; // 기울이기 전 낚싯대 회전
     private bool rodTilted; // 낚싯대 기울임 여부
@@ -90,9 +116,22 @@ public sealed class FishingController : MonoBehaviour // 플레이어 낚시 시
     public PlayerInventory Inventory => playerInventory; // 인벤토리 제공
     public Vector3 BobberPosition => bobber != null ? bobber.transform.position : targetPoint; // 찌 위치 제공
     public string Prompt => prompt; // 안내 문구 제공
+    public FishData HookedFish => hookedFish; // 입질한 물고기 제공
+    public FishingJournal Journal => journal; // 잡은 기록 제공
+    public float ReelProgress => reelProgress; // 끌어올린 정도 제공
 
-    public event Action<FishingController> BiteHooked; // 챔질 성공 알림 (83일차 미니게임 시작점)
+    // 테스트 메뉴 전용 : 비어 있지 않으면 다음 입질 물고기를 조건과 관계없이 이 ID로 정한다
+    public static string DebugForcedFishId { get; set; } = string.Empty;
+
+    public event Action<FishingController> BiteHooked; // 챔질 성공 알림 (미니게임 시작점)
+    public event Action<FishingController> ReelInput; // 끌어올리는 중 F키 입력 알림
     public event Action<FishingController, string> FishingEnded; // 낚시 종료 알림
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)] // 도메인 재로드 없는 Play 대비
+    private static void ResetStatics() // 정적 상태 초기화
+    {
+        DebugForcedFishId = string.Empty; // 강제 물고기 해제
+    }
 
     private void Awake() // 참조 준비
     {
@@ -103,6 +142,11 @@ public sealed class FishingController : MonoBehaviour // 플레이어 낚시 시
         if (playerHealth == null) { playerHealth = GetComponent<PlayerHealth>(); } // 체력 자동 검색
         if (playerMovement == null) { playerMovement = GetComponent<PlayerMovement>(); } // 이동 자동 검색
         if (buildPlacementController == null) { buildPlacementController = GetComponent<BuildPlacementController>(); } // 건축 관리자 자동 검색
+        if (journal == null) { journal = GetComponent<FishingJournal>(); } // 기록 자동 검색
+        if (dayNightCycle == null) { dayNightCycle = FindFirstObjectByType<DayNightCycle>(); } // 낮밤 순환 검색
+        if (seasonCycle == null) { seasonCycle = FindFirstObjectByType<SeasonCycle>(); } // 계절 순환 검색
+        if (weatherCycle == null) { weatherCycle = FindFirstObjectByType<WeatherCycle>(); } // 날씨 순환 검색
+        if (dropContainer == null) { dropContainer = FindFirstObjectByType<WorldItemDropContainer>(); } // 드롭 부모 검색
 
         if (viewTransform == null && Camera.main != null) // 시선 기준 누락 확인
         {
@@ -188,6 +232,10 @@ public sealed class FishingController : MonoBehaviour // 플레이어 낚시 시
             case FishingState.Bite: // 입질
                 Hook(); // 챔질
                 break;
+
+            case FishingState.Reeling: // 끌어올리는 중
+                ReelInput?.Invoke(this); // 미니게임 입력 전달
+                break;
         }
     }
 
@@ -237,14 +285,57 @@ public sealed class FishingController : MonoBehaviour // 플레이어 낚시 시
         return true; // 던지기 성공
     }
 
-    public void CompleteReeling(bool caught, string resultText) // 83일차 미니게임 결과 반영
+    public void CompleteReeling(bool caught, string resultText) // 미니게임 결과 반영 (resultText가 비어 있으면 기본 문구)
     {
         if (state != FishingState.Reeling) // 끌어올리는 중 확인
         {
             return; // 처리 생략
         }
 
-        EndFishing(string.IsNullOrEmpty(resultText) ? (caught ? "CAUGHT!" : "IT GOT AWAY...") : resultText); // 낚시 종료
+        if (!caught || hookedFish == null) // 놓침 확인
+        {
+            EndFishing(string.IsNullOrEmpty(resultText) ? "IT GOT AWAY..." : resultText); // 낚시 종료
+            return; // 처리 종료
+        }
+
+        FishData fish = hookedFish; // 잡은 물고기
+        GiveCatch(fish); // 보상 지급과 기록
+        EndFishing(string.IsNullOrEmpty(resultText) ? $"CAUGHT {fish.DisplayName}!" : resultText, FishRarityUtility.GetColor(fish.Rarity), 2.8f); // 낚시 종료
+    }
+
+    public void SetReelProgress(float progress) // 미니게임 진행도 반영 (찌가 물가로 다가옴)
+    {
+        reelProgress = Mathf.Clamp01(progress); // 진행도 저장
+    }
+
+    public FishingConditions GetCurrentConditions() // 현재 출현 조건 계산
+    {
+        WaterBodyType water = activeSpot != null ? activeSpot.WaterBodyType : targetSpot != null ? targetSpot.WaterBodyType : WaterBodyType.Lake; // 물가
+        SeasonType season = seasonCycle != null ? seasonCycle.CurrentSeason : SeasonType.Spring; // 계절
+        WeatherType weather = weatherCycle != null ? weatherCycle.CurrentWeather : WeatherType.Clear; // 날씨
+        float hour = dayNightCycle != null ? dayNightCycle.CurrentHour : 12f; // 시각
+        int rodTier = activeRod != null ? activeRod.Tier : 1; // 낚싯대 등급
+        return new FishingConditions(water, season, weather, hour, rodTier, usingBait); // 조건 반환
+    }
+
+    public IReadOnlyList<FishData> GetFishList() // 물고기 전체 목록
+    {
+        if (gameDataRegistry != null) // 직접 연결 Registry 확인
+        {
+            return gameDataRegistry.Fish; // 목록 반환
+        }
+
+        return GameDataRegistryRuntime.HasInstance && GameDataRegistryRuntime.Instance.Registry != null
+            ? GameDataRegistryRuntime.Instance.Registry.Fish
+            : Array.Empty<FishData>(); // 전역 Registry 목록 반환
+    }
+
+    public void DebugBiteNow() // 테스트 메뉴 전용 : 대기 중이면 바로 입질
+    {
+        if (state == FishingState.Waiting) // 대기 확인
+        {
+            biteTime = Time.time; // 입질 시각 당김
+        }
     }
 
     public void Cancel(string reason) // 외부 요청 취소
@@ -289,7 +380,15 @@ public sealed class FishingController : MonoBehaviour // 플레이어 낚시 시
 
                 if (Time.time >= biteTime) // 입질 시각 확인
                 {
-                    StartBite(); // 입질 시작
+                    if (TryPickFish(out hookedFish)) // 지금 조건에 맞는 물고기 확인
+                    {
+                        StartBite(); // 입질 시작
+                    }
+                    else
+                    {
+                        EndFishing("NOTHING IS BITING..."); // 이 시간·날씨에는 물고기가 없음
+                        return; // 처리 종료
+                    }
                 }
 
                 break;
@@ -300,10 +399,15 @@ public sealed class FishingController : MonoBehaviour // 플레이어 낚시 시
                 if (Time.time >= biteEndTime) // 챔질 시간 초과 확인
                 {
                     Popup("IT GOT AWAY...", new Color(0.8f, 0.85f, 0.9f, 1f), 2f); // 놓침 알림
+                    hookedFish = null; // 물고기 놓침
                     ScheduleBite(); // 다시 대기
                     SetState(FishingState.Waiting); // 대기 상태
                 }
 
+                break;
+
+            case FishingState.Reeling: // 끌어올리는 중
+                UpdateReeling(); // 찌가 버둥거리며 다가옴
                 break;
         }
     }
@@ -381,6 +485,59 @@ public sealed class FishingController : MonoBehaviour // 플레이어 낚시 시
         }
     }
 
+    private void UpdateReeling() // 끌어올리는 중 찌 움직임
+    {
+        if (bobber == null) // 찌 확인
+        {
+            return; // 처리 생략
+        }
+
+        Vector3 toShore = reelShorePoint - bobberRestPoint; // 물가 방향
+        Vector3 side = Vector3.Cross(Vector3.up, toShore).normalized; // 옆 방향
+        Vector3 basePoint = Vector3.Lerp(bobberRestPoint, reelShorePoint, reelProgress * 0.55f); // 진행도만큼 다가온 위치
+        float sway = Mathf.Sin(Time.time * 23f) * 0.05f; // 좌우 버둥거림
+        float dip = -0.03f - Mathf.Abs(Mathf.Sin(Time.time * 11f)) * 0.04f; // 위아래 출렁임
+        bobber.transform.position = basePoint + side * sway + Vector3.up * dip; // 위치 적용
+    }
+
+    private bool TryPickFish(out FishData fish) // 입질할 물고기 선택
+    {
+        IReadOnlyList<FishData> fishList = GetFishList(); // 전체 목록
+
+        if (!string.IsNullOrEmpty(DebugForcedFishId)) // 테스트용 강제 물고기 확인
+        {
+            for (int index = 0; index < fishList.Count; index++) // 목록 순회
+            {
+                if (fishList[index] != null && fishList[index].FishId == DebugForcedFishId) // ID 일치 확인
+                {
+                    fish = fishList[index]; // 강제 물고기
+                    return true; // 선택 성공
+                }
+            }
+        }
+
+        return FishSelector.TrySelect(fishList, GetCurrentConditions(), rules.BaitRareWeightMultiplier, UnityEngine.Random.value, out fish); // 가중치 선택 결과 반환
+    }
+
+    private void GiveCatch(FishData fish) // 잡은 물고기 지급과 기록
+    {
+        ItemData item = fish.ResultItem; // 결과 아이템
+        int remaining = item != null && playerInventory != null ? playerInventory.AddItem(item, 1) : 0; // 인벤토리 추가
+
+        if (remaining > 0) // 가방 가득 참 확인
+        {
+            WorldItemDropUtility.TryDrop(pickupRegistry, dropContainer, item, remaining, transform.position + transform.forward * 0.6f, this); // 발밑에 떨어뜨리기
+            Popup("BAG FULL - DROPPED", new Color(1f, 0.6f, 0.45f, 1f), 1.8f, transform.position + Vector3.up * 1.7f); // 드롭 알림
+        }
+
+        int day = dayNightCycle != null ? dayNightCycle.CurrentDay : 0; // 현재 날짜
+
+        if (journal != null && journal.RecordCatch(fish, day)) // 처음 잡은 종류 확인
+        {
+            Popup("NEW!", new Color(1f, 0.82f, 0.3f, 1f), 2.6f, transform.position + Vector3.up * 2.5f); // 새 물고기 알림
+        }
+    }
+
     private void ScheduleBite() // 입질 시각 예약
     {
         float wait = UnityEngine.Random.Range(rules.MinimumBiteWait, rules.MaximumBiteWait); // 기본 대기
@@ -403,8 +560,10 @@ public sealed class FishingController : MonoBehaviour // 플레이어 낚시 시
             playerInventory.RemoveItem(rules.BaitItem, 1); // 물고기가 문 미끼 1개 소비
         }
 
-        if (BiteHooked != null) // 83일차 미니게임 연결 확인
+        if (BiteHooked != null && hookedFish != null) // 미니게임 연결 확인
         {
+            reelProgress = 0f; // 진행도 초기화
+            reelShorePoint = activeSpot != null ? activeSpot.GetSurfacePoint(transform.position) : bobberRestPoint; // 물가 쪽 지점
             SetState(FishingState.Reeling); // 끌어올리기 상태
             BiteHooked.Invoke(this); // 미니게임 시작
             return; // 처리 종료
@@ -463,6 +622,11 @@ public sealed class FishingController : MonoBehaviour // 플레이어 낚시 시
 
     private void EndFishing(string message) // 낚시 종료와 정리 (message가 null·빈 문자열이면 알림 없음)
     {
+        EndFishing(message, new Color(0.85f, 0.9f, 0.95f, 1f), 2.2f); // 기본 색상 종료
+    }
+
+    private void EndFishing(string message, Color messageColor, float messageSize) // 낚시 종료와 정리
+    {
         if (!IsBusy) // 이미 종료 확인
         {
             return; // 처리 생략
@@ -470,7 +634,7 @@ public sealed class FishingController : MonoBehaviour // 플레이어 낚시 시
 
         if (!string.IsNullOrEmpty(message)) // 알림 확인
         {
-            Popup(message, new Color(0.85f, 0.9f, 0.95f, 1f), 2.2f, BobberPosition + Vector3.up * 0.3f); // 종료 알림
+            Popup(message, messageColor, messageSize, BobberPosition + Vector3.up * 0.3f); // 종료 알림
         }
 
         if (bobber != null) // 찌 확인
@@ -481,6 +645,8 @@ public sealed class FishingController : MonoBehaviour // 플레이어 낚시 시
         SetLineVisible(false); // 낚싯줄 숨김
         activeSpot = null; // 낚시터 초기화
         activeRod = null; // 낚싯대 초기화
+        hookedFish = null; // 물고기 초기화
+        reelProgress = 0f; // 진행도 초기화
         SetState(FishingState.Idle); // 대기 상태
         UpdateRodTilt(); // 낚싯대 자세 복구
         nextRefreshTime = 0f; // 바로 재계산
@@ -572,7 +738,7 @@ public sealed class FishingController : MonoBehaviour // 플레이어 낚시 시
                 break;
 
             case FishingState.Reeling:
-                prompt = "REELING..."; // 끌어올리는 중
+                prompt = "REELING... | F - PULL"; // 끌어올리는 중
                 break;
 
             default:
@@ -615,7 +781,7 @@ public sealed class FishingController : MonoBehaviour // 플레이어 낚시 시
 
         Vector3 start = GetRodTipPosition(); // 시작점
         Vector3 end = bobber.transform.position; // 끝점
-        float sag = state == FishingState.Bite ? 0.05f : state == FishingState.Casting ? 0f : 0.45f; // 처짐 정도
+        float sag = state == FishingState.Bite || state == FishingState.Reeling ? 0.05f : state == FishingState.Casting ? 0f : 0.45f; // 처짐 정도 (당기는 중에는 팽팽)
         Vector3 control = (start + end) * 0.5f + Vector3.down * sag; // 곡선 조절점
 
         for (int index = 0; index < LineSegments; index++) // 점 순회

@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 // 82일차: 낚시 콘텐츠(낚싯대·미끼·물고기 데이터, 연못, 낚시 조작)를 한 번에 만들고
 // 아이템 DB, 월드 아이템 Registry, GameDataRegistry, 현재 게임 Scene에 연결한다.
 // 여러 번 실행해도 같은 Asset·오브젝트를 갱신하며 중복 생성하지 않는다.
+// 83일차: 출현 조건·보상 참조, 잡은 기록, 끌어올리기 미니게임 HUD 연결과 검증 추가
 public static class FishingContentBuilder
 {
     private const string MenuRoot = "Tools/Project U/Fishing/";
@@ -614,6 +615,7 @@ public static class FishingContentBuilder
 
         FishingController controller = SetupController(scene, interactor, rules, rodTip);
         report.AppendLine($"플레이어 낚시 조작 : {controller.gameObject.name}");
+        report.AppendLine(FishingMinigameUIBuilder.Build(controller));
 
         report.AppendLine(SetupPond(scene, pickups));
 
@@ -784,6 +786,22 @@ public static class FishingContentBuilder
         serialized.FindProperty("rodTip").objectReferenceValue = rodTip;
         serialized.FindProperty("fishingLine").objectReferenceValue = line;
         serialized.FindProperty("bobberPrefab").objectReferenceValue = StylizedArtAssetFactory.GetOrCreateModelPrefab("fx_fishing_bobber", false);
+
+        // 83일차 : 출현 조건·잡은 기록·바닥 드롭
+        FishingJournal journal = player.GetComponent<FishingJournal>();
+
+        if (journal == null)
+        {
+            journal = Undo.AddComponent<FishingJournal>(player);
+        }
+
+        serialized.FindProperty("gameDataRegistry").objectReferenceValue = AssetDatabase.LoadAssetAtPath<GameDataRegistry>(RegistryPath);
+        serialized.FindProperty("dayNightCycle").objectReferenceValue = Object.FindFirstObjectByType<DayNightCycle>(FindObjectsInactive.Include);
+        serialized.FindProperty("seasonCycle").objectReferenceValue = Object.FindFirstObjectByType<SeasonCycle>(FindObjectsInactive.Include);
+        serialized.FindProperty("weatherCycle").objectReferenceValue = Object.FindFirstObjectByType<WeatherCycle>(FindObjectsInactive.Include);
+        serialized.FindProperty("journal").objectReferenceValue = journal;
+        serialized.FindProperty("pickupRegistry").objectReferenceValue = AssetDatabase.LoadAssetAtPath<WorldItemPickupRegistry>(PickupRegistryPath);
+        serialized.FindProperty("dropContainer").objectReferenceValue = Object.FindFirstObjectByType<WorldItemDropContainer>(FindObjectsInactive.Include);
         serialized.ApplyModifiedProperties();
         return controller;
     }
@@ -1371,6 +1389,10 @@ public static class FishingContentBuilder
         {
             Error(rulesError);
         }
+        else
+        {
+            ValidateSelectionAndMinigame(rules, report, Error);
+        }
 
         FarmingRulesData farmingRules = AssetDatabase.LoadAssetAtPath<FarmingRulesData>(FarmingRulesPath);
 
@@ -1388,6 +1410,94 @@ public static class FishingContentBuilder
         errorCount = errors;
         report.AppendLine(errors == 0 ? "결과 : 오류 0개" : $"결과 : 오류 {errors}개");
         return report.ToString();
+    }
+
+    private static void ValidateSelectionAndMinigame(FishingRulesData rules, StringBuilder report, System.Action<string> error)
+    {
+        List<FishData> allFish = new List<FishData>();
+
+        foreach (FishSpec spec in FishSpecs)
+        {
+            FishData fish = AssetDatabase.LoadAssetAtPath<FishData>($"{FishFolder}/{spec.AssetName}.asset");
+
+            if (fish != null)
+            {
+                allFish.Add(fish);
+            }
+        }
+
+        SeasonType[] seasons = { SeasonType.Spring, SeasonType.Summer, SeasonType.Autumn, SeasonType.Winter };
+        WeatherType[] weathers = { WeatherType.Clear, WeatherType.Cloudy, WeatherType.Rain, WeatherType.Snow, WeatherType.Storm };
+        float[] hours = { 8f, 14f, 20f, 2f };
+
+        foreach (FishData fish in allFish)
+        {
+            // 어떤 계절·날씨·시각에 한 번이라도 뽑힐 수 있는지 (기본 낚싯대, 첫 번째 출현 물가)
+            float bestChance = 0f;
+            WaterBodyType water = fish.WaterBodies.Count > 0 ? fish.WaterBodies[0] : WaterBodyType.Lake;
+
+            foreach (SeasonType season in seasons)
+            {
+                foreach (WeatherType weather in weathers)
+                {
+                    foreach (float hour in hours)
+                    {
+                        FishingConditions conditions = new FishingConditions(water, season, weather, hour, fish.RequiredRodTier, true);
+                        bestChance = Mathf.Max(bestChance, FishSelector.GetChance(allFish, fish, conditions, rules.BaitRareWeightMultiplier));
+                    }
+                }
+            }
+
+            if (bestChance <= 0f)
+            {
+                error($"{fish.FishId}가 뽑힐 수 있는 조건이 없습니다.");
+            }
+
+            // 표시가 한 번 왕복하는 시간 × 필요 성공 횟수가 제한 시간 안에 들어오는지
+            float roundTrip = 2f / rules.GetMarkerSpeed(fish.Difficulty);
+            float worstCase = roundTrip * fish.RequiredSuccessCount;
+            float timeLimit = rules.GetTimeLimit(fish.RequiredSuccessCount, 0f);
+
+            if (worstCase > timeLimit)
+            {
+                error($"{fish.FishId} 미니게임을 제한 시간 안에 끝낼 수 없습니다. ({worstCase:0.0}초 > {timeLimit:0.0}초)");
+            }
+
+            if (fish.RequiredSuccessCount > FishingMinigameUIBuilder.SuccessPipCount)
+            {
+                error($"{fish.FishId} 필요 성공 횟수가 HUD 점 수({FishingMinigameUIBuilder.SuccessPipCount})보다 많습니다.");
+            }
+        }
+
+        if (rules.MinigameMaxMisses > FishingMinigameUIBuilder.MissPipCount)
+        {
+            error($"최대 실수 횟수가 HUD 점 수({FishingMinigameUIBuilder.MissPipCount})보다 많습니다.");
+        }
+
+        // 대표 조건별 확률 (연못, 미끼 사용)
+        foreach ((string label, SeasonType season, WeatherType weather, float hour) sample in new[]
+                 {
+                     ("봄 맑은 아침", SeasonType.Spring, WeatherType.Clear, 8f),
+                     ("봄 비 오는 아침", SeasonType.Spring, WeatherType.Rain, 8f),
+                     ("여름 맑은 밤", SeasonType.Summer, WeatherType.Clear, 22f),
+                     ("겨울 눈 오는 낮", SeasonType.Winter, WeatherType.Snow, 14f)
+                 })
+        {
+            FishingConditions conditions = new FishingConditions(WaterBodyType.Lake, sample.season, sample.weather, sample.hour, 1, true);
+            StringBuilder line = new StringBuilder($"  {sample.label} :");
+
+            foreach (FishData fish in allFish)
+            {
+                float chance = FishSelector.GetChance(allFish, fish, conditions, rules.BaitRareWeightMultiplier);
+
+                if (chance > 0f)
+                {
+                    line.Append($" {fish.DisplayName} {chance * 100f:0}%");
+                }
+            }
+
+            report.AppendLine(line.ToString());
+        }
     }
 
     private static void ValidateScene(StringBuilder report, System.Action<string> error)
@@ -1410,7 +1520,7 @@ public static class FishingContentBuilder
         {
             SerializedObject serialized = new SerializedObject(controller);
 
-            foreach (string property in new[] { "playerInventory", "playerStamina", "playerHealth", "playerMovement", "buildPlacementController", "viewTransform", "rules", "castTarget", "castMarker", "rodTip", "fishingLine", "bobberPrefab" })
+            foreach (string property in new[] { "playerInventory", "playerStamina", "playerHealth", "playerMovement", "buildPlacementController", "viewTransform", "rules", "castTarget", "castMarker", "rodTip", "fishingLine", "bobberPrefab", "gameDataRegistry", "dayNightCycle", "seasonCycle", "weatherCycle", "journal", "pickupRegistry", "dropContainer" })
             {
                 if (serialized.FindProperty(property).objectReferenceValue == null)
                 {
@@ -1421,6 +1531,46 @@ public static class FishingContentBuilder
             if (new SerializedObject(interactor).FindProperty("fishingController").objectReferenceValue != controller)
             {
                 error("PlayerInteractor에 FishingController가 연결되지 않았습니다.");
+            }
+
+            FishingMinigameController minigame = interactor.GetComponent<FishingMinigameController>();
+
+            if (minigame == null)
+            {
+                error("플레이어에 FishingMinigameController가 없습니다.");
+            }
+            else
+            {
+                SerializedObject minigameSerialized = new SerializedObject(minigame);
+
+                foreach (string property in new[] { "fishingController", "minigameUI" })
+                {
+                    if (minigameSerialized.FindProperty(property).objectReferenceValue == null)
+                    {
+                        error($"FishingMinigameController.{property} 연결이 비어 있습니다.");
+                    }
+                }
+
+                FishingMinigameUI ui = minigameSerialized.FindProperty("minigameUI").objectReferenceValue as FishingMinigameUI;
+
+                if (ui != null)
+                {
+                    SerializedObject uiSerialized = new SerializedObject(ui);
+
+                    foreach (string property in new[] { "panelRoot", "titleText", "rarityText", "zoneRect", "zoneImage", "markerRect", "markerImage", "timeFillRect", "timeFillImage" })
+                    {
+                        if (uiSerialized.FindProperty(property).objectReferenceValue == null)
+                        {
+                            error($"FishingMinigameUI.{property} 연결이 비어 있습니다.");
+                        }
+                    }
+
+                    if (uiSerialized.FindProperty("successPips").arraySize < FishingMinigameUIBuilder.SuccessPipCount
+                        || uiSerialized.FindProperty("missPips").arraySize < FishingMinigameUIBuilder.MissPipCount)
+                    {
+                        error("FishingMinigameUI 성공·실수 점이 부족합니다.");
+                    }
+                }
             }
         }
 

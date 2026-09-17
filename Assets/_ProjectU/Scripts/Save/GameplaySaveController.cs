@@ -203,6 +203,12 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
             return; // 파일 저장 중단
         }
 
+        if (!FishingSaveBridge.TryCapture(saveData, out string fishingCaptureError)) // 낚시 기록 수집
+        {
+            Debug.LogError($"낚시 기록 저장 준비 실패\n{fishingCaptureError}", this); // 수집 오류 출력
+            return; // 파일 저장 중단
+        }
+
         if (!SaveFileService.TrySave(slotId, saveData, out string resultMessage)) // JSON 파일 저장 실행
         {
             Debug.LogError($"현재 게임 저장 실패\n{resultMessage}", this); // 저장 실패 내용 출력
@@ -291,6 +297,12 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
         if (!FarmSaveBridge.TryRestore(saveData, out string farmRestoreError)) // 밭 상태 복원 (건축물 복원 뒤)
         {
             Debug.LogError($"밭 상태 불러오기 실패\n{farmRestoreError}", this); // 복원 오류 출력
+            return; // 전체 불러오기 중단
+        }
+
+        if (!FishingSaveBridge.TryRestore(saveData, out string fishingRestoreError)) // 낚시 기록 복원
+        {
+            Debug.LogError($"낚시 기록 불러오기 실패\n{fishingRestoreError}", this); // 복원 오류 출력
             return; // 전체 불러오기 중단
         }
 

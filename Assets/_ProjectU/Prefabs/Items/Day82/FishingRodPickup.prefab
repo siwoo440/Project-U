@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 1261164887595103197}
+  - component: {fileID: 8970080364407234931}
   m_Layer: 3
   m_Name: FishingRodPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 8693951962233924780}
+  - {fileID: 3011712914184473082}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &1261164887595103197
+--- !u!114 &8970080364407234931
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: tool_fishing_rod
-  generatedVisual: {fileID: 4732538362204821189}
+  generatedVisual: {fileID: 1207392822224745363}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &276773757307768088
+--- !u!1001 &5961520757020665934
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 373c6faacc03c2944b43ed10db7488f2, type: 3}
---- !u!1 &4732538362204821189 stripped
+--- !u!1 &1207392822224745363 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4790166257516829661, guid: 373c6faacc03c2944b43ed10db7488f2, type: 3}
-  m_PrefabInstance: {fileID: 276773757307768088}
+  m_PrefabInstance: {fileID: 5961520757020665934}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &8693951962233924780 stripped
+--- !u!4 &3011712914184473082 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8894701053081657780, guid: 373c6faacc03c2944b43ed10db7488f2, type: 3}
-  m_PrefabInstance: {fileID: 276773757307768088}
+  m_PrefabInstance: {fileID: 5961520757020665934}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

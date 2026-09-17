@@ -41,6 +41,10 @@ public sealed class SaveGameData // 전체 저장 파일 최상위 데이터
     public bool hasFarmData; // 밭 저장 데이터 존재 여부
     [Tooltip("밭 칸별 상태와 물뿌리개 데이터.")]
     public FarmSaveData farm = new FarmSaveData(); // 밭 저장 데이터
+    [Tooltip("낚시 기록 저장 데이터 존재 여부.")]
+    public bool hasFishingData; // 낚시 기록 저장 데이터 존재 여부
+    [Tooltip("잡은 물고기 기록 데이터.")]
+    public FishingSaveData fishing = new FishingSaveData(); // 낚시 기록 데이터
 
     public static SaveGameData CreateNew(string newSceneName) // 새로운 저장 데이터 생성
     {
@@ -290,6 +294,24 @@ public sealed class FarmPlotSaveData // 밭 한 칸 저장 데이터
     public int lastGrowthDay; // 성장 처리 날짜
     [Tooltip("폭풍 피해 판정을 마지막으로 한 날짜. 81일차 이전 저장 파일은 0.")]
     public int lastStormCheckDay; // 폭풍 판정 날짜
+}
+
+[Serializable] // JSON 직렬화 허용
+public sealed class FishingSaveData // 낚시 기록 전체 저장 데이터
+{
+    [Tooltip("물고기 종류별 잡은 기록 목록.")]
+    public List<FishCatchSaveData> catches = new List<FishCatchSaveData>(); // 잡은 기록 목록
+}
+
+[Serializable] // JSON 직렬화 허용
+public sealed class FishCatchSaveData // 물고기 한 종류의 잡은 기록
+{
+    [Tooltip("물고기 고유 ID.")]
+    public string fishId = string.Empty; // 물고기 ID
+    [Tooltip("잡은 횟수.")]
+    public int caughtCount; // 잡은 횟수
+    [Tooltip("처음 잡은 날짜.")]
+    public int firstCaughtDay; // 처음 잡은 날짜
 }
 
 [Serializable] // JSON 직렬화 허용

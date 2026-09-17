@@ -211,23 +211,7 @@ public sealed class FarmManager : MonoBehaviour // 거점 밭 전체의 날짜·
 
     public bool TryDropItem(ItemData itemData, int quantity, Vector3 position) // 수확물 바닥 드롭
     {
-        if (itemData == null || quantity <= 0) // 요청 확인
-        {
-            return false; // 드롭 생략
-        }
-
-        if (pickupRegistry == null || !pickupRegistry.TryGetPickup(itemData, out WorldItemPickup pickupPrefab)) // Pickup Prefab 확인
-        {
-            Debug.LogWarning($"{itemData.DisplayName}의 월드 아이템 Prefab이 없어 바닥에 떨어뜨리지 못했습니다.", this); // 드롭 실패 경고
-            return false; // 드롭 실패
-        }
-
-        Vector2 offset = UnityEngine.Random.insideUnitCircle * 0.35f; // 흩어짐
-        Vector3 spawnPosition = position + new Vector3(offset.x, 0.5f, offset.y); // 생성 위치
-        Transform parent = dropContainer != null ? dropContainer.transform : null; // 드롭 부모
-        WorldItemPickup pickup = Instantiate(pickupPrefab, spawnPosition, Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 360f), 0f), parent); // 월드 아이템 생성
-        pickup.Initialize(itemData, quantity); // 아이템과 수량 적용
-        return true; // 드롭 성공
+        return WorldItemDropUtility.TryDrop(pickupRegistry, dropContainer, itemData, quantity, position, this); // 공통 드롭 결과 반환
     }
 
     public void RefreshAllPlots() // 전체 밭 외형 갱신

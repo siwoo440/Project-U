@@ -23,3 +23,10 @@ MonoBehaviour:
   castDuration: 0.6
   castStaminaCost: 3
   cancelMoveDistance: 0.35
+  baitRareWeightMultiplier: 1.5
+  minigameMaxMisses: 3
+  minigameBaseTime: 4
+  minigameTimePerSuccess: 1.2
+  markerSpeedRange: {x: 0.7, y: 1.7}
+  zoneWidthRange: {x: 0.32, y: 0.16}
+  speedUpPerSuccess: 1.05

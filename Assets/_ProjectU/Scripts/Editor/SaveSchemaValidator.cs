@@ -53,6 +53,14 @@ public static class SaveSchemaValidator // 저장 구조 Editor 검사
             lastGrowthDay = 3 // 예제 성장 처리 날짜
         }); // 예제 밭 목록 추가
 
+        sampleSaveData.hasFishingData = true; // 예제 낚시 기록 존재 적용
+        sampleSaveData.fishing.catches.Add(new FishCatchSaveData
+        {
+            fishId = "fish_crucian", // 예제 붕어 ID
+            caughtCount = 4, // 예제 잡은 횟수
+            firstCaughtDay = 2 // 예제 처음 잡은 날짜
+        }); // 예제 낚시 기록 추가
+
         string json = JsonUtility.ToJson(sampleSaveData, true); // 저장 데이터를 JSON으로 변환
         SaveGameData restoredSaveData = JsonUtility.FromJson<SaveGameData>(json); // JSON을 저장 데이터로 복원
 
@@ -111,6 +119,18 @@ public static class SaveSchemaValidator // 저장 구조 Editor 검사
         if (!farmRestored) // 밭 복원 실패 확인
         {
             Debug.LogError("저장 구조 검사 실패: 밭 데이터가 일치하지 않습니다."); // 밭 복원 오류 출력
+            return; // 검사 중단
+        }
+
+        bool fishingRestored = restoredSaveData.hasFishingData // 낚시 기록 존재 확인
+            && restoredSaveData.fishing != null // 낚시 저장 묶음 확인
+            && restoredSaveData.fishing.catches.Count == 1 // 기록 개수 확인
+            && restoredSaveData.fishing.catches[0].fishId == "fish_crucian" // 물고기 ID 확인
+            && restoredSaveData.fishing.catches[0].caughtCount == 4; // 잡은 횟수 확인
+
+        if (!fishingRestored) // 낚시 기록 복원 실패 확인
+        {
+            Debug.LogError("저장 구조 검사 실패: 낚시 기록 데이터가 일치하지 않습니다."); // 낚시 기록 오류 출력
             return; // 검사 중단
         }
 

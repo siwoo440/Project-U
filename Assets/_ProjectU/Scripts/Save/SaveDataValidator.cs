@@ -107,6 +107,11 @@ public static class SaveDataValidator // 저장 데이터 유효성 검사
             return false; // 전체 검사 실패
         }
 
+        if (!TryValidateFishingData(saveData, out errorMessage)) // 낚시 기록 검사
+        {
+            return false; // 전체 검사 실패
+        }
+
         errorMessage = string.Empty; // 오류 내용 초기화
         return true; // 전체 검사 성공
     }
@@ -252,6 +257,50 @@ public static class SaveDataValidator // 저장 데이터 유효성 검사
             if (plotData.grownDays < 0 || plotData.lastWateredDay < -1 || plotData.lastGrowthDay < 0 || plotData.lastStormCheckDay < 0) // 날짜 값 확인
             {
                 errorMessage = $"밭 성장 일수 또는 물 준 날짜가 잘못되었습니다: {plotData.structureId}"; // 날짜 오류 저장
+                return false; // 검사 실패
+            }
+        }
+
+        errorMessage = string.Empty; // 오류 내용 초기화
+        return true; // 검사 성공
+    }
+
+    private static bool TryValidateFishingData(SaveGameData saveData, out string errorMessage) // 낚시 기록 저장 데이터 검사
+    {
+        if (!saveData.hasFishingData) // 83일차 이전 저장 파일 확인
+        {
+            errorMessage = string.Empty; // 오류 내용 초기화
+            return true; // 이전 저장 파일 허용
+        }
+
+        if (saveData.fishing == null || saveData.fishing.catches == null) // 낚시 저장 묶음 확인
+        {
+            errorMessage = "낚시 기록 저장 목록이 누락되었습니다."; // 목록 오류 저장
+            return false; // 검사 실패
+        }
+
+        System.Collections.Generic.HashSet<string> usedIds =
+            new System.Collections.Generic.HashSet<string>(System.StringComparer.Ordinal); // 중복 확인 ID 목록
+
+        for (int index = 0; index < saveData.fishing.catches.Count; index++) // 전체 기록 순회
+        {
+            FishCatchSaveData catchData = saveData.fishing.catches[index]; // 현재 기록 조회
+
+            if (catchData == null || string.IsNullOrWhiteSpace(catchData.fishId)) // 항목과 ID 확인
+            {
+                errorMessage = $"낚시 기록 항목 {index}의 물고기 ID가 비어 있습니다."; // ID 오류 저장
+                return false; // 검사 실패
+            }
+
+            if (!usedIds.Add(catchData.fishId)) // ID 중복 확인
+            {
+                errorMessage = $"낚시 기록 물고기 ID가 중복되었습니다: {catchData.fishId}"; // 중복 오류 저장
+                return false; // 검사 실패
+            }
+
+            if (catchData.caughtCount < 1 || catchData.firstCaughtDay < 0) // 횟수와 날짜 확인
+            {
+                errorMessage = $"낚시 기록 횟수 또는 날짜가 잘못되었습니다: {catchData.fishId}"; // 값 오류 저장
                 return false; // 검사 실패
             }
         }
