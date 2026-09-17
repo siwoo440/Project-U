@@ -79,7 +79,13 @@ public enum StylizedColor
     Worm = 106,
     // 84일차: 아이템 모델 보강 색상
     AppleBaked = 107,
-    Caramel = 108
+    Caramel = 108,
+    // 85일차: 요리 색상
+    SoupPumpkin = 109,
+    SoupTomato = 110,
+    Charred = 111,
+    Butter = 112,
+    GrilledFish = 113
 }
 
 public static class StylizedPalette
@@ -178,6 +184,11 @@ public static class StylizedPalette
             case StylizedColor.Worm: return new Entry(Hex(0xC97A7A), 0.45f);
             case StylizedColor.AppleBaked: return new Entry(Hex(0x9A3B26), 0.35f);
             case StylizedColor.Caramel: return new Entry(Hex(0xD08A32), 0.65f);
+            case StylizedColor.SoupPumpkin: return new Entry(Hex(0xF0A13A), 0.55f);
+            case StylizedColor.SoupTomato: return new Entry(Hex(0xC4412C), 0.55f);
+            case StylizedColor.Charred: return new Entry(Hex(0x3A2A20), 0.2f);
+            case StylizedColor.Butter: return new Entry(Hex(0xF6DE7A), 0.6f);
+            case StylizedColor.GrilledFish: return new Entry(Hex(0xC98A4E), 0.5f);
             default: return new Entry(Color.magenta);
         }
     }

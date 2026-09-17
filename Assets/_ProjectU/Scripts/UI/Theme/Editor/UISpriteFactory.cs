@@ -99,8 +99,26 @@ public static class UISpriteFactory
         WriteIcon("Bag", BagIcon);
         WriteIcon("Compass", CompassIcon);
         WriteIcon("Pickup", PickupIcon);
+        WriteCookingIcons();
 
         AssetDatabase.SaveAssets();
+    }
+
+    // 85일차 추가: 요리 창·음식 효과 아이콘만 따로 만든다
+    public static void GenerateCookingIcons()
+    {
+        StylizedArtAssetFactory.EnsureFolder(IconFolder);
+        WriteCookingIcons();
+        AssetDatabase.SaveAssets();
+    }
+
+    private static void WriteCookingIcons()
+    {
+        WriteIcon("Flame", FlameIcon);
+        WriteIcon("Bolt", BoltIcon);
+        WriteIcon("Speed", SpeedIcon);
+        WriteIcon("Clock", ClockIcon);
+        WriteIcon("Check", CheckIcon);
     }
 
     // 82일차 추가: 근처 아이템 아이콘만 따로 만든다 (다른 스프라이트는 다시 쓰지 않음)
@@ -320,6 +338,50 @@ public static class UISpriteFactory
         float shaft = Capsule(x, y, 0f, 0.78f, 0f, 0f, 0.11f);
         float head = Mathf.Max((Mathf.Abs(x) - (y + 0.25f) * 0.9f) * 0.743f, y - 0.15f);
         return Union(tray, Union(shaft, head));
+    }
+
+    // 85일차 추가: 불꽃 (아래 둥근 몸통 + 위로 뾰족한 끝 + 안쪽 작은 불꽃 구멍)
+    private static float FlameIcon(float x, float y)
+    {
+        float body = Circle(x, y, 0f, -0.3f, 0.52f);
+        float tip = Mathf.Max(Mathf.Abs(x + (y - 0.1f) * 0.18f) * 1.3f + (y - 0.92f) * 0.62f, -(y + 0.1f));
+        float outer = Union(body, tip);
+        float innerBody = Circle(x, y, 0.02f, -0.42f, 0.24f);
+        float innerTip = Mathf.Max(Mathf.Abs(x - 0.02f) * 1.5f + (y - 0.12f) * 0.7f, -(y + 0.3f));
+        return Subtract(outer, Union(innerBody, innerTip));
+    }
+
+    // 85일차 추가: 번개 (스태미나)
+    private static float BoltIcon(float x, float y)
+    {
+        float upper = Capsule(x, y, 0.3f, 0.85f, -0.22f, -0.02f, 0.13f);
+        float middle = Capsule(x, y, -0.22f, -0.02f, 0.24f, 0.02f, 0.12f);
+        float lower = Capsule(x, y, 0.24f, 0.02f, -0.3f, -0.85f, 0.13f);
+        return Union(upper, Union(middle, lower));
+    }
+
+    // 85일차 추가: 속도 (겹친 화살표 두 개와 선)
+    private static float SpeedIcon(float x, float y)
+    {
+        float first = Union(Capsule(x, y, -0.05f, 0.5f, 0.4f, 0f, 0.1f), Capsule(x, y, 0.4f, 0f, -0.05f, -0.5f, 0.1f));
+        float second = Union(Capsule(x, y, 0.3f, 0.5f, 0.75f, 0f, 0.1f), Capsule(x, y, 0.75f, 0f, 0.3f, -0.5f, 0.1f));
+        float lines = Union(Capsule(x, y, -0.85f, 0.28f, -0.35f, 0.28f, 0.07f), Capsule(x, y, -0.85f, -0.28f, -0.35f, -0.28f, 0.07f));
+        return Union(Union(first, second), lines);
+    }
+
+    // 85일차 추가: 시계 (조리 시간)
+    private static float ClockIcon(float x, float y)
+    {
+        float ring = Mathf.Abs(Circle(x, y, 0f, 0f, 0.74f)) - 0.1f;
+        float hourHand = Capsule(x, y, 0f, 0f, 0f, 0.44f, 0.08f);
+        float minuteHand = Capsule(x, y, 0f, 0f, 0.34f, -0.18f, 0.08f);
+        return Union(ring, Union(hourHand, minuteHand));
+    }
+
+    // 85일차 추가: 체크 (완성)
+    private static float CheckIcon(float x, float y)
+    {
+        return Union(Capsule(x, y, -0.62f, 0.02f, -0.2f, -0.44f, 0.14f), Capsule(x, y, -0.2f, -0.44f, 0.66f, 0.5f, 0.14f));
     }
 
     private static float CompassIcon(float x, float y)

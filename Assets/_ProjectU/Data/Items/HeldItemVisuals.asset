@@ -55,12 +55,36 @@ MonoBehaviour:
     holderLocalEuler: {x: 0, y: 250, z: 0}
     modelLocalPosition: {x: -0, y: -0.1, z: -0}
     modelScale: 0.33141634
+  - item: {fileID: 11400000, guid: 070f5d6a3c56070488a27144388e461c, type: 2}
+    modelPrefab: {fileID: 6666647802679485285, guid: 352a2d747bd9d3f4498139f98e877512, type: 3}
+    holderLocalPosition: {x: 0, y: 0.04, z: 0.14}
+    holderLocalEuler: {x: 0, y: 250, z: 0}
+    modelLocalPosition: {x: -0, y: -0.06987365, z: -0}
+    modelScale: 0.330033
   - item: {fileID: 11400000, guid: 3a8ea9dc329d35c4b8b4c84410a7f15d, type: 2}
     modelPrefab: {fileID: 7408445301519267726, guid: 2d43ee8ddb6ee0948bc027940d1e0e6b, type: 3}
     holderLocalPosition: {x: 0, y: 0.04, z: 0.14}
     holderLocalEuler: {x: 0, y: 250, z: 0}
     modelLocalPosition: {x: -0.006393933, y: -0.07407887, z: 0.013643382}
     modelScale: 0.54108804
+  - item: {fileID: 11400000, guid: 2c82bd3688707a247a1d2c303d4b2589, type: 2}
+    modelPrefab: {fileID: 7999763414966946367, guid: fd69905e2e4e4f84d8cd37cc07dd356e, type: 3}
+    holderLocalPosition: {x: 0, y: 0.04, z: 0.14}
+    holderLocalEuler: {x: 0, y: 250, z: 0}
+    modelLocalPosition: {x: 0.0074515007, y: -0.06572239, z: -0}
+    modelScale: 0.40637124
+  - item: {fileID: 11400000, guid: b4f9d8fea40a5c741bf6bc3778083b00, type: 2}
+    modelPrefab: {fileID: 6402683941553107687, guid: feaf3d75225d40943aa3e31ddd88dd36, type: 3}
+    holderLocalPosition: {x: 0, y: 0.04, z: 0.14}
+    holderLocalEuler: {x: 0, y: 250, z: 0}
+    modelLocalPosition: {x: 0.010579427, y: -0.029485838, z: -0}
+    modelScale: 0.36857298
+  - item: {fileID: 11400000, guid: 2168b2ceb2540714c8bcfcadd543b478, type: 2}
+    modelPrefab: {fileID: 5882322208728740047, guid: f71e8e89e519d2341b637cede5acf7e1, type: 3}
+    holderLocalPosition: {x: 0, y: 0.04, z: 0.14}
+    holderLocalEuler: {x: 0, y: 250, z: 0}
+    modelLocalPosition: {x: 0.004146319, y: -0.03317073, z: -0}
+    modelScale: 0.41463414
   - item: {fileID: 11400000, guid: a42d6efd666a1fc40809cbcbcd3362b4, type: 2}
     modelPrefab: {fileID: 6382647970070520667, guid: d3ea1298ad0820344bc989e4fe2bdf1a, type: 3}
     holderLocalPosition: {x: 0, y: 0.04, z: 0.14}
@@ -73,6 +97,12 @@ MonoBehaviour:
     holderLocalEuler: {x: 0, y: 250, z: 0}
     modelLocalPosition: {x: -0.0003348817, y: -0.123732515, z: -0.0003348817}
     modelScale: 0.49588552
+  - item: {fileID: 11400000, guid: 7f40f13453370944793fdbd691b6889d, type: 2}
+    modelPrefab: {fileID: 5221561430538808595, guid: 92ddb174554893b4c83f2bafb33c76d5, type: 3}
+    holderLocalPosition: {x: 0, y: 0.04, z: 0.14}
+    holderLocalEuler: {x: 0, y: 250, z: 0}
+    modelLocalPosition: {x: -0, y: -0.09784293, z: -0}
+    modelScale: 0.4511278
   - item: {fileID: 11400000, guid: 95ca44aa8a27d41448c511db6fa0a55c, type: 2}
     modelPrefab: {fileID: 5459417202144515823, guid: 1d841d378ecc81c4cbc11e4389d5973d, type: 3}
     holderLocalPosition: {x: 0, y: 0.04, z: 0.14}
@@ -85,6 +115,12 @@ MonoBehaviour:
     holderLocalEuler: {x: 0, y: 250, z: 0}
     modelLocalPosition: {x: -0.040075406, y: -0.057072543, z: -0.021538248}
     modelScale: 0.46333477
+  - item: {fileID: 11400000, guid: e63787b6f7de7624f9bbb93b5512905e, type: 2}
+    modelPrefab: {fileID: 2499751850217231501, guid: 60087e91fd853164a8b5152a7186362e, type: 3}
+    holderLocalPosition: {x: 0, y: 0.04, z: 0.14}
+    holderLocalEuler: {x: 0, y: 250, z: 0}
+    modelLocalPosition: {x: -0, y: -0.09798457, z: -0}
+    modelScale: 0.4511278
   - item: {fileID: 11400000, guid: 09c927a2524bd8f409d6b8ddab61bc58, type: 2}
     modelPrefab: {fileID: 5788968582559996111, guid: bb526782c392fa94898de351c99b593b, type: 3}
     holderLocalPosition: {x: 0, y: 0.04, z: 0.14}

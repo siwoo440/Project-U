@@ -49,6 +49,7 @@ public static partial class StylizedModelLibrary
                 RegisterProps();
                 RegisterFarming();
                 RegisterFishing();
+                RegisterCooking();
             }
 
             return catalog;

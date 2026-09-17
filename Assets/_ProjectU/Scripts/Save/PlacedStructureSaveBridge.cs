@@ -84,9 +84,12 @@ public sealed class PlacedStructureSaveBridge : MonoBehaviour // 설치 건축�
             if (campfire != null) // 모닥불 건축물 확인
             {
                 structureSaveData.hasCampfireState = true; // 모닥불 상태 존재 표시
-                structureSaveData.campfire.isCooking = campfire.IsCooking; // 조리 진행 상태 저장
-                structureSaveData.campfire.hasReadyResult = campfire.HasReadyResult; // 완성 음식 상태 저장
-                structureSaveData.campfire.remainingCookingTime = campfire.RemainingCookingTime; // 남은 조리 시간 저장
+                // 85일차: 여러 조리 칸은 slots에 저장하고, 예전 한 칸 필드는 비워 둔다
+                structureSaveData.campfire.isCooking = false; // 예전 조리 상태
+                structureSaveData.campfire.hasReadyResult = false; // 예전 완성 상태
+                structureSaveData.campfire.remainingCookingTime = 0f; // 예전 남은 시간
+                structureSaveData.campfire.hasSlotState = true; // 조리 칸 저장 표시
+                structureSaveData.campfire.slots = campfire.CaptureSlots(); // 조리 칸 저장
             }
 
             saveData.world.placedStructures.Add(structureSaveData); // 건축물 저장 목록 추가
@@ -168,10 +171,18 @@ public sealed class PlacedStructureSaveBridge : MonoBehaviour // 설치 건축�
             if (structureSaveData.hasCampfireState) // 모닥불 상태 존재 확인
             {
                 CampfireCookingStation campfire = structureInstance.GetComponentInChildren<CampfireCookingStation>(true); // 모닥불 기능 검색
-                campfire.RestoreFromSave(
-                    structureSaveData.campfire.isCooking,
-                    structureSaveData.campfire.hasReadyResult,
-                    structureSaveData.campfire.remainingCookingTime); // 저장 조리 상태 적용
+
+                if (structureSaveData.campfire.hasSlotState) // 85일차 조리 칸 저장 확인
+                {
+                    campfire.RestoreSlots(structureSaveData.campfire.slots); // 조리 칸 적용
+                }
+                else // 85일차 이전 저장 파일
+                {
+                    campfire.RestoreFromSave(
+                        structureSaveData.campfire.isCooking,
+                        structureSaveData.campfire.hasReadyResult,
+                        structureSaveData.campfire.remainingCookingTime); // 예전 한 칸 상태 적용
+                }
             }
         }
 
@@ -327,6 +338,16 @@ public sealed class PlacedStructureSaveBridge : MonoBehaviour // 설치 건축�
                 return false; // 검사 실패
             }
 
+            if (campfireSaveData.hasSlotState) // 85일차 조리 칸 저장 확인
+            {
+                if (!TryValidateCookingSlots(campfirePrefab, campfireSaveData, structureSaveData.structureId, out errorMessage)) // 조리 칸 검사
+                {
+                    return false; // 검사 실패
+                }
+
+                continue; // 예전 필드 검사 생략
+            }
+
             if (campfireSaveData.isCooking && campfireSaveData.hasReadyResult) // 동시 상태 확인
             {
                 errorMessage = $"모닥불이 조리 중이면서 완료 상태입니다: {structureSaveData.structureId}"; // 상태 충돌 오류
@@ -352,6 +373,84 @@ public sealed class PlacedStructureSaveBridge : MonoBehaviour // 설치 건축�
             if (!campfireSaveData.isCooking && campfireSaveData.remainingCookingTime > 0f) // 유휴 상태 시간 확인
             {
                 errorMessage = $"조리하지 않는 모닥불에 남은 시간이 있습니다: {structureSaveData.structureId}"; // 유휴 시간 오류
+                return false; // 검사 실패
+            }
+        }
+
+        errorMessage = string.Empty; // 오류 내용 초기화
+        return true; // 검사 성공
+    }
+
+    private static bool TryValidateCookingSlots(
+        CampfireCookingStation prefabStation,
+        CampfireSaveData campfireSaveData,
+        string structureId,
+        out string errorMessage) // 85일차: 조리 칸 저장 데이터 검사
+    {
+        if (campfireSaveData.slots == null) // 목록 확인
+        {
+            errorMessage = $"모닥불 조리 칸 목록이 누락되었습니다: {structureId}"; // 목록 오류
+            return false; // 검사 실패
+        }
+
+        if (campfireSaveData.slots.Count > prefabStation.SlotCount) // 칸 수 확인
+        {
+            errorMessage = $"모닥불 조리 칸 수가 시설보다 많습니다: {structureId} ({campfireSaveData.slots.Count}/{prefabStation.SlotCount})"; // 칸 수 오류
+            return false; // 검사 실패
+        }
+
+        foreach (CookingSlotSaveData slot in campfireSaveData.slots) // 칸 순회
+        {
+            if (slot == null) // 빈 항목 확인
+            {
+                errorMessage = $"비어 있는 조리 칸 저장 항목이 있습니다: {structureId}"; // 빈 항목 오류
+                return false; // 검사 실패
+            }
+
+            bool hasInvalidTime = slot.remainingSeconds < 0f
+                || float.IsNaN(slot.remainingSeconds)
+                || float.IsInfinity(slot.remainingSeconds); // 시간 유효성
+
+            if (hasInvalidTime || slot.readyAmount < 0 || slot.batchCount < 0) // 수치 확인
+            {
+                errorMessage = $"조리 칸 수치가 잘못되었습니다: {structureId}"; // 수치 오류
+                return false; // 검사 실패
+            }
+
+            if (string.IsNullOrEmpty(slot.recipeId)) // 빈 칸 확인
+            {
+                if (slot.readyAmount > 0 || slot.remainingSeconds > 0f) // 빈 칸 상태 확인
+                {
+                    errorMessage = $"빈 조리 칸에 진행 상태가 있습니다: {structureId}"; // 빈 칸 오류
+                    return false; // 검사 실패
+                }
+
+                continue; // 다음 칸
+            }
+
+            CookingRecipeData recipe = prefabStation.FindRecipe(slot.recipeId); // 요리법 검색
+
+            if (recipe == null) // 등록 요리법 확인
+            {
+                errorMessage = $"모닥불에 없는 요리법입니다: {slot.recipeId} ({structureId})"; // 요리법 오류
+                return false; // 검사 실패
+            }
+
+            if (slot.batchCount < 1 || slot.batchCount > prefabStation.MaxBatchQuantity) // 묶음 수 확인
+            {
+                errorMessage = $"조리 묶음 수가 잘못되었습니다: {slot.recipeId} x{slot.batchCount} ({structureId})"; // 묶음 오류
+                return false; // 검사 실패
+            }
+
+            if (slot.readyAmount > 0 && slot.remainingSeconds > 0f) // 동시 상태 확인
+            {
+                errorMessage = $"조리 칸이 조리 중이면서 완료 상태입니다: {structureId}"; // 상태 충돌 오류
+                return false; // 검사 실패
+            }
+
+            if (slot.readyAmount > recipe.ResultQuantity * slot.batchCount) // 완성 수량 확인
+            {
+                errorMessage = $"조리 칸 완성 수량이 너무 많습니다: {slot.recipeId} ({structureId})"; // 수량 오류
                 return false; // 검사 실패
             }
         }

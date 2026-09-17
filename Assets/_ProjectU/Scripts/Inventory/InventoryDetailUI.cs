@@ -169,10 +169,12 @@ public sealed class InventoryDetailUI : MonoBehaviour // 아이템 상세 정보
             : Color.white; // 실제 또는 대체 색상 적용
         itemNameText.SetText(itemData.DisplayName); // 아이템 이름 출력
         categoryText.SetText(GetCategoryLabel(itemData.ItemCategory)); // 아이템 분류 출력
-        descriptionText.SetText(
-            string.IsNullOrWhiteSpace(itemData.Description)
-                ? "NO DESCRIPTION"
-                : itemData.Description); // 아이템 설명 출력
+        string description = string.IsNullOrWhiteSpace(itemData.Description)
+            ? "NO DESCRIPTION"
+            : itemData.Description; // 아이템 설명
+        string effects = FoodEffectUtility.BuildRichText(itemData); // 음식·음료·의약품 효과 (85일차)
+        descriptionText.richText = true; // 효과 색상 표시
+        descriptionText.SetText(string.IsNullOrEmpty(effects) ? description : $"{description}\n\n{effects}"); // 아이템 설명 출력
         quantityText.SetText($"QUANTITY: {selectedSlot.Quantity} / {itemData.MaximumStack}"); // 아이템 수량 출력
         removeOneButton.interactable = true; // 제거 버튼 활성화
         dropOneButton.interactable = true; // 버리기 버튼 활성화

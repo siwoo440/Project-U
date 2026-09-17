@@ -214,20 +214,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bac6f95974e2479478ebbd5fc616aed9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CampfireCookingStation
-  promptMessage: F - INTERACT
+  promptMessage: F - COOK
+  stationTier: 1
+  slotCount: 3
+  maxBatchQuantity: 5
   fuelItem: {fileID: 11400000, guid: b9e78781ff8b2aa4bae6df0fa3d2e1c9, type: 2}
   fuelAmount: 1
-  inputItem: {fileID: 11400000, guid: eef1b375027259b42834d2262ce9dd96, type: 2}
-  inputAmount: 1
-  outputItem: {fileID: 11400000, guid: 250b3288a0c4e7e428748a942a5f848a, type: 2}
-  outputAmount: 1
-  cookingDuration: 5
+  recipes:
+  - {fileID: 11400000, guid: 9e38412f51669c44587c25b424ffd667, type: 2}
+  - {fileID: 11400000, guid: e2f8bd118cb7f7344be4a89f9cde6f60, type: 2}
+  - {fileID: 11400000, guid: d233cd1e420313b428ca79c2b4b65f6d, type: 2}
+  - {fileID: 11400000, guid: 9531258593850b04cb23acc4a4a2b493, type: 2}
+  - {fileID: 11400000, guid: 274f61d78a7fee44d87bb82207e6be75, type: 2}
+  - {fileID: 11400000, guid: e9c3caf9e03bada4bbf37539817120b8, type: 2}
+  - {fileID: 11400000, guid: 1cdb45bbfe8283a459808afe63692ad7, type: 2}
+  - {fileID: 11400000, guid: 64669a3ec53bc8a4881b7a126fe6e28e, type: 2}
   fireVisualRoot: {fileID: 1272302503525716027}
+  gameUIManager: {fileID: 0}
   heatRadius: 4
   heatPerSecond: 4
-  isCooking: 0
-  hasReadyResult: 0
-  remainingCookingTime: 0
+  slots: []
 --- !u!114 &931796785801919142
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ae97c6b697735541b72890a71e9e0ab, type: 3}
+  m_Name: FoodEffectIcons
+  m_EditorClassIdentifier: Assembly-CSharp::FoodEffectIconSet
+  hunger: {fileID: 21300000, guid: 1f5f7b45bab7b5448941626a3794e039, type: 3}
+  thirst: {fileID: 21300000, guid: 1d120407ca281a1409021742a7775cc5, type: 3}
+  health: {fileID: 21300000, guid: 98820994bf028f34694e44aff3cf2eac, type: 3}
+  stamina: {fileID: 21300000, guid: bb8b68ebafc6f5d4582d54d15e6edaf7, type: 3}
+  warmth: {fileID: 21300000, guid: f346bba72253e9944a2a3d7040477578, type: 3}
+  speed: {fileID: 21300000, guid: 472f9865d9318544384647812440b41a, type: 3}
+  satiety: {fileID: 21300000, guid: 1f5f7b45bab7b5448941626a3794e039, type: 3}
+  time: {fileID: 21300000, guid: 171f5e76b031c464cb4d54aaf8d0ddd6, type: 3}
+  flame: {fileID: 21300000, guid: 1164d2b9aad6af34589ca45f74a36391, type: 3}

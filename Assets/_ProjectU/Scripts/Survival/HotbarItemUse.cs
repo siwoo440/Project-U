@@ -17,6 +17,8 @@ public sealed class HotbarItemUse : MonoBehaviour // 핫바 아이템 사용 처
     [SerializeField] private InventoryPopupController popupController; // 인벤토리 팝업 관리자
     [Tooltip("건축 배치 관리자.")]
     [SerializeField] private BuildPlacementController buildPlacementController; // 건축 배치 관리자
+    [Tooltip("음식 보조 효과 관리자. 비어 있으면 현재 플레이어 관리자를 사용합니다. (85일차)")]
+    [SerializeField] private FoodBuffController foodBuffController; // 음식 보조 효과 관리자
 
 
     private void Awake() // 필수 참조 검사
@@ -86,9 +88,13 @@ public sealed class HotbarItemUse : MonoBehaviour // 핫바 아이템 사용 처
 
         if (itemData.IsFood) // 음식 분류 확인
         {
-            if (itemData.HungerRestoreAmount <= 0f) { return; }// 허기 회복 효과 확인 -> 효과 없는 음식 사용 차단
-            bool eatSucceeded = playerHunger.TryEat(itemData.HungerRestoreAmount); // 허기 회복 시도
-            if (!eatSucceeded) { return; }// 음식 사용 결과 확인 // 수량 감소 차단
+            // 85일차: 요리는 허기 외에 갈증·체력·보조 효과를 가질 수 있다. 하나라도 적용되면 먹는다.
+            bool ate = itemData.HungerRestoreAmount > 0f && playerHunger.TryEat(itemData.HungerRestoreAmount); // 허기 회복 시도
+            bool drank = itemData.FoodThirstRestoreAmount > 0f && playerThirst.TryDrink(itemData.FoodThirstRestoreAmount); // 갈증 회복 시도
+            bool healed = itemData.FoodHealthRestoreAmount > 0f && playerHealth.Heal(itemData.FoodHealthRestoreAmount); // 체력 회복 시도
+            FoodBuffController buffs = foodBuffController != null ? foodBuffController : FoodBuffController.Local; // 보조 효과 관리자
+            bool buffed = buffs != null && buffs.Apply(itemData.FoodBuffType, itemData.FoodBuffStrength, itemData.FoodBuffDuration); // 보조 효과 적용
+            if (!ate && !drank && !healed && !buffed) { return; } // 적용된 효과가 없으면 수량 감소 차단
             playerInventory.RemoveItemFromSlot(selectedIndex, 1); // 음식 한 개 소비
             return; // 음식 처리 종료
         }

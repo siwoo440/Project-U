@@ -274,7 +274,8 @@ public sealed class PlayerMovement : MonoBehaviour // 플레이어 일반 이동
         float temperatureSpeedMultiplier = playerTemperature.MovementSpeedMultiplier; // 온도 이동 속도 배율 조회
         float currentSpeed = baseMovementSpeed // 값 계산 시작
             * equipmentSpeedMultiplier // 장비 이동 속도 적용
-            * temperatureSpeedMultiplier; // 체온 이동 속도 적용
+            * temperatureSpeedMultiplier // 체온 이동 속도 적용
+            * FoodBuffController.LocalBonusMultiplier(FoodBuffType.MoveSpeed); // 음식 이동 속도 효과 적용 (85일차)
 
         UpdateVerticalVelocity(true); // 점프와 중력 계산
         UpdateFallingState(); // 공중 하강 상태 검사

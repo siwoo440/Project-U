@@ -56,6 +56,13 @@ public static class ItemVisualContentBuilder
         { "food_strawberry", "item_strawberry" },
         { "food_tomato", "item_tomato" },
         { "food_winter_radish", "item_winter_radish" },
+        // 85일차 요리
+        { "food_baked_potato", "item_baked_potato" },
+        { "food_grilled_fish", "item_grilled_fish" },
+        { "food_mushroom_skewer", "item_mushroom_skewer" },
+        { "food_pumpkin_soup", "item_pumpkin_soup" },
+        { "food_tomato_stew", "item_tomato_stew" },
+        { "food_golden_feast", "item_golden_feast" },
         { "item_arrow", "item_arrow_bundle" },
         { "item_herbal_tea", "item_herbal_tea" },
         { "item_iron_axe", "tool_iron_axe" },
@@ -84,8 +91,12 @@ public static class ItemVisualContentBuilder
         { "weapon_bow", "tool_bow" }
     };
 
-    // 84일차에 새로 만든 모델 (코드 변경을 반영하도록 항상 다시 만든다)
-    private static readonly HashSet<string> NewModels = new HashSet<string> { "item_baked_apple", "item_arrow_bundle" };
+    // 84·85일차에 새로 만든 모델 (코드 변경을 반영하도록 항상 다시 만든다)
+    private static readonly HashSet<string> NewModels = new HashSet<string>
+    {
+        "item_baked_apple", "item_arrow_bundle",
+        "item_baked_potato", "item_grilled_fish", "item_mushroom_skewer", "item_pumpkin_soup", "item_tomato_stew", "item_golden_feast"
+    };
 
     private sealed class PickupSpec
     {
@@ -101,7 +112,14 @@ public static class ItemVisualContentBuilder
         { "tool_pickaxe", new PickupSpec { Name = "PickaxePickup", Scale = 2.4f, LyingTool = true } },
         { "weapon_bow", new PickupSpec { Name = "BowPickup", Scale = 2.6f, LyingTool = true } },
         { "item_arrow", new PickupSpec { Name = "ArrowBundlePickup", Scale = 1.9f } },
-        { "food_baked_apple", new PickupSpec { Name = "BakedApplePickup", Scale = 1.15f } }
+        { "food_baked_apple", new PickupSpec { Name = "BakedApplePickup", Scale = 1.15f } },
+        // 85일차 요리
+        { "food_baked_potato", new PickupSpec { Name = "BakedPotatoPickup", Scale = 1.2f } },
+        { "food_grilled_fish", new PickupSpec { Name = "GrilledFishPickup", Scale = 1.4f } },
+        { "food_mushroom_skewer", new PickupSpec { Name = "MushroomSkewerPickup", Scale = 1.4f } },
+        { "food_pumpkin_soup", new PickupSpec { Name = "PumpkinSoupPickup", Scale = 1.15f } },
+        { "food_tomato_stew", new PickupSpec { Name = "TomatoStewPickup", Scale = 1.15f } },
+        { "food_golden_feast", new PickupSpec { Name = "GoldenFeastPickup", Scale = 1.5f } }
     };
 
     // 아이콘 구도 (기본 : 앞쪽 오른쪽 위에서 비스듬히)
@@ -118,7 +136,14 @@ public static class ItemVisualContentBuilder
             case "tool_bow":
                 return new ItemIconRenderer.Framing(new Vector3(0f, 0f, -42f), 8f, 10f);
             case "item_arrow_bundle":
+            case "item_mushroom_skewer":
                 return new ItemIconRenderer.Framing(new Vector3(0f, 0f, 30f), 20f, 28f);
+            case "item_pumpkin_soup":
+            case "item_tomato_stew":
+                return new ItemIconRenderer.Framing(Vector3.zero, 25f, 34f);
+            case "item_grilled_fish":
+            case "item_golden_feast":
+                return new ItemIconRenderer.Framing(Vector3.zero, 15f, 52f);
             case "item_shirt":
                 return new ItemIconRenderer.Framing(Vector3.zero, 20f, 58f);
             case "item_bandage":
@@ -565,6 +590,11 @@ public static class ItemVisualContentBuilder
             case "item_backpack": return 0.36f;
             case "item_shirt": return 0.38f;
             case "item_bandage": return 0.18f;
+            case "item_grilled_fish": return 0.3f;
+            case "item_mushroom_skewer": return 0.34f;
+            case "item_pumpkin_soup":
+            case "item_tomato_stew": return 0.24f;
+            case "item_golden_feast": return 0.34f;
         }
 
         if (modelId.StartsWith("item_fish_"))

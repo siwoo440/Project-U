@@ -192,6 +192,7 @@ public sealed class PlayerTemperature : MonoBehaviour // 플레이어 체온 관
             1f - playerEquipment.TotalColdResistancePercent / 100f); // 방한 능력치 적용 배율 계산
 
         totalCooling *= coldResistanceMultiplier; // 장비 방한 효과 적용
+        totalCooling *= FoodBuffController.LocalReductionMultiplier(FoodBuffType.Warmth); // 음식 보온 효과 적용 (85일차)
 
         float summerHeating = season == SeasonType.Summer && !isNight
             ? summerDayHeatingPerSecond

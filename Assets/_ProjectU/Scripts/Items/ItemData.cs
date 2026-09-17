@@ -83,6 +83,21 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
     [Tooltip("허기 회복량.")] // Inspector 허기 회복 설명
     [SerializeField] private float hungerRestoreAmount; // 허기 회복량
 
+    [Tooltip("음식의 갈증 회복량 (수프·국 등). 85일차")] // Inspector 음식 갈증 설명
+    [SerializeField] private float foodThirstRestoreAmount; // 음식 갈증 회복량
+
+    [Tooltip("음식의 체력 회복량. 85일차")] // Inspector 음식 체력 설명
+    [SerializeField] private float foodHealthRestoreAmount; // 음식 체력 회복량
+
+    [Tooltip("먹었을 때 적용할 보조 효과 종류. 85일차")] // Inspector 보조 효과 설명
+    [SerializeField] private FoodBuffType foodBuffType = FoodBuffType.None; // 보조 효과 종류
+
+    [Tooltip("보조 효과 세기 (%).")] // Inspector 효과 세기 설명
+    [SerializeField, Min(0f)] private float foodBuffStrength; // 보조 효과 세기
+
+    [Tooltip("보조 효과 지속 시간 (초).")] // Inspector 효과 시간 설명
+    [SerializeField, Min(0f)] private float foodBuffDuration; // 보조 효과 시간
+
     [Header("Drink")] // 음료 효과 묶음
     [Tooltip("갈증 회복량.")] // Inspector 갈증 회복 설명
     [SerializeField] private float thirstRestoreAmount; // 갈증 회복량
@@ -124,6 +139,11 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
     public float ColdResistancePercent => IsEquipment ? Mathf.Clamp(coldResistancePercent, 0f, 80f) : 0f; // 장비 방한 능력치 제공
     public int InventorySlotBonus => IsEquipment && equipmentSlotType == EquipmentSlotType.Backpack ? Mathf.Max(0, inventorySlotBonus) : 0; // 가방 슬롯 증가량 제공
     public float HungerRestoreAmount => IsFood ? Mathf.Max(0f, hungerRestoreAmount) : 0f; // 음식 허기 회복량 제공
+    public float FoodThirstRestoreAmount => IsFood ? Mathf.Max(0f, foodThirstRestoreAmount) : 0f; // 음식 갈증 회복량 제공
+    public float FoodHealthRestoreAmount => IsFood ? Mathf.Max(0f, foodHealthRestoreAmount) : 0f; // 음식 체력 회복량 제공
+    public FoodBuffType FoodBuffType => IsFood && foodBuffStrength > 0f && foodBuffDuration > 0f ? foodBuffType : FoodBuffType.None; // 보조 효과 종류 제공
+    public float FoodBuffStrength => FoodBuffType != FoodBuffType.None ? foodBuffStrength : 0f; // 보조 효과 세기 제공
+    public float FoodBuffDuration => FoodBuffType != FoodBuffType.None ? foodBuffDuration : 0f; // 보조 효과 시간 제공
     public float ThirstRestoreAmount => IsDrink ? Mathf.Max(0f, thirstRestoreAmount) : 0f; // 음료 갈증 회복량 제공
     public float HealthRestoreAmount => IsMedicine ? Mathf.Max(0f, healthRestoreAmount) : 0f; // 의약품 체력 회복량 제공
     public bool IsCraftingMaterial => itemCategory == ItemCategory.CraftingMaterial; // 제작 재료 여부 제공
@@ -229,10 +249,19 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
         if (itemCategory != ItemCategory.Food) // 음식이 아닌 분류 확인
         {
             hungerRestoreAmount = 0f; // 음식 회복량 제거
+            foodThirstRestoreAmount = 0f; // 음식 갈증 회복량 제거
+            foodHealthRestoreAmount = 0f; // 음식 체력 회복량 제거
+            foodBuffType = FoodBuffType.None; // 보조 효과 제거
+            foodBuffStrength = 0f; // 효과 세기 제거
+            foodBuffDuration = 0f; // 효과 시간 제거
         }
         else // 음식 분류 확인
         {
             hungerRestoreAmount = Mathf.Max(0f, hungerRestoreAmount); // 회복량 음수 방지
+            foodThirstRestoreAmount = Mathf.Max(0f, foodThirstRestoreAmount); // 갈증 회복량 음수 방지
+            foodHealthRestoreAmount = Mathf.Max(0f, foodHealthRestoreAmount); // 체력 회복량 음수 방지
+            foodBuffStrength = Mathf.Max(0f, foodBuffStrength); // 효과 세기 음수 방지
+            foodBuffDuration = Mathf.Max(0f, foodBuffDuration); // 효과 시간 음수 방지
         }
 
         if (itemCategory != ItemCategory.Drink) // 음료가 아닌 분류 확인

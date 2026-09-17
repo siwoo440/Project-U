@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1024ef42cf32b824a9832cc0defe6a52, type: 3}
+  m_Name: CookingRecipe_BakedPotato
+  m_EditorClassIdentifier: Assembly-CSharp::CookingRecipeData
+  recipeId: cook_baked_potato
+  displayName: BAKED POTATO
+  sortOrder: 1
+  requiredStation: 0
+  ingredients:
+  - itemData: {fileID: 11400000, guid: a42d6efd666a1fc40809cbcbcd3362b4, type: 2}
+    amount: 1
+  resultItem: {fileID: 11400000, guid: 070f5d6a3c56070488a27144388e461c, type: 2}
+  resultQuantity: 1
+  cookingSeconds: 6
+  extraBatchTimeRatio: 0.6

@@ -32,7 +32,8 @@ public sealed class PlayerHunger : MonoBehaviour // 플레이어 허기 관리
     {
         float reductionPercent = playerEquipment.TotalHungerReductionPercent; // 허기 감소 방지량 조회
         float depletionMultiplier = 1f - reductionPercent / 100f; // 허기 감소 배율 계산
-        float depletionAmount = depletionPerSecond * depletionMultiplier * Time.deltaTime; // 장비 적용 허기 감소량
+        float satietyMultiplier = FoodBuffController.LocalReductionMultiplier(FoodBuffType.Satiety); // 음식 포만감 효과 (85일차)
+        float depletionAmount = depletionPerSecond * depletionMultiplier * satietyMultiplier * Time.deltaTime; // 장비·음식 적용 허기 감소량
         currentHunger = Mathf.Max(0f, currentHunger - depletionAmount); // 허기 최소값 제한
     }
 

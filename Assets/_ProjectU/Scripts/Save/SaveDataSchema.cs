@@ -45,6 +45,10 @@ public sealed class SaveGameData // 전체 저장 파일 최상위 데이터
     public bool hasFishingData; // 낚시 기록 저장 데이터 존재 여부
     [Tooltip("잡은 물고기 기록 데이터.")]
     public FishingSaveData fishing = new FishingSaveData(); // 낚시 기록 데이터
+    [Tooltip("음식 보조 효과 저장 데이터 존재 여부.")]
+    public bool hasFoodBuffData; // 음식 효과 저장 여부
+    [Tooltip("적용 중인 음식 보조 효과 목록.")]
+    public List<FoodBuffSaveData> foodBuffs = new List<FoodBuffSaveData>(); // 음식 효과 목록
 
     public static SaveGameData CreateNew(string newSceneName) // 새로운 저장 데이터 생성
     {
@@ -201,6 +205,36 @@ public sealed class CampfireSaveData // 모닥불 조리 저장 데이터
     public bool hasReadyResult; // 완성 음식 보관 상태
     [Tooltip("남은 조리 시간.")]
     public float remainingCookingTime; // 남은 조리 시간
+    [Tooltip("85일차 조리 칸 저장 여부. false이면 위의 한 칸 상태를 사용합니다.")]
+    public bool hasSlotState; // 조리 칸 저장 여부
+    [Tooltip("조리 칸 목록.")]
+    public List<CookingSlotSaveData> slots = new List<CookingSlotSaveData>(); // 조리 칸 목록
+}
+
+[Serializable] // JSON 직렬화 허용
+public sealed class CookingSlotSaveData // 85일차: 조리 칸 저장 데이터
+{
+    [Tooltip("요리법 ID. 비어 있으면 빈 칸입니다.")]
+    public string recipeId = string.Empty; // 요리법 ID
+    [Tooltip("묶음 수.")]
+    public int batchCount; // 묶음 수
+    [Tooltip("남은 조리 시간.")]
+    public float remainingSeconds; // 남은 시간
+    [Tooltip("꺼내기를 기다리는 완성 음식 수량.")]
+    public int readyAmount; // 완성 수량
+}
+
+[Serializable] // JSON 직렬화 허용
+public sealed class FoodBuffSaveData // 85일차: 음식 보조 효과 저장 데이터
+{
+    [Tooltip("효과 종류.")]
+    public int buffType; // 효과 종류
+    [Tooltip("효과 세기 (%).")]
+    public float strength; // 세기
+    [Tooltip("남은 시간.")]
+    public float remainingSeconds; // 남은 시간
+    [Tooltip("전체 시간.")]
+    public float durationSeconds; // 전체 시간
 }
 
 [Serializable] // JSON 직렬화 허용

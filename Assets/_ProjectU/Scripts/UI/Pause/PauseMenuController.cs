@@ -292,8 +292,7 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
             return; // 팝업 닫기 처리 생략
         }
 
-        gameUIManager.CloseInventory(); // 일반 인벤토리 팝업 닫기
-        gameUIManager.CloseStorage(); // 보관함 팝업 닫기
+        gameUIManager.CloseAllPopups(); // 인벤토리·보관함·요리 팝업 닫기
     }
 
     private void ResolveSceneReferences() // 누락된 Scene 참조 자동 검색

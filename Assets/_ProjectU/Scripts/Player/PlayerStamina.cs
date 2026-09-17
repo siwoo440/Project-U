@@ -150,7 +150,8 @@ public sealed class PlayerStamina : MonoBehaviour // 플레이어 스태미나 �
 
         float recoveryAmount = recoveryPerSecond
             * temperatureRecoveryMultiplier
-            * deltaTime; // 체온 적용 스태미나 회복량 계산
+            * FoodBuffController.LocalBonusMultiplier(FoodBuffType.StaminaRecovery)
+            * deltaTime; // 체온·음식 효과 적용 스태미나 회복량 계산
 
         currentStamina = Mathf.Min(maxStamina, currentStamina + recoveryAmount); // 최대 수치 제한
 

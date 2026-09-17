@@ -209,6 +209,12 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
             return; // 파일 저장 중단
         }
 
+        if (!FoodBuffSaveBridge.TryCapture(saveData, out string foodBuffCaptureError)) // 음식 효과 수집 (85일차)
+        {
+            Debug.LogError($"음식 효과 저장 준비 실패\n{foodBuffCaptureError}", this); // 수집 오류 출력
+            return; // 파일 저장 중단
+        }
+
         if (!SaveFileService.TrySave(slotId, saveData, out string resultMessage)) // JSON 파일 저장 실행
         {
             Debug.LogError($"현재 게임 저장 실패\n{resultMessage}", this); // 저장 실패 내용 출력
@@ -303,6 +309,12 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
         if (!FishingSaveBridge.TryRestore(saveData, out string fishingRestoreError)) // 낚시 기록 복원
         {
             Debug.LogError($"낚시 기록 불러오기 실패\n{fishingRestoreError}", this); // 복원 오류 출력
+            return; // 전체 불러오기 중단
+        }
+
+        if (!FoodBuffSaveBridge.TryRestore(saveData, out string foodBuffRestoreError)) // 음식 효과 복원 (85일차)
+        {
+            Debug.LogError($"음식 효과 불러오기 실패\n{foodBuffRestoreError}", this); // 복원 오류 출력
             return; // 전체 불러오기 중단
         }
 
