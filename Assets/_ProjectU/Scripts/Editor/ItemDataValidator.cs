@@ -118,6 +118,9 @@ public static class ItemDataValidator // 아이템 데이터 일괄 검증
             case ItemCategory.Equipment: // 장비 분기
                 return "equipment_"; // 장비 접두사 반환
 
+            case ItemCategory.Seed: // 씨앗 분기
+                return "seed_"; // 씨앗 접두사 반환
+
             default: // 정의되지 않은 분류
                 return string.Empty; // 빈 접두사 반환
         }

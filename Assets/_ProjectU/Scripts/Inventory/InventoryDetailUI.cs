@@ -263,6 +263,9 @@ public sealed class InventoryDetailUI : MonoBehaviour // 아이템 상세 정보
             case ItemCategory.Equipment: // 장비 분기
                 return "EQUIPMENT"; // 장비 문구 반환
 
+            case ItemCategory.Seed: // 씨앗 분기
+                return "SEED"; // 씨앗 문구 반환
+
             default: // 미정 분류
                 return "UNKNOWN"; // 미정 문구 반환
         }

@@ -97,6 +97,11 @@ public sealed class GameDataRegistryEditor : Editor // Registry 자동 수집과
             .ThenBy(enemyData => enemyData.name) // 같은 ID는 Asset 이름 순서로 정렬
             .ToList(); // 정렬 결과를 List로 변환
 
+        List<CropData> cropAssets = FindAssets<CropData>() // 프로젝트 전체 CropData 검색
+            .OrderBy(cropData => cropData.CropId) // 작물 ID 순서로 정렬
+            .ThenBy(cropData => cropData.name) // 같은 ID는 Asset 이름 순서로 정렬
+            .ToList(); // 정렬 결과를 List로 변환
+
         List<ContentVisualProfile> visualProfileAssets = FindAssets<ContentVisualProfile>() // 프로젝트 전체 ContentVisualProfile 검색
             .OrderBy(visualProfile => visualProfile.ProfileId) // Visual Profile ID 순서로 정렬
             .ThenBy(visualProfile => visualProfile.name) // 같은 ID는 Asset 이름 순서로 정렬
@@ -108,6 +113,7 @@ public sealed class GameDataRegistryEditor : Editor // Registry 자동 수집과
         AssignAssetArray(serializedRegistry.FindProperty("craftingRecipes"), craftingRecipeAssets); // 전체 제작법 Asset 배열 등록
         AssignAssetArray(serializedRegistry.FindProperty("buildRecipes"), buildRecipeAssets); // 전체 건축법 Asset 배열 등록
         AssignAssetArray(serializedRegistry.FindProperty("enemies"), enemyAssets); // 전체 적 Asset 배열 등록
+        AssignAssetArray(serializedRegistry.FindProperty("crops"), cropAssets); // 전체 작물 Asset 배열 등록
         AssignAssetArray(serializedRegistry.FindProperty("visualProfiles"), visualProfileAssets); // 전체 Visual Profile Asset 배열 등록
         serializedRegistry.ApplyModifiedProperties(); // Registry 배열 변경 내용 적용
         EditorUtility.SetDirty(registry); // Registry Asset 변경 상태 표시
@@ -120,6 +126,7 @@ public sealed class GameDataRegistryEditor : Editor // Registry 자동 수집과
             + $"제작법 {craftingRecipeAssets.Count} / " // 수집 제작법 수 추가
             + $"건축법 {buildRecipeAssets.Count} / " // 수집 건축법 수 추가
             + $"적 {enemyAssets.Count} / " // 수집 적 수 추가
+            + $"작물 {cropAssets.Count} / " // 수집 작물 수 추가
             + $"Visual Profile {visualProfileAssets.Count}", // 수집 Visual Profile 수 추가
             registry); // Registry Asset을 Log Context로 지정
     }
@@ -135,6 +142,7 @@ public sealed class GameDataRegistryEditor : Editor // Registry 자동 수집과
         registry.RebuildLookup(true); // Registry 자체 중복과 잘못된 ID 전체 검사
         ValidateRecommendedPrefixes(registry); // 데이터 종류별 권장 ID 접두사 검사
         ValidateCraftingResultRegistration(registry); // 제작 결과 아이템 Registry 등록 여부 검사
+        ValidateCropRegistration(registry); // 작물 씨앗·수확물 Registry 등록 여부 검사
         ValidateVisualProfiles(registry); // Visual Profile 외형 생성 정보 검사
         EditorUtility.SetDirty(registry); // Registry Runtime 검증값 변경 상태 표시
         AssetDatabase.SaveAssets(); // Registry 검증 실행값 디스크 저장
@@ -165,6 +173,12 @@ public sealed class GameDataRegistryEditor : Editor // Registry 자동 수집과
             enemyData => enemyData.EnemyId, // EnemyCombatData에서 ID를 가져오는 함수
             "enemy_", // 적 권장 접두사
             "EnemyCombatData"); // 오류 출력용 데이터 종류 이름
+
+        ValidatePrefix( // 작물 ID 접두사 검사 시작
+            registry.Crops, // 전체 작물 데이터 목록
+            cropData => cropData.CropId, // CropData에서 ID를 가져오는 함수
+            "crop_", // 작물 권장 접두사
+            "CropData"); // 오류 출력용 데이터 종류 이름
 
         ValidatePrefix( // Visual Profile ID 접두사 검사 시작
             registry.VisualProfiles, // 전체 Visual Profile 목록
@@ -200,6 +214,38 @@ public sealed class GameDataRegistryEditor : Editor // Registry 자동 수집과
                 + $"제작법: {recipeData.name} / 아이템: {recipeData.ResultItem.name}", // 누락된 제작법과 아이템 이름 추가
                 recipeData); // 현재 제작법 Asset을 Log Context로 지정
         }
+    }
+
+    private static void ValidateCropRegistration(GameDataRegistry registry) // 작물 데이터 필수 조건과 아이템 등록 여부 검사
+    {
+        for (int index = 0; index < registry.Crops.Count; index++) // 전체 작물 데이터 순회
+        {
+            CropData cropData = registry.Crops[index]; // 현재 작물 데이터 가져오기
+
+            if (cropData == null) // 작물 참조 누락 여부 확인
+            {
+                continue; // Registry 기본 빈 참조 검사를 사용하므로 다음 작물로 이동
+            }
+
+            if (!cropData.TryValidate(out string errorMessage)) // 작물 데이터 자체 검사
+            {
+                Debug.LogError(errorMessage, cropData); // 작물 데이터 오류 출력
+                continue; // 아이템 등록 검사 생략
+            }
+
+            ValidateRegisteredItem(registry, cropData.SeedItem, cropData, "씨앗"); // 씨앗 아이템 등록 검사
+            ValidateRegisteredItem(registry, cropData.HarvestItem, cropData, "수확물"); // 수확 아이템 등록 검사
+        }
+    }
+
+    private static void ValidateRegisteredItem(GameDataRegistry registry, ItemData itemData, CropData cropData, string roleName) // 작물 연결 아이템 등록 여부 검사
+    {
+        if (registry.TryGetItem(itemData.ItemId, out ItemData registeredItem) && registeredItem == itemData) // Registry 등록과 참조 일치 확인
+        {
+            return; // 정상 등록
+        }
+
+        Debug.LogError($"작물 {roleName} 아이템이 GameDataRegistry에 등록되지 않았습니다. 작물: {cropData.name} / 아이템: {itemData.name}", cropData); // 등록 누락 오류 출력
     }
 
     private static void ValidateVisualProfiles(GameDataRegistry registry) // Registry에 등록된 Visual Profile 외형 생성 정보 검사

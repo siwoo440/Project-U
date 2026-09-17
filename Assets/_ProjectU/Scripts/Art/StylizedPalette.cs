@@ -57,7 +57,16 @@ public enum StylizedColor
     Glass = 84,
     Snow = 85,
     Mountain = 86,
-    MountainDark = 87
+    MountainDark = 87,
+    // 79일차: 농사 콘텐츠 색상
+    SoilTilled = 90,
+    SoilWet = 91,
+    Potato = 92,
+    Pumpkin = 93,
+    Tomato = 94,
+    Strawberry = 96,
+    SeedPaper = 97,
+    CropGreen = 98
 }
 
 public static class StylizedPalette
@@ -138,6 +147,14 @@ public static class StylizedPalette
             case StylizedColor.Snow: return new Entry(Hex(0xF3F7FA));
             case StylizedColor.Mountain: return new Entry(Hex(0x7C8C9E));
             case StylizedColor.MountainDark: return new Entry(Hex(0x5A6878));
+            case StylizedColor.SoilTilled: return new Entry(Hex(0x7A5A40));
+            case StylizedColor.SoilWet: return new Entry(Hex(0x4A3526), 0.3f);
+            case StylizedColor.Potato: return new Entry(Hex(0xC9A26B));
+            case StylizedColor.Pumpkin: return new Entry(Hex(0xE8822A), 0.3f);
+            case StylizedColor.Tomato: return new Entry(Hex(0xE0402E), 0.55f);
+            case StylizedColor.Strawberry: return new Entry(Hex(0xD92E45), 0.5f);
+            case StylizedColor.SeedPaper: return new Entry(Hex(0xDCC7A1));
+            case StylizedColor.CropGreen: return new Entry(Hex(0x5DB84A));
             default: return new Entry(Color.magenta);
         }
     }

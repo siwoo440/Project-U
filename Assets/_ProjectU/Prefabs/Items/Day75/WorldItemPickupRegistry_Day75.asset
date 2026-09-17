@@ -21,3 +21,27 @@ MonoBehaviour:
     pickupPrefab: {fileID: 3181927310554862687, guid: e61a665b8bce61948b7b69c862f41150, type: 3}
   - itemData: {fileID: 11400000, guid: ce6c806808c6dfb4ca5fb2217dce497c, type: 2}
     pickupPrefab: {fileID: 3181927310554862687, guid: ffc695a0c3ca40d4fb4571ba023a9e01, type: 3}
+  - itemData: {fileID: 11400000, guid: de7994a6b3b2dcc479cd72a544075a60, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 532a4e996a711744d95a00ec4090f223, type: 3}
+  - itemData: {fileID: 11400000, guid: aaca232007164504cbd41b9a9b8cbefb, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 1bddec9c7fab2544491c052d6d1a6081, type: 3}
+  - itemData: {fileID: 11400000, guid: ed2ff3bcb0baa3743bf8df1264f8d60f, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: a098471ad85e1884ab97d21088f2507b, type: 3}
+  - itemData: {fileID: 11400000, guid: b452886093be83d44a997c06ab4f6f18, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: e51ba38874f268445a6e4fa10a6706de, type: 3}
+  - itemData: {fileID: 11400000, guid: 9139b198cba79454cbbb676d851141c5, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: aa3d0c43e17e9694cbe3893862c02b0d, type: 3}
+  - itemData: {fileID: 11400000, guid: a42d6efd666a1fc40809cbcbcd3362b4, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: deb16b64717b95440af68c5dde8fd76e, type: 3}
+  - itemData: {fileID: 11400000, guid: 95ca44aa8a27d41448c511db6fa0a55c, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 809859590674b1b4b94bd529bdffda1a, type: 3}
+  - itemData: {fileID: 11400000, guid: 6fd5b0751520d284ba0ec2064ed5ea80, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 4dd34fb2fb1075142a5aedf53839f93b, type: 3}
+  - itemData: {fileID: 11400000, guid: 60a1b7725b902114381bd98a8db8ec3b, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: a6f1c83711f170c40be6b19a66942a96, type: 3}
+  - itemData: {fileID: 11400000, guid: 09c927a2524bd8f409d6b8ddab61bc58, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 5faed28d6db012d47a32b87a25fa9c76, type: 3}
+  - itemData: {fileID: 11400000, guid: d835eceef0e2d324c91c9629199e0ae8, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: b50dd54f189836045b62bed061b9db63, type: 3}
+  - itemData: {fileID: 11400000, guid: 346ca54060b52d244b3ceb1c09bc4d6e, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 74221393eb2f4cd409040392a44bc524, type: 3}

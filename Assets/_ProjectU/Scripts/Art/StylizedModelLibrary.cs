@@ -47,6 +47,7 @@ public static partial class StylizedModelLibrary
                 RegisterBuildables();
                 RegisterCharacters();
                 RegisterProps();
+                RegisterFarming();
             }
 
             return catalog;

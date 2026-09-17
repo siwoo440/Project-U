@@ -183,6 +183,30 @@ public sealed class GameDataRegistryRuntime : MonoBehaviour // Scene에서 공�
         return registry.TryGetVisualProfile(profileId, out visualProfile); // GameDataRegistry Visual Profile 검색 결과 반환
     }
 
+    public bool TryGetCrop(string cropId, out CropData cropData) // 전역 Registry에서 작물 ID 검색
+    {
+        cropData = null; // 검색 실패 기본 반환값 설정
+
+        if (registry == null) // Registry Asset 연결 여부 확인
+        {
+            return false; // Registry가 없으면 작물 검색 실패 반환
+        }
+
+        return registry.TryGetCrop(cropId, out cropData); // GameDataRegistry 작물 검색 결과 반환
+    }
+
+    public bool TryGetCropBySeed(ItemData seedItem, out CropData cropData) // 전역 Registry에서 씨앗 아이템으로 작물 검색
+    {
+        cropData = null; // 검색 실패 기본 반환값 설정
+
+        if (registry == null) // Registry Asset 연결 여부 확인
+        {
+            return false; // Registry가 없으면 작물 검색 실패 반환
+        }
+
+        return registry.TryGetCropBySeed(seedItem, out cropData); // GameDataRegistry 씨앗 작물 검색 결과 반환
+    }
+
     private void TestItemId(string itemId) // 지정 아이템 ID 검색 결과 출력
     {
         if (TryGetItem(itemId, out ItemData itemData)) // 아이템 ID 검색 성공 여부 확인

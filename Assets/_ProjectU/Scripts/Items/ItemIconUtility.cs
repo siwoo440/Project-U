@@ -24,6 +24,9 @@ public static class ItemIconUtility // 아이템 아이콘 보조 기능
             case ItemCategory.Equipment: // 장비 분기
                 return new Color(0.25f, 0.45f, 0.8f, 1f); // 푸른색 반환
 
+            case ItemCategory.Seed: // 씨앗 분기
+                return new Color(0.6f, 0.75f, 0.3f, 1f); // 연두색 반환
+
             default: // 미정 분류
                 return Color.white; // 기본색 반환
         }

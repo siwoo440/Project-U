@@ -8,6 +8,10 @@ public sealed class EquippedToolView : MonoBehaviour // 장착 도구 외형 관
     [SerializeField] private GameObject axeVisual; // 도끼 외형
     [Tooltip("곡괭이 외형.")]
     [SerializeField] private GameObject pickaxeVisual; // 곡괭이 외형
+    [Tooltip("괭이 외형. 비어 있으면 표시하지 않습니다.")]
+    [SerializeField] private GameObject hoeVisual; // 괭이 외형
+    [Tooltip("물뿌리개 외형. 비어 있으면 표시하지 않습니다.")]
+    [SerializeField] private GameObject wateringCanVisual; // 물뿌리개 외형
 
     private void Awake() // 필수 참조 확인
     {
@@ -55,5 +59,15 @@ public sealed class EquippedToolView : MonoBehaviour // 장착 도구 외형 관
 
         axeVisual.SetActive(selectedToolType == ToolType.Axe); // 도끼 외형 상태 적용
         pickaxeVisual.SetActive(selectedToolType == ToolType.Pickaxe); // 곡괭이 외형 상태 적용
+        SetOptionalVisual(hoeVisual, selectedToolType == ToolType.Hoe); // 괭이 외형 상태 적용
+        SetOptionalVisual(wateringCanVisual, selectedToolType == ToolType.WateringCan); // 물뿌리개 외형 상태 적용
+    }
+
+    private static void SetOptionalVisual(GameObject visual, bool isVisible) // 연결된 선택 외형만 상태 적용
+    {
+        if (visual != null) // 외형 연결 확인
+        {
+            visual.SetActive(isVisible); // 표시 상태 적용
+        }
     }
 }
