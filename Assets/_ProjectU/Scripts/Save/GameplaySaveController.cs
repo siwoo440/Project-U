@@ -215,6 +215,12 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
             return; // 파일 저장 중단
         }
 
+        if (!LivestockSaveBridge.TryCapture(saveData, out string livestockCaptureError)) // 가축 상태 수집 (86일차)
+        {
+            Debug.LogError($"가축 상태 저장 준비 실패\n{livestockCaptureError}", this); // 수집 오류 출력
+            return; // 파일 저장 중단
+        }
+
         if (!SaveFileService.TrySave(slotId, saveData, out string resultMessage)) // JSON 파일 저장 실행
         {
             Debug.LogError($"현재 게임 저장 실패\n{resultMessage}", this); // 저장 실패 내용 출력
@@ -315,6 +321,12 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
         if (!FoodBuffSaveBridge.TryRestore(saveData, out string foodBuffRestoreError)) // 음식 효과 복원 (85일차)
         {
             Debug.LogError($"음식 효과 불러오기 실패\n{foodBuffRestoreError}", this); // 복원 오류 출력
+            return; // 전체 불러오기 중단
+        }
+
+        if (!LivestockSaveBridge.TryRestore(saveData, out string livestockRestoreError)) // 가축 상태 복원 (86일차, 건축물 복원 뒤)
+        {
+            Debug.LogError($"가축 상태 불러오기 실패\n{livestockRestoreError}", this); // 복원 오류 출력
             return; // 전체 불러오기 중단
         }
 

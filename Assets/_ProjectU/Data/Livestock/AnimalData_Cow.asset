@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3ae2d2cc0b2e20418706cedc3f763e4, type: 3}
+  m_Name: AnimalData_Cow
+  m_EditorClassIdentifier: Assembly-CSharp::AnimalData
+  animalId: animal_cow
+  displayName: COW
+  pluralName: COWS
+  individualPrefix: COW
+  modelPrefab: {fileID: 4264485385357567880, guid: aa4af5d721091594fb5225f97bce04a6, type: 3}
+  icon: {fileID: 21300000, guid: 4d1a9270a50b17743a6fd03c0966b6f7, type: 3}
+  walkSpeed: 0.3
+  feedItem: {fileID: 11400000, guid: d59c8cdf23a10a44f9a57f150743b58a, type: 2}
+  feedPerDay: 2
+  attractFeedCost: 8
+  productItem: {fileID: 11400000, guid: 0beb83d291e4ab6438e2b2ea00a83f5d, type: 2}
+  productAmount: 1
+  productIntervalDays: 1
+  maxStoredProduct: 3
+  bonusMood: 80
+  bonusChance: 0.25
+  startMood: 60
+  minimumProduceMood: 30
+  fedMoodGain: 10
+  hungryMoodLoss: 25
+  petMoodGain: 10

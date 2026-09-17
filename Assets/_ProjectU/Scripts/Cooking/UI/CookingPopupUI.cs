@@ -4,7 +4,7 @@ using UnityEngine; // Unity 기본 기능
 using UnityEngine.UI; // Unity UI 기능
 
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
-public sealed class CookingPopupUI : MonoBehaviour // 85일차: 모닥불 요리 창 (왼쪽 요리법 · 오른쪽 상세 · 아래 조리 칸)
+public sealed class CookingPopupUI : MonoBehaviour, IGameScenePopup // 85일차: 모닥불 요리 창 (왼쪽 요리법 · 오른쪽 상세 · 아래 조리 칸)
 {
     [Header("Root")] // 루트 묶음
     [Tooltip("켜고 끄는 창 전체 (어두운 배경 포함).")]
@@ -23,6 +23,8 @@ public sealed class CookingPopupUI : MonoBehaviour // 85일차: 모닥불 요리
     [SerializeField] private Transform recipeListRoot; // 목록 부모
     [Tooltip("요리법 줄 템플릿 (꺼진 상태).")]
     [SerializeField] private CookingRecipeRowUI recipeRowTemplate; // 줄 템플릿
+    [Tooltip("요리법 목록 스크롤 (86일차).")]
+    [SerializeField] private ScrollRect recipeScroll; // 목록 스크롤
 
     [Header("Detail")] // 상세 묶음
     [Tooltip("상세 아이콘.")]
@@ -128,6 +130,13 @@ public sealed class CookingPopupUI : MonoBehaviour // 85일차: 모닥불 요리
         panelRoot.SetActive(true); // 표시
         ShowMessage(string.Empty, Color.clear, 0f); // 알림 초기화
         RebuildAll(); // 그리기
+
+        if (recipeScroll != null) // 스크롤 확인
+        {
+            Canvas.ForceUpdateCanvases(); // 목록 크기 계산
+            recipeScroll.verticalNormalizedPosition = 1f; // 맨 위부터
+        }
+
         return true; // 열기 성공
     }
 

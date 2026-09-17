@@ -50,6 +50,7 @@ public static partial class StylizedModelLibrary
                 RegisterFarming();
                 RegisterFishing();
                 RegisterCooking();
+                RegisterLivestock();
             }
 
             return catalog;

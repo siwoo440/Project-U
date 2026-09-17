@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UIBuildKit;
 
 // 85일차: 요리 창(PopupLayer), 모닥불 진행 고리(HUD), 음식 효과 알약(생존 게이지 아래)을 만든다.
 // 실행할 때마다 같은 이름의 오브젝트를 지우고 새로 만든다.
@@ -23,8 +24,6 @@ public static class CookingPopupUIBuilder
     private const float WindowHeight = 760f;
     private const float Pad = 24f;
     private const float RowHeight = 48f;
-
-    private static Color Faint => new Color(1f, 1f, 1f, 0.08f);
 
     public static string Build(FoodEffectIconSet iconSet, out CookingPopupUI popup)
     {
@@ -103,8 +102,18 @@ public static class CookingPopupUIBuilder
         TMP_Text recipesLabel = CreateLabel(w, "LP_RecipesLabel", "RECIPES");
         TopLeft(recipesLabel.rectTransform, new Vector2(Pad, -80f), new Vector2(380f, 20f));
 
-        RectTransform list = CreateRect(w, "LP_RecipeList");
-        TopLeft(list, new Vector2(Pad, -106f), new Vector2(380f, 440f));
+        // 86일차: 요리법이 늘어나 목록을 마우스 휠로 넘길 수 있게 한다
+        Image viewport = CreateImage(w, "LP_RecipeScroll", null, new Color(0f, 0f, 0f, 0f));
+        viewport.raycastTarget = true;
+        TopLeft(viewport.rectTransform, new Vector2(Pad, -106f), new Vector2(380f, 440f));
+        viewport.gameObject.AddComponent<RectMask2D>();
+
+        RectTransform list = CreateRect(viewport.rectTransform, "LP_RecipeList");
+        list.anchorMin = new Vector2(0f, 1f);
+        list.anchorMax = new Vector2(1f, 1f);
+        list.pivot = new Vector2(0.5f, 1f);
+        list.anchoredPosition = Vector2.zero;
+        list.sizeDelta = new Vector2(-8f, 440f);
         VerticalLayoutGroup listLayout = list.gameObject.AddComponent<VerticalLayoutGroup>();
         listLayout.spacing = 4f;
         listLayout.childAlignment = TextAnchor.UpperLeft;
@@ -112,7 +121,38 @@ public static class CookingPopupUIBuilder
         listLayout.childControlHeight = false;
         listLayout.childForceExpandWidth = true;
         listLayout.childForceExpandHeight = false;
+        ContentSizeFitter listFitter = list.gameObject.AddComponent<ContentSizeFitter>();
+        listFitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
+        listFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
         CookingRecipeRowUI rowTemplate = CreateRecipeRow(list);
+
+        ScrollRect scroll = viewport.gameObject.AddComponent<ScrollRect>();
+        scroll.content = list;
+        scroll.viewport = viewport.rectTransform;
+        scroll.horizontal = false;
+        scroll.vertical = true;
+        scroll.movementType = ScrollRect.MovementType.Clamped;
+        scroll.scrollSensitivity = 26f;
+        scroll.inertia = true;
+
+        Image scrollHint = CreateImage(w, "LP_ScrollTrack", UISpriteFactory.Pill, Faint);
+        scrollHint.type = Image.Type.Sliced;
+        scrollHint.pixelsPerUnitMultiplier = 8f;
+        TopLeft(scrollHint.rectTransform, new Vector2(Pad + 380f - 4f, -106f), new Vector2(4f, 440f));
+        Scrollbar scrollbar = scrollHint.gameObject.AddComponent<Scrollbar>();
+        scrollbar.direction = Scrollbar.Direction.BottomToTop;
+        RectTransform handleArea = CreateRect(scrollHint.rectTransform, "LP_HandleArea");
+        Stretch(handleArea);
+        Image handle = CreateImage(handleArea, "LP_Handle", UISpriteFactory.Pill, new Color(0.95f, 0.72f, 0.3f, 0.7f));
+        handle.type = Image.Type.Sliced;
+        handle.pixelsPerUnitMultiplier = 8f;
+        handle.raycastTarget = true;
+        Stretch(handle.rectTransform);
+        scrollbar.handleRect = handle.rectTransform;
+        scrollbar.targetGraphic = handle;
+        SetScrollbarNavigation(scrollbar);
+        scroll.verticalScrollbar = scrollbar;
+        scroll.verticalScrollbarVisibility = ScrollRect.ScrollbarVisibility.AutoHide;
 
         // 오른쪽 상세
         Image detail = CreateImage(w, "LP_Detail", UISpriteFactory.Panel, ProjectUUIPalette.PanelMid);
@@ -203,6 +243,7 @@ public static class CookingPopupUIBuilder
         so.FindProperty("closeButton").objectReferenceValue = close;
         so.FindProperty("iconSet").objectReferenceValue = iconSet;
         so.FindProperty("recipeListRoot").objectReferenceValue = list;
+        so.FindProperty("recipeScroll").objectReferenceValue = scroll;
         so.FindProperty("recipeRowTemplate").objectReferenceValue = rowTemplate;
         so.FindProperty("detailIcon").objectReferenceValue = detailIcon;
         so.FindProperty("detailNameText").objectReferenceValue = detailName;
@@ -509,203 +550,10 @@ public static class CookingPopupUIBuilder
         return $"음식 효과 표시 {BuffChipCount}칸 (생존 게이지 아래 y {top:0})";
     }
 
-    // ------------------------------------------------------------ 공통 부품
-
-    private static CookingChipUI CreateChip(Transform parent, string name, float height, float fontSize, bool fitWidth)
+    private static void SetScrollbarNavigation(Scrollbar scrollbar)
     {
-        Image background = CreateImage(parent, name, UISpriteFactory.Pill, new Color(1f, 1f, 1f, 0.16f));
-        background.type = Image.Type.Sliced;
-        background.pixelsPerUnitMultiplier = 32f / height;
-        RectTransform chip = background.rectTransform;
-        chip.sizeDelta = new Vector2(120f, height);
-        HorizontalLayoutGroup layout = background.gameObject.AddComponent<HorizontalLayoutGroup>();
-        layout.padding = new RectOffset(Mathf.RoundToInt(height * 0.35f), Mathf.RoundToInt(height * 0.45f), 0, 0);
-        layout.spacing = 5f;
-        layout.childAlignment = TextAnchor.MiddleLeft;
-        layout.childControlWidth = true;
-        layout.childControlHeight = true;
-        layout.childForceExpandWidth = false;
-        layout.childForceExpandHeight = false;
-
-        if (fitWidth)
-        {
-            ContentSizeFitter fitter = background.gameObject.AddComponent<ContentSizeFitter>();
-            fitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
-            fitter.verticalFit = ContentSizeFitter.FitMode.Unconstrained;
-        }
-
-        Image icon = CreateImage(chip, "LP_Icon", null, Color.white);
-        icon.preserveAspect = true;
-        LayoutElement iconLayout = icon.gameObject.AddComponent<LayoutElement>();
-        iconLayout.preferredWidth = height * 0.58f;
-        iconLayout.preferredHeight = height * 0.58f;
-
-        TMP_Text label = CreateText(chip, "LP_Label", "EFFECT", fontSize, FontStyles.Bold, TextAlignmentOptions.MidlineLeft, ProjectUUIPalette.TextPrimary);
-        label.characterSpacing = 0.5f;
-        label.overflowMode = TextOverflowModes.Overflow;
-
-        CookingChipUI ui = background.gameObject.AddComponent<CookingChipUI>();
-        SerializedObject so = new SerializedObject(ui);
-        so.FindProperty("background").objectReferenceValue = background;
-        so.FindProperty("icon").objectReferenceValue = icon;
-        so.FindProperty("label").objectReferenceValue = label;
-        so.ApplyModifiedPropertiesWithoutUndo();
-        return ui;
-    }
-
-    private static void ConfigureLayout(HorizontalLayoutGroup layout, bool controlWidth)
-    {
-        layout.childControlWidth = controlWidth;
-        layout.childControlHeight = true;
-        layout.childForceExpandWidth = false;
-        layout.childForceExpandHeight = true;
-    }
-
-    private static Button CreateButton(Transform parent, string name, string text, float fontSize, Color color, Color textColor, out Image image, out TMP_Text label)
-    {
-        image = CreateImage(parent, name, UISpriteFactory.Button, color);
-        image.type = Image.Type.Sliced;
-        image.raycastTarget = true;
-        Button button = image.gameObject.AddComponent<Button>();
-        button.targetGraphic = image;
-        SetTint(button, 1.1f);
-        label = CreateText(image.rectTransform, "LP_Label", text, fontSize, FontStyles.Bold, TextAlignmentOptions.Center, textColor);
-        label.overflowMode = TextOverflowModes.Overflow;
-        Stretch(label.rectTransform);
-        return button;
-    }
-
-    private static void SetTint(Button button, float highlight)
-    {
-        ColorBlock colors = button.colors;
-        colors.normalColor = Color.white;
-        colors.highlightedColor = new Color(highlight, highlight, highlight, 1f);
-        colors.pressedColor = new Color(0.82f, 0.82f, 0.82f, 1f);
-        colors.selectedColor = Color.white;
-        colors.disabledColor = new Color(1f, 1f, 1f, 0.55f);
-        colors.colorMultiplier = 1f;
-        button.colors = colors;
-        Navigation navigation = button.navigation;
+        Navigation navigation = scrollbar.navigation;
         navigation.mode = Navigation.Mode.None;
-        button.navigation = navigation;
-    }
-
-    private static TMP_Text CreateLabel(Transform parent, string name, string value)
-    {
-        TMP_Text label = CreateText(parent, name, value, 11.5f, FontStyles.Bold, TextAlignmentOptions.MidlineLeft, ProjectUUIPalette.TextSecondary);
-        label.characterSpacing = 3f;
-        return label;
-    }
-
-    private static RectTransform CreateRect(Transform parent, string name)
-    {
-        GameObject created = new GameObject(name, typeof(RectTransform));
-        created.layer = parent.gameObject.layer;
-        created.transform.SetParent(parent, false);
-        Undo.RegisterCreatedObjectUndo(created, "Create Cooking UI");
-        return (RectTransform)created.transform;
-    }
-
-    private static Image CreateImage(Transform parent, string name, Sprite sprite, Color color)
-    {
-        GameObject created = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
-        created.layer = parent.gameObject.layer;
-        created.transform.SetParent(parent, false);
-        Image image = created.GetComponent<Image>();
-        image.sprite = sprite;
-        image.color = color;
-        image.raycastTarget = false;
-        return image;
-    }
-
-    private static TMP_Text CreateText(Transform parent, string name, string value, float size, FontStyles style, TextAlignmentOptions alignment, Color color)
-    {
-        GameObject created = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
-        created.layer = parent.gameObject.layer;
-        created.transform.SetParent(parent, false);
-        TMP_Text text = created.GetComponent<TMP_Text>();
-
-        if (TMP_Settings.defaultFontAsset != null)
-        {
-            text.font = TMP_Settings.defaultFontAsset;
-        }
-
-        text.text = value;
-        text.fontSize = size;
-        text.enableAutoSizing = false;
-        text.fontStyle = style;
-        text.alignment = alignment;
-        text.color = color;
-        text.raycastTarget = false;
-        text.textWrappingMode = TextWrappingModes.NoWrap;
-        text.overflowMode = TextOverflowModes.Ellipsis;
-        return text;
-    }
-
-    private static void Stretch(RectTransform rect)
-    {
-        rect.anchorMin = Vector2.zero;
-        rect.anchorMax = Vector2.one;
-        rect.pivot = new Vector2(0.5f, 0.5f);
-        rect.offsetMin = Vector2.zero;
-        rect.offsetMax = Vector2.zero;
-    }
-
-    private static void TopLeft(RectTransform rect, Vector2 position, Vector2 size)
-    {
-        Place(rect, new Vector2(0f, 1f), new Vector2(0f, 1f), position, size);
-    }
-
-    private static void Place(RectTransform rect, Vector2 anchor, Vector2 pivot, Vector2 position, Vector2 size)
-    {
-        rect.anchorMin = anchor;
-        rect.anchorMax = anchor;
-        rect.pivot = pivot;
-        rect.anchoredPosition = position;
-        rect.sizeDelta = size;
-    }
-
-    private static void SetOffsets(RectTransform rect, Vector2 anchorMin, Vector2 anchorMax, Vector2 offsetMin, Vector2 offsetMax)
-    {
-        rect.anchorMin = anchorMin;
-        rect.anchorMax = anchorMax;
-        rect.pivot = new Vector2(0.5f, 0.5f);
-        rect.offsetMin = offsetMin;
-        rect.offsetMax = offsetMax;
-    }
-
-    private static void RemoveExisting(Transform parent, string name)
-    {
-        Transform existing = parent.Find(name);
-
-        while (existing != null)
-        {
-            Undo.DestroyObjectImmediate(existing.gameObject);
-            existing = parent.Find(name);
-        }
-    }
-
-    private static RectTransform FindChildRect(Transform parent, string name)
-    {
-        Transform child = parent.Find(name);
-        return child as RectTransform;
-    }
-
-    public static RectTransform FindRect(string name)
-    {
-        Scene scene = SceneManager.GetActiveScene();
-
-        foreach (GameObject sceneRoot in scene.GetRootGameObjects())
-        {
-            foreach (RectTransform rect in sceneRoot.GetComponentsInChildren<RectTransform>(true))
-            {
-                if (rect.name == name)
-                {
-                    return rect;
-                }
-            }
-        }
-
-        return null;
+        scrollbar.navigation = navigation;
     }
 }

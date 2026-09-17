@@ -229,6 +229,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e9c3caf9e03bada4bbf37539817120b8, type: 2}
   - {fileID: 11400000, guid: 1cdb45bbfe8283a459808afe63692ad7, type: 2}
   - {fileID: 11400000, guid: 64669a3ec53bc8a4881b7a126fe6e28e, type: 2}
+  - {fileID: 11400000, guid: 65217af8f8a892d44a2a4ac725ece1f5, type: 2}
+  - {fileID: 11400000, guid: c43e45274e2bd8348a31f4da0b658bfa, type: 2}
+  - {fileID: 11400000, guid: 7dca7667e4e590340a375f40c89bbab1, type: 2}
   fireVisualRoot: {fileID: 1272302503525716027}
   gameUIManager: {fileID: 0}
   heatRadius: 4

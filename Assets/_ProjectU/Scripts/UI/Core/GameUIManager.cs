@@ -7,7 +7,14 @@ public enum GamePopupType // 게임 팝업 종류
     None = 0, // 열린 팝업 없음
     Inventory = 1, // 일반 인벤토리 팝업
     Storage = 2, // 보관함 팝업
-    Cooking = 3 // 요리 팝업 (85일차)
+    Cooking = 3, // 요리 팝업 (85일차)
+    AnimalPen = 4 // 우리 팝업 (86일차)
+}
+
+public interface IGameScenePopup // 85·86일차: Scene에 배치해 두고 켜고 끄는 팝업
+{
+    bool IsOpen { get; } // 실제 표시 여부
+    void HideFromManager(); // 관리자 요청으로 숨김
 }
 
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
@@ -41,6 +48,8 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
     [Header("Cooking")] // 요리 팝업 설정 묶음 (85일차)
     [Tooltip("Scene에 배치된 요리 팝업. 비어 있으면 모닥불에서 바로 조리합니다.")]
     [SerializeField] private CookingPopupUI cookingPopup; // 요리 팝업
+    [Tooltip("Scene에 배치된 우리 팝업. 비어 있으면 우리에서 바로 먹이 주기·수거합니다. (86일차)")]
+    [SerializeField] private AnimalPenPopupUI animalPenPopup; // 우리 팝업
 
     private InventoryPopupController inventoryPopupInstance; // 생성된 인벤토리 팝업 인스턴스
     private StorageContainerUI storagePopupInstance; // 생성된 보관함 팝업 인스턴스
@@ -56,6 +65,7 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
     public InventoryPopupController InventoryPopupInstance => inventoryPopupInstance; // 생성된 인벤토리 팝업 제공
     public StorageContainerUI StoragePopupInstance => storagePopupInstance; // 생성된 보관함 팝업 제공
     public CookingPopupUI CookingPopup => cookingPopup; // 요리 팝업 제공
+    public AnimalPenPopupUI AnimalPenPopup => animalPenPopup; // 우리 팝업 제공
     public event Action<GamePopupType, bool> PopupStateChanged; // 팝업 상태 변경 알림
 
     private void Awake() // 게임 UI 관리자 초기화
@@ -220,7 +230,7 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
             inventoryPopupInstance.HideFromManager(); // 관리자 상태와 관계없이 인벤토리 숨김
         }
 
-        if (currentPopupType == GamePopupType.Storage || currentPopupType == GamePopupType.Cooking) // 다른 팝업 상태 확인
+        if (currentPopupType != GamePopupType.None && currentPopupType != GamePopupType.Inventory) // 다른 팝업 상태 확인
         {
             return; // 다른 팝업 입력 잠금 유지
         }
@@ -257,7 +267,7 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
             storagePopupInstance.HideFromManager(); // 관리자 상태와 관계없이 보관함 화면 숨김
         }
 
-        if (currentPopupType == GamePopupType.Inventory || currentPopupType == GamePopupType.Cooking) // 다른 팝업 상태 확인
+        if (currentPopupType != GamePopupType.None && currentPopupType != GamePopupType.Storage) // 다른 팝업 상태 확인
         {
             return; // 다른 팝업 입력 잠금 유지
         }
@@ -285,7 +295,31 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
 
     public bool OpenCooking(CampfireCookingStation station) // 지정 모닥불 요리 팝업 열기 (85일차)
     {
-        if (cookingPopup == null || station == null || !CanUseManager()) // 팝업과 모닥불 확인
+        return cookingPopup != null
+            && station != null
+            && OpenScenePopup(GamePopupType.Cooking, () => cookingPopup.ShowFromManager(this, station, playerInventory)); // 결과 반환
+    }
+
+    public void CloseCooking() // 요리 팝업 강제 종료 (85일차)
+    {
+        CloseScenePopup(GamePopupType.Cooking, cookingPopup); // 종료
+    }
+
+    public bool OpenAnimalPen(AnimalPen pen) // 지정 우리 팝업 열기 (86일차)
+    {
+        return animalPenPopup != null
+            && pen != null
+            && OpenScenePopup(GamePopupType.AnimalPen, () => animalPenPopup.ShowFromManager(this, pen, playerInventory)); // 결과 반환
+    }
+
+    public void CloseAnimalPen() // 우리 팝업 강제 종료 (86일차)
+    {
+        CloseScenePopup(GamePopupType.AnimalPen, animalPenPopup); // 종료
+    }
+
+    private bool OpenScenePopup(GamePopupType popupType, Func<bool> show) // Scene 팝업 공통 열기
+    {
+        if (!CanUseManager()) // 관리자 확인
         {
             return false; // 팝업 열기 실패 반환
         }
@@ -298,39 +332,39 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
             gameplayInputLock.Acquire(PopupLockId); // 공통 팝업 입력 잠금 획득
         }
 
-        if (!cookingPopup.ShowFromManager(this, station, playerInventory)) // 요리 팝업 표시 시도
+        if (!show()) // 팝업 표시 시도
         {
             currentPopupType = GamePopupType.None; // 현재 팝업 상태 초기화
             gameplayInputLock.Release(PopupLockId); // 공통 팝업 입력 잠금 해제
             return false; // 팝업 열기 실패 반환
         }
 
-        currentPopupType = GamePopupType.Cooking; // 현재 팝업 종류 저장
-        PopupStateChanged?.Invoke(GamePopupType.Cooking, true); // 요리 팝업 열림 알림
+        currentPopupType = popupType; // 현재 팝업 종류 저장
+        PopupStateChanged?.Invoke(popupType, true); // 열림 알림
         return true; // 팝업 열기 성공 반환
     }
 
-    public void CloseCooking() // 요리 팝업 강제 종료 (85일차)
+    private void CloseScenePopup(GamePopupType popupType, IGameScenePopup popup) // Scene 팝업 공통 닫기
     {
-        bool wasCookingVisible = cookingPopup != null && cookingPopup.IsOpen; // 실제 요리 화면 표시 여부 확인
+        bool wasVisible = popup != null && popup.IsOpen; // 실제 표시 여부 확인
 
-        if (cookingPopup != null) // 요리 팝업 확인
+        if (popup != null) // 팝업 확인
         {
-            cookingPopup.HideFromManager(); // 요리 화면 숨김
+            popup.HideFromManager(); // 화면 숨김
         }
 
-        if (currentPopupType == GamePopupType.Inventory || currentPopupType == GamePopupType.Storage) // 다른 팝업 상태 확인
+        if (currentPopupType != GamePopupType.None && currentPopupType != popupType) // 다른 팝업 상태 확인
         {
             return; // 다른 팝업 입력 잠금 유지
         }
 
-        bool wasCookingState = currentPopupType == GamePopupType.Cooking || wasCookingVisible; // 요리 팝업 종료 여부
+        bool wasOpenState = currentPopupType == popupType || wasVisible; // 종료 여부
         currentPopupType = GamePopupType.None; // 현재 팝업 상태 초기화
 
-        if (wasCookingState) // 요리 팝업 입력 잠금 보유 가능성 확인
+        if (wasOpenState) // 입력 잠금 보유 가능성 확인
         {
             gameplayInputLock.Release(PopupLockId); // 공통 팝업 입력 잠금 해제
-            PopupStateChanged?.Invoke(GamePopupType.Cooking, false); // 요리 팝업 닫힘 알림
+            PopupStateChanged?.Invoke(popupType, false); // 닫힘 알림
         }
     }
 
@@ -339,6 +373,7 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
         CloseInventory(); // 인벤토리 닫기
         CloseStorage(); // 보관함 닫기
         CloseCooking(); // 요리 닫기
+        CloseAnimalPen(); // 우리 닫기
     }
 
     public void CloseCurrentPopup() // 현재 열린 팝업 종료
@@ -355,6 +390,10 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
 
             case GamePopupType.Cooking: // 요리 팝업 상태
                 CloseCooking(); // 요리 팝업 종료
+                return; // 종료 처리 완료
+
+            case GamePopupType.AnimalPen: // 우리 팝업 상태
+                CloseAnimalPen(); // 우리 팝업 종료
                 return; // 종료 처리 완료
         }
 
@@ -465,6 +504,14 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
                 }
 
                 break; // 요리 처리 종료
+
+            case GamePopupType.AnimalPen: // 우리 팝업 상태
+                if (animalPenPopup != null) // 우리 팝업 확인
+                {
+                    animalPenPopup.HideFromManager(); // 우리 팝업 숨김
+                }
+
+                break; // 우리 처리 종료
         }
 
         currentPopupType = GamePopupType.None; // 현재 팝업 상태 초기화
@@ -535,6 +582,11 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
         if (cookingPopup != null) // 요리 팝업 존재 확인
         {
             cookingPopup.HideFromManager(); // 요리 팝업 숨김
+        }
+
+        if (animalPenPopup != null) // 우리 팝업 존재 확인
+        {
+            animalPenPopup.HideFromManager(); // 우리 팝업 숨김
         }
 
         currentPopupType = GamePopupType.None; // 현재 팝업 상태 초기화

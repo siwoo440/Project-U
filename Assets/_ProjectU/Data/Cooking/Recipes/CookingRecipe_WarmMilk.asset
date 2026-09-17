@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1024ef42cf32b824a9832cc0defe6a52, type: 3}
+  m_Name: CookingRecipe_WarmMilk
+  m_EditorClassIdentifier: Assembly-CSharp::CookingRecipeData
+  recipeId: cook_warm_milk
+  displayName: WARM MILK
+  sortOrder: 10
+  requiredStation: 0
+  ingredients:
+  - itemData: {fileID: 11400000, guid: 0beb83d291e4ab6438e2b2ea00a83f5d, type: 2}
+    amount: 1
+  resultItem: {fileID: 11400000, guid: 7d594dbe78795334dbb0b72bfc9e9c0b, type: 2}
+  resultQuantity: 1
+  cookingSeconds: 5
+  extraBatchTimeRatio: 0.6

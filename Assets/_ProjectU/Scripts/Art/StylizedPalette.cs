@@ -85,7 +85,13 @@ public enum StylizedColor
     SoupTomato = 110,
     Charred = 111,
     Butter = 112,
-    GrilledFish = 113
+    GrilledFish = 113,
+    // 86일차: 가축 색상
+    CowPink = 114,
+    Straw = 115,
+    Egg = 116,
+    Yolk = 117,
+    Grain = 118
 }
 
 public static class StylizedPalette
@@ -189,6 +195,11 @@ public static class StylizedPalette
             case StylizedColor.Charred: return new Entry(Hex(0x3A2A20), 0.2f);
             case StylizedColor.Butter: return new Entry(Hex(0xF6DE7A), 0.6f);
             case StylizedColor.GrilledFish: return new Entry(Hex(0xC98A4E), 0.5f);
+            case StylizedColor.CowPink: return new Entry(Hex(0xE9A3A0), 0.3f);
+            case StylizedColor.Straw: return new Entry(Hex(0xDDBA5C));
+            case StylizedColor.Egg: return new Entry(Hex(0xF3E6CF), 0.45f);
+            case StylizedColor.Yolk: return new Entry(Hex(0xF5B42A), 0.6f);
+            case StylizedColor.Grain: return new Entry(Hex(0xB98E4B));
             default: return new Entry(Color.magenta);
         }
     }

@@ -63,6 +63,13 @@ public static class ItemVisualContentBuilder
         { "food_pumpkin_soup", "item_pumpkin_soup" },
         { "food_tomato_stew", "item_tomato_stew" },
         { "food_golden_feast", "item_golden_feast" },
+        // 86일차 가축
+        { "food_egg", "item_egg" },
+        { "drink_milk", "item_milk" },
+        { "item_animal_feed", "item_animal_feed" },
+        { "food_fried_egg", "item_fried_egg" },
+        { "food_veggie_omelette", "item_veggie_omelette" },
+        { "food_warm_milk", "item_warm_milk" },
         { "item_arrow", "item_arrow_bundle" },
         { "item_herbal_tea", "item_herbal_tea" },
         { "item_iron_axe", "tool_iron_axe" },
@@ -95,7 +102,8 @@ public static class ItemVisualContentBuilder
     private static readonly HashSet<string> NewModels = new HashSet<string>
     {
         "item_baked_apple", "item_arrow_bundle",
-        "item_baked_potato", "item_grilled_fish", "item_mushroom_skewer", "item_pumpkin_soup", "item_tomato_stew", "item_golden_feast"
+        "item_baked_potato", "item_grilled_fish", "item_mushroom_skewer", "item_pumpkin_soup", "item_tomato_stew", "item_golden_feast",
+        "item_egg", "item_milk", "item_animal_feed", "item_fried_egg", "item_veggie_omelette", "item_warm_milk"
     };
 
     private sealed class PickupSpec
@@ -119,8 +127,19 @@ public static class ItemVisualContentBuilder
         { "food_mushroom_skewer", new PickupSpec { Name = "MushroomSkewerPickup", Scale = 1.4f } },
         { "food_pumpkin_soup", new PickupSpec { Name = "PumpkinSoupPickup", Scale = 1.15f } },
         { "food_tomato_stew", new PickupSpec { Name = "TomatoStewPickup", Scale = 1.15f } },
-        { "food_golden_feast", new PickupSpec { Name = "GoldenFeastPickup", Scale = 1.5f } }
+        { "food_golden_feast", new PickupSpec { Name = "GoldenFeastPickup", Scale = 1.5f } },
+        // 86일차 가축
+        { "food_egg", new PickupSpec { Name = "EggPickup", Scale = 1.1f } },
+        { "drink_milk", new PickupSpec { Name = "MilkPickup", Scale = 1.1f } },
+        { "item_animal_feed", new PickupSpec { Name = "AnimalFeedPickup", Scale = 1.4f } },
+        { "food_fried_egg", new PickupSpec { Name = "FriedEggPickup", Scale = 1.3f } },
+        { "food_veggie_omelette", new PickupSpec { Name = "VeggieOmelettePickup", Scale = 1.4f } },
+        { "food_warm_milk", new PickupSpec { Name = "WarmMilkPickup", Scale = 1.1f } }
     };
+
+    // 86일차: 동물 아이콘 (가축 창·HUD)
+    public const string AnimalIconFolder = "Assets/_ProjectU/UI/Icons/Animals";
+    private const string AnimalDataFolder = "Assets/_ProjectU/Data/Livestock";
 
     // 아이콘 구도 (기본 : 앞쪽 오른쪽 위에서 비스듬히)
     private static ItemIconRenderer.Framing GetFraming(string modelId)
@@ -143,7 +162,13 @@ public static class ItemVisualContentBuilder
                 return new ItemIconRenderer.Framing(Vector3.zero, 25f, 34f);
             case "item_grilled_fish":
             case "item_golden_feast":
+            case "item_fried_egg":
+            case "item_veggie_omelette":
                 return new ItemIconRenderer.Framing(Vector3.zero, 15f, 52f);
+            case "animal_chicken":
+                return new ItemIconRenderer.Framing(Vector3.zero, 40f, 12f);
+            case "animal_cow":
+                return new ItemIconRenderer.Framing(Vector3.zero, 55f, 10f);
             case "item_shirt":
                 return new ItemIconRenderer.Framing(Vector3.zero, 20f, 58f);
             case "item_bandage":
@@ -497,6 +522,8 @@ public static class ItemVisualContentBuilder
     {
         StylizedArtAssetFactory.EnsureFolder(IconFolder);
         List<(ItemData item, string path)> written = new List<(ItemData, string)>();
+        List<(AnimalData animal, string path)> writtenAnimals = new List<(AnimalData, string)>();
+        List<AnimalData> animals = LoadAnimals();
         StringBuilder problems = new StringBuilder();
 
         // 1단계 : 한 번의 미리보기 세션에서 모두 찍어 PNG로 저장
@@ -527,6 +554,28 @@ public static class ItemVisualContentBuilder
                 ItemIconRenderer.WritePng(png, path);
                 written.Add((item, path));
             }
+
+            if (animals.Count > 0)
+            {
+                StylizedArtAssetFactory.EnsureFolder(AnimalIconFolder);
+            }
+
+            foreach (AnimalData animal in animals)
+            {
+                GameObject model = animal.ModelPrefab;
+                string modelId = model != null ? model.name.Replace("LP_", string.Empty) : null;
+                byte[] png = model != null ? renderer.RenderPng(model, GetFraming(modelId), out _) : null;
+
+                if (png == null)
+                {
+                    problems.Append($"\n[경고] {animal.AnimalId} 동물 아이콘을 만들지 못했습니다.");
+                    continue;
+                }
+
+                string path = $"{AnimalIconFolder}/ICON_{animal.AnimalId}.png";
+                ItemIconRenderer.WritePng(png, path);
+                writtenAnimals.Add((animal, path));
+            }
         }
 
         EditorUtility.ClearProgressBar();
@@ -537,6 +586,11 @@ public static class ItemVisualContentBuilder
         try
         {
             foreach ((ItemData item, string path) in written)
+            {
+                AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
+            }
+
+            foreach ((AnimalData animal, string path) in writtenAnimals)
             {
                 AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
             }
@@ -572,8 +626,42 @@ public static class ItemVisualContentBuilder
             linked++;
         }
 
+        foreach ((AnimalData animal, string path) in writtenAnimals)
+        {
+            ItemIconRenderer.ImportAsSprite(path);
+            Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(path);
+            SerializedObject serialized = new SerializedObject(animal);
+            serialized.FindProperty("icon").objectReferenceValue = sprite;
+            serialized.ApplyModifiedPropertiesWithoutUndo();
+            EditorUtility.SetDirty(animal);
+        }
+
         AssetDatabase.SaveAssets();
-        return $"아이콘 {written.Count}/{items.Count}개 생성, ItemData 연결 {linked}개 ({IconFolder})" + problems;
+        string animalText = animals.Count > 0 ? $", 동물 아이콘 {writtenAnimals.Count}/{animals.Count}개" : string.Empty;
+        return $"아이콘 {written.Count}/{items.Count}개 생성, ItemData 연결 {linked}개{animalText} ({IconFolder})" + problems;
+    }
+
+    private static List<AnimalData> LoadAnimals()
+    {
+        List<AnimalData> result = new List<AnimalData>();
+
+        if (!AssetDatabase.IsValidFolder(AnimalDataFolder))
+        {
+            return result;
+        }
+
+        foreach (string guid in AssetDatabase.FindAssets("t:AnimalData", new[] { AnimalDataFolder }))
+        {
+            AnimalData animal = AssetDatabase.LoadAssetAtPath<AnimalData>(AssetDatabase.GUIDToAssetPath(guid));
+
+            if (animal != null)
+            {
+                result.Add(animal);
+            }
+        }
+
+        result.Sort((left, right) => string.CompareOrdinal(left.AnimalId, right.AnimalId));
+        return result;
     }
 
     // ---------------------------------------------------------------- 손에 든 외형
@@ -595,6 +683,8 @@ public static class ItemVisualContentBuilder
             case "item_pumpkin_soup":
             case "item_tomato_stew": return 0.24f;
             case "item_golden_feast": return 0.34f;
+            case "item_animal_feed": return 0.3f;
+            case "item_veggie_omelette": return 0.3f;
         }
 
         if (modelId.StartsWith("item_fish_"))

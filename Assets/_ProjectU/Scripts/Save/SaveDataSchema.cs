@@ -49,6 +49,10 @@ public sealed class SaveGameData // 전체 저장 파일 최상위 데이터
     public bool hasFoodBuffData; // 음식 효과 저장 여부
     [Tooltip("적용 중인 음식 보조 효과 목록.")]
     public List<FoodBuffSaveData> foodBuffs = new List<FoodBuffSaveData>(); // 음식 효과 목록
+    [Tooltip("가축 저장 데이터 존재 여부.")]
+    public bool hasLivestockData; // 가축 저장 여부
+    [Tooltip("우리별 가축 상태.")]
+    public LivestockSaveData livestock = new LivestockSaveData(); // 가축 데이터
 
     public static SaveGameData CreateNew(string newSceneName) // 새로운 저장 데이터 생성
     {
@@ -222,6 +226,43 @@ public sealed class CookingSlotSaveData // 85일차: 조리 칸 저장 데이터
     public float remainingSeconds; // 남은 시간
     [Tooltip("꺼내기를 기다리는 완성 음식 수량.")]
     public int readyAmount; // 완성 수량
+}
+
+[Serializable] // JSON 직렬화 허용
+public sealed class LivestockSaveData // 86일차: 가축 전체 저장 데이터
+{
+    [Tooltip("우리 목록.")]
+    public List<AnimalPenSaveData> pens = new List<AnimalPenSaveData>(); // 우리 목록
+}
+
+[Serializable] // JSON 직렬화 허용
+public sealed class AnimalPenSaveData // 86일차: 우리 하나의 저장 데이터
+{
+    [Tooltip("우리 건축물 ID.")]
+    public string structureId = string.Empty; // 건축물 ID
+    [Tooltip("마지막으로 하루 처리를 마친 날짜.")]
+    public int lastProcessedDay; // 마지막 처리 날짜
+    [Tooltip("우리 안 동물 목록.")]
+    public List<PenAnimalSaveData> animals = new List<PenAnimalSaveData>(); // 동물 목록
+}
+
+[Serializable] // JSON 직렬화 허용
+public sealed class PenAnimalSaveData // 86일차: 동물 한 마리의 저장 데이터
+{
+    [Tooltip("동물 종류 ID.")]
+    public string animalId = string.Empty; // 동물 ID
+    [Tooltip("개체 번호.")]
+    public int nameNumber; // 번호
+    [Tooltip("기분 0~100.")]
+    public int mood; // 기분
+    [Tooltip("오늘 먹이를 먹었는지.")]
+    public bool fedToday; // 먹음
+    [Tooltip("오늘 쓰다듬었는지.")]
+    public bool pettedToday; // 쓰다듬음
+    [Tooltip("마지막 생산 후 먹은 날 수.")]
+    public int daysSinceProduct; // 생산 경과
+    [Tooltip("꺼내기를 기다리는 생산물 수.")]
+    public int productReady; // 생산물
 }
 
 [Serializable] // JSON 직렬화 허용

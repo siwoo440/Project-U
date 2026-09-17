@@ -18,6 +18,7 @@ public static class CookingContentBuilder
     private const string DialogTitle = "Project U 요리 콘텐츠";
 
     private const string ItemFolder = "Assets/_ProjectU/Data/Items/Day85";
+    private const string LivestockFoodFolder = "Assets/_ProjectU/Data/Items/Day86";
     private const string RecipeFolder = "Assets/_ProjectU/Data/Cooking/Recipes";
     public const string IconSetPath = "Assets/_ProjectU/Data/Cooking/FoodEffectIcons.asset";
     private const string ItemDatabasePath = "Assets/_ProjectU/Data/Databases/ItemDatabase.asset";
@@ -38,6 +39,7 @@ public static class CookingContentBuilder
         public float BuffStrength;
         public float BuffSeconds;
         public int Stack;
+        public string Folder = ItemFolder;
     }
 
     private static readonly FoodSpec[] FoodSpecs =
@@ -77,6 +79,25 @@ public static class CookingContentBuilder
             AssetName = "ItemData_GoldenFeast", Id = "food_golden_feast", DisplayName = "GOLDEN CARP FEAST",
             Description = "A rare golden carp grilled with vegetables. Light on your feet after eating.",
             Hunger = 70f, Health = 30f, Buff = FoodBuffType.MoveSpeed, BuffStrength = 12f, BuffSeconds = 300f, Stack = 3
+        },
+        // 86일차: 달걀·우유 요리
+        new FoodSpec
+        {
+            AssetName = "ItemData_FriedEgg", Id = "food_fried_egg", DisplayName = "FRIED EGGS",
+            Description = "Two sunny-side-up eggs. A quick breakfast that keeps you going.",
+            Hunger = 25f, Buff = FoodBuffType.StaminaRecovery, BuffStrength = 20f, BuffSeconds = 120f, Stack = 10, Folder = LivestockFoodFolder
+        },
+        new FoodSpec
+        {
+            AssetName = "ItemData_VeggieOmelette", Id = "food_veggie_omelette", DisplayName = "VEGGIE OMELETTE",
+            Description = "A fluffy omelette with tomato and mushroom.",
+            Hunger = 45f, Health = 10f, Buff = FoodBuffType.Satiety, BuffStrength = 30f, BuffSeconds = 240f, Stack = 5, Folder = LivestockFoodFolder
+        },
+        new FoodSpec
+        {
+            AssetName = "ItemData_WarmMilk", Id = "food_warm_milk", DisplayName = "WARM MILK",
+            Description = "A mug of warm milk with a drizzle of honey. Great on cold nights.",
+            Hunger = 10f, Thirst = 30f, Buff = FoodBuffType.Warmth, BuffStrength = 30f, BuffSeconds = 180f, Stack = 5, Folder = LivestockFoodFolder
         }
     };
 
@@ -113,7 +134,15 @@ public static class CookingContentBuilder
             Ingredients = new[] { ("food_tomato", 2), ("food_potato", 1), ("drink_water_bottle", 1) } },
         new RecipeSpec { AssetName = "CookingRecipe_GoldenFeast", Id = "cook_golden_feast", DisplayName = "GOLDEN CARP FEAST", Order = 7,
             Station = CookingStationTier.StoneCampfire, ResultId = "food_golden_feast", Seconds = 18f,
-            Ingredients = new[] { ("resource_fish_golden_carp", 1), ("food_winter_radish", 1), ("food_tomato", 1) } }
+            Ingredients = new[] { ("resource_fish_golden_carp", 1), ("food_winter_radish", 1), ("food_tomato", 1) } },
+        // 86일차: 가축 생산물 요리 (달걀·우유가 없으면 건너뜀)
+        new RecipeSpec { AssetName = "CookingRecipe_FriedEgg", Id = "cook_fried_egg", DisplayName = "FRIED EGGS", Order = 8,
+            Station = CookingStationTier.Campfire, ResultId = "food_fried_egg", Seconds = 6f, Ingredients = new[] { ("food_egg", 2) } },
+        new RecipeSpec { AssetName = "CookingRecipe_VeggieOmelette", Id = "cook_veggie_omelette", DisplayName = "VEGGIE OMELETTE", Order = 9,
+            Station = CookingStationTier.Campfire, ResultId = "food_veggie_omelette", Seconds = 9f,
+            Ingredients = new[] { ("food_egg", 2), ("food_tomato", 1), ("item_wild_mushroom", 1) } },
+        new RecipeSpec { AssetName = "CookingRecipe_WarmMilk", Id = "cook_warm_milk", DisplayName = "WARM MILK", Order = 10,
+            Station = CookingStationTier.Campfire, ResultId = "food_warm_milk", Seconds = 5f, Ingredients = new[] { ("drink_milk", 1) } }
     };
 
     // ---------------------------------------------------------------- 메뉴
@@ -172,6 +201,7 @@ public static class CookingContentBuilder
         try
         {
             StylizedArtAssetFactory.EnsureFolder(ItemFolder);
+            StylizedArtAssetFactory.EnsureFolder(LivestockFoodFolder);
             StylizedArtAssetFactory.EnsureFolder(RecipeFolder);
 
             EditorUtility.DisplayProgressBar(DialogTitle, "음식 데이터", 0.1f);
@@ -276,7 +306,7 @@ public static class CookingContentBuilder
 
     private static ItemData CreateOrUpdateFood(FoodSpec spec)
     {
-        ItemData item = LoadOrCreateAsset<ItemData>($"{ItemFolder}/{spec.AssetName}.asset");
+        ItemData item = LoadOrCreateAsset<ItemData>($"{spec.Folder}/{spec.AssetName}.asset");
         SerializedObject serialized = new SerializedObject(item);
         serialized.FindProperty("itemId").stringValue = spec.Id;
         serialized.FindProperty("displayName").stringValue = spec.DisplayName;
@@ -311,7 +341,7 @@ public static class CookingContentBuilder
         {
             if (!items.ContainsKey(itemId))
             {
-                report.AppendLine($"[오류] {spec.Id} 재료 아이템을 찾지 못했습니다: {itemId}");
+                report.AppendLine($"[건너뜀] {spec.Id} : 재료 {itemId}가 아직 없습니다. (가축 콘텐츠 생성 도구를 먼저 실행하세요)");
                 return null;
             }
         }
@@ -559,6 +589,7 @@ public static class CookingContentBuilder
         // 요리법
         List<CookingRecipeData> recipes = new List<CookingRecipeData>();
         HashSet<string> ids = new HashSet<string>();
+        int skipped = 0;
 
         foreach (RecipeSpec spec in RecipeSpecs)
         {
@@ -566,7 +597,15 @@ public static class CookingContentBuilder
 
             if (recipe == null)
             {
-                Error($"요리법 없음: {spec.Id}");
+                if (HasAllIngredients(spec, items))
+                {
+                    Error($"요리법 없음: {spec.Id}");
+                }
+                else
+                {
+                    skipped++;
+                }
+
                 continue;
             }
 
@@ -600,7 +639,7 @@ public static class CookingContentBuilder
             }
         }
 
-        report.AppendLine($"요리법 {recipes.Count}/{RecipeSpecs.Length}개 확인");
+        report.AppendLine($"요리법 {recipes.Count}/{RecipeSpecs.Length}개 확인{(skipped > 0 ? $" (재료가 없어 건너뜀 {skipped}개)" : string.Empty)}");
 
         // 모닥불
         ValidateStation(CampfirePrefabPath, CookingStationTier.Campfire, recipes, report, Error);
@@ -630,6 +669,19 @@ public static class CookingContentBuilder
         errorCount = errors;
         report.Append(errors == 0 ? "결과 : 문제 없음" : $"결과 : 오류 {errors}개");
         return report.ToString();
+    }
+
+    private static bool HasAllIngredients(RecipeSpec spec, Dictionary<string, ItemData> items)
+    {
+        foreach ((string itemId, int _) in spec.Ingredients)
+        {
+            if (!items.ContainsKey(itemId))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private static void ValidateStation(string path, CookingStationTier tier, List<CookingRecipeData> recipes, StringBuilder report, System.Action<string> error)

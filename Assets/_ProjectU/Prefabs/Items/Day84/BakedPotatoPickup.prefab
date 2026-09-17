@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 3706611677917503852}
+  - component: {fileID: 2753432942994233614}
   m_Layer: 3
   m_Name: BakedPotatoPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 5553927998289123511}
+  - {fileID: 8730410329628684893}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &3706611677917503852
+--- !u!114 &2753432942994233614
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: item_baked_potato
-  generatedVisual: {fileID: 3522290895348425757}
+  generatedVisual: {fileID: 349751412573359863}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &7810649346269808504
+--- !u!1001 &6367564119368347026
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 352a2d747bd9d3f4498139f98e877512, type: 3}
---- !u!1 &3522290895348425757 stripped
+--- !u!1 &349751412573359863 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6666647802679485285, guid: 352a2d747bd9d3f4498139f98e877512, type: 3}
-  m_PrefabInstance: {fileID: 7810649346269808504}
+  m_PrefabInstance: {fileID: 6367564119368347026}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &5553927998289123511 stripped
+--- !u!4 &8730410329628684893 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2411259940717076431, guid: 352a2d747bd9d3f4498139f98e877512, type: 3}
-  m_PrefabInstance: {fileID: 7810649346269808504}
+  m_PrefabInstance: {fileID: 6367564119368347026}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:
