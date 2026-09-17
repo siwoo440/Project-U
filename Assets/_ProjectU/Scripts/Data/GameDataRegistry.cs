@@ -8,7 +8,7 @@ using UnityEngine; // Unity 기본 기능
     menuName = "Project U/Data/Game Data Registry")] // Project 창 생성 메뉴 경로
 public sealed class GameDataRegistry : ScriptableObject // 프로젝트의 공통 콘텐츠 데이터를 ID로 관리하는 Registry
 {
-    private const int CurrentRegistryVersion = 3; // 작물 데이터 등록을 포함한 현재 Registry 구조 버전
+    private const int CurrentRegistryVersion = 4; // 물고기 데이터 등록을 포함한 현재 Registry 구조 버전
 
     [Header("Registry")] // Registry 기본 설정 묶음
     [Tooltip("저장 데이터 호환성과 Registry 변경 추적에 사용할 버전입니다.")] // Inspector Registry 버전 설명
@@ -34,6 +34,10 @@ public sealed class GameDataRegistry : ScriptableObject // 프로젝트의 공�
     [Tooltip("게임에서 사용할 전체 CropData 목록입니다.")] // Inspector 작물 목록 설명
     [SerializeField] private CropData[] crops = Array.Empty<CropData>(); // 전체 작물 데이터 목록
 
+    [Header("Fish Data")] // 물고기 데이터 목록 묶음
+    [Tooltip("게임에서 사용할 전체 FishData 목록입니다.")] // Inspector 물고기 목록 설명
+    [SerializeField] private FishData[] fish = Array.Empty<FishData>(); // 전체 물고기 데이터 목록
+
     [Header("Visual Profile Data")] // Visual Profile 데이터 목록 묶음
     [Tooltip("게임에서 사용할 전체 ContentVisualProfile 목록입니다.")] // Inspector Visual Profile 목록 설명
     [SerializeField] private ContentVisualProfile[] visualProfiles = Array.Empty<ContentVisualProfile>(); // 전체 Visual Profile 목록
@@ -53,6 +57,9 @@ public sealed class GameDataRegistry : ScriptableObject // 프로젝트의 공�
 
     [Tooltip("현재 정상 등록된 작물 데이터 수입니다.")] // Inspector 작물 등록 수 설명
     [SerializeField] private int registeredCropCount; // 정상 등록된 작물 수
+
+    [Tooltip("현재 정상 등록된 물고기 데이터 수입니다.")] // Inspector 물고기 등록 수 설명
+    [SerializeField] private int registeredFishCount; // 정상 등록된 물고기 수
 
     [Tooltip("현재 정상 등록된 Visual Profile 수입니다.")] // Inspector Visual Profile 등록 수 설명
     [SerializeField] private int registeredVisualProfileCount; // 정상 등록된 Visual Profile 수
@@ -76,6 +83,7 @@ public sealed class GameDataRegistry : ScriptableObject // 프로젝트의 공�
     private readonly Dictionary<string, EnemyCombatData> enemyLookup = new Dictionary<string, EnemyCombatData>(StringComparer.Ordinal); // 적 ID 검색 Dictionary
     private readonly Dictionary<string, CropData> cropLookup = new Dictionary<string, CropData>(StringComparer.Ordinal); // 작물 ID 검색 Dictionary
     private readonly Dictionary<ItemData, CropData> cropBySeedLookup = new Dictionary<ItemData, CropData>(); // 씨앗 아이템 작물 검색 Dictionary
+    private readonly Dictionary<string, FishData> fishLookup = new Dictionary<string, FishData>(StringComparer.Ordinal); // 물고기 ID 검색 Dictionary
     private readonly Dictionary<string, ContentVisualProfile> visualProfileLookup = new Dictionary<string, ContentVisualProfile>(StringComparer.Ordinal); // Visual Profile ID 검색 Dictionary
     private readonly HashSet<string> allRegisteredIds = new HashSet<string>(StringComparer.Ordinal); // 전체 데이터 종류의 등록 ID 집합
     private bool isLookupReady; // ID 검색 Dictionary 준비 여부
@@ -86,12 +94,14 @@ public sealed class GameDataRegistry : ScriptableObject // 프로젝트의 공�
     public IReadOnlyList<BuildRecipeData> BuildRecipes => buildRecipes; // 전체 건축법 데이터 목록 제공
     public IReadOnlyList<EnemyCombatData> Enemies => enemies; // 전체 적 데이터 목록 제공
     public IReadOnlyList<CropData> Crops => crops; // 전체 작물 데이터 목록 제공
+    public IReadOnlyList<FishData> Fish => fish; // 전체 물고기 데이터 목록 제공
     public IReadOnlyList<ContentVisualProfile> VisualProfiles => visualProfiles; // 전체 Visual Profile 목록 제공
     public int RegisteredItemCount => registeredItemCount; // 정상 아이템 등록 수 제공
     public int RegisteredCraftingRecipeCount => registeredCraftingRecipeCount; // 정상 제작법 등록 수 제공
     public int RegisteredBuildRecipeCount => registeredBuildRecipeCount; // 정상 건축법 등록 수 제공
     public int RegisteredEnemyCount => registeredEnemyCount; // 정상 적 등록 수 제공
     public int RegisteredCropCount => registeredCropCount; // 정상 작물 등록 수 제공
+    public int RegisteredFishCount => registeredFishCount; // 정상 물고기 등록 수 제공
     public int RegisteredVisualProfileCount => registeredVisualProfileCount; // 정상 Visual Profile 등록 수 제공
     public int DuplicateIdCount => duplicateIdCount; // 종류별 중복 ID 수 제공
     public int CrossCategoryDuplicateIdCount => crossCategoryDuplicateIdCount; // 전체 종류 중복 ID 수 제공
@@ -112,6 +122,7 @@ public sealed class GameDataRegistry : ScriptableObject // 프로젝트의 공�
         buildRecipes ??= Array.Empty<BuildRecipeData>(); // 건축법 배열 누락 시 빈 배열 생성
         enemies ??= Array.Empty<EnemyCombatData>(); // 적 배열 누락 시 빈 배열 생성
         crops ??= Array.Empty<CropData>(); // 작물 배열 누락 시 빈 배열 생성
+        fish ??= Array.Empty<FishData>(); // 물고기 배열 누락 시 빈 배열 생성
         visualProfiles ??= Array.Empty<ContentVisualProfile>(); // Visual Profile 배열 누락 시 빈 배열 생성
         RebuildLookup(false); // Inspector 변경 내용을 ID 검색 Dictionary에 반영
     }
@@ -136,6 +147,7 @@ public sealed class GameDataRegistry : ScriptableObject // 프로젝트의 공�
         RegisterBuildRecipes(logResults); // 전체 건축법 데이터 등록
         RegisterEnemies(logResults); // 전체 적 데이터 등록
         RegisterCrops(logResults); // 전체 작물 데이터 등록
+        RegisterFish(logResults); // 전체 물고기 데이터 등록
         RegisterVisualProfiles(logResults); // 전체 Visual Profile 등록
         isLookupReady = true; // ID 검색 Dictionary 준비 완료 상태 적용
 
@@ -221,6 +233,12 @@ public sealed class GameDataRegistry : ScriptableObject // 프로젝트의 공�
         }
 
         return cropBySeedLookup.TryGetValue(seedItem, out cropData); // 씨앗 아이템 검색 결과 반환
+    }
+
+    public bool TryGetFish(string fishId, out FishData fishData) // 물고기 ID로 FishData 검색
+    {
+        EnsureLookupReady(); // ID 검색 Dictionary 준비 상태 확인
+        return fishLookup.TryGetValue(NormalizeId(fishId), out fishData); // 정리된 물고기 ID 검색 결과 반환
     }
 
     public bool TryGetVisualProfile(string profileId, out ContentVisualProfile visualProfile) // Profile ID로 ContentVisualProfile 검색
@@ -365,6 +383,25 @@ public sealed class GameDataRegistry : ScriptableObject // 프로젝트의 공�
         }
     }
 
+    private void RegisterFish(bool logResults) // 전체 FishData를 물고기 검색 Dictionary에 등록
+    {
+        for (int index = 0; index < fish.Length; index++) // 전체 물고기 데이터 순회
+        {
+            FishData fishData = fish[index]; // 현재 물고기 데이터 가져오기
+
+            if (fishData == null) // 물고기 데이터 참조 누락 여부 확인
+            {
+                LogNullEntry("FishData", index, logResults); // 누락된 물고기 참조 결과 출력
+                continue; // 다음 물고기 데이터로 이동
+            }
+
+            if (TryRegisterEntry(fishData.FishId, fishData, fishLookup, "FishData", logResults)) // 물고기 ID 등록 시도
+            {
+                registeredFishCount++; // 정상 물고기 등록 수 증가
+            }
+        }
+    }
+
     private void RegisterVisualProfiles(bool logResults) // 전체 ContentVisualProfile을 Profile 검색 Dictionary에 등록
     {
         for (int index = 0; index < visualProfiles.Length; index++) // 전체 Visual Profile 순회
@@ -452,6 +489,7 @@ public sealed class GameDataRegistry : ScriptableObject // 프로젝트의 공�
         enemyLookup.Clear(); // 적 검색 Dictionary 초기화
         cropLookup.Clear(); // 작물 검색 Dictionary 초기화
         cropBySeedLookup.Clear(); // 씨앗 작물 검색 Dictionary 초기화
+        fishLookup.Clear(); // 물고기 검색 Dictionary 초기화
         visualProfileLookup.Clear(); // Visual Profile 검색 Dictionary 초기화
         allRegisteredIds.Clear(); // 전체 등록 ID 집합 초기화
         registeredItemCount = 0; // 정상 아이템 등록 수 초기화
@@ -459,6 +497,7 @@ public sealed class GameDataRegistry : ScriptableObject // 프로젝트의 공�
         registeredBuildRecipeCount = 0; // 정상 건축법 등록 수 초기화
         registeredEnemyCount = 0; // 정상 적 등록 수 초기화
         registeredCropCount = 0; // 정상 작물 등록 수 초기화
+        registeredFishCount = 0; // 정상 물고기 등록 수 초기화
         registeredVisualProfileCount = 0; // 정상 Visual Profile 등록 수 초기화
         duplicateIdCount = 0; // 종류별 중복 ID 수 초기화
         crossCategoryDuplicateIdCount = 0; // 전체 종류 중복 ID 수 초기화
@@ -485,6 +524,7 @@ public sealed class GameDataRegistry : ScriptableObject // 프로젝트의 공�
             + $"건축법 {registeredBuildRecipeCount} / " // 정상 건축법 수 추가
             + $"적 {registeredEnemyCount} / " // 정상 적 수 추가
             + $"작물 {registeredCropCount} / " // 정상 작물 수 추가
+            + $"물고기 {registeredFishCount} / " // 정상 물고기 수 추가
             + $"Visual Profile {registeredVisualProfileCount} / " // 정상 Visual Profile 수 추가
             + $"종류별 중복 {duplicateIdCount} / " // 종류별 중복 수 추가
             + $"전체 중복 {crossCategoryDuplicateIdCount} / " // 전체 종류 중복 수 추가

@@ -43,6 +43,9 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
     [Tooltip("앞 칸의 밭·경작 대상을 찾는 농사 도구 관리자입니다. 비어 있으면 같은 Player에서 검색합니다.")] // Inspector 농사 도구 설명
     [SerializeField] private FarmingToolController farmingToolController; // 농사 도구 관리자
 
+    [Tooltip("낚싯대 던지기·챔질 대상을 제공하는 낚시 관리자입니다. 비어 있으면 같은 Player에서 검색합니다.")] // Inspector 낚시 설명
+    [SerializeField] private FishingController fishingController; // 낚시 관리자
+
     [Header("UI")] // 안내 UI 설정 묶음
     [Tooltip("안내 UI 루트.")] // Inspector UI 루트 설명
     [SerializeField] private GameObject promptRoot; // 안내 UI 루트
@@ -74,6 +77,11 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
         if (farmingToolController == null) // 농사 도구 관리자 참조 확인
         {
             farmingToolController = GetComponent<FarmingToolController>(); // 같은 Player에서 자동 검색 (없어도 동작)
+        }
+
+        if (fishingController == null) // 낚시 관리자 참조 확인
+        {
+            fishingController = GetComponent<FishingController>(); // 같은 Player에서 자동 검색 (없어도 동작)
         }
 
         bool hasMissingReference = // 값 계산 시작
@@ -177,6 +185,11 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
 
     private void HandleAttackPressed() // 좌클릭 누름 공격 처리
     {
+        if (fishingController != null && fishingController.IsBusy) // 낚시 중 확인
+        {
+            return; // 낚시 중 공격 차단
+        }
+
         if (bowChargeController.IsRangedWeaponSelected) // 현재 원거리 활 선택 여부 확인
         {
             bowChargeController.TryBeginCharge(); // 활 장전 시작 시도
@@ -223,6 +236,19 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
 
     private void DetectInteractable() // 전방 상호작용 대상 탐지
     {
+        if (fishingController != null && fishingController.IsBusy) // 낚시 중 확인
+        {
+            InteractableBase fishingTarget = fishingController.FindTargetInteractable(); // 낚시 대상 유지
+
+            if (fishingTarget != currentInteractable) // 대상 변경 확인
+            {
+                currentInteractable = fishingTarget; // 낚시 대상 적용
+            }
+
+            RefreshPrompt(); // 낚시 상태 문구 표시
+            return; // 다른 대상 탐지 생략
+        }
+
         InteractableBase detectedInteractable = null; // 이번 프레임 탐지 대상
         Vector3 detectionDirection = viewTransform.forward.normalized; // Camera 시선 방향 계산
         int hitCount = Physics.SphereCastNonAlloc( // 호출 시작
@@ -263,6 +289,11 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
         if (detectedInteractable == null && farmingToolController != null) // 시선 앞 대상이 없을 때 발밑 앞 칸 확인
         {
             detectedInteractable = farmingToolController.FindTargetInteractable(); // 밭 또는 경작 대상 검색
+        }
+
+        if (detectedInteractable == null && fishingController != null) // 낚싯대를 들고 물가를 보는지 확인
+        {
+            detectedInteractable = fishingController.FindTargetInteractable(); // 던질 지점 대상 검색
         }
 
         if (detectedInteractable == currentInteractable) // 동일 대상 유지 확인

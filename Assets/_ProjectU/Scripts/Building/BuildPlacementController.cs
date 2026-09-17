@@ -188,7 +188,8 @@ public sealed class BuildPlacementController : MonoBehaviour // 혼합형 건축
                 && !hasOpenPopup
                 && !hasOpenWorldMap
                 && !hasOpenPauseMenu
-                && !playerHealth.IsDead; // 건축 진입 조건 계산
+                && !playerHealth.IsDead
+                && !FishingController.IsLocalBusy; // 건축 진입 조건 계산 (낚시 중 진입 차단)
 
             if (canEnterBuildMode) // 건축 진입 입력 확인
             {

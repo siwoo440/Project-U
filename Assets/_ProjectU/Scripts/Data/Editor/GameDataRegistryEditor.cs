@@ -102,6 +102,11 @@ public sealed class GameDataRegistryEditor : Editor // Registry 자동 수집과
             .ThenBy(cropData => cropData.name) // 같은 ID는 Asset 이름 순서로 정렬
             .ToList(); // 정렬 결과를 List로 변환
 
+        List<FishData> fishAssets = FindAssets<FishData>() // 프로젝트 전체 FishData 검색
+            .OrderBy(fishData => fishData.FishId) // 물고기 ID 순서로 정렬
+            .ThenBy(fishData => fishData.name) // 같은 ID는 Asset 이름 순서로 정렬
+            .ToList(); // 정렬 결과를 List로 변환
+
         List<ContentVisualProfile> visualProfileAssets = FindAssets<ContentVisualProfile>() // 프로젝트 전체 ContentVisualProfile 검색
             .OrderBy(visualProfile => visualProfile.ProfileId) // Visual Profile ID 순서로 정렬
             .ThenBy(visualProfile => visualProfile.name) // 같은 ID는 Asset 이름 순서로 정렬
@@ -114,6 +119,7 @@ public sealed class GameDataRegistryEditor : Editor // Registry 자동 수집과
         AssignAssetArray(serializedRegistry.FindProperty("buildRecipes"), buildRecipeAssets); // 전체 건축법 Asset 배열 등록
         AssignAssetArray(serializedRegistry.FindProperty("enemies"), enemyAssets); // 전체 적 Asset 배열 등록
         AssignAssetArray(serializedRegistry.FindProperty("crops"), cropAssets); // 전체 작물 Asset 배열 등록
+        AssignAssetArray(serializedRegistry.FindProperty("fish"), fishAssets); // 전체 물고기 Asset 배열 등록
         AssignAssetArray(serializedRegistry.FindProperty("visualProfiles"), visualProfileAssets); // 전체 Visual Profile Asset 배열 등록
         serializedRegistry.ApplyModifiedProperties(); // Registry 배열 변경 내용 적용
         EditorUtility.SetDirty(registry); // Registry Asset 변경 상태 표시
@@ -127,6 +133,7 @@ public sealed class GameDataRegistryEditor : Editor // Registry 자동 수집과
             + $"건축법 {buildRecipeAssets.Count} / " // 수집 건축법 수 추가
             + $"적 {enemyAssets.Count} / " // 수집 적 수 추가
             + $"작물 {cropAssets.Count} / " // 수집 작물 수 추가
+            + $"물고기 {fishAssets.Count} / " // 수집 물고기 수 추가
             + $"Visual Profile {visualProfileAssets.Count}", // 수집 Visual Profile 수 추가
             registry); // Registry Asset을 Log Context로 지정
     }
@@ -143,6 +150,7 @@ public sealed class GameDataRegistryEditor : Editor // Registry 자동 수집과
         ValidateRecommendedPrefixes(registry); // 데이터 종류별 권장 ID 접두사 검사
         ValidateCraftingResultRegistration(registry); // 제작 결과 아이템 Registry 등록 여부 검사
         ValidateCropRegistration(registry); // 작물 씨앗·수확물 Registry 등록 여부 검사
+        ValidateFishRegistration(registry); // 물고기 결과 아이템 Registry 등록 여부 검사
         ValidateVisualProfiles(registry); // Visual Profile 외형 생성 정보 검사
         EditorUtility.SetDirty(registry); // Registry Runtime 검증값 변경 상태 표시
         AssetDatabase.SaveAssets(); // Registry 검증 실행값 디스크 저장
@@ -179,6 +187,12 @@ public sealed class GameDataRegistryEditor : Editor // Registry 자동 수집과
             cropData => cropData.CropId, // CropData에서 ID를 가져오는 함수
             "crop_", // 작물 권장 접두사
             "CropData"); // 오류 출력용 데이터 종류 이름
+
+        ValidatePrefix( // 물고기 ID 접두사 검사 시작
+            registry.Fish, // 전체 물고기 데이터 목록
+            fishData => fishData.FishId, // FishData에서 ID를 가져오는 함수
+            "fish_", // 물고기 권장 접두사
+            "FishData"); // 오류 출력용 데이터 종류 이름
 
         ValidatePrefix( // Visual Profile ID 접두사 검사 시작
             registry.VisualProfiles, // 전체 Visual Profile 목록
@@ -235,6 +249,30 @@ public sealed class GameDataRegistryEditor : Editor // Registry 자동 수집과
 
             ValidateRegisteredItem(registry, cropData.SeedItem, cropData, "씨앗"); // 씨앗 아이템 등록 검사
             ValidateRegisteredItem(registry, cropData.HarvestItem, cropData, "수확물"); // 수확 아이템 등록 검사
+        }
+    }
+
+    private static void ValidateFishRegistration(GameDataRegistry registry) // 물고기 데이터 필수 조건과 결과 아이템 등록 여부 검사
+    {
+        for (int index = 0; index < registry.Fish.Count; index++) // 전체 물고기 데이터 순회
+        {
+            FishData fishData = registry.Fish[index]; // 현재 물고기 데이터 가져오기
+
+            if (fishData == null) // 물고기 참조 누락 여부 확인
+            {
+                continue; // 다음 물고기로 이동
+            }
+
+            if (!fishData.TryValidate(out string errorMessage)) // 물고기 데이터 자체 검사
+            {
+                Debug.LogError(errorMessage, fishData); // 물고기 데이터 오류 출력
+                continue; // 아이템 등록 검사 생략
+            }
+
+            if (!registry.TryGetItem(fishData.ResultItem.ItemId, out ItemData registeredItem) || registeredItem != fishData.ResultItem) // 결과 아이템 등록 확인
+            {
+                Debug.LogError($"물고기 결과 아이템이 GameDataRegistry에 등록되지 않았습니다. 물고기: {fishData.name} / 아이템: {fishData.ResultItem.name}", fishData); // 등록 누락 오류 출력
+            }
         }
     }
 

@@ -45,6 +45,11 @@ public sealed class HotbarItemUse : MonoBehaviour // 핫바 아이템 사용 처
             return; // 팝업 중 아이템 사용 차단
         }
 
+        if (FishingController.IsLocalBusy) // 낚시 중 확인
+        {
+            return; // 낚시 중 아이템 사용 차단
+        }
+
         if (Cursor.lockState != CursorLockMode.Locked) // 게임 커서 상태 확인
         {
             return; // UI 조작 중 아이템 사용 차단

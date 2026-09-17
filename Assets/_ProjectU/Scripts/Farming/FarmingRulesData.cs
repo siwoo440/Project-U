@@ -18,6 +18,12 @@ public sealed class FarmingRulesData : ScriptableObject // 밭·물주기·날�
     [Tooltip("밭을 한 칸 만들 때 소비할 스태미나입니다.")]
     [SerializeField, Min(0f)] private float tillingStaminaCost = 4f; // 경작 스태미나 비용
 
+    [Tooltip("밭을 만들 때 흙에서 함께 나올 수 있는 아이템입니다. (82일차: 지렁이 미끼)")]
+    [SerializeField] private ItemData tillingBonusItem; // 경작 보너스 아이템
+
+    [Tooltip("경작 보너스 아이템이 나올 확률입니다.")]
+    [SerializeField, Range(0f, 1f)] private float tillingBonusChance = 0.3f; // 경작 보너스 확률
+
     [Header("Watering")] // 물주기 설정 묶음
     [Tooltip("작물에 물을 줄 때 손에 들고 있어야 하는 도구입니다.")]
     [SerializeField] private ToolType wateringTool = ToolType.WateringCan; // 물주기 도구
@@ -49,6 +55,8 @@ public sealed class FarmingRulesData : ScriptableObject // 밭·물주기·날�
     public BuildRecipeData FarmPlotRecipe => farmPlotRecipe; // 밭 건축 데이터 제공
     public ToolType TillingTool => tillingTool; // 경작 도구 제공
     public float TillingStaminaCost => tillingStaminaCost; // 경작 스태미나 제공
+    public ItemData TillingBonusItem => tillingBonusItem; // 경작 보너스 아이템 제공
+    public float TillingBonusChance => tillingBonusChance; // 경작 보너스 확률 제공
     public ToolType WateringTool => wateringTool; // 물주기 도구 제공
     public int WateringCanCapacity => Mathf.Max(1, wateringCanCapacity); // 물뿌리개 용량 제공
     public float WateringStaminaCost => wateringStaminaCost; // 물주기 스태미나 제공

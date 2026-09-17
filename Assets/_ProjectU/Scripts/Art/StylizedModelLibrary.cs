@@ -48,6 +48,7 @@ public static partial class StylizedModelLibrary
                 RegisterCharacters();
                 RegisterProps();
                 RegisterFarming();
+                RegisterFishing();
             }
 
             return catalog;

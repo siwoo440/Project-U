@@ -166,7 +166,27 @@ public sealed class FarmingToolController : MonoBehaviour // 플레이어 앞 �
         }
 
         nextRefreshTime = 0f; // 다음 요청에서 대상 재계산
+        GiveTillingBonus(manager); // 흙에서 나온 보너스 아이템
         return true; // 경작 성공
+    }
+
+    private void GiveTillingBonus(FarmManager manager) // 경작 보너스 아이템 지급 (82일차: 지렁이 미끼)
+    {
+        ItemData bonus = manager.Rules.TillingBonusItem; // 보너스 아이템
+
+        if (bonus == null || playerInventory == null || Random.value >= manager.Rules.TillingBonusChance) // 확률 확인
+        {
+            return; // 지급 없음
+        }
+
+        int remaining = playerInventory.AddItem(bonus, 1); // 인벤토리 추가
+
+        if (remaining > 0) // 넘침 확인
+        {
+            manager.TryDropItem(bonus, remaining, tillPosition); // 바닥 드롭
+        }
+
+        CombatDamagePopup.SpawnText(tillPosition + Vector3.up * 0.6f, "+1 " + bonus.DisplayName, new Color(0.9f, 0.75f, 0.55f, 1f), 2f); // 획득 알림
     }
 
     public bool TryConsumeStamina(float cost) // 농사 작업 스태미나 소비

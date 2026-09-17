@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baf402925022aed4a83c3d9ebd49d32a, type: 3}
+  m_Name: FishData_Catfish
+  m_EditorClassIdentifier: Assembly-CSharp::FishData
+  fishId: fish_catfish
+  displayName: CATFISH
+  description: Appears in the evening and at night in summer and autumn.
+  rarity: 1
+  resultItem: {fileID: 11400000, guid: 57290689e97387440ab6d1bcbf4ef495, type: 2}
+  waterBodies: 0100000000000000
+  timeWindow: 12
+  seasons: 0100000002000000
+  weathers: 
+  requiredRodTier: 1
+  spawnWeight: 20
+  difficulty: 0.5
+  requiredSuccessCount: 4

@@ -58,6 +58,7 @@ public sealed class PlayerHealth : MonoBehaviour // 플레이어 체력과 전�
     public event Action<float> Damaged; // 실제 피해량 이벤트
     public event Action<float> Healed; // 실제 회복량 이벤트
     public event Action<float> CombatDamageBlocked; // 무적으로 차단한 피해량 이벤트
+    public event Action<float> CombatDamaged; // 전투 피해만의 실제 피해량 이벤트 (생존 틱 피해 제외)
     public event Action Died; // 체력 소진 사망 이벤트
     public event Action Revived; // 사망 상태 부활 완료 이벤트
 
@@ -144,7 +145,13 @@ public sealed class PlayerHealth : MonoBehaviour // 플레이어 체력과 전�
             return false; // 전투 피해 차단 반환
         }
 
+        float previousHealth = currentHealth; // 피해 전 체력 저장
         bool damageApplied = ApplyDamage(damageAmount); // 실제 체력 피해 적용
+
+        if (damageApplied) // 피해 적용 확인
+        {
+            CombatDamaged?.Invoke(previousHealth - currentHealth); // 전투 피해량 전달
+        }
 
         if (!damageApplied || isDead) // 피해 적용 결과와 생존 상태 확인
         {

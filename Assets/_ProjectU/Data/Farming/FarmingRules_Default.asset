@@ -16,6 +16,8 @@ MonoBehaviour:
   farmPlotRecipe: {fileID: 11400000, guid: 5c1850e385d07af4898db59a096c63aa, type: 2}
   tillingTool: 3
   tillingStaminaCost: 4
+  tillingBonusItem: {fileID: 11400000, guid: f82cfee3161243747ad3a92e8c7418ba, type: 2}
+  tillingBonusChance: 0.3
   wateringTool: 4
   wateringCanCapacity: 10
   wateringStaminaCost: 2

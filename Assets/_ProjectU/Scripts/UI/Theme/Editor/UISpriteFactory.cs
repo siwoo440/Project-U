@@ -98,8 +98,16 @@ public static class UISpriteFactory
         WriteIcon("Leaf", LeafIcon);
         WriteIcon("Bag", BagIcon);
         WriteIcon("Compass", CompassIcon);
+        WriteIcon("Pickup", PickupIcon);
 
         AssetDatabase.SaveAssets();
+    }
+
+    // 82일차 추가: 근처 아이템 아이콘만 따로 만든다 (다른 스프라이트는 다시 쓰지 않음)
+    public static void GeneratePickupIcon()
+    {
+        StylizedArtAssetFactory.EnsureFolder(IconFolder);
+        WriteIcon("Pickup", PickupIcon);
     }
 
     // ------------------------------------------------------------ 저장
@@ -303,6 +311,15 @@ public static class UISpriteFactory
         handle = Mathf.Max(handle, -(y - 0.38f));
         float pocket = Box(x, y, 0f, -0.35f, 0.3f, 0.02f, 0f);
         return Subtract(Union(body, handle), pocket);
+    }
+
+    // 82일차 추가: 근처 아이템 (쟁반으로 들어가는 화살표)
+    private static float PickupIcon(float x, float y)
+    {
+        float tray = Subtract(Box(x, y, 0f, -0.55f, 0.72f, 0.28f, 0.08f), Box(x, y, 0f, -0.4f, 0.52f, 0.28f, 0.04f));
+        float shaft = Capsule(x, y, 0f, 0.78f, 0f, 0f, 0.11f);
+        float head = Mathf.Max((Mathf.Abs(x) - (y + 0.25f) * 0.9f) * 0.743f, y - 0.15f);
+        return Union(tray, Union(shaft, head));
     }
 
     private static float CompassIcon(float x, float y)

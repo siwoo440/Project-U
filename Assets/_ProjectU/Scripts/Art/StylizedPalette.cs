@@ -68,7 +68,15 @@ public enum StylizedColor
     SeedPaper = 97,
     CropGreen = 98,
     // 81일차: 수확 가능 표시
-    ReadyGlow = 99
+    ReadyGlow = 99,
+    // 82일차: 낚시 콘텐츠 색상
+    FishSilver = 100,
+    FishOlive = 101,
+    FishDark = 102,
+    FishGold = 103,
+    FishBlue = 104,
+    PondDeep = 105,
+    Worm = 106
 }
 
 public static class StylizedPalette
@@ -158,6 +166,13 @@ public static class StylizedPalette
             case StylizedColor.SeedPaper: return new Entry(Hex(0xDCC7A1));
             case StylizedColor.CropGreen: return new Entry(Hex(0x5DB84A));
             case StylizedColor.ReadyGlow: return new Entry(Hex(0xFFC93C), 0.4f, 0f, 0.9f);
+            case StylizedColor.FishSilver: return new Entry(Hex(0xAFC0C8), 0.7f, 0.3f);
+            case StylizedColor.FishOlive: return new Entry(Hex(0x7D8A4E), 0.55f);
+            case StylizedColor.FishDark: return new Entry(Hex(0x4B4A45), 0.5f);
+            case StylizedColor.FishGold: return new Entry(Hex(0xF0A93A), 0.7f, 0.35f);
+            case StylizedColor.FishBlue: return new Entry(Hex(0x8DB6D6), 0.75f, 0.2f);
+            case StylizedColor.PondDeep: return new Entry(Hex(0x1E3A40));
+            case StylizedColor.Worm: return new Entry(Hex(0xC97A7A), 0.45f);
             default: return new Entry(Color.magenta);
         }
     }

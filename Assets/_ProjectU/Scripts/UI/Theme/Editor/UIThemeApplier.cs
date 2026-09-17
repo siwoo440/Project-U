@@ -804,33 +804,8 @@ public static class UIThemeApplier
 
     private static string LayoutNearbyLoot()
     {
-        RectTransform panel = FindRect("NearbyLootPanel");
-
-        if (panel == null)
-        {
-            return "근처 아이템 패널 없음";
-        }
-
-        Image background = panel.GetComponent<Image>();
-
-        if (background != null)
-        {
-            Record(background);
-            background.sprite = UISpriteFactory.Panel;
-            background.type = Image.Type.Sliced;
-            background.color = new Color(0.075f, 0.09f, 0.115f, 0.82f);
-        }
-
-        Transform scroll = panel.Find("NearbyLootScrollView");
-        Image scrollImage = scroll != null ? scroll.GetComponent<Image>() : null;
-
-        if (scrollImage != null)
-        {
-            Record(scrollImage);
-            scrollImage.color = new Color(0f, 0f, 0f, 0.18f);
-        }
-
-        return "근처 아이템 패널 스타일 적용";
+        // 82일차 추가: 근처 아이템 패널은 전용 도구로 다시 만든다 (일반 규칙으로 바뀐 색상도 함께 복구)
+        return NearbyLootPanelBuilder.Build(useUndo);
     }
 
     private static string LayoutDeathScreen()

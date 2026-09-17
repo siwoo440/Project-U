@@ -195,6 +195,18 @@ public sealed class GameDataRegistryRuntime : MonoBehaviour // Scene에서 공�
         return registry.TryGetCrop(cropId, out cropData); // GameDataRegistry 작물 검색 결과 반환
     }
 
+    public bool TryGetFish(string fishId, out FishData fishData) // 전역 Registry에서 물고기 ID 검색
+    {
+        fishData = null; // 검색 실패 기본 반환값 설정
+
+        if (registry == null) // Registry Asset 연결 여부 확인
+        {
+            return false; // Registry가 없으면 물고기 검색 실패 반환
+        }
+
+        return registry.TryGetFish(fishId, out fishData); // GameDataRegistry 물고기 검색 결과 반환
+    }
+
     public bool TryGetCropBySeed(ItemData seedItem, out CropData cropData) // 전역 Registry에서 씨앗 아이템으로 작물 검색
     {
         cropData = null; // 검색 실패 기본 반환값 설정

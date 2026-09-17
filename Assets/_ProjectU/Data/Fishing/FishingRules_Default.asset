@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3e55ffefe3483a4b8a613e541918a4b, type: 3}
+  m_Name: FishingRules_Default
+  m_EditorClassIdentifier: Assembly-CSharp::FishingRulesData
+  rulesId: fishing_rules_default
+  rods:
+  - {fileID: 11400000, guid: 8255c3e45048c3945bbcfc7df6d99e7d, type: 2}
+  baitItem: {fileID: 11400000, guid: f82cfee3161243747ad3a92e8c7418ba, type: 2}
+  baitBiteTimeMultiplier: 0.6
+  minimumBiteWait: 3
+  maximumBiteWait: 8
+  biteWindow: 1.5
+  castDuration: 0.6
+  castStaminaCost: 3
+  cancelMoveDistance: 0.35

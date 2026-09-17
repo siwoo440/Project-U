@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee0b813991221674a99c5d95f958b33a, type: 3}
   m_Name: GameDataRegistry
   m_EditorClassIdentifier: Assembly-CSharp::GameDataRegistry
-  registryVersion: 3
+  registryVersion: 4
   items:
   - {fileID: 11400000, guid: 233c5c7467d9daa41bab4b59439b9465, type: 2}
   - {fileID: 11400000, guid: ced6962cfb3b9a249aadbf41f4f53d78, type: 2}
@@ -35,13 +35,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ce6c806808c6dfb4ca5fb2217dce497c, type: 2}
   - {fileID: 11400000, guid: b9e78781ff8b2aa4bae6df0fa3d2e1c9, type: 2}
   - {fileID: 11400000, guid: 2e83945f5dda2f34bb4e993074cfc81c, type: 2}
+  - {fileID: 11400000, guid: 57290689e97387440ab6d1bcbf4ef495, type: 2}
+  - {fileID: 11400000, guid: bad80e6a70bf78a4a81937454f7a8f95, type: 2}
+  - {fileID: 11400000, guid: 535bf968045572f408e41892f2d80b93, type: 2}
+  - {fileID: 11400000, guid: 83e8c92974737c246a6f55d31325f68b, type: 2}
+  - {fileID: 11400000, guid: eee016df450094545b4a90688d3bce9b, type: 2}
   - {fileID: 11400000, guid: 479a7e7a5dbb8df4a9ea663d4e582a1b, type: 2}
+  - {fileID: 11400000, guid: f82cfee3161243747ad3a92e8c7418ba, type: 2}
   - {fileID: 11400000, guid: de7994a6b3b2dcc479cd72a544075a60, type: 2}
   - {fileID: 11400000, guid: b452886093be83d44a997c06ab4f6f18, type: 2}
   - {fileID: 11400000, guid: aaca232007164504cbd41b9a9b8cbefb, type: 2}
   - {fileID: 11400000, guid: ed2ff3bcb0baa3743bf8df1264f8d60f, type: 2}
   - {fileID: 11400000, guid: 9139b198cba79454cbbb676d851141c5, type: 2}
   - {fileID: 11400000, guid: d801a65a4ac6aa9488b8fe9ba94ccb15, type: 2}
+  - {fileID: 11400000, guid: 28689924401732340b18d9b6429728b1, type: 2}
   - {fileID: 11400000, guid: d835eceef0e2d324c91c9629199e0ae8, type: 2}
   - {fileID: 11400000, guid: 34ed2068e680c3e47b192431c37799db, type: 2}
   - {fileID: 11400000, guid: 346ca54060b52d244b3ceb1c09bc4d6e, type: 2}
@@ -49,6 +56,7 @@ MonoBehaviour:
   craftingRecipes:
   - {fileID: 11400000, guid: 263c19dd4430aff4bb2ff8fd97c6a40e, type: 2}
   - {fileID: 11400000, guid: ab1624f42b2517647bf71889128d3174, type: 2}
+  - {fileID: 11400000, guid: 20a9c329f3bd6d74eb0acd4c4b7380a2, type: 2}
   - {fileID: 11400000, guid: 8a55d961b934e5747bf4db5be27aee50, type: 2}
   - {fileID: 11400000, guid: 8d0a40c64036cac4e8294093619954af, type: 2}
   - {fileID: 11400000, guid: 7e69f276b3f39af4788f2c31f54530b7, type: 2}
@@ -80,6 +88,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2da33fcbb2c54df439af10a0c510c866, type: 2}
   - {fileID: 11400000, guid: 621a2b93746634b4fb438707ec5e4573, type: 2}
   - {fileID: 11400000, guid: fadc339b56681b84d91217d185769f56, type: 2}
+  fish:
+  - {fileID: 11400000, guid: c68bf0308bd6ca147b8bb21992d3062d, type: 2}
+  - {fileID: 11400000, guid: f0e1416aab5661148be71ffd00c12191, type: 2}
+  - {fileID: 11400000, guid: de0b58eb92d900b4aae339d305934e12, type: 2}
+  - {fileID: 11400000, guid: 2de8045cc43cf9f4b8880bae6a5e5b07, type: 2}
+  - {fileID: 11400000, guid: 61ab654eb89704c458884ec97f8f5522, type: 2}
   visualProfiles:
   - {fileID: 11400000, guid: a2b63d4407ce3ba4487452a927419c7b, type: 2}
   - {fileID: 11400000, guid: af3263318ebcdf343866d5092de005c7, type: 2}
@@ -87,11 +101,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5a34511c6c255bc4385f22c5ac719ee4, type: 2}
   - {fileID: 11400000, guid: 1d079380262c135438299fb860a67faf, type: 2}
   - {fileID: 11400000, guid: 8cfe3946eff21504f88debcf76681a85, type: 2}
-  registeredItemCount: 32
-  registeredCraftingRecipeCount: 6
+  registeredItemCount: 39
+  registeredCraftingRecipeCount: 7
   registeredBuildRecipeCount: 16
   registeredEnemyCount: 3
   registeredCropCount: 5
+  registeredFishCount: 5
   registeredVisualProfileCount: 6
   duplicateIdCount: 0
   crossCategoryDuplicateIdCount: 0

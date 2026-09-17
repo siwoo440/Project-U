@@ -45,6 +45,11 @@ public sealed class HotbarInput : MonoBehaviour // 핫바 숫자키 입력 처�
             return; // 핫바 선택 차단
         }
 
+        if (FishingController.IsLocalBusy) // 낚시 중 확인
+        {
+            return; // 낚시 중 도구 교체 차단
+        }
+
         HandleWheelInput(); // 마우스 휠 칸 이동 처리
 
         Keyboard keyboard = Keyboard.current; // 현재 키보드 가져오기
