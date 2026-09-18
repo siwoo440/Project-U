@@ -35,7 +35,7 @@ public static class MarketContentBuilder
     private static readonly (string id, int price, MarketGoodsType type)[] FixedPrices =
     {
         ("food_potato", 8, MarketGoodsType.Crop),
-        ("food_strawberry", 5, MarketGoodsType.Crop),
+        ("food_strawberry", 7, MarketGoodsType.Crop), // 95일차: 5 → 7 (다른 작물보다 하루 이익이 낮던 문제)
         ("food_tomato", 9, MarketGoodsType.Crop),
         ("food_pumpkin", 28, MarketGoodsType.Crop),
         ("food_winter_radish", 12, MarketGoodsType.Crop),
@@ -211,6 +211,14 @@ public static class MarketContentBuilder
         report.AppendLine();
         report.Append(Validate(out _));
         return report.ToString();
+    }
+
+    public static string RefreshCatalog() // 95일차: 가격표 · 상인 재고만 다시 만들기 (13번 밸런스 메뉴에서 사용)
+    {
+        StringBuilder report = new StringBuilder();
+        CreateOrUpdateCatalog(LoadItemsById(), report);
+        AssetDatabase.SaveAssets();
+        return report.ToString().TrimEnd();
     }
 
     private static string IngredientText((string itemId, int amount)[] ingredients)

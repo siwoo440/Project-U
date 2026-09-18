@@ -124,7 +124,7 @@ public static class CookingContentBuilder
         new RecipeSpec { AssetName = "CookingRecipe_GrilledCrucian", Id = "cook_grilled_crucian", DisplayName = "GRILLED CRUCIAN", Order = 3,
             Station = CookingStationTier.Campfire, ResultId = "food_grilled_fish", Seconds = 8f, Ingredients = new[] { ("resource_fish_crucian", 1) } },
         new RecipeSpec { AssetName = "CookingRecipe_GrilledTrout", Id = "cook_grilled_trout", DisplayName = "GRILLED TROUT", Order = 4,
-            Station = CookingStationTier.Campfire, ResultId = "food_grilled_fish", Seconds = 8f, Ingredients = new[] { ("resource_fish_trout", 1) } },
+            Station = CookingStationTier.Campfire, ResultId = "food_grilled_fish", ResultQuantity = 2, Seconds = 8f, Ingredients = new[] { ("resource_fish_trout", 1) } }, // 95일차: 송어는 큰 생선이라 2개 (요리하면 손해 보던 문제)
         new RecipeSpec { AssetName = "CookingRecipe_PumpkinSoup", Id = "cook_pumpkin_soup", DisplayName = "PUMPKIN SOUP", Order = 5,
             Station = CookingStationTier.StoneCampfire, ResultId = "food_pumpkin_soup", ResultQuantity = 2, Seconds = 12f,
             Ingredients = new[] { ("food_pumpkin", 1), ("drink_water_bottle", 1) } },
@@ -174,6 +174,25 @@ public static class CookingContentBuilder
     }
 
     // ---------------------------------------------------------------- 전체 생성
+
+    public static string RefreshRecipes() // 95일차: 요리법 데이터만 다시 만들기 (13번 밸런스 메뉴에서 사용)
+    {
+        StringBuilder report = new StringBuilder();
+        Dictionary<string, ItemData> items = LoadItemsById();
+        int count = 0;
+
+        foreach (RecipeSpec spec in RecipeSpecs)
+        {
+            if (CreateOrUpdateRecipe(spec, items, report) != null)
+            {
+                count++;
+            }
+        }
+
+        AssetDatabase.SaveAssets();
+        report.AppendLine($"요리법 {count}개 갱신");
+        return report.ToString().TrimEnd();
+    }
 
     public static string BuildAll()
     {

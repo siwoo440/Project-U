@@ -38,7 +38,7 @@ MonoBehaviour:
     requirements:
     - item: {fileID: 11400000, guid: 95ca44aa8a27d41448c511db6fa0a55c, type: 2}
       amount: 6
-    rewardCoins: 50
+    rewardCoins: 60
     rewardAffinity: 4
     rewardItem: {fileID: 0}
     rewardItemAmount: 0
@@ -56,7 +56,7 @@ MonoBehaviour:
     requirements:
     - item: {fileID: 11400000, guid: 60a1b7725b902114381bd98a8db8ec3b, type: 2}
       amount: 2
-    rewardCoins: 75
+    rewardCoins: 90
     rewardAffinity: 4
     rewardItem: {fileID: 0}
     rewardItemAmount: 0

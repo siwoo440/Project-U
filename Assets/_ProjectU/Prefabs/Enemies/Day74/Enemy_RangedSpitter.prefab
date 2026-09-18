@@ -749,7 +749,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyLootDropper
   enemyHealth: {fileID: 3580850875095873761}
-  lootTable: {fileID: 11400000, guid: 6076abac9d590fa4985e27406669d66b, type: 2}
+  lootTable: {fileID: 11400000, guid: f4a24a3926ed0214f9540efdbcb26ae0, type: 2}
   dropOrigin: {fileID: 3902300589703150641}
   dropContainer: {fileID: 0}
   dropRadius: 0.55

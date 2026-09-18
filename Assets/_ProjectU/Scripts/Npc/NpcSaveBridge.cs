@@ -100,7 +100,7 @@ public static class NpcSaveBridge
                 return false;
             }
 
-            if (entry.lastTalkDay < -1 || entry.lastGiftDay < -1 || entry.giftsOnLastGiftDay < 0 || entry.receivedGiftCount < 0 || entry.talkDays < 0)
+            if (entry.lastTalkDay < -1 || entry.lastGiftDay < -1 || entry.giftsOnLastGiftDay < 0 || entry.receivedGiftCount < 0 || entry.talkDays < 0 || entry.giftWeek < -1 || entry.giftsThisWeek < 0)
             {
                 errorMessage = $"NPC 관계 기록 값이 잘못되었습니다: {entry.characterId}";
                 return false;

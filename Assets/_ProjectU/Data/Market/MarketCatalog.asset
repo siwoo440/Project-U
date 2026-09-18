@@ -18,7 +18,7 @@ MonoBehaviour:
     goodsType: 0
     freshSeasons: 00000000
   - item: {fileID: 11400000, guid: 95ca44aa8a27d41448c511db6fa0a55c, type: 2}
-    basePrice: 5
+    basePrice: 7
     goodsType: 0
     freshSeasons: 00000000
   - item: {fileID: 11400000, guid: 6fd5b0751520d284ba0ec2064ed5ea80, type: 2}

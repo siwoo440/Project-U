@@ -5,7 +5,7 @@ using UnityEngine.InputSystem; // 키보드 입력 기능
 using UnityEngine.UI; // Unity UI 기능
 
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
-public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일차: NPC 대화 창 (초상 · 이름 · 호감도 · 대사 · 대화/선물/거래) / 93일차: 의뢰 전달
+public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일차: NPC 대화 창 (초상 · 이름 · 호감도 · 대사 · 대화/선물/거래) / 93일차: 의뢰 전달 / 94일차: 이벤트 / 95일차: 한 주 선물 제한
 {
     [Header("Root")] // 루트
     [Tooltip("켜고 끄는 창 전체.")]
@@ -77,6 +77,7 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
     public string CurrentLine => lineText != null ? lineText.text : string.Empty; // 현재 대사 (테스트용)
     public string MessageLabel => messageText != null && messageText.gameObject.activeSelf ? messageText.text : string.Empty; // 알림 (테스트용)
     public bool IsGiftPanelOpen => giftPanel != null && giftPanel.activeSelf; // 선물 창 여부 (테스트용)
+    public string GiftLabel => giftLabel != null ? giftLabel.text : string.Empty; // 선물 버튼 문구 (95일차 테스트용)
     public IReadOnlyList<NpcGiftSlotUI> GiftSlots => giftSlots; // 선물 칸 (테스트용)
     public bool CanTrade => tradeButton != null && tradeButton.gameObject.activeSelf; // 거래 버튼 여부 (테스트용)
     public string TradeLabel => tradeLabel != null ? tradeLabel.text : string.Empty; // 거래 버튼 문구 (테스트용)
@@ -275,9 +276,11 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
             return;
         }
 
-        if (relations.GiftsLeftToday(agent.Character, npcManager.CurrentDay) <= 0)
+        string limitReason = relations.GiftLimitReason(agent.Character, npcManager.CurrentDay, IsBirthdayToday(agent.Character)); // 95일차: 하루 · 한 주 제한
+
+        if (limitReason.Length > 0)
         {
-            ShowMessage("오늘은 이미 선물을 받았어요. 내일 다시 주세요.", ProjectUUIPalette.TextSecondary);
+            ShowMessage(limitReason, ProjectUUIPalette.TextSecondary);
             return;
         }
 
@@ -303,7 +306,7 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
 
         NpcCharacterData character = agent.Character;
         int day = npcManager.CurrentDay;
-        bool birthday = character.IsBirthday(npcManager.CurrentSeason, npcManager.CurrentDayInSeason);
+        bool birthday = IsBirthdayToday(character);
         AffinityStage before = relations.GetStage(character);
         NpcGiftResult result = relations.GiveGift(character, item, day, birthday);
 
@@ -453,11 +456,13 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
             affinityFill.anchorMax = new Vector2(Mathf.Clamp01(affinity / (float)character.MaxAffinity), 1f);
         }
 
-        bool canGift = relations.GiftsLeftToday(character, npcManager.CurrentDay) > 0;
+        bool birthdayToday = IsBirthdayToday(character);
+        bool canGift = relations.GiftsLeftToday(character, npcManager.CurrentDay, birthdayToday) > 0;
 
-        if (giftLabel != null)
+        if (giftLabel != null) // 95일차: 한 주 제한이면 "이번 주 완료", 남은 수 표시
         {
-            giftLabel.text = canGift ? "선물하기" : "선물 완료";
+            int weekLeft = relations.GiftsLeftThisWeek(character, npcManager.CurrentDay);
+            giftLabel.text = canGift ? (birthdayToday ? "생일 선물" : $"선물하기 ({weekLeft})") : relations.GiftsLeftToday(character, npcManager.CurrentDay, true) > 0 ? "이번 주 완료" : "선물 완료";
         }
 
         if (questButton != null) // 93일차: 이 NPC에게 받은 의뢰가 있으면 전달 버튼
@@ -726,6 +731,11 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
 
         Color color = delta > 0 ? ProjectUUIPalette.Accent : ProjectUUIPalette.Danger;
         CombatDamagePopup.SpawnText(agent.transform.position + Vector3.up * 2.3f, $"호감도 {delta:+0;-0}", color, 1.6f);
+    }
+
+    private bool IsBirthdayToday(NpcCharacterData character) // 95일차: 오늘이 생일인지 (선물 제한 · 버튼 문구)
+    {
+        return character != null && npcManager != null && character.IsBirthday(npcManager.CurrentSeason, npcManager.CurrentDayInSeason);
     }
 
     private static string StageMessage(NpcCharacterData character, string message, AffinityStage before, AffinityStage after) // 단계가 바뀌면 알림 덧붙이기

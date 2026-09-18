@@ -21,7 +21,7 @@ MonoBehaviour:
     requirements:
     - item: {fileID: 11400000, guid: a42d6efd666a1fc40809cbcbcd3362b4, type: 2}
       amount: 5
-    rewardCoins: 55
+    rewardCoins: 65
     rewardAffinity: 4
     rewardItem: {fileID: 0}
     rewardItemAmount: 0
@@ -39,7 +39,7 @@ MonoBehaviour:
     requirements:
     - item: {fileID: 11400000, guid: 6fd5b0751520d284ba0ec2064ed5ea80, type: 2}
       amount: 5
-    rewardCoins: 60
+    rewardCoins: 70
     rewardAffinity: 4
     rewardItem: {fileID: 0}
     rewardItemAmount: 0
@@ -56,7 +56,7 @@ MonoBehaviour:
     requirements:
     - item: {fileID: 11400000, guid: 60a1b7725b902114381bd98a8db8ec3b, type: 2}
       amount: 2
-    rewardCoins: 75
+    rewardCoins: 90
     rewardAffinity: 5
     rewardItem: {fileID: 0}
     rewardItemAmount: 0
@@ -74,7 +74,7 @@ MonoBehaviour:
     requirements:
     - item: {fileID: 11400000, guid: 09c927a2524bd8f409d6b8ddab61bc58, type: 2}
       amount: 4
-    rewardCoins: 65
+    rewardCoins: 75
     rewardAffinity: 4
     rewardItem: {fileID: 0}
     rewardItemAmount: 0

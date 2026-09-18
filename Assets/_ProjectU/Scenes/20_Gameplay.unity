@@ -108013,7 +108013,7 @@ MonoBehaviour:
   spawnOnStart: 1
   initialSpawnDelay: 1
   respawnEnabled: 1
-  respawnDelay: 10
+  respawnDelay: 180
   corpseVisibleDuration: 2
   spawnRadius: 0.5
   navMeshSampleRadius: 3
@@ -108242,7 +108242,7 @@ MonoBehaviour:
   spawnOnStart: 1
   initialSpawnDelay: 0
   respawnEnabled: 1
-  respawnDelay: 10
+  respawnDelay: 180
   corpseVisibleDuration: 2
   spawnRadius: 0.5
   navMeshSampleRadius: 3
@@ -140601,7 +140601,7 @@ MonoBehaviour:
   spawnOnStart: 1
   initialSpawnDelay: 0
   respawnEnabled: 1
-  respawnDelay: 15
+  respawnDelay: 240
   corpseVisibleDuration: 2
   spawnRadius: 0.5
   navMeshSampleRadius: 3

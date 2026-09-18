@@ -17,14 +17,14 @@ MonoBehaviour:
     pickupPrefab: {fileID: 3181927310554862687, guid: 4c6185a1794e8554b8d53c608e4daec4, type: 3}
     dropChance: 1
     minimumQuantity: 1
-    maximumQuantity: 3
+    maximumQuantity: 2
   - itemData: {fileID: 11400000, guid: ce6c806808c6dfb4ca5fb2217dce497c, type: 2}
     pickupPrefab: {fileID: 3181927310554862687, guid: ffc695a0c3ca40d4fb4571ba023a9e01, type: 3}
-    dropChance: 1
+    dropChance: 0.6
     minimumQuantity: 1
-    maximumQuantity: 2
+    maximumQuantity: 1
   - itemData: {fileID: 11400000, guid: c593f671b9ae9d24e96e6cd5ee7b2a1c, type: 2}
     pickupPrefab: {fileID: 3181927310554862687, guid: e61a665b8bce61948b7b69c862f41150, type: 3}
-    dropChance: 1
+    dropChance: 0.35
     minimumQuantity: 1
     maximumQuantity: 1

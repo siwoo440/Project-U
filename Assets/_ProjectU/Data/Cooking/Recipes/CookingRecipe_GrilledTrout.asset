@@ -20,6 +20,6 @@ MonoBehaviour:
   - itemData: {fileID: 11400000, guid: eee016df450094545b4a90688d3bce9b, type: 2}
     amount: 1
   resultItem: {fileID: 11400000, guid: b4f9d8fea40a5c741bf6bc3778083b00, type: 2}
-  resultQuantity: 1
+  resultQuantity: 2
   cookingSeconds: 8
   extraBatchTimeRatio: 0.6

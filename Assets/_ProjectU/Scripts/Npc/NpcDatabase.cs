@@ -45,6 +45,8 @@ public sealed class NpcDatabase : ScriptableObject // 89일차: 전체 NPC 목�
     [SerializeField, Min(0)] private int dailyTalkPoints = 1; // 대화 점수
     [Tooltip("NPC 한 명에게 하루에 줄 수 있는 선물 수.")]
     [SerializeField, Min(1)] private int giftsPerDay = 1; // 하루 선물 수
+    [Tooltip("95일차: NPC 한 명에게 한 주(월~일)에 줄 수 있는 선물 수. 생일 선물은 세지 않습니다.")]
+    [SerializeField, Min(1)] private int giftsPerWeek = 2; // 한 주 선물 수
 
     private Dictionary<string, NpcCharacterData> lookup; // ID 검색
 
@@ -53,6 +55,8 @@ public sealed class NpcDatabase : ScriptableObject // 89일차: 전체 NPC 목�
     public int BirthdayMultiplier => Mathf.Max(1, birthdayMultiplier); // 생일 배율 제공
     public int DailyTalkPoints => Mathf.Max(0, dailyTalkPoints); // 대화 점수 제공
     public int GiftsPerDay => Mathf.Max(1, giftsPerDay); // 하루 선물 수 제공
+    public int GiftsPerWeek => Mathf.Max(1, giftsPerWeek); // 한 주 선물 수 제공
+    public int StageThreshold(AffinityStage stage) => stage <= AffinityStage.Uninterested ? 0 : stageThresholds[Mathf.Clamp((int)stage - 1, 0, stageThresholds.Length - 1)]; // 95일차: 단계 시작 점수 (밸런스 계산)
 
     public bool TryGet(string characterId, out NpcCharacterData character) // ID로 NPC 검색
     {

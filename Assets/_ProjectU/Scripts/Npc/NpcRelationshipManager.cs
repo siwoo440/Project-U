@@ -21,6 +21,10 @@ public sealed class NpcRelationshipSaveData // 91일차: NPC 한 명과의 관�
     public int receivedGiftCount; // 받은 선물 수
     [Tooltip("지금까지 대화한 날 수.")]
     public int talkDays; // 대화한 날 수
+    [Tooltip("95일차: 마지막으로 선물한 주 (1일차가 있는 주 = 0).")]
+    public int giftWeek = -1; // 마지막 선물 주
+    [Tooltip("95일차: 그 주에 준 선물 수 (생일 선물 제외).")]
+    public int giftsThisWeek; // 그 주 선물 수
 }
 
 [Serializable] // JSON 저장
@@ -49,7 +53,7 @@ public readonly struct NpcGiftResult // 선물 결과
 }
 
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
-public sealed class NpcRelationshipManager : MonoBehaviour // 91일차: NPC 호감도 · 만남 · 하루 대화·선물 제한
+public sealed class NpcRelationshipManager : MonoBehaviour // 91일차: NPC 호감도 · 만남 · 하루 대화·선물 제한 / 95일차: 한 주 선물 제한
 {
     public static NpcRelationshipManager Instance { get; private set; } // Scene 관리자
 
@@ -124,13 +128,43 @@ public sealed class NpcRelationshipManager : MonoBehaviour // 91일차: NPC 호�
         return state != null && state.lastTalkDay == day;
     }
 
-    public int GiftsLeftToday(NpcCharacterData character, int day) // 오늘 더 줄 수 있는 선물 수
+    public int GiftsLeftToday(NpcCharacterData character, int day, bool isBirthday = false) // 오늘 더 줄 수 있는 선물 수 (95일차: 한 주 제한 포함, 생일은 한 주 제한 없음)
     {
         NpcRelationshipSaveData state = GetState(character);
         int limit = database != null ? database.GiftsPerDay : 1;
         int given = state != null && state.lastGiftDay == day ? state.giftsOnLastGiftDay : 0;
+        int left = Mathf.Max(0, limit - given);
+        return isBirthday ? left : Mathf.Min(left, GiftsLeftThisWeek(character, day));
+    }
+
+    public int GiftsLeftThisWeek(NpcCharacterData character, int day) // 95일차: 이번 주에 더 줄 수 있는 선물 수
+    {
+        NpcRelationshipSaveData state = GetState(character);
+        int limit = database != null ? database.GiftsPerWeek : 2;
+        int given = state != null && state.giftWeek == WeekOf(day) ? state.giftsThisWeek : 0;
         return Mathf.Max(0, limit - given);
     }
+
+    public string GiftLimitReason(NpcCharacterData character, int day, bool isBirthday = false) // 95일차: 선물을 줄 수 없는 이유 (줄 수 있으면 빈 문자열)
+    {
+        NpcRelationshipSaveData state = GetState(character);
+        int dailyLimit = database != null ? database.GiftsPerDay : 1;
+
+        if (state != null && state.lastGiftDay == day && state.giftsOnLastGiftDay >= dailyLimit)
+        {
+            return "오늘은 이미 선물을 받았어요. 내일 다시 주세요.";
+        }
+
+        if (!isBirthday && GiftsLeftThisWeek(character, day) <= 0)
+        {
+            int weekly = database != null ? database.GiftsPerWeek : 2;
+            return $"이번 주에는 선물을 {weekly}번 받았어요. 월요일부터 다시 줄 수 있어요.";
+        }
+
+        return string.Empty;
+    }
+
+    public static int WeekOf(int day) => (Mathf.Max(1, day) - 1) / NpcCalendar.DaysPerWeek; // 95일차: 날짜 → 주 번호 (1일차 = 월요일)
 
     public bool MarkMet(NpcCharacterData character) // 처음 만남 기록 (처음이면 true)
     {
@@ -170,9 +204,11 @@ public sealed class NpcRelationshipManager : MonoBehaviour // 91일차: NPC 호�
             return new NpcGiftResult(false, GiftPreference.Neutral, 0, false, "선물을 줄 수 없어요.");
         }
 
-        if (GiftsLeftToday(character, day) <= 0)
+        string limitReason = GiftLimitReason(character, day, isBirthday);
+
+        if (limitReason.Length > 0)
         {
-            return new NpcGiftResult(false, GiftPreference.Neutral, 0, false, "오늘은 이미 선물을 받았어요.");
+            return new NpcGiftResult(false, GiftPreference.Neutral, 0, false, limitReason);
         }
 
         GiftPreference preference = character.GiftProfile.GetPreference(item);
@@ -186,6 +222,20 @@ public sealed class NpcRelationshipManager : MonoBehaviour // 91일차: NPC 호�
 
         state.giftsOnLastGiftDay++;
         state.receivedGiftCount++;
+
+        if (!isBirthday) // 95일차: 생일 선물은 한 주 선물 수에 넣지 않는다
+        {
+            int week = WeekOf(day);
+
+            if (state.giftWeek != week)
+            {
+                state.giftWeek = week;
+                state.giftsThisWeek = 0;
+            }
+
+            state.giftsThisWeek++;
+        }
+
         state.met = true;
         ChangeAffinity(character, points);
         return new NpcGiftResult(true, preference, points, isBirthday, string.Empty);
@@ -226,7 +276,8 @@ public sealed class NpcRelationshipManager : MonoBehaviour // 91일차: NPC 호�
             {
                 characterId = state.characterId, met = state.met, affinity = state.affinity, lastTalkDay = state.lastTalkDay,
                 lastGiftDay = state.lastGiftDay, giftsOnLastGiftDay = state.giftsOnLastGiftDay,
-                receivedGiftCount = state.receivedGiftCount, talkDays = state.talkDays
+                receivedGiftCount = state.receivedGiftCount, talkDays = state.talkDays,
+                giftWeek = state.giftWeek, giftsThisWeek = state.giftsThisWeek
             });
         }
 
