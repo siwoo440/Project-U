@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 // 여러 번 실행해도 같은 Asset을 갱신하며 새로 중복 생성하지 않는다.
 public static class FarmingContentBuilder
 {
-    private const string MenuRoot = "Tools/Project U/Farming/";
+    public const string BuildMenuRoot = "Tools/Project U/Build Content/";
     private const string DialogTitle = "Project U 농사 콘텐츠";
 
     private const string ItemFolder = "Assets/_ProjectU/Data/Items/Day79";
@@ -32,8 +32,6 @@ public static class FarmingContentBuilder
     private const string PlantFiberItemPath = "Assets/_ProjectU/Data/Items/Day71/ItemData_PlantFiber.asset";
     private const string IronOreItemPath = "Assets/_ProjectU/Data/Items/Day71/ItemData_IronOre.asset";
     private const string PickaxeItemPath = "Assets/_ProjectU/Data/Items/ItemData_Pickaxe.asset";
-    private const string RegistryMenuPath = "Project U/Data/Create Or Refresh Game Data Registry";
-    private const string WorldIdMenuPath = "Tools/Project U/Assign And Validate World Object IDs";
     private const string StarterRootName = "=== Day79 Farming Starter ===";
     private const string WetSoilName = "WetSoil";
     private const string CropAnchorName = "CropAnchor";
@@ -162,7 +160,7 @@ public static class FarmingContentBuilder
 
     // ---------------------------------------------------------------- 메뉴
 
-    [MenuItem(MenuRoot + "1. Build Farming Content (Data + Prefabs + Scene)", false, 0)]
+    [MenuItem(BuildMenuRoot + "2. Farming (Crops + Plots + Tools)", false, 21)]
     private static void BuildAllMenu()
     {
         bool confirmed = EditorUtility.DisplayDialog(
@@ -181,23 +179,6 @@ public static class FarmingContentBuilder
 
         string report = BuildAll();
         Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, Shorten(report), "확인");
-    }
-
-    [MenuItem(MenuRoot + "2. Validate Farming Content", false, 1)]
-    private static void ValidateMenu()
-    {
-        string report = Validate(out int errorCount);
-
-        if (errorCount > 0)
-        {
-            Debug.LogError(report);
-        }
-        else
-        {
-            Debug.Log(report);
-        }
-
         EditorUtility.DisplayDialog(DialogTitle, Shorten(report), "확인");
     }
 
@@ -272,14 +253,8 @@ public static class FarmingContentBuilder
             report.AppendLine(RegisterItems(items, pickups));
             AssetDatabase.SaveAssets();
 
-            if (!EditorApplication.ExecuteMenuItem(RegistryMenuPath))
-            {
-                report.AppendLine("[경고] GameDataRegistry 갱신 메뉴를 찾지 못했습니다.");
-            }
-            else
-            {
-                report.AppendLine("GameDataRegistry 자동 수집 완료");
-            }
+            GameDataRegistryEditor.CreateOrRefreshDefaultRegistry();
+            report.AppendLine("GameDataRegistry 자동 수집 완료");
 
             Progress("게임 Scene 연결", 0.85f);
             report.AppendLine(WireScene(craftingRecipes, plotRecipe, rules, pickups));
@@ -862,10 +837,8 @@ public static class FarmingContentBuilder
         report.AppendLine(PlaceStarterKit(pickups));
         report.AppendLine(FarmingGameplaySetup.SetupScene(rules));
 
-        if (EditorApplication.ExecuteMenuItem(WorldIdMenuPath))
-        {
-            report.AppendLine("월드 오브젝트 저장 ID 발급 완료");
-        }
+        WorldObjectIdValidator.AssignAndValidateWorldObjectIds();
+        report.AppendLine("월드 오브젝트 저장 ID 발급 완료");
 
         EditorSceneManager.MarkSceneDirty(scene);
         report.Append("Scene 변경 완료 → Ctrl+S로 저장하세요");

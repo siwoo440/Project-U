@@ -4,7 +4,7 @@ using UnityEngine;
 // 83일차: Play 중 물고기 출현·미니게임·보상을 빠르게 확인하기 위한 테스트 메뉴
 public static class FishingDebugMenu
 {
-    private const string MenuRoot = "Tools/Project U/Fishing/Debug (Play Mode)/";
+    private const string MenuRoot = "Tools/Project U/Debug (Play Mode)/Fishing/";
 
     [MenuItem(MenuRoot + "Bite Now", false, 100)]
     private static void BiteNow()
@@ -59,27 +59,12 @@ public static class FishingDebugMenu
     [MenuItem(MenuRoot + "Force Next Fish/Clear (Use Conditions)", false, 140)]
     private static void ClearForced() => Force(string.Empty);
 
-    [MenuItem(MenuRoot + "Weather/Clear", false, 160)]
-    private static void WeatherClear() => SetWeather(WeatherType.Clear);
-
-    [MenuItem(MenuRoot + "Weather/Rain", false, 161)]
-    private static void WeatherRain() => SetWeather(WeatherType.Rain);
-
-    [MenuItem(MenuRoot + "Weather/Storm", false, 162)]
-    private static void WeatherStorm() => SetWeather(WeatherType.Storm);
-
     private static void Force(string fishId)
     {
         FishingController.DebugForcedFishId = fishId;
         Debug.Log(string.IsNullOrEmpty(fishId)
             ? "[Fishing Debug] 강제 물고기를 해제했습니다. 현재 조건으로 물고기를 뽑습니다."
             : $"[Fishing Debug] 다음 입질부터 {fishId}가 뭅니다.");
-    }
-
-    private static void SetWeather(WeatherType weather)
-    {
-        Object.FindFirstObjectByType<WeatherCycle>().ForceWeather(weather);
-        Debug.Log($"[Fishing Debug] 날씨를 {weather}(으)로 바꿨습니다.");
     }
 
     [MenuItem(MenuRoot + "Bite Now", true)]
@@ -94,13 +79,5 @@ public static class FishingDebugMenu
     private static bool CanUseFishingMenu()
     {
         return EditorApplication.isPlaying && FishingController.Local != null;
-    }
-
-    [MenuItem(MenuRoot + "Weather/Clear", true)]
-    [MenuItem(MenuRoot + "Weather/Rain", true)]
-    [MenuItem(MenuRoot + "Weather/Storm", true)]
-    private static bool CanUseWeatherMenu()
-    {
-        return EditorApplication.isPlaying && Object.FindFirstObjectByType<WeatherCycle>() != null;
     }
 }

@@ -13,7 +13,7 @@ using UnityEngine.SceneManagement;
 // 여러 번 실행해도 같은 Asset·오브젝트를 갱신한다.
 public static class MarketContentBuilder
 {
-    private const string MenuRoot = "Tools/Project U/Market/";
+    public const string BuildMenuRoot = "Tools/Project U/Build Content/";
     private const string DialogTitle = "Project U 판매·상점 콘텐츠";
 
     public const string DataFolder = "Assets/_ProjectU/Data/Market";
@@ -25,7 +25,6 @@ public static class MarketContentBuilder
     private const string IconFolder = "Assets/_ProjectU/UI/Icons/Market";
     public const string MerchantIconPath = IconFolder + "/ICON_merchant.png";
     private const string LayerReferencePrefabPath = "Assets/_ProjectU/Prefabs/Building/Day73/WoodTablePlaced.prefab";
-    private const string RegistryMenuPath = "Project U/Data/Create Or Refresh Game Data Registry";
     private const string ManagerName = "MarketManager";
     private const string ShapeName = "Shape";
     private const string FlagName = "Flag";
@@ -112,7 +111,7 @@ public static class MarketContentBuilder
 
     // ---------------------------------------------------------------- 메뉴
 
-    [MenuItem(MenuRoot + "1. Build Market Content (Prices + Shipping Bin + Stall + UI)", false, 0)]
+    [MenuItem(BuildMenuRoot + "6. Market (Prices + Shipping Bin + Stall + UI)", false, 25)]
     private static void BuildAllMenu()
     {
         bool confirmed = EditorUtility.DisplayDialog(
@@ -131,23 +130,6 @@ public static class MarketContentBuilder
 
         string report = BuildAll();
         Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, Shorten(report), "확인");
-    }
-
-    [MenuItem(MenuRoot + "2. Validate Market Content", false, 1)]
-    private static void ValidateMenu()
-    {
-        string report = Validate(out int errorCount);
-
-        if (errorCount > 0)
-        {
-            Debug.LogError(report);
-        }
-        else
-        {
-            Debug.Log(report);
-        }
-
         EditorUtility.DisplayDialog(DialogTitle, Shorten(report), "확인");
     }
 
@@ -216,14 +198,8 @@ public static class MarketContentBuilder
             EditorUtility.DisplayProgressBar(DialogTitle, "상인 초상", 0.6f);
             merchantIcon = RenderMerchantIcon(report);
 
-            if (EditorApplication.ExecuteMenuItem(RegistryMenuPath))
-            {
-                report.AppendLine("GameDataRegistry 자동 수집 완료");
-            }
-            else
-            {
-                report.AppendLine("[경고] GameDataRegistry 갱신 메뉴를 찾지 못했습니다.");
-            }
+            GameDataRegistryEditor.CreateOrRefreshDefaultRegistry();
+            report.AppendLine("GameDataRegistry 자동 수집 완료");
         }
         finally
         {

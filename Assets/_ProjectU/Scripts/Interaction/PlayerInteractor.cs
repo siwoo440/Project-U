@@ -53,6 +53,15 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
     [Tooltip("안내 문구 텍스트.")] // Inspector 안내 텍스트 설명
     [SerializeField] private TMP_Text promptText; // 안내 문구 텍스트
 
+    [Tooltip("안내 상자 최소 너비. 긴 문구는 최대 너비까지 넓어집니다. (88일차)")] // Inspector 최소 너비 설명
+    [SerializeField, Min(100f)] private float promptMinWidth = 380f; // 안내 상자 최소 너비
+
+    [Tooltip("안내 상자 최대 너비.")] // Inspector 최대 너비 설명
+    [SerializeField, Min(100f)] private float promptMaxWidth = 960f; // 안내 상자 최대 너비
+
+    [Tooltip("문구 양옆 여백 합계.")] // Inspector 여백 설명
+    [SerializeField, Min(0f)] private float promptPadding = 60f; // 문구 여백
+
     private readonly RaycastHit[] detectionHits = new RaycastHit[16]; // 상호작용 탐지 결과 배열
     private InteractableBase currentInteractable; // 현재 탐지 대상
     private string lastPromptText; // 마지막 표시 안내 문구
@@ -320,7 +329,22 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
         {
             lastPromptText = prompt; // 표시 문구 저장
             promptText.SetText(prompt); // 안내 문구 표시
+            FitPromptWidth(prompt); // 문구 길이에 맞게 상자 너비 조정
         }
+    }
+
+    private void FitPromptWidth(string prompt) // 88일차: 긴 안내 문구가 두 줄로 넘어가지 않게 상자 너비 조정
+    {
+        RectTransform root = promptRoot.transform as RectTransform; // 안내 상자
+
+        if (root == null || string.IsNullOrEmpty(prompt)) // 확인
+        {
+            return; // 생략
+        }
+
+        float textWidth = promptText.GetPreferredValues(prompt, float.PositiveInfinity, root.rect.height).x; // 한 줄 너비
+        float width = Mathf.Clamp(textWidth + promptPadding, promptMinWidth, Mathf.Max(promptMinWidth, promptMaxWidth)); // 상자 너비
+        root.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width); // 적용
     }
 
     private void CancelAttackStates() // 근접 공격과 활 장전 상태 취소

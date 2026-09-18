@@ -33,8 +33,7 @@ public sealed class GameDataRegistryEditor : Editor // Registry 자동 수집과
         }
     }
 
-    [MenuItem("Project U/Data/Create Or Refresh Game Data Registry")] // Unity 상단 Registry 생성 및 갱신 메뉴 등록
-    private static void CreateOrRefreshDefaultRegistry() // 기본 경로 Registry Asset 생성 또는 갱신
+    public static void CreateOrRefreshDefaultRegistry() // 기본 경로 Registry Asset 생성 또는 갱신
     {
         EnsureFolderExists(DefaultRegistryFolder); // Registry Asset 기본 폴더 생성 보장
         GameDataRegistry registry = AssetDatabase.LoadAssetAtPath<GameDataRegistry>(DefaultRegistryPath); // 기본 경로 기존 Registry 검색
@@ -53,8 +52,7 @@ public sealed class GameDataRegistryEditor : Editor // Registry 자동 수집과
         EditorGUIUtility.PingObject(registry); // 생성 또는 갱신된 Registry Asset 위치 강조
     }
 
-    [MenuItem("Project U/Data/Validate Default Game Data Registry")] // Unity 상단 기본 Registry 검증 메뉴 등록
-    private static void ValidateDefaultRegistry() // 기본 경로 Registry Asset 검증
+    public static void ValidateDefaultRegistry() // 기본 경로 Registry Asset 검증
     {
         GameDataRegistry registry = AssetDatabase.LoadAssetAtPath<GameDataRegistry>(DefaultRegistryPath); // 기본 Registry Asset 검색
 

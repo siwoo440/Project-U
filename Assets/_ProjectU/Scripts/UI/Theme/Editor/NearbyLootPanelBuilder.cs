@@ -11,7 +11,6 @@ using UnityEngine.UI;
 // 이미지는 모두 LP_ 이름이라 UI 테마 도구를 다시 실행해도 덮어쓰지 않는다.
 public static class NearbyLootPanelBuilder
 {
-    private const string MenuPath = "Tools/Project U/Art & UI/6. Rebuild Nearby Items Panel";
     private const string EntryPrefabPath = "Assets/_ProjectU/Prefabs/UI/Day75/PF_UI_NearbyLootEntry.prefab";
     private const string PanelName = "NearbyLootPanel";
     private const string ThemeFolder = "Assets/_ProjectU/UI/Themes";
@@ -26,14 +25,6 @@ public static class NearbyLootPanelBuilder
     private static readonly Color DividerColor = new Color(0.95f, 0.72f, 0.3f, 0.3f);
 
     private static bool useUndo;
-
-    [MenuItem(MenuPath, false, 25)]
-    private static void BuildFromMenu()
-    {
-        string report = Build(true);
-        Debug.Log("[Project U] 근처 아이템 UI\n" + report);
-        EditorUtility.DisplayDialog("근처 아이템 UI", report, "확인");
-    }
 
     public static string Build(bool withUndo)
     {

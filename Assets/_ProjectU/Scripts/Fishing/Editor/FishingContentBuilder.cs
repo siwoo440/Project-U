@@ -13,7 +13,7 @@ using UnityEngine.SceneManagement;
 // 83일차: 출현 조건·보상 참조, 잡은 기록, 끌어올리기 미니게임 HUD 연결과 검증 추가
 public static class FishingContentBuilder
 {
-    private const string MenuRoot = "Tools/Project U/Fishing/";
+    public const string BuildMenuRoot = "Tools/Project U/Build Content/";
     private const string DialogTitle = "Project U 낚시 콘텐츠";
 
     private const string ItemFolder = "Assets/_ProjectU/Data/Items/Day82";
@@ -30,8 +30,6 @@ public static class FishingContentBuilder
     private const string WoodItemPath = "Assets/_ProjectU/Data/Items/ItemData_Wood.asset";
     private const string PlantFiberItemPath = "Assets/_ProjectU/Data/Items/Day71/ItemData_PlantFiber.asset";
     private const string LineMaterialPath = "Assets/_ProjectU/Art/Generated/Materials/M_FishingLine.mat";
-    private const string RegistryMenuPath = "Project U/Data/Create Or Refresh Game Data Registry";
-    private const string WorldIdMenuPath = "Tools/Project U/Assign And Validate World Object IDs";
     private const string PondRootName = "=== Day82 Fishing Pond ===";
     private const string CastTargetName = "FishingCastTarget";
     private const string LineName = "FishingLine";
@@ -148,7 +146,7 @@ public static class FishingContentBuilder
 
     // ---------------------------------------------------------------- 메뉴
 
-    [MenuItem(MenuRoot + "1. Build Fishing Content (Data + Prefabs + Pond + Scene)", false, 0)]
+    [MenuItem(BuildMenuRoot + "3. Fishing (Fish + Rod + Pond)", false, 22)]
     private static void BuildAllMenu()
     {
         bool confirmed = EditorUtility.DisplayDialog(
@@ -166,23 +164,6 @@ public static class FishingContentBuilder
 
         string report = BuildAll();
         Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, Shorten(report), "확인");
-    }
-
-    [MenuItem(MenuRoot + "2. Validate Fishing Content", false, 1)]
-    private static void ValidateMenu()
-    {
-        string report = Validate(out int errorCount);
-
-        if (errorCount > 0)
-        {
-            Debug.LogError(report);
-        }
-        else
-        {
-            Debug.Log(report);
-        }
-
         EditorUtility.DisplayDialog(DialogTitle, Shorten(report), "확인");
     }
 
@@ -245,9 +226,8 @@ public static class FishingContentBuilder
             report.AppendLine(ConnectTillingBait(items["resource_worm_bait"]));
             AssetDatabase.SaveAssets();
 
-            report.AppendLine(EditorApplication.ExecuteMenuItem(RegistryMenuPath)
-                ? "GameDataRegistry 자동 수집 완료"
-                : "[경고] GameDataRegistry 갱신 메뉴를 찾지 못했습니다.");
+            GameDataRegistryEditor.CreateOrRefreshDefaultRegistry();
+            report.AppendLine("GameDataRegistry 자동 수집 완료");
 
             EditorUtility.DisplayProgressBar(DialogTitle, "게임 Scene 연결", 0.7f);
             report.AppendLine(WireScene(rules, rodRecipe, pickups));
@@ -619,10 +599,8 @@ public static class FishingContentBuilder
 
         report.AppendLine(SetupPond(scene, pickups));
 
-        if (EditorApplication.ExecuteMenuItem(WorldIdMenuPath))
-        {
-            report.AppendLine("월드 오브젝트 저장 ID 발급 완료");
-        }
+        WorldObjectIdValidator.AssignAndValidateWorldObjectIds();
+        report.AppendLine("월드 오브젝트 저장 ID 발급 완료");
 
         EditorSceneManager.MarkSceneDirty(scene);
         report.Append("Scene 변경 완료 → Ctrl+S로 저장하세요");

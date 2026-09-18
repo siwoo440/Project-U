@@ -4,7 +4,7 @@ using UnityEngine;
 // 81일차: Play 중 작물 성장을 빠르게 확인하기 위한 테스트 메뉴
 public static class FarmingDebugMenu
 {
-    private const string MenuRoot = "Tools/Project U/Farming/Debug (Play Mode)/";
+    private const string MenuRoot = "Tools/Project U/Debug (Play Mode)/Farming/";
 
     [MenuItem(MenuRoot + "Water All Plots", false, 100)]
     private static void WaterAllPlots()
@@ -20,7 +20,6 @@ public static class FarmingDebugMenu
         Debug.Log($"[Farming Debug] 밭 {FarmManager.ActivePlots.Count}칸에 물을 주었습니다. (DAY {day})");
     }
 
-    [MenuItem(MenuRoot + "Advance To Next Morning", false, 101)]
     private static void AdvanceToNextMorning()
     {
         DayNightCycle cycle = Object.FindFirstObjectByType<DayNightCycle>();
@@ -37,7 +36,6 @@ public static class FarmingDebugMenu
     }
 
     [MenuItem(MenuRoot + "Water All Plots", true)]
-    [MenuItem(MenuRoot + "Advance To Next Morning", true)]
     [MenuItem(MenuRoot + "Water All And Advance Day", true)]
     private static bool CanUseDebugMenu()
     {

@@ -76,7 +76,7 @@ public sealed class AnimalPenPopupUI : MonoBehaviour, IGameScenePopup // 86일�
     {
         if (panelRoot == null || targetPen == null || playerInventory == null || cardTemplate == null || targetPen.AcceptedAnimal == null) // 참조 확인
         {
-            Debug.LogError("우리 창 참조가 누락되었습니다. Tools > Project U > Livestock > 1. Build Livestock Content를 다시 실행하세요.", this); // 오류
+            Debug.LogError("우리 창 참조가 누락되었습니다. Tools > Project U > Build Content > 5. Livestock를 다시 실행하세요.", this); // 오류
             return false; // 실패
         }
 

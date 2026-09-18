@@ -99,7 +99,7 @@ public sealed class MarketManager : MonoBehaviour // 87일차: 판매 상자 밤
 
         if (catalog == null) // 가격표 확인
         {
-            Debug.LogError("MarketManager에 가격표가 없습니다. Tools > Project U > Market > 1. Build Market Content를 실행하세요.", this); // 오류
+            Debug.LogError("MarketManager에 가격표가 없습니다. Tools > Project U > Build Content > 6. Market를 실행하세요.", this); // 오류
         }
     }
 

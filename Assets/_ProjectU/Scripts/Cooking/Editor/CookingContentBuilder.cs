@@ -14,7 +14,7 @@ using UnityEngine.SceneManagement;
 // 여러 번 실행해도 같은 Asset·오브젝트를 갱신한다.
 public static class CookingContentBuilder
 {
-    private const string MenuRoot = "Tools/Project U/Cooking/";
+    public const string BuildMenuRoot = "Tools/Project U/Build Content/";
     private const string DialogTitle = "Project U 요리 콘텐츠";
 
     private const string ItemFolder = "Assets/_ProjectU/Data/Items/Day85";
@@ -24,7 +24,6 @@ public static class CookingContentBuilder
     private const string ItemDatabasePath = "Assets/_ProjectU/Data/Databases/ItemDatabase.asset";
     private const string CampfirePrefabPath = "Assets/_ProjectU/Prefabs/Building/CampfirePlaced.prefab";
     private const string StoneCampfirePrefabPath = "Assets/_ProjectU/Prefabs/Building/Day73/StoneCampfirePlaced.prefab";
-    private const string RegistryMenuPath = "Project U/Data/Create Or Refresh Game Data Registry";
 
     private sealed class FoodSpec
     {
@@ -147,7 +146,7 @@ public static class CookingContentBuilder
 
     // ---------------------------------------------------------------- 메뉴
 
-    [MenuItem(MenuRoot + "1. Build Cooking Content (Data + Campfires + Visuals + UI)", false, 0)]
+    [MenuItem(BuildMenuRoot + "4. Cooking (Recipes + Campfires + UI)", false, 23)]
     private static void BuildAllMenu()
     {
         bool confirmed = EditorUtility.DisplayDialog(
@@ -165,23 +164,6 @@ public static class CookingContentBuilder
 
         string report = BuildAll();
         Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, Shorten(report), "확인");
-    }
-
-    [MenuItem(MenuRoot + "2. Validate Cooking Content", false, 1)]
-    private static void ValidateMenu()
-    {
-        string report = Validate(out int errorCount);
-
-        if (errorCount > 0)
-        {
-            Debug.LogError(report);
-        }
-        else
-        {
-            Debug.Log(report);
-        }
-
         EditorUtility.DisplayDialog(DialogTitle, Shorten(report), "확인");
     }
 
@@ -238,14 +220,8 @@ public static class CookingContentBuilder
             report.AppendLine(ConfigureStation(StoneCampfirePrefabPath, CookingStationTier.StoneCampfire, 3, recipes));
             AssetDatabase.SaveAssets();
 
-            if (EditorApplication.ExecuteMenuItem(RegistryMenuPath))
-            {
-                report.AppendLine("GameDataRegistry 자동 수집 완료");
-            }
-            else
-            {
-                report.AppendLine("[경고] GameDataRegistry 갱신 메뉴를 찾지 못했습니다.");
-            }
+            GameDataRegistryEditor.CreateOrRefreshDefaultRegistry();
+            report.AppendLine("GameDataRegistry 자동 수집 완료");
 
             EditorUtility.DisplayProgressBar(DialogTitle, "요리 아이콘", 0.45f);
             UISpriteFactory.GenerateCookingIcons();

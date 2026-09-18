@@ -16,7 +16,7 @@ using UnityEngine.UI;
 // 여러 번 실행해도 같은 Asset·오브젝트를 갱신한다.
 public static class ItemVisualContentBuilder
 {
-    private const string MenuRoot = "Tools/Project U/Items/";
+    public const string BuildMenuRoot = "Tools/Project U/Build Content/";
     private const string DialogTitle = "Project U 아이템 외형";
 
     private const string ItemDatabasePath = "Assets/_ProjectU/Data/Databases/ItemDatabase.asset";
@@ -188,7 +188,7 @@ public static class ItemVisualContentBuilder
 
     // ---------------------------------------------------------------- 메뉴
 
-    [MenuItem(MenuRoot + "1. Build Item Visuals (Models + Icons + Pickups + UI)", false, 0)]
+    [MenuItem(BuildMenuRoot + "1. Items (Models + Icons + Pickups)", false, 20)]
     private static void BuildAllMenu()
     {
         bool confirmed = EditorUtility.DisplayDialog(
@@ -205,31 +205,6 @@ public static class ItemVisualContentBuilder
         }
 
         string report = BuildAll();
-        Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, Shorten(report), "확인");
-    }
-
-    [MenuItem(MenuRoot + "2. Validate Item Visuals", false, 1)]
-    private static void ValidateMenu()
-    {
-        string report = Validate(out int errorCount);
-
-        if (errorCount > 0)
-        {
-            Debug.LogError(report);
-        }
-        else
-        {
-            Debug.Log(report);
-        }
-
-        EditorUtility.DisplayDialog(DialogTitle, Shorten(report), "확인");
-    }
-
-    [MenuItem(MenuRoot + "3. Rebuild Item Icons Only", false, 2)]
-    private static void RebuildIconsMenu()
-    {
-        string report = BuildIcons(LoadItems());
         Debug.Log(report);
         EditorUtility.DisplayDialog(DialogTitle, Shorten(report), "확인");
     }

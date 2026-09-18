@@ -114,7 +114,7 @@ public sealed class CookingPopupUI : MonoBehaviour, IGameScenePopup // 85일차:
     {
         if (panelRoot == null || targetStation == null || playerInventory == null || recipeRowTemplate == null) // 참조 확인
         {
-            Debug.LogError("요리 창 참조가 누락되었습니다. Tools > Project U > Cooking > 1. Build Cooking Content를 다시 실행하세요.", this); // 오류 출력
+            Debug.LogError("요리 창 참조가 누락되었습니다. Tools > Project U > Build Content > 4. Cooking를 다시 실행하세요.", this); // 오류 출력
             return false; // 열기 실패
         }
 

@@ -16,8 +16,9 @@ public sealed class GameStateView : MonoBehaviour // 게임 상태 표시 UI
 
         if (GameManager.Instance == null) // 게임 관리자 존재 여부 확인
         {
-            stateText.text = "STATE: MANAGER MISSING"; // 관리자 누락 표시
-            Debug.LogError("GameManager를 찾을 수 없습니다.", this); // 관리자 누락 오류
+            // 88일차: 게임 Scene을 바로 실행하면 GameManager가 없는 것이 정상이므로 표시만 숨기고 경고로 남긴다
+            stateText.text = string.Empty; // 상태 표시 숨김
+            Debug.LogWarning("GameManager가 없습니다. 게임 Scene을 바로 실행한 경우 정상입니다 (Bootstrap Scene에서 시작하면 상태가 표시됩니다).", this); // 관리자 누락 안내
             return; // 활성화 처리 중단
         }
 

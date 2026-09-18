@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement; // 현재 Scene 기능
 
 public static class WorldObjectIdValidator // 월드 오브젝트 ID 발급 도구
 {
-    [MenuItem("Tools/Project U/Assign And Validate World Object IDs")] // ID 발급 메뉴
-    private static void AssignAndValidateWorldObjectIds() // 현재 Scene ID 발급과 중복 수정
+    [MenuItem("Tools/Project U/Scene/Assign World Object IDs", false, 60)] // ID 발급 메뉴 (88일차 경로 정리)
+    public static void AssignAndValidateWorldObjectIds() // 현재 Scene ID 발급과 중복 수정
     {
         HashSet<GameObject> targetObjects = new HashSet<GameObject>(); // ID 발급 대상 목록
 

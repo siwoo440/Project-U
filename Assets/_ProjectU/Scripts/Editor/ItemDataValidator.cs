@@ -5,10 +5,10 @@ using UnityEngine; // Unity 기본 기능
 
 public static class ItemDataValidator // 아이템 데이터 일괄 검증
 {
+    private const string CommonPrefix = "item_"; // 모든 분류에서 쓸 수 있는 공통 접두사
     private static readonly Regex ItemIdPattern = new Regex("^[a-z][a-z0-9]*(?:_[a-z0-9]+)+$", RegexOptions.Compiled); // 소문자 밑줄 ID 형식
 
-    [MenuItem("Project U/Data/Validate Item Data")] // 상단 검증 메뉴 등록
-    private static void ValidateAllItemData() // 전체 아이템 데이터 검증
+    public static int ValidateAllItemData() // 전체 아이템 데이터 검증, 오류 수 반환 (88일차: 전체 검사에서 호출)
     {
         string[] searchFolders = { "Assets/_ProjectU/Data/Items" }; // 아이템 검색 폴더
         string[] itemGuids = AssetDatabase.FindAssets("t:ItemData", searchFolders); // ItemData 에셋 GUID 검색
@@ -33,10 +33,11 @@ public static class ItemDataValidator // 아이템 데이터 일괄 검증
         if (errorCount == 0) // 오류 없음 확인
         {
             Debug.Log($"[ItemData] 검증 완료: {itemGuids.Length}개 / 오류 0개"); // 검증 성공 출력
-            return; // 검증 종료
+            return 0; // 검증 종료
         }
 
         Debug.LogError($"[ItemData] 검증 실패: {itemGuids.Length}개 / 오류 {errorCount}개"); // 검증 실패 출력
+        return errorCount; // 오류 수 반환
     }
 
     private static int ValidateItemData(ItemData itemData, string assetPath, Dictionary<string, string> idToPath) // 단일 아이템 검사
@@ -58,9 +59,10 @@ public static class ItemDataValidator // 아이템 데이터 일괄 검증
                 errorCount++; // 오류 개수 증가
             }
 
-            if (!itemId.StartsWith(expectedPrefix)) // 분류 접두사 확인
+            // 88일차: 71일차부터 쓰는 공통 접두사 item_ (Registry 권장 규칙)도 허용한다
+            if (!itemId.StartsWith(expectedPrefix) && !itemId.StartsWith(CommonPrefix)) // 분류 접두사 확인
             {
-                Debug.LogError($"[ItemData] {itemData.ItemCategory} ID는 {expectedPrefix}로 시작해야 합니다: {itemId}", itemData); // 접두사 오류 출력
+                Debug.LogError($"[ItemData] {itemData.ItemCategory} ID는 {expectedPrefix} 또는 {CommonPrefix}로 시작해야 합니다: {itemId}", itemData); // 접두사 오류 출력
                 errorCount++; // 오류 개수 증가
             }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 // 85일차: Play 중 요리 확인용 메뉴
 public static class CookingDebugMenu
 {
-    private const string Root = "Tools/Project U/Cooking/Debug (Play Mode)/";
+    private const string Root = "Tools/Project U/Debug (Play Mode)/Cooking/";
 
     private static readonly (string itemId, int amount)[] Kit =
     {

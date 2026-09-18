@@ -125,7 +125,7 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
 
         if (panelRoot == null || rowTemplate == null || targetStall == null || playerInventory == null || targetMarket == null || targetMarket.Catalog == null || targetWallet == null) // 참조 확인
         {
-            Debug.LogError("상인 창 참조가 누락되었습니다. Tools > Project U > Market > 1. Build Market Content를 다시 실행하세요.", this); // 오류
+            Debug.LogError("상인 창 참조가 누락되었습니다. Tools > Project U > Build Content > 6. Market를 다시 실행하세요.", this); // 오류
             return false; // 실패
         }
 

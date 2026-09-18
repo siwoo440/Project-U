@@ -124,7 +124,7 @@ public sealed class CampfireCookingStation : InteractableBase, IBuildRemovalGuar
 
         if (CountValidRecipes() == 0) // 요리법 확인
         {
-            Debug.LogError($"{gameObject.name}에 요리법이 없습니다. Tools > Project U > Cooking > 1. Build Cooking Content를 실행하세요.", this); // 데이터 오류 출력
+            Debug.LogError($"{gameObject.name}에 요리법이 없습니다. Tools > Project U > Build Content > 4. Cooking를 실행하세요.", this); // 데이터 오류 출력
             enabled = false; // 조리 기능 비활성화
             return; // 초기화 중단
         }

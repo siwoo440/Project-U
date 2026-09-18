@@ -5,7 +5,7 @@ using UnityEngine;
 // 87일차: Play 중 판매·상점 확인용 메뉴
 public static class MarketDebugMenu
 {
-    private const string Root = "Tools/Project U/Market/Debug (Play Mode)/";
+    private const string Root = "Tools/Project U/Debug (Play Mode)/Market/";
 
     private static readonly (string itemId, int amount)[] Kit =
     {
@@ -92,20 +92,6 @@ public static class MarketDebugMenu
         LogMarket();
     }
 
-    [MenuItem(Root + "Advance One Day (07:00)", false, 40)]
-    private static void AdvanceDay()
-    {
-        DayNightCycle cycle = Object.FindFirstObjectByType<DayNightCycle>();
-
-        if (cycle == null)
-        {
-            return;
-        }
-
-        cycle.SetTime(cycle.CurrentDay + 1, 7f);
-        Debug.Log($"DAY {cycle.CurrentDay} 07:00 으로 이동 (자정 판매가 처리됩니다)");
-    }
-
     [MenuItem(Root + "Log Market", false, 41)]
     private static void LogMarket()
     {
@@ -133,7 +119,6 @@ public static class MarketDebugMenu
     [MenuItem(Root + "Give 500 Coins", true)]
     [MenuItem(Root + "Sell Shipping Bins Now", true)]
     [MenuItem(Root + "Refresh Merchant Stock", true)]
-    [MenuItem(Root + "Advance One Day (07:00)", true)]
     [MenuItem(Root + "Log Market", true)]
     private static bool IsPlaying()
     {

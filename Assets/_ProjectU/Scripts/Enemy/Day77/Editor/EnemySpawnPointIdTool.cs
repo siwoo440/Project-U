@@ -7,8 +7,8 @@ using UnityEngine;
 // 77일차: 현재 Scene의 EnemySpawnPoint 저장 ID 발급과 중복 수정
 public static class EnemySpawnPointIdTool
 {
-    [MenuItem("Tools/Project U/Assign Enemy Spawn Point IDs")]
-    private static void AssignEnemySpawnPointIds()
+    [MenuItem("Tools/Project U/Scene/Assign Enemy Spawn Point IDs", false, 61)]
+    public static void AssignEnemySpawnPointIds()
     {
         EnemySpawnPoint[] spawnPoints = UnityEngine.Object.FindObjectsByType<EnemySpawnPoint>(
             FindObjectsInactive.Include,

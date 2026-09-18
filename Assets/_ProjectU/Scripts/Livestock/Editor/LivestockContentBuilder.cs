@@ -14,7 +14,7 @@ using UnityEngine.SceneManagement;
 // 여러 번 실행해도 같은 Asset·오브젝트를 갱신한다.
 public static class LivestockContentBuilder
 {
-    private const string MenuRoot = "Tools/Project U/Livestock/";
+    public const string BuildMenuRoot = "Tools/Project U/Build Content/";
     private const string DialogTitle = "Project U 가축 콘텐츠";
 
     private const string ItemFolder = "Assets/_ProjectU/Data/Items/Day86";
@@ -25,7 +25,6 @@ public static class LivestockContentBuilder
     private const string ItemDatabasePath = "Assets/_ProjectU/Data/Databases/ItemDatabase.asset";
     private const string PickupRegistryPath = "Assets/_ProjectU/Prefabs/Items/Day75/WorldItemPickupRegistry_Day75.asset";
     private const string LayerReferencePrefabPath = "Assets/_ProjectU/Prefabs/Building/Day73/WoodTablePlaced.prefab";
-    private const string RegistryMenuPath = "Project U/Data/Create Or Refresh Game Data Registry";
     private const string ManagerName = "LivestockManager";
     private const string ShapeName = "Shape";
     private const string AnimalRootName = "Animals";
@@ -134,7 +133,7 @@ public static class LivestockContentBuilder
 
     // ---------------------------------------------------------------- 메뉴
 
-    [MenuItem(MenuRoot + "1. Build Livestock Content (Data + Pens + UI + Recipes)", false, 0)]
+    [MenuItem(BuildMenuRoot + "5. Livestock (Animals + Pens + UI)", false, 24)]
     private static void BuildAllMenu()
     {
         bool confirmed = EditorUtility.DisplayDialog(
@@ -153,23 +152,6 @@ public static class LivestockContentBuilder
 
         string report = BuildAll();
         Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, Shorten(report), "확인");
-    }
-
-    [MenuItem(MenuRoot + "2. Validate Livestock Content", false, 1)]
-    private static void ValidateMenu()
-    {
-        string report = Validate(out int errorCount);
-
-        if (errorCount > 0)
-        {
-            Debug.LogError(report);
-        }
-        else
-        {
-            Debug.Log(report);
-        }
-
         EditorUtility.DisplayDialog(DialogTitle, Shorten(report), "확인");
     }
 
@@ -243,14 +225,8 @@ public static class LivestockContentBuilder
 
             AssetDatabase.SaveAssets();
 
-            if (EditorApplication.ExecuteMenuItem(RegistryMenuPath))
-            {
-                report.AppendLine("GameDataRegistry 자동 수집 완료");
-            }
-            else
-            {
-                report.AppendLine("[경고] GameDataRegistry 갱신 메뉴를 찾지 못했습니다.");
-            }
+            GameDataRegistryEditor.CreateOrRefreshDefaultRegistry();
+            report.AppendLine("GameDataRegistry 자동 수집 완료");
         }
         finally
         {

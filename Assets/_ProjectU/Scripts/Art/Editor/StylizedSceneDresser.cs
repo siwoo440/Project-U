@@ -1063,9 +1063,9 @@ public static class StylizedSceneDresser
     // 저장 시스템은 Scene의 월드 아이템·채집 자원·적 Spawn Point에 고유 ID가 있어야 초기화된다
     private static string AssignSaveIds()
     {
-        bool worldIds = EditorApplication.ExecuteMenuItem("Tools/Project U/Assign And Validate World Object IDs");
-        bool spawnIds = EditorApplication.ExecuteMenuItem("Tools/Project U/Assign Enemy Spawn Point IDs");
-        return $"저장용 ID 검사 실행 (월드 오브젝트 {(worldIds ? "완료" : "메뉴 없음")}, 적 Spawn Point {(spawnIds ? "완료" : "메뉴 없음")})";
+        WorldObjectIdValidator.AssignAndValidateWorldObjectIds();
+        EnemySpawnPointIdTool.AssignEnemySpawnPointIds();
+        return "저장용 ID 검사 실행 (월드 오브젝트, 적 Spawn Point)";
     }
 
     // ----------------------------------------------------------------- NavMesh

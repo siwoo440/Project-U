@@ -5,7 +5,7 @@ using UnityEngine;
 // 86일차: Play 중 가축 확인용 메뉴
 public static class LivestockDebugMenu
 {
-    private const string Root = "Tools/Project U/Livestock/Debug (Play Mode)/";
+    private const string Root = "Tools/Project U/Debug (Play Mode)/Livestock/";
 
     private static readonly (string itemId, int amount)[] Kit =
     {
@@ -77,20 +77,6 @@ public static class LivestockDebugMenu
     [MenuItem(Root + "Set Mood 10 (Nearest Pen)", false, 23)]
     private static void MoodLow() => SetMood(10);
 
-    [MenuItem(Root + "Advance One Day", false, 40)]
-    private static void AdvanceDay()
-    {
-        DayNightCycle cycle = Object.FindFirstObjectByType<DayNightCycle>();
-
-        if (cycle == null)
-        {
-            return;
-        }
-
-        cycle.SetTime(cycle.CurrentDay + 1, 7f);
-        Debug.Log($"DAY {cycle.CurrentDay} 07:00 으로 이동");
-    }
-
     [MenuItem(Root + "Log Nearest Pen", false, 41)]
     private static void LogNearest()
     {
@@ -116,7 +102,6 @@ public static class LivestockDebugMenu
     [MenuItem(Root + "Feed All (Nearest Pen, Free)", true)]
     [MenuItem(Root + "Set Mood 100 (Nearest Pen)", true)]
     [MenuItem(Root + "Set Mood 10 (Nearest Pen)", true)]
-    [MenuItem(Root + "Advance One Day", true)]
     [MenuItem(Root + "Log Nearest Pen", true)]
     private static bool IsPlaying()
     {

@@ -97,7 +97,7 @@ public sealed class AnimalPen : InteractableBase, IBuildRemovalGuard // 86일차
 
         if (acceptedAnimal == null) // 데이터 확인
         {
-            Debug.LogError($"{gameObject.name}의 동물 데이터가 없습니다. Tools > Project U > Livestock > 1. Build Livestock Content를 실행하세요.", this); // 오류
+            Debug.LogError($"{gameObject.name}의 동물 데이터가 없습니다. Tools > Project U > Build Content > 5. Livestock를 실행하세요.", this); // 오류
         }
     }
 
