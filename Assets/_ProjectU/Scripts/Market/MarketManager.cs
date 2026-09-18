@@ -386,7 +386,7 @@ public sealed class MarketManager : MonoBehaviour // 87일차: 판매 상자 밤
             foreach (ShopOffer offer in offers) // 재고 순회
             {
                 MarketStockSaveData saved = data.stock.Find(entry => entry != null && string.Equals(entry.itemId, offer.Item.ItemId, StringComparison.Ordinal)); // 저장 찾기
-                offer.Remaining = saved != null ? Mathf.Clamp(saved.remaining, 0, offer.Entry.DailyStock) : offer.Remaining; // 적용
+                offer.Remaining = saved != null ? Mathf.Clamp(saved.remaining, 0, offer.DailyStock) : offer.Remaining; // 적용
             }
         }
 

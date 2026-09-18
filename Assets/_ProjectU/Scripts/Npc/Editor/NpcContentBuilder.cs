@@ -561,6 +561,11 @@ public static class NpcContentBuilder
                 }
             }
         }
+
+        foreach (string text in NpcShopBuilder.CollectShopTexts()) // 92일차: 상점 이름 · 인사도 글꼴에 포함
+        {
+            yield return text;
+        }
     }
 
     private static Dictionary<string, ItemData> LoadItemsById()

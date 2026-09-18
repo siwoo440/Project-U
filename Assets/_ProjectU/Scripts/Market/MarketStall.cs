@@ -2,7 +2,7 @@ using UnityEngine; // Unity 기본 기능
 
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
 [RequireComponent(typeof(PlacedBuildObject))] // 설치 건축물 정보 요구
-public sealed class MarketStall : InteractableBase // 87일차: 떠돌이 상인이 낮 동안 머무는 가판대
+public sealed class MarketStall : InteractableBase // 87일차: 떠돌이 상인이 낮 동안 머무는 가판대 / 92일차: 마을 NPC 리첼이 있으면 리첼의 NPC 상점을 엶
 {
     [Header("Stall")] // 가판대 설정
     [Tooltip("가판대 표시 이름.")]
@@ -34,6 +34,12 @@ public sealed class MarketStall : InteractableBase // 87일차: 떠돌이 상인
     {
         get
         {
+            if (TryGetNpcMerchant(out NpcShopManager shops, out NpcShopData shop, out NpcAgent owner)) // 92일차: 리첼의 NPC 상점
+            {
+                NpcShopStatus status = shops.GetStatus(shop, owner); // 영업 상태
+                return status.IsOpen ? $"F - TRADE ({owner.DisplayName})" : $"{stallDisplayName} | {status.Reason}"; // 결과 반환
+            }
+
             MarketManager manager = MarketManager.Instance; // 관리자
 
             if (manager == null || manager.Catalog == null) // 상점 없음
@@ -112,6 +118,29 @@ public sealed class MarketStall : InteractableBase // 87일차: 떠돌이 상인
             return; // 중단
         }
 
+        if (gameUIManager == null) // 관리자 확인
+        {
+            gameUIManager = FindFirstObjectByType<GameUIManager>(); // Scene 검색
+        }
+
+        if (TryGetNpcMerchant(out NpcShopManager shops, out NpcShopData shop, out NpcAgent owner)) // 92일차: 가판대에 서는 NPC(리첼)의 상점
+        {
+            NpcShopStatus status = shops.GetStatus(shop, owner); // 영업 상태
+
+            if (!status.IsOpen) // 닫힘
+            {
+                CombatDamagePopup.SpawnText(transform.position + Vector3.up * 2.2f, status.Reason, new Color(0.72f, 0.7f, 0.65f, 1f), 2.5f); // 알림
+                return; // 중단
+            }
+
+            if (gameUIManager == null || !gameUIManager.OpenNpcShop(owner)) // 상점 창 열기
+            {
+                CombatDamagePopup.SpawnText(transform.position + Vector3.up * 2.2f, "SHOP WINDOW MISSING", ProjectUUIPalette.Danger, 2f); // 알림
+            }
+
+            return; // 완료
+        }
+
         MarketManager manager = MarketManager.Instance; // 관리자
 
         if (manager == null || manager.Catalog == null) // 상점 없음
@@ -125,15 +154,19 @@ public sealed class MarketStall : InteractableBase // 87일차: 떠돌이 상인
             return; // 중단
         }
 
-        if (gameUIManager == null) // 관리자 확인
-        {
-            gameUIManager = FindFirstObjectByType<GameUIManager>(); // Scene 검색
-        }
-
         if (gameUIManager == null || !gameUIManager.OpenShop(this)) // 상점 창 열기
         {
             CombatDamagePopup.SpawnText(transform.position + Vector3.up * 2.2f, "SHOP WINDOW MISSING", ProjectUUIPalette.Danger, 2f); // 알림
         }
+    }
+
+    private static bool TryGetNpcMerchant(out NpcShopManager shops, out NpcShopData shop, out NpcAgent owner) // 92일차: 가판대 상인 NPC와 그 상점
+    {
+        shops = NpcShopManager.Instance; // NPC 상점 관리자
+        shop = null; // 초기화
+        owner = NpcManager.HasStallMerchant ? NpcManager.Instance.StallMerchant : null; // 리첼
+
+        return shops != null && owner != null && shops.TryGetShop(owner.Character, out shop); // 결과 반환
     }
 
     public static string FormatHour(float hour) // 시각 문구 (06:00)

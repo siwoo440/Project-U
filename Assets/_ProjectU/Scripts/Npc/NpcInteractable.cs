@@ -3,7 +3,7 @@ using UnityEngine; // Unity 기본 기능
 
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
 [RequireComponent(typeof(NpcAgent))] // NPC 필요
-public sealed class NpcInteractable : InteractableBase // 90일차: NPC에게 다가가면 이름·하는 일 표시 / 91일차: 말을 걸면 대화 창 (창이 없으면 말풍선)
+public sealed class NpcInteractable : InteractableBase // 90일차: NPC에게 다가가면 이름·하는 일 표시 / 91일차: 말을 걸면 대화 창 (창이 없으면 말풍선) / 92일차: 영업 중이면 거래 안내
 {
     [Tooltip("말풍선 표시 시간 (초).")]
     [SerializeField, Min(1f)] private float speechSeconds = 4.5f; // 말풍선 시간
@@ -18,6 +18,12 @@ public sealed class NpcInteractable : InteractableBase // 90일차: NPC에게 �
         get
         {
             NpcAgent agent = GetAgent();
+            NpcShopManager shops = NpcShopManager.Instance;
+
+            if (shops != null && shops.TryGetShop(agent.Character, out NpcShopData shop) && shops.GetStatus(shop, agent).IsOpen)
+            {
+                return $"F - {agent.DisplayName} | 대화 · 거래"; // 92일차: 영업 중인 상점 주인
+            }
 
             if (NpcManager.Instance != null && NpcManager.Instance.GetStallFor(agent) != null)
             {

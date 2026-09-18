@@ -1,0 +1,98 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 862bff83c5e89624b8b5daae52fdb7f1, type: 3}
+  m_Name: NpcShop_Dravia
+  m_EditorClassIdentifier: Assembly-CSharp::NpcShopData
+  shopId: shop_dravia
+  ownerId: char_dravia
+  shopName: "\uB300\uC7A5\uAC04"
+  openLocationIds:
+  - loc_smithy_anvil
+  stock:
+  - item: {fileID: 11400000, guid: c593f671b9ae9d24e96e6cd5ee7b2a1c, type: 2}
+    price: 20
+    dailyStock: 8
+    seasons: 
+    dailyChance: 1
+    requiredStage: 0
+  - item: {fileID: 11400000, guid: 1132e66db22cdae448d0dfb6dec7e8c1, type: 2}
+    price: 2
+    dailyStock: 30
+    seasons: 
+    dailyChance: 1
+    requiredStage: 0
+  - item: {fileID: 11400000, guid: d801a65a4ac6aa9488b8fe9ba94ccb15, type: 2}
+    price: 40
+    dailyStock: 1
+    seasons: 
+    dailyChance: 1
+    requiredStage: 0
+  - item: {fileID: 11400000, guid: 34ed2068e680c3e47b192431c37799db, type: 2}
+    price: 40
+    dailyStock: 1
+    seasons: 
+    dailyChance: 1
+    requiredStage: 0
+  - item: {fileID: 11400000, guid: d835eceef0e2d324c91c9629199e0ae8, type: 2}
+    price: 45
+    dailyStock: 1
+    seasons: 
+    dailyChance: 1
+    requiredStage: 0
+  - item: {fileID: 11400000, guid: 346ca54060b52d244b3ceb1c09bc4d6e, type: 2}
+    price: 50
+    dailyStock: 1
+    seasons: 
+    dailyChance: 1
+    requiredStage: 0
+  - item: {fileID: 11400000, guid: 39da177e19117c74f96b0718ec760b34, type: 2}
+    price: 150
+    dailyStock: 1
+    seasons: 
+    dailyChance: 0.5
+    requiredStage: 0
+  - item: {fileID: 11400000, guid: 63a6ccd99ac6288459462be53a4919a5, type: 2}
+    price: 60
+    dailyStock: 1
+    seasons: 
+    dailyChance: 1
+    requiredStage: 1
+  - item: {fileID: 11400000, guid: cc96d25a17a973747bb1d11fe6839e7b, type: 2}
+    price: 240
+    dailyStock: 1
+    seasons: 
+    dailyChance: 1
+    requiredStage: 2
+  stockSeed: 3202
+  discountByStage: 0000000000000000050000000a0000000f000000
+  buyRules:
+  - item: {fileID: 11400000, guid: c593f671b9ae9d24e96e6cd5ee7b2a1c, type: 2}
+    anyGoods: 0
+    goodsType: 0
+    multiplier: 1.2
+  - item: {fileID: 11400000, guid: 479a7e7a5dbb8df4a9ea663d4e582a1b, type: 2}
+    anyGoods: 0
+    goodsType: 0
+    multiplier: 1
+  - item: {fileID: 11400000, guid: b9e78781ff8b2aa4bae6df0fa3d2e1c9, type: 2}
+    anyGoods: 0
+    goodsType: 0
+    multiplier: 1
+  dailyBuyLimit: 20
+  greetings:
+  - "\uD544\uC694\uD55C \uAC78 \uACE8\uB77C. \uD765\uC815\uC740 \uC548 \uBC1B\uC544."
+  - "\uCCA0\uAD11\uC11D\uC774 \uC788\uC73C\uBA74 \uAC00\uC838\uC640. \uAC12\uC740
+    \uC81C\uB300\uB85C \uCCD0 \uC8FC\uC9C0."
+  - "\uB3C4\uAD6C\uB294 \uC190\uC5D0 \uB9DE\uB294 \uAC78\uB85C \uACE8\uB77C. \uBB34\uAC81\uB2E4\uACE0
+    \uC88B\uC740 \uAC8C \uC544\uB2C8\uC57C."
+  farewell: "\uD654\uB85C \uBD88 \uC904\uC77C \uC2DC\uAC04\uC774\uB2E4. \uB0B4\uC77C
+    \uC640."

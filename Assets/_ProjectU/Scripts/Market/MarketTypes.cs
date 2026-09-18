@@ -103,19 +103,54 @@ public sealed class ShippingSaleReport // 87일차: 하루 판매 결과
     public bool HasSales => ItemsSold > 0; // 판매 여부
 }
 
-public sealed class ShopOffer // 87일차: 오늘 상인이 파는 물건 한 칸
+public class ShopOffer // 87일차: 오늘 상인이 파는 물건 한 칸 / 92일차: NPC 상점도 함께 사용
 {
-    public ShopOffer(MarketStockEntry entry, int remaining) // 생성
+    public ShopOffer(MarketStockEntry entry, int remaining) : this(entry.Item, entry.Price, entry.DailyStock, entry.IsSpecial, remaining) // 87일차 상인 재고
     {
         Entry = entry; // 원본
+    }
+
+    public ShopOffer(ItemData item, int price, int dailyStock, bool isSpecial, int remaining) // 92일차: 원본 종류와 관계없이 생성
+    {
+        Item = item; // 아이템
+        Price = Mathf.Max(1, price); // 가격
+        DailyStock = Mathf.Max(1, dailyStock); // 하루 재고
+        IsSpecial = isSpecial; // 가끔 오는 물건
         Remaining = remaining; // 남은 수
     }
 
-    public MarketStockEntry Entry { get; } // 원본 데이터
+    public MarketStockEntry Entry { get; } // 87일차 상인 재고 원본 (NPC 상점은 null)
     public int Remaining { get; set; } // 남은 재고
-    public ItemData Item => Entry.Item; // 아이템 제공
-    public int Price => Entry.Price; // 가격 제공
+    public ItemData Item { get; } // 아이템 제공
+    public int Price { get; } // 기본 가격 제공 (할인 전)
+    public int DailyStock { get; } // 하루 재고 제공
+    public bool IsSpecial { get; } // 가끔 오는 물건 여부
     public bool SoldOut => Remaining <= 0; // 품절 여부
+}
+
+public interface IShopVendor // 92일차: 상점 창이 보여 주는 가게 (87일차 가판대 상인 · 92일차 NPC 상점)
+{
+    string Title { get; } // 창 제목
+    Sprite Portrait { get; } // 제목 아이콘 (없으면 기본 상인 얼굴)
+    string SpeechLine { get; } // 제목 옆 한마디 (없으면 빈 문자열)
+    Vector3 SpeechPosition { get; } // 인사 말풍선 위치
+    bool IsPresent { get; } // 창을 유지할 수 있는지 (가판대 · 주인이 곁에 있는지)
+    bool IsOpen { get; } // 영업 중인지
+    string ClosingLine { get; } // 영업이 끝나 창이 닫힐 때 인사
+    string InfoLabel { get; } // 위쪽 안내 알약
+    IReadOnlyList<ShopOffer> Offers { get; } // 오늘 파는 물건
+    int GetUnitPrice(ShopOffer offer); // 지금 한 개 가격 (할인 적용)
+    int DiscountPercent { get; } // 지금 할인율 % (없으면 0)
+    string GetLockReason(ShopOffer offer); // 아직 살 수 없는 이유 (없으면 null)
+    bool TryBuy(ShopOffer offer, int quantity, PlayerInventory inventory, out string message); // 사기
+    bool BuysFromPlayer { get; } // 팔기 탭 (false면 판매 상자 가격표 탭)
+    string BuyInfo { get; } // 사 주는 물건 안내 (팔기 탭 아래쪽)
+    int GetBuybackPrice(ItemData item); // 한 개 매입 가격 (0 = 사 주지 않음)
+    int BuybackLeftToday { get; } // 오늘 더 사 줄 수 있는 수량
+    bool TrySell(ItemData item, int quantity, PlayerInventory inventory, out string message); // 팔기
+    void Opened(Transform player); // 창이 열림 (NPC 멈추기 등)
+    void Closed(); // 창이 닫힘
+    event Action Changed; // 재고 · 매입 변경 알림
 }
 
 public interface IStorageInfoProvider // 87일차: 보관함 창 위쪽 안내 문구와 상호작용 안내 추가 문구

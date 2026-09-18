@@ -109,7 +109,7 @@ public static class MarketDebugMenu
 
         foreach (ShopOffer offer in manager.Offers)
         {
-            report.Append($"\n  {offer.Item.DisplayName} {offer.Price} 코인, 남은 {offer.Remaining}{(offer.Entry.IsSpecial ? " (가끔)" : string.Empty)}");
+            report.Append($"\n  {offer.Item.DisplayName} {offer.Price} 코인, 남은 {offer.Remaining}{(offer.IsSpecial ? " (가끔)" : string.Empty)}");
         }
 
         Debug.Log(report.ToString());

@@ -6,6 +6,7 @@ using static UIBuildKit;
 
 // 87일차: 상인 창(PopupLayer), 코인 알약(생존 게이지 아래), 아침 판매 알림(화면 위 가운데),
 // 보관함 창의 판매 상자 안내 문구를 만든다. 실행할 때마다 같은 이름의 오브젝트를 지우고 새로 만든다.
+// 92일차: 상인 창에 NPC 상점 주인 한마디 칸 추가, 상인 창만 다시 만드는 기능(10번 메뉴에서 사용)
 public static class MarketPopupUIBuilder
 {
     public const string PopupRootName = "LP_ShopPopup";
@@ -45,6 +46,37 @@ public static class MarketPopupUIBuilder
         popup = BuildPopup(popupLayer, merchantIcon);
         string hud = BuildCoinHUD(out coinHud);
         return $"상인 창 생성 (PopupLayer) · {hud}";
+    }
+
+    public static string RebuildShopPopup(out ShopPopupUI popup) // 92일차: 상인 창만 다시 만들고 GameUIManager에 연결 (NPC 상점 한마디 칸)
+    {
+        popup = null;
+
+        if (UISpriteFactory.Panel == null || UISpriteFactory.Pill == null || UISpriteFactory.CircleSprite == null)
+        {
+            UISpriteFactory.GenerateAll();
+        }
+
+        RectTransform popupLayer = FindRect(PopupLayerName);
+
+        if (popupLayer == null)
+        {
+            return "✗ PopupLayer를 찾지 못해 상인 창을 만들지 못했습니다.";
+        }
+
+        popup = BuildPopup(popupLayer, AssetDatabase.LoadAssetAtPath<Sprite>(MarketContentBuilder.MerchantIconPath));
+        GameUIManager uiManager = Object.FindFirstObjectByType<GameUIManager>(FindObjectsInactive.Include);
+
+        if (uiManager == null)
+        {
+            return "✗ GameUIManager가 없어 상인 창을 연결하지 못했습니다.";
+        }
+
+        SerializedObject serialized = new SerializedObject(uiManager);
+        serialized.FindProperty("shopPopup").objectReferenceValue = popup;
+        serialized.ApplyModifiedPropertiesWithoutUndo();
+        EditorUtility.SetDirty(uiManager);
+        return "상인 창 다시 생성 (NPC 한마디 칸 포함) · GameUIManager 연결";
     }
 
     // ------------------------------------------------------------ 상인 창
@@ -115,6 +147,13 @@ public static class MarketPopupUIBuilder
         TMP_Text tabHint = CreateText(w, "LP_TabHint", "TAB", 10.5f, FontStyles.Bold, TextAlignmentOptions.MidlineLeft, new Color(0.72f, 0.7f, 0.65f, 0.6f));
         tabHint.characterSpacing = 2f;
         TopLeft(tabHint.rectTransform, new Vector2(Pad + 398f, -78f), new Vector2(60f, 34f));
+
+        // 92일차: NPC 상점 주인의 한마디 (탭 오른쪽, 가판대 상인은 숨김)
+        TMP_Text speech = CreateText(w, "LP_Speech", "\"어서 와요\"", 15f, FontStyles.Normal, TextAlignmentOptions.MidlineRight, new Color(0.96f, 0.88f, 0.72f, 1f));
+        speech.textWrappingMode = TextWrappingModes.NoWrap;
+        speech.overflowMode = TextOverflowModes.Ellipsis;
+        TopLeft(speech.rectTransform, new Vector2(Pad + 460f, -78f), new Vector2(WindowWidth - Pad * 2f - 460f, 34f));
+        speech.gameObject.SetActive(false);
 
         // 왼쪽 목록
         Image viewport = CreateImage(w, "LP_ListScroll", null, new Color(0f, 0f, 0f, 0f));
@@ -253,6 +292,7 @@ public static class MarketPopupUIBuilder
         so.FindProperty("infoChip").objectReferenceValue = infoChip;
         so.FindProperty("coinChip").objectReferenceValue = coinChip;
         so.FindProperty("closeButton").objectReferenceValue = close;
+        so.FindProperty("speechText").objectReferenceValue = speech;
         so.FindProperty("buyTabButton").objectReferenceValue = buyTab;
         so.FindProperty("buyTabImage").objectReferenceValue = buyTabImage;
         so.FindProperty("buyTabLabel").objectReferenceValue = buyTabLabel;

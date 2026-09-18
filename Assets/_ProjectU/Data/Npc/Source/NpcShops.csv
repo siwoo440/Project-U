@@ -1,0 +1,4 @@
+ShopID,Owner,Name,OpenLocations,Buys,DailyBuyLimit,Discounts,StockSeed,Greetings,Farewell
+shop_milky,char_milky,선셋 카페,loc_cafe_counter,type:Crop:1.0|type:AnimalProduct:1.1|type:Forage:1.0,30,0/0/5/10/15,3101,"어서 와요~ 오늘 메뉴판이에요. 천천히 골라요.|좋은 달걀이나 우유가 있으면 저한테 팔아 줘요. 값은 조금 더 쳐 드릴게요~|따뜻한 걸로 드릴까요? 오늘도 막 데워 뒀어요.",오늘 영업은 여기까지예요~ 내일 또 와요.
+shop_dravia,char_dravia,대장간,loc_smithy_anvil,item_iron_ore:1.2|resource_stone:1.0|item_wood:1.0,20,0/0/5/10/15,3202,"필요한 걸 골라. 흥정은 안 받아.|철광석이 있으면 가져와. 값은 제대로 쳐 주지.|도구는 손에 맞는 걸로 골라. 무겁다고 좋은 게 아니야.",화로 불 줄일 시간이다. 내일 와.
+shop_lichel,char_lichel,떠돌이 상점,loc_market_stall,type:*:0.8,40,0/0/5/10/15,3303,"흥~ 오늘 물건은 오늘만이야. 잘 골라 봐.|팔 거 있어? 뭐든 사 줄게. 값은… 조금 깎아서.|씨앗은 계절마다 바뀌어. 지금 안 사면 후회한다?","오늘 장사 끝! 내일 또 와, 흥."

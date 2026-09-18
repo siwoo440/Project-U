@@ -9,6 +9,7 @@ using Object = UnityEngine.Object;
 // 1. 기능별 검사(아이템 외형 · 농사 · 낚시 · 요리 · 가축 · 판매)와 아이템 데이터 · Registry 검사를 한 번에 실행
 // 2. 기능 사이 연결 검사 : 생산물 판매 가격, 요리 재료를 구하는 곳, 씨앗 판매, 저장 목록, 날짜 처리 관리자
 // 89일차: NPC 검사와 NPC 선물을 구하는 곳 검사 추가
+// 92일차: NPC 상점 검사 추가, NPC 상점 판매 물건을 구하는 곳에 포함
 public static class ContentIntegrationValidator
 {
     private const string DialogTitle = "Project U 전체 콘텐츠 검사";
@@ -89,6 +90,7 @@ public static class ContentIntegrationValidator
             ("NPC", Feature(NpcContentBuilder.Validate)),
             ("NPC 마을 배치", Feature(NpcPlacementBuilder.Validate)),
             ("NPC 대화", Feature(NpcDialogueBuilder.Validate)),
+            ("NPC 상점", Feature(NpcShopBuilder.Validate)),
             ("아이템 데이터 (ID 규칙)", ItemDataValidator.ValidateAllItemData),
             ("Game Data Registry", () => CountLoggedErrors(GameDataRegistryEditor.ValidateDefaultRegistry, details))
         };
@@ -248,6 +250,11 @@ public static class ContentIntegrationValidator
             if (catalog != null)
             {
                 foreach (MarketStockEntry entry in catalog.Stock) AddSource(entry?.Item, "상인");
+            }
+
+            foreach (NpcShopData shop in NpcShopBuilder.LoadShops())
+            {
+                foreach (NpcShopData.StockEntry entry in shop.Stock) AddSource(entry?.Item, "NPC 상점");
             }
 
             foreach (string guid in AssetDatabase.FindAssets("t:EnemyLootTable", new[] { "Assets/_ProjectU" }))

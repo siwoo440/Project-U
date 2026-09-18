@@ -5,12 +5,13 @@ using UnityEngine.InputSystem; // 키보드 입력 기능
 using UnityEngine.UI; // Unity UI 기능
 
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
-public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: 떠돌이 상인 창 (오늘 재고 사기 · 판매 가격표)
+public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: 떠돌이 상인 창 (오늘 재고 사기 · 판매 가격표) / 92일차: NPC 상점 (할인 · 잠긴 물건 · 팔기)
 {
     public enum ShopTab // 창 탭
     {
         Buy = 0, // 사기
-        Prices = 1 // 판매 가격표
+        Prices = 1, // 판매 가격표 (87일차 가판대)
+        Sell = 2 // 팔기 (92일차 NPC 상점)
     }
 
     [Header("Root")] // 루트
@@ -26,14 +27,16 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
     [SerializeField] private CookingChipUI coinChip; // 코인
     [Tooltip("닫기 버튼.")]
     [SerializeField] private Button closeButton; // 닫기
+    [Tooltip("92일차: 가게 주인 한마디 (탭 오른쪽). 비어 있으면 표시하지 않습니다.")]
+    [SerializeField] private TMP_Text speechText; // 한마디
 
     [Header("Tabs")] // 탭
     [SerializeField] private Button buyTabButton; // 사기 탭
     [SerializeField] private Image buyTabImage; // 사기 탭 배경
     [SerializeField] private TMP_Text buyTabLabel; // 사기 탭 문구
-    [SerializeField] private Button pricesTabButton; // 가격표 탭
-    [SerializeField] private Image pricesTabImage; // 가격표 탭 배경
-    [SerializeField] private TMP_Text pricesTabLabel; // 가격표 탭 문구
+    [SerializeField] private Button pricesTabButton; // 두 번째 탭 (가격표 · 팔기)
+    [SerializeField] private Image pricesTabImage; // 두 번째 탭 배경
+    [SerializeField] private TMP_Text pricesTabLabel; // 두 번째 탭 문구
 
     [Header("List")] // 목록
     [Tooltip("목록 줄 부모.")]
@@ -60,8 +63,8 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
     [SerializeField] private Button minusButton; // 수량 감소
     [SerializeField] private Button plusButton; // 수량 증가
     [SerializeField] private TMP_Text quantityText; // 수량
-    [SerializeField] private Button buyButton; // 구매
-    [SerializeField] private TMP_Text buyLabel; // 구매 문구
+    [SerializeField] private Button buyButton; // 구매 · 판매
+    [SerializeField] private TMP_Text buyLabel; // 구매 · 판매 문구
 
     [Header("Footer")] // 아래쪽
     [SerializeField] private TMP_Text hintText; // 안내
@@ -77,37 +80,45 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
 
     private readonly List<ShopRowUI> rows = new List<ShopRowUI>(); // 목록 줄
     private readonly List<MarketPriceEntry> priceEntries = new List<MarketPriceEntry>(); // 가격표 정렬 목록
+    private readonly List<ItemData> sellItems = new List<ItemData>(); // 팔 수 있는 가방 물건 (92일차)
     private GameUIManager manager; // 관리자
-    private MarketStall stall; // 현재 가판대
-    private MarketManager market; // 상점 관리자
+    private IShopVendor vendor; // 현재 가게 (92일차)
+    private MarketManager market; // 상점 관리자 (가격표 · 계절)
     private PlayerInventory inventory; // 인벤토리
     private PlayerWallet wallet; // 지갑
+    private Sprite defaultTitleSprite; // 기본 상인 얼굴
     private ShopTab tab = ShopTab.Buy; // 현재 탭
     private int selectedIndex; // 선택 줄
-    private int quantity = 1; // 구매 수량
+    private int quantity = 1; // 수량
     private bool isDirty; // 다시 그리기 필요
     private float messageHideTime; // 알림 숨김 시각
 
-    public bool IsOpen => panelRoot != null && panelRoot.activeSelf && stall != null; // 열림 여부
+    public bool IsOpen => panelRoot != null && panelRoot.activeSelf && vendor != null; // 열림 여부
+    public IShopVendor Vendor => vendor; // 현재 가게 (테스트용)
     public ShopTab CurrentTab => tab; // 탭 제공
     public int SelectedIndex => selectedIndex; // 선택 제공
     public int Quantity => quantity; // 수량 제공
     public IReadOnlyList<ShopRowUI> Rows => rows; // 줄 제공 (테스트용)
+    public IReadOnlyList<ItemData> SellItems => sellItems; // 팔기 목록 (테스트용)
+    public string TitleLabel => titleText != null ? titleText.text : string.Empty; // 제목 (테스트용)
+    public string SpeechLabel => speechText != null && speechText.gameObject.activeSelf ? speechText.text : string.Empty; // 한마디 (테스트용)
     public string BuyLabel => buyLabel != null ? buyLabel.text : string.Empty; // 구매 문구 제공 (테스트용)
     public bool CanPressBuy => buyButton != null && buyButton.interactable; // 구매 가능 제공 (테스트용)
     public string MessageLabel => messageText != null && messageText.gameObject.activeSelf ? messageText.text : string.Empty; // 알림 제공 (테스트용)
+    public ShopTab SecondTab => vendor != null && vendor.BuysFromPlayer ? ShopTab.Sell : ShopTab.Prices; // 두 번째 탭 종류
 
     private void Awake() // 버튼 연결
     {
         if (closeButton != null) closeButton.onClick.AddListener(RequestClose); // 닫기
         if (buyTabButton != null) buyTabButton.onClick.AddListener(() => SetTab(ShopTab.Buy)); // 사기 탭
-        if (pricesTabButton != null) pricesTabButton.onClick.AddListener(() => SetTab(ShopTab.Prices)); // 가격표 탭
+        if (pricesTabButton != null) pricesTabButton.onClick.AddListener(() => SetTab(SecondTab)); // 두 번째 탭
         if (minusButton != null) minusButton.onClick.AddListener(() => ChangeQuantity(-1)); // 감소
         if (plusButton != null) plusButton.onClick.AddListener(() => ChangeQuantity(1)); // 증가
-        if (buyButton != null) buyButton.onClick.AddListener(Buy); // 구매
+        if (buyButton != null) buyButton.onClick.AddListener(Confirm); // 구매 · 판매
         if (rowTemplate != null) rowTemplate.gameObject.SetActive(false); // 템플릿 숨김
+        if (titleIcon != null) defaultTitleSprite = titleIcon.sprite; // 기본 상인 얼굴
 
-        if (panelRoot != null && stall == null) // 시작 상태
+        if (panelRoot != null && vendor == null) // 시작 상태
         {
             panelRoot.SetActive(false); // 숨김
         }
@@ -118,12 +129,17 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
         Unsubscribe(); // 해제
     }
 
-    public bool ShowFromManager(GameUIManager owner, MarketStall targetStall, PlayerInventory playerInventory) // 창 열기
+    public bool ShowFromManager(GameUIManager owner, MarketStall targetStall, PlayerInventory playerInventory) // 87일차 가판대 상인 창 열기
+    {
+        return ShowVendor(owner, targetStall != null ? new StallShopVendor(targetStall, MarketManager.Instance) : null, playerInventory); // 결과 반환
+    }
+
+    public bool ShowVendor(GameUIManager owner, IShopVendor targetVendor, PlayerInventory playerInventory) // 92일차: 가게 창 열기 (가판대 · NPC 상점)
     {
         MarketManager targetMarket = MarketManager.Instance; // 상점 관리자
         PlayerWallet targetWallet = targetMarket != null ? targetMarket.Wallet : null; // 지갑
 
-        if (panelRoot == null || rowTemplate == null || targetStall == null || playerInventory == null || targetMarket == null || targetMarket.Catalog == null || targetWallet == null) // 참조 확인
+        if (panelRoot == null || rowTemplate == null || targetVendor == null || playerInventory == null || targetMarket == null || targetMarket.Catalog == null || targetWallet == null) // 참조 확인
         {
             Debug.LogError("상인 창 참조가 누락되었습니다. Tools > Project U > Build Content > 6. Market를 다시 실행하세요.", this); // 오류
             return false; // 실패
@@ -131,13 +147,14 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
 
         Unsubscribe(); // 이전 구독 해제
         manager = owner; // 관리자
-        stall = targetStall; // 가판대
+        vendor = targetVendor; // 가게
         market = targetMarket; // 상점
         inventory = playerInventory; // 인벤토리
         wallet = targetWallet; // 지갑
-        market.StockChanged += MarkDirty; // 재고 변경 구독
+        vendor.Changed += MarkDirty; // 재고 변경 구독
         wallet.CoinsChanged += HandleCoins; // 코인 변경 구독
         inventory.InventoryChanged += MarkDirty; // 인벤토리 변경 구독
+        vendor.Opened(inventory.transform); // 주인 멈추기 등
         tab = ShopTab.Buy; // 사기 탭
         selectedIndex = FirstAvailableOffer(); // 첫 물건
         quantity = 1; // 수량
@@ -152,7 +169,13 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
     public void HideFromManager() // 창 닫기
     {
         Unsubscribe(); // 해제
-        stall = null; // 가판대 해제
+
+        if (vendor != null) // 가게 확인
+        {
+            vendor.Closed(); // 주인 다시 움직이기 등
+        }
+
+        vendor = null; // 가게 해제
         market = null; // 상점 해제
         inventory = null; // 인벤토리 해제
         wallet = null; // 지갑 해제
@@ -165,7 +188,7 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
 
     private void Unsubscribe() // 이벤트 해제
     {
-        if (market != null) market.StockChanged -= MarkDirty; // 재고
+        if (vendor != null) vendor.Changed -= MarkDirty; // 재고
         if (wallet != null) wallet.CoinsChanged -= HandleCoins; // 코인
         if (inventory != null) inventory.InventoryChanged -= MarkDirty; // 인벤토리
     }
@@ -187,15 +210,15 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
             return; // 생략
         }
 
-        if (stall == null || !stall.isActiveAndEnabled || market == null) // 가판대가 사라짐
+        if (vendor == null || !vendor.IsPresent || market == null) // 가판대 · 주인이 사라짐
         {
             RequestClose(); // 닫기
             return; // 생략
         }
 
-        if (!market.IsShopOpen) // 영업 종료
+        if (!vendor.IsOpen) // 영업 종료
         {
-            CombatDamagePopup.SpawnText(stall.transform.position + Vector3.up * 2.2f, "SEE YOU TOMORROW!", ProjectUUIPalette.Accent, 2f); // 인사
+            CombatDamagePopup.SpawnText(vendor.SpeechPosition, vendor.ClosingLine, ProjectUUIPalette.Accent, 2f); // 인사
             RequestClose(); // 닫기
             return; // 생략
         }
@@ -204,7 +227,7 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
 
         if (keyboard != null && keyboard.tabKey.wasPressedThisFrame) // Tab으로 탭 전환
         {
-            SetTab(tab == ShopTab.Buy ? ShopTab.Prices : ShopTab.Buy); // 전환
+            SetTab(tab == ShopTab.Buy ? SecondTab : ShopTab.Buy); // 전환
         }
 
         if (isDirty) // 변경 확인
@@ -233,9 +256,14 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
 
     public void SetTab(ShopTab next) // 탭 바꾸기
     {
-        if (market == null) // 열림 확인
+        if (vendor == null) // 열림 확인
         {
             return; // 생략
+        }
+
+        if (next != ShopTab.Buy) // 두 번째 탭은 가게 종류에 맞춤
+        {
+            next = SecondTab; // 가격표 또는 팔기
         }
 
         if (tab != next) // 다른 탭
@@ -264,27 +292,56 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
     {
         Keyboard keyboard = Keyboard.current; // 키보드
         bool shift = keyboard != null && (keyboard.leftShiftKey.isPressed || keyboard.rightShiftKey.isPressed); // Shift
-        ShopOffer offer = SelectedOffer; // 선택 물건
+        int max; // 최대 수량
 
-        if (offer == null) // 확인
+        if (tab == ShopTab.Sell) // 팔기
         {
-            return; // 생략
+            ItemData item = SelectedSellItem; // 선택 물건
+
+            if (item == null) // 확인
+            {
+                return; // 생략
+            }
+
+            max = MaxSellQuantity(item); // 최대
+        }
+        else // 사기
+        {
+            ShopOffer offer = SelectedOffer; // 선택 물건
+
+            if (offer == null) // 확인
+            {
+                return; // 생략
+            }
+
+            max = MaxQuantity(offer); // 최대
         }
 
-        quantity = Mathf.Clamp(quantity + delta * (shift ? 10 : 1), 1, Mathf.Max(1, MaxQuantity(offer))); // 적용
+        quantity = Mathf.Clamp(quantity + delta * (shift ? 10 : 1), 1, Mathf.Max(1, max)); // 적용
         Rebuild(); // 다시 그리기
+    }
+
+    public void Confirm() // 버튼 : 사기 탭이면 사기, 팔기 탭이면 팔기
+    {
+        if (tab == ShopTab.Sell) // 팔기
+        {
+            Sell(); // 팔기
+            return; // 완료
+        }
+
+        Buy(); // 사기
     }
 
     public void Buy() // 선택 물건 사기
     {
         ShopOffer offer = SelectedOffer; // 선택 물건
 
-        if (offer == null || market == null) // 확인
+        if (offer == null || vendor == null) // 확인
         {
             return; // 생략
         }
 
-        bool success = market.TryBuy(offer, quantity, inventory, out string message); // 사기
+        bool success = vendor.TryBuy(offer, quantity, inventory, out string message); // 사기
         ShowMessage(message, success ? ProjectUUIPalette.Teal : ProjectUUIPalette.Danger, messageDuration); // 알림
 
         if (success) // 성공
@@ -295,26 +352,53 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
         Rebuild(); // 다시 그리기
     }
 
-    private ShopOffer SelectedOffer => tab == ShopTab.Buy && market != null && selectedIndex >= 0 && selectedIndex < market.Offers.Count ? market.Offers[selectedIndex] : null; // 선택 물건
+    public void Sell() // 92일차: 선택 물건 팔기
+    {
+        ItemData item = SelectedSellItem; // 선택 물건
+
+        if (item == null || vendor == null) // 확인
+        {
+            return; // 생략
+        }
+
+        bool success = vendor.TrySell(item, quantity, inventory, out string message); // 팔기
+        ShowMessage(message, success ? ProjectUUIPalette.Teal : ProjectUUIPalette.Danger, messageDuration); // 알림
+
+        if (success) // 성공
+        {
+            quantity = 1; // 수량 초기화
+        }
+
+        Rebuild(); // 다시 그리기
+    }
+
+    private ShopOffer SelectedOffer => tab == ShopTab.Buy && vendor != null && selectedIndex >= 0 && selectedIndex < vendor.Offers.Count ? vendor.Offers[selectedIndex] : null; // 선택 물건
+    private ItemData SelectedSellItem => tab == ShopTab.Sell && selectedIndex >= 0 && selectedIndex < sellItems.Count ? sellItems[selectedIndex] : null; // 선택한 팔 물건
 
     private int MaxQuantity(ShopOffer offer) // 최대 구매 수량 (재고·코인)
     {
-        int affordable = offer.Price > 0 ? wallet.Coins / offer.Price : offer.Remaining; // 살 수 있는 수
+        int unit = vendor.GetUnitPrice(offer); // 한 개 가격
+        int affordable = unit > 0 ? wallet.Coins / unit : offer.Remaining; // 살 수 있는 수
         return Mathf.Min(offer.Remaining, affordable, 99); // 결과 반환
     }
 
-    private int FirstAvailableOffer() // 품절이 아닌 첫 물건
+    private int MaxSellQuantity(ItemData item) // 최대 판매 수량 (가방 · 오늘 매입 남은 수)
     {
-        MarketManager target = market != null ? market : MarketManager.Instance; // 관리자
+        return Mathf.Min(inventory.GetItemQuantity(item), vendor.BuybackLeftToday, 99); // 결과 반환
+    }
 
-        if (target == null) // 확인
+    private int FirstAvailableOffer() // 품절 · 잠김이 아닌 첫 물건
+    {
+        if (vendor == null) // 확인
         {
             return 0; // 기본
         }
 
-        for (int index = 0; index < target.Offers.Count; index++) // 순회
+        IReadOnlyList<ShopOffer> offers = vendor.Offers; // 재고
+
+        for (int index = 0; index < offers.Count; index++) // 순회
         {
-            if (!target.Offers[index].SoldOut) // 재고 있음
+            if (!offers[index].SoldOut && vendor.GetLockReason(offers[index]) == null) // 살 수 있음
             {
                 return index; // 결과
             }
@@ -342,6 +426,26 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
         }); // 정렬
     }
 
+    private void BuildSellItems() // 가방에서 이 가게가 사 주는 물건 (가방 순서)
+    {
+        sellItems.Clear(); // 초기화
+
+        for (int index = 0; index < inventory.SlotCapacity; index++) // 칸 순회
+        {
+            InventorySlot slot = inventory.GetSlot(index); // 칸
+
+            if (slot == null || slot.ItemData == null || slot.Quantity <= 0 || sellItems.Contains(slot.ItemData)) // 빈 칸 · 중복
+            {
+                continue; // 다음
+            }
+
+            if (vendor.GetBuybackPrice(slot.ItemData) > 0) // 사 주는 물건
+            {
+                sellItems.Add(slot.ItemData); // 추가
+            }
+        }
+    }
+
     private void ResetScroll() // 목록 맨 위로
     {
         if (listScroll != null) // 스크롤 확인
@@ -356,31 +460,46 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
     {
         isDirty = false; // 기록 해제
 
-        if (market == null || inventory == null || wallet == null) // 상태 확인
+        if (vendor == null || market == null || inventory == null || wallet == null) // 상태 확인
         {
             return; // 생략
         }
 
         SeasonType season = market.CurrentSeason; // 계절
-        titleText.SetText(stall.MerchantName); // 제목
+        titleText.SetText(vendor.Title); // 제목
+        titleIcon.sprite = vendor.Portrait != null ? vendor.Portrait : defaultTitleSprite; // 주인 초상 (없으면 기본 얼굴)
         titleIcon.enabled = titleIcon.sprite != null; // 아이콘
-        int left = 0; // 남은 재고 합계
 
-        foreach (ShopOffer offer in market.Offers) // 순회
+        if (speechText != null) // 한마디
         {
-            left += offer.Remaining; // 합계
+            string line = vendor.SpeechLine; // 문구
+            speechText.gameObject.SetActive(!string.IsNullOrEmpty(line)); // 표시
+            speechText.SetText(line ?? string.Empty); // 적용
         }
 
-        infoChip.Bind($"{SeasonLabel(season)} STOCK  ·  {left} LEFT TODAY", ProjectUUIPalette.Teal, crateSprite); // 재고 안내
+        if (vendor.BuysFromPlayer) // 팔기 목록은 가방이 바뀔 수 있어 매번 갱신
+        {
+            BuildSellItems(); // 갱신
+        }
+        else
+        {
+            sellItems.Clear(); // 없음
+        }
+
+        infoChip.Bind(vendor.InfoLabel, ProjectUUIPalette.Teal, crateSprite); // 가게 안내
         coinChip.Bind($"{wallet.Coins:N0}", ProjectUUIPalette.Accent, coinSprite); // 코인
         SetTabVisual(buyTabImage, buyTabLabel, tab == ShopTab.Buy); // 사기 탭
-        SetTabVisual(pricesTabImage, pricesTabLabel, tab == ShopTab.Prices); // 가격표 탭
-        buyTabLabel.SetText($"BUY  ({market.Offers.Count})"); // 사기 탭 문구
-        pricesTabLabel.SetText("SELL PRICES"); // 가격표 탭 문구
+        SetTabVisual(pricesTabImage, pricesTabLabel, tab != ShopTab.Buy); // 두 번째 탭
+        buyTabLabel.SetText($"BUY  ({vendor.Offers.Count})"); // 사기 탭 문구
+        pricesTabLabel.SetText(SecondTab == ShopTab.Sell ? $"SELL  ({sellItems.Count})" : "SELL PRICES"); // 두 번째 탭 문구
 
         if (tab == ShopTab.Buy) // 사기 탭
         {
             RebuildBuy(); // 그리기
+        }
+        else if (tab == ShopTab.Sell) // 팔기 탭
+        {
+            RebuildSell(); // 그리기
         }
         else // 가격표 탭
         {
@@ -390,41 +509,74 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
 
     private void RebuildBuy() // 사기 탭
     {
-        IReadOnlyList<ShopOffer> offers = market.Offers; // 재고
+        IReadOnlyList<ShopOffer> offers = vendor.Offers; // 재고
         selectedIndex = offers.Count == 0 ? 0 : Mathf.Clamp(selectedIndex, 0, offers.Count - 1); // 선택 보정
 
         for (int index = 0; index < offers.Count; index++) // 줄 그리기
         {
             ShopOffer offer = offers[index]; // 물건
-            bool affordable = wallet.Coins >= offer.Price; // 살 수 있음
-            string status = offer.SoldOut ? "SOLD OUT" : offer.Entry.IsSpecial ? $"RARE FIND  ·  {offer.Remaining} LEFT" : $"{offer.Remaining} LEFT"; // 상태
-            Color statusColor = offer.SoldOut ? ProjectUUIPalette.Danger : offer.Entry.IsSpecial ? ProjectUUIPalette.Accent : ProjectUUIPalette.Teal; // 상태 색
-            Color priceColor = offer.SoldOut || affordable ? ProjectUUIPalette.Accent : ProjectUUIPalette.Danger; // 가격 색
-            GetRow(index).Bind(index, offer.Item, status, statusColor, offer.Price, priceColor, index == selectedIndex, offer.SoldOut || !affordable, Select); // 표시
+            int unit = vendor.GetUnitPrice(offer); // 오늘 가격
+            string locked = vendor.GetLockReason(offer); // 잠김
+            bool affordable = wallet.Coins >= unit; // 살 수 있음
+            string status; // 상태
+            Color statusColor; // 상태 색
+
+            if (offer.SoldOut)
+            {
+                status = "SOLD OUT"; // 품절
+                statusColor = ProjectUUIPalette.Danger; // 빨강
+            }
+            else if (locked != null)
+            {
+                status = locked; // 잠김
+                statusColor = ProjectUUIPalette.TextSecondary; // 회색
+            }
+            else
+            {
+                status = offer.IsSpecial ? $"RARE FIND  ·  {offer.Remaining} LEFT" : $"{offer.Remaining} LEFT"; // 남은 수
+                if (unit < offer.Price) status = $"{vendor.DiscountPercent}% OFF  ·  {status}"; // 할인
+                statusColor = offer.IsSpecial || unit < offer.Price ? ProjectUUIPalette.Accent : ProjectUUIPalette.Teal; // 색
+            }
+
+            bool dim = offer.SoldOut || locked != null || !affordable; // 흐리게
+            Color priceColor = offer.SoldOut || locked != null || affordable ? ProjectUUIPalette.Accent : ProjectUUIPalette.Danger; // 가격 색
+            GetRow(index).Bind(index, offer.Item, status, statusColor, unit, priceColor, index == selectedIndex, dim, Select); // 표시
         }
 
         HideRowsFrom(offers.Count); // 남는 줄
         emptyListText.gameObject.SetActive(offers.Count == 0); // 빈 목록
-        emptyListText.SetText("THE MERCHANT HAS NOTHING TO SELL TODAY"); // 문구
+        emptyListText.SetText("NOTHING FOR SALE TODAY"); // 문구
         buyGroup.SetActive(true); // 구매 묶음
-        hintText.SetText("BUY WITH COINS  ·  SHIFT + / - FOR 10  ·  TAB: SELL PRICES"); // 안내
+        hintText.SetText($"BUY WITH COINS  ·  SHIFT + / - FOR 10  ·  TAB: {(SecondTab == ShopTab.Sell ? "SELL" : "SELL PRICES")}"); // 안내
 
         ShopOffer selected = SelectedOffer; // 선택
 
         if (selected == null) // 선택 없음
         {
-            BindEmptyDetail(); // 빈 상세
+            BindEmptyDetail("NOTHING TO BUY"); // 빈 상세
             return; // 완료
         }
 
         ItemData item = selected.Item; // 아이템
+        int selectedUnit = vendor.GetUnitPrice(selected); // 한 개 가격
+        string selectedLock = vendor.GetLockReason(selected); // 잠김
         int max = MaxQuantity(selected); // 최대 수량
         quantity = Mathf.Clamp(quantity, 1, Mathf.Max(1, max)); // 수량 보정
-        int cost = selected.Price * quantity; // 금액
+        int cost = selectedUnit * quantity; // 금액
         BindItemDetail(item); // 공통 상세
         typeChip.Bind(TypeLabel(item), ProjectUUIPalette.TextSecondary, tagSprite); // 분류
-        stateChip.Bind(selected.SoldOut ? "SOLD OUT TODAY" : $"{selected.Remaining} LEFT TODAY", selected.SoldOut ? ProjectUUIPalette.Danger : ProjectUUIPalette.Teal, crateSprite); // 재고
-        priceText.SetText($"{selected.Price} <size=60%>COINS EACH</size>"); // 가격
+
+        if (selectedLock != null) // 잠김
+        {
+            stateChip.Bind(selectedLock, ProjectUUIPalette.TextSecondary, crateSprite); // 이유
+        }
+        else
+        {
+            stateChip.Bind(selected.SoldOut ? "SOLD OUT TODAY" : $"{selected.Remaining} LEFT TODAY", selected.SoldOut ? ProjectUUIPalette.Danger : ProjectUUIPalette.Teal, crateSprite); // 재고
+        }
+
+        string was = selectedUnit < selected.Price ? $"  <size=55%><color=#9A968C><s>{selected.Price}</s></color></size>" : string.Empty; // 할인 전 가격
+        priceText.SetText($"{selectedUnit} <size=60%>COINS EACH</size>{was}"); // 가격
         priceText.color = ProjectUUIPalette.Accent; // 색
         int inBag = inventory.GetItemQuantity(item); // 가방 수량
         noteText.SetText(inBag > 0 ? $"YOU HAVE {inBag} IN YOUR BAG" : "YOU DON'T HAVE ANY YET"); // 보조 안내
@@ -433,11 +585,66 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
         string reason = null; // 불가 이유
 
         if (selected.SoldOut) reason = "SOLD OUT"; // 품절
-        else if (!wallet.CanAfford(selected.Price * quantity)) reason = $"NEED {selected.Price * quantity - wallet.Coins} MORE COINS"; // 코인 부족
+        else if (selectedLock != null) reason = "LOCKED"; // 관계 단계 부족
+        else if (!wallet.CanAfford(cost)) reason = $"NEED {cost - wallet.Coins} MORE COINS"; // 코인 부족
         else if (!inventory.CanAddItem(item, quantity)) reason = "BAG IS FULL"; // 가방 부족
 
         buyButton.interactable = reason == null; // 가능 여부
         buyLabel.SetText(reason ?? $"BUY x{quantity}  ·  {cost}"); // 문구
+        minusButton.interactable = quantity > 1; // 감소
+        plusButton.interactable = quantity < max; // 증가
+    }
+
+    private void RebuildSell() // 92일차: 팔기 탭
+    {
+        selectedIndex = sellItems.Count == 0 ? 0 : Mathf.Clamp(selectedIndex, 0, sellItems.Count - 1); // 선택 보정
+        int left = vendor.BuybackLeftToday; // 오늘 매입 남은 수
+
+        for (int index = 0; index < sellItems.Count; index++) // 줄 그리기
+        {
+            ItemData item = sellItems[index]; // 아이템
+            int unit = vendor.GetBuybackPrice(item); // 매입 가격
+            int bin = market.GetQuote(item).UnitPrice; // 판매 상자 가격
+            string status = $"{inventory.GetItemQuantity(item)} IN BAG"; // 상태
+            if (unit > bin) status += $"  ·  +{Mathf.RoundToInt((unit / (float)bin - 1f) * 100f)}% VS BIN"; // 판매 상자보다 비쌈
+            GetRow(index).Bind(index, item, status, unit > bin ? ProjectUUIPalette.Accent : ProjectUUIPalette.Teal, unit, ProjectUUIPalette.Accent, index == selectedIndex, left <= 0, Select); // 표시
+        }
+
+        HideRowsFrom(sellItems.Count); // 남는 줄
+        emptyListText.gameObject.SetActive(sellItems.Count == 0); // 빈 목록
+        emptyListText.SetText("NOTHING IN YOUR BAG THIS SHOP BUYS"); // 문구
+        buyGroup.SetActive(true); // 판매 묶음
+        hintText.SetText($"BUYS: {vendor.BuyInfo}  ·  TAB: BUY"); // 안내
+
+        ItemData selected = SelectedSellItem; // 선택
+
+        if (selected == null) // 선택 없음
+        {
+            BindEmptyDetail("NOTHING TO SELL"); // 빈 상세
+            return; // 완료
+        }
+
+        int selectedUnit = vendor.GetBuybackPrice(selected); // 매입 가격
+        MarketPriceQuote quote = market.GetQuote(selected); // 판매 상자 가격
+        int inBag = inventory.GetItemQuantity(selected); // 가방 수량
+        int max = MaxSellQuantity(selected); // 최대 수량
+        quantity = Mathf.Clamp(quantity, 1, Mathf.Max(1, max)); // 수량 보정
+        BindItemDetail(selected); // 공통 상세
+        typeChip.Bind(GoodsLabel(quote.GoodsType), ProjectUUIPalette.TextSecondary, tagSprite); // 분류
+        string compare = selectedUnit > quote.UnitPrice ? $"BIN PAYS {quote.UnitPrice}  ·  HERE +{selectedUnit - quote.UnitPrice}" : selectedUnit == quote.UnitPrice ? "SAME AS SHIPPING BIN" : $"SHIPPING BIN PAYS {quote.UnitPrice}"; // 비교
+        stateChip.Bind(compare, selectedUnit >= quote.UnitPrice ? ProjectUUIPalette.Teal : ProjectUUIPalette.TextSecondary, coinSprite); // 판매 상자 비교
+        priceText.SetText($"{selectedUnit} <size=60%>COINS EACH</size>"); // 가격
+        priceText.color = ProjectUUIPalette.Accent; // 색
+        noteText.SetText($"BUYS {left} MORE TODAY  ·  YOU HAVE {inBag}"); // 보조 안내
+        quantityText.SetText($"x{quantity}"); // 수량
+
+        string reason = null; // 불가 이유
+
+        if (left <= 0) reason = "NO MORE BUYING TODAY"; // 오늘 매입 끝
+        else if (inBag <= 0) reason = "NONE IN YOUR BAG"; // 가방에 없음
+
+        buyButton.interactable = reason == null; // 가능 여부
+        buyLabel.SetText(reason ?? $"SELL x{quantity}  ·  +{selectedUnit * quantity}"); // 문구
         minusButton.interactable = quantity > 1; // 감소
         plusButton.interactable = quantity < max; // 증가
     }
@@ -465,7 +672,7 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
 
         if (priceEntries.Count == 0) // 목록 없음
         {
-            BindEmptyDetail(); // 빈 상세
+            BindEmptyDetail("NOTHING TO BUY"); // 빈 상세
             return; // 완료
         }
 
@@ -490,7 +697,7 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
         detailInfoText.SetText(item.Description); // 설명
     }
 
-    private void BindEmptyDetail() // 빈 상세
+    private void BindEmptyDetail(string buttonText) // 빈 상세
     {
         detailIcon.enabled = false; // 숨김
         detailNameText.SetText("NOTHING SELECTED"); // 이름
@@ -500,7 +707,7 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
         priceText.SetText(string.Empty); // 가격
         noteText.SetText(string.Empty); // 안내
         buyButton.interactable = false; // 구매 불가
-        buyLabel.SetText("NOTHING TO BUY"); // 문구
+        buyLabel.SetText(buttonText); // 문구
         minusButton.interactable = false; // 감소 불가
         plusButton.interactable = false; // 증가 불가
         quantityText.SetText("x0"); // 수량
@@ -552,7 +759,16 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
     private string TypeLabel(ItemData item) // 상인 물건 분류 문구
     {
         MarketPriceQuote quote = market.Catalog.GetQuote(item, market.CurrentSeason); // 가격표
-        return quote.Sellable ? GoodsLabel(quote.GoodsType) : item.ItemCategory == ItemCategory.Seed ? "SEED" : item.ItemCategory.ToString().ToUpperInvariant(); // 결과 반환
+
+        if (quote.Sellable) // 판매 상자 분류
+        {
+            return GoodsLabel(quote.GoodsType); // 결과 반환
+        }
+
+        if (item.IsTool) return "TOOL"; // 도구
+        if (item.IsWeapon) return "WEAPON"; // 무기
+        if (item.IsEquipment) return "GEAR"; // 장비
+        return item.ItemCategory == ItemCategory.Seed ? "SEED" : item.ItemCategory.ToString().ToUpperInvariant(); // 결과 반환
     }
 
     public static string GoodsLabel(MarketGoodsType type) // 분류 문구

@@ -51,6 +51,7 @@ public sealed class NpcManager : MonoBehaviour // 90일차: 마을 NPC 일정 �
     public int CurrentDayInSeason => seasonCycle != null ? seasonCycle.CurrentDayInSeason : 1; // 계절 안 날짜 제공 (91일차 생일)
     public WeatherType CurrentWeather => weatherCycle != null ? weatherCycle.CurrentWeather : WeatherType.Clear; // 날씨 제공
     public static bool HasStallMerchant => Instance != null && Instance.isActiveAndEnabled && Instance.FindAgent(Instance.stallMerchantId) != null; // 가판대 상인 NPC 여부
+    public NpcAgent StallMerchant => FindAgent(stallMerchantId); // 92일차: 가판대 상인 NPC (리첼)
 
     private void Awake() // 준비
     {
@@ -177,6 +178,22 @@ public sealed class NpcManager : MonoBehaviour // 90일차: 마을 NPC 일정 �
         }
 
         return lookup.TryGetValue(locationId ?? string.Empty, out point);
+    }
+
+    public SeasonType GetSeasonForDay(int day) // 92일차: 지정 날짜의 계절 (다음 영업일 · 불러오기 재고 계산)
+    {
+        int daysPerSeason = seasonCycle != null ? Mathf.Max(1, seasonCycle.DaysPerSeason) : 28;
+        return (SeasonType)((Mathf.Max(1, day) - 1) / daysPerSeason % 4);
+    }
+
+    public bool IsAnchorReady(NpcLocationPoint point) // 92일차: 위치가 따라가는 건축물이 있는지 (상인 가판대는 있어야 장사 가능)
+    {
+        if (point == null || point.Anchor != NpcLocationAnchor.MarketStall)
+        {
+            return point != null;
+        }
+
+        return cachedStall != null && cachedStall.isActiveAndEnabled; // 가판대 검색은 2초마다 (FindStructures)
     }
 
     public MarketStall GetStallFor(NpcAgent agent) // 가판대에 도착해 서 있는 상인 NPC면 그 가판대

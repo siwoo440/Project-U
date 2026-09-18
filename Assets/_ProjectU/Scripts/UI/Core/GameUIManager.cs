@@ -332,6 +332,17 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
             && OpenScenePopup(GamePopupType.Shop, () => shopPopup.ShowFromManager(this, stall, playerInventory)); // 결과 반환
     }
 
+    public bool OpenNpcShop(NpcAgent npc) // NPC 상점 창 열기 (92일차 : 87일차 상인 창 재사용)
+    {
+        NpcShopManager shops = NpcShopManager.Instance; // NPC 상점 관리자
+
+        return shopPopup != null
+            && npc != null
+            && shops != null
+            && shops.TryGetShop(npc.Character, out NpcShopData shop)
+            && OpenScenePopup(GamePopupType.Shop, () => shopPopup.ShowVendor(this, new NpcShopVendor(shops, shop, npc), playerInventory)); // 결과 반환
+    }
+
     public void CloseShop() // 상인 팝업 강제 종료 (87일차)
     {
         CloseScenePopup(GamePopupType.Shop, shopPopup); // 종료
@@ -562,6 +573,14 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
                 }
 
                 break; // 상인 처리 종료
+
+            case GamePopupType.Dialogue: // NPC 대화 창 상태 (92일차: 대화 창에서 상점 창으로 바로 넘어갈 때)
+                if (npcDialoguePopup != null) // 대화 창 확인
+                {
+                    npcDialoguePopup.HideFromManager(); // 대화 창 숨김
+                }
+
+                break; // 대화 처리 종료
         }
 
         currentPopupType = GamePopupType.None; // 현재 팝업 상태 초기화
@@ -642,6 +661,11 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
         if (shopPopup != null) // 상인 팝업 존재 확인
         {
             shopPopup.HideFromManager(); // 상인 팝업 숨김
+        }
+
+        if (npcDialoguePopup != null) // NPC 대화 창 존재 확인 (92일차)
+        {
+            npcDialoguePopup.HideFromManager(); // 대화 창 숨김
         }
 
         currentPopupType = GamePopupType.None; // 현재 팝업 상태 초기화

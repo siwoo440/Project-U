@@ -107,6 +107,17 @@ public sealed class NpcRelationshipManager : MonoBehaviour // 91일차: NPC 호�
     public AffinityStage GetStage(NpcCharacterData character) => database != null ? database.GetStage(GetAffinity(character)) : AffinityStage.Uninterested; // 단계
     public bool HasMet(NpcCharacterData character) => GetState(character)?.met ?? false; // 만남 여부
 
+    public AffinityStage PeekStage(NpcCharacterData character) // 92일차: 관계 기록을 새로 만들지 않고 단계만 확인 (상점 할인용)
+    {
+        if (character == null || database == null)
+        {
+            return AffinityStage.Uninterested;
+        }
+
+        int affinity = lookup.TryGetValue(character.CharacterId, out NpcRelationshipSaveData state) ? state.affinity : character.DefaultAffinity;
+        return database.GetStage(affinity);
+    }
+
     public bool HasTalkedToday(NpcCharacterData character, int day) // 오늘 대화 점수를 받았는지
     {
         NpcRelationshipSaveData state = GetState(character);

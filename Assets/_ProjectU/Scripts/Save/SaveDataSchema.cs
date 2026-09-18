@@ -61,6 +61,10 @@ public sealed class SaveGameData // 전체 저장 파일 최상위 데이터
     public bool hasNpcData; // NPC 저장 여부
     [Tooltip("NPC별 만남 · 호감도 · 하루 대화·선물 기록.")]
     public NpcSaveData npc = new NpcSaveData(); // NPC 관계
+    [Tooltip("NPC 상점 저장 데이터 존재 여부. (92일차)")]
+    public bool hasNpcShopData; // NPC 상점 저장 여부
+    [Tooltip("NPC 상점별 오늘 재고 · 매입 기록 · 거래 합계.")]
+    public NpcShopSaveData npcShops = new NpcShopSaveData(); // NPC 상점
 
     public static SaveGameData CreateNew(string newSceneName) // 새로운 저장 데이터 생성
     {

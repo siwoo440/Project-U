@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-// 90일차: NPC 테스트 메뉴 (Play 중에만) / 91일차: 호감도 · 선물 테스트
+// 90일차: NPC 테스트 메뉴 (Play 중에만) / 91일차: 호감도 · 선물 테스트 / 92일차: NPC 상점 테스트
 public static class NpcDebugMenu
 {
     private const string MenuRoot = "Tools/Project U/Debug (Play Mode)/NPC/";
@@ -79,7 +79,55 @@ public static class NpcDebugMenu
         Debug.Log("모든 NPC 관계를 처음 상태로 되돌렸습니다.");
     }
 
+    [MenuItem(MenuRoot + "Log NPC Shops", false, 110)]
+    private static void LogShops()
+    {
+        Debug.Log(NpcShopManager.Instance.Describe());
+    }
+
+    [MenuItem(MenuRoot + "Refresh NPC Shop Stock (Today)", false, 111)]
+    private static void RefreshShops()
+    {
+        NpcShopManager.Instance.RefreshAll(NpcShopManager.Instance.CurrentDay);
+        Debug.Log(NpcShopManager.Instance.Describe());
+    }
+
+    [MenuItem(MenuRoot + "Open Nearest NPC Shop", false, 112)]
+    private static void OpenNearestShop()
+    {
+        NpcAgent npc = FindNearestWhere(agent => NpcShopManager.Instance.TryGetShop(agent.Character, out _));
+
+        if (npc == null || !NpcShopManager.Instance.TryGetShop(npc.Character, out NpcShopData shop))
+        {
+            Debug.LogWarning("상점 주인 NPC가 없습니다.");
+            return;
+        }
+
+        NpcShopStatus status = NpcShopManager.Instance.GetStatus(shop, npc);
+
+        if (!status.IsOpen)
+        {
+            Debug.Log($"{npc.DisplayName} : {status.Reason} (오늘 {status.TodayHours})");
+            return;
+        }
+
+        Object.FindFirstObjectByType<GameUIManager>().OpenNpcShop(npc);
+    }
+
+    [MenuItem(MenuRoot + "Log NPC Shops", true)]
+    [MenuItem(MenuRoot + "Refresh NPC Shop Stock (Today)", true)]
+    [MenuItem(MenuRoot + "Open Nearest NPC Shop", true)]
+    private static bool CanUseShops()
+    {
+        return EditorApplication.isPlaying && NpcManager.Instance != null && NpcShopManager.Instance != null;
+    }
+
     private static NpcAgent FindNearest() // 플레이어와 가장 가까운 NPC
+    {
+        return FindNearestWhere(agent => true);
+    }
+
+    private static NpcAgent FindNearestWhere(System.Predicate<NpcAgent> match) // 조건에 맞는 가장 가까운 NPC
     {
         Transform player = Object.FindFirstObjectByType<PlayerInventory>().transform;
         NpcAgent nearest = null;
@@ -87,7 +135,7 @@ public static class NpcDebugMenu
 
         foreach (NpcAgent agent in NpcManager.Instance.Agents)
         {
-            if (agent == null)
+            if (agent == null || !match(agent))
             {
                 continue;
             }

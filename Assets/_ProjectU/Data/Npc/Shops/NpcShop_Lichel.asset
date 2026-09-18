@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 862bff83c5e89624b8b5daae52fdb7f1, type: 3}
+  m_Name: NpcShop_Lichel
+  m_EditorClassIdentifier: Assembly-CSharp::NpcShopData
+  shopId: shop_lichel
+  ownerId: char_lichel
+  shopName: "\uB5A0\uB3CC\uC774 \uC0C1\uC810"
+  openLocationIds:
+  - loc_market_stall
+  stock:
+  - item: {fileID: 11400000, guid: de7994a6b3b2dcc479cd72a544075a60, type: 2}
+    price: 6
+    dailyStock: 12
+    seasons: 00000000
+    dailyChance: 1
+    requiredStage: 0
+  - item: {fileID: 11400000, guid: aaca232007164504cbd41b9a9b8cbefb, type: 2}
+    price: 8
+    dailyStock: 12
+    seasons: 00000000
+    dailyChance: 1
+    requiredStage: 0
+  - item: {fileID: 11400000, guid: ed2ff3bcb0baa3743bf8df1264f8d60f, type: 2}
+    price: 8
+    dailyStock: 12
+    seasons: 01000000
+    dailyChance: 1
+    requiredStage: 0
+  - item: {fileID: 11400000, guid: b452886093be83d44a997c06ab4f6f18, type: 2}
+    price: 14
+    dailyStock: 12
+    seasons: 02000000
+    dailyChance: 1
+    requiredStage: 0
+  - item: {fileID: 11400000, guid: 9139b198cba79454cbbb676d851141c5, type: 2}
+    price: 9
+    dailyStock: 12
+    seasons: 03000000
+    dailyChance: 1
+    requiredStage: 0
+  - item: {fileID: 11400000, guid: d59c8cdf23a10a44f9a57f150743b58a, type: 2}
+    price: 3
+    dailyStock: 30
+    seasons: 
+    dailyChance: 1
+    requiredStage: 0
+  - item: {fileID: 11400000, guid: f82cfee3161243747ad3a92e8c7418ba, type: 2}
+    price: 2
+    dailyStock: 20
+    seasons: 
+    dailyChance: 1
+    requiredStage: 0
+  - item: {fileID: 11400000, guid: 2e83945f5dda2f34bb4e993074cfc81c, type: 2}
+    price: 18
+    dailyStock: 3
+    seasons: 
+    dailyChance: 1
+    requiredStage: 0
+  - item: {fileID: 11400000, guid: 1132e66db22cdae448d0dfb6dec7e8c1, type: 2}
+    price: 2
+    dailyStock: 20
+    seasons: 
+    dailyChance: 0.5
+    requiredStage: 0
+  - item: {fileID: 11400000, guid: 28689924401732340b18d9b6429728b1, type: 2}
+    price: 60
+    dailyStock: 1
+    seasons: 
+    dailyChance: 0.25
+    requiredStage: 0
+  - item: {fileID: 11400000, guid: ced6962cfb3b9a249aadbf41f4f53d78, type: 2}
+    price: 35
+    dailyStock: 1
+    seasons: 
+    dailyChance: 0.3
+    requiredStage: 1
+  - item: {fileID: 11400000, guid: f256d7e940b86444db7d46375d22f42c, type: 2}
+    price: 450
+    dailyStock: 1
+    seasons: 
+    dailyChance: 0.15
+    requiredStage: 0
+  stockSeed: 3303
+  discountByStage: 0000000000000000050000000a0000000f000000
+  buyRules:
+  - item: {fileID: 0}
+    anyGoods: 1
+    goodsType: 0
+    multiplier: 0.8
+  dailyBuyLimit: 40
+  greetings:
+  - "\uD765~ \uC624\uB298 \uBB3C\uAC74\uC740 \uC624\uB298\uB9CC\uC774\uC57C. \uC798
+    \uACE8\uB77C \uBD10."
+  - "\uD314 \uAC70 \uC788\uC5B4? \uBB50\uB4E0 \uC0AC \uC904\uAC8C. \uAC12\uC740\u2026
+    \uC870\uAE08 \uAE4E\uC544\uC11C."
+  - "\uC528\uC557\uC740 \uACC4\uC808\uB9C8\uB2E4 \uBC14\uB00C\uC5B4. \uC9C0\uAE08
+    \uC548 \uC0AC\uBA74 \uD6C4\uD68C\uD55C\uB2E4?"
+  farewell: "\uC624\uB298 \uC7A5\uC0AC \uB05D! \uB0B4\uC77C \uB610 \uC640, \uD765."

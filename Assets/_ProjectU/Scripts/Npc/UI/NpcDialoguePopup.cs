@@ -53,6 +53,7 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
     private PlayerInventory inventory; // 인벤토리
     private Transform player; // 플레이어
     private List<string> talkLines = new List<string>(); // 대화하기 대사
+    private TMP_Text tradeLabel; // 거래 버튼 문구 (92일차: 닫힘 표시)
     private float visibleCharacters; // 보이는 글자 수
     private float messageHideTime; // 알림 숨김 시각
 
@@ -63,6 +64,7 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
     public bool IsGiftPanelOpen => giftPanel != null && giftPanel.activeSelf; // 선물 창 여부 (테스트용)
     public IReadOnlyList<NpcGiftSlotUI> GiftSlots => giftSlots; // 선물 칸 (테스트용)
     public bool CanTrade => tradeButton != null && tradeButton.gameObject.activeSelf; // 거래 버튼 여부 (테스트용)
+    public string TradeLabel => tradeLabel != null ? tradeLabel.text : string.Empty; // 거래 버튼 문구 (테스트용)
 
     private void Awake() // 버튼 연결
     {
@@ -267,10 +269,34 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
         return true;
     }
 
-    public void Trade() // 거래 (가판대에 서 있는 상인)
+    public void Trade() // 거래 (92일차: NPC 상점 · 영업 시간이 아니면 이유 안내 / 91일차: 가판대 상인)
     {
         if (!IsOpen)
         {
+            return;
+        }
+
+        NpcShopManager shops = NpcShopManager.Instance;
+
+        if (shops != null && shops.TryGetShop(agent.Character, out NpcShopData shop))
+        {
+            NpcShopStatus status = shops.GetStatus(shop, agent);
+
+            if (!status.IsOpen)
+            {
+                FinishTyping();
+                ShowMessage($"{status.Reason}\n오늘 영업 : {status.TodayHours}", ProjectUUIPalette.TextSecondary);
+                return;
+            }
+
+            GameUIManager owner = manager;
+            NpcAgent shopOwner = agent;
+
+            if (owner == null || !owner.OpenNpcShop(shopOwner)) // 대화 창을 숨기고 상점 창으로 바로 넘어감
+            {
+                ShowMessage("상점 창을 열 수 없어요. Build Content > 10. NPC Shops를 실행하세요.", ProjectUUIPalette.Danger);
+            }
+
             return;
         }
 
@@ -351,7 +377,21 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
 
         if (tradeButton != null)
         {
-            tradeButton.gameObject.SetActive(npcManager.GetStallFor(agent) != null);
+            NpcShopManager shops = NpcShopManager.Instance;
+            NpcShopData shop = null;
+            bool hasShop = shops != null && shops.TryGetShop(character, out shop);
+            bool open = hasShop ? shops.GetStatus(shop, agent).IsOpen : npcManager.GetStallFor(agent) != null;
+            tradeButton.gameObject.SetActive(hasShop || open); // 92일차: 상점 주인은 영업 시간이 아니어도 버튼을 보여 주고 이유를 안내
+
+            if (tradeLabel == null)
+            {
+                tradeLabel = tradeButton.GetComponentInChildren<TMP_Text>(true);
+            }
+
+            if (tradeLabel != null)
+            {
+                tradeLabel.text = open ? "거래" : "거래 (닫힘)";
+            }
         }
     }
 
