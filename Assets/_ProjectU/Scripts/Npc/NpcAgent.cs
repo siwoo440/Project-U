@@ -1,0 +1,328 @@
+using TMPro; // TextMeshPro 기능
+using UnityEngine; // Unity 기본 기능
+using UnityEngine.AI; // NavMesh 이동
+
+[DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
+[RequireComponent(typeof(NavMeshAgent))] // 길찾기 이동
+public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (일정 위치로 걷기 · 이름표 · 말풍선 · 집 안 들어가기)
+{
+    [Header("Data")] // 데이터
+    [Tooltip("캐릭터 데이터.")]
+    [SerializeField] private NpcCharacterData character; // 캐릭터
+
+    [Header("Parts")] // 구성 요소
+    [Tooltip("저폴리 모델 (걷기 흔들림 · 집 안에서 숨김).")]
+    [SerializeField] private Transform model; // 모델
+    [Tooltip("머리 위 이름표.")]
+    [SerializeField] private TMP_Text nameTag; // 이름표
+    [Tooltip("말풍선.")]
+    [SerializeField] private TMP_Text speech; // 말풍선
+    [Tooltip("몸 충돌체 (상호작용 탐지).")]
+    [SerializeField] private Collider bodyCollider; // 충돌체
+
+    [Header("Motion")] // 움직임
+    [Tooltip("걷는 속도 (m/s).")]
+    [SerializeField, Min(0.2f)] private float walkSpeed = 2.2f; // 걷기 속도
+    [Tooltip("이 거리 안에 오면 도착으로 봅니다.")]
+    [SerializeField, Min(0.05f)] private float arriveDistance = 0.35f; // 도착 거리
+    [Tooltip("이 거리 안에 플레이어가 오면 바라봅니다.")]
+    [SerializeField, Min(0f)] private float lookDistance = 4.5f; // 바라보기 거리
+    [Tooltip("이름표가 보이는 거리.")]
+    [SerializeField, Min(1f)] private float nameTagDistance = 14f; // 이름표 거리
+    [Tooltip("길이 막혀 이 시간(초) 동안 움직이지 못하면 목적지로 옮깁니다.")]
+    [SerializeField, Min(0.5f)] private float stuckSeconds = 4f; // 막힘 시간
+
+    [Header("Runtime")] // 실행 상태
+    [SerializeField] private string currentLocationId; // 현재 위치 ID
+    [SerializeField] private string currentActivity; // 하는 일
+    [SerializeField] private bool isInside; // 집 안 여부
+    [SerializeField] private bool arrived = true; // 도착 여부
+
+    private NavMeshAgent agent; // 길찾기
+    private Transform player; // 플레이어
+    private Transform viewCamera; // 카메라
+    private Vector3 targetPosition; // 목적지
+    private Quaternion targetFacing = Quaternion.identity; // 도착 후 방향
+    private bool hideOnArrival; // 도착하면 집 안으로
+    private float speechTimer; // 말풍선 남은 시간
+    private float stuckTimer; // 막힘 시간
+    private float motionTime; // 걷기·숨쉬기 시간
+    private Vector3 modelBasePosition; // 모델 기본 위치
+    private Vector3 modelBaseScale = Vector3.one; // 모델 기본 크기
+
+    public NpcCharacterData Character => character; // 캐릭터 제공
+    public string CharacterId => character != null ? character.CharacterId : string.Empty; // ID 제공
+    public string DisplayName => character != null ? character.DisplayName : name; // 이름 제공
+    public string CurrentLocationId => currentLocationId; // 위치 제공
+    public string CurrentActivity => currentActivity; // 하는 일 제공
+    public NpcLocationPoint CurrentPoint { get; private set; } // 위치 지점 제공
+    public bool IsInside => isInside; // 집 안 여부 제공
+    public bool HasArrived => arrived; // 도착 여부 제공
+    public Vector3 TargetPosition => targetPosition; // 목적지 제공
+    public string StopKey { get; set; } // 관리자가 쓰는 현재 일정 칸 키
+
+    private void Awake() // 준비
+    {
+        agent = GetComponent<NavMeshAgent>();
+        agent.speed = walkSpeed;
+        agent.stoppingDistance = Mathf.Min(arriveDistance, 0.2f);
+        agent.autoBraking = true;
+
+        if (model != null)
+        {
+            modelBasePosition = model.localPosition;
+            modelBaseScale = model.localScale;
+        }
+
+        motionTime = (GetInstanceID() & 1023) * 0.013f; // NPC마다 다른 박자
+        targetPosition = transform.position;
+        targetFacing = transform.rotation;
+
+        if (speech != null)
+        {
+            speech.gameObject.SetActive(false);
+        }
+    }
+
+    public void GoTo(NpcLocationPoint point, Vector3 position, Quaternion facing, string activity, bool hideWhenArrived, bool snap) // 일정 위치로 이동
+    {
+        CurrentPoint = point;
+        currentLocationId = point != null ? point.LocationId : string.Empty;
+        currentActivity = activity;
+        hideOnArrival = hideWhenArrived;
+        targetFacing = facing;
+        targetPosition = NavMesh.SamplePosition(position, out NavMeshHit hit, 2.5f, NavMesh.AllAreas) ? hit.position : position;
+        stuckTimer = 0f;
+
+        if (snap || !agent.isOnNavMesh)
+        {
+            Arrive(true);
+            return;
+        }
+
+        SetInside(false);
+        arrived = false;
+        agent.isStopped = false;
+
+        if (!agent.SetDestination(targetPosition))
+        {
+            Arrive(true); // 길을 못 찾으면 바로 옮김
+        }
+    }
+
+    public void Say(string text, float seconds) // 말풍선 표시
+    {
+        if (speech == null || isInside || string.IsNullOrEmpty(text))
+        {
+            return;
+        }
+
+        speech.text = $"<mark=#1C1C20D0 padding=\"14,14,6,6\">{text}</mark>";
+        speech.gameObject.SetActive(true);
+        speechTimer = Mathf.Max(1f, seconds);
+    }
+
+    public void FaceTowards(Vector3 worldPosition) // 말을 건 사람 바라보기
+    {
+        Vector3 direction = worldPosition - transform.position;
+        direction.y = 0f;
+
+        if (direction.sqrMagnitude > 0.01f)
+        {
+            transform.rotation = Quaternion.LookRotation(direction);
+        }
+    }
+
+    private void Update() // 도착 확인 · 방향 · 걷기 흔들림
+    {
+        float deltaTime = Time.deltaTime;
+
+        if (!arrived && agent.isOnNavMesh && !agent.pathPending)
+        {
+            if (agent.pathStatus == NavMeshPathStatus.PathInvalid)
+            {
+                Arrive(true);
+            }
+            else if (agent.remainingDistance <= arriveDistance)
+            {
+                Arrive(false);
+            }
+            else if (agent.velocity.sqrMagnitude < 0.01f)
+            {
+                stuckTimer += deltaTime;
+
+                if (stuckTimer >= stuckSeconds)
+                {
+                    Arrive(true); // 막혀 있으면 목적지로 옮김
+                }
+            }
+            else
+            {
+                stuckTimer = 0f;
+            }
+        }
+
+        if (arrived && !isInside)
+        {
+            Quaternion desired = targetFacing;
+            Transform target = FindPlayer();
+
+            if (target != null)
+            {
+                Vector3 toPlayer = target.position - transform.position;
+                toPlayer.y = 0f;
+
+                if (toPlayer.sqrMagnitude <= lookDistance * lookDistance && toPlayer.sqrMagnitude > 0.04f)
+                {
+                    desired = Quaternion.LookRotation(toPlayer);
+                }
+            }
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, desired, 1f - Mathf.Exp(-6f * deltaTime));
+        }
+
+        AnimateModel(deltaTime);
+
+        if (speechTimer > 0f)
+        {
+            speechTimer -= deltaTime;
+
+            if (speechTimer <= 0f && speech != null)
+            {
+                speech.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    private void LateUpdate() // 이름표·말풍선이 카메라를 향하게
+    {
+        if (viewCamera == null)
+        {
+            Camera main = Camera.main;
+            viewCamera = main != null ? main.transform : null;
+        }
+
+        if (viewCamera == null)
+        {
+            return;
+        }
+
+        Transform target = FindPlayer();
+        bool nearby = target != null && (target.position - transform.position).sqrMagnitude <= nameTagDistance * nameTagDistance;
+
+        if (nameTag != null)
+        {
+            bool show = nearby && !isInside;
+
+            if (nameTag.gameObject.activeSelf != show)
+            {
+                nameTag.gameObject.SetActive(show);
+            }
+
+            if (show)
+            {
+                nameTag.transform.rotation = Quaternion.LookRotation(nameTag.transform.position - viewCamera.position);
+            }
+        }
+
+        if (speech != null && speech.gameObject.activeSelf)
+        {
+            speech.transform.rotation = Quaternion.LookRotation(speech.transform.position - viewCamera.position);
+        }
+    }
+
+    private void Arrive(bool warp) // 도착 처리
+    {
+        if (warp && agent.isOnNavMesh)
+        {
+            agent.Warp(targetPosition);
+        }
+        else if (warp)
+        {
+            transform.position = targetPosition;
+        }
+
+        if (agent.isOnNavMesh)
+        {
+            agent.ResetPath();
+        }
+
+        if (warp)
+        {
+            transform.rotation = targetFacing;
+        }
+
+        arrived = true;
+        stuckTimer = 0f;
+        SetInside(hideOnArrival);
+    }
+
+    private void SetInside(bool inside) // 집 안으로 들어가기 (보이지 않음)
+    {
+        isInside = inside;
+
+        if (model != null && model.gameObject.activeSelf == inside)
+        {
+            model.gameObject.SetActive(!inside);
+        }
+
+        if (bodyCollider != null)
+        {
+            bodyCollider.enabled = !inside;
+        }
+
+        if (inside && speech != null)
+        {
+            speech.gameObject.SetActive(false);
+            speechTimer = 0f;
+        }
+    }
+
+    private void AnimateModel(float deltaTime) // 걷기 흔들림 · 숨쉬기
+    {
+        if (model == null || isInside)
+        {
+            return;
+        }
+
+        float speed = agent.velocity.magnitude;
+        motionTime += deltaTime * (speed > 0.1f ? 7.5f : 2f);
+
+        if (speed > 0.1f)
+        {
+            float bob = Mathf.Abs(Mathf.Sin(motionTime)) * 0.045f;
+            model.localPosition = modelBasePosition + Vector3.up * bob;
+            model.localRotation = Quaternion.Euler(0f, 0f, Mathf.Sin(motionTime) * 3f);
+            model.localScale = modelBaseScale;
+        }
+        else
+        {
+            float breath = 1f + Mathf.Sin(motionTime) * 0.012f;
+            model.localPosition = modelBasePosition;
+            model.localRotation = Quaternion.identity;
+            model.localScale = new Vector3(modelBaseScale.x, modelBaseScale.y * breath, modelBaseScale.z);
+        }
+    }
+
+    private Transform FindPlayer() // 플레이어 찾기
+    {
+        if (player == null)
+        {
+            PlayerInventory inventory = FindFirstObjectByType<PlayerInventory>();
+            player = inventory != null ? inventory.transform : null;
+        }
+
+        return player;
+    }
+
+#if UNITY_EDITOR
+    public void EditorAssign(NpcCharacterData data, Transform modelRoot, TMP_Text tag, TMP_Text bubble, Collider body) // 생성 도구 전용
+    {
+        character = data;
+        model = modelRoot;
+        nameTag = tag;
+        speech = bubble;
+        bodyCollider = body;
+    }
+#endif
+}

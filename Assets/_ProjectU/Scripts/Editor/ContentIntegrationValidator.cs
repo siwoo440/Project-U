@@ -87,6 +87,7 @@ public static class ContentIntegrationValidator
             ("가축", Feature(LivestockContentBuilder.Validate)),
             ("판매·상점", Feature(MarketContentBuilder.Validate)),
             ("NPC", Feature(NpcContentBuilder.Validate)),
+            ("NPC 마을 배치", Feature(NpcPlacementBuilder.Validate)),
             ("아이템 데이터 (ID 규칙)", ItemDataValidator.ValidateAllItemData),
             ("Game Data Registry", () => CountLoggedErrors(GameDataRegistryEditor.ValidateDefaultRegistry, details))
         };

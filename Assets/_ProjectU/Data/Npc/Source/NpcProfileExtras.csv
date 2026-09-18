@@ -10,7 +10,7 @@ char_ragh,FALSE,Summer,11,,
 char_arachne,FALSE,Autumn,18,,
 char_mireille,TRUE,Spring,25,loc_home_mireille,loc_animal_pens
 char_erina,FALSE,Winter,25,,
-char_milky,TRUE,Winter,8,loc_home_milky,loc_cafe
+char_milky,TRUE,Winter,8,loc_home_milky,loc_cafe_counter
 char_lilica,FALSE,Spring,6,,
 char_milu,FALSE,Summer,13,,
 char_harka,FALSE,Autumn,20,,
@@ -22,7 +22,7 @@ char_chesca,FALSE,Summer,15,,
 char_lanhua,FALSE,Autumn,22,,
 char_noctia,FALSE,Winter,3,,
 char_seira,FALSE,Spring,10,,
-char_dravia,TRUE,Summer,5,loc_home_dravia,loc_smithy
+char_dravia,TRUE,Summer,5,loc_home_dravia,loc_smithy_anvil
 char_marielle,FALSE,Summer,17,,
 char_censia,FALSE,Autumn,24,,
 char_ravenna,FALSE,Winter,5,,

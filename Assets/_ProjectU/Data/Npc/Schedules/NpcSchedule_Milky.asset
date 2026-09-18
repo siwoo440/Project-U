@@ -24,7 +24,7 @@ MonoBehaviour:
       locationId: loc_home_milky
       activity: "\uC6B0\uC720 \uB370\uC6B0\uAE30"
     - hour: 8
-      locationId: loc_cafe
+      locationId: loc_cafe_counter
       activity: "\uCE74\uD398 \uC601\uC5C5"
     - hour: 18
       locationId: loc_village_square
@@ -66,7 +66,7 @@ MonoBehaviour:
       locationId: loc_home_milky
       activity: "\uC6B0\uC720 \uB370\uC6B0\uAE30"
     - hour: 8
-      locationId: loc_cafe
+      locationId: loc_cafe_counter
       activity: "\uBE44 \uC624\uB294 \uB0A0 \uC601\uC5C5"
     - hour: 19
       locationId: loc_home_milky

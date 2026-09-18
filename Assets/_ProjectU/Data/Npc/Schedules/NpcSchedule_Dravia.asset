@@ -24,13 +24,13 @@ MonoBehaviour:
       locationId: loc_home_dravia
       activity: "\uD654\uB85C \uC608\uC5F4"
     - hour: 9
-      locationId: loc_smithy
+      locationId: loc_smithy_anvil
       activity: "\uB300\uC7A5\uAC04 \uC601\uC5C5"
     - hour: 13
       locationId: loc_cafe
       activity: "\uB9E4\uC6B4 \uC810\uC2EC"
     - hour: 14
-      locationId: loc_smithy
+      locationId: loc_smithy_anvil
       activity: "\uB300\uC7A5\uAC04 \uC601\uC5C5"
     - hour: 18
       locationId: loc_village_square
@@ -69,7 +69,7 @@ MonoBehaviour:
       locationId: loc_home_dravia
       activity: "\uD654\uB85C \uC608\uC5F4"
     - hour: 9
-      locationId: loc_smithy
+      locationId: loc_smithy_anvil
       activity: "\uBE44 \uC624\uB294 \uB0A0 \uC81C\uB828"
     - hour: 18
       locationId: loc_home_dravia

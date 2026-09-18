@@ -62,7 +62,7 @@ char_mireille,rain,10,All,All,Bad,10,loc_home_mireille,뜨개질
 char_mireille,rain,10,All,All,Bad,15,loc_animal_pens,가축 달래기
 char_mireille,rain,10,All,All,Bad,18,loc_home_mireille,휴식
 char_milky,default,0,All,All,Any,6,loc_home_milky,우유 데우기
-char_milky,default,0,All,All,Any,8,loc_cafe,카페 영업
+char_milky,default,0,All,All,Any,8,loc_cafe_counter,카페 영업
 char_milky,default,0,All,All,Any,18,loc_village_square,저녁 산책
 char_milky,default,0,All,All,Any,20,loc_home_milky,가게 정리
 char_milky,default,0,All,All,Any,22,loc_home_milky,잠
@@ -72,12 +72,12 @@ char_milky,rest,5,Wednesday,All,Any,13,loc_market_stall,장보기
 char_milky,rest,5,Wednesday,All,Any,16,loc_village_square,산책
 char_milky,rest,5,Wednesday,All,Any,19,loc_home_milky,새 메뉴 연습
 char_milky,rain,10,Monday|Tuesday|Thursday|Friday|Saturday|Sunday,All,Bad,6,loc_home_milky,우유 데우기
-char_milky,rain,10,Monday|Tuesday|Thursday|Friday|Saturday|Sunday,All,Bad,8,loc_cafe,비 오는 날 영업
+char_milky,rain,10,Monday|Tuesday|Thursday|Friday|Saturday|Sunday,All,Bad,8,loc_cafe_counter,비 오는 날 영업
 char_milky,rain,10,Monday|Tuesday|Thursday|Friday|Saturday|Sunday,All,Bad,19,loc_home_milky,가게 정리
 char_dravia,default,0,All,All,Any,7,loc_home_dravia,화로 예열
-char_dravia,default,0,All,All,Any,9,loc_smithy,대장간 영업
+char_dravia,default,0,All,All,Any,9,loc_smithy_anvil,대장간 영업
 char_dravia,default,0,All,All,Any,13,loc_cafe,매운 점심
-char_dravia,default,0,All,All,Any,14,loc_smithy,대장간 영업
+char_dravia,default,0,All,All,Any,14,loc_smithy_anvil,대장간 영업
 char_dravia,default,0,All,All,Any,18,loc_village_square,저녁 산책
 char_dravia,default,0,All,All,Any,21,loc_home_dravia,잠
 char_dravia,rest,5,Sunday,All,Any,8,loc_home_dravia,늦잠
@@ -86,7 +86,7 @@ char_dravia,rest,5,Sunday,All,Any,15,loc_pond_dock,물가에서 쉬기
 char_dravia,rest,5,Sunday,All,Any,18,loc_cafe,저녁
 char_dravia,rest,5,Sunday,All,Any,21,loc_home_dravia,잠
 char_dravia,rain,10,Monday|Tuesday|Wednesday|Thursday|Friday|Saturday,All,Bad,7,loc_home_dravia,화로 예열
-char_dravia,rain,10,Monday|Tuesday|Wednesday|Thursday|Friday|Saturday,All,Bad,9,loc_smithy,비 오는 날 제련
+char_dravia,rain,10,Monday|Tuesday|Wednesday|Thursday|Friday|Saturday,All,Bad,9,loc_smithy_anvil,비 오는 날 제련
 char_dravia,rain,10,Monday|Tuesday|Wednesday|Thursday|Friday|Saturday,All,Bad,18,loc_home_dravia,쉬기
 char_lichel,default,0,All,All,Any,5,loc_lichel_camp,짐 정리
 char_lichel,default,0,All,All,Any,6,loc_market_stall,떠돌이 상점

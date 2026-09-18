@@ -91,7 +91,11 @@ public enum StylizedColor
     Straw = 115,
     Egg = 116,
     Yolk = 117,
-    Grain = 118
+    Grain = 118,
+    // 90일차: NPC 색 칸 (NpcAppearance가 NPC마다 캐릭터 시트 색으로 덮어씀)
+    NpcOutfit = 120,
+    NpcAccent = 121,
+    NpcHair = 122
 }
 
 public static class StylizedPalette
@@ -200,6 +204,9 @@ public static class StylizedPalette
             case StylizedColor.Egg: return new Entry(Hex(0xF3E6CF), 0.45f);
             case StylizedColor.Yolk: return new Entry(Hex(0xF5B42A), 0.6f);
             case StylizedColor.Grain: return new Entry(Hex(0xB98E4B));
+            case StylizedColor.NpcOutfit: return new Entry(Hex(0x8FA7C4));
+            case StylizedColor.NpcAccent: return new Entry(Hex(0xE9DDC0));
+            case StylizedColor.NpcHair: return new Entry(Hex(0x5A3A26));
             default: return new Entry(Color.magenta);
         }
     }

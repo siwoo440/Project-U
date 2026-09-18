@@ -106,7 +106,7 @@ MonoBehaviour:
   birthdaySeason: 3
   birthdayDay: 8
   homeLocationId: loc_home_milky
-  workLocationId: loc_cafe
+  workLocationId: loc_cafe_counter
   giftProfile: {fileID: 11400000, guid: fa33b2b457a291e4d810ed2a0ce13e0a, type: 2}
   dialogueSet: {fileID: 11400000, guid: c9dff0b8d949ede4e9eb41c0fe755424, type: 2}
   schedule: {fileID: 11400000, guid: f8d5b9b11c65dea47ac39375f2ef947e, type: 2}

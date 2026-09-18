@@ -85,7 +85,7 @@ MonoBehaviour:
   birthdaySeason: 1
   birthdayDay: 5
   homeLocationId: loc_home_dravia
-  workLocationId: loc_smithy
+  workLocationId: loc_smithy_anvil
   giftProfile: {fileID: 11400000, guid: e6d7517114846b148ac59f62444f7cec, type: 2}
   dialogueSet: {fileID: 11400000, guid: f6edfa35ea7c57e46be5ffea43d8daa9, type: 2}
   schedule: {fileID: 11400000, guid: 50ba0fa03b3067a4da5807cbdf3c0ec7, type: 2}

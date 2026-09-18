@@ -70,10 +70,16 @@ MonoBehaviour:
     description: "\uC57D\uCD08\uAC00 \uC790\uB77C\uB294 \uC232 \uC785\uAD6C"
   - locationId: loc_cafe
     displayName: "\uC120\uC14B \uCE74\uD398"
-    description: "\uBC00\uD0A4\uC758 \uCE74\uD398 (90\uC77C\uCC28 \uAC74\uBB3C)"
+    description: "\uCE74\uD398 \uCE74\uC6B4\uD130 \uC55E (\uC190\uB2D8 \uC790\uB9AC)"
+  - locationId: loc_cafe_counter
+    displayName: "\uCE74\uD398 \uCE74\uC6B4\uD130"
+    description: "\uCE74\uC6B4\uD130 \uC548\uCABD (\uBC00\uD0A4 \uC790\uB9AC)"
   - locationId: loc_smithy
     displayName: "\uB300\uC7A5\uAC04"
-    description: "\uB4DC\uB77C\uBE44\uC544\uC758 \uD654\uB85C (90\uC77C\uCC28 \uAC74\uBB3C)"
+    description: "\uB300\uC7A5\uAC04 \uC55E (\uC190\uB2D8 \uC790\uB9AC)"
+  - locationId: loc_smithy_anvil
+    displayName: "\uB300\uC7A5\uAC04 \uBAA8\uB8E8"
+    description: "\uBAA8\uB8E8 \uB4A4 (\uB4DC\uB77C\uBE44\uC544 \uC790\uB9AC)"
   - locationId: loc_home_lunette
     displayName: "\uB8E8\uB124\uD2B8\uC758 \uC624\uB450\uB9C9"
     description: "\uC232 \uAC00\uC7A5\uC790\uB9AC \uADFC\uCC98 \uC791\uC740 \uC624\uB450\uB9C9"

@@ -64,7 +64,7 @@ public sealed class MarketStall : InteractableBase // 87일차: 떠돌이 상인
             return; // 생략
         }
 
-        bool open = IsOpen; // 영업 여부
+        bool open = IsOpen && !NpcManager.HasStallMerchant; // 영업 여부 (90일차: 마을 NPC 리첼이 가판대에 서면 기본 상인 모델은 숨김)
 
         if (merchant.gameObject.activeSelf != open) // 표시 전환
         {
