@@ -100,6 +100,21 @@ public static class NpcQuestBuilder
 
     // ---------------------------------------------------------------- 의뢰 데이터
 
+    public static string RefreshQuestData() // 94일차: 의뢰 CSV만 다시 읽어 의뢰 묶음 갱신 (특별 의뢰의 필요 이벤트, 12번 메뉴에서 사용)
+    {
+        NpcDatabase database = AssetDatabase.LoadAssetAtPath<NpcDatabase>(NpcContentBuilder.DatabasePath);
+
+        if (database == null)
+        {
+            return "✗ NpcDatabase가 없어 의뢰 데이터를 갱신하지 못했습니다.";
+        }
+
+        StringBuilder report = new StringBuilder();
+        CreateBooks(database, report);
+        AssetDatabase.SaveAssets();
+        return report.ToString().TrimEnd();
+    }
+
     private static List<NpcQuestBook> CreateBooks(NpcDatabase database, StringBuilder report)
     {
         List<string> errors = new List<string>();
@@ -193,7 +208,7 @@ public static class NpcQuestBuilder
             }
 
             list.Add(new NpcQuestBook.Quest(id, row["Title"], kind, requirements, ParseInt(row["RewardCoins"], 0), ParseInt(row["RewardAffinity"], 0),
-                rewardItem, rewardAmount, ParseInt(row["Days"], 3), seasons.ToArray(), stage, row["Request"], row["Thanks"]));
+                rewardItem, rewardAmount, ParseInt(row["Days"], 3), seasons.ToArray(), stage, row["Request"], row["Thanks"], row["RequiredEvent"]));
             special += kind == NpcQuestKind.Special ? 1 : 0;
         }
 
@@ -589,6 +604,21 @@ public static class NpcQuestBuilder
         if (!quest.IsSpecial)
         {
             ValidateReward(quest, shops, catalog, error);
+        }
+
+        if (!string.IsNullOrEmpty(quest.RequiredEventId)) // 94일차: 필요한 이벤트는 같은 NPC의 이벤트여야 한다
+        {
+            NpcEventBook eventBook = NpcEventBuilder.LoadBooks().FirstOrDefault(candidate => candidate.OwnerId == book.OwnerId);
+            NpcEventBook.Event required = eventBook?.Events.FirstOrDefault(candidate => candidate != null && candidate.EventId == quest.RequiredEventId);
+
+            if (required == null)
+            {
+                error($"{id} : 필요한 이벤트 {quest.RequiredEventId} 가 {book.OwnerId} 의 이벤트에 없습니다. 12번 메뉴를 먼저 실행하세요.");
+            }
+            else if (required.RequiredStage > quest.RequiredStage)
+            {
+                error($"{id} : 필요한 이벤트의 관계 단계가 의뢰 단계보다 높습니다.");
+            }
         }
     }
 

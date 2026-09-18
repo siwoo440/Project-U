@@ -32,6 +32,7 @@ MonoBehaviour:
       \uB2E4\uC12F \uAC1C\uB9CC \uAC00\uC838\uB2E4\uC8FC\uC2E4\uB798\uC694?"
     thanksLine: "\uC591\uB4E4\uC774 \uBC8C\uC368 \uC88B\uC544\uD558\uB124\uC694~
       \uACE0\uB9C8\uC6CC\uC694."
+    requiredEventId: 
   - questId: quest_mireille_egg
     title: "\uC544\uCE68 \uB2EC\uAC40"
     kind: 0
@@ -48,6 +49,7 @@ MonoBehaviour:
     requestLine: "\uC544\uCE68\uC5D0 \uC4F8 \uB2EC\uAC40\uC774 \uBAA8\uC790\uB77C\uC694.
       \uC138 \uAC1C\uB9CC \uBD80\uD0C1\uD574\uB3C4 \uB420\uAE4C\uC694?"
     thanksLine: "\uB530\uB73B\uD55C \uC544\uCE68\uC744 \uB9CC\uB4E4 \uC218 \uC788\uACA0\uC5B4\uC694~"
+    requiredEventId: 
   - questId: quest_mireille_fiber
     title: "\uC6B0\uB9AC \uC6B8\uD0C0\uB9AC \uC190\uC9C8"
     kind: 0
@@ -64,6 +66,7 @@ MonoBehaviour:
     requestLine: "\uC6B0\uB9AC \uC6B8\uD0C0\uB9AC\uB97C \uBB36\uC744 \uC2DD\uBB3C
       \uC12C\uC720\uAC00 \uD544\uC694\uD574\uC694. \uC5F4 \uAC1C\uB9CC\uC694~"
     thanksLine: "\uC774\uAC78\uB85C \uC6B8\uD0C0\uB9AC\uAC00 \uD2BC\uD2BC\uD574\uC9C0\uACA0\uC5B4\uC694."
+    requiredEventId: 
   - questId: quest_mireille_special
     title: "\uACA8\uC6B8 \uC591\uD138 \uBAA9\uB3C4\uB9AC"
     kind: 1
@@ -84,3 +87,4 @@ MonoBehaviour:
       \uAC1C\uBA74 \uBC24\uC0C8 \uC9E4 \uC218 \uC788\uC5B4\uC694."
     thanksLine: "\uB2E4 \uC9F0\uC5B4\uC694~ \uC591\uB4E4 \uBA39\uC774\uB3C4 \uC870\uAE08
       \uB098\uB220 \uB4DC\uB9B4\uAC8C\uC694."
+    requiredEventId: event_mireille_trust

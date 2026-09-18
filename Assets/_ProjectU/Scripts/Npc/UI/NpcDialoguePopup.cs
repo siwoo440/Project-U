@@ -39,6 +39,10 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
     [SerializeField] private TMP_Text questLabel; // 의뢰 버튼 문구 (진행도)
     [SerializeField] private Button closeButton; // 닫기
 
+    [Header("Event")] // 94일차: 하트 이벤트 선택지
+    [SerializeField] private Button[] choiceButtons = new Button[0]; // 선택지 버튼
+    [SerializeField] private TMP_Text[] choiceLabels = new TMP_Text[0]; // 선택지 문구
+
     [Header("Gift")] // 선물
     [SerializeField] private GameObject giftPanel; // 선물 목록 창
     [SerializeField] private Transform giftListRoot; // 목록 부모
@@ -56,6 +60,15 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
     private Transform player; // 플레이어
     private List<string> talkLines = new List<string>(); // 대화하기 대사
     private TMP_Text tradeLabel; // 거래 버튼 문구 (92일차: 닫힘 표시)
+    private TMP_Text talkLabel; // 대화하기 버튼 문구 (94일차: 이벤트 중 "다음")
+    private const int EventPhaseNone = 0; // 이벤트 없음
+    private const int EventPhaseLines = 1; // 선택지 전 대사
+    private const int EventPhaseChoosing = 2; // 선택지 고르는 중
+    private const int EventPhaseAfter = 3; // 대답 · 마무리 대사
+    private readonly List<string> eventQueue = new List<string>(); // 남은 이벤트 대사
+    private NpcEventBook.Event activeEvent; // 진행 중인 이벤트
+    private int eventPhase; // 이벤트 단계
+    private int eventChoice = -1; // 고른 선택지
     private float visibleCharacters; // 보이는 글자 수
     private float messageHideTime; // 알림 숨김 시각
 
@@ -69,6 +82,9 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
     public string TradeLabel => tradeLabel != null ? tradeLabel.text : string.Empty; // 거래 버튼 문구 (테스트용)
     public bool CanDeliverQuest => questButton != null && questButton.gameObject.activeSelf; // 의뢰 버튼 여부 (테스트용)
     public string QuestLabel => questLabel != null ? questLabel.text : string.Empty; // 의뢰 버튼 문구 (테스트용)
+    public NpcEventBook.Event ActiveEvent => activeEvent; // 진행 중 이벤트 (테스트용)
+    public bool IsChoosing => activeEvent != null && eventPhase == EventPhaseChoosing; // 선택지 표시 중 (테스트용)
+    public int VisibleChoiceCount => System.Array.FindAll(choiceButtons, button => button != null && button.gameObject.activeSelf).Length; // 보이는 선택지 수 (테스트용)
 
     private void Awake() // 버튼 연결
     {
@@ -80,6 +96,17 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
         if (lineButton != null) lineButton.onClick.AddListener(FinishTyping);
         if (giftCancelButton != null) giftCancelButton.onClick.AddListener(CloseGiftPanel);
         if (giftSlotTemplate != null) giftSlotTemplate.gameObject.SetActive(false);
+
+        for (int index = 0; index < choiceButtons.Length; index++) // 94일차: 선택지
+        {
+            int choice = index;
+
+            if (choiceButtons[index] != null)
+            {
+                choiceButtons[index].onClick.AddListener(() => Choose(choice));
+                choiceButtons[index].gameObject.SetActive(false);
+            }
+        }
 
         if (panelRoot != null && agent == null)
         {
@@ -131,7 +158,19 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
             ShowMessage(StageMessage(character, $"오늘 첫 대화 · 호감도 +{points}", before, stage), ProjectUUIPalette.Accent);
         }
 
-        ShowLine(opening);
+        activeEvent = null;
+        eventPhase = EventPhaseNone;
+        NpcEventManager events = NpcEventManager.Instance;
+
+        if (events != null && events.TryGetReadyEvent(agent, out NpcEventBook.Event ready))
+        {
+            BeginEvent(ready); // 94일차: 기다리던 하트 이벤트가 있으면 인사 대신 이야기 시작
+        }
+        else
+        {
+            ShowLine(opening);
+        }
+
         RefreshHeader();
         return true;
     }
@@ -146,6 +185,8 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
         }
 
         agent = null;
+        activeEvent = null; // 94일차: 이벤트 도중 닫으면 기록하지 않음 (다음에 다시 봄)
+        eventPhase = EventPhaseNone;
         relations = null;
         npcManager = null;
         inventory = null;
@@ -210,6 +251,16 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
             return;
         }
 
+        if (activeEvent != null) // 94일차: 이벤트 중에는 다음 대사 (선택지를 고를 때는 멈춤)
+        {
+            if (eventPhase != EventPhaseChoosing)
+            {
+                AdvanceEvent();
+            }
+
+            return;
+        }
+
         string id = agent.CharacterId;
         int day = npcManager.CurrentDay;
         int index = talkProgress.TryGetValue(id, out (int day, int index) progress) && progress.day == day ? progress.index : 0;
@@ -219,7 +270,7 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
 
     public void OpenGiftPanel() // 선물하기
     {
-        if (!IsOpen)
+        if (!IsOpen || activeEvent != null)
         {
             return;
         }
@@ -439,6 +490,148 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
                 tradeLabel.text = open ? "거래" : "거래 (닫힘)";
             }
         }
+
+        RefreshEventButtons();
+    }
+
+    private void RefreshEventButtons() // 94일차: 이벤트 중에는 다음 · 선택지만 보여 줌
+    {
+        bool inEvent = activeEvent != null;
+        bool choosing = inEvent && eventPhase == EventPhaseChoosing;
+
+        if (inEvent)
+        {
+            if (giftButton != null) giftButton.gameObject.SetActive(false);
+            if (questButton != null) questButton.gameObject.SetActive(false);
+            if (tradeButton != null) tradeButton.gameObject.SetActive(false);
+        }
+        else if (giftButton != null)
+        {
+            giftButton.gameObject.SetActive(true);
+        }
+
+        if (talkButton != null)
+        {
+            talkButton.gameObject.SetActive(!choosing);
+
+            if (talkLabel == null)
+            {
+                talkLabel = talkButton.GetComponentInChildren<TMP_Text>(true);
+            }
+
+            if (talkLabel != null)
+            {
+                talkLabel.text = inEvent ? "다음" : "대화하기";
+            }
+        }
+
+        for (int index = 0; index < choiceButtons.Length; index++)
+        {
+            bool show = choosing && index < activeEvent.Choices.Count && choiceButtons[index] != null;
+
+            if (choiceButtons[index] != null)
+            {
+                choiceButtons[index].gameObject.SetActive(show);
+            }
+
+            if (show && index < choiceLabels.Length && choiceLabels[index] != null)
+            {
+                choiceLabels[index].text = activeEvent.Choices[index].Label;
+            }
+        }
+    }
+
+    // ------------------------------------------------------------ 94일차: 하트 이벤트
+
+    private void BeginEvent(NpcEventBook.Event data) // 이벤트 장면 시작 (선택지 전 대사부터)
+    {
+        activeEvent = data;
+        eventPhase = EventPhaseLines;
+        eventChoice = -1;
+        eventQueue.Clear();
+
+        foreach (NpcEventBook.Line line in data.Lines)
+        {
+            eventQueue.Add(FormatEventLine(line));
+        }
+
+        CloseGiftPanel();
+        ShowMessage($"이야기 · {data.Title}", ProjectUUIPalette.Accent);
+        AdvanceEvent();
+    }
+
+    private void AdvanceEvent() // 다음 대사 → 선택지 → 대답 · 마무리 대사 → 끝
+    {
+        if (eventQueue.Count > 0)
+        {
+            ShowLine(eventQueue[0]);
+            eventQueue.RemoveAt(0);
+
+            if (eventQueue.Count == 0 && eventPhase == EventPhaseLines)
+            {
+                eventPhase = EventPhaseChoosing; // 마지막 대사와 함께 선택지를 보여 줌
+            }
+
+            RefreshHeader();
+            return;
+        }
+
+        if (eventPhase == EventPhaseLines)
+        {
+            eventPhase = EventPhaseChoosing;
+            RefreshHeader();
+            return;
+        }
+
+        if (eventPhase == EventPhaseAfter)
+        {
+            FinishEvent();
+        }
+    }
+
+    public void Choose(int index) // 선택지 고르기
+    {
+        if (!IsOpen || activeEvent == null || eventPhase != EventPhaseChoosing || index < 0 || index >= activeEvent.Choices.Count)
+        {
+            return;
+        }
+
+        FinishTyping();
+        eventChoice = index;
+        eventPhase = EventPhaseAfter;
+        eventQueue.Clear();
+        eventQueue.Add(activeEvent.Choices[index].Reply);
+
+        foreach (NpcEventBook.Line line in activeEvent.AfterLines)
+        {
+            eventQueue.Add(FormatEventLine(line));
+        }
+
+        AdvanceEvent();
+    }
+
+    private void FinishEvent() // 선택 결과 적용 (호감도 · 아이템 · 기록)
+    {
+        NpcEventBook.Event data = activeEvent;
+        NpcCharacterData character = agent.Character;
+        activeEvent = null;
+        eventPhase = EventPhaseNone;
+        NpcEventManager events = NpcEventManager.Instance;
+
+        if (events != null && events.Complete(data.EventId, eventChoice, inventory, out NpcEventResult result))
+        {
+            string item = result.Item != null && result.ItemAmount > 0 ? $" · {result.Item.DisplayName} x{result.ItemAmount}" : string.Empty;
+            Color color = result.Affinity >= 0 ? ProjectUUIPalette.Accent : ProjectUUIPalette.Danger;
+            ShowMessage(StageMessage(character, $"{data.Title} · 호감도 {result.Affinity:+0;-0;0}{item}", result.Before, result.After), color);
+        }
+
+        talkLines = NpcDialogueSelector.TalkLines(character, relations.GetStage(character), npcManager.CurrentSeason, npcManager.CurrentWeather);
+        RefreshHeader();
+    }
+
+    private static string FormatEventLine(NpcEventBook.Line line) // 플레이어 대사는 "나" 표시
+    {
+        return line.FromPlayer ? $"<color=#8FC7FF>나</color>  {line.Text}" : line.Text;
     }
 
     private static string RequirementProgress(NpcQuestManager quests, NpcQuestBook.Quest quest) // 의뢰 버튼 진행도 "2/3"

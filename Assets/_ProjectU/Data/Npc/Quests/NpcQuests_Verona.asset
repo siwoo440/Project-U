@@ -32,6 +32,7 @@ MonoBehaviour:
       \uB124 \uBC2D\uC5D0\uC11C \uB09C \uAC83\uC774\uBA74 \uC88B\uACA0\uAD70."
     thanksLine: "\uC88B\uC740 \uAC10\uC790\uB2E4. \uB300\uC9C0\uAC00 \uB108\uB97C
       \uBBFF\uACE0 \uC788\uC5B4."
+    requiredEventId: 
   - questId: quest_verona_tomato
     title: "\uC5EC\uB984 \uD1A0\uB9C8\uD1A0"
     kind: 0
@@ -48,6 +49,7 @@ MonoBehaviour:
     requestLine: "\uC5EC\uB984 \uD587\uBCD5\uC744 \uBA39\uC740 \uD1A0\uB9C8\uD1A0
       \uB2E4\uC12F \uAC1C. \uC798 \uC775\uC740 \uAC78\uB85C \uBD80\uD0C1\uD558\uC9C0."
     thanksLine: "\u2026\uC798 \uC775\uC5C8\uAD70. \uACE0\uB9D9\uB2E4."
+    requiredEventId: 
   - questId: quest_verona_pumpkin
     title: "\uAC00\uC744 \uD638\uBC15 \uB450 \uB369\uC774"
     kind: 0
@@ -65,6 +67,7 @@ MonoBehaviour:
       \uD544\uC694\uD558\uB2E4."
     thanksLine: "\uBB35\uC9C1\uD558\uAD70. \uC774\uB9CC\uD558\uBA74 \uC218\uD655\uC81C\uAC00
       \uD48D\uC131\uD558\uACA0\uC5B4."
+    requiredEventId: 
   - questId: quest_verona_radish
     title: "\uACA8\uC6B8\uBB34 \uC800\uC7A5"
     kind: 0
@@ -82,6 +85,7 @@ MonoBehaviour:
       \uB46C\uC57C \uD574. \uB124 \uAC1C\uB9CC \uAC00\uC838\uC640 \uC918."
     thanksLine: "\uC88B\uC544. \uC774 \uACA8\uC6B8\uB3C4 \uBB34\uC0AC\uD788 \uB0A0
       \uC218 \uC788\uACA0\uAD70."
+    requiredEventId: 
   - questId: quest_verona_special
     title: "\uB300\uC9C0\uC758 \uAC10\uC0AC \uC81C\uBB3C"
     kind: 1
@@ -100,3 +104,4 @@ MonoBehaviour:
       \uB354 \uC88B\uACA0\uC9C0."
     thanksLine: "\u2026\uB300\uC9C0\uAC00 \uAE30\uBED0\uD558\uB294\uAD70. \uC774
       \uC528\uC557\uC744 \uBC1B\uC544. \uB108\uB77C\uBA74 \uC798 \uD0A4\uC6B8 \uAC70\uC57C."
+    requiredEventId: event_verona_trust

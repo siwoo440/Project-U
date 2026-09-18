@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c705680e20332f5478f3a6911a134984, type: 3}
+  m_Name: NpcEvents_Mireille
+  m_EditorClassIdentifier: Assembly-CSharp::NpcEventBook
+  ownerId: char_mireille
+  events:
+  - eventId: event_mireille_curious
+    title: "\uC544\uCE68 \uC6B0\uB9AC"
+    requiredStage: 1
+    locationId: loc_animal_pens
+    fromHour: 6
+    toHour: 10
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC5B4\uBA38, \uC77C\uCC0D \uC624\uC168\uB124\uC694~ \uC591\uB4E4\uC774
+        \uC544\uC9C1 \uC878\uB824\uD574\uC694."
+    - fromPlayer: 0
+      text: "\uC774 \uC544\uC774\uB294 \uAC81\uC774 \uB9CE\uC544\uC11C\u2026 \uBAA8\uB974\uB294
+        \uC0AC\uB78C\uC774 \uC624\uBA74 \uC228\uC5B4\uC694."
+    choices:
+    - label: "\uCC9C\uCC9C\uD788 \uC190\uC744 \uB0B4\uBC00\uC5B4 \uBCFC\uAC8C."
+      reply: "\uC5B4\uBA38, \uC190 \uB0C4\uC0C8\uB97C \uB9E1\uB124\uC694~ \uBC8C\uC368
+        \uCE5C\uD574\uC84C\uC5B4\uC694."
+      affinity: 5
+    - label: "\uC5B5\uC9C0\uB85C \uC4F0\uB2E4\uB4EC\uC5B4 \uBCFC\uB798."
+      reply: "\uC544, \uB3C4\uB9DD\uAC14\uC5B4\uC694\u2026 \uC870\uAE08 \uCC9C\uCC9C\uD788
+        \uD574 \uC8FC\uC138\uC694."
+      affinity: -2
+    afterLines:
+    - fromPlayer: 0
+      text: "\uAC00\uCD95\uC740 \uB9C8\uC74C\uC744 \uBA3C\uC800 \uC5F4\uC5B4\uC57C
+        \uD574\uC694. \uC0AC\uB78C\uB3C4 \uADF8\uB807\uC8E0~"
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_mireille_trust
+    title: "\uD480\uBC2D \uC0B0\uCC45"
+    requiredStage: 2
+    locationId: loc_farm_fields
+    fromHour: 10
+    toHour: 13
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC0AC\uC2E4 \uC800, \uC61B\uB0A0\uC5D4 \uCE7C\uC744 \uB4E4\uB358 \uC0AC\uB78C\uC774\uC5C8\uC5B4\uC694."
+    - fromPlayer: 0
+      text: "\uC9C0\uAE08\uC740\u2026 \uC591\uC744 \uC9C0\uD0A4\uB294 \uAC8C \uB354
+        \uC88B\uC544\uC694. \uD53C\uB294 \uC2EB\uC5B4\uC694."
+    choices:
+    - label: "\uC9C0\uAE08\uC758 \uB124\uAC00 \uC88B\uC544."
+      reply: "\u2026\uACE0\uB9C8\uC6CC\uC694. \uADF8 \uB9D0 \uB4E4\uC73C\uB2C8 \uD480
+        \uB0C4\uC0C8\uAC00 \uB354 \uC88B\uC544\uC694~"
+      affinity: 8
+    - label: "\uADF8\uB798\uB3C4 \uAC15\uD558\uC796\uC544."
+      reply: "\uAC15\uD55C \uAC74\u2026 \uC9C0\uD0A4\uB294 \uB370\uB9CC \uC4F0\uACE0
+        \uC2F6\uC5B4\uC694."
+      affinity: 2
+    afterLines:
+    - fromPlayer: 0
+      text: "\uC774 \uC598\uAE30\uB294 \uC6B0\uB9AC \uB458\uB9CC\uC758 \uBE44\uBC00\uC774\uC5D0\uC694~"
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_mireille_affection
+    title: "\uC591\uD138 \uBAA9\uB3C4\uB9AC"
+    requiredStage: 3
+    locationId: loc_village_square
+    fromHour: 13
+    toHour: 15
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC774\uAC70\uC694\u2026 \uC591\uD138\uB85C \uC9E0 \uBAA9\uB3C4\uB9AC\uC608\uC694.
+        \uC544\uC9C1 \uBC18\uBC16\uC5D0 \uBABB \uC9F0\uC9C0\uB9CC\uC694."
+    - fromPlayer: 0
+      text: "\uACA8\uC6B8\uC774 \uC624\uAE30 \uC804\uC5D0 \uB2F9\uC2E0\uD55C\uD14C
+        \uC8FC\uACE0 \uC2F6\uC5B4\uC11C\uC694~"
+    choices:
+    - label: "\uAE30\uB2E4\uB9B4\uAC8C."
+      reply: "\uC5D0\uD5E4\uD5E4\u2026 \uADF8\uB7FC \uBC24\uC0C8 \uC9DC\uC57C\uACA0\uB124\uC694~"
+      affinity: 10
+    - label: "\uAC19\uC774 \uC9DC \uBCFC\uAE4C?"
+      reply: "\uC815\uB9D0\uC694? \uADF8\uB7FC \uC81C\uAC00 \uCF54 \uC7A1\uB294 \uBC95
+        \uC54C\uB824 \uB4DC\uB9B4\uAC8C\uC694~"
+      affinity: 8
+    afterLines:
+    - fromPlayer: 0
+      text: "\uC624\uB298\uC740 \uB530\uB73B\uD55C \uC6B0\uC720\uB85C \uB300\uC2E0\uD560\uAC8C\uC694.
+        \uBAA9\uB3C4\uB9AC\uB294 \uC870\uAE08\uB9CC \uAE30\uB2E4\uB824\uC694~"
+    rewardItem: {fileID: 11400000, guid: 7d594dbe78795334dbb0b72bfc9e9c0b, type: 2}
+    rewardItemAmount: 1

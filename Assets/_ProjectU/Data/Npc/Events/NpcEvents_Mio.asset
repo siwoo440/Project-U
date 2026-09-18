@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c705680e20332f5478f3a6911a134984, type: 3}
+  m_Name: NpcEvents_Mio
+  m_EditorClassIdentifier: Assembly-CSharp::NpcEventBook
+  ownerId: char_mio
+  events:
+  - eventId: event_mio_curious
+    title: "\uCC0C\uAC00 \uD754\uB4E4\uB9B0\uB2E4\uB0E5"
+    requiredStage: 1
+    locationId: loc_pond_dock
+    fromHour: 9
+    toHour: 12
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC27F! \uC9C0\uAE08 \uCC0C\uAC00 \uC6C0\uC9C1\uC600\uB2E4\uB0E5\u2026!"
+    - fromPlayer: 0
+      text: "\u2026\uB193\uCCE4\uB2E4\uB0E5. \uB124\uAC00 \uC18C\uB9AC\uB97C \uB0B4\uC11C
+        \uADF8\uB798!"
+    choices:
+    - label: "\uBBF8\uC548, \uB2E4\uC74C\uC5D4 \uC870\uC6A9\uD788 \uD560\uAC8C."
+      reply: "\uD765, \uC54C\uBA74 \uB410\uB2E4\uB0E5. \uC606\uC5D0 \uC549\uC544\uB3C4
+        \uB3FC."
+      affinity: 5
+    - label: "\uC6D0\uB798 \uBABB \uC7A1\uC740 \uAC70 \uC544\uB0D0?"
+      reply: "\uBB50\uB77C\uACE0\uB0E5?! \uB450\uACE0 \uBD10, \uB2E4\uC74C\uC5D4
+        \uAF2D \uC7A1\uC744 \uAC70\uB2E4\uB0E5!"
+      affinity: -2
+    afterLines:
+    - fromPlayer: 0
+      text: "\uB09A\uC2DC\uB294 \uAE30\uB2E4\uB9AC\uB294 \uAC70\uB2E4\uB0E5. \uAC19\uC774
+        \uAE30\uB2E4\uB9AC\uBA74 \uB35C \uC2EC\uC2EC\uD558\uAD6C\uB0E5."
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_mio_trust
+    title: "\uAD11\uC7A5\uC758 \uB0AE\uC7A0 \uC790\uB9AC"
+    requiredStage: 2
+    locationId: loc_village_square
+    fromHour: 12
+    toHour: 14
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC5EC\uAE30\uAC00 \uAD11\uC7A5\uC5D0\uC11C \uC81C\uC77C \uB530\uB73B\uD55C
+        \uC790\uB9AC\uB2E4\uB0E5. \uBE44\uBC00\uC774\uC57C."
+    - fromPlayer: 0
+      text: "\uC61B\uB0A0\uC5D4 \uBC30 \uC704\uC5D0\uC11C \uC0B4\uC558\uC5B4. \uBB3C
+        \uC704\uAC00 \uC9D1\uC774\uC5C8\uB2E4\uB0E5."
+    choices:
+    - label: "\uADF8\uB798\uC11C \uBB3C\uACE0\uAE30\uB97C \uC88B\uC544\uD558\uB294\uAD6C\uB098."
+      reply: "\uBB3C\uACE0\uAE30\uB3C4 \uC88B\uC9C0\uB9CC\u2026 \uBB3C \uC704\uC758
+        \uC870\uC6A9\uD568\uC774 \uB354 \uC88B\uC544\uB0E5."
+      affinity: 6
+    - label: "\uB098\uB3C4 \uC5EC\uAE30\uC11C \uB0AE\uC7A0 \uC790\uB3C4 \uB3FC?"
+      reply: "\u2026\uD2B9\uBCC4\uD788 \uD5C8\uB77D\uD574 \uC900\uB2E4\uB0E5. \uB300\uC2E0
+        \uC870\uC6A9\uD788 \uD574!"
+      affinity: 8
+    afterLines:
+    - fromPlayer: 0
+      text: "\uB108\uB791 \uC788\uC73C\uBA74 \uB0AE\uC7A0\uC774 \uB354 \uC798 \uC628\uB2E4\uB0E5."
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_mio_affection
+    title: "\uB458\uB9CC\uC758 \uB09A\uC2DC\uD130"
+    requiredStage: 3
+    locationId: loc_pond_dock
+    fromHour: 14
+    toHour: 18
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC774 \uC790\uB9AC\u2026 \uC544\uBB34\uD55C\uD14C\uB3C4 \uC548 \uC54C\uB824
+        \uC900 \uACF3\uC774\uB2E4\uB0E5."
+    - fromPlayer: 0
+      text: "\uD669\uAE08 \uC789\uC5B4\uAC00 \uAC00\uB054 \uC5EC\uAE30\uAE4C\uC9C0
+        \uC62C\uB77C\uC640. \uB108\uD55C\uD14C\uB9CC \uC54C\uB824 \uC8FC\uB294 \uAC70\uC57C."
+    choices:
+    - label: "\uAC19\uC774 \uC7A1\uC790."
+      reply: "\uC751! \uC6B0\uB9AC \uB458\uC774\uBA74 \uC804\uC124\uB3C4 \uC7A1\uC744
+        \uC218 \uC788\uB2E4\uB0E5!"
+      affinity: 10
+    - label: "\uD63C\uC790 \uC7A1\uC544\uB3C4 \uB3FC?"
+      reply: "\u2026\uADF8\uAC74 \uC880 \uC11C\uC6B4\uD558\uB2E4\uB0E5."
+      affinity: 1
+    afterLines:
+    - fromPlayer: 0
+      text: "\uC774 \uBBF8\uB07C, \uB0B4\uAC00 \uC81C\uC77C \uC544\uB07C\uB294 \uAC70\uB2E4\uB0E5.
+        \uC368 \uBD10."
+    rewardItem: {fileID: 11400000, guid: f82cfee3161243747ad3a92e8c7418ba, type: 2}
+    rewardItemAmount: 10

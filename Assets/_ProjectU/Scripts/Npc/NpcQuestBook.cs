@@ -55,8 +55,10 @@ public sealed class NpcQuestBook : ScriptableObject // 93일차: NPC 한 명의 
         [SerializeField, TextArea(1, 3)] private string requestLine; // 의뢰 대사
         [Tooltip("전달했을 때 대사.")]
         [SerializeField, TextArea(1, 3)] private string thanksLine; // 감사 대사
+        [Tooltip("이 하트 이벤트를 본 뒤에만 게시판에 나옵니다 (94일차, 비우면 조건 없음).")]
+        [SerializeField] private string requiredEventId; // 필요한 이벤트
 
-        public Quest(string questId, string title, NpcQuestKind kind, List<Requirement> requirements, int rewardCoins, int rewardAffinity, ItemData rewardItem, int rewardItemAmount, int days, SeasonType[] seasons, AffinityStage requiredStage, string requestLine, string thanksLine) // 생성 도구에서 사용
+        public Quest(string questId, string title, NpcQuestKind kind, List<Requirement> requirements, int rewardCoins, int rewardAffinity, ItemData rewardItem, int rewardItemAmount, int days, SeasonType[] seasons, AffinityStage requiredStage, string requestLine, string thanksLine, string requiredEventId = "") // 생성 도구에서 사용
         {
             this.questId = questId;
             this.title = title;
@@ -71,6 +73,7 @@ public sealed class NpcQuestBook : ScriptableObject // 93일차: NPC 한 명의 
             this.requiredStage = requiredStage;
             this.requestLine = requestLine;
             this.thanksLine = thanksLine;
+            this.requiredEventId = requiredEventId ?? string.Empty;
         }
 
         public string QuestId => questId; // ID 제공
@@ -87,6 +90,7 @@ public sealed class NpcQuestBook : ScriptableObject // 93일차: NPC 한 명의 
         public AffinityStage RequiredStage => requiredStage; // 필요 단계 제공
         public string RequestLine => requestLine; // 의뢰 대사 제공
         public string ThanksLine => thanksLine; // 감사 대사 제공
+        public string RequiredEventId => requiredEventId; // 필요한 이벤트 제공 (94일차)
 
         public bool IsOfferedIn(SeasonType season) // 지정 계절 게시 여부
         {

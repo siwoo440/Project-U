@@ -69,6 +69,10 @@ public sealed class SaveGameData // 전체 저장 파일 최상위 데이터
     public bool hasNpcQuestData; // NPC 의뢰 저장 여부
     [Tooltip("게시판 · 진행 중 의뢰 · 완료 기록.")]
     public NpcQuestSaveData npcQuests = new NpcQuestSaveData(); // NPC 의뢰
+    [Tooltip("NPC 이벤트 저장 데이터 존재 여부. (94일차)")]
+    public bool hasNpcEventData; // NPC 이벤트 저장 여부
+    [Tooltip("본 하트 이벤트 · 고른 선택지.")]
+    public NpcEventSaveData npcEvents = new NpcEventSaveData(); // NPC 이벤트
 
     public static SaveGameData CreateNew(string newSceneName) // 새로운 저장 데이터 생성
     {

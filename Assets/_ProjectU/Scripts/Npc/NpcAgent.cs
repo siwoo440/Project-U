@@ -53,6 +53,7 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
     private Vector3 talkTarget; // 대화 상대 위치
     private string nameTagBaseText; // 의뢰 표시 없는 이름표 문구 (93일차)
     private NpcQuestMarker questMarker = NpcQuestMarker.None; // 현재 의뢰 표시
+    private bool hasEventMarker; // 이벤트 표시 (94일차)
 
     public NpcCharacterData Character => character; // 캐릭터 제공
     public string CharacterId => character != null ? character.CharacterId : string.Empty; // ID 제공
@@ -64,6 +65,7 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
     public bool HasArrived => arrived; // 도착 여부 제공
     public bool IsTalking => isTalking; // 대화 중 여부 제공
     public NpcQuestMarker QuestMarker => questMarker; // 의뢰 표시 제공 (93일차)
+    public bool HasEventMarker => hasEventMarker; // 이벤트 표시 제공 (94일차)
     public Vector3 TargetPosition => targetPosition; // 목적지 제공
     public string StopKey { get; set; } // 관리자가 쓰는 현재 일정 칸 키
 
@@ -130,7 +132,29 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
 
     public void SetQuestMarker(NpcQuestMarker marker) // 93일차: 이름표 위 의뢰 표시 (! 전달 가능 · ? 진행 중)
     {
-        if (nameTag == null || marker == questMarker)
+        if (marker == questMarker)
+        {
+            return;
+        }
+
+        questMarker = marker;
+        RefreshNameTag();
+    }
+
+    public void SetEventMarker(bool ready) // 94일차: 이름표 위 이벤트 표시 (… 말을 걸면 이야기 시작, 의뢰 표시보다 먼저)
+    {
+        if (ready == hasEventMarker)
+        {
+            return;
+        }
+
+        hasEventMarker = ready;
+        RefreshNameTag();
+    }
+
+    private void RefreshNameTag() // 이름표 = 표시 + 이름 · 직업
+    {
+        if (nameTag == null)
         {
             return;
         }
@@ -140,9 +164,13 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
             nameTagBaseText = nameTag.text; // 생성 도구가 만든 이름 · 직업 문구
         }
 
-        questMarker = marker;
+        if (hasEventMarker)
+        {
+            nameTag.text = $"<size=170%><b><color=#F07A9A>…</color></b></size>\n{nameTagBaseText}";
+            return;
+        }
 
-        switch (marker)
+        switch (questMarker)
         {
             case NpcQuestMarker.Ready:
                 nameTag.text = $"<size=170%><b><color=#F2B84B>!</color></b></size>\n{nameTagBaseText}";

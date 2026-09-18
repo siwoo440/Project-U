@@ -26,6 +26,7 @@ public static class NpcDialogueBuilder
     private const float WindowHeight = 262f; // 93일차: 버튼 4칸 (대화 · 선물 · 의뢰 · 거래)
     private const float ButtonHeight = 40f;
     private const float ButtonStep = 46f;
+    public const int ChoiceCount = 3; // 94일차: 이벤트 선택지 버튼 수
     private const float WindowBottom = 122f; // 핫바(화면 아래) 위로
     private const float Pad = 20f;
     private const float PortraitSize = 210f;
@@ -330,6 +331,23 @@ public static class NpcDialogueBuilder
         Button close = CreateButton(w, "LP_Close", "닫기 (ESC)", 15f, new Color(1f, 1f, 1f, 0.06f), ProjectUUIPalette.TextSecondary, out _, out _);
         TopLeft((RectTransform)close.transform, new Vector2(buttonX, -WindowHeight + Pad + 36f), new Vector2(ButtonWidth, 36f));
 
+        // 94일차: 하트 이벤트 선택지 (대화 · 선물 · 의뢰 자리에 겹쳐 두고 선택할 때만 보임)
+        Button[] choices = new Button[ChoiceCount];
+        TMP_Text[] choiceLabels = new TMP_Text[ChoiceCount];
+
+        for (int index = 0; index < ChoiceCount; index++)
+        {
+            choices[index] = CreateButton(w, $"LP_Choice{index}", "선택지", 15f, new Color(0.94f, 0.55f, 0.66f, 1f), ProjectUUIPalette.TextDark, out _, out TMP_Text choiceLabel);
+            choiceLabel.textWrappingMode = TextWrappingModes.Normal;
+            choiceLabel.enableAutoSizing = true;
+            choiceLabel.fontSizeMin = 11f;
+            choiceLabel.fontSizeMax = 15f;
+            choiceLabel.margin = new Vector4(8f, 2f, 8f, 2f);
+            TopLeft((RectTransform)choices[index].transform, new Vector2(buttonX, -Pad - ButtonStep * index), new Vector2(ButtonWidth, ButtonHeight));
+            choices[index].gameObject.SetActive(false);
+            choiceLabels[index] = choiceLabel;
+        }
+
         TMP_Text hint = CreateText(w, "LP_Hint", "스페이스 · 엔터 : 다음 말", 12f, FontStyles.Normal, TextAlignmentOptions.MidlineRight, new Color(0.72f, 0.7f, 0.65f, 0.6f));
         TopLeft(hint.rectTransform, new Vector2(buttonX - 250f, -WindowHeight + 30f), new Vector2(236f, 20f));
 
@@ -396,6 +414,16 @@ public static class NpcDialogueBuilder
         Set(serialized, "tradeButton", trade);
         Set(serialized, "questButton", quest);
         Set(serialized, "questLabel", questLabel);
+        SerializedProperty choiceButtonList = serialized.FindProperty("choiceButtons");
+        SerializedProperty choiceLabelList = serialized.FindProperty("choiceLabels");
+        choiceButtonList.arraySize = ChoiceCount;
+        choiceLabelList.arraySize = ChoiceCount;
+
+        for (int index = 0; index < ChoiceCount; index++)
+        {
+            choiceButtonList.GetArrayElementAtIndex(index).objectReferenceValue = choices[index];
+            choiceLabelList.GetArrayElementAtIndex(index).objectReferenceValue = choiceLabels[index];
+        }
         Set(serialized, "closeButton", close);
         Set(serialized, "giftPanel", giftWindow.gameObject);
         Set(serialized, "giftListRoot", list);
@@ -491,6 +519,16 @@ public static class NpcDialogueBuilder
                 foreach (string field in PopupFields.Where(field => serialized.FindProperty(field).objectReferenceValue == null))
                 {
                     Error($"NPC 대화 창의 {field} 연결이 비어 있습니다.");
+                }
+
+                foreach (string list in new[] { "choiceButtons", "choiceLabels" }) // 94일차: 이벤트 선택지
+                {
+                    SerializedProperty property = serialized.FindProperty(list);
+
+                    if (property.arraySize != ChoiceCount || Enumerable.Range(0, property.arraySize).Any(index => property.GetArrayElementAtIndex(index).objectReferenceValue == null))
+                    {
+                        Error($"NPC 대화 창의 이벤트 선택지({list})가 {ChoiceCount}개가 아닙니다. 12번 메뉴를 실행하세요.");
+                    }
                 }
             }
 

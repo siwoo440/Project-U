@@ -571,6 +571,11 @@ public static class NpcContentBuilder
         {
             yield return text;
         }
+
+        foreach (string text in NpcEventBuilder.CollectEventTexts()) // 94일차: 이벤트 대사 · 선택지도 글꼴에 포함
+        {
+            yield return text;
+        }
     }
 
     private static Dictionary<string, ItemData> LoadItemsById()

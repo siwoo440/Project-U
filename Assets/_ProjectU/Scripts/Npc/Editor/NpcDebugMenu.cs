@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-// 90일차: NPC 테스트 메뉴 (Play 중에만) / 91일차: 호감도 · 선물 테스트 / 92일차: NPC 상점 테스트 / 93일차: 의뢰 테스트
+// 90일차: NPC 테스트 메뉴 (Play 중에만) / 91일차: 호감도 · 선물 테스트 / 92일차: NPC 상점 테스트 / 93일차: 의뢰 테스트 / 94일차: 이벤트 테스트
 public static class NpcDebugMenu
 {
     private const string MenuRoot = "Tools/Project U/Debug (Play Mode)/NPC/";
@@ -175,6 +175,26 @@ public static class NpcDebugMenu
     private static bool CanUseQuests()
     {
         return EditorApplication.isPlaying && NpcQuestManager.Instance != null;
+    }
+
+    [MenuItem(MenuRoot + "Log NPC Events", false, 130)]
+    private static void LogEvents()
+    {
+        Debug.Log(NpcEventManager.Instance.Describe());
+    }
+
+    [MenuItem(MenuRoot + "Reset Seen Events", false, 131)]
+    private static void ResetEvents()
+    {
+        NpcEventManager.Instance.ResetForLoad();
+        Debug.Log("본 이벤트 기록을 모두 지웠습니다.");
+    }
+
+    [MenuItem(MenuRoot + "Log NPC Events", true)]
+    [MenuItem(MenuRoot + "Reset Seen Events", true)]
+    private static bool CanUseEvents()
+    {
+        return EditorApplication.isPlaying && NpcEventManager.Instance != null;
     }
 
     private static NpcAgent FindNearest() // 플레이어와 가장 가까운 NPC

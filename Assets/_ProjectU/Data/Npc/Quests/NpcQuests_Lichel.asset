@@ -31,6 +31,7 @@ MonoBehaviour:
     requestLine: "\uBA54\uAE30 \uD55C \uB9C8\uB9AC \uAD6C\uD574 \uC640. \uBE44\uC2F8\uAC8C
       \uD314 \uACF3\uC774 \uC788\uAC70\uB4E0, \uD765."
     thanksLine: "\uC88B\uC544~ \uC774 \uC815\uB3C4\uBA74 \uAD1C\uCC2E\uC740 \uAC70\uB798\uC9C0."
+    requiredEventId: 
   - questId: quest_lichel_skewer
     title: "\uC7A5\uD130 \uAC04\uC2DD"
     kind: 0
@@ -47,6 +48,7 @@ MonoBehaviour:
     requestLine: "\uBC84\uC12F \uAF2C\uCE58 \uB450 \uAC1C. \uC7A5\uD130 \uC190\uB2D8\uB4E4\uD55C\uD14C
       \uD314 \uAC70\uC57C."
     thanksLine: "\uD765, \uC81C\uBC95\uC774\uB124. \uC798 \uD314\uB9AC\uACA0\uC5B4."
+    requiredEventId: 
   - questId: quest_lichel_wood
     title: "\uC9D0\uB9C8\uCC28 \uC218\uB9AC"
     kind: 0
@@ -63,6 +65,7 @@ MonoBehaviour:
     requestLine: "\uC9D0\uB9C8\uCC28 \uBC14\uD034\uAC00 \uC090\uAC71\uAC70\uB824.
       \uB098\uBB34 \uC5F4\uB2E4\uC12F \uAC1C\uB9CC."
     thanksLine: "\uB410\uB2E4, \uC774\uC81C \uB35C\uCEF9\uAC70\uB9AC\uC9C0 \uC54A\uACA0\uC9C0."
+    requiredEventId: 
   - questId: quest_lichel_special
     title: "\uD070\uC190 \uC190\uB2D8\uC758 \uC8FC\uBB38"
     kind: 1
@@ -83,3 +86,4 @@ MonoBehaviour:
       \uB9D0\uD558\uB294 \uAC70\uC57C."
     thanksLine: "\uB300\uBC15 \uAC70\uB798\uC600\uC5B4! \uC774\uAC74 \uB124 \uBAAB\uC774\uC57C.
       \uAC00\uBC29, \uD544\uC694\uD588\uC9C0? \uD765."
+    requiredEventId: event_lichel_trust

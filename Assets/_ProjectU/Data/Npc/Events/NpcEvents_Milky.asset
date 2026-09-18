@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c705680e20332f5478f3a6911a134984, type: 3}
+  m_Name: NpcEvents_Milky
+  m_EditorClassIdentifier: Assembly-CSharp::NpcEventBook
+  ownerId: char_milky
+  events:
+  - eventId: event_milky_curious
+    title: "\uC624\uD6C4\uC758 \uC0C8 \uBA54\uB274"
+    requiredStage: 1
+    locationId: loc_cafe_counter
+    fromHour: 14
+    toHour: 18
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC74C~ \uC0C8 \uBA54\uB274\uB97C \uB9CC\uB4E4\uC5B4 \uBD24\uB294\uB370,
+        \uB9DB \uC880 \uBD10 \uC904\uB798\uC694?"
+    - fromPlayer: 0
+      text: "\uC6B0\uC720\uC5D0 \uAFC0\uC744 \uC870\uAE08 \uB123\uC5C8\uC5B4\uC694.
+        \uC5B4\uB54C\uC694?"
+    choices:
+    - label: "\uC815\uB9D0 \uB9DB\uC788\uC5B4!"
+      reply: "\uC5B4\uBA38~ \uADF8\uB7FC \uB0B4\uC77C\uBD80\uD130 \uBA54\uB274\uD310\uC5D0
+        \uC62C\uB9B4\uAC8C\uC694."
+      affinity: 5
+    - label: "\uC870\uAE08 \uB2EC\uC544."
+      reply: "\uC194\uC9C1\uD574\uC11C \uC88B\uC544\uC694~ \uAFC0\uC744 \uC870\uAE08
+        \uC904\uC5EC \uBCFC\uAC8C\uC694."
+      affinity: 3
+    afterLines:
+    - fromPlayer: 0
+      text: "\uC190\uB2D8 \uC758\uACAC\uC774 \uCE74\uD398\uB97C \uD0A4\uC6B0\uB294
+        \uAC70\uC608\uC694. \uACE0\uB9C8\uC6CC\uC694~"
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_milky_trust
+    title: "\uC800\uB141 \uC0B0\uCC45"
+    requiredStage: 2
+    locationId: loc_village_square
+    fromHour: 18
+    toHour: 20
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC608\uC804\uC5D0 \uD63C\uC790 \uAC00\uAC8C\uB97C \uC9C0\uD0A4\uB2E4\u2026
+        \uBB34\uC11C\uC6B4 \uC77C\uC744 \uACAA\uC5C8\uC5B4\uC694."
+    - fromPlayer: 0
+      text: "\uADF8 \uB4A4\uB85C \uD574\uAC00 \uC9C0\uBA74 \uBB38 \uB2EB\uB294 \uAC8C
+        \uC870\uAE08 \uBB34\uC11C\uC6CC\uC694."
+    choices:
+    - label: "\uBB38 \uB2EB\uC744 \uB54C \uB4E4\uB97C\uAC8C."
+      reply: "\uC815\uB9D0\uC694\u2026? \uADF8\uB7FC \uBD88 \uD558\uB098\uB294 \uCF1C
+        \uB450\uACE0 \uAE30\uB2E4\uB9B4\uAC8C\uC694."
+      affinity: 8
+    - label: "\uC774 \uB9C8\uC744\uC740 \uC548\uC804\uD574."
+      reply: "\uADF8\uB807\uC8E0\u2026 \uC694\uC998\uC740 \uB2E4\uB4E4 \uC788\uC73C\uB2C8\uAE4C\uC694."
+      affinity: 3
+    afterLines:
+    - fromPlayer: 0
+      text: "\uC774\uB807\uAC8C \uAC77\uB294 \uC800\uB141\uC774\u2026 \uC88B\uC544\uC84C\uC5B4\uC694."
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_milky_affection
+    title: "\uCC3D\uAC00\uC758 \uB2F9\uC2E0 \uC790\uB9AC"
+    requiredStage: 3
+    locationId: loc_cafe_counter
+    fromHour: 8
+    toHour: 12
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC774 \uCC3D\uAC00 \uC790\uB9AC, \uC624\uB298\uBD80\uD130 \uB2F9\uC2E0
+        \uC790\uB9AC\uC608\uC694."
+    - fromPlayer: 0
+      text: "\uC544\uCE68\uB9C8\uB2E4 \uB530\uB73B\uD55C \uC6B0\uC720\uB97C \uC62C\uB824
+        \uB458\uAC8C\uC694. \uC2DD\uAE30 \uC804\uC5D0 \uC640\uC57C \uD574\uC694~"
+    choices:
+    - label: "\uB9E4\uC77C \uC62C\uAC8C."
+      reply: "\uC57D\uC18D\uD588\uC5B4\uC694~ \uC548 \uC624\uBA74 \uC6B0\uC720\uAC00
+        \uC2AC\uD37C\uD560 \uAC70\uC608\uC694."
+      affinity: 10
+    - label: "\uC6B0\uC720\uBCF4\uB2E4 \uB124\uAC00 \uBCF4\uACE0 \uC2F6\uC5B4\uC11C
+        \uC62C\uAC8C."
+      reply: "\uC5B4, \uC5B4\uBA38\u2026 \uC624\uB298\uC740 \uC6B0\uC720\uB97C \uC870\uAE08
+        \uB354 \uB370\uC6CC\uC57C\uACA0\uB124\uC694\u2026"
+      affinity: 8
+    afterLines:
+    - fromPlayer: 0
+      text: "\uC624\uB298 \uBAAB\uC774\uC5D0\uC694. \uB530\uB73B\uD560 \uB54C \uB9C8\uC154\uC694~"
+    rewardItem: {fileID: 11400000, guid: 7d594dbe78795334dbb0b72bfc9e9c0b, type: 2}
+    rewardItemAmount: 2

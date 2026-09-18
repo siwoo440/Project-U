@@ -533,7 +533,7 @@ public sealed class NpcQuestManager : MonoBehaviour // 93일차: 마을 게시�
 
             foreach (NpcQuestBook.Quest quest in book.Quests)
             {
-                if (quest == null || !quest.IsOfferedIn(season) || quest.RequiredStage > stage || (quest.IsSpecial && GetCompletedCount(quest.QuestId) > 0))
+                if (quest == null || !quest.IsOfferedIn(season) || quest.RequiredStage > stage || (quest.IsSpecial && GetCompletedCount(quest.QuestId) > 0) || !RequiredEventSeen(quest))
                 {
                     continue;
                 }
@@ -566,6 +566,12 @@ public sealed class NpcQuestManager : MonoBehaviour // 93일차: 마을 게시�
                 board.Add(quest.QuestId);
             }
         }
+    }
+
+    private static bool RequiredEventSeen(NpcQuestBook.Quest quest) // 94일차: 필요한 하트 이벤트를 봤는지 (이벤트 기능이 없는 Scene은 통과)
+    {
+        NpcEventManager events = NpcEventManager.Instance;
+        return string.IsNullOrEmpty(quest.RequiredEventId) || events == null || events.HasSeen(quest.RequiredEventId);
     }
 
     private static void Shuffle<T>(List<T> list, System.Random random) // 같은 기준 값이면 같은 순서

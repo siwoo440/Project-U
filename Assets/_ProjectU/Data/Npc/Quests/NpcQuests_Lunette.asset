@@ -32,6 +32,7 @@ MonoBehaviour:
       \uB124 \uAC1C\uB9CC \uBAA8\uC544 \uC8FC\uC2E4 \uC218 \uC788\uC744\uAE4C\uC694?"
     thanksLine: "\uACE0\uB9C8\uC6CC\uC694\u2026 \uC774\uAC78\uB85C \uC88B\uC740 \uC57D\uC744
       \uB9CC\uB4E4 \uC218 \uC788\uACA0\uC5B4\uC694."
+    requiredEventId: 
   - questId: quest_lunette_berry
     title: "\uC791\uC740 \uC5F4\uB9E4 \uD55C \uC90C"
     kind: 0
@@ -48,6 +49,7 @@ MonoBehaviour:
     requestLine: "\uCC28\uC5D0 \uB123\uC744 \uC5F4\uB9E4\uAC00 \uB5A8\uC5B4\uC84C\uC5B4\uC694\u2026
       \uC5EC\uC12F \uAC1C\uB9CC \uBD80\uD0C1\uB4DC\uB824\uB3C4 \uB420\uAE4C\uC694?"
     thanksLine: "\uC640\u2026 \uD5A5\uC774 \uC88B\uC544\uC694. \uC815\uB9D0 \uACE0\uB9C8\uC6CC\uC694."
+    requiredEventId: 
   - questId: quest_lunette_apple
     title: "\uC57D\uCD08\uC0AC\uC758 \uC0AC\uACFC"
     kind: 0
@@ -65,6 +67,7 @@ MonoBehaviour:
       \uB124 \uAC1C\uBA74 \uCDA9\uBD84\uD574\uC694."
     thanksLine: "\uACE0\uB9C8\uC6CC\uC694\u2026 \uB9D0\uB9AC\uBA74 \uD5A5\uC774 \uB354
       \uC88B\uC544\uC9C8 \uAC70\uC608\uC694."
+    requiredEventId: 
   - questId: quest_lunette_special
     title: "\uB2EC\uBE5B \uC57D\uCD08 \uBAA8\uC784"
     kind: 1
@@ -86,3 +89,4 @@ MonoBehaviour:
     thanksLine: "\uACE0\uB9C8\uC6CC\uC694\u2026 \uBAA8\uB450\uC5D0\uAC8C \uB2F9\uC2E0
       \uC774\uC57C\uAE30\uB97C \uD588\uC5B4\uC694. \uC774\uAC74 \uC81C\uAC00 \uB9CC\uB4E0
       \uBD95\uB300\uC608\uC694."
+    requiredEventId: event_lunette_trust

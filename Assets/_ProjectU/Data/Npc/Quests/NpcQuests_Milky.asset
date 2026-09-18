@@ -31,6 +31,7 @@ MonoBehaviour:
     requestLine: "\uC6B0\uC720\uAC00 \uC870\uAE08 \uBAA8\uC790\uB77C\uC694~ \uC138
       \uBCD1\uB9CC \uAC00\uC838\uB2E4\uC904\uB798\uC694?"
     thanksLine: "\uC74C~ \uC2E0\uC120\uD55C \uC6B0\uC720\uB124\uC694. \uACE0\uB9C8\uC6CC\uC694."
+    requiredEventId: 
   - questId: quest_milky_strawberry
     title: "\uBD04 \uB538\uAE30 \uB514\uC800\uD2B8"
     kind: 0
@@ -48,6 +49,7 @@ MonoBehaviour:
       \uB538\uAE30 \uC5EC\uC12F \uAC1C\uBA74 \uB3FC\uC694."
     thanksLine: "\uB2EC\uCF64\uD55C \uB0C4\uC0C8~ \uC624\uB298 \uB514\uC800\uD2B8\uB294
       \uC131\uACF5\uC774\uC5D0\uC694."
+    requiredEventId: 
   - questId: quest_milky_pumpkin
     title: "\uD638\uBC15 \uC218\uD504 \uC7AC\uB8CC"
     kind: 0
@@ -64,6 +66,7 @@ MonoBehaviour:
     requestLine: "\uD638\uBC15 \uC218\uD504\uB97C \uB053\uC774\uB824\uACE0\uC694.
       \uD638\uBC15 \uB450 \uAC1C\uB9CC \uBD80\uD0C1\uD574\uC694~"
     thanksLine: "\uC774\uAC78\uB85C \uCE74\uD398\uAC00 \uB530\uB73B\uD574\uC9C0\uACA0\uC5B4\uC694~"
+    requiredEventId: 
   - questId: quest_milky_special
     title: "\uD669\uAE08 \uC789\uC5B4 \uB9CC\uCC2C \uC900\uBE44"
     kind: 1
@@ -84,3 +87,4 @@ MonoBehaviour:
       \uB450 \uBCD1, \uBD80\uD0C1\uD574\uB3C4 \uB420\uAE4C\uC694?"
     thanksLine: "\uC815\uB9D0 \uAC00\uC838\uC654\uB124\uC694\u2026! \uCCAB \uC811\uC2DC\uB294
       \uB2F9\uC2E0 \uAC70\uC608\uC694. \uC774\uAC74 \uB530\uB73B\uD55C \uC6B0\uC720\uC608\uC694~"
+    requiredEventId: event_milky_trust

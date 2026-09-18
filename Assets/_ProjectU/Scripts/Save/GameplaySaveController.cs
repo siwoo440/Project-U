@@ -245,6 +245,12 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
             return; // 파일 저장 중단
         }
 
+        if (!NpcEventSaveBridge.TryCapture(saveData, out string npcEventCaptureError)) // NPC 이벤트 수집 (94일차)
+        {
+            Debug.LogError($"NPC 이벤트 저장 준비 실패\n{npcEventCaptureError}", this); // 수집 오류 출력
+            return; // 파일 저장 중단
+        }
+
         if (!SaveFileService.TrySave(slotId, saveData, out string resultMessage)) // JSON 파일 저장 실행
         {
             Debug.LogError($"현재 게임 저장 실패\n{resultMessage}", this); // 저장 실패 내용 출력
@@ -369,6 +375,12 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
         if (!NpcShopSaveBridge.TryRestore(saveData, out string npcShopRestoreError)) // NPC 상점 복원 (92일차, 상점 코인 복원 뒤)
         {
             Debug.LogError($"NPC 상점 불러오기 실패\n{npcShopRestoreError}", this); // 복원 오류 출력
+            return; // 전체 불러오기 중단
+        }
+
+        if (!NpcEventSaveBridge.TryRestore(saveData, out string npcEventRestoreError)) // NPC 이벤트 복원 (94일차, 의뢰보다 먼저 : 특별 의뢰 조건)
+        {
+            Debug.LogError($"NPC 이벤트 불러오기 실패\n{npcEventRestoreError}", this); // 복원 오류 출력
             return; // 전체 불러오기 중단
         }
 

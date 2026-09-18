@@ -32,6 +32,7 @@ MonoBehaviour:
       \uC624\uB298 \uC800\uB141\uC740 \uC0DD\uC120\uAD6C\uC774\uC57C!"
     thanksLine: "\uC5ED\uC2DC \uB108\uB2E4\uB0E5! \uC624\uB298 \uC800\uB141\uC740
       \uC794\uCE58\uAD6C\uB0E5."
+    requiredEventId: 
   - questId: quest_mio_smelt
     title: "\uACA8\uC6B8 \uBE59\uC5B4"
     kind: 0
@@ -48,6 +49,7 @@ MonoBehaviour:
     requestLine: "\uC5BC\uC74C \uBC11 \uBE59\uC5B4\uAC00 \uBA39\uACE0 \uC2F6\uB2E4\uB0E5\u2026
       \uC138 \uB9C8\uB9AC\uB9CC \uBD80\uD0C1\uD574."
     thanksLine: "\uBC18\uC9DD\uBC18\uC9DD\uD558\uAD6C\uB0E5! \uACE0\uB9C8\uC6CC."
+    requiredEventId: 
   - questId: quest_mio_trout
     title: "\uC1A1\uC5B4 \uB450 \uB9C8\uB9AC"
     kind: 0
@@ -65,6 +67,7 @@ MonoBehaviour:
       \uB450 \uB9C8\uB9AC \uC7A1\uC544 \uC62C \uC218 \uC788\uC5B4?"
     thanksLine: "\uC6B0\uC640\u2026 \uD06C\uB2E4\uB0E5! \uB108 \uB09A\uC2DC \uC880
       \uD558\uB294\uAD6C\uB0E5."
+    requiredEventId: 
   - questId: quest_mio_special
     title: "\uC804\uC124\uC758 \uD669\uAE08 \uC789\uC5B4"
     kind: 1
@@ -83,3 +86,4 @@ MonoBehaviour:
     thanksLine: "\uC9C4\uC9DC \uC7A1\uC558\uAD6C\uB0E5\u2026! \uB108\uB294 \uB0B4
       \uCD5C\uACE0\uC758 \uB09A\uC2DC \uCE5C\uAD6C\uB2E4\uB0E5. \uC774 \uBBF8\uB07C
       \uBC1B\uC544."
+    requiredEventId: event_mio_trust

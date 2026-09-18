@@ -31,6 +31,7 @@ MonoBehaviour:
     requestLine: "\uCCA0\uAD11\uC11D \uB2E4\uC12F \uAC1C. \uBAA8\uB8E8\uAC00 \uC2EC\uC2EC\uD574\uD558\uACE0
       \uC788\uC5B4."
     thanksLine: "\uC88B\uC740 \uAD11\uC11D\uC774\uAD70. \uBD88\uC774 \uBC18\uAE30\uACA0\uC5B4."
+    requiredEventId: 
   - questId: quest_dravia_stone
     title: "\uD654\uB85C \uBCF4\uC218\uC6A9 \uB3CC"
     kind: 0
@@ -47,6 +48,7 @@ MonoBehaviour:
     requestLine: "\uD654\uB85C \uBCBD\uC774 \uAC08\uB77C\uC84C\uC5B4. \uB3CC \uC2A4\uBB34
       \uAC1C\uB9CC \uAC00\uC838\uC640."
     thanksLine: "\uC774 \uC815\uB3C4\uBA74 \uD654\uB85C\uAC00 \uB2E4\uC2DC \uD2BC\uD2BC\uD574\uC9C0\uC9C0."
+    requiredEventId: 
   - questId: quest_dravia_wood
     title: "\uD654\uB85C \uC7A5\uC791"
     kind: 0
@@ -63,6 +65,7 @@ MonoBehaviour:
     requestLine: "\uC7A5\uC791\uC774 \uB5A8\uC5B4\uC84C\uB2E4. \uB098\uBB34 \uC2A4\uBB34
       \uAC1C. \uAE09\uD574."
     thanksLine: "\uC88B\uC544. \uC624\uB298 \uBD88\uC740 \uAEBC\uC9C0\uC9C0 \uC54A\uACA0\uAD70."
+    requiredEventId: 
   - questId: quest_dravia_special
     title: "\uB124 \uC190\uC5D0 \uB9DE\uB294 \uB3C4\uB07C"
     kind: 1
@@ -82,3 +85,4 @@ MonoBehaviour:
       \uB450 \uAC1C. \u2026\uB124 \uB3C4\uB07C\uB97C \uB9CC\uB4E4\uC5B4 \uC904 \uC0DD\uAC01\uC774\uB2E4."
     thanksLine: "\uBC1B\uC544. \uB124 \uC190\uC5D0 \uB9DE\uCDB0 \uB450\uB4DC\uB9B0
       \uB3C4\uB07C\uB2E4. \uD568\uBD80\uB85C \uC4F0\uC9C0 \uB9C8."
+    requiredEventId: event_dravia_trust
