@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4bf3c4498412d4d8c95a03bab470e9, type: 3}
+  m_Name: NpcQuests_Lunette
+  m_EditorClassIdentifier: Assembly-CSharp::NpcQuestBook
+  groupId: quest_lunette
+  ownerId: char_lunette
+  quests:
+  - questId: quest_lunette_mushroom
+    title: "\uC232 \uBC84\uC12F \uBAA8\uC73C\uAE30"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: ce6c806808c6dfb4ca5fb2217dce497c, type: 2}
+      amount: 4
+    rewardCoins: 40
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uC800\u2026 \uC232 \uBC84\uC12F\uC774 \uC870\uAE08 \uD544\uC694\uD574\uC694.
+      \uB124 \uAC1C\uB9CC \uBAA8\uC544 \uC8FC\uC2E4 \uC218 \uC788\uC744\uAE4C\uC694?"
+    thanksLine: "\uACE0\uB9C8\uC6CC\uC694\u2026 \uC774\uAC78\uB85C \uC88B\uC740 \uC57D\uC744
+      \uB9CC\uB4E4 \uC218 \uC788\uACA0\uC5B4\uC694."
+  - questId: quest_lunette_berry
+    title: "\uC791\uC740 \uC5F4\uB9E4 \uD55C \uC90C"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 3a8ea9dc329d35c4b8b4c84410a7f15d, type: 2}
+      amount: 6
+    rewardCoins: 25
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uCC28\uC5D0 \uB123\uC744 \uC5F4\uB9E4\uAC00 \uB5A8\uC5B4\uC84C\uC5B4\uC694\u2026
+      \uC5EC\uC12F \uAC1C\uB9CC \uBD80\uD0C1\uB4DC\uB824\uB3C4 \uB420\uAE4C\uC694?"
+    thanksLine: "\uC640\u2026 \uD5A5\uC774 \uC88B\uC544\uC694. \uC815\uB9D0 \uACE0\uB9C8\uC6CC\uC694."
+  - questId: quest_lunette_apple
+    title: "\uC57D\uCD08\uC0AC\uC758 \uC0AC\uACFC"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: eef1b375027259b42834d2262ce9dd96, type: 2}
+      amount: 4
+    rewardCoins: 25
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uC0AC\uACFC\uB97C \uB9D0\uB824\uC11C \uCC28\uC5D0 \uB123\uC73C\uB824\uACE0\uC694\u2026
+      \uB124 \uAC1C\uBA74 \uCDA9\uBD84\uD574\uC694."
+    thanksLine: "\uACE0\uB9C8\uC6CC\uC694\u2026 \uB9D0\uB9AC\uBA74 \uD5A5\uC774 \uB354
+      \uC88B\uC544\uC9C8 \uAC70\uC608\uC694."
+  - questId: quest_lunette_special
+    title: "\uB2EC\uBE5B \uC57D\uCD08 \uBAA8\uC784"
+    kind: 1
+    requirements:
+    - item: {fileID: 11400000, guid: 2168b2ceb2540714c8bcfcadd543b478, type: 2}
+      amount: 2
+    - item: {fileID: 11400000, guid: 3a8ea9dc329d35c4b8b4c84410a7f15d, type: 2}
+      amount: 5
+    rewardCoins: 90
+    rewardAffinity: 10
+    rewardItem: {fileID: 11400000, guid: 2e83945f5dda2f34bb4e993074cfc81c, type: 2}
+    rewardItemAmount: 3
+    days: 5
+    seasons: 
+    requiredStage: 2
+    requestLine: "\uC800\u2026 \uC0AC\uC2E4 \uBD80\uD0C1\uC774 \uC788\uC5B4\uC694.
+      \uC232\uC758 \uC57D\uCD08 \uBAA8\uC784\uC5D0 \uAC00\uC838\uAC08 \uBC84\uC12F
+      \uAF2C\uCE58\uB791 \uC5F4\uB9E4\uB97C \uBAA8\uC544 \uC8FC\uC2E4 \uC218 \uC788\uC744\uAE4C\uC694?"
+    thanksLine: "\uACE0\uB9C8\uC6CC\uC694\u2026 \uBAA8\uB450\uC5D0\uAC8C \uB2F9\uC2E0
+      \uC774\uC57C\uAE30\uB97C \uD588\uC5B4\uC694. \uC774\uAC74 \uC81C\uAC00 \uB9CC\uB4E0
+      \uBD95\uB300\uC608\uC694."

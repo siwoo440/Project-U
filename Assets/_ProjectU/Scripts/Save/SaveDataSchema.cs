@@ -65,6 +65,10 @@ public sealed class SaveGameData // 전체 저장 파일 최상위 데이터
     public bool hasNpcShopData; // NPC 상점 저장 여부
     [Tooltip("NPC 상점별 오늘 재고 · 매입 기록 · 거래 합계.")]
     public NpcShopSaveData npcShops = new NpcShopSaveData(); // NPC 상점
+    [Tooltip("NPC 의뢰 저장 데이터 존재 여부. (93일차)")]
+    public bool hasNpcQuestData; // NPC 의뢰 저장 여부
+    [Tooltip("게시판 · 진행 중 의뢰 · 완료 기록.")]
+    public NpcQuestSaveData npcQuests = new NpcQuestSaveData(); // NPC 의뢰
 
     public static SaveGameData CreateNew(string newSceneName) // 새로운 저장 데이터 생성
     {

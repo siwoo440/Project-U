@@ -566,6 +566,11 @@ public static class NpcContentBuilder
         {
             yield return text;
         }
+
+        foreach (string text in NpcQuestBuilder.CollectQuestTexts()) // 93일차: 의뢰 제목 · 대사도 글꼴에 포함
+        {
+            yield return text;
+        }
     }
 
     private static Dictionary<string, ItemData> LoadItemsById()

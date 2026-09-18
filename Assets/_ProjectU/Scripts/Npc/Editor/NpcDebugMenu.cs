@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-// 90일차: NPC 테스트 메뉴 (Play 중에만) / 91일차: 호감도 · 선물 테스트 / 92일차: NPC 상점 테스트
+// 90일차: NPC 테스트 메뉴 (Play 중에만) / 91일차: 호감도 · 선물 테스트 / 92일차: NPC 상점 테스트 / 93일차: 의뢰 테스트
 public static class NpcDebugMenu
 {
     private const string MenuRoot = "Tools/Project U/Debug (Play Mode)/NPC/";
@@ -120,6 +120,61 @@ public static class NpcDebugMenu
     private static bool CanUseShops()
     {
         return EditorApplication.isPlaying && NpcManager.Instance != null && NpcShopManager.Instance != null;
+    }
+
+    [MenuItem(MenuRoot + "Log NPC Quests", false, 120)]
+    private static void LogQuests()
+    {
+        Debug.Log(NpcQuestManager.Instance.Describe());
+    }
+
+    [MenuItem(MenuRoot + "Refresh Quest Board (Today)", false, 121)]
+    private static void RefreshQuestBoard()
+    {
+        NpcQuestManager.Instance.ProcessDay(NpcQuestManager.Instance.CurrentDay);
+        Debug.Log(NpcQuestManager.Instance.Describe());
+    }
+
+    [MenuItem(MenuRoot + "Accept Board Quests", false, 122)]
+    private static void AcceptBoardQuests()
+    {
+        NpcQuestManager quests = NpcQuestManager.Instance;
+
+        foreach (string questId in new System.Collections.Generic.List<string>(quests.BoardIds))
+        {
+            quests.Accept(questId, out string message);
+            Debug.Log(message);
+        }
+    }
+
+    [MenuItem(MenuRoot + "Give Items For Active Quests", false, 123)]
+    private static void GiveQuestItems()
+    {
+        PlayerInventory inventory = Object.FindFirstObjectByType<PlayerInventory>();
+
+        foreach (NpcActiveQuest entry in NpcQuestManager.Instance.Active)
+        {
+            foreach (NpcQuestBook.Requirement requirement in entry.Quest.Requirements)
+            {
+                int missing = requirement.Amount - inventory.GetItemQuantity(requirement.Item);
+
+                if (missing > 0)
+                {
+                    inventory.AddItem(requirement.Item, missing);
+                }
+            }
+        }
+
+        Debug.Log(NpcQuestManager.Instance.Describe());
+    }
+
+    [MenuItem(MenuRoot + "Log NPC Quests", true)]
+    [MenuItem(MenuRoot + "Refresh Quest Board (Today)", true)]
+    [MenuItem(MenuRoot + "Accept Board Quests", true)]
+    [MenuItem(MenuRoot + "Give Items For Active Quests", true)]
+    private static bool CanUseQuests()
+    {
+        return EditorApplication.isPlaying && NpcQuestManager.Instance != null;
     }
 
     private static NpcAgent FindNearest() // 플레이어와 가장 가까운 NPC

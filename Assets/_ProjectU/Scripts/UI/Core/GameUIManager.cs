@@ -10,7 +10,8 @@ public enum GamePopupType // 게임 팝업 종류
     Cooking = 3, // 요리 팝업 (85일차)
     AnimalPen = 4, // 우리 팝업 (86일차)
     Shop = 5, // 상인 팝업 (87일차)
-    Dialogue = 6 // NPC 대화 창 (91일차)
+    Dialogue = 6, // NPC 대화 창 (91일차)
+    QuestBoard = 7 // 마을 게시판 창 (93일차)
 }
 
 public interface IGameScenePopup // 85·86일차: Scene에 배치해 두고 켜고 끄는 팝업
@@ -56,6 +57,8 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
     [SerializeField] private ShopPopupUI shopPopup; // 상인 팝업
     [Tooltip("Scene에 배치된 NPC 대화 창. (91일차)")]
     [SerializeField] private NpcDialoguePopup npcDialoguePopup; // NPC 대화 창
+    [Tooltip("Scene에 배치된 마을 게시판 창. (93일차)")]
+    [SerializeField] private NpcQuestBoardPopup questBoardPopup; // 게시판 창
 
     private InventoryPopupController inventoryPopupInstance; // 생성된 인벤토리 팝업 인스턴스
     private StorageContainerUI storagePopupInstance; // 생성된 보관함 팝업 인스턴스
@@ -72,6 +75,7 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
     public StorageContainerUI StoragePopupInstance => storagePopupInstance; // 생성된 보관함 팝업 제공
     public CookingPopupUI CookingPopup => cookingPopup; // 요리 팝업 제공
     public NpcDialoguePopup NpcDialoguePopup => npcDialoguePopup; // NPC 대화 창 제공 (91일차)
+    public NpcQuestBoardPopup QuestBoardPopup => questBoardPopup; // 게시판 창 제공 (93일차)
     public AnimalPenPopupUI AnimalPenPopup => animalPenPopup; // 우리 팝업 제공
     public ShopPopupUI ShopPopup => shopPopup; // 상인 팝업 제공
     public event Action<GamePopupType, bool> PopupStateChanged; // 팝업 상태 변경 알림
@@ -360,6 +364,18 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
         CloseScenePopup(GamePopupType.Dialogue, npcDialoguePopup); // 종료
     }
 
+    public bool OpenQuestBoard(QuestBoard board) // 마을 게시판 창 열기 (93일차)
+    {
+        return questBoardPopup != null
+            && board != null
+            && OpenScenePopup(GamePopupType.QuestBoard, () => questBoardPopup.ShowFromManager(this, board, playerInventory)); // 결과 반환
+    }
+
+    public void CloseQuestBoard() // 마을 게시판 창 강제 종료 (93일차)
+    {
+        CloseScenePopup(GamePopupType.QuestBoard, questBoardPopup); // 종료
+    }
+
     private bool OpenScenePopup(GamePopupType popupType, Func<bool> show) // Scene 팝업 공통 열기
     {
         if (!CanUseManager()) // 관리자 확인
@@ -419,6 +435,7 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
         CloseAnimalPen(); // 우리 닫기
         CloseShop(); // 상인 닫기
         CloseNpcDialogue(); // NPC 대화 닫기 (91일차)
+        CloseQuestBoard(); // 게시판 닫기 (93일차)
     }
 
     public void CloseCurrentPopup() // 현재 열린 팝업 종료
@@ -447,6 +464,10 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
 
             case GamePopupType.Dialogue: // NPC 대화 창 상태 (91일차)
                 CloseNpcDialogue(); // NPC 대화 창 종료
+                return; // 종료 처리 완료
+
+            case GamePopupType.QuestBoard: // 게시판 창 상태 (93일차)
+                CloseQuestBoard(); // 게시판 창 종료
                 return; // 종료 처리 완료
         }
 
@@ -581,6 +602,14 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
                 }
 
                 break; // 대화 처리 종료
+
+            case GamePopupType.QuestBoard: // 게시판 창 상태 (93일차)
+                if (questBoardPopup != null) // 게시판 창 확인
+                {
+                    questBoardPopup.HideFromManager(); // 게시판 창 숨김
+                }
+
+                break; // 게시판 처리 종료
         }
 
         currentPopupType = GamePopupType.None; // 현재 팝업 상태 초기화
@@ -666,6 +695,11 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
         if (npcDialoguePopup != null) // NPC 대화 창 존재 확인 (92일차)
         {
             npcDialoguePopup.HideFromManager(); // 대화 창 숨김
+        }
+
+        if (questBoardPopup != null) // 게시판 창 존재 확인 (93일차)
+        {
+            questBoardPopup.HideFromManager(); // 게시판 창 숨김
         }
 
         currentPopupType = GamePopupType.None; // 현재 팝업 상태 초기화

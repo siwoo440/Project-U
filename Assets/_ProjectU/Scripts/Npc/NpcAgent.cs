@@ -51,6 +51,8 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
     private Vector3 modelBasePosition; // 모델 기본 위치
     private Vector3 modelBaseScale = Vector3.one; // 모델 기본 크기
     private Vector3 talkTarget; // 대화 상대 위치
+    private string nameTagBaseText; // 의뢰 표시 없는 이름표 문구 (93일차)
+    private NpcQuestMarker questMarker = NpcQuestMarker.None; // 현재 의뢰 표시
 
     public NpcCharacterData Character => character; // 캐릭터 제공
     public string CharacterId => character != null ? character.CharacterId : string.Empty; // ID 제공
@@ -61,6 +63,7 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
     public bool IsInside => isInside; // 집 안 여부 제공
     public bool HasArrived => arrived; // 도착 여부 제공
     public bool IsTalking => isTalking; // 대화 중 여부 제공
+    public NpcQuestMarker QuestMarker => questMarker; // 의뢰 표시 제공 (93일차)
     public Vector3 TargetPosition => targetPosition; // 목적지 제공
     public string StopKey { get; set; } // 관리자가 쓰는 현재 일정 칸 키
 
@@ -123,6 +126,34 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
         speech.text = $"<mark=#1C1C20D0 padding=\"14,14,6,6\">{text}</mark>";
         speech.gameObject.SetActive(true);
         speechTimer = Mathf.Max(1f, seconds);
+    }
+
+    public void SetQuestMarker(NpcQuestMarker marker) // 93일차: 이름표 위 의뢰 표시 (! 전달 가능 · ? 진행 중)
+    {
+        if (nameTag == null || marker == questMarker)
+        {
+            return;
+        }
+
+        if (nameTagBaseText == null)
+        {
+            nameTagBaseText = nameTag.text; // 생성 도구가 만든 이름 · 직업 문구
+        }
+
+        questMarker = marker;
+
+        switch (marker)
+        {
+            case NpcQuestMarker.Ready:
+                nameTag.text = $"<size=170%><b><color=#F2B84B>!</color></b></size>\n{nameTagBaseText}";
+                break;
+            case NpcQuestMarker.Active:
+                nameTag.text = $"<size=150%><b><color=#C9C4B8>?</color></b></size>\n{nameTagBaseText}";
+                break;
+            default:
+                nameTag.text = nameTagBaseText;
+                break;
+        }
     }
 
     public void SetTalking(bool talking, Vector3 partnerPosition) // 91일차: 대화 창이 열린 동안 멈춰서 상대를 바라봄

@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4bf3c4498412d4d8c95a03bab470e9, type: 3}
+  m_Name: NpcQuests_Verona
+  m_EditorClassIdentifier: Assembly-CSharp::NpcQuestBook
+  groupId: quest_verona
+  ownerId: char_verona
+  quests:
+  - questId: quest_verona_potato
+    title: "\uBD04 \uAC10\uC790 \uC218\uD655"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: a42d6efd666a1fc40809cbcbcd3362b4, type: 2}
+      amount: 5
+    rewardCoins: 55
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 00000000
+    requiredStage: 0
+    requestLine: "\uBD04 \uAC10\uC790 \uB2E4\uC12F \uAC1C\uAC00 \uD544\uC694\uD558\uB2E4.
+      \uB124 \uBC2D\uC5D0\uC11C \uB09C \uAC83\uC774\uBA74 \uC88B\uACA0\uAD70."
+    thanksLine: "\uC88B\uC740 \uAC10\uC790\uB2E4. \uB300\uC9C0\uAC00 \uB108\uB97C
+      \uBBFF\uACE0 \uC788\uC5B4."
+  - questId: quest_verona_tomato
+    title: "\uC5EC\uB984 \uD1A0\uB9C8\uD1A0"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 6fd5b0751520d284ba0ec2064ed5ea80, type: 2}
+      amount: 5
+    rewardCoins: 60
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 01000000
+    requiredStage: 0
+    requestLine: "\uC5EC\uB984 \uD587\uBCD5\uC744 \uBA39\uC740 \uD1A0\uB9C8\uD1A0
+      \uB2E4\uC12F \uAC1C. \uC798 \uC775\uC740 \uAC78\uB85C \uBD80\uD0C1\uD558\uC9C0."
+    thanksLine: "\u2026\uC798 \uC775\uC5C8\uAD70. \uACE0\uB9D9\uB2E4."
+  - questId: quest_verona_pumpkin
+    title: "\uAC00\uC744 \uD638\uBC15 \uB450 \uB369\uC774"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 60a1b7725b902114381bd98a8db8ec3b, type: 2}
+      amount: 2
+    rewardCoins: 75
+    rewardAffinity: 5
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 02000000
+    requiredStage: 0
+    requestLine: "\uC218\uD655\uC81C\uC5D0 \uC4F8 \uD638\uBC15\uC774 \uB450 \uB369\uC774
+      \uD544\uC694\uD558\uB2E4."
+    thanksLine: "\uBB35\uC9C1\uD558\uAD70. \uC774\uB9CC\uD558\uBA74 \uC218\uD655\uC81C\uAC00
+      \uD48D\uC131\uD558\uACA0\uC5B4."
+  - questId: quest_verona_radish
+    title: "\uACA8\uC6B8\uBB34 \uC800\uC7A5"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 09c927a2524bd8f409d6b8ddab61bc58, type: 2}
+      amount: 4
+    rewardCoins: 65
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 03000000
+    requiredStage: 0
+    requestLine: "\uACA8\uC6B8\uC744 \uB098\uB824\uBA74 \uBB34\uB97C \uC800\uC7A5\uD574
+      \uB46C\uC57C \uD574. \uB124 \uAC1C\uB9CC \uAC00\uC838\uC640 \uC918."
+    thanksLine: "\uC88B\uC544. \uC774 \uACA8\uC6B8\uB3C4 \uBB34\uC0AC\uD788 \uB0A0
+      \uC218 \uC788\uACA0\uAD70."
+  - questId: quest_verona_special
+    title: "\uB300\uC9C0\uC758 \uAC10\uC0AC \uC81C\uBB3C"
+    kind: 1
+    requirements:
+    - item: {fileID: 11400000, guid: 070f5d6a3c56070488a27144388e461c, type: 2}
+      amount: 4
+    rewardCoins: 90
+    rewardAffinity: 10
+    rewardItem: {fileID: 11400000, guid: b452886093be83d44a997c06ab4f6f18, type: 2}
+    rewardItemAmount: 6
+    days: 5
+    seasons: 
+    requiredStage: 2
+    requestLine: "\uAD6C\uC6B4 \uAC10\uC790 \uB124 \uAC1C\uB97C \uB300\uC9C0\uC5D0
+      \uBC14\uCE58\uACE0 \uC2F6\uB2E4. \uB124 \uC190\uC73C\uB85C \uAD6C\uC6B4 \uAC83\uC774\uBA74
+      \uB354 \uC88B\uACA0\uC9C0."
+    thanksLine: "\u2026\uB300\uC9C0\uAC00 \uAE30\uBED0\uD558\uB294\uAD70. \uC774
+      \uC528\uC557\uC744 \uBC1B\uC544. \uB108\uB77C\uBA74 \uC798 \uD0A4\uC6B8 \uAC70\uC57C."

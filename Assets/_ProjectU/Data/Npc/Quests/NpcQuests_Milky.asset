@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4bf3c4498412d4d8c95a03bab470e9, type: 3}
+  m_Name: NpcQuests_Milky
+  m_EditorClassIdentifier: Assembly-CSharp::NpcQuestBook
+  groupId: quest_milky
+  ownerId: char_milky
+  quests:
+  - questId: quest_milky_milk
+    title: "\uCE74\uD398 \uC6B0\uC720 \uBCF4\uCDA9"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 0beb83d291e4ab6438e2b2ea00a83f5d, type: 2}
+      amount: 3
+    rewardCoins: 60
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uC6B0\uC720\uAC00 \uC870\uAE08 \uBAA8\uC790\uB77C\uC694~ \uC138
+      \uBCD1\uB9CC \uAC00\uC838\uB2E4\uC904\uB798\uC694?"
+    thanksLine: "\uC74C~ \uC2E0\uC120\uD55C \uC6B0\uC720\uB124\uC694. \uACE0\uB9C8\uC6CC\uC694."
+  - questId: quest_milky_strawberry
+    title: "\uBD04 \uB538\uAE30 \uB514\uC800\uD2B8"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 95ca44aa8a27d41448c511db6fa0a55c, type: 2}
+      amount: 6
+    rewardCoins: 50
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 00000000
+    requiredStage: 0
+    requestLine: "\uB538\uAE30 \uB514\uC800\uD2B8\uB97C \uB9CC\uB4E4\uACE0 \uC2F6\uC5B4\uC694~
+      \uB538\uAE30 \uC5EC\uC12F \uAC1C\uBA74 \uB3FC\uC694."
+    thanksLine: "\uB2EC\uCF64\uD55C \uB0C4\uC0C8~ \uC624\uB298 \uB514\uC800\uD2B8\uB294
+      \uC131\uACF5\uC774\uC5D0\uC694."
+  - questId: quest_milky_pumpkin
+    title: "\uD638\uBC15 \uC218\uD504 \uC7AC\uB8CC"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 60a1b7725b902114381bd98a8db8ec3b, type: 2}
+      amount: 2
+    rewardCoins: 75
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 02000000
+    requiredStage: 0
+    requestLine: "\uD638\uBC15 \uC218\uD504\uB97C \uB053\uC774\uB824\uACE0\uC694.
+      \uD638\uBC15 \uB450 \uAC1C\uB9CC \uBD80\uD0C1\uD574\uC694~"
+    thanksLine: "\uC774\uAC78\uB85C \uCE74\uD398\uAC00 \uB530\uB73B\uD574\uC9C0\uACA0\uC5B4\uC694~"
+  - questId: quest_milky_special
+    title: "\uD669\uAE08 \uC789\uC5B4 \uB9CC\uCC2C \uC900\uBE44"
+    kind: 1
+    requirements:
+    - item: {fileID: 11400000, guid: 535bf968045572f408e41892f2d80b93, type: 2}
+      amount: 1
+    - item: {fileID: 11400000, guid: 0beb83d291e4ab6438e2b2ea00a83f5d, type: 2}
+      amount: 2
+    rewardCoins: 180
+    rewardAffinity: 12
+    rewardItem: {fileID: 11400000, guid: 7d594dbe78795334dbb0b72bfc9e9c0b, type: 2}
+    rewardItemAmount: 2
+    days: 5
+    seasons: 
+    requiredStage: 2
+    requestLine: "\uD2B9\uBCC4\uD55C \uB0A0\uC5D0 \uD669\uAE08 \uC789\uC5B4 \uB9CC\uCC2C\uC744
+      \uB0B4\uACE0 \uC2F6\uC5B4\uC694~ \uD669\uAE08 \uC789\uC5B4\uB791 \uC6B0\uC720
+      \uB450 \uBCD1, \uBD80\uD0C1\uD574\uB3C4 \uB420\uAE4C\uC694?"
+    thanksLine: "\uC815\uB9D0 \uAC00\uC838\uC654\uB124\uC694\u2026! \uCCAB \uC811\uC2DC\uB294
+      \uB2F9\uC2E0 \uAC70\uC608\uC694. \uC774\uAC74 \uB530\uB73B\uD55C \uC6B0\uC720\uC608\uC694~"

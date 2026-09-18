@@ -5,7 +5,7 @@ using UnityEngine.InputSystem; // 키보드 입력 기능
 using UnityEngine.UI; // Unity UI 기능
 
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
-public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일차: NPC 대화 창 (초상 · 이름 · 호감도 · 대사 · 대화/선물/거래)
+public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일차: NPC 대화 창 (초상 · 이름 · 호감도 · 대사 · 대화/선물/거래) / 93일차: 의뢰 전달
 {
     [Header("Root")] // 루트
     [Tooltip("켜고 끄는 창 전체.")]
@@ -35,6 +35,8 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
     [SerializeField] private Button giftButton; // 선물하기
     [SerializeField] private TMP_Text giftLabel; // 선물 문구
     [SerializeField] private Button tradeButton; // 거래
+    [SerializeField] private Button questButton; // 의뢰 전달 (93일차)
+    [SerializeField] private TMP_Text questLabel; // 의뢰 버튼 문구 (진행도)
     [SerializeField] private Button closeButton; // 닫기
 
     [Header("Gift")] // 선물
@@ -65,12 +67,15 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
     public IReadOnlyList<NpcGiftSlotUI> GiftSlots => giftSlots; // 선물 칸 (테스트용)
     public bool CanTrade => tradeButton != null && tradeButton.gameObject.activeSelf; // 거래 버튼 여부 (테스트용)
     public string TradeLabel => tradeLabel != null ? tradeLabel.text : string.Empty; // 거래 버튼 문구 (테스트용)
+    public bool CanDeliverQuest => questButton != null && questButton.gameObject.activeSelf; // 의뢰 버튼 여부 (테스트용)
+    public string QuestLabel => questLabel != null ? questLabel.text : string.Empty; // 의뢰 버튼 문구 (테스트용)
 
     private void Awake() // 버튼 연결
     {
         if (talkButton != null) talkButton.onClick.AddListener(Talk);
         if (giftButton != null) giftButton.onClick.AddListener(OpenGiftPanel);
         if (tradeButton != null) tradeButton.onClick.AddListener(Trade);
+        if (questButton != null) questButton.onClick.AddListener(DeliverQuest);
         if (closeButton != null) closeButton.onClick.AddListener(RequestClose);
         if (lineButton != null) lineButton.onClick.AddListener(FinishTyping);
         if (giftCancelButton != null) giftCancelButton.onClick.AddListener(CloseGiftPanel);
@@ -269,6 +274,35 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
         return true;
     }
 
+    public void DeliverQuest() // 93일차: 이 NPC에게 받은 의뢰 전달 (모자라면 필요한 물건 안내)
+    {
+        NpcQuestManager quests = NpcQuestManager.Instance;
+        NpcActiveQuest entry = IsOpen && quests != null ? quests.GetActiveFor(agent.Character) : null;
+
+        if (entry == null)
+        {
+            return;
+        }
+
+        FinishTyping();
+        NpcCharacterData character = agent.Character;
+
+        if (!quests.TryComplete(entry.Quest.QuestId, inventory, out NpcQuestResult result, out string message))
+        {
+            ShowMessage($"{message}\n{entry.Quest.Title} · {quests.ProgressText(entry.Quest)} · {NpcQuestManager.DaysLeftText(quests.DaysLeft(entry))}", ProjectUUIPalette.TextSecondary);
+            RefreshHeader();
+            return;
+        }
+
+        List<string> rewards = new List<string>();
+        if (result.Coins > 0) rewards.Add($"코인 +{result.Coins}");
+        if (result.Affinity > 0) rewards.Add($"호감도 +{result.Affinity}");
+        if (result.Item != null && result.ItemAmount > 0) rewards.Add($"{result.Item.DisplayName} x{result.ItemAmount}");
+        ShowLine(string.IsNullOrEmpty(entry.Quest.ThanksLine) ? NpcDialogueSelector.Silent : entry.Quest.ThanksLine);
+        ShowMessage(StageMessage(character, $"의뢰 완료 · {string.Join(" · ", rewards)}", result.Before, result.After), ProjectUUIPalette.Accent);
+        RefreshHeader();
+    }
+
     public void Trade() // 거래 (92일차: NPC 상점 · 영업 시간이 아니면 이유 안내 / 91일차: 가판대 상인)
     {
         if (!IsOpen)
@@ -375,6 +409,18 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
             giftLabel.text = canGift ? "선물하기" : "선물 완료";
         }
 
+        if (questButton != null) // 93일차: 이 NPC에게 받은 의뢰가 있으면 전달 버튼
+        {
+            NpcQuestManager quests = NpcQuestManager.Instance;
+            NpcActiveQuest entry = quests != null ? quests.GetActiveFor(character) : null;
+            questButton.gameObject.SetActive(entry != null);
+
+            if (entry != null && questLabel != null)
+            {
+                questLabel.text = quests.IsReady(entry.Quest) ? "의뢰 전달" : $"의뢰 ({RequirementProgress(quests, entry.Quest)})";
+            }
+        }
+
         if (tradeButton != null)
         {
             NpcShopManager shops = NpcShopManager.Instance;
@@ -393,6 +439,23 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
                 tradeLabel.text = open ? "거래" : "거래 (닫힘)";
             }
         }
+    }
+
+    private static string RequirementProgress(NpcQuestManager quests, NpcQuestBook.Quest quest) // 의뢰 버튼 진행도 "2/3"
+    {
+        int have = 0;
+        int need = 0;
+
+        foreach (NpcQuestBook.Requirement requirement in quest.Requirements)
+        {
+            if (requirement?.Item != null)
+            {
+                have += Mathf.Min(quests.CountInBag(requirement.Item), requirement.Amount);
+                need += requirement.Amount;
+            }
+        }
+
+        return $"{have}/{need}";
     }
 
     private void RebuildGiftList() // 가방의 아이템 목록

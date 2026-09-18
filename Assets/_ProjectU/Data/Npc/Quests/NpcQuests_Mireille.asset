@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4bf3c4498412d4d8c95a03bab470e9, type: 3}
+  m_Name: NpcQuests_Mireille
+  m_EditorClassIdentifier: Assembly-CSharp::NpcQuestBook
+  groupId: quest_mireille
+  ownerId: char_mireille
+  quests:
+  - questId: quest_mireille_apple
+    title: "\uC591\uB4E4\uC758 \uAC04\uC2DD"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: eef1b375027259b42834d2262ce9dd96, type: 2}
+      amount: 5
+    rewardCoins: 30
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uC591\uB4E4\uC774 \uC0AC\uACFC\uB97C \uC88B\uC544\uD574\uC694~
+      \uB2E4\uC12F \uAC1C\uB9CC \uAC00\uC838\uB2E4\uC8FC\uC2E4\uB798\uC694?"
+    thanksLine: "\uC591\uB4E4\uC774 \uBC8C\uC368 \uC88B\uC544\uD558\uB124\uC694~
+      \uACE0\uB9C8\uC6CC\uC694."
+  - questId: quest_mireille_egg
+    title: "\uC544\uCE68 \uB2EC\uAC40"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 475aeddadd419b64b95a40abb76444f6, type: 2}
+      amount: 3
+    rewardCoins: 40
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uC544\uCE68\uC5D0 \uC4F8 \uB2EC\uAC40\uC774 \uBAA8\uC790\uB77C\uC694.
+      \uC138 \uAC1C\uB9CC \uBD80\uD0C1\uD574\uB3C4 \uB420\uAE4C\uC694?"
+    thanksLine: "\uB530\uB73B\uD55C \uC544\uCE68\uC744 \uB9CC\uB4E4 \uC218 \uC788\uACA0\uC5B4\uC694~"
+  - questId: quest_mireille_fiber
+    title: "\uC6B0\uB9AC \uC6B8\uD0C0\uB9AC \uC190\uC9C8"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: bc991e404803cba4292542d6a52ddd7a, type: 2}
+      amount: 10
+    rewardCoins: 25
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uC6B0\uB9AC \uC6B8\uD0C0\uB9AC\uB97C \uBB36\uC744 \uC2DD\uBB3C
+      \uC12C\uC720\uAC00 \uD544\uC694\uD574\uC694. \uC5F4 \uAC1C\uB9CC\uC694~"
+    thanksLine: "\uC774\uAC78\uB85C \uC6B8\uD0C0\uB9AC\uAC00 \uD2BC\uD2BC\uD574\uC9C0\uACA0\uC5B4\uC694."
+  - questId: quest_mireille_special
+    title: "\uACA8\uC6B8 \uC591\uD138 \uBAA9\uB3C4\uB9AC"
+    kind: 1
+    requirements:
+    - item: {fileID: 11400000, guid: 7d594dbe78795334dbb0b72bfc9e9c0b, type: 2}
+      amount: 2
+    - item: {fileID: 11400000, guid: bc991e404803cba4292542d6a52ddd7a, type: 2}
+      amount: 10
+    rewardCoins: 80
+    rewardAffinity: 10
+    rewardItem: {fileID: 11400000, guid: d59c8cdf23a10a44f9a57f150743b58a, type: 2}
+    rewardItemAmount: 10
+    days: 5
+    seasons: 
+    requiredStage: 2
+    requestLine: "\uC591\uD138 \uBAA9\uB3C4\uB9AC\uB97C \uC9DC\uB824\uACE0\uC694~
+      \uB530\uB73B\uD55C \uC6B0\uC720 \uB450 \uC794\uC774\uB791 \uC12C\uC720 \uC5F4
+      \uAC1C\uBA74 \uBC24\uC0C8 \uC9E4 \uC218 \uC788\uC5B4\uC694."
+    thanksLine: "\uB2E4 \uC9F0\uC5B4\uC694~ \uC591\uB4E4 \uBA39\uC774\uB3C4 \uC870\uAE08
+      \uB098\uB220 \uB4DC\uB9B4\uAC8C\uC694."

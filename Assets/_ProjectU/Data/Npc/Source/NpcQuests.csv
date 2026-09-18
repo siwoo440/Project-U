@@ -1,0 +1,30 @@
+QuestID,Owner,Kind,Title,Requirements,RewardCoins,RewardAffinity,RewardItem,Days,Seasons,MinStage,Request,Thanks
+quest_lunette_mushroom,char_lunette,Board,숲 버섯 모으기,item_wild_mushroom:4,40,4,,3,All,,"저… 숲 버섯이 조금 필요해요. 네 개만 모아 주실 수 있을까요?","고마워요… 이걸로 좋은 약을 만들 수 있겠어요."
+quest_lunette_berry,char_lunette,Board,작은 열매 한 줌,food_berry:6,25,3,,2,All,,"차에 넣을 열매가 떨어졌어요… 여섯 개만 부탁드려도 될까요?","와… 향이 좋아요. 정말 고마워요."
+quest_lunette_apple,char_lunette,Board,약초사의 사과,food_apple:4,25,3,,3,All,,"사과를 말려서 차에 넣으려고요… 네 개면 충분해요.","고마워요… 말리면 향이 더 좋아질 거예요."
+quest_verona_potato,char_verona,Board,봄 감자 수확,food_potato:5,55,4,,3,Spring,,봄 감자 다섯 개가 필요하다. 네 밭에서 난 것이면 좋겠군.,좋은 감자다. 대지가 너를 믿고 있어.
+quest_verona_tomato,char_verona,Board,여름 토마토,food_tomato:5,60,4,,3,Summer,,여름 햇볕을 먹은 토마토 다섯 개. 잘 익은 걸로 부탁하지.,…잘 익었군. 고맙다.
+quest_verona_pumpkin,char_verona,Board,가을 호박 두 덩이,food_pumpkin:2,75,5,,3,Autumn,,수확제에 쓸 호박이 두 덩이 필요하다.,묵직하군. 이만하면 수확제가 풍성하겠어.
+quest_verona_radish,char_verona,Board,겨울무 저장,food_winter_radish:4,65,4,,3,Winter,,겨울을 나려면 무를 저장해 둬야 해. 네 개만 가져와 줘.,좋아. 이 겨울도 무사히 날 수 있겠군.
+quest_mio_crucian,char_mio,Board,저녁 반찬 붕어,resource_fish_crucian:3,60,4,,2,Spring|Summer|Autumn,,붕어 세 마리만 가져다줄래냥? 오늘 저녁은 생선구이야!,역시 너다냥! 오늘 저녁은 잔치구냥.
+quest_mio_smelt,char_mio,Board,겨울 빙어,resource_fish_smelt:3,65,4,,2,Winter,,얼음 밑 빙어가 먹고 싶다냥… 세 마리만 부탁해.,반짝반짝하구냥! 고마워.
+quest_mio_trout,char_mio,Board,송어 두 마리,resource_fish_trout:2,90,5,,3,Spring|Autumn,,송어는 힘이 세서 재밌다냥. 두 마리 잡아 올 수 있어?,우와… 크다냥! 너 낚시 좀 하는구냥.
+quest_mireille_apple,char_mireille,Board,양들의 간식,food_apple:5,30,3,,3,All,,양들이 사과를 좋아해요~ 다섯 개만 가져다주실래요?,양들이 벌써 좋아하네요~ 고마워요.
+quest_mireille_egg,char_mireille,Board,아침 달걀,food_egg:3,40,4,,2,All,,아침에 쓸 달걀이 모자라요. 세 개만 부탁해도 될까요?,따뜻한 아침을 만들 수 있겠어요~
+quest_mireille_fiber,char_mireille,Board,우리 울타리 손질,item_plant_fiber:10,25,3,,3,All,,우리 울타리를 묶을 식물 섬유가 필요해요. 열 개만요~,이걸로 울타리가 튼튼해지겠어요.
+quest_milky_milk,char_milky,Board,카페 우유 보충,drink_milk:3,60,4,,2,All,,우유가 조금 모자라요~ 세 병만 가져다줄래요?,음~ 신선한 우유네요. 고마워요.
+quest_milky_strawberry,char_milky,Board,봄 딸기 디저트,food_strawberry:6,50,4,,2,Spring,,딸기 디저트를 만들고 싶어요~ 딸기 여섯 개면 돼요.,달콤한 냄새~ 오늘 디저트는 성공이에요.
+quest_milky_pumpkin,char_milky,Board,호박 수프 재료,food_pumpkin:2,75,4,,3,Autumn,,호박 수프를 끓이려고요. 호박 두 개만 부탁해요~,이걸로 카페가 따뜻해지겠어요~
+quest_dravia_ore,char_dravia,Board,철광석 납품,item_iron_ore:5,70,4,,3,All,,철광석 다섯 개. 모루가 심심해하고 있어.,좋은 광석이군. 불이 반기겠어.
+quest_dravia_stone,char_dravia,Board,화로 보수용 돌,resource_stone:20,30,3,,3,All,,화로 벽이 갈라졌어. 돌 스무 개만 가져와.,이 정도면 화로가 다시 튼튼해지지.
+quest_dravia_wood,char_dravia,Board,화로 장작,item_wood:20,30,3,,2,All,,장작이 떨어졌다. 나무 스무 개. 급해.,좋아. 오늘 불은 꺼지지 않겠군.
+quest_lichel_catfish,char_lichel,Board,메기 한 마리,resource_fish_catfish:1,50,4,,3,Summer|Autumn,,"메기 한 마리 구해 와. 비싸게 팔 곳이 있거든, 흥.",좋아~ 이 정도면 괜찮은 거래지.
+quest_lichel_skewer,char_lichel,Board,장터 간식,food_mushroom_skewer:2,60,4,,2,All,,버섯 꼬치 두 개. 장터 손님들한테 팔 거야.,"흥, 제법이네. 잘 팔리겠어."
+quest_lichel_wood,char_lichel,Board,짐마차 수리,item_wood:15,25,3,,3,All,,짐마차 바퀴가 삐걱거려. 나무 열다섯 개만.,"됐다, 이제 덜컹거리지 않겠지."
+quest_lunette_special,char_lunette,Special,달빛 약초 모임,food_mushroom_skewer:2|food_berry:5,90,10,medicine_bandage:3,5,All,Trust,"저… 사실 부탁이 있어요. 숲의 약초 모임에 가져갈 버섯 꼬치랑 열매를 모아 주실 수 있을까요?","고마워요… 모두에게 당신 이야기를 했어요. 이건 제가 만든 붕대예요."
+quest_verona_special,char_verona,Special,대지의 감사 제물,food_baked_potato:4,90,10,seed_pumpkin:6,5,All,Trust,구운 감자 네 개를 대지에 바치고 싶다. 네 손으로 구운 것이면 더 좋겠지.,…대지가 기뻐하는군. 이 씨앗을 받아. 너라면 잘 키울 거야.
+quest_mio_special,char_mio,Special,전설의 황금 잉어,resource_fish_golden_carp:1,150,10,resource_worm_bait:10,5,All,Trust,"황금 잉어… 전설의 물고기다냥. 너라면 잡을 수 있을 것 같아!","진짜 잡았구냥…! 너는 내 최고의 낚시 친구다냥. 이 미끼 받아."
+quest_mireille_special,char_mireille,Special,겨울 양털 목도리,food_warm_milk:2|item_plant_fiber:10,80,10,item_animal_feed:10,5,All,Trust,"양털 목도리를 짜려고요~ 따뜻한 우유 두 잔이랑 섬유 열 개면 밤새 짤 수 있어요.","다 짰어요~ 양들 먹이도 조금 나눠 드릴게요."
+quest_milky_special,char_milky,Special,황금 잉어 만찬 준비,resource_fish_golden_carp:1|drink_milk:2,180,12,food_warm_milk:2,5,All,Trust,"특별한 날에 황금 잉어 만찬을 내고 싶어요~ 황금 잉어랑 우유 두 병, 부탁해도 될까요?","정말 가져왔네요…! 첫 접시는 당신 거예요. 이건 따뜻한 우유예요~"
+quest_dravia_special,char_dravia,Special,네 손에 맞는 도끼,item_iron_ore:10|food_grilled_fish:2,50,10,item_iron_axe:1,5,All,Trust,"철광석 열 개랑 구운 생선 두 개. …네 도끼를 만들어 줄 생각이다.","받아. 네 손에 맞춰 두드린 도끼다. 함부로 쓰지 마."
+quest_lichel_special,char_lichel,Special,큰손 손님의 주문,resource_fish_golden_carp:1|resource_fish_catfish:2,120,10,equipment_small_backpack:1,5,Summer|Autumn,Trust,"큰손 손님이 황금 잉어랑 메기 두 마리를 찾아. …너한테만 말하는 거야.","대박 거래였어! 이건 네 몫이야. 가방, 필요했지? 흥."

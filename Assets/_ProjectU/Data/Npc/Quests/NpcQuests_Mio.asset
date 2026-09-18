@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4bf3c4498412d4d8c95a03bab470e9, type: 3}
+  m_Name: NpcQuests_Mio
+  m_EditorClassIdentifier: Assembly-CSharp::NpcQuestBook
+  groupId: quest_mio
+  ownerId: char_mio
+  quests:
+  - questId: quest_mio_crucian
+    title: "\uC800\uB141 \uBC18\uCC2C \uBD95\uC5B4"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: bad80e6a70bf78a4a81937454f7a8f95, type: 2}
+      amount: 3
+    rewardCoins: 60
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 000000000100000002000000
+    requiredStage: 0
+    requestLine: "\uBD95\uC5B4 \uC138 \uB9C8\uB9AC\uB9CC \uAC00\uC838\uB2E4\uC904\uB798\uB0E5?
+      \uC624\uB298 \uC800\uB141\uC740 \uC0DD\uC120\uAD6C\uC774\uC57C!"
+    thanksLine: "\uC5ED\uC2DC \uB108\uB2E4\uB0E5! \uC624\uB298 \uC800\uB141\uC740
+      \uC794\uCE58\uAD6C\uB0E5."
+  - questId: quest_mio_smelt
+    title: "\uACA8\uC6B8 \uBE59\uC5B4"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 83e8c92974737c246a6f55d31325f68b, type: 2}
+      amount: 3
+    rewardCoins: 65
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 03000000
+    requiredStage: 0
+    requestLine: "\uC5BC\uC74C \uBC11 \uBE59\uC5B4\uAC00 \uBA39\uACE0 \uC2F6\uB2E4\uB0E5\u2026
+      \uC138 \uB9C8\uB9AC\uB9CC \uBD80\uD0C1\uD574."
+    thanksLine: "\uBC18\uC9DD\uBC18\uC9DD\uD558\uAD6C\uB0E5! \uACE0\uB9C8\uC6CC."
+  - questId: quest_mio_trout
+    title: "\uC1A1\uC5B4 \uB450 \uB9C8\uB9AC"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: eee016df450094545b4a90688d3bce9b, type: 2}
+      amount: 2
+    rewardCoins: 90
+    rewardAffinity: 5
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 0000000002000000
+    requiredStage: 0
+    requestLine: "\uC1A1\uC5B4\uB294 \uD798\uC774 \uC138\uC11C \uC7AC\uBC0C\uB2E4\uB0E5.
+      \uB450 \uB9C8\uB9AC \uC7A1\uC544 \uC62C \uC218 \uC788\uC5B4?"
+    thanksLine: "\uC6B0\uC640\u2026 \uD06C\uB2E4\uB0E5! \uB108 \uB09A\uC2DC \uC880
+      \uD558\uB294\uAD6C\uB0E5."
+  - questId: quest_mio_special
+    title: "\uC804\uC124\uC758 \uD669\uAE08 \uC789\uC5B4"
+    kind: 1
+    requirements:
+    - item: {fileID: 11400000, guid: 535bf968045572f408e41892f2d80b93, type: 2}
+      amount: 1
+    rewardCoins: 150
+    rewardAffinity: 10
+    rewardItem: {fileID: 11400000, guid: f82cfee3161243747ad3a92e8c7418ba, type: 2}
+    rewardItemAmount: 10
+    days: 5
+    seasons: 
+    requiredStage: 2
+    requestLine: "\uD669\uAE08 \uC789\uC5B4\u2026 \uC804\uC124\uC758 \uBB3C\uACE0\uAE30\uB2E4\uB0E5.
+      \uB108\uB77C\uBA74 \uC7A1\uC744 \uC218 \uC788\uC744 \uAC83 \uAC19\uC544!"
+    thanksLine: "\uC9C4\uC9DC \uC7A1\uC558\uAD6C\uB0E5\u2026! \uB108\uB294 \uB0B4
+      \uCD5C\uACE0\uC758 \uB09A\uC2DC \uCE5C\uAD6C\uB2E4\uB0E5. \uC774 \uBBF8\uB07C
+      \uBC1B\uC544."

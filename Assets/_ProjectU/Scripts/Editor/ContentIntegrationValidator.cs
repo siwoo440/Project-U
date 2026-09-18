@@ -10,6 +10,7 @@ using Object = UnityEngine.Object;
 // 2. 기능 사이 연결 검사 : 생산물 판매 가격, 요리 재료를 구하는 곳, 씨앗 판매, 저장 목록, 날짜 처리 관리자
 // 89일차: NPC 검사와 NPC 선물을 구하는 곳 검사 추가
 // 92일차: NPC 상점 검사 추가, NPC 상점 판매 물건을 구하는 곳에 포함
+// 93일차: NPC 의뢰 검사 추가, 의뢰에 필요한 물건을 구할 수 있는지 검사
 public static class ContentIntegrationValidator
 {
     private const string DialogTitle = "Project U 전체 콘텐츠 검사";
@@ -91,6 +92,7 @@ public static class ContentIntegrationValidator
             ("NPC 마을 배치", Feature(NpcPlacementBuilder.Validate)),
             ("NPC 대화", Feature(NpcDialogueBuilder.Validate)),
             ("NPC 상점", Feature(NpcShopBuilder.Validate)),
+            ("NPC 의뢰", Feature(NpcQuestBuilder.Validate)),
             ("아이템 데이터 (ID 규칙)", ItemDataValidator.ValidateAllItemData),
             ("Game Data Registry", () => CountLoggedErrors(GameDataRegistryEditor.ValidateDefaultRegistry, details))
         };
@@ -214,6 +216,7 @@ public static class ContentIntegrationValidator
             CheckSeeds();
             CheckItemRegistration();
             CheckNpcGifts();
+            CheckNpcQuests();
             CheckScene();
         }
 
@@ -412,6 +415,43 @@ public static class ContentIntegrationValidator
             }
 
             Ok($"NPC {database.Characters.Count}명 중 {obtainable}명 : 매우 좋아하는 선물을 구할 수 있음");
+        }
+
+        // 93일차: 의뢰에 필요한 물건과 보상 아이템은 게임 안에서 구할 수 있어야 한다
+        private void CheckNpcQuests()
+        {
+            int quests = 0;
+            int items = 0;
+
+            foreach (NpcQuestBook book in NpcQuestBuilder.LoadBooks())
+            {
+                foreach (NpcQuestBook.Quest quest in book.Quests)
+                {
+                    if (quest == null)
+                    {
+                        continue;
+                    }
+
+                    quests++;
+
+                    foreach (NpcQuestBook.Requirement requirement in quest.Requirements)
+                    {
+                        if (requirement?.Item == null)
+                        {
+                            continue;
+                        }
+
+                        items++;
+
+                        if (!sources.ContainsKey(requirement.Item))
+                        {
+                            Error($"{quest.QuestId} : 필요 물건 {requirement.Item.ItemId} 를 얻는 곳을 찾지 못했습니다.");
+                        }
+                    }
+                }
+            }
+
+            Ok($"NPC 의뢰 {quests}개 : 필요 물건 {items}칸 구하는 곳 확인");
         }
 
         // 작물마다 씨앗을 살 수 있고, 계절마다 심을 작물이 있어야 한다

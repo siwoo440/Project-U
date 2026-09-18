@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static UIBuildKit;
 
-// 91일차: NPC 대화 도구
+// 91일차: NPC 대화 도구 (93일차: 대화 창에 의뢰 전달 버튼 추가, 11번 메뉴가 창만 다시 만들 수 있음)
 // 1. 알파 NPC 7명의 초상(저폴리 모델 가슴 위, 캐릭터 색)을 만들어 NPC 데이터에 연결
 // 2. 게임 Scene의 PopupLayer에 대화 창(초상 · 이름 · 호감도 · 대사 · 대화/선물/거래 · 선물 목록)을 만들고 GameUIManager에 연결
 // 3. NPC 관리자 오브젝트에 관계 관리자(호감도 · 만남 · 하루 대화·선물)를 붙인다
@@ -23,7 +23,9 @@ public static class NpcDialogueBuilder
     private const string PopupLayerName = "PopupLayer";
 
     private const float WindowWidth = 1180f;
-    private const float WindowHeight = 250f;
+    private const float WindowHeight = 262f; // 93일차: 버튼 4칸 (대화 · 선물 · 의뢰 · 거래)
+    private const float ButtonHeight = 40f;
+    private const float ButtonStep = 46f;
     private const float WindowBottom = 122f; // 핫바(화면 아래) 위로
     private const float Pad = 20f;
     private const float PortraitSize = 210f;
@@ -212,6 +214,29 @@ public static class NpcDialogueBuilder
         return report.ToString();
     }
 
+    public static string RebuildPopup() // 93일차: 대화 창만 다시 만들고 GameUIManager에 연결 (의뢰 버튼, 11번 메뉴에서 사용)
+    {
+        if (UISpriteFactory.Panel == null || UISpriteFactory.Pill == null || UISpriteFactory.Slot == null)
+        {
+            UISpriteFactory.GenerateAll();
+        }
+
+        RectTransform popupLayer = FindRect(PopupLayerName);
+        GameUIManager uiManager = Object.FindFirstObjectByType<GameUIManager>(FindObjectsInactive.Include);
+
+        if (popupLayer == null || uiManager == null)
+        {
+            return "✗ PopupLayer 또는 GameUIManager가 없어 대화 창을 다시 만들지 못했습니다.";
+        }
+
+        NpcDialoguePopup popup = BuildPopup(popupLayer);
+        SerializedObject serialized = new SerializedObject(uiManager);
+        serialized.FindProperty("npcDialoguePopup").objectReferenceValue = popup;
+        serialized.ApplyModifiedPropertiesWithoutUndo();
+        EditorUtility.SetDirty(uiManager);
+        return "대화 창 다시 생성 (의뢰 버튼 포함) · GameUIManager 연결";
+    }
+
     private static NpcDialoguePopup BuildPopup(RectTransform popupLayer)
     {
         RemoveExisting(popupLayer, PopupRootName);
@@ -291,16 +316,19 @@ public static class NpcDialogueBuilder
         TopLeft(message.rectTransform, new Vector2(TextLeft, -WindowHeight + 52f), new Vector2(WindowWidth - TextLeft - ButtonWidth - Pad - 24f, 40f));
         message.gameObject.SetActive(false);
 
-        // 오른쪽 버튼
+        // 오른쪽 버튼 (93일차: 의뢰 버튼을 넣으려고 한 칸 40px로 줄임)
         float buttonX = WindowWidth - Pad - ButtonWidth;
         Button talk = CreateButton(w, "LP_Talk", "대화하기", 18f, ProjectUUIPalette.Accent, ProjectUUIPalette.TextDark, out _, out _);
-        TopLeft((RectTransform)talk.transform, new Vector2(buttonX, -Pad), new Vector2(ButtonWidth, 46f));
+        TopLeft((RectTransform)talk.transform, new Vector2(buttonX, -Pad), new Vector2(ButtonWidth, ButtonHeight));
         Button gift = CreateButton(w, "LP_Gift", "선물하기", 18f, ProjectUUIPalette.ButtonNormal, ProjectUUIPalette.TextPrimary, out _, out TMP_Text giftLabel);
-        TopLeft((RectTransform)gift.transform, new Vector2(buttonX, -Pad - 54f), new Vector2(ButtonWidth, 46f));
+        TopLeft((RectTransform)gift.transform, new Vector2(buttonX, -Pad - ButtonStep), new Vector2(ButtonWidth, ButtonHeight));
+        Button quest = CreateButton(w, "LP_Quest", "의뢰 전달", 17f, ProjectUUIPalette.Hunger, ProjectUUIPalette.TextDark, out _, out TMP_Text questLabel);
+        TopLeft((RectTransform)quest.transform, new Vector2(buttonX, -Pad - ButtonStep * 2f), new Vector2(ButtonWidth, ButtonHeight));
+        quest.gameObject.SetActive(false);
         Button trade = CreateButton(w, "LP_Trade", "거래", 18f, ProjectUUIPalette.Teal, ProjectUUIPalette.TextDark, out _, out _);
-        TopLeft((RectTransform)trade.transform, new Vector2(buttonX, -Pad - 108f), new Vector2(ButtonWidth, 46f));
+        TopLeft((RectTransform)trade.transform, new Vector2(buttonX, -Pad - ButtonStep * 3f), new Vector2(ButtonWidth, ButtonHeight));
         Button close = CreateButton(w, "LP_Close", "닫기 (ESC)", 15f, new Color(1f, 1f, 1f, 0.06f), ProjectUUIPalette.TextSecondary, out _, out _);
-        TopLeft((RectTransform)close.transform, new Vector2(buttonX, -WindowHeight + Pad + 40f), new Vector2(ButtonWidth, 40f));
+        TopLeft((RectTransform)close.transform, new Vector2(buttonX, -WindowHeight + Pad + 36f), new Vector2(ButtonWidth, 36f));
 
         TMP_Text hint = CreateText(w, "LP_Hint", "스페이스 · 엔터 : 다음 말", 12f, FontStyles.Normal, TextAlignmentOptions.MidlineRight, new Color(0.72f, 0.7f, 0.65f, 0.6f));
         TopLeft(hint.rectTransform, new Vector2(buttonX - 250f, -WindowHeight + 30f), new Vector2(236f, 20f));
@@ -366,6 +394,8 @@ public static class NpcDialogueBuilder
         Set(serialized, "giftButton", gift);
         Set(serialized, "giftLabel", giftLabel);
         Set(serialized, "tradeButton", trade);
+        Set(serialized, "questButton", quest);
+        Set(serialized, "questLabel", questLabel);
         Set(serialized, "closeButton", close);
         Set(serialized, "giftPanel", giftWindow.gameObject);
         Set(serialized, "giftListRoot", list);
@@ -418,7 +448,7 @@ public static class NpcDialogueBuilder
     private static readonly string[] PopupFields =
     {
         "panelRoot", "portraitFrame", "portrait", "nameText", "jobText", "stageText", "affinityFill", "lineText", "lineButton", "messageText",
-        "talkButton", "giftButton", "giftLabel", "tradeButton", "closeButton", "giftPanel", "giftListRoot", "giftSlotTemplate", "giftEmptyText", "giftCancelButton"
+        "talkButton", "giftButton", "giftLabel", "tradeButton", "questButton", "questLabel", "closeButton", "giftPanel", "giftListRoot", "giftSlotTemplate", "giftEmptyText", "giftCancelButton"
     };
 
     public static string Validate(out int errorCount)
