@@ -110,6 +110,11 @@ public sealed class GameDataRegistryEditor : Editor // Registry 자동 수집과
             .ThenBy(visualProfile => visualProfile.name) // 같은 ID는 Asset 이름 순서로 정렬
             .ToList(); // 정렬 결과를 List로 변환
 
+        List<NpcCharacterData> npcAssets = FindAssets<NpcCharacterData>() // 89일차: 프로젝트 전체 NpcCharacterData 검색
+            .OrderBy(npcData => npcData.CharacterId) // 캐릭터 ID 순서로 정렬
+            .ThenBy(npcData => npcData.name) // 같은 ID는 Asset 이름 순서로 정렬
+            .ToList(); // 정렬 결과를 List로 변환
+
         SerializedObject serializedRegistry = new SerializedObject(registry); // Registry private 배열 수정을 위한 SerializedObject 생성
         serializedRegistry.Update(); // 최신 Registry 직렬화 상태 읽기
         AssignAssetArray(serializedRegistry.FindProperty("items"), itemAssets); // 전체 아이템 Asset 배열 등록
@@ -119,6 +124,7 @@ public sealed class GameDataRegistryEditor : Editor // Registry 자동 수집과
         AssignAssetArray(serializedRegistry.FindProperty("crops"), cropAssets); // 전체 작물 Asset 배열 등록
         AssignAssetArray(serializedRegistry.FindProperty("fish"), fishAssets); // 전체 물고기 Asset 배열 등록
         AssignAssetArray(serializedRegistry.FindProperty("visualProfiles"), visualProfileAssets); // 전체 Visual Profile Asset 배열 등록
+        AssignAssetArray(serializedRegistry.FindProperty("npcs"), npcAssets); // 전체 NPC Asset 배열 등록
         serializedRegistry.ApplyModifiedProperties(); // Registry 배열 변경 내용 적용
         EditorUtility.SetDirty(registry); // Registry Asset 변경 상태 표시
         AssetDatabase.SaveAssets(); // Registry 변경 내용 디스크 저장
@@ -132,7 +138,8 @@ public sealed class GameDataRegistryEditor : Editor // Registry 자동 수집과
             + $"적 {enemyAssets.Count} / " // 수집 적 수 추가
             + $"작물 {cropAssets.Count} / " // 수집 작물 수 추가
             + $"물고기 {fishAssets.Count} / " // 수집 물고기 수 추가
-            + $"Visual Profile {visualProfileAssets.Count}", // 수집 Visual Profile 수 추가
+            + $"Visual Profile {visualProfileAssets.Count} / " // 수집 Visual Profile 수 추가
+            + $"NPC {npcAssets.Count}", // 수집 NPC 수 추가
             registry); // Registry Asset을 Log Context로 지정
     }
 
@@ -197,6 +204,12 @@ public sealed class GameDataRegistryEditor : Editor // Registry 자동 수집과
             visualProfile => visualProfile.ProfileId, // ContentVisualProfile에서 ID를 가져오는 함수
             "visual_", // Visual Profile 권장 접두사
             "ContentVisualProfile"); // 오류 출력용 데이터 종류 이름
+
+        ValidatePrefix( // 89일차: NPC ID 접두사 검사 시작
+            registry.Npcs, // 전체 NPC 데이터 목록
+            npcData => npcData.CharacterId, // NpcCharacterData에서 ID를 가져오는 함수
+            "char_", // NPC 권장 접두사 (캐릭터 시트 규칙)
+            "NpcCharacterData"); // 오류 출력용 데이터 종류 이름
     }
 
     private static void ValidateCraftingResultRegistration(GameDataRegistry registry) // 제작법 결과 아이템이 Registry에 등록되었는지 검사

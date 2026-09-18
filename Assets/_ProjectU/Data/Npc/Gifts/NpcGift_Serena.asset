@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5965c6a9f8452146af23bb0d764ae92, type: 3}
+  m_Name: NpcGift_Serena
+  m_EditorClassIdentifier: Assembly-CSharp::NpcGiftProfile
+  profileId: gift_serena
+  sheetNote: "\uC88B\uC544\uD568: \uACE0\uC11C, \uC789\uD06C, \uCD1B\uBD88, \uC624\uB798\uB41C
+    \uBD81\uB9C8\uD06C / \uC2EB\uC5B4\uD568: \uBD88, \uC18C\uC74C, \uBC1D\uC740 \uBE5B"
+  defaultPreference: 2
+  entries:
+  - item: {fileID: 11400000, guid: 361f6079362891a468aae059667ddd1c, type: 2}
+    preference: 0
+    source: item_herbal_tea
+  - item: {fileID: 11400000, guid: 250b3288a0c4e7e428748a942a5f848a, type: 2}
+    preference: 1
+    source: food_baked_apple
+  - item: {fileID: 11400000, guid: 7d594dbe78795334dbb0b72bfc9e9c0b, type: 2}
+    preference: 1
+    source: food_warm_milk
+  - item: {fileID: 11400000, guid: d801a65a4ac6aa9488b8fe9ba94ccb15, type: 2}
+    preference: 3
+    source: tool_axe
+  - item: {fileID: 11400000, guid: 34ed2068e680c3e47b192431c37799db, type: 2}
+    preference: 3
+    source: tool_pickaxe

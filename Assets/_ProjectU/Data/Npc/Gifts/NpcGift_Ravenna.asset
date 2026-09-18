@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5965c6a9f8452146af23bb0d764ae92, type: 3}
+  m_Name: NpcGift_Ravenna
+  m_EditorClassIdentifier: Assembly-CSharp::NpcGiftProfile
+  profileId: gift_ravenna
+  sheetNote: "\uC88B\uC544\uD568: \uAC80 \uC190\uC9C8 \uB3C4\uAD6C, \uCC28, \uCD1B\uBD88
+    / \uC2EB\uC5B4\uD568: \uBB34\uB840\uD568, \uC131\uC744 \uC870\uB871\uD558\uB294
+    \uB9D0"
+  defaultPreference: 2
+  entries:
+  - item: {fileID: 11400000, guid: 361f6079362891a468aae059667ddd1c, type: 2}
+    preference: 0
+    source: item_herbal_tea
+  - item: {fileID: 11400000, guid: 1132e66db22cdae448d0dfb6dec7e8c1, type: 2}
+    preference: 1
+    source: tag:weapon
+  - item: {fileID: 11400000, guid: cc96d25a17a973747bb1d11fe6839e7b, type: 2}
+    preference: 1
+    source: tag:weapon
+  - item: {fileID: 11400000, guid: 39da177e19117c74f96b0718ec760b34, type: 2}
+    preference: 1
+    source: tag:weapon
+  - item: {fileID: 11400000, guid: f82cfee3161243747ad3a92e8c7418ba, type: 2}
+    preference: 3
+    source: resource_worm_bait

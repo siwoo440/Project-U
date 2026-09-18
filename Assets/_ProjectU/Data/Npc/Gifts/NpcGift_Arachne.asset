@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5965c6a9f8452146af23bb0d764ae92, type: 3}
+  m_Name: NpcGift_Arachne
+  m_EditorClassIdentifier: Assembly-CSharp::NpcGiftProfile
+  profileId: gift_arachne
+  sheetNote: "\uC88B\uC544\uD568: \uBC14\uB290\uC9C8 \uB3C4\uAD6C, \uBE44\uB2E8,
+    \uAC80\uC740 \uC218\uC815 / \uC2EB\uC5B4\uD568: \uBD88, \uAC70\uCE5C \uC18C\uB9AC,
+    \uBC1D\uC740 \uC870\uBA85"
+  defaultPreference: 2
+  entries:
+  - item: {fileID: 11400000, guid: 3a8d5e1739f820a40882f0ae4c0d09f4, type: 2}
+    preference: 0
+    source: equipment_cloth_shirt
+  - item: {fileID: 11400000, guid: ced6962cfb3b9a249aadbf41f4f53d78, type: 2}
+    preference: 1
+    source: equipment_cloth_cap
+  - item: {fileID: 11400000, guid: bc991e404803cba4292542d6a52ddd7a, type: 2}
+    preference: 1
+    source: item_plant_fiber
+  - item: {fileID: 11400000, guid: 34ed2068e680c3e47b192431c37799db, type: 2}
+    preference: 3
+    source: tool_pickaxe

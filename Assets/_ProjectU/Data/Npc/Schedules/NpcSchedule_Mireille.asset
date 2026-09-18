@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94295176dd2bda648968d83c1418a684, type: 3}
+  m_Name: NpcSchedule_Mireille
+  m_EditorClassIdentifier: Assembly-CSharp::NpcScheduleData
+  scheduleId: schedule_mireille
+  plans:
+  - planId: default
+    priority: 0
+    days: 127
+    seasons: 15
+    weather: 0
+    stops:
+    - hour: 5
+      locationId: loc_home_mireille
+      activity: "\uC77C\uC5B4\uB098\uAE30"
+    - hour: 6
+      locationId: loc_animal_pens
+      activity: "\uAC00\uCD95 \uB3CC\uBCF4\uAE30"
+    - hour: 10
+      locationId: loc_farm_fields
+      activity: "\uD480\uBC2D \uC0B0\uCC45"
+    - hour: 13
+      locationId: loc_village_square
+      activity: "\uC810\uC2EC"
+    - hour: 15
+      locationId: loc_animal_pens
+      activity: "\uAC00\uCD95 \uB3CC\uBCF4\uAE30"
+    - hour: 18
+      locationId: loc_home_mireille
+      activity: "\uC591\uD138 \uC190\uC9C8"
+    - hour: 21
+      locationId: loc_home_mireille
+      activity: "\uC7A0"
+  - planId: rest
+    priority: 5
+    days: 64
+    seasons: 15
+    weather: 0
+    stops:
+    - hour: 7
+      locationId: loc_home_mireille
+      activity: "\uAE30\uB3C4"
+    - hour: 9
+      locationId: loc_animal_pens
+      activity: "\uAC00\uCD95 \uBA39\uC774 \uC8FC\uAE30"
+    - hour: 11
+      locationId: loc_forest_edge
+      activity: "\uB8E8\uB124\uD2B8\uC640 \uC57D\uCD08 \uB530\uAE30"
+    - hour: 15
+      locationId: loc_cafe
+      activity: "\uCC28 \uB9C8\uC2DC\uAE30"
+    - hour: 18
+      locationId: loc_home_mireille
+      activity: "\uD734\uC2DD"
+  - planId: rain
+    priority: 10
+    days: 127
+    seasons: 15
+    weather: 2
+    stops:
+    - hour: 6
+      locationId: loc_animal_pens
+      activity: "\uAC00\uCD95 \uB2EC\uB798\uAE30"
+    - hour: 10
+      locationId: loc_home_mireille
+      activity: "\uB728\uAC1C\uC9C8"
+    - hour: 15
+      locationId: loc_animal_pens
+      activity: "\uAC00\uCD95 \uB2EC\uB798\uAE30"
+    - hour: 18
+      locationId: loc_home_mireille
+      activity: "\uD734\uC2DD"

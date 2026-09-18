@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5965c6a9f8452146af23bb0d764ae92, type: 3}
+  m_Name: NpcGift_Bellamorta
+  m_EditorClassIdentifier: Assembly-CSharp::NpcGiftProfile
+  profileId: gift_bellamorta
+  sheetNote: "\uC88B\uC544\uD568: \uBCF4\uC11D, \uD5A5\uC218, \uACE0\uC11C, \uC640\uC778
+    / \uC2EB\uC5B4\uD568: \uC131\uC218, \uC131\uC2A4\uB7EC\uC6B4 \uBB38\uC591"
+  defaultPreference: 2
+  entries:
+  - item: {fileID: 11400000, guid: 2c82bd3688707a247a1d2c303d4b2589, type: 2}
+    preference: 0
+    source: food_golden_feast
+  - item: {fileID: 11400000, guid: 3a8ea9dc329d35c4b8b4c84410a7f15d, type: 2}
+    preference: 1
+    source: food_berry
+  - item: {fileID: 11400000, guid: c593f671b9ae9d24e96e6cd5ee7b2a1c, type: 2}
+    preference: 1
+    source: item_iron_ore
+  - item: {fileID: 11400000, guid: 233c5c7467d9daa41bab4b59439b9465, type: 2}
+    preference: 3
+    source: drink_water_bottle

@@ -1,0 +1,164 @@
+CharacterID,Preference,Target,Note
+char_lunette,Loved,item_herbal_tea,차
+char_lunette,Liked,tag:herb,약초
+char_lunette,Liked,tag:cloth,부드러운 천
+char_lunette,Liked,food_berry,
+char_lunette,Disliked,tag:weapon,무기
+char_lunette,Hated,tool_pickaxe,큰 소리 나는 도구
+char_bellamorta,Loved,food_golden_feast,호화로운 것
+char_bellamorta,Liked,food_berry,와인 대신
+char_bellamorta,Liked,item_iron_ore,보석 대신
+char_bellamorta,Disliked,drink_water_bottle,성수
+char_serena,Loved,item_herbal_tea,조용한 독서
+char_serena,Liked,food_warm_milk,
+char_serena,Liked,food_baked_apple,
+char_serena,Disliked,tool_pickaxe,소음
+char_serena,Disliked,tool_axe,소음
+char_eiri,Loved,food_strawberry,향긋한 것
+char_eiri,Liked,tag:sweet,
+char_eiri,Disliked,tag:ore,무거운 것
+char_rize,Loved,item_iron_ore,에너지 코어 대신
+char_rize,Liked,tag:metal_tool,
+char_rize,Disliked,resource_worm_bait,먼지·습기
+char_rize,Hated,drink_water_bottle,물
+char_liriel,Loved,food_berry,꽃·꿀 대신
+char_liriel,Liked,tag:sweet,
+char_liriel,Liked,tag:seed,
+char_liriel,Disliked,tag:metal_tool,철제 도구
+char_mio,Loved,food_grilled_fish,생선
+char_mio,Loved,resource_fish_golden_carp,전설의 황금고기
+char_mio,Loved,food_golden_feast,
+char_mio,Liked,tag:fish,생선
+char_mio,Liked,food_fried_egg,간식
+char_mio,Disliked,food_winter_radish,채소
+char_mio,Disliked,food_tomato,채소
+char_mio,Hated,drink_water_bottle,맹물
+char_ragh,Loved,tag:hearty,고기 요리
+char_ragh,Liked,equipment_work_hat,가죽 장비 대신
+char_ragh,Liked,equipment_cloth_cap,
+char_ragh,Disliked,tag:sweet,단것
+char_arachne,Loved,equipment_cloth_shirt,비단 대신
+char_arachne,Liked,item_plant_fiber,실
+char_arachne,Liked,equipment_cloth_cap,
+char_arachne,Disliked,tool_pickaxe,거친 소리
+char_mireille,Loved,food_warm_milk,우유
+char_mireille,Liked,drink_milk,우유
+char_mireille,Liked,tag:herb,허브
+char_mireille,Liked,item_animal_feed,양 먹이
+char_mireille,Hated,weapon_bow,칼·피
+char_mireille,Disliked,tag:weapon,칼
+char_mireille,Disliked,tool_axe,칼
+char_erina,Loved,weapon_bow,활 재료
+char_erina,Liked,item_arrow,
+char_erina,Liked,item_wood,
+char_erina,Liked,tag:herb,약초
+char_erina,Disliked,tool_pickaxe,소음
+char_milky,Loved,food_baked_apple,디저트
+char_milky,Loved,food_strawberry,디저트
+char_milky,Liked,drink_milk,우유
+char_milky,Liked,food_egg,
+char_milky,Liked,tag:sweet,
+char_milky,Disliked,medicine_bandage,쓴 약
+char_milky,Hated,weapon_bow,싸움
+char_milky,Hated,item_arrow,싸움
+char_lilica,Loved,food_strawberry,달콤한 간식
+char_lilica,Liked,tag:sweet,
+char_lilica,Disliked,drink_water_bottle,성수
+char_lilica,Hated,food_winter_radish,마늘 대신
+char_milu,Loved,food_berry,스윗젤리 대신
+char_milu,Liked,drink_water_bottle,마력수 대신
+char_milu,Liked,tag:sweet,
+char_milu,Disliked,item_plant_fiber,천 조각
+char_milu,Disliked,item_wood,건조한 재료
+char_harka,Loved,tag:hearty,고기류 음식
+char_harka,Liked,equipment_small_backpack,탐험 장비
+char_harka,Liked,equipment_work_hat,
+char_harka,Disliked,resource_worm_bait,썩은 냄새
+char_beatrice,Loved,food_berry,꿀 대신
+char_beatrice,Liked,tag:sweet,
+char_beatrice,Liked,tag:seed,꽃 대신
+char_beatrice,Disliked,tool_pickaxe,소음
+char_verona,Loved,food_pumpkin,농작물
+char_verona,Loved,food_winter_radish,농작물
+char_verona,Liked,tag:crop,농작물
+char_verona,Liked,tag:seed,
+char_verona,Liked,item_iron_ore,대지 결정 대신
+char_verona,Disliked,resource_stone,가벼운 농담
+char_verona,Hated,resource_worm_bait,헛된 약속
+char_kasumi,Loved,food_tomato,붉은 것
+char_kasumi,Liked,food_apple,
+char_kasumi,Liked,equipment_cloth_cap,붉은 비단 대신
+char_kasumi,Disliked,tag:metal_tool,쇠붙이
+char_lichel,Loved,resource_fish_golden_carp,금빛
+char_lichel,Loved,food_golden_feast,
+char_lichel,Liked,food_baked_potato,간식
+char_lichel,Liked,food_apple,간식
+char_lichel,Liked,food_berry,간식
+char_lichel,Liked,item_iron_ore,반짝이는 것
+char_lichel,Disliked,tool_pickaxe,큰 소리
+char_lichel,Hated,item_animal_feed,가축 취급
+char_chesca,Loved,item_iron_ore,보석 대신
+char_chesca,Liked,item_plant_fiber,천 조각
+char_chesca,Liked,equipment_cloth_cap,
+char_chesca,Disliked,tool_pickaxe,금속망치
+char_lanhua,Loved,item_herbal_tea,차
+char_lanhua,Liked,tag:weapon,무기류
+char_lanhua,Disliked,medicine_bandage,나약함
+char_noctia,Loved,item_wild_mushroom,
+char_noctia,Liked,item_herbal_tea,묵향 대신
+char_noctia,Liked,item_iron_ore,수정 구슬 대신
+char_noctia,Disliked,drink_water_bottle,신성한 물건
+char_seira,Loved,item_wild_mushroom,희귀 약초
+char_seira,Liked,tag:herb,
+char_seira,Liked,drink_water_bottle,유리병
+char_seira,Disliked,tool_pickaxe,
+char_dravia,Loved,item_iron_ore,희귀 광석
+char_dravia,Loved,food_tomato_stew,매운 음식
+char_dravia,Liked,resource_stone,
+char_dravia,Liked,tag:metal_tool,망치 대신
+char_dravia,Liked,item_wood,연료
+char_dravia,Disliked,item_plant_fiber,눅눅한 불쏘시개
+char_dravia,Hated,drink_water_bottle,젖은 연료
+char_marielle,Loved,resource_fish_golden_carp,진주 대신
+char_marielle,Liked,resource_fish_smelt,
+char_marielle,Liked,food_winter_radish,해초 요리 대신
+char_marielle,Disliked,resource_worm_bait,오염된 물
+char_censia,Loved,item_animal_feed,곡물
+char_censia,Liked,food_apple,
+char_censia,Liked,food_potato,
+char_censia,Disliked,resource_stone,
+char_ravenna,Loved,item_herbal_tea,차
+char_ravenna,Liked,tag:weapon,검 손질 도구 대신
+char_ravenna,Disliked,resource_worm_bait,
+char_akane,Loved,food_pumpkin_soup,따뜻한 음식
+char_akane,Liked,tag:dish,
+char_akane,Disliked,food_winter_radish,차가운 음식
+char_akane,Disliked,drink_water_bottle,차가운 음식
+char_pipi,Loved,tag:metal_tool,공구
+char_pipi,Liked,item_iron_ore,
+char_pipi,Liked,resource_stone,폐품
+char_pipi,Liked,item_wood,
+char_pipi,Disliked,resource_worm_bait,
+char_safira,Loved,item_wild_mushroom,
+char_safira,Liked,tag:herb,약초
+char_safira,Hated,drink_water_bottle,물
+char_lumina,Loved,food_strawberry,꽃 대신
+char_lumina,Liked,tag:seed,
+char_lumina,Liked,food_berry,
+char_lumina,Disliked,item_wood,연기
+char_neri,Loved,resource_worm_bait,벌레 요리
+char_neri,Liked,drink_water_bottle,
+char_neri,Liked,resource_fish_smelt,
+char_neri,Disliked,item_plant_fiber,건조함
+char_neri,Hated,resource_fish_catfish,큰 포식자
+char_sharia,Loved,resource_fish_catfish,생선
+char_sharia,Loved,resource_fish_golden_carp,
+char_sharia,Liked,tag:fish,생선
+char_sharia,Disliked,food_berry,
+char_aliune,Loved,tag:seed,씨앗
+char_aliune,Liked,drink_water_bottle,깨끗한 물
+char_aliune,Disliked,item_wood,불
+char_aliune,Hated,tool_hoe,제초
+char_octavia,Loved,resource_fish_trout,
+char_octavia,Liked,tag:fish,
+char_octavia,Disliked,item_plant_fiber,촉수 구속

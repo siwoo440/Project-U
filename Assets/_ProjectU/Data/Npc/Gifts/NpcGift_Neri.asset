@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5965c6a9f8452146af23bb0d764ae92, type: 3}
+  m_Name: NpcGift_Neri
+  m_EditorClassIdentifier: Assembly-CSharp::NpcGiftProfile
+  profileId: gift_neri
+  sheetNote: "\uC88B\uC544\uD568: \uBC8C\uB808 \uC694\uB9AC, \uC5F0\uC78E, \uBE44\uAD6C\uB984
+    \uC218\uC815 / \uC2EB\uC5B4\uD568: \uAC74\uC870\uD568, \uD070 \uD3EC\uC2DD\uC790"
+  defaultPreference: 2
+  entries:
+  - item: {fileID: 11400000, guid: f82cfee3161243747ad3a92e8c7418ba, type: 2}
+    preference: 0
+    source: resource_worm_bait
+  - item: {fileID: 11400000, guid: 233c5c7467d9daa41bab4b59439b9465, type: 2}
+    preference: 1
+    source: drink_water_bottle
+  - item: {fileID: 11400000, guid: 83e8c92974737c246a6f55d31325f68b, type: 2}
+    preference: 1
+    source: resource_fish_smelt
+  - item: {fileID: 11400000, guid: bc991e404803cba4292542d6a52ddd7a, type: 2}
+    preference: 3
+    source: item_plant_fiber
+  - item: {fileID: 11400000, guid: 57290689e97387440ab6d1bcbf4ef495, type: 2}
+    preference: 4
+    source: resource_fish_catfish

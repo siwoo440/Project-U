@@ -1,0 +1,51 @@
+Tag,ItemID,Note
+fish,resource_fish_crucian,물고기
+fish,resource_fish_trout,물고기
+fish,resource_fish_catfish,물고기
+fish,resource_fish_smelt,물고기
+fish,resource_fish_golden_carp,물고기
+crop,food_potato,농작물
+crop,food_strawberry,농작물
+crop,food_tomato,농작물
+crop,food_pumpkin,농작물
+crop,food_winter_radish,농작물
+sweet,food_strawberry,달콤한 것 (디저트·꿀 대신)
+sweet,food_apple,달콤한 것
+sweet,food_berry,달콤한 것
+sweet,food_baked_apple,달콤한 것
+herb,item_herbal_tea,약초
+herb,item_wild_mushroom,약초
+dish,food_baked_apple,요리
+dish,food_baked_potato,요리
+dish,food_fried_egg,요리
+dish,food_golden_feast,요리
+dish,food_grilled_fish,요리
+dish,food_mushroom_skewer,요리
+dish,food_pumpkin_soup,요리
+dish,food_tomato_stew,요리
+dish,food_veggie_omelette,요리
+dish,food_warm_milk,요리
+hearty,food_grilled_fish,든든한 요리 (고기 요리 대신)
+hearty,food_mushroom_skewer,든든한 요리
+hearty,food_tomato_stew,든든한 요리
+hearty,food_golden_feast,든든한 요리
+ore,item_iron_ore,광석 (보석·수정 대신)
+ore,resource_stone,광석
+metal_tool,tool_axe,쇠 도구
+metal_tool,tool_pickaxe,쇠 도구
+metal_tool,tool_hoe,쇠 도구
+metal_tool,item_iron_axe,쇠 도구
+weapon,weapon_bow,무기
+weapon,item_arrow,무기
+weapon,item_iron_axe,무기
+cloth,item_plant_fiber,천·실
+cloth,equipment_cloth_cap,천·실
+cloth,equipment_cloth_shirt,천·실
+gear,equipment_small_backpack,탐험 장비
+gear,equipment_work_hat,탐험 장비
+gear,tool_fishing_rod_basic,탐험 장비
+seed,seed_potato,씨앗 (꽃 대신)
+seed,seed_strawberry,씨앗
+seed,seed_tomato,씨앗
+seed,seed_pumpkin,씨앗
+seed,seed_winter_radish,씨앗

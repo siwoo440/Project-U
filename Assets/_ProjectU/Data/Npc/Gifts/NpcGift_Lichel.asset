@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5965c6a9f8452146af23bb0d764ae92, type: 3}
+  m_Name: NpcGift_Lichel
+  m_EditorClassIdentifier: Assembly-CSharp::NpcGiftProfile
+  profileId: gift_lichel
+  sheetNote: "\uC88B\uC544\uD568: \uAE08\uD654, \uBCF4\uC11D, \uAC04\uC2DD, \uACE0\uC591\uC774
+    \uD53C\uD558\uC9C0 / \uC2EB\uC5B4\uD568: \uD070 \uC18C\uB9AC, \uBE5A, \uBD88\uC2E0"
+  defaultPreference: 2
+  entries:
+  - item: {fileID: 11400000, guid: 2c82bd3688707a247a1d2c303d4b2589, type: 2}
+    preference: 0
+    source: food_golden_feast
+  - item: {fileID: 11400000, guid: 535bf968045572f408e41892f2d80b93, type: 2}
+    preference: 0
+    source: resource_fish_golden_carp
+  - item: {fileID: 11400000, guid: eef1b375027259b42834d2262ce9dd96, type: 2}
+    preference: 1
+    source: food_apple
+  - item: {fileID: 11400000, guid: 070f5d6a3c56070488a27144388e461c, type: 2}
+    preference: 1
+    source: food_baked_potato
+  - item: {fileID: 11400000, guid: 3a8ea9dc329d35c4b8b4c84410a7f15d, type: 2}
+    preference: 1
+    source: food_berry
+  - item: {fileID: 11400000, guid: c593f671b9ae9d24e96e6cd5ee7b2a1c, type: 2}
+    preference: 1
+    source: item_iron_ore
+  - item: {fileID: 11400000, guid: 34ed2068e680c3e47b192431c37799db, type: 2}
+    preference: 3
+    source: tool_pickaxe
+  - item: {fileID: 11400000, guid: d59c8cdf23a10a44f9a57f150743b58a, type: 2}
+    preference: 4
+    source: item_animal_feed

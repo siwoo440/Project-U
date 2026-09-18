@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d77783e0816168844892fa111bd9f183, type: 3}
+  m_Name: NpcDatabase
+  m_EditorClassIdentifier: Assembly-CSharp::NpcDatabase
+  characters:
+  - {fileID: 11400000, guid: 621f02fdb01adac4e95af1c890d34f35, type: 2}
+  - {fileID: 11400000, guid: 0ad6b5da90feab54197b2b9fb6533522, type: 2}
+  - {fileID: 11400000, guid: b1e577dad44cb4046870a840e3016d1f, type: 2}
+  - {fileID: 11400000, guid: 2378f66227c5cbf428b932c4c5d21be9, type: 2}
+  - {fileID: 11400000, guid: 76798491316125e46b79cbb73c3aede4, type: 2}
+  - {fileID: 11400000, guid: aeef9669a9e809246974ee366f93ab0b, type: 2}
+  - {fileID: 11400000, guid: fd0924e3580ad104299c5997ce1c78c2, type: 2}
+  - {fileID: 11400000, guid: b29125c66784e5346841df853e89ed03, type: 2}
+  - {fileID: 11400000, guid: b1e5dc6c4869e794b874c1361e8d8e06, type: 2}
+  - {fileID: 11400000, guid: a675da946deb65e4ba4b70132bf876bb, type: 2}
+  - {fileID: 11400000, guid: 29d7b56b7263a064eb5148fca6962c48, type: 2}
+  - {fileID: 11400000, guid: 8223336453398a54e9fe4a4eb045f973, type: 2}
+  - {fileID: 11400000, guid: 8d6b29d1f74fc8d48963fa95fc455e3e, type: 2}
+  - {fileID: 11400000, guid: 461752585d6dfae418484ffa855da846, type: 2}
+  - {fileID: 11400000, guid: 07e67d239533adf4d89627a76eebf7b6, type: 2}
+  - {fileID: 11400000, guid: de1b5e176f36a704496e3a980a66a66c, type: 2}
+  - {fileID: 11400000, guid: 774a35c879bf49441ad6445c9cce1f3b, type: 2}
+  - {fileID: 11400000, guid: 05a52a7b04373a74dae8f44e7b614e38, type: 2}
+  - {fileID: 11400000, guid: 07822e55b0c531a42be8d76bb343b052, type: 2}
+  - {fileID: 11400000, guid: 7efdaa1a9ae3cce499b0b9f57303e5b0, type: 2}
+  - {fileID: 11400000, guid: 366313814d11dea4786073f9f3f7420d, type: 2}
+  - {fileID: 11400000, guid: b3565a16bc0956242b0634508d2cc045, type: 2}
+  - {fileID: 11400000, guid: dbcffc3ed19909540a01973530df2058, type: 2}
+  - {fileID: 11400000, guid: 115993a0cafa3b84e91dbe58a60a73c9, type: 2}
+  - {fileID: 11400000, guid: 643e4f94537d58d4e87dd2e804a7483a, type: 2}
+  - {fileID: 11400000, guid: 455178a7c31325843a3ad6d889c80c40, type: 2}
+  - {fileID: 11400000, guid: f488cf5304ba79d46a1608f24d82304a, type: 2}
+  - {fileID: 11400000, guid: a27098d463bb2694bab04676caae9981, type: 2}
+  - {fileID: 11400000, guid: 2c61b55bb321cdb48854d569f96fe3aa, type: 2}
+  - {fileID: 11400000, guid: 444fe2ba715c9c54694f5e9cb25588cb, type: 2}
+  - {fileID: 11400000, guid: f7f80a309c75b0c48a59d812b6e4d941, type: 2}
+  - {fileID: 11400000, guid: a5ea6a0a013887b40b5b8aaad63dd941, type: 2}
+  - {fileID: 11400000, guid: c64178232ed5ced49ba75eef98101a8d, type: 2}
+  - {fileID: 11400000, guid: e81950d7e0dfc4347ba85eabb6babbc4, type: 2}
+  - {fileID: 11400000, guid: e2e4ce1c6d5ca6f4dabad35ebf88ac4e, type: 2}
+  locations:
+  - locationId: loc_village_square
+    displayName: "\uB9C8\uC744 \uAD11\uC7A5"
+    description: "\uB9C8\uC744 \uAC00\uC6B4\uB370 \uACF5\uD130 (\uBAA8\uB2E5\uBD88\uACFC
+      \uAC8C\uC2DC\uD310 \uADFC\uCC98)"
+  - locationId: loc_farm_fields
+    displayName: "\uB18D\uC7A5 \uBC2D"
+    description: "\uD50C\uB808\uC774\uC5B4 \uBC2D \uC606 \uAE38"
+  - locationId: loc_pond_dock
+    displayName: "\uC5F0\uBABB \uC120\uCC29\uC7A5"
+    description: "\uB09A\uC2DC \uC5F0\uBABB \uAC00\uC7A5\uC790\uB9AC"
+  - locationId: loc_animal_pens
+    displayName: "\uAC00\uCD95 \uC6B0\uB9AC"
+    description: "\uB2ED\uC7A5\uACFC \uC678\uC591\uAC04 \uC55E"
+  - locationId: loc_market_stall
+    displayName: "\uC0C1\uC778 \uAC00\uD310\uB300"
+    description: "\uB5A0\uB3CC\uC774 \uC0C1\uC778 \uAC00\uD310\uB300 \uC790\uB9AC"
+  - locationId: loc_forest_edge
+    displayName: "\uC232 \uAC00\uC7A5\uC790\uB9AC"
+    description: "\uC57D\uCD08\uAC00 \uC790\uB77C\uB294 \uC232 \uC785\uAD6C"
+  - locationId: loc_cafe
+    displayName: "\uC120\uC14B \uCE74\uD398"
+    description: "\uBC00\uD0A4\uC758 \uCE74\uD398 (90\uC77C\uCC28 \uAC74\uBB3C)"
+  - locationId: loc_smithy
+    displayName: "\uB300\uC7A5\uAC04"
+    description: "\uB4DC\uB77C\uBE44\uC544\uC758 \uD654\uB85C (90\uC77C\uCC28 \uAC74\uBB3C)"
+  - locationId: loc_home_lunette
+    displayName: "\uB8E8\uB124\uD2B8\uC758 \uC624\uB450\uB9C9"
+    description: "\uC232 \uAC00\uC7A5\uC790\uB9AC \uADFC\uCC98 \uC791\uC740 \uC624\uB450\uB9C9"
+  - locationId: loc_home_verona
+    displayName: "\uBCA0\uB85C\uB098\uC758 \uB18D\uAC00"
+    description: "\uBC2D \uC606 \uB18D\uAC00"
+  - locationId: loc_home_mio
+    displayName: "\uBBF8\uC624\uC758 \uC624\uB450\uB9C9"
+    description: "\uC5F0\uBABB\uAC00 \uC624\uB450\uB9C9"
+  - locationId: loc_home_mireille
+    displayName: "\uBBF8\uB808\uC720\uC758 \uC591\uCE58\uAE30 \uC9D1"
+    description: "\uAC00\uCD95 \uC6B0\uB9AC \uC606 \uC791\uC740 \uC9D1"
+  - locationId: loc_home_milky
+    displayName: "\uCE74\uD398 2\uCE35"
+    description: "\uC120\uC14B \uCE74\uD398 \uC704\uCE35"
+  - locationId: loc_home_dravia
+    displayName: "\uB300\uC7A5\uAC04 \uB4A4\uCC44"
+    description: "\uB300\uC7A5\uAC04 \uB4A4\uCABD \uBC29"
+  - locationId: loc_lichel_camp
+    displayName: "\uB9AC\uCCBC\uC758 \uC9D0\uB9C8\uCC28"
+    description: "\uB9C8\uC744 \uC678\uACFD \uACF5\uD130"
+  stageThresholds: 14000000280000003c00000050000000
+  giftPoints: 080000000400000001000000fbfffffff6ffffff
+  birthdayMultiplier: 3
+  dailyTalkPoints: 1
+  giftsPerDay: 1

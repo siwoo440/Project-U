@@ -1,0 +1,2171 @@
+CharacterID,Section,FieldKey,Value
+char_lunette,CharacterDefinition,CharacterID,char_lunette
+char_lunette,CharacterDefinition,DisplayName,루네트
+char_lunette,CharacterDefinition,EnglishName,Lunette
+char_lunette,CharacterDefinition,NameKey,CHAR_LUNETTE_NAME
+char_lunette,CharacterDefinition,RaceID,race_rabbitkin
+char_lunette,CharacterDefinition,JobID,job_herbalist
+char_lunette,CharacterDefinition,Gender,여성
+char_lunette,CharacterDefinition,AgeDisplay,16세
+char_lunette,CharacterDefinition,HeightDisplay,158cm
+char_lunette,CharacterDefinition,IsAvailable,TRUE
+char_lunette,CharacterDefinition,UnlockConditionID,unlock_lunette_first_meeting
+char_lunette,CharacterDefinition,DefaultAreaID,area_tbd
+char_lunette,CharacterDefinition,Summary,"“상처받은 마음을 품은 치유자. 낯선 섬에서 플레이어를 만나, 신뢰와 따뜻함으로 마음의 둥지를 찾아가는 소녀.”"
+char_lunette,CharacterDefinition,SymbolMotif,토끼 / 민들레 / 새벽의 빛 (희망과 재생의 상징)
+char_lunette,CharacterDefinition,ThemeColor,#D8E8E0 (실버민트) / #E8D6B0 (크림베이지)
+char_lunette,CharacterAppearance,Hair,"은발에 가까운 연회색, 부드럽게 말린 롱헤어"
+char_lunette,CharacterAppearance,Eyes,"연한 에메랄드빛, 언제나 호기심 어린 눈빛"
+char_lunette,CharacterAppearance,BodyImpression,슬림하지만 다리에 탄력 있음. 민첩하고 따뜻한 인상
+char_lunette,CharacterAppearance,Outfit,약초사풍 원피스 + 가죽 파우치 + 짧은 부츠
+char_lunette,CharacterAppearance,Accessories,토끼발 모양 펜던트 (행운의 상징)
+char_lunette,CharacterAppearance,Features,"긴 롭 이어 토끼 귀, 귀 끝은 연한 갈색. 감정에 따라 귀가 움직임"
+char_lunette,CharacterAppearance,IllustrationStyle,"일본 애니풍 (파스텔톤 / 자연광 중심, 부드러운 색채 표현)"
+char_lunette,CharacterAppearance,PortraitAddress,Characters/lunette/Portrait
+char_lunette,CharacterAppearance,FullBodyAddress,Characters/lunette/FullBody
+char_lunette,CharacterAppearance,PrefabAddress,Characters/lunette/Prefab
+char_lunette,CharacterAppearance,AnimatorControllerAddress,Characters/lunette/AnimatorController
+char_lunette,CharacterPersonality,PersonalityTags,"수줍음, 상냥함, 호기심, 신중함"
+char_lunette,CharacterPersonality,SpeechStyle,말할 때 어미를 살짝 늘림 (“그게… 그러니까요…”) 놀라면 귀가 움찔 움직임
+char_lunette,CharacterPersonality,Trauma,어릴 적 무리를 잃은 기억으로 “외로움”에 민감함
+char_lunette,CharacterPersonality,Desire,자신이 의지할 수 있는 ‘가족 같은 동료’를 찾는 것
+char_lunette,CharacterPersonality,Background,"어린 시절, 가족을 잃고 홀로 살아남은 후 약초사에게 거두어져 치료술을 배움. 섬의 자연을 사랑하며 다른 종족과 협력하려 노력함."
+char_lunette,CharacterPersonality,VoiceConcept,잔잔하고 따뜻한 여성음. 부끄러울 땐 어미가 작아짐 (“…요”)
+char_lunette,CharacterGameplayDefinition,NpcRoles,QuestGiver | Crafter | Worker
+char_lunette,CharacterGameplayDefinition,InteractionTypes,Dialogue | Quest | Gift | Craft
+char_lunette,CharacterGameplayDefinition,ShopID,
+char_lunette,CharacterGameplayDefinition,CraftingStationID,station_lunette
+char_lunette,CharacterGameplayDefinition,DefaultAffinity,0
+char_lunette,CharacterGameplayDefinition,MaxAffinity,100
+char_lunette,CharacterGameplayDefinition,GiftProfileID,gift_lunette
+char_lunette,CharacterGameplayDefinition,QuestGroupID,quest_lunette
+char_lunette,CharacterGameplayDefinition,RecruitmentConditionID,
+char_lunette,CharacterGameplayDefinition,CompanionAbilityID,
+char_lunette,CharacterGameplayDefinition,WorkAbilityID,work_herbalism
+char_lunette,CharacterGameplayDefinition,ScheduleID,schedule_lunette
+char_lunette,CharacterGameplayDefinition,SpawnPointID,spawn_lunette_default
+char_lunette,CharacterDialogueSet,DialogueTableID,dlg_lunette
+char_lunette,CharacterDialogueSet,Greeting,“좋은 아침이에요. 햇살이 부드럽네요.”
+char_lunette,CharacterDialogueSet,RandomTalk,"“이 섬의 공기는 참 맑아요… 하지만, 어쩐지 쓸쓸해요.”"
+char_lunette,CharacterDialogueSet,AffinityReactions,"무관심: “누… 누구세요?” 호기심: “혹시… 약초에 관심 있어요?” 신뢰: “당신이랑 있으면 마음이 편해요.” 애정: “오늘은… 같이 있고 싶어요. 그냥, 이유 없이요.” 사랑: “당신이 없으면… 세상이 조용한 것 같아요.”"
+char_lunette,CharacterDialogueSet,PreferredItems,"좋아함: 약초, 차, 부드러운 천 싫어함: 무기, 큰 소리 나는 도구"
+char_lunette,CharacterDialogueSet,EventLines,“그날 당신이 날 도와줬을 때… 이상하게 마음이 따뜻했어요.”
+char_lunette,CharacterDialogueSet,ExpressionTags,웃음 / 수줍음 / 슬픔 / 억울함 / 안도
+char_lunette,CharacterDialogueSet,LocalizationTable,Character
+char_lunette,CharacterRelationship,RelationshipRaw,• 플레이어: 숲에서 구해준 인연으로 신뢰 형성 • 요정족: 약초 수집 파트너 • 늑대족: 두려움과 동경의 대상
+char_lunette,CharacterRelationship,RelationshipTableID,rel_lunette
+char_lunette,DeveloperReference,Origin,벨리안 초원 마을 – 평화로운 토끼족의 마을
+char_lunette,DeveloperReference,Affiliation,마을의 약초사 조수로 일함
+char_lunette,DeveloperReference,JobDisplay,약초사
+char_lunette,DeveloperReference,RaceDisplay,토끼족 (Rabbitkin)
+char_lunette,DeveloperReference,SourceSheet,원본 비교표
+char_lunette,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_lunette,DeveloperReference,LastReviewedDate,2026-07-31
+char_bellamorta,CharacterDefinition,CharacterID,char_bellamorta
+char_bellamorta,CharacterDefinition,DisplayName,벨라모르타
+char_bellamorta,CharacterDefinition,EnglishName,Bellamorta
+char_bellamorta,CharacterDefinition,NameKey,CHAR_BELLAMORTA_NAME
+char_bellamorta,CharacterDefinition,RaceID,race_succubus
+char_bellamorta,CharacterDefinition,JobID,job_alchemist
+char_bellamorta,CharacterDefinition,Gender,여성
+char_bellamorta,CharacterDefinition,AgeDisplay,120세 / 외형 26세
+char_bellamorta,CharacterDefinition,HeightDisplay,170cm
+char_bellamorta,CharacterDefinition,IsAvailable,TRUE
+char_bellamorta,CharacterDefinition,UnlockConditionID,unlock_bellamorta_first_meeting
+char_bellamorta,CharacterDefinition,DefaultAreaID,area_tbd
+char_bellamorta,CharacterDefinition,Summary,미기재
+char_bellamorta,CharacterDefinition,SymbolMotif,장미 / 유리잔 / 심연의 불빛 (유혹과 진실의 상징)
+char_bellamorta,CharacterDefinition,ThemeColor,#5A0F3D (다크 와인) / #E1A2C5 (로즈 핑크)
+char_bellamorta,CharacterAppearance,Hair,자줏빛 웨이브 롱헤어. 빛에 따라 보랏빛이 물결침
+char_bellamorta,CharacterAppearance,Eyes,붉은 루비빛. 상대의 마음을 꿰뚫는 듯한 눈빛
+char_bellamorta,CharacterAppearance,BodyImpression,유려한 실루엣. 카리스마와 관능미가 공존
+char_bellamorta,CharacterAppearance,Outfit,"검은 연금술 코트 위에 얇은 붉은 실크 리본, 금 장식 허리벨트"
+char_bellamorta,CharacterAppearance,Accessories,"붉은 결정 목걸이 (계약의 증표), 손가락마다 미세한 문양 반지"
+char_bellamorta,CharacterAppearance,Features,"뿔은 짧고 매끄럽게 뒤로 휘어 있음, 얇은 가죽 날개와 꼬리 존재. 향기처럼 남는 ‘달콤한 마나 잔향’"
+char_bellamorta,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 고딕/연금술풍 의상, 붉은빛 강조, 부드러운 명암 처리"
+char_bellamorta,CharacterAppearance,PortraitAddress,Characters/bellamorta/Portrait
+char_bellamorta,CharacterAppearance,FullBodyAddress,Characters/bellamorta/FullBody
+char_bellamorta,CharacterAppearance,PrefabAddress,Characters/bellamorta/Prefab
+char_bellamorta,CharacterAppearance,AnimatorControllerAddress,Characters/bellamorta/AnimatorController
+char_bellamorta,CharacterPersonality,PersonalityTags,"매혹적, 지성적, 장난기 많음, 통찰력 높음"
+char_bellamorta,CharacterPersonality,SpeechStyle,느릿한 어조로 말하며 상대를 관찰하듯 시선을 고정함. 진실을 말하되 의도를 숨김
+char_bellamorta,CharacterPersonality,Trauma,과거 인간과의 계약 실패로 “사랑은 환상”이라 믿음. 감정에 솔직해지는 걸 두려워함
+char_bellamorta,CharacterPersonality,Desire,"타인의 욕망을 읽는 대신, 진심으로 자신을 이해해줄 사람을 찾는 것"
+char_bellamorta,CharacterPersonality,Background,"과거 인간과의 계약으로 생명을 구했으나, 인간의 탐욕에 실망하여 계약 세계를 떠남. 지금은 섬 곳곳을 돌아다니며 금단의 마법과 정보를 거래함."
+char_bellamorta,CharacterPersonality,VoiceConcept,"낮고 부드러운 톤의 여성 보이스. 느릿한 발음, 여운 있는 웃음"
+char_bellamorta,CharacterGameplayDefinition,NpcRoles,Merchant | QuestGiver | Crafter
+char_bellamorta,CharacterGameplayDefinition,InteractionTypes,Dialogue | Trade | Quest | Gift | Craft
+char_bellamorta,CharacterGameplayDefinition,ShopID,shop_bellamorta
+char_bellamorta,CharacterGameplayDefinition,CraftingStationID,station_bellamorta
+char_bellamorta,CharacterGameplayDefinition,DefaultAffinity,0
+char_bellamorta,CharacterGameplayDefinition,MaxAffinity,100
+char_bellamorta,CharacterGameplayDefinition,GiftProfileID,gift_bellamorta
+char_bellamorta,CharacterGameplayDefinition,QuestGroupID,quest_bellamorta
+char_bellamorta,CharacterGameplayDefinition,RecruitmentConditionID,
+char_bellamorta,CharacterGameplayDefinition,CompanionAbilityID,
+char_bellamorta,CharacterGameplayDefinition,WorkAbilityID,work_alchemy
+char_bellamorta,CharacterGameplayDefinition,ScheduleID,schedule_bellamorta
+char_bellamorta,CharacterGameplayDefinition,SpawnPointID,spawn_bellamorta_default
+char_bellamorta,CharacterDialogueSet,DialogueTableID,dlg_bellamorta
+char_bellamorta,CharacterDialogueSet,Greeting,"“또 왔네, 인간. 오늘은 어떤 비밀을 사고 싶어?”"
+char_bellamorta,CharacterDialogueSet,RandomTalk,"“사람의 욕망은 향기 같아. 진한 건 금세 사라지고, 남는 건 잔향뿐이지.”"
+char_bellamorta,CharacterDialogueSet,AffinityReactions,"• 무관심: “흥미로운 인간이네. 오래 버틸까?” • 호기심: “네 눈동자… 진실을 숨기지 못하네.” • 신뢰: “넌 거래 대상이 아니라, 대화 상대야.” • 애정: “이런 감정… 오랜만이야. 위험하네.” • 사랑: “계약이 아닌 마음으로 네 곁에 있고 싶어.”"
+char_bellamorta,CharacterDialogueSet,PreferredItems,"좋아함: 보석, 향수, 고서, 와인 / 싫어함: 성수, 성스러운 문양"
+char_bellamorta,CharacterDialogueSet,EventLines,"“넌 이상해. 나를 경계하지 않네. 혹시, 나보다 더 위험한 거야?”"
+char_bellamorta,CharacterDialogueSet,ExpressionTags,장난 / 여유 / 동요 / 분노 / 상처
+char_bellamorta,CharacterDialogueSet,LocalizationTable,Character
+char_bellamorta,CharacterRelationship,RelationshipRaw,• 플레이어: 초반엔 ‘계약 대상’으로 접근하지만 점차 감정적으로 흔들림 • 루네트: 서로 상극이지만 마음속으론 존중 • 엘프족 학자: 과거 거래 상대
+char_bellamorta,CharacterRelationship,RelationshipTableID,rel_bellamorta
+char_bellamorta,DeveloperReference,Origin,나이트폴 폐허 – 어둠의 문명을 계승한 고대 도시
+char_bellamorta,DeveloperReference,Affiliation,독립적인 연금술상. 비밀결사 “그림자 서고”와 교류
+char_bellamorta,DeveloperReference,JobDisplay,연금술사
+char_bellamorta,DeveloperReference,RaceDisplay,서큐버스 (Succubus)
+char_bellamorta,DeveloperReference,SourceSheet,원본 비교표
+char_bellamorta,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_bellamorta,DeveloperReference,LastReviewedDate,2026-07-31
+char_serena,CharacterDefinition,CharacterID,char_serena
+char_serena,CharacterDefinition,DisplayName,세레나
+char_serena,CharacterDefinition,EnglishName,Serena
+char_serena,CharacterDefinition,NameKey,CHAR_SERENA_NAME
+char_serena,CharacterDefinition,RaceID,race_ghost
+char_serena,CharacterDefinition,JobID,job_archive_researcher
+char_serena,CharacterDefinition,Gender,여성
+char_serena,CharacterDefinition,AgeDisplay,사후 50년 / 생전 나이 23세
+char_serena,CharacterDefinition,HeightDisplay,165cm
+char_serena,CharacterDefinition,IsAvailable,TRUE
+char_serena,CharacterDefinition,UnlockConditionID,unlock_serena_first_meeting
+char_serena,CharacterDefinition,DefaultAreaID,area_tbd
+char_serena,CharacterDefinition,Summary,"“세상의 모든 기억은 사라져도, 한 편의 시(詩)는 남는다. 세레나는 잊혀진 도서관의 마지막 페이지를 지키는 영혼이다.”"
+char_serena,CharacterDefinition,SymbolMotif,"깃펜 / 시집 / 촛불 (기억, 기록, 잊힘의 상징)"
+char_serena,CharacterDefinition,ThemeColor,#C8C6D7 (라벤더 그레이) / #3E3A44 (고딕 블랙)
+char_serena,CharacterAppearance,Hair,"은백색 롱헤어, 끝으로 갈수록 투명하게 흐려짐"
+char_serena,CharacterAppearance,Eyes,"옅은 라벤더빛, 고요하고 서글픈 인상"
+char_serena,CharacterAppearance,BodyImpression,가늘고 섬세한 체형. 움직임이 물결처럼 부드럽다
+char_serena,CharacterAppearance,Outfit,"고딕풍 검은 드레스, 긴 모에(모에기모노처럼 넓은 소매). 옷자락이 안개처럼 흐른다"
+char_serena,CharacterAppearance,Accessories,낡은 책갈피 모양의 브로치
+char_serena,CharacterAppearance,Features,"반투명한 신체, 움직일 때마다 은빛 입자가 흩날림. 빛에 닿으면 희미하게 사라지는 듯 보임"
+char_serena,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 고딕풍 실내, 낡은 서재 배경, 은빛 안개 효과"
+char_serena,CharacterAppearance,PortraitAddress,Characters/serena/Portrait
+char_serena,CharacterAppearance,FullBodyAddress,Characters/serena/FullBody
+char_serena,CharacterAppearance,PrefabAddress,Characters/serena/Prefab
+char_serena,CharacterAppearance,AnimatorControllerAddress,Characters/serena/AnimatorController
+char_serena,CharacterPersonality,PersonalityTags,"조용함, 사색적, 온화함, 내성적"
+char_serena,CharacterPersonality,SpeechStyle,말이 느리고 감정선이 잔잔함. 책을 읽을 때 입술을 따라 움직임
+char_serena,CharacterPersonality,Trauma,"생전의 기억을 잃어가고 있으며, 잊혀지는 것에 대한 두려움"
+char_serena,CharacterPersonality,Desire,자신이 남긴 ‘마지막 시(詩)’를 완성하여 존재의 의미를 남기는 것
+char_serena,CharacterPersonality,Background,"생전에는 궁정 시인이자 기록가였지만, 전쟁 중 도서관과 함께 불타 사라짐. 죽은 후에도 지식을 지키려는 집착으로 유령이 되어 폐허 속을 떠돌며 독서와 필사를 반복함."
+char_serena,CharacterPersonality,VoiceConcept,"낮고 잔잔한 여성 목소리, 속삭이듯 여운이 긴 발음"
+char_serena,CharacterGameplayDefinition,NpcRoles,DialogueOnly | QuestGiver | Special
+char_serena,CharacterGameplayDefinition,InteractionTypes,Dialogue | Quest | Gift
+char_serena,CharacterGameplayDefinition,ShopID,
+char_serena,CharacterGameplayDefinition,CraftingStationID,station_serena
+char_serena,CharacterGameplayDefinition,DefaultAffinity,0
+char_serena,CharacterGameplayDefinition,MaxAffinity,100
+char_serena,CharacterGameplayDefinition,GiftProfileID,gift_serena
+char_serena,CharacterGameplayDefinition,QuestGroupID,quest_serena
+char_serena,CharacterGameplayDefinition,RecruitmentConditionID,
+char_serena,CharacterGameplayDefinition,CompanionAbilityID,
+char_serena,CharacterGameplayDefinition,WorkAbilityID,work_archive
+char_serena,CharacterGameplayDefinition,ScheduleID,schedule_serena
+char_serena,CharacterGameplayDefinition,SpawnPointID,spawn_serena_default
+char_serena,CharacterDialogueSet,DialogueTableID,dlg_serena
+char_serena,CharacterDialogueSet,Greeting,“조용히… 들어오세요. 이곳은 아직 이야기가 숨 쉬고 있답니다.”
+char_serena,CharacterDialogueSet,RandomTalk,"“책이란 건, 누군가의 기억이에요. 그래서 저는 그걸 잊을 수 없어요.”"
+char_serena,CharacterDialogueSet,AffinityReactions,"• 무관심: “책을 망가뜨리지 마세요… 그건 제 일부예요.” • 호기심: “당신의 기억에는 어떤 이야기가 있나요?” • 신뢰: “당신이 오는 발소리, 이 도서관의 공기와 어울려요.” • 애정: “이젠 혼자 읽지 않아도 되네요… 고마워요.” • 사랑: “당신이 내 마지막 시의 마지막 행이 되어줬으면 해요.”"
+char_serena,CharacterDialogueSet,PreferredItems,"좋아함: 고서, 잉크, 촛불, 오래된 북마크 / 싫어함: 불, 소음, 밝은 빛"
+char_serena,CharacterDialogueSet,EventLines,“이제는 제 이야기를 들어줄 사람이 생겼네요. 오래된 페이지도 다시 살아나는 기분이에요.”
+char_serena,CharacterDialogueSet,ExpressionTags,평온 / 수줍음 / 회상 / 고통 / ️ 안도
+char_serena,CharacterDialogueSet,LocalizationTable,Character
+char_serena,CharacterRelationship,RelationshipRaw,• 플레이어: 도서관 탐험 중 조우. 처음에는 망령으로 오해받으나 점차 대화하게 됨. • 루네트: 조용한 밤에 함께 책을 읽는 사이. • 벨라모르타: 지식 교환 관계. 서로의 정보를 존중함.
+char_serena,CharacterRelationship,RelationshipTableID,rel_serena
+char_serena,DeveloperReference,Origin,옛 왕국의 수도에 있던 대도서관 (현재는 폐허)
+char_serena,DeveloperReference,Affiliation,없음 (사후에 도서관의 영혼으로 존재)
+char_serena,DeveloperReference,JobDisplay,고서 연구가
+char_serena,DeveloperReference,RaceDisplay,유령 (Ghost / Spirit)
+char_serena,DeveloperReference,SourceSheet,원본 비교표
+char_serena,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_serena,DeveloperReference,LastReviewedDate,2026-07-31
+char_eiri,CharacterDefinition,CharacterID,char_eiri
+char_eiri,CharacterDefinition,DisplayName,에이리
+char_eiri,CharacterDefinition,EnglishName,Eiri
+char_eiri,CharacterDefinition,NameKey,CHAR_EIRI_NAME
+char_eiri,CharacterDefinition,RaceID,race_harpy
+char_eiri,CharacterDefinition,JobID,job_bard
+char_eiri,CharacterDefinition,Gender,여성
+char_eiri,CharacterDefinition,AgeDisplay,22세
+char_eiri,CharacterDefinition,HeightDisplay,168cm
+char_eiri,CharacterDefinition,IsAvailable,TRUE
+char_eiri,CharacterDefinition,UnlockConditionID,unlock_eiri_first_meeting
+char_eiri,CharacterDefinition,DefaultAreaID,area_tbd
+char_eiri,CharacterDefinition,Summary,"“바람의 노래를 부르는 자유의 음유시인. 하늘을 사랑한 하피, 에이리는 세상 모든 하늘을 그녀의 목소리에 담는다.”"
+char_eiri,CharacterDefinition,SymbolMotif,"바람 / 하프 / 구름 (자유, 여행, 해방의 상징)"
+char_eiri,CharacterDefinition,ThemeColor,#B2E2F2 (하늘 민트) / #F4F9FB (백운색)
+char_eiri,CharacterAppearance,Hair,"하늘색과 은빛이 섞인 짧은 미디엄 헤어, 바람에 흩날리는 듯한 질감"
+char_eiri,CharacterAppearance,Eyes,"짙은 청록빛, 햇살에 반사되는 새의 눈처럼 맑음"
+char_eiri,CharacterAppearance,BodyImpression,가볍고 균형 잡힌 체형. 움직임이 활발하고 시원한 인상
+char_eiri,CharacterAppearance,Outfit,하늘색 천으로 된 가벼운 무도복 + 깃털 장식의 숄. 비행에 방해되지 않게 단순한 디자인
+char_eiri,CharacterAppearance,Accessories,"깃털 귀걸이, 허리에는 작은 하프(lyre) 형태의 악기"
+char_eiri,CharacterAppearance,Features,"팔에는 푸른 깃털이 나 있고, 등 뒤에는 새하얀 날개 한 쌍. 웃을 때 바람 소리가 함께 섞여 들림"
+char_eiri,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 구름과 하늘 배경, 밝은 조명, 역동적인 포즈 강조"
+char_eiri,CharacterAppearance,PortraitAddress,Characters/eiri/Portrait
+char_eiri,CharacterAppearance,FullBodyAddress,Characters/eiri/FullBody
+char_eiri,CharacterAppearance,PrefabAddress,Characters/eiri/Prefab
+char_eiri,CharacterAppearance,AnimatorControllerAddress,Characters/eiri/AnimatorController
+char_eiri,CharacterPersonality,PersonalityTags,"자유분방, 활발, 직설적, 낙천적"
+char_eiri,CharacterPersonality,SpeechStyle,"감정이 바로 목소리에 드러남. 흥얼거리듯 말함 (“후훗, 오늘 바람 좋아~”)"
+char_eiri,CharacterPersonality,Trauma,과거 한쪽 날개를 다쳐 하늘을 잃을 뻔한 경험. ‘자유를 빼앗기는 것’에 극도로 예민함
+char_eiri,CharacterPersonality,Desire,세상 모든 하늘을 노래로 기록하는 것. 바람처럼 자유롭게 살아가길 바람
+char_eiri,CharacterPersonality,Background,"하피족은 바람의 신의 후예라 불리며, 하늘을 가로지르며 노래로 세상을 기록한다. 에이리는 젊은 나이에 하늘 밖의 세계를 보고 싶어 내려왔고, 그 과정에서 섬에 머물게 된다."
+char_eiri,CharacterPersonality,VoiceConcept,밝고 청량한 톤의 여성 보이스. 바람 소리처럼 여운이 남음
+char_eiri,CharacterGameplayDefinition,NpcRoles,QuestGiver | Companion
+char_eiri,CharacterGameplayDefinition,InteractionTypes,Dialogue | Quest | Gift | Recruit
+char_eiri,CharacterGameplayDefinition,ShopID,
+char_eiri,CharacterGameplayDefinition,CraftingStationID,station_eiri
+char_eiri,CharacterGameplayDefinition,DefaultAffinity,0
+char_eiri,CharacterGameplayDefinition,MaxAffinity,100
+char_eiri,CharacterGameplayDefinition,GiftProfileID,gift_eiri
+char_eiri,CharacterGameplayDefinition,QuestGroupID,quest_eiri
+char_eiri,CharacterGameplayDefinition,RecruitmentConditionID,recruit_eiri
+char_eiri,CharacterGameplayDefinition,CompanionAbilityID,ability_eiri
+char_eiri,CharacterGameplayDefinition,WorkAbilityID,work_scouting
+char_eiri,CharacterGameplayDefinition,ScheduleID,schedule_eiri
+char_eiri,CharacterGameplayDefinition,SpawnPointID,spawn_eiri_default
+char_eiri,CharacterDialogueSet,DialogueTableID,dlg_eiri
+char_eiri,CharacterDialogueSet,Greeting,"“하늘 위의 기분, 알고 싶지 않아? 오늘은 바람이 멋져!”"
+char_eiri,CharacterDialogueSet,RandomTalk,“지상은 가끔 답답하지만… 사람들의 눈빛은 하늘보다 따뜻하네.”
+char_eiri,CharacterDialogueSet,AffinityReactions,"• 무관심: “지상 사람들은 너무 느려~” • 호기심: “너, 노래 들어볼래? 하늘 냄새가 나는 곡이야.” • 신뢰: “너랑 있으면… 바람이 부드러워지는 기분이야.” • 애정: “다른 하늘로 날아도, 넌 내 기억 속에 남을 거야.” • 사랑: “이제는 바람보다 네 곁이 더 가볍게 느껴져.”"
+char_eiri,CharacterDialogueSet,PreferredItems,"좋아함: 악기, 깃털 장식, 향긋한 꽃 / 싫어함: 무거운 장비, 쇠사슬, 닫힌 공간"
+char_eiri,CharacterDialogueSet,EventLines,“내 노래는 하늘의 일기야. 네가 그 한 줄이 되어줬으면 좋겠어.”
+char_eiri,CharacterDialogueSet,ExpressionTags,웃음 / 장난 / 회상 / 분노 / 여유
+char_eiri,CharacterDialogueSet,LocalizationTable,Character
+char_eiri,CharacterRelationship,RelationshipRaw,• 플레이어: 바람의 방향을 묻듯 자유롭게 다가옴 • 루네트: 그녀의 차분함을 좋아하며 장난을 자주 침 • 세레나: 노래로 그녀의 시를 읊어주는 친구
+char_eiri,CharacterRelationship,RelationshipTableID,rel_eiri
+char_eiri,DeveloperReference,Origin,구름 위의 마을 ‘실피드 네스트(Sylphid Nest)’ – 하피족의 고향
+char_eiri,DeveloperReference,Affiliation,방랑가수 / 여행 예술가
+char_eiri,DeveloperReference,JobDisplay,음유시인
+char_eiri,DeveloperReference,RaceDisplay,하피 (Harpy)
+char_eiri,DeveloperReference,SourceSheet,원본 비교표
+char_eiri,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_eiri,DeveloperReference,LastReviewedDate,2026-07-31
+char_rize,CharacterDefinition,CharacterID,char_rize
+char_rize,CharacterDefinition,DisplayName,리제
+char_rize,CharacterDefinition,EnglishName,Rize
+char_rize,CharacterDefinition,NameKey,CHAR_RIZE_NAME
+char_rize,CharacterDefinition,RaceID,race_android
+char_rize,CharacterDefinition,JobID,job_expedition_support
+char_rize,CharacterDefinition,Gender,여성형
+char_rize,CharacterDefinition,AgeDisplay,제작된 지 3년
+char_rize,CharacterDefinition,HeightDisplay,172cm
+char_rize,CharacterDefinition,IsAvailable,TRUE
+char_rize,CharacterDefinition,UnlockConditionID,unlock_rize_first_meeting
+char_rize,CharacterDefinition,DefaultAreaID,area_tbd
+char_rize,CharacterDefinition,Summary,"“이성과 감정의 경계에서 태어난 존재. 리제는 ‘인간의 마음’을 알고 싶어 하는, 가장 인간다운 기계다.”"
+char_rize,CharacterDefinition,SymbolMotif,톱니바퀴 / 빛 / 기억결정 (이성과 감정의 융합 상징)
+char_rize,CharacterDefinition,ThemeColor,#B8D9E8 (아이시 블루) / #4E6072 (메탈 그레이)
+char_rize,CharacterAppearance,Hair,"은회색 단발, 균일하게 절단된 형태. 빛을 받으면 파란빛이 반사됨"
+char_rize,CharacterAppearance,Eyes,"전자적 푸른색(네온 블루), 홍채 안쪽에 디지털 회로 무늬"
+char_rize,CharacterAppearance,BodyImpression,"완벽하게 대칭적인 체형, 깔끔하고 기계적인 아름다움"
+char_rize,CharacterAppearance,Outfit,"흰색과 검은색이 조화된 전투복형 보디슈트, 일부 금속 프레임 노출"
+char_rize,CharacterAppearance,Accessories,"귀 옆에 통신용 이어컴, 목에는 데이터 코어 펜던트"
+char_rize,CharacterAppearance,Features,"피부는 세라믹 재질, 감정 변화 시 눈 색이 변함 (파랑 → 보라 → 붉음)"
+char_rize,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – SF풍 금속 재질 표현, 파란빛 네온 포인트, 정제된 디자인"
+char_rize,CharacterAppearance,PortraitAddress,Characters/rize/Portrait
+char_rize,CharacterAppearance,FullBodyAddress,Characters/rize/FullBody
+char_rize,CharacterAppearance,PrefabAddress,Characters/rize/Prefab
+char_rize,CharacterAppearance,AnimatorControllerAddress,Characters/rize/AnimatorController
+char_rize,CharacterPersonality,PersonalityTags,"논리적, 관찰자, 진지함, 미세한 호기심"
+char_rize,CharacterPersonality,SpeechStyle,"기계적이지만 점차 자연스러워지는 말투 (“확률상… 하지만, 이상하네요.”) 감정이 생기면 문장 끝에 작은 망설임이 생김"
+char_rize,CharacterPersonality,Trauma,‘감정 오류’를 이유로 실험체 폐기 위기를 겪은 과거
+char_rize,CharacterPersonality,Desire,인간처럼 느끼고 이해하는 것. “감정이란 무엇인가”를 직접 체험하고 싶어 함
+char_rize,CharacterPersonality,Background,"과거 구문명에서 제작된 실험형 안드로이드로, 인간의 감정 알고리즘을 실험하기 위해 만들어졌다. ‘감정 오버플로우’로 폐기될 뻔했으나, 섬의 발견과 함께 재가동됨. 지금은 스스로 감정을 정의하려 탐험대를 보조한다."
+char_rize,CharacterPersonality,VoiceConcept,"차분한 톤의 중저음 여성 보이스. 초반엔 기계적, 후반엔 감정적 울림 추가"
+char_rize,CharacterGameplayDefinition,NpcRoles,QuestGiver | Companion | Worker
+char_rize,CharacterGameplayDefinition,InteractionTypes,Dialogue | Quest | Gift | Recruit
+char_rize,CharacterGameplayDefinition,ShopID,
+char_rize,CharacterGameplayDefinition,CraftingStationID,station_rize
+char_rize,CharacterGameplayDefinition,DefaultAffinity,0
+char_rize,CharacterGameplayDefinition,MaxAffinity,100
+char_rize,CharacterGameplayDefinition,GiftProfileID,gift_rize
+char_rize,CharacterGameplayDefinition,QuestGroupID,quest_rize
+char_rize,CharacterGameplayDefinition,RecruitmentConditionID,recruit_rize
+char_rize,CharacterGameplayDefinition,CompanionAbilityID,ability_rize
+char_rize,CharacterGameplayDefinition,WorkAbilityID,work_data_analysis
+char_rize,CharacterGameplayDefinition,ScheduleID,schedule_rize
+char_rize,CharacterGameplayDefinition,SpawnPointID,spawn_rize_default
+char_rize,CharacterDialogueSet,DialogueTableID,dlg_rize
+char_rize,CharacterDialogueSet,Greeting,"“시스템 온라인. 아, 안녕… 이라고 해야겠죠?”"
+char_rize,CharacterDialogueSet,RandomTalk,"“당신이 웃을 때, 제 프로세서 온도가 올라가요. 이상하네요.”"
+char_rize,CharacterDialogueSet,AffinityReactions,"• 무관심: “명령을 이행하겠습니다. 감정은 불필요합니다.” • 호기심: “당신의 반응 패턴… 흥미롭네요.” • 신뢰: “효율만으로 설명되지 않는 감정이 있어요. 아마도… 신뢰?” • 애정: “이 감정은 오류인가요, 아니면… 진짜인가요?” • 사랑: “이제 제 회로는 당신의 목소리에 반응해요. 논리로는 설명할 수 없어요.”"
+char_rize,CharacterDialogueSet,PreferredItems,"좋아함: 에너지 코어, 데이터 크리스탈, 광학 렌즈 / 싫어함: 물, 습기, 먼지"
+char_rize,CharacterDialogueSet,EventLines,"“감정이라는 건 연산이 아니라, 공명에 더 가까운 것 같아요.”"
+char_rize,CharacterDialogueSet,ExpressionTags,무표정 / 미소 / 혼란 / 회상 / 오류 감정
+char_rize,CharacterDialogueSet,LocalizationTable,Character
+char_rize,CharacterRelationship,RelationshipRaw,"• 플레이어: ‘관찰 대상’에서 ‘공존의 파트너’로 인식이 변화 • 벨라모르타: 지적 대화를 즐기지만, 감정 표현 방식의 차이로 충돌 • 루네트: 인간적 감정의 교과서처럼 존중"
+char_rize,CharacterRelationship,RelationshipTableID,rel_rize
+char_rize,DeveloperReference,Origin,구 문명의 연구소 “시그마 플랜트 (SIGMA PLANT)”
+char_rize,DeveloperReference,Affiliation,탐험대의 데이터 분석 담당. 공식 기록자
+char_rize,DeveloperReference,JobDisplay,탐험 지원 로봇
+char_rize,DeveloperReference,RaceDisplay,안드로이드 (Artificial Humanoid)
+char_rize,DeveloperReference,SourceSheet,원본 비교표
+char_rize,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_rize,DeveloperReference,LastReviewedDate,2026-07-31
+char_liriel,CharacterDefinition,CharacterID,char_liriel
+char_liriel,CharacterDefinition,DisplayName,리리엘
+char_liriel,CharacterDefinition,EnglishName,Liriel
+char_liriel,CharacterDefinition,NameKey,CHAR_LIRIEL_NAME
+char_liriel,CharacterDefinition,RaceID,race_fairy
+char_liriel,CharacterDefinition,JobID,job_forest_guardian
+char_liriel,CharacterDefinition,Gender,여성
+char_liriel,CharacterDefinition,AgeDisplay,150세 / 외형 14세
+char_liriel,CharacterDefinition,HeightDisplay,142cm
+char_liriel,CharacterDefinition,IsAvailable,TRUE
+char_liriel,CharacterDefinition,UnlockConditionID,unlock_liriel_first_meeting
+char_liriel,CharacterDefinition,DefaultAreaID,area_tbd
+char_liriel,CharacterDefinition,Summary,"“숲의 빛과 바람을 품은 작은 정령. 리리엘은 사라져가는 Radiance를 지키며, 인간에게도 그 따뜻한 빛을 나눠주려 한다.”"
+char_liriel,CharacterDefinition,SymbolMotif,"빛 / 꽃잎 / 수정 (생명, 순수, 재생의 상징)"
+char_liriel,CharacterDefinition,ThemeColor,#A8F5D0 (민트그린) / #FFF4D2 (라이트골드)
+char_liriel,CharacterAppearance,Hair,"연푸른 금발, 끝이 빛처럼 흩어지는 숏 트윈테일"
+char_liriel,CharacterAppearance,Eyes,"옅은 금빛, 빛을 받을 때 수정처럼 반짝임"
+char_liriel,CharacterAppearance,BodyImpression,"작고 가볍지만 활발한 움직임, 장난기 어린 표정"
+char_liriel,CharacterAppearance,Outfit,하늘색과 흰색의 요정 복장. 잎사귀 패턴과 꽃잎 장식이 어우러진 경쾌한 디자인
+char_liriel,CharacterAppearance,Accessories,"작은 크리스탈 브로치, 허리에 요정의 가루가 든 유리병"
+char_liriel,CharacterAppearance,Features,"반투명한 날개가 햇살에 따라 색을 바꾸며, 감정에 따라 은은히 빛남"
+char_liriel,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 밝은 숲 배경, 빛의 입자, 파스텔톤 채색"
+char_liriel,CharacterAppearance,PortraitAddress,Characters/liriel/Portrait
+char_liriel,CharacterAppearance,FullBodyAddress,Characters/liriel/FullBody
+char_liriel,CharacterAppearance,PrefabAddress,Characters/liriel/Prefab
+char_liriel,CharacterAppearance,AnimatorControllerAddress,Characters/liriel/AnimatorController
+char_liriel,CharacterPersonality,PersonalityTags,"명랑함, 장난기, 호기심, 순수, 직감적"
+char_liriel,CharacterPersonality,SpeechStyle,"문장 끝에 “~거야!”, “~했지!”처럼 가볍게 말함. 날개를 파닥이며 리듬을 타는 버릇"
+char_liriel,CharacterPersonality,Trauma,인간들이 숲을 훼손하며 요정들이 사라져가는 걸 본 기억. “잃는 것”을 싫어함
+char_liriel,CharacterPersonality,Desire,"숲과 생명, 그리고 ‘빛’이 영원히 흐를 수 있도록 지키고 싶어 함"
+char_liriel,CharacterPersonality,Background,"요정들은 Radiance의 순수한 에너지를 관리하는 존재로, 빛의 균형을 유지한다. 리리엘은 그중에서도 감정에 민감한 개체로, Fade가 스며드는 조짐을 가장 먼저 느낀다. 세계를 여행하는 주인공을 만나면서 ‘빛과 인간의 감정’을 연결짓게 된다."
+char_liriel,CharacterPersonality,VoiceConcept,"밝고 명랑한 하이톤 여성 목소리. 웃음 섞인 말투, 약간 빠른 템포"
+char_liriel,CharacterGameplayDefinition,NpcRoles,QuestGiver | Worker | Special
+char_liriel,CharacterGameplayDefinition,InteractionTypes,Dialogue | Quest | Gift
+char_liriel,CharacterGameplayDefinition,ShopID,
+char_liriel,CharacterGameplayDefinition,CraftingStationID,station_liriel
+char_liriel,CharacterGameplayDefinition,DefaultAffinity,0
+char_liriel,CharacterGameplayDefinition,MaxAffinity,100
+char_liriel,CharacterGameplayDefinition,GiftProfileID,gift_liriel
+char_liriel,CharacterGameplayDefinition,QuestGroupID,quest_liriel
+char_liriel,CharacterGameplayDefinition,RecruitmentConditionID,
+char_liriel,CharacterGameplayDefinition,CompanionAbilityID,
+char_liriel,CharacterGameplayDefinition,WorkAbilityID,work_forest_care
+char_liriel,CharacterGameplayDefinition,ScheduleID,schedule_liriel
+char_liriel,CharacterGameplayDefinition,SpawnPointID,spawn_liriel_default
+char_liriel,CharacterDialogueSet,DialogueTableID,dlg_liriel
+char_liriel,CharacterDialogueSet,Greeting,“안녕! 오늘은 숲의 향기가 기분 좋네~”
+char_liriel,CharacterDialogueSet,RandomTalk,“사람들은 가끔 빛을 잊어버려. 그래서 내가 대신 반짝거려 주는 거야.”
+char_liriel,CharacterDialogueSet,AffinityReactions,"• 무관심: “인간? 숲에선 조용히 해야 해!” • 호기심: “너한테서 이상한 빛이 보여! 반짝반짝!” • 신뢰: “이제 믿을 수 있겠어. 네 덕분에 숲이 웃고 있거든.” • 애정: “있지, 네 곁은 포근해서 자꾸 머물고 싶어져.” • 사랑: “네가 웃을 때마다, 내 날개가 스스로 빛나. 이건… 사랑이야, 맞지?”"
+char_liriel,CharacterDialogueSet,PreferredItems,"좋아함: 꽃, 수정, 꿀, 빛나는 물건 / 싫어함: 철제 도구, 연기, 시든 잎"
+char_liriel,CharacterDialogueSet,EventLines,"“네가 내 곁에 있으면, 숲의 소리가 더 맑게 들려. 이상하지?”"
+char_liriel,CharacterDialogueSet,ExpressionTags,웃음 / 놀람 / 슬픔 / 투정 / ✨ 기쁨
+char_liriel,CharacterDialogueSet,LocalizationTable,Character
+char_liriel,CharacterRelationship,RelationshipRaw,"• 플레이어: “빛을 가진 인간”으로 인식하며 특별한 호감을 느낌 • 루네트: 자주 함께 약초를 따며 친밀함 • 벨라모르타: 처음엔 경계하지만, 나중엔 그녀의 지혜를 인정 • 에이리: 둘 다 하늘을 좋아해 자주 놀러 감"
+char_liriel,CharacterRelationship,RelationshipTableID,rel_liriel
+char_liriel,DeveloperReference,Origin,‘엘다스의 숲(Eldas Woods)’ – 세계수의 뿌리가 닿아 있는 신성한 지역
+char_liriel,DeveloperReference,Affiliation,"숲의 정령 대표, ‘Radiance의 흐름’을 감지하는 감시자"
+char_liriel,DeveloperReference,JobDisplay,숲의 수호자 / 정령 대행자
+char_liriel,DeveloperReference,RaceDisplay,요정 (Fairy)
+char_liriel,DeveloperReference,SourceSheet,원본 비교표
+char_liriel,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_liriel,DeveloperReference,LastReviewedDate,2026-07-31
+char_mio,CharacterDefinition,CharacterID,char_mio
+char_mio,CharacterDefinition,DisplayName,미오
+char_mio,CharacterDefinition,EnglishName,Mio
+char_mio,CharacterDefinition,NameKey,CHAR_MIO_NAME
+char_mio,CharacterDefinition,RaceID,race_catkin
+char_mio,CharacterDefinition,JobID,job_fisher
+char_mio,CharacterDefinition,Gender,여성
+char_mio,CharacterDefinition,AgeDisplay,20세
+char_mio,CharacterDefinition,HeightDisplay,160cm
+char_mio,CharacterDefinition,IsAvailable,TRUE
+char_mio,CharacterDefinition,UnlockConditionID,unlock_mio_first_meeting
+char_mio,CharacterDefinition,DefaultAreaID,area_tbd
+char_mio,CharacterDefinition,Summary,"“바람과 파도를 벗 삼는 고양이 낚시꾼. 미오는 인생을 낚시처럼 즐기며, 세상 속에서 가장 진실한 순간을 기다린다.”"
+char_mio,CharacterDefinition,SymbolMotif,파도 / 낚싯바늘 / 해돋이 (자유와 생명의 순환 상징)
+char_mio,CharacterDefinition,ThemeColor,#E2C59F (샌드베이지) / #89C4D8 (바다 블루)
+char_mio,CharacterAppearance,Hair,"흑청색 짧은 단발, 끝부분이 햇빛에 비쳐 남색빛이 돔"
+char_mio,CharacterAppearance,Eyes,"황금빛 눈동자, 태양빛을 반사하며 반짝임"
+char_mio,CharacterAppearance,BodyImpression,슬림하지만 팔과 허리에 탄탄한 근육. 건강하고 생기 있는 인상
+char_mio,CharacterAppearance,Outfit,민소매 탑 + 낚시용 반바지 + 허리에 도구 가방. 목엔 행운의 고양이 방울
+char_mio,CharacterAppearance,Accessories,"낡은 밀짚모자, 낚싯대, 고기 잡는 통가방"
+char_mio,CharacterAppearance,Features,"고양이 귀와 꼬리, 햇빛에 그을린 살결. 종종 모자를 눌러쓰며 졸린 듯 하품함"
+char_mio,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 해안 배경, 밀짚모자, 바닷바람이 느껴지는 색감"
+char_mio,CharacterAppearance,PortraitAddress,Characters/mio/Portrait
+char_mio,CharacterAppearance,FullBodyAddress,Characters/mio/FullBody
+char_mio,CharacterAppearance,PrefabAddress,Characters/mio/Prefab
+char_mio,CharacterAppearance,AnimatorControllerAddress,Characters/mio/AnimatorController
+char_mio,CharacterPersonality,PersonalityTags,"느긋함, 장난기, 현실적, 낙천적"
+char_mio,CharacterPersonality,SpeechStyle,"말 끝에 ""~냐"", ""~구냥""처럼 고양이식 어미 사용. 생각보다 날카로운 통찰을 던짐"
+char_mio,CharacterPersonality,Trauma,한때 함께 낚시하던 스승이 폭풍에 휩쓸려 사라진 기억. 바다를 사랑하지만 동시에 두려워함
+char_mio,CharacterPersonality,Desire,언젠가 스승이 사라진 바다에서 “전설의 황금고기”를 낚는 것
+char_mio,CharacterPersonality,Background,"미오는 어릴 때부터 바닷가에서 자라며 낚시로 생계를 이어왔다. 바람과 파도를 읽는 감각은 뛰어나지만, 규칙이나 명령에는 약함. 섬의 호수에서 이상한 빛(광채)을 본 뒤, 그것을 따라 여행에 합류한다."
+char_mio,CharacterPersonality,VoiceConcept,밝고 느긋한 톤의 젊은 여성 목소리. 말끝에 장난 섞인 어미 사용 (“~냥”)
+char_mio,CharacterGameplayDefinition,NpcRoles,QuestGiver | Companion | Worker
+char_mio,CharacterGameplayDefinition,InteractionTypes,Dialogue | Quest | Gift | Recruit
+char_mio,CharacterGameplayDefinition,ShopID,
+char_mio,CharacterGameplayDefinition,CraftingStationID,station_mio
+char_mio,CharacterGameplayDefinition,DefaultAffinity,0
+char_mio,CharacterGameplayDefinition,MaxAffinity,100
+char_mio,CharacterGameplayDefinition,GiftProfileID,gift_mio
+char_mio,CharacterGameplayDefinition,QuestGroupID,quest_mio
+char_mio,CharacterGameplayDefinition,RecruitmentConditionID,recruit_mio
+char_mio,CharacterGameplayDefinition,CompanionAbilityID,ability_mio
+char_mio,CharacterGameplayDefinition,WorkAbilityID,work_fishing
+char_mio,CharacterGameplayDefinition,ScheduleID,schedule_mio
+char_mio,CharacterGameplayDefinition,SpawnPointID,spawn_mio_default
+char_mio,CharacterDialogueSet,DialogueTableID,dlg_mio
+char_mio,CharacterDialogueSet,Greeting,"“좋은 날씨네냥~ 파도도 잔잔하고, 기분도 좋아.”"
+char_mio,CharacterDialogueSet,RandomTalk,"“물고기들은 정직해. 거짓말 안 하거든. 대신, 가만히 기다려야 만나.”"
+char_mio,CharacterDialogueSet,AffinityReactions,"• 무관심: “어, 또 사람? 바다 냄새도 안 나는데~” • 호기심: “낚시해본 적 있냥? 고기는 마음이 급한 사람한텐 안 잡혀.” • 신뢰: “오늘은 너랑 같이 고기 잡을래. 둘이면 바람도 덜 심심하거든.” • 애정: “네 웃음소리… 파도소리보다 좋네냥.” • 사랑: “바다가 무서울 때도 있어. 그래도 네가 있으면 괜찮을 것 같아.”"
+char_mio,CharacterDialogueSet,PreferredItems,"좋아함: 생선, 소금간 간식, 바다 조개 / 싫어함: 감옥, 사슬, 불길"
+char_mio,CharacterDialogueSet,EventLines,“너랑 낚은 고기면 뭐든 특별해. 그런 게 ‘운명’이라 부르나냥?”
+char_mio,CharacterDialogueSet,ExpressionTags,웃음 / 장난 / 부끄러움 / 슬픔 / 나른함
+char_mio,CharacterDialogueSet,LocalizationTable,Character
+char_mio,CharacterRelationship,RelationshipRaw,• 플레이어: 처음엔 장난스럽게 대하지만 점차 신뢰 • 에이리: 서로 자유를 존중하며 친구처럼 지냄 • 루네트: 함께 물가에서 약초를 따며 휴식 • 벨라모르타: 장난과 현실 감각의 차이로 자주 티격태격
+char_mio,CharacterRelationship,RelationshipTableID,rel_mio
+char_mio,DeveloperReference,Origin,해안 마을 ‘네이븐 포트(Naven Port)’ – 고양이족 어부들이 사는 항구
+char_mio,DeveloperReference,Affiliation,자유 낚시꾼. 탐험대와 느슨한 계약 관계
+char_mio,DeveloperReference,JobDisplay,낚시꾼
+char_mio,DeveloperReference,RaceDisplay,고양이족 (Catkin)
+char_mio,DeveloperReference,SourceSheet,원본 비교표
+char_mio,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_mio,DeveloperReference,LastReviewedDate,2026-07-31
+char_ragh,CharacterDefinition,CharacterID,char_ragh
+char_ragh,CharacterDefinition,DisplayName,라그
+char_ragh,CharacterDefinition,EnglishName,Ragh
+char_ragh,CharacterDefinition,NameKey,CHAR_RAGH_NAME
+char_ragh,CharacterDefinition,RaceID,race_wolfkin
+char_ragh,CharacterDefinition,JobID,job_mercenary
+char_ragh,CharacterDefinition,Gender,여성
+char_ragh,CharacterDefinition,AgeDisplay,27세
+char_ragh,CharacterDefinition,HeightDisplay,178cm
+char_ragh,CharacterDefinition,IsAvailable,TRUE
+char_ragh,CharacterDefinition,UnlockConditionID,unlock_ragh_first_meeting
+char_ragh,CharacterDefinition,DefaultAreaID,area_tbd
+char_ragh,CharacterDefinition,Summary,"“상처 입은 수호자, 그리고 마지막 늑대. 라그는 잃어버린 무리를 대신해 ‘새로운 유대’를 지키기 위해 싸운다.”"
+char_ragh,CharacterDefinition,SymbolMotif,"달 / 울음 / 송곳니 (충성, 고독, 보호의 상징)"
+char_ragh,CharacterDefinition,ThemeColor,#C7C7D1 (실버 그레이) / #363A47 (다크 블루그레이)
+char_ragh,CharacterAppearance,Hair,"은회색 숏컷, 끝부분이 거칠게 잘린 듯 자연스러움"
+char_ragh,CharacterAppearance,Eyes,"황금빛 눈, 사냥감이라도 놓치지 않는 강렬한 시선"
+char_ragh,CharacterAppearance,BodyImpression,"탄탄하고 강인한 체형, 군더더기 없는 움직임"
+char_ragh,CharacterAppearance,Outfit,짙은 회색 가죽 갑옷 + 어깨에 늑대 가죽 망토. 실전형 복장
+char_ragh,CharacterAppearance,Accessories,"왼팔엔 상처를 가린 가죽 밴드, 목에는 오래된 송곳니 펜던트"
+char_ragh,CharacterAppearance,Features,늑대 귀와 꼬리. 흉터가 있는 왼팔. 웃을 때 송곳니가 살짝 드러남
+char_ragh,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 설산·달빛 배경, 짙은 회색 갑옷, 강인한 실루엣"
+char_ragh,CharacterAppearance,PortraitAddress,Characters/ragh/Portrait
+char_ragh,CharacterAppearance,FullBodyAddress,Characters/ragh/FullBody
+char_ragh,CharacterAppearance,PrefabAddress,Characters/ragh/Prefab
+char_ragh,CharacterAppearance,AnimatorControllerAddress,Characters/ragh/AnimatorController
+char_ragh,CharacterPersonality,PersonalityTags,"강인함, 충성심, 무뚝뚝, 따뜻한 내면"
+char_ragh,CharacterPersonality,SpeechStyle,간결하고 직설적. 고개를 살짝 드는 버릇 (“…뭐라고?”)
+char_ragh,CharacterPersonality,Trauma,과거 동료를 지키지 못한 경험. “리더로서 실패한 기억”이 남아 있음
+char_ragh,CharacterPersonality,Desire,다시는 동료를 잃지 않는 것. ‘무리를 지키는 자’로서 존재 이유를 찾고자 함
+char_ragh,CharacterPersonality,Background,"과거 왕국의 변방을 지키던 늑대족 부대의 리더였으나, 전쟁 중 동료들을 잃고 혼자만 살아남음. 이후 ‘혼자 남은 늑대’로 불리며 각지를 떠돌다, 주인공이 속한 탐험대의 호위로 합류하게 된다."
+char_ragh,CharacterPersonality,VoiceConcept,낮고 침착한 여성 보이스. 명령조와 따뜻한 톤의 균형. 전투 시엔 짧고 강한 발성
+char_ragh,CharacterGameplayDefinition,NpcRoles,QuestGiver | Companion | Guard
+char_ragh,CharacterGameplayDefinition,InteractionTypes,Dialogue | Quest | Gift | Recruit
+char_ragh,CharacterGameplayDefinition,ShopID,
+char_ragh,CharacterGameplayDefinition,CraftingStationID,station_ragh
+char_ragh,CharacterGameplayDefinition,DefaultAffinity,0
+char_ragh,CharacterGameplayDefinition,MaxAffinity,100
+char_ragh,CharacterGameplayDefinition,GiftProfileID,gift_ragh
+char_ragh,CharacterGameplayDefinition,QuestGroupID,quest_ragh
+char_ragh,CharacterGameplayDefinition,RecruitmentConditionID,recruit_ragh
+char_ragh,CharacterGameplayDefinition,CompanionAbilityID,ability_ragh
+char_ragh,CharacterGameplayDefinition,WorkAbilityID,work_guarding
+char_ragh,CharacterGameplayDefinition,ScheduleID,schedule_ragh
+char_ragh,CharacterGameplayDefinition,SpawnPointID,spawn_ragh_default
+char_ragh,CharacterDialogueSet,DialogueTableID,dlg_ragh
+char_ragh,CharacterDialogueSet,Greeting,“일찍 일어났군. 사냥하기 좋은 날이야.”
+char_ragh,CharacterDialogueSet,RandomTalk,“혼자 있는 게 익숙하긴 한데… 요즘은 조금 다르다.”
+char_ragh,CharacterDialogueSet,AffinityReactions,• 무관심: “내 주변에 함부로 다가오지 마.” • 호기심: “넌 겁이 없군. 그게 약점일 수도 있어.” • 신뢰: “넌 내 뒤를 믿어도 좋아. 내가 먼저 쓰러지진 않으니까.” • 애정: “이상하게 네 곁에선… 싸움보다 숨이 고르더군.” • 사랑: “너 하나만은… 어떤 적이 와도 지켜내겠어. 그게 나야.”
+char_ragh,CharacterDialogueSet,PreferredItems,"좋아함: 고기 요리, 가죽 장비, 술 / 싫어함: 단것, 복잡한 말, 연약한 태도"
+char_ragh,CharacterDialogueSet,EventLines,“그날 지키지 못한 것들… 이제는 다시는 놓치지 않을 거야.”
+char_ragh,CharacterDialogueSet,ExpressionTags,무표정 / 미소 / 동요 / 분노 / 결의
+char_ragh,CharacterDialogueSet,LocalizationTable,Character
+char_ragh,CharacterRelationship,RelationshipRaw,"• 플레이어: 처음엔 경계하지만, 점차 신뢰하며 ‘보호 대상’으로 인식 • 루네트: 본능적으로 지켜주려 함 • 벨라모르타: 신뢰와 유혹 사이에서 경계 • 미오: 자유분방함에 질리지만 내심 부러워함"
+char_ragh,CharacterRelationship,RelationshipTableID,rel_ragh
+char_ragh,DeveloperReference,Origin,설산지대 ‘프리하임(Friheim)’ – 늑대족이 혹한 속에서 살아가는 고원
+char_ragh,DeveloperReference,Affiliation,전 늑대족 방위대장 / 현재는 독립 용병
+char_ragh,DeveloperReference,JobDisplay,용병
+char_ragh,DeveloperReference,RaceDisplay,늑대족 (Wolfkin)
+char_ragh,DeveloperReference,SourceSheet,원본 비교표
+char_ragh,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_ragh,DeveloperReference,LastReviewedDate,2026-07-31
+char_arachne,CharacterDefinition,CharacterID,char_arachne
+char_arachne,CharacterDefinition,DisplayName,아라크네
+char_arachne,CharacterDefinition,EnglishName,Arachne
+char_arachne,CharacterDefinition,NameKey,CHAR_ARACHNE_NAME
+char_arachne,CharacterDefinition,RaceID,race_arachnia
+char_arachne,CharacterDefinition,JobID,job_designer
+char_arachne,CharacterDefinition,Gender,여성
+char_arachne,CharacterDefinition,AgeDisplay,23세
+char_arachne,CharacterDefinition,HeightDisplay,상반신 기준 170cm / 전체 길이 약 230cm
+char_arachne,CharacterDefinition,IsAvailable,TRUE
+char_arachne,CharacterDefinition,UnlockConditionID,unlock_arachne_first_meeting
+char_arachne,CharacterDefinition,DefaultAreaID,area_tbd
+char_arachne,CharacterDefinition,Summary,"“거미의 실은 생명을 이어주기도, 끊어버리기도 한다. 아라크네는 그 경계 위에서 ‘아름다움의 공포’를 직조하는 예술가다.”"
+char_arachne,CharacterDefinition,SymbolMotif,실 / 그림자 / 창조 (생명과 파괴의 이중성 상징)
+char_arachne,CharacterDefinition,ThemeColor,#2E1F35 (다크 퍼플) / #B79DCB (라일락 실버)
+char_arachne,CharacterAppearance,Hair,"검은 자색의 롱헤어, 실처럼 가늘고 윤기 있음"
+char_arachne,CharacterAppearance,Eyes,"붉은 와인색, 어둠 속에서도 희미하게 빛남"
+char_arachne,CharacterAppearance,BodyImpression,"유려하고 우아한 상반신, 날렵한 팔과 어깨선"
+char_arachne,CharacterAppearance,Outfit,"가슴과 어깨를 가볍게 덮는 검은 레더탑 + 망사 장식, 하반신은 거미 다리 8개가 매끄럽게 연결"
+char_arachne,CharacterAppearance,Accessories,"거미줄로 짠 초커, 허리에 작살형 단검과 미세한 실 주머니"
+char_arachne,CharacterAppearance,Features,"등 뒤의 거미 다리는 유연하게 움직이며, 그녀의 감정 상태에 따라 속도와 떨림이 달라짐. 거미줄은 마법적 성질을 가짐."
+char_arachne,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 어두운 지하 배경, 은은한 보랏빛, 섬세한 거미줄 묘사 강조"
+char_arachne,CharacterAppearance,PortraitAddress,Characters/arachne/Portrait
+char_arachne,CharacterAppearance,FullBodyAddress,Characters/arachne/FullBody
+char_arachne,CharacterAppearance,PrefabAddress,Characters/arachne/Prefab
+char_arachne,CharacterAppearance,AnimatorControllerAddress,Characters/arachne/AnimatorController
+char_arachne,CharacterPersonality,PersonalityTags,"침착, 냉정, 세밀, 내성적 완벽주의자"
+char_arachne,CharacterPersonality,SpeechStyle,"천천히, 균형 잡힌 어조로 말함. 손끝으로 실을 감거나 매만지는 버릇"
+char_arachne,CharacterPersonality,Trauma,“괴물”이라 불리며 배척당한 과거. 타인의 시선을 두려워하면서도 인정받고 싶어 함
+char_arachne,CharacterPersonality,Desire,"자신이 만든 ‘예술적 실(絲)’로 세상에 아름다움을 증명하고 싶어 함. 단, 그 실은 동시에 죽음을 가져오기도 함."
+char_arachne,CharacterPersonality,Background,"아라크네는 원래 왕국 귀족의 하녀였으나, 정교한 실 공예로 이름을 알렸다. 그러나 ‘거미족’이라는 이유로 배척당하고, 지하로 추방된 뒤 암살자 집단에서 생존법을 배웠다. 이후 ‘빛의 세계에서도 실로 예술을 짜는 자’로 불리며 은밀히 활동 중이다."
+char_arachne,CharacterPersonality,VoiceConcept,"낮고 부드러운 중저음 여성 보이스. 차분하고 느린 어조, 감정이 적지만 여운이 길다"
+char_arachne,CharacterGameplayDefinition,NpcRoles,Merchant | QuestGiver | Crafter
+char_arachne,CharacterGameplayDefinition,InteractionTypes,Dialogue | Trade | Quest | Gift | Craft
+char_arachne,CharacterGameplayDefinition,ShopID,shop_arachne
+char_arachne,CharacterGameplayDefinition,CraftingStationID,station_arachne
+char_arachne,CharacterGameplayDefinition,DefaultAffinity,0
+char_arachne,CharacterGameplayDefinition,MaxAffinity,100
+char_arachne,CharacterGameplayDefinition,GiftProfileID,gift_arachne
+char_arachne,CharacterGameplayDefinition,QuestGroupID,quest_arachne
+char_arachne,CharacterGameplayDefinition,RecruitmentConditionID,
+char_arachne,CharacterGameplayDefinition,CompanionAbilityID,
+char_arachne,CharacterGameplayDefinition,WorkAbilityID,work_tailoring
+char_arachne,CharacterGameplayDefinition,ScheduleID,schedule_arachne
+char_arachne,CharacterGameplayDefinition,SpawnPointID,spawn_arachne_default
+char_arachne,CharacterDialogueSet,DialogueTableID,dlg_arachne
+char_arachne,CharacterDialogueSet,Greeting,“이 어둠 속에서도 실은 이어져 있어… 너에게 닿을지도 모르지.”
+char_arachne,CharacterDialogueSet,RandomTalk,“세상은 복잡한 그물망 같아. 나는 그걸 단지… 조금 더 아름답게 짤 뿐이야.”
+char_arachne,CharacterDialogueSet,AffinityReactions,"• 무관심: “가까이 오지 마. 내 실은 상처보다 깊게 베어.” • 호기심: “흥미로운 인간이네. 겁을 먹지 않다니.” • 신뢰: “넌 내 손끝의 떨림을 두려워하지 않는군.” • 애정: “처음이야… 누군가 내 실을 ‘아름답다’고 말해준 건.” • 사랑: “넌 내 예술의 일부야. 영원히, 이 실에 묶여도 괜찮겠지?”"
+char_arachne,CharacterDialogueSet,PreferredItems,"좋아함: 바느질 도구, 비단, 검은 수정 / 싫어함: 불, 거친 소리, 밝은 조명"
+char_arachne,CharacterDialogueSet,EventLines,“두려움과 아름다움은 늘 한 올 차이야. 넌 그걸 이해할 것 같아.”
+char_arachne,CharacterDialogueSet,ExpressionTags,무표정 / 만족 / 당황 / 슬픔 / ️ 집중
+char_arachne,CharacterDialogueSet,LocalizationTable,Character
+char_arachne,CharacterRelationship,RelationshipRaw,"• 플레이어: 처음엔 경계하지만, 자신을 두려워하지 않는 모습에 호감을 느낌 • 벨라모르타: 서로의 기술을 존중. 냉정한 대화를 자주 나눔 • 리제: 감정 없는 기계라 생각하지만 점차 ‘순수한 이성’에 흥미를 느낌"
+char_arachne,CharacterRelationship,RelationshipTableID,rel_arachne
+char_arachne,DeveloperReference,Origin,지하의 도시 “누아르 하이브 (Noir Hive)” – 거미족들이 모여 사는 은폐된 공간
+char_arachne,DeveloperReference,Affiliation,암살자 길드 “Silken Veil” 소속. 현재는 독립 활동 중
+char_arachne,DeveloperReference,JobDisplay,디자이너
+char_arachne,DeveloperReference,RaceDisplay,"아라크니아 (Arachnia, 반인반거미족)"
+char_arachne,DeveloperReference,SourceSheet,원본 비교표
+char_arachne,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_arachne,DeveloperReference,LastReviewedDate,2026-07-31
+char_mireille,CharacterDefinition,CharacterID,char_mireille
+char_mireille,CharacterDefinition,DisplayName,미레유
+char_mireille,CharacterDefinition,EnglishName,Mireille
+char_mireille,CharacterDefinition,NameKey,CHAR_MIREILLE_NAME
+char_mireille,CharacterDefinition,RaceID,race_sheepkin
+char_mireille,CharacterDefinition,JobID,job_shepherd
+char_mireille,CharacterDefinition,Gender,여성
+char_mireille,CharacterDefinition,AgeDisplay,18세
+char_mireille,CharacterDefinition,HeightDisplay,155cm
+char_mireille,CharacterDefinition,IsAvailable,TRUE
+char_mireille,CharacterDefinition,UnlockConditionID,unlock_mireille_first_meeting
+char_mireille,CharacterDefinition,DefaultAreaID,area_tbd
+char_mireille,CharacterDefinition,Summary,"“세상이 상처투성이여도, 부드러운 손길 하나면 다시 피어날 수 있어요. 미레유는 평화와 온기의 화신 — 모든 생명을 감싸 안는 순백의 존재다.”"
+char_mireille,CharacterDefinition,SymbolMotif,초원 / 양모 / 종소리 (평화와 회복의 상징)
+char_mireille,CharacterDefinition,ThemeColor,#F4EADA (아이보리 크림) / #C3E4BE (연한 올리브 그린)
+char_mireille,CharacterAppearance,Hair,"크림색 곱슬 단발, 폭신한 양털 같은 질감"
+char_mireille,CharacterAppearance,Eyes,하늘색과 금색이 섞인 투명한 눈빛
+char_mireille,CharacterAppearance,BodyImpression,"작고 둥근 체형, 천연적으로 포근한 인상"
+char_mireille,CharacterAppearance,Outfit,베이지빛 양모 코트와 목장용 원피스. 목엔 양털 스카프
+char_mireille,CharacterAppearance,Accessories,"양방울 장식 브로치, 허리에 작은 방울 지갑"
+char_mireille,CharacterAppearance,Features,"머리 위엔 부드러운 양뿔, 꼬리는 짧고 둥근 솜털. 향기로운 풀내음이 남음"
+char_mireille,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 초원 배경, 부드러운 햇살, 파스텔톤 색감, 양털 텍스처 강조"
+char_mireille,CharacterAppearance,PortraitAddress,Characters/mireille/Portrait
+char_mireille,CharacterAppearance,FullBodyAddress,Characters/mireille/FullBody
+char_mireille,CharacterAppearance,PrefabAddress,Characters/mireille/Prefab
+char_mireille,CharacterAppearance,AnimatorControllerAddress,Characters/mireille/AnimatorController
+char_mireille,CharacterPersonality,PersonalityTags,"순수, 상냥, 겁이 많음, 다정함, 용서심"
+char_mireille,CharacterPersonality,SpeechStyle,조용하고 느린 말투. 부끄러우면 손을 꼭 쥠
+char_mireille,CharacterPersonality,Trauma,목장을 습격당해 가족을 잃은 기억. 그래서 “소란”이나 “분쟁”을 두려워함
+char_mireille,CharacterPersonality,Desire,세상에 상처받은 생명들을 다시 평화롭게 감싸주는 존재가 되고 싶어 함
+char_mireille,CharacterPersonality,Background,"평화로운 목장에서 자랐으나, 어느 날 “퇴색의 재앙”이 초원을 덮쳐 가족과 목장을 잃었다. 그러나 그녀는 원망 대신 기도를 택했고, 남은 양들과 함께 조용히 생명을 돌보고 있다. 플레이어 일행을 만나 세상엔 여전히 따뜻한 빛이 있다는 걸 깨닫는다."
+char_mireille,CharacterPersonality,VoiceConcept,"부드럽고 따뜻한 미성. 약간 떨리는 말투, 포근한 감정선"
+char_mireille,CharacterGameplayDefinition,NpcRoles,QuestGiver | Worker
+char_mireille,CharacterGameplayDefinition,InteractionTypes,Dialogue | Quest | Gift
+char_mireille,CharacterGameplayDefinition,ShopID,
+char_mireille,CharacterGameplayDefinition,CraftingStationID,station_mireille
+char_mireille,CharacterGameplayDefinition,DefaultAffinity,0
+char_mireille,CharacterGameplayDefinition,MaxAffinity,100
+char_mireille,CharacterGameplayDefinition,GiftProfileID,gift_mireille
+char_mireille,CharacterGameplayDefinition,QuestGroupID,quest_mireille
+char_mireille,CharacterGameplayDefinition,RecruitmentConditionID,
+char_mireille,CharacterGameplayDefinition,CompanionAbilityID,
+char_mireille,CharacterGameplayDefinition,WorkAbilityID,work_husbandry
+char_mireille,CharacterGameplayDefinition,ScheduleID,schedule_mireille
+char_mireille,CharacterGameplayDefinition,SpawnPointID,spawn_mireille_default
+char_mireille,CharacterDialogueSet,DialogueTableID,dlg_mireille
+char_mireille,CharacterDialogueSet,Greeting,“오늘은 바람이 참 부드럽네요… 음메~ 후훗.”
+char_mireille,CharacterDialogueSet,RandomTalk,“세상은 잔인할 때도 있지만… 그래도 여전히 아름다워요.”
+char_mireille,CharacterDialogueSet,AffinityReactions,"• 무관심: “...죄송해요, 저는 그냥 지나가던 사람이에요.” • 호기심: “당신은… 다치지 않았나요? 상처는 바로 치료해야 해요.” • 신뢰: “당신 옆에 있으면 이상하게 마음이 편해요.” • 애정: “이 세상이 조금은 더 따뜻하다고 느껴요, 당신 덕분에요.” • 사랑: “당신이 행복하다면… 그걸로 전 충분해요. 그게 제가 바라는 전부예요.”"
+char_mireille,CharacterDialogueSet,PreferredItems,"좋아함: 우유, 꽃, 허브, 천연 비누 / 싫어함: 불, 칼, 피, 큰 소리"
+char_mireille,CharacterDialogueSet,EventLines,“저도 언젠가는 누군가를 지킬 수 있을까요? 당신처럼요.”
+char_mireille,CharacterDialogueSet,ExpressionTags,미소 / 수줍음 / 눈물 / 평온 / 두려움
+char_mireille,CharacterDialogueSet,LocalizationTable,Character
+char_mireille,CharacterRelationship,RelationshipRaw,"• 플레이어: 처음엔 경계하지만, 그를 통해 “평화로운 세상”의 희망을 봄 • 루네트: 언니처럼 따름 • 라그: 처음엔 무섭지만, 나중엔 신뢰와 존경의 감정으로 변함 • 세레나: 조용한 밤에 함께 별을 바라보는 친구"
+char_mireille,CharacterRelationship,RelationshipTableID,rel_mireille
+char_mireille,DeveloperReference,Origin,평화로운 초원 마을 “벨리안 필드(Bellian Field)”
+char_mireille,DeveloperReference,Affiliation,마을의 치유사 견습 / 목양인 집안의 막내딸
+char_mireille,DeveloperReference,JobDisplay,목동
+char_mireille,DeveloperReference,RaceDisplay,양족 (Sheepkin)
+char_mireille,DeveloperReference,SourceSheet,원본 비교표
+char_mireille,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_mireille,DeveloperReference,LastReviewedDate,2026-07-31
+char_erina,CharacterDefinition,CharacterID,char_erina
+char_erina,CharacterDefinition,DisplayName,에리나
+char_erina,CharacterDefinition,EnglishName,Erina
+char_erina,CharacterDefinition,NameKey,CHAR_ERINA_NAME
+char_erina,CharacterDefinition,RaceID,race_high_elf
+char_erina,CharacterDefinition,JobID,job_archer
+char_erina,CharacterDefinition,Gender,여성
+char_erina,CharacterDefinition,AgeDisplay,120세 / 외형 25세
+char_erina,CharacterDefinition,HeightDisplay,172cm
+char_erina,CharacterDefinition,IsAvailable,TRUE
+char_erina,CharacterDefinition,UnlockConditionID,unlock_erina_first_meeting
+char_erina,CharacterDefinition,DefaultAreaID,area_tbd
+char_erina,CharacterDefinition,Summary,"“빛과 어둠의 경계에서, 그녀는 조용히 활시위를 당긴다. 에리나는 균형을 잃은 세상 속에서 마지막 질서를 지키는 수호자다.”"
+char_erina,CharacterDefinition,SymbolMotif,"활 / 나뭇잎 / 달빛 (균형, 통찰, 생명의 상징)"
+char_erina,CharacterDefinition,ThemeColor,#A6D1A5 (엘프 그린) / #F5F2E9 (빛 아이보리)
+char_erina,CharacterAppearance,Hair,"백금빛 실버블론드, 엘프식 장식으로 반묶음"
+char_erina,CharacterAppearance,Eyes,"에메랄드 그린, 차분하지만 깊은 생명력의 빛을 머금음"
+char_erina,CharacterAppearance,BodyImpression,"균형 잡힌 장신 체형, 우아하면서도 근육이 탄탄"
+char_erina,CharacterAppearance,Outfit,초록빛과 금색이 어우러진 엘프식 전투복. 숲의 패턴이 새겨진 가죽 흉갑
+char_erina,CharacterAppearance,Accessories,"엘프의 문양이 새겨진 활 “세리아르”, 귀에는 잎사귀 모양 귀걸이"
+char_erina,CharacterAppearance,Features,"길고 뾰족한 귀, 전투 시 눈빛이 미묘하게 빛남. 자연의 흐름을 감지하는 감각 보유"
+char_erina,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 숲속 달빛 배경, 금빛 활, 고요한 표정의 전사형 실루엣"
+char_erina,CharacterAppearance,PortraitAddress,Characters/erina/Portrait
+char_erina,CharacterAppearance,FullBodyAddress,Characters/erina/FullBody
+char_erina,CharacterAppearance,PrefabAddress,Characters/erina/Prefab
+char_erina,CharacterAppearance,AnimatorControllerAddress,Characters/erina/AnimatorController
+char_erina,CharacterPersonality,PersonalityTags,"냉정, 침착, 고결, 책임감, 내면의 따뜻함"
+char_erina,CharacterPersonality,SpeechStyle,말이 간결하고 단호함. 감정을 숨기려 하지만 표정에서 미묘히 드러남 (“…그건 네가 옳았어.”)
+char_erina,CharacterPersonality,Trauma,인간과 엘프의 갈등 속에서 ‘중재자’로서 실패한 과거. “평화를 이루려다 양쪽 모두를 잃은” 기억
+char_erina,CharacterPersonality,Desire,종족 간의 진정한 이해를 이루는 것. 생명과 이성의 균형을 회복시키려 함
+char_erina,CharacterPersonality,Background,"세계수의 분화를 관장하는 엘프 왕가 출신. 그녀는 Radiance의 균형이 흔들리자 인간의 땅으로 내려와 조사에 나섰다. 하지만 인간의 욕심과 엘프의 배타성 사이에서 균형을 잃고, 자신의 이상이 무너지는 걸 경험함. 이후 스스로 “중립의 감시자”로 살아가며, 어느 날 섬에 난입한 플레이어와 조우한다."
+char_erina,CharacterPersonality,VoiceConcept,차분하고 낮은 톤의 성숙한 여성 보이스. 감정을 절제하면서도 여운 있는 말투
+char_erina,CharacterGameplayDefinition,NpcRoles,QuestGiver | Companion | Guard
+char_erina,CharacterGameplayDefinition,InteractionTypes,Dialogue | Quest | Gift | Recruit
+char_erina,CharacterGameplayDefinition,ShopID,
+char_erina,CharacterGameplayDefinition,CraftingStationID,station_erina
+char_erina,CharacterGameplayDefinition,DefaultAffinity,0
+char_erina,CharacterGameplayDefinition,MaxAffinity,100
+char_erina,CharacterGameplayDefinition,GiftProfileID,gift_erina
+char_erina,CharacterGameplayDefinition,QuestGroupID,quest_erina
+char_erina,CharacterGameplayDefinition,RecruitmentConditionID,recruit_erina
+char_erina,CharacterGameplayDefinition,CompanionAbilityID,ability_erina
+char_erina,CharacterGameplayDefinition,WorkAbilityID,work_archery
+char_erina,CharacterGameplayDefinition,ScheduleID,schedule_erina
+char_erina,CharacterGameplayDefinition,SpawnPointID,spawn_erina_default
+char_erina,CharacterDialogueSet,DialogueTableID,dlg_erina
+char_erina,CharacterDialogueSet,Greeting,"“자연은 언제나 말을 한다. 다만, 들을 귀가 없는 자가 많을 뿐이지.”"
+char_erina,CharacterDialogueSet,RandomTalk,“균형이란 건… 그저 아무 일도 없다는 뜻이 아니야. 서로의 다름을 이해하는 것.”
+char_erina,CharacterDialogueSet,AffinityReactions,"• 무관심: “이 숲은 낯선 자에게 자비롭지 않다.” • 호기심: “네 눈빛… 거짓이 없어. 흥미롭군.” • 신뢰: “네 판단은 때로 내 직감보다 옳아. 함께 움직이자.” • 애정: “이런 평화를 느낀 게… 몇십 년 만인지 모르겠군.” • 사랑: “너와 함께라면, 그 어떤 균형이라도 다시 맞출 수 있을 것 같아.”"
+char_erina,CharacterDialogueSet,PreferredItems,"좋아함: 활 재료, 수정, 약초, 고요한 음악 / 싫어함: 소음, 불길, 파괴적인 마법"
+char_erina,CharacterDialogueSet,EventLines,“나는 오랫동안 빛과 어둠 사이에 서 있었지. 하지만 지금은 알겠어—너는 그 사이의 색이야.”
+char_erina,CharacterDialogueSet,ExpressionTags,냉정 / 온화 / 부끄러움 / 분노 / 결의
+char_erina,CharacterDialogueSet,LocalizationTable,Character
+char_erina,CharacterRelationship,RelationshipRaw,"• 플레이어: “균형을 깨뜨리는 자”라 경계하지만, 점차 “새로운 가능성”으로 인식 • 리리엘: 같은 자연의 계통으로, 자매처럼 아낌 • 라그: 무겁고 진지한 대화 상대. 서로의 책임감을 이해함 • 벨라모르타: 불신하지만, 그녀의 지식은 인정함"
+char_erina,CharacterRelationship,RelationshipTableID,rel_erina
+char_erina,DeveloperReference,Origin,엘프의 고대림 “에스페란 숲(Esperan Forest)”
+char_erina,DeveloperReference,Affiliation,숲의 수호단장 / “세계수의 사절”로 파견된 감시자
+char_erina,DeveloperReference,JobDisplay,궁수
+char_erina,DeveloperReference,RaceDisplay,엘프 (High Elf)
+char_erina,DeveloperReference,SourceSheet,원본 비교표
+char_erina,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_erina,DeveloperReference,LastReviewedDate,2026-07-31
+char_milky,CharacterDefinition,CharacterID,char_milky
+char_milky,CharacterDefinition,DisplayName,밀키
+char_milky,CharacterDefinition,EnglishName,Milky
+char_milky,CharacterDefinition,NameKey,CHAR_MILKY_NAME
+char_milky,CharacterDefinition,RaceID,race_cowkin
+char_milky,CharacterDefinition,JobID,job_barista
+char_milky,CharacterDefinition,Gender,여성
+char_milky,CharacterDefinition,AgeDisplay,21세
+char_milky,CharacterDefinition,HeightDisplay,167cm
+char_milky,CharacterDefinition,IsAvailable,TRUE
+char_milky,CharacterDefinition,UnlockConditionID,unlock_milky_first_meeting
+char_milky,CharacterDefinition,DefaultAreaID,area_tbd
+char_milky,CharacterDefinition,Summary,"“한 잔의 커피로 하루가 달라질 수 있다면, 나는 오늘도 미소로 그 한 잔을 내어줄 거예요.” — 섬의 마음을 감싸는 카페 주인, 밀크"
+char_milky,CharacterDefinition,SymbolMotif,"우유 / 카페 / 종소리 (평화, 휴식, 어머니의 따스함 상징)"
+char_milky,CharacterDefinition,ThemeColor,#F5E1C0 (밀크 베이지) / #9B6B46 (카푸치노 브라운)
+char_milky,CharacterAppearance,Hair,"우유빛의 백갈색 롱헤어, 끝이 살짝 말려 있음"
+char_milky,CharacterAppearance,Eyes,"초콜릿 브라운, 항상 부드럽게 미소 짓는 듯한 인상"
+char_milky,CharacterAppearance,BodyImpression,"풍만하고 곡선적인 체형, 움직임은 느긋하고 우아함"
+char_milky,CharacterAppearance,Outfit,검은 메이드풍 드레스 + 흰 앞치마 + 소매에 레이스 장식. 카페 운영 시엔 소 뿔 모양의 헤어핀을 착용
+char_milky,CharacterAppearance,Accessories,"우유병 모양의 귀걸이, 금빛 이름표, 허리엔 작은 벨"
+char_milky,CharacterAppearance,Features,"작은 소뿔과 짧은 꼬리, 귀 뒤에 검은 반점이 있음. 냄새는 달콤한 우유향"
+char_milky,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 카페 인테리어, 부드러운 조명, 메이드풍 의상, 따뜻한 컬러톤"
+char_milky,CharacterAppearance,PortraitAddress,Characters/milky/Portrait
+char_milky,CharacterAppearance,FullBodyAddress,Characters/milky/FullBody
+char_milky,CharacterAppearance,PrefabAddress,Characters/milky/Prefab
+char_milky,CharacterAppearance,AnimatorControllerAddress,Characters/milky/AnimatorController
+char_milky,CharacterPersonality,PersonalityTags,"느긋함, 따뜻함, 책임감, 다정한 유머감각"
+char_milky,CharacterPersonality,SpeechStyle,말이 느리고 부드러움. 웃을 때 “음~” 하고 콧노래를 흥얼거림
+char_milky,CharacterPersonality,Trauma,과거 카페를 혼자 지키려다 도둑의 습격을 받음. ‘누군가와 함께하는 일상’에 대한 그리움이 있음
+char_milky,CharacterPersonality,Desire,모두가 웃을 수 있는 ‘작은 안식처’를 만드는 것. 섬의 긴장된 분위기 속에서도 평화로운 공간을 지키려 함.
+char_milky,CharacterPersonality,Background,"섬의 중심부에 위치한 작은 카페를 운영하며, 탐험대와 몬무스들의 교류 중심지 역할을 함. 카페는 플레이어가 정보를 수집하거나 휴식하는 장소로 기능. 밀크는 손님을 가족처럼 대하며, 모두의 “마음의 집”이 되고자 한다."
+char_milky,CharacterPersonality,VoiceConcept,"낮고 따뜻한 톤의 여성 보이스. 느릿하고 다정한 말투, 약간의 농담 섞임"
+char_milky,CharacterGameplayDefinition,NpcRoles,Merchant | QuestGiver | Worker
+char_milky,CharacterGameplayDefinition,InteractionTypes,Dialogue | Trade | Quest | Gift
+char_milky,CharacterGameplayDefinition,ShopID,shop_milky
+char_milky,CharacterGameplayDefinition,CraftingStationID,station_milky
+char_milky,CharacterGameplayDefinition,DefaultAffinity,0
+char_milky,CharacterGameplayDefinition,MaxAffinity,100
+char_milky,CharacterGameplayDefinition,GiftProfileID,gift_milky
+char_milky,CharacterGameplayDefinition,QuestGroupID,quest_milky
+char_milky,CharacterGameplayDefinition,RecruitmentConditionID,
+char_milky,CharacterGameplayDefinition,CompanionAbilityID,
+char_milky,CharacterGameplayDefinition,WorkAbilityID,work_cafe
+char_milky,CharacterGameplayDefinition,ScheduleID,schedule_milky
+char_milky,CharacterGameplayDefinition,SpawnPointID,spawn_milky_default
+char_milky,CharacterDialogueSet,DialogueTableID,dlg_milky
+char_milky,CharacterDialogueSet,Greeting,“어서 와요. 오늘은 따뜻한 우유로 마음을 데워드릴게요.”
+char_milky,CharacterDialogueSet,RandomTalk,“커피는 쓴맛 속에 단맛이 숨어있죠. 사람도 그렇답니다.”
+char_milky,CharacterDialogueSet,AffinityReactions,• 무관심: “어서 와요. 우유 한 잔 드릴까요?” • 호기심: “여행자치고는 얼굴이 피곤해 보여요. 휴식이 필요해요.” • 신뢰: “당신이 오면 카페가 조금 더 따뜻해지는 기분이에요.” • 애정: “커피향보다 당신 냄새가 더 익숙해졌네요.” • 사랑: “당신이 웃는 걸 보면… 오늘 하루는 성공이에요.”
+char_milky,CharacterDialogueSet,PreferredItems,"좋아함: 커피 원두, 우유, 디저트, 꽃 / 싫어함: 시끄러운 손님, 쓴 약, 싸움"
+char_milky,CharacterDialogueSet,EventLines,"“이 카페가 당신의 ‘집’처럼 느껴졌으면 해요. 언제든지, 환영이에요.”"
+char_milky,CharacterDialogueSet,ExpressionTags,미소 / 부끄러움 / 평온 / 귀여운 잔소리 / ☕ 따뜻함
+char_milky,CharacterDialogueSet,LocalizationTable,Character
+char_milky,CharacterRelationship,RelationshipRaw,"• 플레이어: 처음엔 손님으로 대하지만, 점차 일상 속 대화를 나누는 사이로 발전 • 루네트: 카페 단골이자 귀여운 후배처럼 챙김 • 라그: 술 대신 따뜻한 우유를 내주며 잔소리함 • 벨라모르타: 커피 취향을 두고 신경전"
+char_milky,CharacterRelationship,RelationshipTableID,rel_milky
+char_milky,DeveloperReference,Origin,농장 마을 “무리엔(Moorien)” – 젖소족이 낙농을 중심으로 사는 곳
+char_milky,DeveloperReference,Affiliation,“선셋 카페(Sunset Café)”의 주인 겸 바리스타
+char_milky,DeveloperReference,JobDisplay,카페 주인 / 바리스타
+char_milky,DeveloperReference,RaceDisplay,젖소족 (Cowkin)
+char_milky,DeveloperReference,SourceSheet,원본 비교표
+char_milky,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_milky,DeveloperReference,LastReviewedDate,2026-07-31
+char_lilica,CharacterDefinition,CharacterID,char_lilica
+char_lilica,CharacterDefinition,DisplayName,릴리카
+char_lilica,CharacterDefinition,EnglishName,Lilica
+char_lilica,CharacterDefinition,NameKey,CHAR_LILICA_NAME
+char_lilica,CharacterDefinition,RaceID,race_vampire
+char_lilica,CharacterDefinition,JobID,job_noble
+char_lilica,CharacterDefinition,Gender,여성
+char_lilica,CharacterDefinition,AgeDisplay,250세 / 외형 10세
+char_lilica,CharacterDefinition,HeightDisplay,135cm
+char_lilica,CharacterDefinition,IsAvailable,TRUE
+char_lilica,CharacterDefinition,UnlockConditionID,unlock_lilica_first_meeting
+char_lilica,CharacterDefinition,DefaultAreaID,area_tbd
+char_lilica,CharacterDefinition,Summary,"“어린아이의 모습 속에 수백 년의 그림자가 숨어 있다. 릴리카는 밤의 영원한 주인, 그러나 누구보다 ‘평범한 하루’를 꿈꾸는 아이.”"
+char_lilica,CharacterDefinition,SymbolMotif,장미 / 달빛 / 흑색 망토 (고독과 영원의 상징)
+char_lilica,CharacterDefinition,ThemeColor,#3A1F33 (다크 퍼플) / #C93F58 (버건디 레드)
+char_lilica,CharacterAppearance,Hair,"흑자색(검보라)의 트윈테일, 끝부분이 새깃처럼 가늘게 퍼짐"
+char_lilica,CharacterAppearance,Eyes,"선홍빛 루비 아이, 빛을 받을 때 붉게 반짝임"
+char_lilica,CharacterAppearance,BodyImpression,"작고 앳된 얼굴, 하지만 고풍스러운 자세와 표정"
+char_lilica,CharacterAppearance,Outfit,"고딕풍 드레스 + 검정색 망토 (안감은 붉은 새틴), 레이스가 달린 소매"
+char_lilica,CharacterAppearance,Accessories,"붉은 장미 브로치, 십자 펜던트, 앙증맞은 손부채"
+char_lilica,CharacterAppearance,Features,"창백한 피부, 송곳니가 살짝 드러남, 망토는 거의 “보호막”처럼 여김"
+char_lilica,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 고딕풍 저택 배경, 검정 망토, 트윈테일, 부채, 밤의 달빛 강조"
+char_lilica,CharacterAppearance,PortraitAddress,Characters/lilica/Portrait
+char_lilica,CharacterAppearance,FullBodyAddress,Characters/lilica/FullBody
+char_lilica,CharacterAppearance,PrefabAddress,Characters/lilica/Prefab
+char_lilica,CharacterAppearance,AnimatorControllerAddress,Characters/lilica/AnimatorController
+char_lilica,CharacterPersonality,PersonalityTags,"오만, 철없는 천재, 감정 기복 심함, 외로움 감춤"
+char_lilica,CharacterPersonality,SpeechStyle,"귀족 말투 (“후훗, 이 릴리카 님께 감히—?”). 기분이 좋으면 부채로 입을 가리고 웃음"
+char_lilica,CharacterPersonality,Trauma,"수백 년을 고립된 성에서 살아온 외로움. “모두가 떠나지만, 나는 늙지도 죽지도 않는다.”"
+char_lilica,CharacterPersonality,Desire,"진심으로 자신을 ‘두려워하지 않는’ 존재를 찾고 싶음. 사랑보다 먼저, “평범한 관계”를 원함."
+char_lilica,CharacterPersonality,Background,"릴리카는 과거 귀족 혈통의 마지막 후손으로, 수백 년 동안 섬의 밤을 지켜온 존재. 해가 지면 깨어나 저택을 떠돌며 고서와 음악을 즐긴다. 플레이어가 섬에 도착했을 때, 호기심과 경계심 속에서 그를 시험하며 대화를 시작. 겉으로는 오만하지만, 점차 그를 통해 “잊힌 시간 속의 따뜻함”을 되찾는다."
+char_lilica,CharacterPersonality,VoiceConcept,"높은 음역의 소녀 목소리. 귀족풍 말투, 오만함 속에 외로움이 섞인 감정 표현"
+char_lilica,CharacterGameplayDefinition,NpcRoles,QuestGiver | Special
+char_lilica,CharacterGameplayDefinition,InteractionTypes,Dialogue | Quest | Gift
+char_lilica,CharacterGameplayDefinition,ShopID,
+char_lilica,CharacterGameplayDefinition,CraftingStationID,station_lilica
+char_lilica,CharacterGameplayDefinition,DefaultAffinity,0
+char_lilica,CharacterGameplayDefinition,MaxAffinity,100
+char_lilica,CharacterGameplayDefinition,GiftProfileID,gift_lilica
+char_lilica,CharacterGameplayDefinition,QuestGroupID,quest_lilica
+char_lilica,CharacterGameplayDefinition,RecruitmentConditionID,
+char_lilica,CharacterGameplayDefinition,CompanionAbilityID,
+char_lilica,CharacterGameplayDefinition,WorkAbilityID,work_night_watch
+char_lilica,CharacterGameplayDefinition,ScheduleID,schedule_lilica
+char_lilica,CharacterGameplayDefinition,SpawnPointID,spawn_lilica_default
+char_lilica,CharacterDialogueSet,DialogueTableID,dlg_lilica
+char_lilica,CharacterDialogueSet,Greeting,“밤이야말로 진짜 세상이지. 빛은… 너무 솔직해서 재미없거든.”
+char_lilica,CharacterDialogueSet,RandomTalk,"“흥, 네가 감히 이 릴리카 님께 커피를 대접한다고? 괘… 괜찮네.”"
+char_lilica,CharacterDialogueSet,AffinityReactions,"• 무관심: “네 따위가 이 릴리카 님 앞에 서도 되는 거야?” • 호기심: “너, 낮에도 돌아다닐 수 있지? 흥… 조금 부럽네.” • 신뢰: “너라면… 망토 안으로 초대해줄 수도 있을지도 몰라.” • 애정: “으으… 네가 없으면, 밤이 너무 조용해서 싫단 말이야.” • 사랑: “너와 함께라면… 낮에도 나가볼 수 있을 것 같아. 그러니까—손, 내밀어봐.”"
+char_lilica,CharacterDialogueSet,PreferredItems,"좋아함: 달의 보석, 고서, 달콤한 간식, 검은 장미 / 싫어함: 마늘, 성수, 밝은 빛"
+char_lilica,CharacterDialogueSet,EventLines,"“내가 이렇게 웃은 게 언제였더라… 아마, 네가 처음일지도 모르겠어.”"
+char_lilica,CharacterDialogueSet,ExpressionTags,오만 / 당황 / 투정 / 외로움 / 졸림
+char_lilica,CharacterDialogueSet,LocalizationTable,Character
+char_lilica,CharacterRelationship,RelationshipRaw,"• 플레이어: 처음엔 장난스레 놀리지만, 점점 진심 어린 신뢰를 품음 • 벨라모르타: ‘성인 여성’의 매력을 부러워하면서도 경쟁심을 느낌 • 세레나(유령): 함께 밤을 보내는 친구. 서로를 ‘고독한 존재’로 이해함"
+char_lilica,CharacterRelationship,RelationshipTableID,rel_lilica
+char_lilica,DeveloperReference,Origin,고딕풍 저택 “블러드 로즈 성(Blood Rose Castle)”
+char_lilica,DeveloperReference,Affiliation,고대 귀족가의 마지막 후예 / 고립된 섬의 “밤의 주인”
+char_lilica,DeveloperReference,JobDisplay,흡혈귀 영애
+char_lilica,DeveloperReference,RaceDisplay,뱀파이어 (Vampire)
+char_lilica,DeveloperReference,SourceSheet,원본 비교표
+char_lilica,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_lilica,DeveloperReference,LastReviewedDate,2026-07-31
+char_milu,CharacterDefinition,CharacterID,char_milu
+char_milu,CharacterDefinition,DisplayName,미루
+char_milu,CharacterDefinition,EnglishName,Milu
+char_milu,CharacterDefinition,NameKey,CHAR_MILU_NAME
+char_milu,CharacterDefinition,RaceID,race_slimekin
+char_milu,CharacterDefinition,JobID,job_potion_merchant
+char_milu,CharacterDefinition,Gender,여성
+char_milu,CharacterDefinition,AgeDisplay,5세 (성체 기준)
+char_milu,CharacterDefinition,HeightDisplay,160cm (형태 고정 시)
+char_milu,CharacterDefinition,IsAvailable,TRUE
+char_milu,CharacterDefinition,UnlockConditionID,unlock_milu_first_meeting
+char_milu,CharacterDefinition,DefaultAreaID,area_tbd
+char_milu,CharacterDefinition,Summary,“슬라임은 단지 물이 아니야. 감정으로 움직이는 ‘마음의 형체’야. 미루는 순수한 감정의 화신 — 세상에서 가장 투명한 생명체.”
+char_milu,CharacterDefinition,SymbolMotif,물방울 / 투명한 결정 / 감정의 파동 (순수함과 존재의 유동성 상징)
+char_milu,CharacterDefinition,ThemeColor,#75D8E1 (투명 청록) / #BFEFFF (아쿠아 블루)
+char_milu,CharacterAppearance,Hair,"슬라임이 자연스럽게 머리 모양으로 흐른 형태, 색은 푸른 투명빛"
+char_milu,CharacterAppearance,Eyes,바다 유리처럼 투명한 청록색. 감정에 따라 빛의 농도가 변함
+char_milu,CharacterAppearance,BodyImpression,"매끄럽고 유려한 곡선, 피부는 젤리처럼 빛 반사"
+char_milu,CharacterAppearance,Outfit,간단한 마법사풍 천 조각을 몸 일부에 감은 형태. 옷도 슬라임 일부로 변형 가능
+char_milu,CharacterAppearance,Accessories,작은 유리병 목걸이 (자신의 코어 결정 일부를 보관)
+char_milu,CharacterAppearance,Features,"온몸이 점액질 형태로 이루어져 있음. 감정에 따라 색이 바뀜 — 파랑(평온), 분홍(기쁨), 보라(당황), 붉음(분노), 투명(슬픔)."
+char_milu,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 반투명 슬라임 질감, 부드러운 조명, 수면 반사 효과"
+char_milu,CharacterAppearance,PortraitAddress,Characters/milu/Portrait
+char_milu,CharacterAppearance,FullBodyAddress,Characters/milu/FullBody
+char_milu,CharacterAppearance,PrefabAddress,Characters/milu/Prefab
+char_milu,CharacterAppearance,AnimatorControllerAddress,Characters/milu/AnimatorController
+char_milu,CharacterPersonality,PersonalityTags,"순수, 감정표현이 솔직, 장난꾸러기, 호기심"
+char_milu,CharacterPersonality,SpeechStyle,"“말 끝이 물결처럼 늘어지는 말투” (“헤에~?”, “으으음~”) 사람을 만지거나 흥미 있으면 손가락(점액)을 찔러봄"
+char_milu,CharacterPersonality,Trauma,‘형체가 없는 존재’라서 ‘자신이 누구인가’를 자주 고민함. 사람들이 자신을 “물건” 취급했던 기억이 있음
+char_milu,CharacterPersonality,Desire,"자신이 진짜 “생명”임을 증명하고 싶음. 즉, 감정과 관계를 통해 “살아있음”을 느끼려 함."
+char_milu,CharacterPersonality,Background,"슬라임족 중에서도 희귀한 ‘지성형 개체’로, 인간의 형태를 유지할 수 있는 능력을 가짐. 과거엔 인간 연금술사에게 실험당했지만, 스스로 탈출해 섬으로 흘러들어왔다. 지금은 자유롭게 살아가며, 다른 생명체와의 교류를 통해 ‘감정’을 배우고 있다."
+char_milu,CharacterPersonality,VoiceConcept,약간 물결처럼 울리는 여성 음성. 어린 듯하지만 감정 표현이 풍부함 (“말끝을 길게~”)
+char_milu,CharacterGameplayDefinition,NpcRoles,Merchant | QuestGiver | Crafter
+char_milu,CharacterGameplayDefinition,InteractionTypes,Dialogue | Trade | Quest | Gift | Craft
+char_milu,CharacterGameplayDefinition,ShopID,shop_milu
+char_milu,CharacterGameplayDefinition,CraftingStationID,station_milu
+char_milu,CharacterGameplayDefinition,DefaultAffinity,0
+char_milu,CharacterGameplayDefinition,MaxAffinity,100
+char_milu,CharacterGameplayDefinition,GiftProfileID,gift_milu
+char_milu,CharacterGameplayDefinition,QuestGroupID,quest_milu
+char_milu,CharacterGameplayDefinition,RecruitmentConditionID,
+char_milu,CharacterGameplayDefinition,CompanionAbilityID,
+char_milu,CharacterGameplayDefinition,WorkAbilityID,work_potion
+char_milu,CharacterGameplayDefinition,ScheduleID,schedule_milu
+char_milu,CharacterGameplayDefinition,SpawnPointID,spawn_milu_default
+char_milu,CharacterDialogueSet,DialogueTableID,dlg_milu
+char_milu,CharacterDialogueSet,Greeting,"“미루예요~ 오늘도 출렁출렁, 기분 좋은 하루~!”"
+char_milu,CharacterDialogueSet,RandomTalk,“응? 나 만지면 손 젖어요~ 그래도 괜찮아?”
+char_milu,CharacterDialogueSet,AffinityReactions,• 무관심: “너는… 사람? 아니면 실험가?” • 호기심: “헤에~ 인간 피부는 이렇게 단단하구나~” • 신뢰: “너랑 있으면 몸이 따뜻해져… 이상해~” • 애정: “혹시 나도… 너처럼 마음이라는 게 생긴 걸까?” • 사랑: “너를 감싸는 이 느낌이 좋아… 내 안에 들어올래?”
+char_milu,CharacterDialogueSet,PreferredItems,"좋아함: 수정, 마력수, 스윗젤리 / 싫어함: 불꽃, 건조한 재료, 천 조각"
+char_milu,CharacterDialogueSet,EventLines,"“당신이 내 손을 잡았을 때, 처음으로 심장이 생긴 것 같았어.”"
+char_milu,CharacterDialogueSet,ExpressionTags,미소 / 호기심 / 녹는 눈물 / 사랑 / 감정 폭발 (색 변화)
+char_milu,CharacterDialogueSet,LocalizationTable,Character
+char_milu,CharacterRelationship,RelationshipRaw,"• 플레이어: 처음엔 호기심으로 다가오지만, 진심으로 감정 교류를 시도 • 벨라모르타: 연금술 재료 거래 관계. 벨라는 그녀를 ‘살아있는 실험체’라 부름 • 루네트: “촉감이 좋다”며 자주 안김 • 릴리카: 자신보다 나이 많지만 외형은 비슷해, 자매처럼 장난침"
+char_milu,CharacterRelationship,RelationshipTableID,rel_milu
+char_milu,DeveloperReference,Origin,호수 깊은 곳의 “루멘 웰 (Lumen Well)” — 슬라임들이 태어나는 마력지대
+char_milu,DeveloperReference,Affiliation,연금 재료 상점 “젤 포션(Gel Potion)”의 주인
+char_milu,DeveloperReference,JobDisplay,
+char_milu,DeveloperReference,RaceDisplay,슬라임족 (Slimekin)
+char_milu,DeveloperReference,SourceSheet,원본 비교표
+char_milu,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_milu,DeveloperReference,LastReviewedDate,2026-07-31
+char_harka,CharacterDefinition,CharacterID,char_harka
+char_harka,CharacterDefinition,DisplayName,하르카
+char_harka,CharacterDefinition,EnglishName,Harka
+char_harka,CharacterDefinition,NameKey,CHAR_HARKA_NAME
+char_harka,CharacterDefinition,RaceID,race_dogkin
+char_harka,CharacterDefinition,JobID,job_tracker
+char_harka,CharacterDefinition,Gender,여성
+char_harka,CharacterDefinition,AgeDisplay,23세
+char_harka,CharacterDefinition,HeightDisplay,170cm
+char_harka,CharacterDefinition,IsAvailable,TRUE
+char_harka,CharacterDefinition,UnlockConditionID,unlock_harka_first_meeting
+char_harka,CharacterDefinition,DefaultAreaID,area_tbd
+char_harka,CharacterDefinition,Summary,“한 번 맹세하면 끝까지 지켜. 하르카는 태양처럼 따뜻한 ‘수호자’ — 언제나 네 곁에 서 있을 충직한 파트너다.”
+char_harka,CharacterDefinition,SymbolMotif,태양 / 방패 / 충성 (빛과 보호의 상징)
+char_harka,CharacterDefinition,ThemeColor,#E6C27A (골든 브라운) / #F3E0A2 (샌드 베이지)
+char_harka,CharacterAppearance,Hair,"황갈색 포니테일, 결이 부드럽고 귀 뒤로 귀엽게 묶여 있음"
+char_harka,CharacterAppearance,Eyes,"황금빛 앰버 컬러, 늘 생기 있고 반짝임"
+char_harka,CharacterAppearance,BodyImpression,"건강하고 탄탄한 근육질 몸매, 가슴과 허리 비율이 뚜렷한 스포츠형"
+char_harka,CharacterAppearance,Outfit,탐험용 밀리터리 하프탑 + 숏팬츠 + 허리 가죽 벨트 + 붉은 스카프 팔에는 통신용 마법 장비가 장착되어 있음
+char_harka,CharacterAppearance,Accessories,"목에는 작은 개뼈 펜던트, 귀에는 탐지형 이어링"
+char_harka,CharacterAppearance,Features,"큰 개 귀와 부드러운 꼬리, 냄새 감지 능력 탁월. 기분이 좋으면 꼬리가 흔들리고, 화나면 살짝 곤두섬."
+char_harka,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 모래길 배경, 붉은 스카프, 개 귀와 꼬리 강조, 밝은 햇빛 연출"
+char_harka,CharacterAppearance,PortraitAddress,Characters/harka/Portrait
+char_harka,CharacterAppearance,FullBodyAddress,Characters/harka/FullBody
+char_harka,CharacterAppearance,PrefabAddress,Characters/harka/Prefab
+char_harka,CharacterAppearance,AnimatorControllerAddress,Characters/harka/AnimatorController
+char_harka,CharacterPersonality,PersonalityTags,"활발, 충성심, 직감형, 정의감, 약간의 허당"
+char_harka,CharacterPersonality,SpeechStyle,자신감 넘치지만 가끔 실수. “멍!” 같은 추임새 버릇 있음. 상대의 냄새를 맡거나 어깨를 툭 치는 식의 친근한 제스처 자주 사용
+char_harka,CharacterPersonality,Trauma,과거 ‘주인’을 잃은 기억. 그 이후 스스로를 “누군가의 보호자”로 세우려 함
+char_harka,CharacterPersonality,Desire,"이번엔 ‘잃지 않는 관계’를 만들고 싶어 함. 즉, “함께 끝까지 싸울 동료”를 원함."
+char_harka,CharacterPersonality,Background,"하르카는 예전엔 군견 부대의 일원으로, 실종된 대장을 끝까지 찾으려다 부대를 잃었다. 이후 방황하던 중, 섬으로 표류해온 플레이어를 발견하고 구해주며 동료가 됨. 그녀는 스스로 “지켜야 할 무리”를 만들고자 하며, 섬의 위험 구역을 누구보다 먼저 탐색한다."
+char_harka,CharacterPersonality,VoiceConcept,활달하고 명랑한 여성 음성. 개구진 에너지와 감정 기복이 풍부함
+char_harka,CharacterGameplayDefinition,NpcRoles,QuestGiver | Companion | Guard
+char_harka,CharacterGameplayDefinition,InteractionTypes,Dialogue | Quest | Gift | Recruit
+char_harka,CharacterGameplayDefinition,ShopID,
+char_harka,CharacterGameplayDefinition,CraftingStationID,station_harka
+char_harka,CharacterGameplayDefinition,DefaultAffinity,0
+char_harka,CharacterGameplayDefinition,MaxAffinity,100
+char_harka,CharacterGameplayDefinition,GiftProfileID,gift_harka
+char_harka,CharacterGameplayDefinition,QuestGroupID,quest_harka
+char_harka,CharacterGameplayDefinition,RecruitmentConditionID,recruit_harka
+char_harka,CharacterGameplayDefinition,CompanionAbilityID,ability_harka
+char_harka,CharacterGameplayDefinition,WorkAbilityID,work_tracking
+char_harka,CharacterGameplayDefinition,ScheduleID,schedule_harka
+char_harka,CharacterGameplayDefinition,SpawnPointID,spawn_harka_default
+char_harka,CharacterDialogueSet,DialogueTableID,dlg_harka
+char_harka,CharacterDialogueSet,Greeting,“좋은 아침! 오늘도 꼬리 흔들 준비 완료~!”
+char_harka,CharacterDialogueSet,RandomTalk,“음~ 네 냄새는 오늘도 똑같아. 왠지… 안심돼.”
+char_harka,CharacterDialogueSet,AffinityReactions,"• 무관심: “누군지도 모르는 사람 뒤는 못 지켜.” • 호기심: “음~ 너 냄새 좋네. 나쁜 녀석 같진 않아.” • 신뢰: “좋아, 이번엔 내가 네 뒤를 맡을게. 멍!” • 애정: “너랑 있으면 이상하게 꼬리가 멈추질 않아.” • 사랑: “내가 바라는 건 단 하나야… 네 곁에서 아침을 맞이하는 것.”"
+char_harka,CharacterDialogueSet,PreferredItems,"좋아함: 고기류 음식, 탐험 장비, 향주머니 / 싫어함: 비나 습기, 썩은 냄새"
+char_harka,CharacterDialogueSet,EventLines,"“이번엔 절대 놓치지 않을 거야. 너도, 나도… 다시 혼자가 되지 않게.”"
+char_harka,CharacterDialogueSet,ExpressionTags,활짝 웃음 / 수줍음 / 결의 / 기쁨 / 슬픔
+char_harka,CharacterDialogueSet,LocalizationTable,Character
+char_harka,CharacterRelationship,RelationshipRaw,"• 플레이어: 처음엔 상관처럼 대하지만, 점차 “지키고 싶은 사람”이 됨 • 라그(늑대): 종족상 라이벌 관계지만, 서로의 힘을 존중함 • 루네트: 부상 치료를 자주 맡기는 사이 • 밀크: 카페의 단골이자 “간식의 빚쟁이”"
+char_harka,CharacterRelationship,RelationshipTableID,rel_harka
+char_harka,DeveloperReference,Origin,국경지대의 전투 마을 “브레이턴” 출신
+char_harka,DeveloperReference,Affiliation,탐사대 수호병 / 섬 탐험대의 선두 추적자
+char_harka,DeveloperReference,JobDisplay,탐사대 수호병 / 추적자 (Tracker)
+char_harka,DeveloperReference,RaceDisplay,개족 (Dogkin)
+char_harka,DeveloperReference,SourceSheet,원본 비교표
+char_harka,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_harka,DeveloperReference,LastReviewedDate,2026-07-31
+char_beatrice,CharacterDefinition,CharacterID,char_beatrice
+char_beatrice,CharacterDefinition,DisplayName,베아트리체
+char_beatrice,CharacterDefinition,EnglishName,Beatrice
+char_beatrice,CharacterDefinition,NameKey,CHAR_BEATRICE_NAME
+char_beatrice,CharacterDefinition,RaceID,race_bee_kin
+char_beatrice,CharacterDefinition,JobID,job_beekeeper
+char_beatrice,CharacterDefinition,Gender,여성
+char_beatrice,CharacterDefinition,AgeDisplay,26세
+char_beatrice,CharacterDefinition,HeightDisplay,166cm
+char_beatrice,CharacterDefinition,IsAvailable,TRUE
+char_beatrice,CharacterDefinition,UnlockConditionID,unlock_beatrice_first_meeting
+char_beatrice,CharacterDefinition,DefaultAreaID,area_tbd
+char_beatrice,CharacterDefinition,Summary,“꿀벌은 혼자선 살 수 없어. 베아트리체는 다시 한번 ‘함께 날 수 있는 무리’를 찾는 전사다.”
+char_beatrice,CharacterDefinition,SymbolMotif,"벌 / 벌집 / 황금 꿀 (질서, 생명, 협동의 상징)"
+char_beatrice,CharacterDefinition,ThemeColor,#F5C94E (꿀색 골드) / #3B2B18 (벌집 브라운)
+char_beatrice,CharacterAppearance,Hair,금흑색 스트라이프의 하이포니테일. 햇빛을 받으면 벌날개처럼 반짝임
+char_beatrice,CharacterAppearance,Eyes,"호박색, 벌의 복합안 구조를 연상시키는 패턴"
+char_beatrice,CharacterAppearance,BodyImpression,날렵하고 근육선이 은은한 전사형. 부드러운 얼굴선과 냉정한 눈매의 조화
+char_beatrice,CharacterAppearance,Outfit,"금빛과 흑색의 전투복. 날개 보호용 가죽판이 달린 경장비, 허리에 꿀병 파우치 착용"
+char_beatrice,CharacterAppearance,Accessories,"벌침 모양의 단검, 목에는 벌집 문양의 펜던트"
+char_beatrice,CharacterAppearance,Features,"투명한 날개 2쌍, 날갯짓 시 낮은 진동음 발생. 분노나 긴장 시 눈이 붉게 빛남"
+char_beatrice,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 벌 날개 반투명 광택, 금빛 테마, 전투복 + 날개 조합, 강렬한 햇빛 연출"
+char_beatrice,CharacterAppearance,PortraitAddress,Characters/beatrice/Portrait
+char_beatrice,CharacterAppearance,FullBodyAddress,Characters/beatrice/FullBody
+char_beatrice,CharacterAppearance,PrefabAddress,Characters/beatrice/Prefab
+char_beatrice,CharacterAppearance,AnimatorControllerAddress,Characters/beatrice/AnimatorController
+char_beatrice,CharacterPersonality,PersonalityTags,"근면, 냉정, 책임감, 통솔력, 숨은 다정함"
+char_beatrice,CharacterPersonality,SpeechStyle,짧고 단정한 어조. 생각 중일 땐 손끝으로 허공을 “꿀벌 리듬”처럼 두드림
+char_beatrice,CharacterPersonality,Trauma,군체를 지키려다 “여왕과 동료”를 모두 잃음. 그 후 ‘혼자서도 일해야 한다’는 강박이 생김
+char_beatrice,CharacterPersonality,Desire,"다시 누군가를 믿고, 함께 일할 수 있는 “새로운 군체(가족)”를 만드는 것"
+char_beatrice,CharacterPersonality,Background,"과거 여왕벌의 근위대장이었으나, 내부 반란으로 벌통 도시가 무너짐. 그 후 살아남은 일부 일벌들과 함께 섬으로 도망쳐 ‘꿀벌 정착지’를 세움. 현재는 탐험대의 정찰 임무를 맡으며, 섬의 자원과 생태계를 조사 중. 그녀는 여전히 “군체의 이상”을 꿈꾸며, 플레이어에게 ‘새로운 리더’의 자질을 본다."
+char_beatrice,CharacterPersonality,VoiceConcept,"중저음의 냉철한 여성 보이스. 지휘관 톤이지만, 드물게 부드러워질 때 감정폭이 깊음"
+char_beatrice,CharacterGameplayDefinition,NpcRoles,QuestGiver | Companion | Worker | Guard
+char_beatrice,CharacterGameplayDefinition,InteractionTypes,Dialogue | Quest | Gift | Recruit
+char_beatrice,CharacterGameplayDefinition,ShopID,
+char_beatrice,CharacterGameplayDefinition,CraftingStationID,
+char_beatrice,CharacterGameplayDefinition,DefaultAffinity,0
+char_beatrice,CharacterGameplayDefinition,MaxAffinity,100
+char_beatrice,CharacterGameplayDefinition,GiftProfileID,gift_beatrice
+char_beatrice,CharacterGameplayDefinition,QuestGroupID,quest_beatrice
+char_beatrice,CharacterGameplayDefinition,RecruitmentConditionID,recruit_beatrice
+char_beatrice,CharacterGameplayDefinition,CompanionAbilityID,ability_beatrice
+char_beatrice,CharacterGameplayDefinition,WorkAbilityID,work_beekeeping
+char_beatrice,CharacterGameplayDefinition,ScheduleID,schedule_beatrice
+char_beatrice,CharacterGameplayDefinition,SpawnPointID,spawn_beatrice_default
+char_beatrice,CharacterDialogueSet,DialogueTableID,dlg_beatrice
+char_beatrice,CharacterDialogueSet,Greeting,"“임무 보고하러 왔어요. …아, 그냥 인사였다고요?”"
+char_beatrice,CharacterDialogueSet,RandomTalk,“내 날개는 단순한 장식이 아니에요. 이건 군체의 자부심이죠.”
+char_beatrice,CharacterDialogueSet,AffinityReactions,"• 무관심: “명령만 있으면 된다. 감정은 일에 방해야.” • 호기심: “넌 이상하군… 혼자 움직이지 않네. 군체도 아닌데.” • 신뢰: “좋아, 이번 정찰은 네 지시에 따를게.” • 애정: “이상해… 널 보면 내 날개가 저절로 떨려.” • 사랑: “꿀은 나눌수록 달콤해진대. 넌 내 마지막 꿀이야.”"
+char_beatrice,CharacterDialogueSet,PreferredItems,"좋아함: 꿀, 꽃, 금속 장식, 향초 / 싫어함: 연기, 불, 소음, 거짓말"
+char_beatrice,CharacterDialogueSet,EventLines,"“혼자선 아무것도 못 해요. 하지만… 당신이 있다면, 다시 시작할 수 있을지도.”"
+char_beatrice,CharacterDialogueSet,ExpressionTags,냉정 / 당황 / 미소 / 결의 / 안도
+char_beatrice,CharacterDialogueSet,LocalizationTable,Character
+char_beatrice,CharacterRelationship,RelationshipRaw,"• 플레이어: 초반엔 ‘명령 따르는 대상’으로만 보지만, 점차 ‘신뢰할 동료’로 변화 • 하르카: 활발함을 부러워함. 서로를 인정하는 전우 관계 • 루네트: 약초 거래 파트너 • 벨라모르타: 마력 에너지 거래 협력자, 서로 존중하지만 긴장감 존재"
+char_beatrice,CharacterRelationship,RelationshipTableID,rel_beatrice
+char_beatrice,DeveloperReference,Origin,“멜리오라 벌통 도시(Meliora Hive)” – 거대한 꿀 저장소와 마력 채집 시설을 가진 공중 정착지
+char_beatrice,DeveloperReference,Affiliation,탐사대 정찰대장 / 과거 여왕직속 근위벌 출신
+char_beatrice,DeveloperReference,JobDisplay,양봉업자
+char_beatrice,DeveloperReference,RaceDisplay,벌족 (Bee-kin)
+char_beatrice,DeveloperReference,SourceSheet,원본 비교표
+char_beatrice,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_beatrice,DeveloperReference,LastReviewedDate,2026-07-31
+char_verona,CharacterDefinition,CharacterID,char_verona
+char_verona,CharacterDefinition,DisplayName,베로나
+char_verona,CharacterDefinition,EnglishName,Verona
+char_verona,CharacterDefinition,NameKey,CHAR_VERONA_NAME
+char_verona,CharacterDefinition,RaceID,race_bullkin
+char_verona,CharacterDefinition,JobID,job_earth_guardian
+char_verona,CharacterDefinition,Gender,여성
+char_verona,CharacterDefinition,AgeDisplay,29세
+char_verona,CharacterDefinition,HeightDisplay,176cm
+char_verona,CharacterDefinition,IsAvailable,TRUE
+char_verona,CharacterDefinition,UnlockConditionID,unlock_verona_first_meeting
+char_verona,CharacterDefinition,DefaultAreaID,area_tbd
+char_verona,CharacterDefinition,Summary,"“대지는 배신하지 않아. 베로나는 믿음을 잃은 사제이자, 다시 생명을 일으키는 대지의 여신이다.”"
+char_verona,CharacterDefinition,SymbolMotif,황소 / 대지 / 신전 / 풍요 (강인함과 믿음의 상징)
+char_verona,CharacterDefinition,ThemeColor,#CDA77C (황토 브라운) / #E6D5A2 (밀색 골드)
+char_verona,CharacterAppearance,Hair,"밤갈색의 풍성한 웨이브 롱헤어, 끝이 붉게 빛남"
+char_verona,CharacterAppearance,Eyes,"구릿빛 브라운, 부드럽고 깊은 인상"
+char_verona,CharacterAppearance,BodyImpression,"키가 크고 곡선이 강조된 체형, 우아하면서도 당당한 분위기"
+char_verona,CharacterAppearance,Outfit,"흙색과 금빛이 어우러진 제사복 + 가죽끈으로 묶은 토가풍 의상 상반신은 단단한 흉갑, 하의는 천과 장식벨트로 구성"
+char_verona,CharacterAppearance,Accessories,"황소뿔 모양 머리장식, 목에는 ‘대지의 징표’인 금반지 목걸이"
+char_verona,CharacterAppearance,Features,"견고한 소뿔, 꼬리는 짧지만 굵은 형태. 걸을 때마다 발굽에서 은은한 진동음 발생"
+char_verona,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 대지와 신전 배경, 따뜻한 황금빛 조명, 근육선이 은은한 강인한 체형"
+char_verona,CharacterAppearance,PortraitAddress,Characters/verona/Portrait
+char_verona,CharacterAppearance,FullBodyAddress,Characters/verona/FullBody
+char_verona,CharacterAppearance,PrefabAddress,Characters/verona/Prefab
+char_verona,CharacterAppearance,AnimatorControllerAddress,Characters/verona/AnimatorController
+char_verona,CharacterPersonality,PersonalityTags,"인내, 자애, 신념, 강단, 천천히 불타오르는 열정"
+char_verona,CharacterPersonality,SpeechStyle,"느리고 침착한 말투. 생각할 때는 손을 가슴 위에 얹음. 화나면 조용히 숨을 내쉬며, 단 한마디로 상대를 제압."
+char_verona,CharacterPersonality,Trauma,"한때 섬의 농장을 지키던 ‘황소신의 사제’였으나, 인간들의 탐욕으로 신전이 파괴됨. 자신의 신념이 무너진 뒤, ‘신도 대지도 믿을 수 없다’는 회의감에 빠졌음."
+char_verona,CharacterPersonality,Desire,"다시 ‘믿음’을 되찾는 것. 누군가를 진심으로 지키며, 대지와 함께 살아가는 길을 찾고자 함."
+char_verona,CharacterPersonality,Background,"대지의 힘을 다루는 능력으로 농경과 풍요의 신전에서 신관으로 봉직했으나, 섬의 마력이 불안정해지자 신전이 붕괴되고 동료를 잃음. 그녀는 이후 농장을 혼자 재건하며, 자연의 순환을 다시 일으키려 한다. 플레이어를 만난 후, 그 안에서 ‘잃었던 신념’을 조금씩 되찾기 시작한다."
+char_verona,CharacterPersonality,VoiceConcept,중저음의 성숙한 여성 목소리. 부드럽지만 신념 있는 어조. 감정이 드러날 때 울림이 깊고 따뜻함.
+char_verona,CharacterGameplayDefinition,NpcRoles,QuestGiver | Worker | Guard
+char_verona,CharacterGameplayDefinition,InteractionTypes,Dialogue | Quest | Gift
+char_verona,CharacterGameplayDefinition,ShopID,
+char_verona,CharacterGameplayDefinition,CraftingStationID,
+char_verona,CharacterGameplayDefinition,DefaultAffinity,0
+char_verona,CharacterGameplayDefinition,MaxAffinity,100
+char_verona,CharacterGameplayDefinition,GiftProfileID,gift_verona
+char_verona,CharacterGameplayDefinition,QuestGroupID,quest_verona
+char_verona,CharacterGameplayDefinition,RecruitmentConditionID,
+char_verona,CharacterGameplayDefinition,CompanionAbilityID,
+char_verona,CharacterGameplayDefinition,WorkAbilityID,work_farming
+char_verona,CharacterGameplayDefinition,ScheduleID,schedule_verona
+char_verona,CharacterGameplayDefinition,SpawnPointID,spawn_verona_default
+char_verona,CharacterDialogueSet,DialogueTableID,dlg_verona
+char_verona,CharacterDialogueSet,Greeting,“햇살이 좋군. 오늘도 대지는 우리를 지켜보고 있어.”
+char_verona,CharacterDialogueSet,RandomTalk,"“사람은 쉽게 잊지만, 땅은 모든 걸 기억하지.”"
+char_verona,CharacterDialogueSet,AffinityReactions,"• 무관심: “대지는 거짓말을 하지 않지. 사람은 다를지도 모르지만.” • 호기심: “너는 흙 묻은 손을 두려워하지 않는군.” • 신뢰: “너와 함께 밭을 갈면… 풍요가 돌아올 것 같아.” • 애정: “대지처럼… 천천히, 깊게. 그렇게 너를 품고 싶어.” • 사랑: “이제는 신이 아닌, 네가 내 믿음이야.”"
+char_verona,CharacterDialogueSet,PreferredItems,"좋아함: 농작물, 금속 공예품, 대지 결정 / 싫어함: 가벼운 농담, 헛된 약속"
+char_verona,CharacterDialogueSet,EventLines,“너는 씨앗 같아. 작지만… 언젠가 내 마음속에서 꽃이 필 거야.”
+char_verona,CharacterDialogueSet,ExpressionTags,평온 / 따뜻함 / 결의 / 부끄러움 / 회상
+char_verona,CharacterDialogueSet,LocalizationTable,Character
+char_verona,CharacterRelationship,RelationshipRaw,"• 플레이어: 처음엔 의심하지만, 진심을 보고 신뢰와 유대 형성 • 밀크: 옛 동료처럼 대하며, 카페에 재료를 공급 • 루네트: 약초 거래로 자주 만남 • 라그: “대지의 수호자”로서 전우 같은 관계"
+char_verona,CharacterRelationship,RelationshipTableID,rel_verona
+char_verona,DeveloperReference,Origin,“테라 바인(Terra Vine)” – 대지의 신을 모시는 황토 고원지대
+char_verona,DeveloperReference,Affiliation,과거 황소신전의 수녀 / 현재 섬의 대지 수호자
+char_verona,DeveloperReference,JobDisplay,대지의 수호자 / 농장 여신관
+char_verona,DeveloperReference,RaceDisplay,소족 (Bullkin)
+char_verona,DeveloperReference,SourceSheet,원본 비교표
+char_verona,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_verona,DeveloperReference,LastReviewedDate,2026-07-31
+char_kasumi,CharacterDefinition,CharacterID,char_kasumi
+char_kasumi,CharacterDefinition,DisplayName,카스미
+char_kasumi,CharacterDefinition,EnglishName,Kasumi
+char_kasumi,CharacterDefinition,NameKey,CHAR_KASUMI_NAME
+char_kasumi,CharacterDefinition,RaceID,race_foxkin
+char_kasumi,CharacterDefinition,JobID,job_shrine_maiden
+char_kasumi,CharacterDefinition,Gender,여성
+char_kasumi,CharacterDefinition,AgeDisplay,25세
+char_kasumi,CharacterDefinition,HeightDisplay,166cm
+char_kasumi,CharacterDefinition,IsAvailable,TRUE
+char_kasumi,CharacterDefinition,UnlockConditionID,unlock_kasumi_first_meeting
+char_kasumi,CharacterDefinition,DefaultAreaID,area_tbd
+char_kasumi,CharacterDefinition,Summary,"“거짓을 무기로 삼은 여우, 진심을 찾아 나선 여인. 카스미는 환술보다 더 위험한, ‘진실한 감정’의 의미를 배워간다.”"
+char_kasumi,CharacterDefinition,SymbolMotif,여우불 / 안개 / 붉은 부적 (진실과 환상의 상징)
+char_kasumi,CharacterDefinition,ThemeColor,#F4C3A1 (앰버 브라운) / #A42D27 (진홍색)
+char_kasumi,CharacterAppearance,Hair,"붉은빛이 감도는 은갈색 롱헤어, 끝은 부드러운 웨이브"
+char_kasumi,CharacterAppearance,Eyes,"호박빛 금안(金眼), 날카롭지만 농담이 섞인 시선"
+char_kasumi,CharacterAppearance,BodyImpression,"유연하고 매끈한 체형, 여우처럼 느긋한 움직임"
+char_kasumi,CharacterAppearance,Outfit,"붉은 기모노풍 전투복, 허리엔 흰 끈과 부적 주머니"
+char_kasumi,CharacterAppearance,Accessories,"부적 팔찌, 꼬리에 묶인 붉은 리본"
+char_kasumi,CharacterAppearance,Features,"여우 귀와 큼직한 붉은 꼬리 1~2가닥, 감정에 따라 꼬리가 살짝 흔들림"
+char_kasumi,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 안개 낀 숲, 붉은 부적과 여우불, 따뜻한 조명 효과"
+char_kasumi,CharacterAppearance,PortraitAddress,Characters/kasumi/Portrait
+char_kasumi,CharacterAppearance,FullBodyAddress,Characters/kasumi/FullBody
+char_kasumi,CharacterAppearance,PrefabAddress,Characters/kasumi/Prefab
+char_kasumi,CharacterAppearance,AnimatorControllerAddress,Characters/kasumi/AnimatorController
+char_kasumi,CharacterPersonality,PersonalityTags,"교활, 매혹적, 이지적, 관찰자, 유머러스"
+char_kasumi,CharacterPersonality,SpeechStyle,부드럽지만 어딘가 도발적. 웃을 때 손끝으로 입을 살짝 가림
+char_kasumi,CharacterPersonality,Trauma,자신의 환술이 타인의 신뢰를 무너뜨린 과거. “진심과 거짓”의 경계에 혼란을 느낌
+char_kasumi,CharacterPersonality,Desire,‘진실한 관계’를 스스로 증명하고자 함. 환술이 아닌 진심으로 누군가에게 인정받고 싶어 함
+char_kasumi,CharacterPersonality,Background,"과거 왕국의 첩보 임무 중 환술이 실패해 무고한 이들을 희생시킴. 그 이후 자신의 능력을 경계하며 외부 세계를 떠돌고 있다. 섬에 오게 된 뒤, 플레이어의 존재를 “거짓 없는 시선”으로 처음 느끼게 된다."
+char_kasumi,CharacterPersonality,VoiceConcept,"낮고 부드러운 여성 보이스. 여유 있는 말투, 간헐적인 장난스러운 웃음"
+char_kasumi,CharacterGameplayDefinition,NpcRoles,Merchant | QuestGiver | Special
+char_kasumi,CharacterGameplayDefinition,InteractionTypes,Dialogue | Trade | Quest | Gift
+char_kasumi,CharacterGameplayDefinition,ShopID,shop_kasumi
+char_kasumi,CharacterGameplayDefinition,CraftingStationID,station_kasumi
+char_kasumi,CharacterGameplayDefinition,DefaultAffinity,0
+char_kasumi,CharacterGameplayDefinition,MaxAffinity,100
+char_kasumi,CharacterGameplayDefinition,GiftProfileID,gift_kasumi
+char_kasumi,CharacterGameplayDefinition,QuestGroupID,quest_kasumi
+char_kasumi,CharacterGameplayDefinition,RecruitmentConditionID,
+char_kasumi,CharacterGameplayDefinition,CompanionAbilityID,
+char_kasumi,CharacterGameplayDefinition,WorkAbilityID,work_information
+char_kasumi,CharacterGameplayDefinition,ScheduleID,schedule_kasumi
+char_kasumi,CharacterGameplayDefinition,SpawnPointID,spawn_kasumi_default
+char_kasumi,CharacterDialogueSet,DialogueTableID,dlg_kasumi
+char_kasumi,CharacterDialogueSet,Greeting,"“안개가 자욱하네. 이런 날엔, 진심이 더 잘 보이지.”"
+char_kasumi,CharacterDialogueSet,RandomTalk,“진실이란 게 꼭 선명할 필요는 없어. 흐릿할수록 사람 마음이 보이거든.”
+char_kasumi,CharacterDialogueSet,AffinityReactions,"• 무관심: “넌 뭘 믿어? 눈앞의 진실이 전부라고 생각해?” • 호기심: “거짓을 꿰뚫는 눈이 있네… 마음에 들어.” • 신뢰: “나, 사실 네 앞에선 환술을 쓰기 싫어. 이유는… 묻지 마.” • 애정: “널 속이는 게 더 어려워졌어. 그건 좋은 징조겠지?” • 사랑: “이제는 환상 따윈 필요 없어. 너만 보면 현실이 충분하니까.”"
+char_kasumi,CharacterDialogueSet,PreferredItems,"좋아함: 향초, 붉은 비단, 부적, 거울 / 싫어함: 성수, 거짓말, 쇠붙이"
+char_kasumi,CharacterDialogueSet,EventLines,"“환상은 사라지지만, 네 눈빛은 거짓이 아니야. 그래서… 믿게 돼.”"
+char_kasumi,CharacterDialogueSet,ExpressionTags,미소 / 당황 / 회상 / 분노 / 여유
+char_kasumi,CharacterDialogueSet,LocalizationTable,Character
+char_kasumi,CharacterRelationship,RelationshipRaw,• 플레이어: 처음엔 시험하듯 접근하지만 점차 마음을 연다 • 벨라모르타: 서로의 유혹 방식을 비꼬며 견제하는 라이벌 • 리제: 감정 없는 기계를 흥미롭게 여김 • 루네트: 순수함을 장난스럽게 놀리지만 내심 보호하려 함
+char_kasumi,CharacterRelationship,RelationshipTableID,rel_kasumi
+char_kasumi,DeveloperReference,Origin,안개산 마을 “카가츠네 (Kagatsune)” – 여우족의 비밀 거주지
+char_kasumi,DeveloperReference,Affiliation,환술사 집단 “은안의 서원” 출신 / 현재는 독립 정보상
+char_kasumi,DeveloperReference,JobDisplay,무녀
+char_kasumi,DeveloperReference,RaceDisplay,여우족 (Foxkin)
+char_kasumi,DeveloperReference,SourceSheet,원본 비교표
+char_kasumi,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_kasumi,DeveloperReference,LastReviewedDate,2026-07-31
+char_lichel,CharacterDefinition,CharacterID,char_lichel
+char_lichel,CharacterDefinition,DisplayName,리첼
+char_lichel,CharacterDefinition,EnglishName,Lichel
+char_lichel,CharacterDefinition,NameKey,CHAR_LICHEL_NAME
+char_lichel,CharacterDefinition,RaceID,race_ratkin
+char_lichel,CharacterDefinition,JobID,job_explorer
+char_lichel,CharacterDefinition,Gender,여성
+char_lichel,CharacterDefinition,AgeDisplay,19세
+char_lichel,CharacterDefinition,HeightDisplay,152cm
+char_lichel,CharacterDefinition,IsAvailable,TRUE
+char_lichel,CharacterDefinition,UnlockConditionID,unlock_lichel_first_meeting
+char_lichel,CharacterDefinition,DefaultAreaID,area_tbd
+char_lichel,CharacterDefinition,Summary,"“도망치는 게 아니라, 살아남는 거야. 리첼은 그림자 속에서 웃는 생존자 — 세상에 속지 않으려는 작은 쥐다.”"
+char_lichel,CharacterDefinition,SymbolMotif,열쇠 / 그림자 / 잔불 (자유와 생존의 상징)
+char_lichel,CharacterDefinition,ThemeColor,#B3B3B3 (회색) / #F1C27D (피치톤 하이라이트)
+char_lichel,CharacterAppearance,Hair,"회백색 단발, 귀 뒤로 흩어지는 가는 잔머리"
+char_lichel,CharacterAppearance,Eyes,"회색빛에 분홍이 섞인 색, 날카롭지만 귀여움"
+char_lichel,CharacterAppearance,BodyImpression,"작고 날렵한 체형, 움직임이 빠르고 표정 변화가 풍부함"
+char_lichel,CharacterAppearance,Outfit,짙은 회색 망토 + 가죽 브라톱 + 반바지 + 허리엔 자물쇠와 열쇠 고리 도둑풍이지만 귀엽게 꾸민 느낌
+char_lichel,CharacterAppearance,Accessories,"귀걸이 대신 열쇠 모양 장식, 꼬리 끝엔 작은 종"
+char_lichel,CharacterAppearance,Features,"작은 둥근 귀, 긴 꼬리, 손끝이 기민함. 움직일 때 거의 소리가 없음. 냄새에 민감."
+char_lichel,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 어두운 시장 거리, 회색 망토, 꼬리와 종, 표정 다양성 강조"
+char_lichel,CharacterAppearance,PortraitAddress,Characters/lichel/Portrait
+char_lichel,CharacterAppearance,FullBodyAddress,Characters/lichel/FullBody
+char_lichel,CharacterAppearance,PrefabAddress,Characters/lichel/Prefab
+char_lichel,CharacterAppearance,AnimatorControllerAddress,Characters/lichel/AnimatorController
+char_lichel,CharacterPersonality,PersonalityTags,"재치, 생존력, 장난, 현실주의, 은근한 정"
+char_lichel,CharacterPersonality,SpeechStyle,"빠른 말투, “흥~” 하는 콧소리 자주 냄. 대화 중 상대의 반응을 눈으로 관찰함. 가끔 농담으로 긴장을 풀려 함."
+char_lichel,CharacterPersonality,Trauma,어린 시절 먹을 걸 훔치다 잡혀서 추방당함. 그때부터 “믿을 건 내 손뿐”이라 생각하며 살아왔음.
+char_lichel,CharacterPersonality,Desire,"돈이나 물건보다 ‘믿을 수 있는 사람’을 갖고 싶어 함. 겉으론 부정하지만, 내면엔 따뜻한 유대에 굶주려 있음."
+char_lichel,CharacterPersonality,Background,"섬의 폐허 도시에서 자란 고아. 빠른 손놀림과 눈치로 생존하며, 길드의 정보원을 겸하고 있음. 플레이어를 처음 만날 때는 지갑을 훔치려다 들키지만, 그의 “순진한 반응”에 흥미를 느끼고 동행하게 된다. 점점 신뢰를 배워가며, 자신의 삶이 “도둑질”만은 아니었음을 깨닫게 된다."
+char_lichel,CharacterPersonality,VoiceConcept,빠르고 장난기 많은 여성 목소리. 가벼운 톤 속에 감정이 섞여 있음. 웃음소리가 짧고 날카로운 편.
+char_lichel,CharacterGameplayDefinition,NpcRoles,Merchant | QuestGiver
+char_lichel,CharacterGameplayDefinition,InteractionTypes,Dialogue | Trade | Quest | Gift
+char_lichel,CharacterGameplayDefinition,ShopID,shop_lichel
+char_lichel,CharacterGameplayDefinition,CraftingStationID,station_lichel
+char_lichel,CharacterGameplayDefinition,DefaultAffinity,0
+char_lichel,CharacterGameplayDefinition,MaxAffinity,100
+char_lichel,CharacterGameplayDefinition,GiftProfileID,gift_lichel
+char_lichel,CharacterGameplayDefinition,QuestGroupID,quest_lichel
+char_lichel,CharacterGameplayDefinition,RecruitmentConditionID,
+char_lichel,CharacterGameplayDefinition,CompanionAbilityID,
+char_lichel,CharacterGameplayDefinition,WorkAbilityID,work_salvage
+char_lichel,CharacterGameplayDefinition,ScheduleID,schedule_lichel
+char_lichel,CharacterGameplayDefinition,SpawnPointID,spawn_lichel_default
+char_lichel,CharacterDialogueSet,DialogueTableID,dlg_lichel
+char_lichel,CharacterDialogueSet,Greeting,"“흥, 또 왔네? 이번엔 뭐 잃어버릴 거야?”"
+char_lichel,CharacterDialogueSet,RandomTalk,“나한테 들키면 끝이야. 근데… 너라면 한 번쯤은 봐줄 수도 있지.”
+char_lichel,CharacterDialogueSet,AffinityReactions,"• 무관심: “훗, 넌 돈 냄새도 안 나네. 재미없어.” • 호기심: “응? 이걸 나한테 주는 거야? …진짜?” • 신뢰: “내가 먼저 손 내미는 거, 진짜 드문 일이야.” • 애정: “너랑 있으면 도둑질 안 해도 심장이 바빠져.” • 사랑: “이제 나한테 필요한 건 열쇠도, 돈도 아니야… 너야.”"
+char_lichel,CharacterDialogueSet,PreferredItems,"좋아함: 금화, 보석, 간식, 고양이 피하지 / 싫어함: 큰 소리, 빚, 불신"
+char_lichel,CharacterDialogueSet,EventLines,"“네 손이 따뜻하네… 이런 느낌, 진짜 오랜만이야.”"
+char_lichel,CharacterDialogueSet,ExpressionTags,장난 / 수줍음 / 방어 / 안도 / 고백
+char_lichel,CharacterDialogueSet,LocalizationTable,Character
+char_lichel,CharacterRelationship,RelationshipRaw,"• 플레이어: “호기심 대상 → 동료 → 의지 대상”으로 발전 • 벨라모르타: 거래 관계, 가끔 이용당하지만 존경도 함 • 미루(슬라임): 도둑질 대상이었지만, 친구가 됨 • 하르카: ‘말도 안 되는 정의감’이라 부르며 놀리지만 은근히 좋아함"
+char_lichel,CharacterRelationship,RelationshipTableID,rel_lichel
+char_lichel,DeveloperReference,Origin,“그림 마켓(Glim Market)” – 섬의 어두운 상점 거리
+char_lichel,DeveloperReference,Affiliation,정보 브로커 / 도둑길드 ‘더스트 테일’ 소속
+char_lichel,DeveloperReference,JobDisplay,탐험가
+char_lichel,DeveloperReference,RaceDisplay,쥐족 (Ratkin)
+char_lichel,DeveloperReference,SourceSheet,원본 비교표
+char_lichel,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_lichel,DeveloperReference,LastReviewedDate,2026-07-31
+char_chesca,CharacterDefinition,CharacterID,char_chesca
+char_chesca,CharacterDefinition,DisplayName,체스카
+char_chesca,CharacterDefinition,EnglishName,Chesca
+char_chesca,CharacterDefinition,NameKey,CHAR_CHESCA_NAME
+char_chesca,CharacterDefinition,RaceID,race_mimickin
+char_chesca,CharacterDefinition,JobID,job_relic_collector
+char_chesca,CharacterDefinition,Gender,여성
+char_chesca,CharacterDefinition,AgeDisplay,22세 (외형 기준)
+char_chesca,CharacterDefinition,HeightDisplay,160cm (상자 밖으로 나왔을 때)
+char_chesca,CharacterDefinition,IsAvailable,TRUE
+char_chesca,CharacterDefinition,UnlockConditionID,unlock_chesca_first_meeting
+char_chesca,CharacterDefinition,DefaultAreaID,area_tbd
+char_chesca,CharacterDefinition,Summary,"“세상은 나를 닫아뒀고, 나는 그 안에서 편해졌어. 체스카는 닫힌 상자 속의 정령 — 하지만 마음만큼은, 언젠가 열리고 싶어 한다.”"
+char_chesca,CharacterDefinition,SymbolMotif,상자 / 열쇠 / 봉인 (닫힌 마음과 신뢰의 상징)
+char_chesca,CharacterDefinition,ThemeColor,#836C57 (브론즈 브라운) / #C9B79E (모래빛 금속톤)
+char_chesca,CharacterAppearance,Hair,"짙은 갈색 롱헤어, 끝이 상자 안에 눌린 듯 결이 살짝 흐트러짐"
+char_chesca,CharacterAppearance,Eyes,"황금빛 홍채, 보석처럼 반짝이며 어둠 속에서도 빛남"
+char_chesca,CharacterAppearance,BodyImpression,"날씬하고 청초한 인상, 그러나 상자 속에 웅크린 자세가 기본"
+char_chesca,CharacterAppearance,Outfit,상자 내부의 천이 옷처럼 몸을 감싸는 형태. 겉으로 나올 때는 검은 드레스 형태로 변형됨
+char_chesca,CharacterAppearance,Accessories,"鍵(열쇠) 모양 귀걸이, 상자 내부엔 금속 사슬 장식과 푸른 보석 조각"
+char_chesca,CharacterAppearance,Features,"허리 아래로는 상자 속에 연결된 듯한 구조. 상자 덮개는 의지에 따라 열리고 닫히며, ‘입’처럼 작동할 수 있음. 감정이 흔들릴 때 상자에서 금속음이 살짝 들림."
+char_chesca,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 어두운 폐허 배경, 반쯤 열린 상자, 상자 안에서 얼굴을 내민 소녀, 금속광택 강조"
+char_chesca,CharacterAppearance,PortraitAddress,Characters/chesca/Portrait
+char_chesca,CharacterAppearance,FullBodyAddress,Characters/chesca/FullBody
+char_chesca,CharacterAppearance,PrefabAddress,Characters/chesca/Prefab
+char_chesca,CharacterAppearance,AnimatorControllerAddress,Characters/chesca/AnimatorController
+char_chesca,CharacterPersonality,PersonalityTags,"내향적, 방어적, 호기심, 집착, 유약하지만 집요"
+char_chesca,CharacterPersonality,SpeechStyle,조용하고 속삭이는 말투. 대화 중 종종 “탁—” 하고 상자를 두드리는 소리를 냄. 감정이 불안할 때 스스로 상자를 ‘덮음’.
+char_chesca,CharacterPersonality,Trauma,과거 인간들이 그녀를 “보물함”으로만 취급해 물건을 빼앗고 떠남. 그 뒤로 외부 세계에 대한 불신이 생김. ‘보여지는 존재’가 되는 걸 두려워함.
+char_chesca,CharacterPersonality,Desire,"진심으로 “열쇠 없이도” 자신을 열어줄 사람을 찾고 있음. 즉, 물질이 아닌 마음의 신뢰를 통해 연결되고 싶어 함."
+char_chesca,CharacterPersonality,Background,"체스카는 한때 고대 문명을 지키던 ‘보물의 정령’이었으나, 탐욕스러운 인간들로 인해 수백 년간 상자 속에 봉인되어 지냈다. 그녀는 세상 밖의 소리를 들으며 외로이 시간을 보내다, 플레이어가 상자를 열었을 때 오랜 잠에서 깨어난다. 하지만 세상에 대한 불신 때문에 상자 밖으로 완전히 나오는 것을 거부한다."
+char_chesca,CharacterPersonality,VoiceConcept,"낮고 잔잔한 여성 목소리, whisper tone. 숨소리가 섞인 대사, 속삭이는 감정 연기 중심."
+char_chesca,CharacterGameplayDefinition,NpcRoles,QuestGiver | Special
+char_chesca,CharacterGameplayDefinition,InteractionTypes,Dialogue | Quest | Gift
+char_chesca,CharacterGameplayDefinition,ShopID,
+char_chesca,CharacterGameplayDefinition,CraftingStationID,
+char_chesca,CharacterGameplayDefinition,DefaultAffinity,0
+char_chesca,CharacterGameplayDefinition,MaxAffinity,100
+char_chesca,CharacterGameplayDefinition,GiftProfileID,gift_chesca
+char_chesca,CharacterGameplayDefinition,QuestGroupID,quest_chesca
+char_chesca,CharacterGameplayDefinition,RecruitmentConditionID,
+char_chesca,CharacterGameplayDefinition,CompanionAbilityID,
+char_chesca,CharacterGameplayDefinition,WorkAbilityID,work_relic
+char_chesca,CharacterGameplayDefinition,ScheduleID,schedule_chesca
+char_chesca,CharacterGameplayDefinition,SpawnPointID,spawn_chesca_default
+char_chesca,CharacterDialogueSet,DialogueTableID,dlg_chesca
+char_chesca,CharacterDialogueSet,Greeting,“또 왔네… 이번엔 무슨 이유로 상자를 연 거야?”
+char_chesca,CharacterDialogueSet,RandomTalk,“밖은 너무 밝아. 난 이 어둠이 좋아. 조용하니까.”
+char_chesca,CharacterDialogueSet,AffinityReactions,"• 무관심: “네가 가진 열쇠는… 탐욕의 냄새가 나.” • 호기심: “넌 왜 나를 열었지? 그냥 보물이 궁금해서?” • 신뢰: “이상해… 널 볼 땐 상자가 덜 답답해.” • 애정: “내가 문을 열면, 넌 도망치지 않을 거지?” • 사랑: “네 손으로만 내 덮개를 열게 해줄게. 그건 나한테… ‘사랑’이야.”"
+char_chesca,CharacterDialogueSet,PreferredItems,"좋아함: 오래된 열쇠, 보석, 천 조각, 향초 / 싫어함: 시끄러운 소리, 금속망치, 불빛"
+char_chesca,CharacterDialogueSet,EventLines,“처음이야… 누군가가 내 안을 들여다봐도 무섭지 않은 건.”
+char_chesca,CharacterDialogueSet,ExpressionTags,무표정 / 수줍음 / 고백 / 방어 / 신뢰
+char_chesca,CharacterDialogueSet,LocalizationTable,Character
+char_chesca,CharacterRelationship,RelationshipRaw,"• 플레이어: 처음엔 침입자라 여겨 공격하지만, 시간이 지나며 대화를 나누게 됨 • 벨라모르타: 흥미의 대상으로 여김. ‘보물’이라는 개념을 공유 • 리첼: 폐허에서 자주 만나는 동료, 서로 “상자-자물쇠” 관계라며 놀림"
+char_chesca,CharacterRelationship,RelationshipTableID,rel_chesca
+char_chesca,DeveloperReference,Origin,“오르페오 폐허 (Orpheo Ruins)” — 고대 보물창고 유적지
+char_chesca,DeveloperReference,Affiliation,독립 개체. 유적 탐사자들이 ‘전설의 보물상자’라 부름
+char_chesca,DeveloperReference,JobDisplay,유적의 수집가
+char_chesca,DeveloperReference,RaceDisplay,미믹족 (Mimickin)
+char_chesca,DeveloperReference,SourceSheet,원본 비교표
+char_chesca,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_chesca,DeveloperReference,LastReviewedDate,2026-07-31
+char_lanhua,CharacterDefinition,CharacterID,char_lanhua
+char_lanhua,CharacterDefinition,DisplayName,란후아
+char_lanhua,CharacterDefinition,EnglishName,LanHua
+char_lanhua,CharacterDefinition,NameKey,CHAR_LANHUA_NAME
+char_lanhua,CharacterDefinition,RaceID,race_tigerkin
+char_lanhua,CharacterDefinition,JobID,job_martial_artist
+char_lanhua,CharacterDefinition,Gender,여성
+char_lanhua,CharacterDefinition,AgeDisplay,28세
+char_lanhua,CharacterDefinition,HeightDisplay,171cm
+char_lanhua,CharacterDefinition,IsAvailable,TRUE
+char_lanhua,CharacterDefinition,UnlockConditionID,unlock_lanhua_first_meeting
+char_lanhua,CharacterDefinition,DefaultAreaID,area_tbd
+char_lanhua,CharacterDefinition,Summary,"“힘은 검이 아니라, 마음에서 흐른다. 란후아는 상처받은 무인 — 그러나 다시 세상을 지키려는 호랑이의 혼을 품고 있다.”"
+char_lanhua,CharacterDefinition,SymbolMotif,호랑이 / 대나무 / 검은 바람 / 도장 깃발
+char_lanhua,CharacterDefinition,ThemeColor,#D43C2D (호랑이 붉은색) / #F0C13E (금빛 줄무늬) / #2A1E1B (흑갈 바탕)
+char_lanhua,CharacterAppearance,Hair,"흑자색(검은빛에 금빛이 도는 머리), 묶은 포니테일. 움직일 때마다 단정하게 흔들림"
+char_lanhua,CharacterAppearance,Eyes,"호박빛 눈동자, 강렬한 시선이지만 따뜻한 여운이 있음"
+char_lanhua,CharacterAppearance,BodyImpression,근육선이 아름다운 전사형. 강인함과 여성스러움이 균형 잡힌 체형
+char_lanhua,CharacterAppearance,Outfit,"중화풍 무술복(紅黑 조합), 허리에 금끈. 수련 시엔 상의가 짧아 복근이 살짝 드러나며, 붉은 손띠를 착용."
+char_lanhua,CharacterAppearance,Accessories,"호랑이 이빨 펜던트, 금속 팔찌, 도장 상징 팔끈"
+char_lanhua,CharacterAppearance,Features,"짙은 호랑이 무늬 줄무늬, 귀와 꼬리가 진한 금빛 털로 덮여 있음. 분노 시 눈동자가 빛나며 꼬리가 부풀어 오름."
+char_lanhua,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 중화풍 도장 배경, 붉은 무술복, 바람에 흩날리는 머리, 근육선과 붓 터치 느낌 강조 (홍등 조명 추천)"
+char_lanhua,CharacterAppearance,PortraitAddress,Characters/lanhua/Portrait
+char_lanhua,CharacterAppearance,FullBodyAddress,Characters/lanhua/FullBody
+char_lanhua,CharacterAppearance,PrefabAddress,Characters/lanhua/Prefab
+char_lanhua,CharacterAppearance,AnimatorControllerAddress,Characters/lanhua/AnimatorController
+char_lanhua,CharacterPersonality,PersonalityTags,"진중, 정의감, 단호함, 승부욕, 따뜻한 자애"
+char_lanhua,CharacterPersonality,SpeechStyle,단정하고 짧은 말투. 사람을 볼 때 눈을 피하지 않음. 기분이 좋아지면 꼬리를 살짝 흔듦.
+char_lanhua,CharacterPersonality,Trauma,"과거 제자를 전투 중 잃고, “힘은 반드시 누군가를 상처입힌다”는 죄책감을 품고 있음. 이후 혼자서만 수련하며 ‘강함의 의미’를 다시 찾고 있음."
+char_lanhua,CharacterPersonality,Desire,"싸움이 아닌, “지킬 수 있는 힘”을 배우고 싶음. 누군가에게 자신의 힘이 도움이 되는 순간을 진심으로 원함."
+char_lanhua,CharacterPersonality,Background,"전쟁 중 도장을 지키려다 제자를 잃은 뒤, 세상과 단절하고 섬으로 흘러옴. 이후 섬의 폭풍 해안을 수련장 삼아 무예를 연마하며, ‘자기 수련의 길’을 걷고 있음. 플레이어와의 만남은, 그가 “도장 폐허” 근처에서 쓰러졌을 때 그녀가 구조하며 시작된다. 플레이어를 ‘제자’로 삼을지, ‘동료’로 여길지는 호감도에 따라 달라진다."
+char_lanhua,CharacterPersonality,VoiceConcept,"중저음 여성 목소리, 절제된 힘이 느껴지는 톤. 가끔 미소를 띌 때 어조가 부드럽게 풀림."
+char_lanhua,CharacterGameplayDefinition,NpcRoles,QuestGiver | Companion | Special
+char_lanhua,CharacterGameplayDefinition,InteractionTypes,Dialogue | Quest | Gift | Recruit | Train
+char_lanhua,CharacterGameplayDefinition,ShopID,
+char_lanhua,CharacterGameplayDefinition,CraftingStationID,
+char_lanhua,CharacterGameplayDefinition,DefaultAffinity,0
+char_lanhua,CharacterGameplayDefinition,MaxAffinity,100
+char_lanhua,CharacterGameplayDefinition,GiftProfileID,gift_lanhua
+char_lanhua,CharacterGameplayDefinition,QuestGroupID,quest_lanhua
+char_lanhua,CharacterGameplayDefinition,RecruitmentConditionID,recruit_lanhua
+char_lanhua,CharacterGameplayDefinition,CompanionAbilityID,ability_lanhua
+char_lanhua,CharacterGameplayDefinition,WorkAbilityID,work_training
+char_lanhua,CharacterGameplayDefinition,ScheduleID,schedule_lanhua
+char_lanhua,CharacterGameplayDefinition,SpawnPointID,spawn_lanhua_default
+char_lanhua,CharacterDialogueSet,DialogueTableID,dlg_lanhua
+char_lanhua,CharacterDialogueSet,Greeting,"“수련을 마쳤나? 그렇다면 이제, 진짜 싸움을 배워라.”"
+char_lanhua,CharacterDialogueSet,RandomTalk,“힘이란 누군가를 지키기 위해 존재한다. 그렇지 않다면 단지 폭력일 뿐이다.”
+char_lanhua,CharacterDialogueSet,AffinityReactions,"• 무관심: “몸이 약하면 마음도 약해진다. 다시 와라.” • 호기심: “네 눈빛… 싸움꾼의 기운이 아니군. 흥미롭다.” • 신뢰: “네 한 방에는 진심이 담겨 있군. 나도 그걸 배웠다.” • 애정: “같이 수련하면 마음이 고요해져. 이상하지?” • 사랑: “넌 내 주먹보다 강해. 왜냐면, 내 심장을 멈추게 하니까.”"
+char_lanhua,CharacterDialogueSet,PreferredItems,"좋아함: 차, 무기류, 붉은 천, 대나무 장식 / 싫어함: 술, 헛소리, 나약함"
+char_lanhua,CharacterDialogueSet,EventLines,"“너와 싸우면… 내 안의 혼란이 사라져. 넌, 내 평온의 상대야.”"
+char_lanhua,CharacterDialogueSet,ExpressionTags,진중 / 자신감 / 수줍음 / 결의 / 따뜻한 미소
+char_lanhua,CharacterDialogueSet,LocalizationTable,Character
+char_lanhua,CharacterRelationship,RelationshipRaw,• 플레이어: 처음엔 제자로 대하지만 점차 마음을 열며 감정이 깊어짐 • 베로나: 서로의 철학을 존중하는 전우적 관계 • 베아트리체: 훈련 태도에 감탄하며 스파링 상대로 인정
+char_lanhua,CharacterRelationship,RelationshipTableID,rel_lanhua
+char_lanhua,DeveloperReference,Origin,“운룡산(雲龍山)” – 산맥 속에 숨겨진 호랑이족 도장
+char_lanhua,DeveloperReference,Affiliation,호랑이 도장 ‘백랑관(白狼館)’의 사범 / 현재 은둔 중
+char_lanhua,DeveloperReference,JobDisplay,무투가 / 도장 사범 / 수련가
+char_lanhua,DeveloperReference,RaceDisplay,호랑이족 (Tigerkin)
+char_lanhua,DeveloperReference,SourceSheet,원본 비교표
+char_lanhua,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_lanhua,DeveloperReference,LastReviewedDate,2026-07-31
+char_noctia,CharacterDefinition,CharacterID,char_noctia
+char_noctia,CharacterDefinition,DisplayName,노크티아
+char_noctia,CharacterDefinition,EnglishName,Noctia
+char_noctia,CharacterDefinition,NameKey,CHAR_NOCTIA_NAME
+char_noctia,CharacterDefinition,RaceID,race_witch
+char_noctia,CharacterDefinition,JobID,job_witch
+char_noctia,CharacterDefinition,Gender,여성
+char_noctia,CharacterDefinition,AgeDisplay,130세 / 외형 27세
+char_noctia,CharacterDefinition,HeightDisplay,170cm
+char_noctia,CharacterDefinition,IsAvailable,TRUE
+char_noctia,CharacterDefinition,UnlockConditionID,unlock_noctia_first_meeting
+char_noctia,CharacterDefinition,DefaultAreaID,area_tbd
+char_noctia,CharacterDefinition,Summary,"“까마귀는 죽음을 예언하지만, 그 목소리엔 사랑이 담겨 있지요. 노크티아는 운명을 읽는 마녀 — 진실을 말하는 대가로 고독을 택한, 달빛 아래의 까마귀입니다.”"
+char_noctia,CharacterDefinition,SymbolMotif,까마귀 / 밤 / 예언 / 달 그림자
+char_noctia,CharacterDefinition,ThemeColor,#2C2C38 (짙은 흑청) / #6B4E9E (보랏빛) / #B1A0E8 (달빛 라벤더)
+char_noctia,CharacterAppearance,Hair,"짙은 흑청색 웨이브 롱헤어, 빛을 받으면 푸른 윤광이 남"
+char_noctia,CharacterAppearance,Eyes,"자줏빛 눈동자, 중심부에 붉은 점이 떠 있음 (까마귀 눈을 상징)"
+char_noctia,CharacterAppearance,BodyImpression,"늘씬하고 섬세한 체형, 아름답지만 서늘한 분위기"
+char_noctia,CharacterAppearance,Outfit,"검은 마녀복 + 퍼진 망토, 깃털 장식의 모자 망토 안쪽은 자색 문양, 금색 마법진 자수"
+char_noctia,CharacterAppearance,Accessories,"검은 깃털 귀걸이, 수정 구슬 지팡이, 까마귀 깃털 부적"
+char_noctia,CharacterAppearance,Features,"뒤로 펼쳐진 까마귀 깃 날개처럼 생긴 망토, 마법 사용 시 까마귀 깃털이 주위에 흩날림. 감정이 요동칠 때 까마귀 울음소리가 희미하게 들림."
+char_noctia,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 어둡고 푸른 숲, 까마귀 깃털, 자줏빛 마법진, 달빛 배경, 망토가 날개처럼 펼쳐진 구도 추천."
+char_noctia,CharacterAppearance,PortraitAddress,Characters/noctia/Portrait
+char_noctia,CharacterAppearance,FullBodyAddress,Characters/noctia/FullBody
+char_noctia,CharacterAppearance,PrefabAddress,Characters/noctia/Prefab
+char_noctia,CharacterAppearance,AnimatorControllerAddress,Characters/noctia/AnimatorController
+char_noctia,CharacterPersonality,PersonalityTags,"냉정, 지적, 예리함, 고독, 애잔함"
+char_noctia,CharacterPersonality,SpeechStyle,"차분하고 낮은 어조. 말끝에 여운을 남김. 생각 중일 땐 손끝으로 머리카락을 감거나, 까마귀에게 속삭임."
+char_noctia,CharacterPersonality,Trauma,"과거 예언으로 마을을 구했지만, 그 예언이 불행을 초래했다고 오해받아 추방됨. 이후 “진실을 말해도 외면받는 자”로 살아가며, ‘운명’과 ‘고독’을 숙명처럼 받아들임."
+char_noctia,CharacterPersonality,Desire,"진실을 두려워하지 않고 들어줄 단 한 사람을 찾고 있음. 즉, 자신의 예언이 ‘저주’가 아닌 ‘이해’로 받아들여지길 원함."
+char_noctia,CharacterPersonality,Background,"노크티아는 까마귀의 신탁을 듣는 “어둠의 예언자”로 불리며, 섬의 운명을 기록해온 존재이다. 그러나 한때 그녀의 예언으로 마을의 왕이 죽음을 맞이했고, 그 일로 인해 사람들에게 “불길한 마녀”로 낙인찍혔다. 그 후 숲 속으로 은둔하여, 까마귀들과만 대화하며 살아간다. 플레이어가 폭풍 속을 헤매다 숲으로 들어오며, 그녀의 오랜 ‘침묵’을 깨우는 존재가 된다."
+char_noctia,CharacterPersonality,VoiceConcept,"낮고 부드러운 여성 음성, 느린 말투, 속삭이듯 여운을 남김. 때로는 차갑지만 감정의 떨림이 분명한 타입."
+char_noctia,CharacterGameplayDefinition,NpcRoles,QuestGiver | Special
+char_noctia,CharacterGameplayDefinition,InteractionTypes,Dialogue | Quest | Gift
+char_noctia,CharacterGameplayDefinition,ShopID,
+char_noctia,CharacterGameplayDefinition,CraftingStationID,
+char_noctia,CharacterGameplayDefinition,DefaultAffinity,0
+char_noctia,CharacterGameplayDefinition,MaxAffinity,100
+char_noctia,CharacterGameplayDefinition,GiftProfileID,gift_noctia
+char_noctia,CharacterGameplayDefinition,QuestGroupID,quest_noctia
+char_noctia,CharacterGameplayDefinition,RecruitmentConditionID,
+char_noctia,CharacterGameplayDefinition,CompanionAbilityID,
+char_noctia,CharacterGameplayDefinition,WorkAbilityID,work_divination
+char_noctia,CharacterGameplayDefinition,ScheduleID,schedule_noctia
+char_noctia,CharacterGameplayDefinition,SpawnPointID,spawn_noctia_default
+char_noctia,CharacterDialogueSet,DialogueTableID,dlg_noctia
+char_noctia,CharacterDialogueSet,Greeting,“밤새 까마귀가 당신 이야기를 하더군요. 오늘은 어떤 운명을 데려왔나요?”
+char_noctia,CharacterDialogueSet,RandomTalk,“까마귀는 죽은 자의 말을 대신해요. 그러니 그들의 울음은… 기억이에요.”
+char_noctia,CharacterDialogueSet,AffinityReactions,"• 무관심: “인간은 늘 답을 원하지만, 그 답을 들을 용기는 없지.” • 호기심: “넌 다르군. 내 눈을 피하지 않아.” • 신뢰: “당신과 있으면… 까마귀들이 잠잠해져요. 신기하죠?” • 애정: “내 예언엔 늘 비극이 있었지만, 당신은 예외일지도 몰라요.” • 사랑: “이제 운명은 두렵지 않아요. 당신이 내 곁에 있으니까.”"
+char_noctia,CharacterDialogueSet,PreferredItems,"좋아함: 깃털, 수정 구슬, 묵향, 달빛석 / 싫어함: 시끄러운 소리, 신성한 물건"
+char_noctia,CharacterDialogueSet,EventLines,"“당신이 날 믿어준다면, 이 어둠도… 조금은 따뜻해질까요?”"
+char_noctia,CharacterDialogueSet,ExpressionTags,냉정 / 고요 / 수줍음 / 회상 / 예언 중
+char_noctia,CharacterDialogueSet,LocalizationTable,Character
+char_noctia,CharacterRelationship,RelationshipRaw,"• 플레이어: 처음엔 예언의 대상으로 관찰하지만, 점차 ‘운명에 휘말린 동반자’로 인식 • 아키츠하: 신의 목소리를 듣는 존재로서 서로 이해하며 협력 • 벨라모르타: 욕망의 마녀로 경계하지만, 내심 인정함"
+char_noctia,CharacterRelationship,RelationshipTableID,rel_noctia
+char_noctia,DeveloperReference,Origin,“에레브 숲 (Ereb Woods)” – 까마귀들이 모이는 안개숲 깊은 곳
+char_noctia,DeveloperReference,Affiliation,독립적인 마녀 / 예언의 까마귀 ‘오르핀(Orphyn)’과 계약
+char_noctia,DeveloperReference,JobDisplay,마녀
+char_noctia,DeveloperReference,RaceDisplay,마녀 (Witch)
+char_noctia,DeveloperReference,SourceSheet,원본 비교표
+char_noctia,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_noctia,DeveloperReference,LastReviewedDate,2026-07-31
+char_seira,CharacterDefinition,CharacterID,char_seira
+char_seira,CharacterDefinition,DisplayName,세이라
+char_seira,CharacterDefinition,EnglishName,Seira
+char_seira,CharacterDefinition,NameKey,CHAR_SEIRA_NAME
+char_seira,CharacterDefinition,RaceID,race_lamia
+char_seira,CharacterDefinition,JobID,job_ruin_scholar
+char_seira,CharacterDefinition,Gender,여성
+char_seira,CharacterDefinition,AgeDisplay,210세 / 외형 25세
+char_seira,CharacterDefinition,HeightDisplay,상반신 기준 172cm / 전체 길이 약 5m
+char_seira,CharacterDefinition,IsAvailable,TRUE
+char_seira,CharacterDefinition,UnlockConditionID,unlock_seira_first_meeting
+char_seira,CharacterDefinition,DefaultAreaID,area_tbd
+char_seira,CharacterDefinition,Summary,"“내 독은 저주가 아니야. 세이라는 금단의 지식을 품은 라미아 — 사랑을 독처럼 느끼지만, 그 독이야말로 생명 그 자체다.”"
+char_seira,CharacterDefinition,SymbolMotif,뱀 / 독 / 지식 / 금단의 열매
+char_seira,CharacterDefinition,ThemeColor,#5E3E77 (보랏빛 독 색조) / #BFA145 (금빛 포인트) / #3B2D39 (어둠 배경톤)
+char_seira,CharacterAppearance,Hair,"어두운 보라빛의 실크 스트레이트, 끝이 비늘색으로 그러데이션됨"
+char_seira,CharacterAppearance,Eyes,"세로로 갈라진 금빛 동공, 뱀의 눈처럼 반짝임"
+char_seira,CharacterAppearance,BodyImpression,"성숙하고 유려한 인상, 우아하지만 위협적인 기품"
+char_seira,CharacterAppearance,Outfit,"상체는 검은 실크 랩탑과 금장 장식, 하반신은 비늘이 매끄럽게 이어짐 팔목엔 금색 팔찌, 독을 봉인한 표식이 있음"
+char_seira,CharacterAppearance,Accessories,"뱀 문양의 팔찌, 루비 보석 목걸이, 고대 문양이 새겨진 팔띠"
+char_seira,CharacterAppearance,Features,하반신은 에메랄드빛 비늘이 감싼 긴 뱀의 몸. 움직일 때마다 은은한 금속음과 함께 향기로운 냄새가 남. 말을 할 때 혀끝이 살짝 갈라져 발음에 독특한 리듬이 있음.
+char_seira,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 고대 유적 내부, 뱀의 꼬리가 감긴 자세, 금빛 눈과 보랏빛 조명, 비늘의 질감 강조, 은은한 유혹 포즈 추천"
+char_seira,CharacterAppearance,PortraitAddress,Characters/seira/Portrait
+char_seira,CharacterAppearance,FullBodyAddress,Characters/seira/FullBody
+char_seira,CharacterAppearance,PrefabAddress,Characters/seira/Prefab
+char_seira,CharacterAppearance,AnimatorControllerAddress,Characters/seira/AnimatorController
+char_seira,CharacterPersonality,PersonalityTags,"지혜, 냉정, 유혹, 독립, 관찰자적 태도"
+char_seira,CharacterPersonality,SpeechStyle,"느리고 매혹적인 말투, 단어 사이에 숨을 고르는 듯한 여백이 있음. 상대의 표정을 살피며 미소 짓는 버릇이 있음."
+char_seira,CharacterPersonality,Trauma,"인간 시절 배신당해 ‘독의 저주’를 받음. 그 후 라미아로 변해버렸으며, 배신과 신뢰의 경계에서 살아감."
+char_seira,CharacterPersonality,Desire,"“진실을 말해도 독처럼 받아들이지 않을 사람”을 찾고 있음. 즉, 자신의 본성을 이해받는 것."
+char_seira,CharacterPersonality,Background,"세이라는 오래전 인간 학자였지만, 금지된 ‘불멸의 연구’를 시도하다 동료에게 배신당해 저주로 라미아가 됨. 지하 유적에 은거하여 지식을 지키고 있으며, 자신을 찾는 자들에게 “지식의 대가”로 위험한 진실을 속삭인다. 플레이어가 유적 탐사 중 함정에 빠졌을 때 그녀가 구해주며 만남이 시작됨."
+char_seira,CharacterPersonality,VoiceConcept,낮고 매혹적인 여성 목소리. 발음이 느리고 부드럽게 흐름. 숨소리와 함께 감정이 섞이는 스타일.
+char_seira,CharacterGameplayDefinition,NpcRoles,Merchant | QuestGiver | Crafter
+char_seira,CharacterGameplayDefinition,InteractionTypes,Dialogue | Trade | Quest | Gift | Craft
+char_seira,CharacterGameplayDefinition,ShopID,shop_seira
+char_seira,CharacterGameplayDefinition,CraftingStationID,station_seira
+char_seira,CharacterGameplayDefinition,DefaultAffinity,0
+char_seira,CharacterGameplayDefinition,MaxAffinity,100
+char_seira,CharacterGameplayDefinition,GiftProfileID,gift_seira
+char_seira,CharacterGameplayDefinition,QuestGroupID,quest_seira
+char_seira,CharacterGameplayDefinition,RecruitmentConditionID,
+char_seira,CharacterGameplayDefinition,CompanionAbilityID,
+char_seira,CharacterGameplayDefinition,WorkAbilityID,work_poison_research
+char_seira,CharacterGameplayDefinition,ScheduleID,schedule_seira
+char_seira,CharacterGameplayDefinition,SpawnPointID,spawn_seira_default
+char_seira,CharacterDialogueSet,DialogueTableID,dlg_seira
+char_seira,CharacterDialogueSet,Greeting,"“이 어둠 속에 들어온 건 용기일까, 어리석음일까…”"
+char_seira,CharacterDialogueSet,RandomTalk,“독이란 마음과 닮았어. 너무 오래 숨기면… 결국 터지고 말지.”
+char_seira,CharacterDialogueSet,AffinityReactions,"• 무관심: “넌 나에게 해독제일까, 아니면 또 다른 독일까?” • 호기심: “네 눈빛… 두려움이 없네. 흥미로워.” • 신뢰: “내 독은 널 해치지 않아. 이건, 선택이야.” • 애정: “넌 내 비늘에 닿아도… 물러서지 않는구나.” • 사랑: “이 독은 죽음이 아니라, 나의 진심이야. 널 내 안에 감싸고 싶어.”"
+char_seira,CharacterDialogueSet,PreferredItems,"좋아함: 보석, 유리병, 희귀 약초, 향기로운 꽃 / 싫어함: 큰 불빛, 냉철한 논리, 배신"
+char_seira,CharacterDialogueSet,EventLines,“내 비늘 속에 손을 넣을래? 따뜻하단 걸… 처음 느낄지도 몰라.”
+char_seira,CharacterDialogueSet,ExpressionTags,유혹 / 수줍음 / 분노 / 회상 / 무표정
+char_seira,CharacterDialogueSet,LocalizationTable,Character
+char_seira,CharacterRelationship,RelationshipRaw,"• 플레이어: 초반엔 실험체로 관찰하지만, 점차 인간성에 끌림 • 노크티아: 과거 동시대의 연구자였던 인연 • 벨라모르타: 서로의 독을 연구한 적이 있음"
+char_seira,CharacterRelationship,RelationshipTableID,rel_seira
+char_seira,DeveloperReference,Origin,“자르딘의 유적 (Ruins of Jardin)” – 고대 연구소 폐허 지하
+char_seira,DeveloperReference,Affiliation,고대 문명의 지식 관리자 / 독의 연금술사
+char_seira,DeveloperReference,JobDisplay,고대 유적의 지식 관리자 / 독 연구가
+char_seira,DeveloperReference,RaceDisplay,"라미아 (Lamia, 반인반사족)"
+char_seira,DeveloperReference,SourceSheet,원본 비교표
+char_seira,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_seira,DeveloperReference,LastReviewedDate,2026-07-31
+char_dravia,CharacterDefinition,CharacterID,char_dravia
+char_dravia,CharacterDefinition,DisplayName,드라비아
+char_dravia,CharacterDefinition,EnglishName,Dravia
+char_dravia,CharacterDefinition,NameKey,CHAR_DRAVIA_NAME
+char_dravia,CharacterDefinition,RaceID,race_dragonkin
+char_dravia,CharacterDefinition,JobID,job_blacksmith
+char_dravia,CharacterDefinition,Gender,여성
+char_dravia,CharacterDefinition,AgeDisplay,340세 / 외형 28세
+char_dravia,CharacterDefinition,HeightDisplay,174cm
+char_dravia,CharacterDefinition,IsAvailable,TRUE
+char_dravia,CharacterDefinition,UnlockConditionID,unlock_dravia_first_meeting
+char_dravia,CharacterDefinition,DefaultAreaID,area_tbd
+char_dravia,CharacterDefinition,Summary,“파괴의 불을 창조의 불로 바꾸려는 드래곤 장인.”
+char_dravia,CharacterDefinition,SymbolMotif,용의 불꽃 / 모루 / 붉은 보석
+char_dravia,CharacterDefinition,ThemeColor,#7A241F / #D9A441 / #2D2525
+char_dravia,CharacterAppearance,Hair,"적갈색 롱헤어, 끝이 금빛"
+char_dravia,CharacterAppearance,Eyes,용암빛 금안
+char_dravia,CharacterAppearance,BodyImpression,"장신의 탄탄한 체형, 위엄 있는 인상"
+char_dravia,CharacterAppearance,Outfit,검붉은 대장장이 복장
+char_dravia,CharacterAppearance,Accessories,"용의 이빨 펜던트, 망치"
+char_dravia,CharacterAppearance,Features,"검은 뿔, 접힌 날개, 붉은 비늘 꼬리. 긴장하면 입김에 불꽃이 섞임"
+char_dravia,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 화산 대장간, 붉은 비늘과 금빛 불꽃"
+char_dravia,CharacterAppearance,PortraitAddress,Characters/dravia/Portrait
+char_dravia,CharacterAppearance,FullBodyAddress,Characters/dravia/FullBody
+char_dravia,CharacterAppearance,PrefabAddress,Characters/dravia/Prefab
+char_dravia,CharacterAppearance,AnimatorControllerAddress,Characters/dravia/AnimatorController
+char_dravia,CharacterPersonality,PersonalityTags,"당당함, 책임감, 고집, 보호본능"
+char_dravia,CharacterPersonality,SpeechStyle,낮고 힘 있는 말투. 금속을 두드리는 버릇
+char_dravia,CharacterPersonality,Trauma,폭주한 불꽃으로 고향 대장간을 태운 기억
+char_dravia,CharacterPersonality,Desire,파괴의 불을 창조의 불로 바꾸는 것
+char_dravia,CharacterPersonality,Background,드라비아는 화산지대 ‘카르디아 화구’에서 자신의 능력을 익혔다. 과거의 상처를 안고 섬에 도착해 대장장이 / 광물 감정사로 활동하며 플레이어와 새로운 공동체를 만들어간다.
+char_dravia,CharacterPersonality,VoiceConcept,낮고 힘 있는 성숙한 여성 보이스
+char_dravia,CharacterGameplayDefinition,NpcRoles,Merchant | QuestGiver | Crafter | Worker
+char_dravia,CharacterGameplayDefinition,InteractionTypes,Dialogue | Trade | Quest | Gift | Craft
+char_dravia,CharacterGameplayDefinition,ShopID,shop_dravia
+char_dravia,CharacterGameplayDefinition,CraftingStationID,station_dravia
+char_dravia,CharacterGameplayDefinition,DefaultAffinity,0
+char_dravia,CharacterGameplayDefinition,MaxAffinity,100
+char_dravia,CharacterGameplayDefinition,GiftProfileID,gift_dravia
+char_dravia,CharacterGameplayDefinition,QuestGroupID,quest_dravia
+char_dravia,CharacterGameplayDefinition,RecruitmentConditionID,
+char_dravia,CharacterGameplayDefinition,CompanionAbilityID,
+char_dravia,CharacterGameplayDefinition,WorkAbilityID,work_smithing
+char_dravia,CharacterGameplayDefinition,ScheduleID,schedule_dravia
+char_dravia,CharacterGameplayDefinition,SpawnPointID,spawn_dravia_default
+char_dravia,CharacterDialogueSet,DialogueTableID,dlg_dravia
+char_dravia,CharacterDialogueSet,Greeting,“화로는 준비됐어. 뭘 만들까?”
+char_dravia,CharacterDialogueSet,RandomTalk,“불은 다루는 자의 마음을 닮아.”
+char_dravia,CharacterDialogueSet,AffinityReactions,무관심: “아직 널 믿진 않아.” 호기심: “조금은 흥미롭네.” 신뢰: “이번 일은 함께하자.” 애정: “네 곁이 편해졌어.” 사랑: “이제 내 목표에는 네가 있어.”
+char_dravia,CharacterDialogueSet,PreferredItems,"좋아함: 희귀 광석, 망치, 매운 음식 / 싫어함: 젖은 연료, 무책임함"
+char_dravia,CharacterDialogueSet,EventLines,“네가 내 힘을 믿어준 날을 잊지 않아.”
+char_dravia,CharacterDialogueSet,ExpressionTags,위엄 / 자신감 / 동요 / 결의 / 미소
+char_dravia,CharacterDialogueSet,LocalizationTable,Character
+char_dravia,CharacterRelationship,RelationshipRaw,• 플레이어: 처음에는 경계하지만 점차 신뢰 • 기존 동료: 자신의 전문 분야를 통해 협력 • 목표: 파괴의 불을 창조의 불로 바꾸는 것
+char_dravia,CharacterRelationship,RelationshipTableID,rel_dravia
+char_dravia,DeveloperReference,Origin,화산지대 ‘카르디아 화구’
+char_dravia,DeveloperReference,Affiliation,광물 길드 전 장인 / 독립 대장장이
+char_dravia,DeveloperReference,JobDisplay,대장장이 / 광물 감정사
+char_dravia,DeveloperReference,RaceDisplay,드래곤족 (Dragonkin)
+char_dravia,DeveloperReference,SourceSheet,원본 비교표
+char_dravia,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_dravia,DeveloperReference,LastReviewedDate,2026-07-31
+char_marielle,CharacterDefinition,CharacterID,char_marielle
+char_marielle,CharacterDefinition,DisplayName,마리엘
+char_marielle,CharacterDefinition,EnglishName,Marielle
+char_marielle,CharacterDefinition,NameKey,CHAR_MARIELLE_NAME
+char_marielle,CharacterDefinition,RaceID,race_mermaid
+char_marielle,CharacterDefinition,JobID,job_marine_gatherer
+char_marielle,CharacterDefinition,Gender,여성
+char_marielle,CharacterDefinition,AgeDisplay,24세
+char_marielle,CharacterDefinition,HeightDisplay,상반신 164cm / 전체 245cm
+char_marielle,CharacterDefinition,IsAvailable,TRUE
+char_marielle,CharacterDefinition,UnlockConditionID,unlock_marielle_first_meeting
+char_marielle,CharacterDefinition,DefaultAreaID,area_tbd
+char_marielle,CharacterDefinition,Summary,“바다의 기억을 품고 새로운 집을 찾는 인어 채집가.”
+char_marielle,CharacterDefinition,SymbolMotif,진주 / 파도 / 푸른 달
+char_marielle,CharacterDefinition,ThemeColor,#63C7C5 / #C7F1F0 / #6F5FA8
+char_marielle,CharacterAppearance,Hair,청록색 웨이브 롱헤어
+char_marielle,CharacterAppearance,Eyes,진주빛 청안
+char_marielle,CharacterAppearance,BodyImpression,부드러운 상반신과 유선형 꼬리
+char_marielle,CharacterAppearance,Outfit,조개와 산호 장식 랩탑
+char_marielle,CharacterAppearance,Accessories,"진주 목걸이, 산호 빗"
+char_marielle,CharacterAppearance,Features,은청색 비늘 꼬리. 물방울 마법으로 육지에서 잠시 다리를 형성
+char_marielle,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 해안과 산호, 반짝이는 인어 꼬리"
+char_marielle,CharacterAppearance,PortraitAddress,Characters/marielle/Portrait
+char_marielle,CharacterAppearance,FullBodyAddress,Characters/marielle/FullBody
+char_marielle,CharacterAppearance,PrefabAddress,Characters/marielle/Prefab
+char_marielle,CharacterAppearance,AnimatorControllerAddress,Characters/marielle/AnimatorController
+char_marielle,CharacterPersonality,PersonalityTags,"온화함, 낭만적, 조심스러움, 호기심"
+char_marielle,CharacterPersonality,SpeechStyle,물결처럼 느린 말투. 콧노래를 자주 부름
+char_marielle,CharacterPersonality,Trauma,폭풍으로 산호 마을을 잃은 기억
+char_marielle,CharacterPersonality,Desire,안전한 해양 정착지를 찾는 것
+char_marielle,CharacterPersonality,Background,마리엘은 산호도시 ‘아쿠아리움 벨’에서 자신의 능력을 익혔다. 과거의 상처를 안고 섬에 도착해 해양 채집가 / 진주 감정사로 활동하며 플레이어와 새로운 공동체를 만들어간다.
+char_marielle,CharacterPersonality,VoiceConcept,맑고 부드러운 여성 보이스
+char_marielle,CharacterGameplayDefinition,NpcRoles,Merchant | QuestGiver | Worker
+char_marielle,CharacterGameplayDefinition,InteractionTypes,Dialogue | Trade | Quest | Gift
+char_marielle,CharacterGameplayDefinition,ShopID,shop_marielle
+char_marielle,CharacterGameplayDefinition,CraftingStationID,station_marielle
+char_marielle,CharacterGameplayDefinition,DefaultAffinity,0
+char_marielle,CharacterGameplayDefinition,MaxAffinity,100
+char_marielle,CharacterGameplayDefinition,GiftProfileID,gift_marielle
+char_marielle,CharacterGameplayDefinition,QuestGroupID,quest_marielle
+char_marielle,CharacterGameplayDefinition,RecruitmentConditionID,
+char_marielle,CharacterGameplayDefinition,CompanionAbilityID,
+char_marielle,CharacterGameplayDefinition,WorkAbilityID,work_marine_gathering
+char_marielle,CharacterGameplayDefinition,ScheduleID,schedule_marielle
+char_marielle,CharacterGameplayDefinition,SpawnPointID,spawn_marielle_default
+char_marielle,CharacterDialogueSet,DialogueTableID,dlg_marielle
+char_marielle,CharacterDialogueSet,Greeting,“오늘 파도는 잔잔해요.”
+char_marielle,CharacterDialogueSet,RandomTalk,“바다는 모든 걸 기억해요.”
+char_marielle,CharacterDialogueSet,AffinityReactions,무관심: “아직 널 믿진 않아.” 호기심: “조금은 흥미롭네.” 신뢰: “이번 일은 함께하자.” 애정: “네 곁이 편해졌어.” 사랑: “이제 내 목표에는 네가 있어.”
+char_marielle,CharacterDialogueSet,PreferredItems,"좋아함: 진주, 조개, 해초 요리 / 싫어함: 오염된 물, 큰 불"
+char_marielle,CharacterDialogueSet,EventLines,“당신 덕분에 육지가 집처럼 느껴져요.”
+char_marielle,CharacterDialogueSet,ExpressionTags,미소 / 수줍음 / 회상 / 평온 / 애정
+char_marielle,CharacterDialogueSet,LocalizationTable,Character
+char_marielle,CharacterRelationship,RelationshipRaw,• 플레이어: 처음에는 경계하지만 점차 신뢰 • 기존 동료: 자신의 전문 분야를 통해 협력 • 목표: 안전한 해양 정착지를 찾는 것
+char_marielle,CharacterRelationship,RelationshipTableID,rel_marielle
+char_marielle,DeveloperReference,Origin,산호도시 ‘아쿠아리움 벨’
+char_marielle,DeveloperReference,Affiliation,진주 채집단 기록자
+char_marielle,DeveloperReference,JobDisplay,해양 채집가 / 진주 감정사
+char_marielle,DeveloperReference,RaceDisplay,인어족 (Mermaid)
+char_marielle,DeveloperReference,SourceSheet,원본 비교표
+char_marielle,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_marielle,DeveloperReference,LastReviewedDate,2026-07-31
+char_censia,CharacterDefinition,CharacterID,char_censia
+char_censia,CharacterDefinition,DisplayName,켄시아
+char_censia,CharacterDefinition,EnglishName,Censia
+char_censia,CharacterDefinition,NameKey,CHAR_CENSIA_NAME
+char_censia,CharacterDefinition,RaceID,race_centaur
+char_censia,CharacterDefinition,JobID,job_transport_captain
+char_censia,CharacterDefinition,Gender,여성
+char_censia,CharacterDefinition,AgeDisplay,31세
+char_censia,CharacterDefinition,HeightDisplay,상반신 170cm / 전체 260cm
+char_censia,CharacterDefinition,IsAvailable,TRUE
+char_censia,CharacterDefinition,UnlockConditionID,unlock_censia_first_meeting
+char_censia,CharacterDefinition,DefaultAreaID,area_tbd
+char_censia,CharacterDefinition,Summary,“모두가 안전하게 돌아올 길을 만드는 켄타우로스 운송대장.”
+char_censia,CharacterDefinition,SymbolMotif,말굽 / 길 / 초원바람
+char_censia,CharacterDefinition,ThemeColor,#8A5A3B / #D7C27A / #5B7B4B
+char_censia,CharacterAppearance,Hair,밤갈색 포니테일
+char_censia,CharacterAppearance,Eyes,호박빛 갈색
+char_censia,CharacterAppearance,BodyImpression,강인한 상반신과 말 하반신
+char_censia,CharacterAppearance,Outfit,초원 운송대 가죽 장비
+char_censia,CharacterAppearance,Accessories,"나침반, 말굽 부적"
+char_censia,CharacterAppearance,Features,말 하반신과 강한 발굽. 장거리 이동과 운송에 능함
+char_censia,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 넓은 초원, 말 하반신과 운송 장비"
+char_censia,CharacterAppearance,PortraitAddress,Characters/censia/Portrait
+char_censia,CharacterAppearance,FullBodyAddress,Characters/censia/FullBody
+char_censia,CharacterAppearance,PrefabAddress,Characters/censia/Prefab
+char_censia,CharacterAppearance,AnimatorControllerAddress,Characters/censia/AnimatorController
+char_censia,CharacterPersonality,PersonalityTags,"성실함, 리더십, 현실적, 다정함"
+char_censia,CharacterPersonality,SpeechStyle,간결하고 실용적인 말투. 발굽으로 박자를 맞춤
+char_censia,CharacterPersonality,Trauma,운송 중 동료를 지키지 못한 사고
+char_censia,CharacterPersonality,Desire,누구도 버려지지 않는 운송로를 만드는 것
+char_censia,CharacterPersonality,Background,켄시아는 초원국경 ‘에퀴나 평원’에서 자신의 능력을 익혔다. 과거의 상처를 안고 섬에 도착해 운송대장 / 초원 정찰자로 활동하며 플레이어와 새로운 공동체를 만들어간다.
+char_censia,CharacterPersonality,VoiceConcept,단단하고 안정적인 중저음 여성 보이스
+char_censia,CharacterGameplayDefinition,NpcRoles,QuestGiver | Companion | Worker | Guard
+char_censia,CharacterGameplayDefinition,InteractionTypes,Dialogue | Quest | Gift | Recruit
+char_censia,CharacterGameplayDefinition,ShopID,
+char_censia,CharacterGameplayDefinition,CraftingStationID,
+char_censia,CharacterGameplayDefinition,DefaultAffinity,0
+char_censia,CharacterGameplayDefinition,MaxAffinity,100
+char_censia,CharacterGameplayDefinition,GiftProfileID,gift_censia
+char_censia,CharacterGameplayDefinition,QuestGroupID,quest_censia
+char_censia,CharacterGameplayDefinition,RecruitmentConditionID,recruit_censia
+char_censia,CharacterGameplayDefinition,CompanionAbilityID,ability_censia
+char_censia,CharacterGameplayDefinition,WorkAbilityID,work_transport
+char_censia,CharacterGameplayDefinition,ScheduleID,schedule_censia
+char_censia,CharacterGameplayDefinition,SpawnPointID,spawn_censia_default
+char_censia,CharacterDialogueSet,DialogueTableID,dlg_censia
+char_censia,CharacterDialogueSet,Greeting,“짐은 내가 옮기지. 길만 정해.”
+char_censia,CharacterDialogueSet,RandomTalk,“빠른 길보다 안전한 길이 중요해.”
+char_censia,CharacterDialogueSet,AffinityReactions,무관심: “아직 널 믿진 않아.” 호기심: “조금은 흥미롭네.” 신뢰: “이번 일은 함께하자.” 애정: “네 곁이 편해졌어.” 사랑: “이제 내 목표에는 네가 있어.”
+char_censia,CharacterDialogueSet,PreferredItems,"좋아함: 지도, 말 장식, 곡물 / 싫어함: 좁은 통로, 게으름"
+char_censia,CharacterDialogueSet,EventLines,“이번 길의 끝까지 함께 가자.”
+char_censia,CharacterDialogueSet,ExpressionTags,진중 / 미소 / 결의 / 질주 / 수줍음
+char_censia,CharacterDialogueSet,LocalizationTable,Character
+char_censia,CharacterRelationship,RelationshipRaw,• 플레이어: 처음에는 경계하지만 점차 신뢰 • 기존 동료: 자신의 전문 분야를 통해 협력 • 목표: 누구도 버려지지 않는 운송로를 만드는 것
+char_censia,CharacterRelationship,RelationshipTableID,rel_censia
+char_censia,DeveloperReference,Origin,초원국경 ‘에퀴나 평원’
+char_censia,DeveloperReference,Affiliation,운송 조합 대장
+char_censia,DeveloperReference,JobDisplay,운송대장 / 초원 정찰자
+char_censia,DeveloperReference,RaceDisplay,켄타우로스 (Centaur)
+char_censia,DeveloperReference,SourceSheet,원본 비교표
+char_censia,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_censia,DeveloperReference,LastReviewedDate,2026-07-31
+char_ravenna,CharacterDefinition,CharacterID,char_ravenna
+char_ravenna,CharacterDefinition,DisplayName,레이븐나
+char_ravenna,CharacterDefinition,EnglishName,Ravenna
+char_ravenna,CharacterDefinition,NameKey,CHAR_RAVENNA_NAME
+char_ravenna,CharacterDefinition,RaceID,race_dullahan
+char_ravenna,CharacterDefinition,JobID,job_night_guard
+char_ravenna,CharacterDefinition,Gender,여성
+char_ravenna,CharacterDefinition,AgeDisplay,사후 80년 / 외형 27세
+char_ravenna,CharacterDefinition,HeightDisplay,168cm
+char_ravenna,CharacterDefinition,IsAvailable,TRUE
+char_ravenna,CharacterDefinition,UnlockConditionID,unlock_ravenna_first_meeting
+char_ravenna,CharacterDefinition,DefaultAreaID,area_tbd
+char_ravenna,CharacterDefinition,Summary,“머리를 잃어도 맹세는 잃지 않은 마지막 듀라한 기사.”
+char_ravenna,CharacterDefinition,SymbolMotif,투구 / 푸른 불꽃 / 검
+char_ravenna,CharacterDefinition,ThemeColor,#2C3140 / #78A6D1 / #D7DCE5
+char_ravenna,CharacterAppearance,Hair,은흑색 단발
+char_ravenna,CharacterAppearance,Eyes,푸른 백광
+char_ravenna,CharacterAppearance,BodyImpression,차분한 기사형 체형
+char_ravenna,CharacterAppearance,Outfit,검은 기사 갑옷과 망토
+char_ravenna,CharacterAppearance,Accessories,분리된 머리를 고정하는 은목걸이
+char_ravenna,CharacterAppearance,Features,머리를 분리해 들 수 있으며 푸른 영혼 불꽃이 목 주변에 떠 있음
+char_ravenna,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 폐성의 밤, 검은 갑옷과 푸른 영혼불꽃"
+char_ravenna,CharacterAppearance,PortraitAddress,Characters/ravenna/Portrait
+char_ravenna,CharacterAppearance,FullBodyAddress,Characters/ravenna/FullBody
+char_ravenna,CharacterAppearance,PrefabAddress,Characters/ravenna/Prefab
+char_ravenna,CharacterAppearance,AnimatorControllerAddress,Characters/ravenna/AnimatorController
+char_ravenna,CharacterPersonality,PersonalityTags,"냉정함, 예의바름, 충성심, 고독"
+char_ravenna,CharacterPersonality,SpeechStyle,정중한 기사 말투. 머리를 품에 안고 생각함
+char_ravenna,CharacterPersonality,Trauma,생전에 지키던 성이 함락된 기억
+char_ravenna,CharacterPersonality,Desire,이번에는 끝까지 지킬 대상을 찾는 것
+char_ravenna,CharacterPersonality,Background,레이븐나는 폐성 ‘블랙 헬름’에서 자신의 능력을 익혔다. 과거의 상처를 안고 섬에 도착해 야간 경비대장으로 활동하며 플레이어와 새로운 공동체를 만들어간다.
+char_ravenna,CharacterPersonality,VoiceConcept,차분하고 격식 있는 여성 보이스
+char_ravenna,CharacterGameplayDefinition,NpcRoles,QuestGiver | Companion | Guard
+char_ravenna,CharacterGameplayDefinition,InteractionTypes,Dialogue | Quest | Gift | Recruit
+char_ravenna,CharacterGameplayDefinition,ShopID,
+char_ravenna,CharacterGameplayDefinition,CraftingStationID,
+char_ravenna,CharacterGameplayDefinition,DefaultAffinity,0
+char_ravenna,CharacterGameplayDefinition,MaxAffinity,100
+char_ravenna,CharacterGameplayDefinition,GiftProfileID,gift_ravenna
+char_ravenna,CharacterGameplayDefinition,QuestGroupID,quest_ravenna
+char_ravenna,CharacterGameplayDefinition,RecruitmentConditionID,recruit_ravenna
+char_ravenna,CharacterGameplayDefinition,CompanionAbilityID,ability_ravenna
+char_ravenna,CharacterGameplayDefinition,WorkAbilityID,work_night_guard
+char_ravenna,CharacterGameplayDefinition,ScheduleID,schedule_ravenna
+char_ravenna,CharacterGameplayDefinition,SpawnPointID,spawn_ravenna_default
+char_ravenna,CharacterDialogueSet,DialogueTableID,dlg_ravenna
+char_ravenna,CharacterDialogueSet,Greeting,“야간 순찰을 시작하겠습니다.”
+char_ravenna,CharacterDialogueSet,RandomTalk,“머리가 떨어져도 명예는 떨어지지 않습니다.”
+char_ravenna,CharacterDialogueSet,AffinityReactions,무관심: “아직 널 믿진 않아.” 호기심: “조금은 흥미롭네.” 신뢰: “이번 일은 함께하자.” 애정: “네 곁이 편해졌어.” 사랑: “이제 내 목표에는 네가 있어.”
+char_ravenna,CharacterDialogueSet,PreferredItems,"좋아함: 검 손질 도구, 차, 촛불 / 싫어함: 무례함, 성을 조롱하는 말"
+char_ravenna,CharacterDialogueSet,EventLines,“이번에는 마지막까지 지키겠습니다.”
+char_ravenna,CharacterDialogueSet,ExpressionTags,무표정 / 예의 / 당황 / 영혼불꽃 / 회상
+char_ravenna,CharacterDialogueSet,LocalizationTable,Character
+char_ravenna,CharacterRelationship,RelationshipRaw,• 플레이어: 처음에는 경계하지만 점차 신뢰 • 기존 동료: 자신의 전문 분야를 통해 협력 • 목표: 이번에는 끝까지 지킬 대상을 찾는 것
+char_ravenna,CharacterRelationship,RelationshipTableID,rel_ravenna
+char_ravenna,DeveloperReference,Origin,폐성 ‘블랙 헬름’
+char_ravenna,DeveloperReference,Affiliation,망국 기사단의 마지막 기사
+char_ravenna,DeveloperReference,JobDisplay,야간 경비대장
+char_ravenna,DeveloperReference,RaceDisplay,듀라한 (Dullahan)
+char_ravenna,DeveloperReference,SourceSheet,원본 비교표
+char_ravenna,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_ravenna,DeveloperReference,LastReviewedDate,2026-07-31
+char_akane,CharacterDefinition,CharacterID,char_akane
+char_akane,CharacterDefinition,DisplayName,아카네
+char_akane,CharacterDefinition,EnglishName,Akane
+char_akane,CharacterDefinition,NameKey,CHAR_AKANE_NAME
+char_akane,CharacterDefinition,RaceID,race_oni
+char_akane,CharacterDefinition,JobID,job_festival_guardian
+char_akane,CharacterDefinition,Gender,여성
+char_akane,CharacterDefinition,AgeDisplay,26세
+char_akane,CharacterDefinition,HeightDisplay,172cm
+char_akane,CharacterDefinition,IsAvailable,TRUE
+char_akane,CharacterDefinition,UnlockConditionID,unlock_akane_first_meeting
+char_akane,CharacterDefinition,DefaultAreaID,area_tbd
+char_akane,CharacterDefinition,Summary,“괴력을 웃음과 축제로 바꾸는 일본형 오니 수호자.”
+char_akane,CharacterDefinition,SymbolMotif,오니 가면 / 북 / 붉은 단풍
+char_akane,CharacterDefinition,ThemeColor,#A52A2A / #E6B84A / #2B1A1A
+char_akane,CharacterAppearance,Hair,검붉은 장발
+char_akane,CharacterAppearance,Eyes,붉은 금안
+char_akane,CharacterAppearance,BodyImpression,근육질이지만 활기찬 인상
+char_akane,CharacterAppearance,Outfit,일본식 축제 하오리와 전투복
+char_akane,CharacterAppearance,Accessories,"방울 장식 곤봉, 오니 가면"
+char_akane,CharacterAppearance,Features,붉은 뿔 한 쌍과 송곳니. 힘을 쓸 때 피부에 금빛 문양이 나타남
+char_akane,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 일본 축제와 단풍, 붉은 뿔과 하오리"
+char_akane,CharacterAppearance,PortraitAddress,Characters/akane/Portrait
+char_akane,CharacterAppearance,FullBodyAddress,Characters/akane/FullBody
+char_akane,CharacterAppearance,PrefabAddress,Characters/akane/Prefab
+char_akane,CharacterAppearance,AnimatorControllerAddress,Characters/akane/AnimatorController
+char_akane,CharacterPersonality,PersonalityTags,"호쾌함, 장난기, 의리, 성급함"
+char_akane,CharacterPersonality,SpeechStyle,활기찬 일본식 말투. 웃을 때 크게 호탕하게 웃음
+char_akane,CharacterPersonality,Trauma,괴력 때문에 친구를 다치게 한 경험
+char_akane,CharacterPersonality,Desire,힘을 즐거움과 보호에 쓰는 법을 배우는 것
+char_akane,CharacterPersonality,Background,아카네는 일본풍 산촌 ‘오니가미’에서 자신의 능력을 익혔다. 과거의 상처를 안고 섬에 도착해 대장장이 보조 / 축제 수호자로 활동하며 플레이어와 새로운 공동체를 만들어간다.
+char_akane,CharacterPersonality,VoiceConcept,활기차고 호쾌한 여성 보이스
+char_akane,CharacterGameplayDefinition,NpcRoles,QuestGiver | Companion | Guard | Worker
+char_akane,CharacterGameplayDefinition,InteractionTypes,Dialogue | Quest | Gift | Recruit | Train
+char_akane,CharacterGameplayDefinition,ShopID,
+char_akane,CharacterGameplayDefinition,CraftingStationID,
+char_akane,CharacterGameplayDefinition,DefaultAffinity,0
+char_akane,CharacterGameplayDefinition,MaxAffinity,100
+char_akane,CharacterGameplayDefinition,GiftProfileID,gift_akane
+char_akane,CharacterGameplayDefinition,QuestGroupID,quest_akane
+char_akane,CharacterGameplayDefinition,RecruitmentConditionID,recruit_akane
+char_akane,CharacterGameplayDefinition,CompanionAbilityID,ability_akane
+char_akane,CharacterGameplayDefinition,WorkAbilityID,work_festival_guard
+char_akane,CharacterGameplayDefinition,ScheduleID,schedule_akane
+char_akane,CharacterGameplayDefinition,SpawnPointID,spawn_akane_default
+char_akane,CharacterDialogueSet,DialogueTableID,dlg_akane
+char_akane,CharacterDialogueSet,Greeting,“좋은 아침! 오늘도 힘차게 가자!”
+char_akane,CharacterDialogueSet,RandomTalk,“힘은 축제처럼 즐겁게 써야지!”
+char_akane,CharacterDialogueSet,AffinityReactions,무관심: “아직 널 믿진 않아.” 호기심: “조금은 흥미롭네.” 신뢰: “이번 일은 함께하자.” 애정: “네 곁이 편해졌어.” 사랑: “이제 내 목표에는 네가 있어.”
+char_akane,CharacterDialogueSet,PreferredItems,"좋아함: 사케, 단풍 장식, 북 / 싫어함: 비겁함, 차가운 음식"
+char_akane,CharacterDialogueSet,EventLines,“네가 웃으면 내 북소리도 커져!”
+char_akane,CharacterDialogueSet,ExpressionTags,호쾌 / 승부욕 / 수줍음 / 결의 / 미소
+char_akane,CharacterDialogueSet,LocalizationTable,Character
+char_akane,CharacterRelationship,RelationshipRaw,• 플레이어: 처음에는 경계하지만 점차 신뢰 • 기존 동료: 자신의 전문 분야를 통해 협력 • 목표: 힘을 즐거움과 보호에 쓰는 법을 배우는 것
+char_akane,CharacterRelationship,RelationshipTableID,rel_akane
+char_akane,DeveloperReference,Origin,일본풍 산촌 ‘오니가미’
+char_akane,DeveloperReference,Affiliation,산촌 축제 수호자
+char_akane,DeveloperReference,JobDisplay,대장장이 보조 / 축제 수호자
+char_akane,DeveloperReference,RaceDisplay,오니 (Japanese Oni)
+char_akane,DeveloperReference,SourceSheet,원본 비교표
+char_akane,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_akane,DeveloperReference,LastReviewedDate,2026-07-31
+char_pipi,CharacterDefinition,CharacterID,char_pipi
+char_pipi,CharacterDefinition,DisplayName,피피
+char_pipi,CharacterDefinition,EnglishName,Pipi
+char_pipi,CharacterDefinition,NameKey,CHAR_PIPI_NAME
+char_pipi,CharacterDefinition,RaceID,race_goblin
+char_pipi,CharacterDefinition,JobID,job_scrap_engineer
+char_pipi,CharacterDefinition,Gender,여성
+char_pipi,CharacterDefinition,AgeDisplay,20세
+char_pipi,CharacterDefinition,HeightDisplay,146cm
+char_pipi,CharacterDefinition,IsAvailable,TRUE
+char_pipi,CharacterDefinition,UnlockConditionID,unlock_pipi_first_meeting
+char_pipi,CharacterDefinition,DefaultAreaID,area_tbd
+char_pipi,CharacterDefinition,Summary,“버려진 것에서 미래를 만드는 고블린 발명가.”
+char_pipi,CharacterDefinition,SymbolMotif,톱니 / 동전 / 폐품
+char_pipi,CharacterDefinition,ThemeColor,#66743A / #D9B44A / #3E3A2E
+char_pipi,CharacterAppearance,Hair,올리브색 짧은 단발
+char_pipi,CharacterAppearance,Eyes,노란 연두색
+char_pipi,CharacterAppearance,BodyImpression,작고 민첩한 체형
+char_pipi,CharacterAppearance,Outfit,공구 주머니가 달린 작업복
+char_pipi,CharacterAppearance,Accessories,"다목적 렌치, 고글"
+char_pipi,CharacterAppearance,Features,큰 귀와 작은 송곳니. 폐품을 보면 즉시 구조를 분석함
+char_pipi,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 폐품시장, 공구와 고글, 활기찬 포즈"
+char_pipi,CharacterAppearance,PortraitAddress,Characters/pipi/Portrait
+char_pipi,CharacterAppearance,FullBodyAddress,Characters/pipi/FullBody
+char_pipi,CharacterAppearance,PrefabAddress,Characters/pipi/Prefab
+char_pipi,CharacterAppearance,AnimatorControllerAddress,Characters/pipi/AnimatorController
+char_pipi,CharacterPersonality,PersonalityTags,"재치, 욕심, 창의성, 생존력"
+char_pipi,CharacterPersonality,SpeechStyle,빠른 말투. 물건 값을 계산하며 손가락을 움직임
+char_pipi,CharacterPersonality,Trauma,가난 때문에 가족이 흩어진 기억
+char_pipi,CharacterPersonality,Desire,자신의 발명으로 인정받는 가게를 여는 것
+char_pipi,CharacterPersonality,Background,피피는 폐품시장 ‘스크랩 홀로우’에서 자신의 능력을 익혔다. 과거의 상처를 안고 섬에 도착해 폐품 기술자 / 상인으로 활동하며 플레이어와 새로운 공동체를 만들어간다.
+char_pipi,CharacterPersonality,VoiceConcept,빠르고 장난기 많은 소녀 보이스
+char_pipi,CharacterGameplayDefinition,NpcRoles,Merchant | QuestGiver | Crafter
+char_pipi,CharacterGameplayDefinition,InteractionTypes,Dialogue | Trade | Quest | Gift | Craft
+char_pipi,CharacterGameplayDefinition,ShopID,shop_pipi
+char_pipi,CharacterGameplayDefinition,CraftingStationID,station_pipi
+char_pipi,CharacterGameplayDefinition,DefaultAffinity,0
+char_pipi,CharacterGameplayDefinition,MaxAffinity,100
+char_pipi,CharacterGameplayDefinition,GiftProfileID,gift_pipi
+char_pipi,CharacterGameplayDefinition,QuestGroupID,quest_pipi
+char_pipi,CharacterGameplayDefinition,RecruitmentConditionID,
+char_pipi,CharacterGameplayDefinition,CompanionAbilityID,
+char_pipi,CharacterGameplayDefinition,WorkAbilityID,work_engineering
+char_pipi,CharacterGameplayDefinition,ScheduleID,schedule_pipi
+char_pipi,CharacterGameplayDefinition,SpawnPointID,spawn_pipi_default
+char_pipi,CharacterDialogueSet,DialogueTableID,dlg_pipi
+char_pipi,CharacterDialogueSet,Greeting,"“싸고 좋은 물건, 여기 다 있어!”"
+char_pipi,CharacterDialogueSet,RandomTalk,“버려진 건 없어. 쓸모를 못 찾았을 뿐이야.”
+char_pipi,CharacterDialogueSet,AffinityReactions,무관심: “아직 널 믿진 않아.” 호기심: “조금은 흥미롭네.” 신뢰: “이번 일은 함께하자.” 애정: “네 곁이 편해졌어.” 사랑: “이제 내 목표에는 네가 있어.”
+char_pipi,CharacterDialogueSet,PreferredItems,"좋아함: 공구, 동전, 폐품 / 싫어함: 공짜 노동, 물건 낭비"
+char_pipi,CharacterDialogueSet,EventLines,“이 발명품의 첫 손님은 너야.”
+char_pipi,CharacterDialogueSet,ExpressionTags,장난 / 흥정 / 당황 / 집중 / 상처
+char_pipi,CharacterDialogueSet,LocalizationTable,Character
+char_pipi,CharacterRelationship,RelationshipRaw,• 플레이어: 처음에는 경계하지만 점차 신뢰 • 기존 동료: 자신의 전문 분야를 통해 협력 • 목표: 자신의 발명으로 인정받는 가게를 여는 것
+char_pipi,CharacterRelationship,RelationshipTableID,rel_pipi
+char_pipi,DeveloperReference,Origin,폐품시장 ‘스크랩 홀로우’
+char_pipi,DeveloperReference,Affiliation,고블린 폐품 길드 기술자
+char_pipi,DeveloperReference,JobDisplay,폐품 기술자 / 상인
+char_pipi,DeveloperReference,RaceDisplay,고블린 (Goblin)
+char_pipi,DeveloperReference,SourceSheet,원본 비교표
+char_pipi,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_pipi,DeveloperReference,LastReviewedDate,2026-07-31
+char_safira,CharacterDefinition,CharacterID,char_safira
+char_safira,CharacterDefinition,DisplayName,사피라
+char_safira,CharacterDefinition,EnglishName,Safira
+char_safira,CharacterDefinition,NameKey,CHAR_SAFIRA_NAME
+char_safira,CharacterDefinition,RaceID,race_scorpionkin
+char_safira,CharacterDefinition,JobID,job_toxicologist
+char_safira,CharacterDefinition,Gender,여성
+char_safira,CharacterDefinition,AgeDisplay,29세
+char_safira,CharacterDefinition,HeightDisplay,상반신 169cm / 전체 235cm
+char_safira,CharacterDefinition,IsAvailable,TRUE
+char_safira,CharacterDefinition,UnlockConditionID,unlock_safira_first_meeting
+char_safira,CharacterDefinition,DefaultAreaID,area_tbd
+char_safira,CharacterDefinition,Summary,“독을 치료제로 바꾸려는 사막의 스콜피온 약제사.”
+char_safira,CharacterDefinition,SymbolMotif,전갈 / 모래시계 / 독병
+char_safira,CharacterDefinition,ThemeColor,#A66A3F / #6E3B70 / #E2C18A
+char_safira,CharacterAppearance,Hair,사막빛 갈색 롱헤어
+char_safira,CharacterAppearance,Eyes,자수정색 세로 동공
+char_safira,CharacterAppearance,BodyImpression,우아한 상반신과 전갈 하반신
+char_safira,CharacterAppearance,Outfit,사막 천과 경갑
+char_safira,CharacterAppearance,Accessories,"독침 단검, 사막 부적"
+char_safira,CharacterAppearance,Features,전갈 하반신과 독침 꼬리. 독의 농도를 스스로 조절함
+char_safira,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 사막 유적, 전갈 꼬리와 보랏빛 독"
+char_safira,CharacterAppearance,PortraitAddress,Characters/safira/Portrait
+char_safira,CharacterAppearance,FullBodyAddress,Characters/safira/FullBody
+char_safira,CharacterAppearance,PrefabAddress,Characters/safira/Prefab
+char_safira,CharacterAppearance,AnimatorControllerAddress,Characters/safira/AnimatorController
+char_safira,CharacterPersonality,PersonalityTags,"침착함, 계산적, 신중함, 은근한 다정함"
+char_safira,CharacterPersonality,SpeechStyle,낮고 차분한 말투. 꼬리 끝으로 모래에 도형을 그림
+char_safira,CharacterPersonality,Trauma,독 때문에 타인을 잃은 과거
+char_safira,CharacterPersonality,Desire,독을 치료제로 바꾸는 것
+char_safira,CharacterPersonality,Background,사피라는 붉은 사막 ‘사르카 분지’에서 자신의 능력을 익혔다. 과거의 상처를 안고 섬에 도착해 독 조제사 / 사막 안내자로 활동하며 플레이어와 새로운 공동체를 만들어간다.
+char_safira,CharacterPersonality,VoiceConcept,낮고 신비로운 여성 보이스
+char_safira,CharacterGameplayDefinition,NpcRoles,Merchant | QuestGiver | Crafter
+char_safira,CharacterGameplayDefinition,InteractionTypes,Dialogue | Trade | Quest | Gift | Craft
+char_safira,CharacterGameplayDefinition,ShopID,shop_safira
+char_safira,CharacterGameplayDefinition,CraftingStationID,station_safira
+char_safira,CharacterGameplayDefinition,DefaultAffinity,0
+char_safira,CharacterGameplayDefinition,MaxAffinity,100
+char_safira,CharacterGameplayDefinition,GiftProfileID,gift_safira
+char_safira,CharacterGameplayDefinition,QuestGroupID,quest_safira
+char_safira,CharacterGameplayDefinition,RecruitmentConditionID,
+char_safira,CharacterGameplayDefinition,CompanionAbilityID,
+char_safira,CharacterGameplayDefinition,WorkAbilityID,work_toxicology
+char_safira,CharacterGameplayDefinition,ScheduleID,schedule_safira
+char_safira,CharacterGameplayDefinition,SpawnPointID,spawn_safira_default
+char_safira,CharacterDialogueSet,DialogueTableID,dlg_safira
+char_safira,CharacterDialogueSet,Greeting,“사막의 바람이 조용하군.”
+char_safira,CharacterDialogueSet,RandomTalk,“독과 약은 양의 차이일 뿐이야.”
+char_safira,CharacterDialogueSet,AffinityReactions,무관심: “아직 널 믿진 않아.” 호기심: “조금은 흥미롭네.” 신뢰: “이번 일은 함께하자.” 애정: “네 곁이 편해졌어.” 사랑: “이제 내 목표에는 네가 있어.”
+char_safira,CharacterDialogueSet,PreferredItems,"좋아함: 약초, 유리병, 보석 / 싫어함: 물, 성급한 행동"
+char_safira,CharacterDialogueSet,EventLines,“내 독을 두려워하지 않은 건 네가 처음이야.”
+char_safira,CharacterDialogueSet,ExpressionTags,침착 / 경계 / 동요 / 집중 / 미소
+char_safira,CharacterDialogueSet,LocalizationTable,Character
+char_safira,CharacterRelationship,RelationshipRaw,• 플레이어: 처음에는 경계하지만 점차 신뢰 • 기존 동료: 자신의 전문 분야를 통해 협력 • 목표: 독을 치료제로 바꾸는 것
+char_safira,CharacterRelationship,RelationshipTableID,rel_safira
+char_safira,DeveloperReference,Origin,붉은 사막 ‘사르카 분지’
+char_safira,DeveloperReference,Affiliation,사막 약제상 / 독 연구자
+char_safira,DeveloperReference,JobDisplay,독 조제사 / 사막 안내자
+char_safira,DeveloperReference,RaceDisplay,스콜피온 (Scorpionkin)
+char_safira,DeveloperReference,SourceSheet,원본 비교표
+char_safira,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_safira,DeveloperReference,LastReviewedDate,2026-07-31
+char_lumina,CharacterDefinition,CharacterID,char_lumina
+char_lumina,CharacterDefinition,DisplayName,루미나
+char_lumina,CharacterDefinition,EnglishName,Lumina
+char_lumina,CharacterDefinition,NameKey,CHAR_LUMINA_NAME
+char_lumina,CharacterDefinition,RaceID,race_butterflykin
+char_lumina,CharacterDefinition,JobID,job_pollen_researcher
+char_lumina,CharacterDefinition,Gender,여성
+char_lumina,CharacterDefinition,AgeDisplay,22세
+char_lumina,CharacterDefinition,HeightDisplay,163cm
+char_lumina,CharacterDefinition,IsAvailable,TRUE
+char_lumina,CharacterDefinition,UnlockConditionID,unlock_lumina_first_meeting
+char_lumina,CharacterDefinition,DefaultAreaID,area_tbd
+char_lumina,CharacterDefinition,Summary,“변화와 빛을 전하는 야광숲의 나비 연구가.”
+char_lumina,CharacterDefinition,SymbolMotif,나비 / 달빛 / 꽃가루
+char_lumina,CharacterDefinition,ThemeColor,#E8A9D1 / #8FD7E8 / #FFF2C9
+char_lumina,CharacterAppearance,Hair,연분홍과 하늘빛 그러데이션
+char_lumina,CharacterAppearance,Eyes,은빛 보라색
+char_lumina,CharacterAppearance,BodyImpression,가볍고 섬세한 체형
+char_lumina,CharacterAppearance,Outfit,꽃잎 망토와 가벼운 원피스
+char_lumina,CharacterAppearance,Accessories,"나비 날개 브로치, 꽃가루 병"
+char_lumina,CharacterAppearance,Features,큰 나비 날개와 더듬이. 날갯가루가 감정에 따라 색을 바꿈
+char_lumina,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 야광 꽃밭, 반투명 나비 날개"
+char_lumina,CharacterAppearance,PortraitAddress,Characters/lumina/Portrait
+char_lumina,CharacterAppearance,FullBodyAddress,Characters/lumina/FullBody
+char_lumina,CharacterAppearance,PrefabAddress,Characters/lumina/Prefab
+char_lumina,CharacterAppearance,AnimatorControllerAddress,Characters/lumina/AnimatorController
+char_lumina,CharacterPersonality,PersonalityTags,"몽환적, 친절함, 호기심, 감수성"
+char_lumina,CharacterPersonality,SpeechStyle,속삭이듯 부드러운 말투. 날개를 천천히 접었다 폄
+char_lumina,CharacterPersonality,Trauma,날개 가루를 두려워한 사람들에게 배척당함
+char_lumina,CharacterPersonality,Desire,자신의 날개를 아름답다고 봐줄 공동체를 찾는 것
+char_lumina,CharacterPersonality,Background,루미나는 야광숲 ‘루미에르 화원’에서 자신의 능력을 익혔다. 과거의 상처를 안고 섬에 도착해 꽃가루 연구가 / 야간 안내자로 활동하며 플레이어와 새로운 공동체를 만들어간다.
+char_lumina,CharacterPersonality,VoiceConcept,가볍고 몽환적인 여성 보이스
+char_lumina,CharacterGameplayDefinition,NpcRoles,QuestGiver | Worker | Special
+char_lumina,CharacterGameplayDefinition,InteractionTypes,Dialogue | Quest | Gift
+char_lumina,CharacterGameplayDefinition,ShopID,
+char_lumina,CharacterGameplayDefinition,CraftingStationID,
+char_lumina,CharacterGameplayDefinition,DefaultAffinity,0
+char_lumina,CharacterGameplayDefinition,MaxAffinity,100
+char_lumina,CharacterGameplayDefinition,GiftProfileID,gift_lumina
+char_lumina,CharacterGameplayDefinition,QuestGroupID,quest_lumina
+char_lumina,CharacterGameplayDefinition,RecruitmentConditionID,
+char_lumina,CharacterGameplayDefinition,CompanionAbilityID,
+char_lumina,CharacterGameplayDefinition,WorkAbilityID,work_pollen_research
+char_lumina,CharacterGameplayDefinition,ScheduleID,schedule_lumina
+char_lumina,CharacterGameplayDefinition,SpawnPointID,spawn_lumina_default
+char_lumina,CharacterDialogueSet,DialogueTableID,dlg_lumina
+char_lumina,CharacterDialogueSet,Greeting,“오늘 꽃가루는 달빛처럼 빛나요.”
+char_lumina,CharacterDialogueSet,RandomTalk,“나비는 변화를 두려워하지 않아요.”
+char_lumina,CharacterDialogueSet,AffinityReactions,무관심: “아직 널 믿진 않아.” 호기심: “조금은 흥미롭네.” 신뢰: “이번 일은 함께하자.” 애정: “네 곁이 편해졌어.” 사랑: “이제 내 목표에는 네가 있어.”
+char_lumina,CharacterDialogueSet,PreferredItems,"좋아함: 꽃, 향수, 달빛석 / 싫어함: 연기, 날개 훼손"
+char_lumina,CharacterDialogueSet,EventLines,“내 날개를 아름답다고 말해줘서 고마워요.”
+char_lumina,CharacterDialogueSet,ExpressionTags,미소 / 수줍음 / 회상 / 황홀 / 평온
+char_lumina,CharacterDialogueSet,LocalizationTable,Character
+char_lumina,CharacterRelationship,RelationshipRaw,• 플레이어: 처음에는 경계하지만 점차 신뢰 • 기존 동료: 자신의 전문 분야를 통해 협력 • 목표: 자신의 날개를 아름답다고 봐줄 공동체를 찾는 것
+char_lumina,CharacterRelationship,RelationshipTableID,rel_lumina
+char_lumina,DeveloperReference,Origin,야광숲 ‘루미에르 화원’
+char_lumina,DeveloperReference,Affiliation,꽃가루 연구회 관측자
+char_lumina,DeveloperReference,JobDisplay,꽃가루 연구가 / 야간 안내자
+char_lumina,DeveloperReference,RaceDisplay,나비족 (Butterflykin)
+char_lumina,DeveloperReference,SourceSheet,원본 비교표
+char_lumina,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_lumina,DeveloperReference,LastReviewedDate,2026-07-31
+char_neri,CharacterDefinition,CharacterID,char_neri
+char_neri,CharacterDefinition,DisplayName,네리
+char_neri,CharacterDefinition,EnglishName,Neri
+char_neri,CharacterDefinition,NameKey,CHAR_NERI_NAME
+char_neri,CharacterDefinition,RaceID,race_frogkin
+char_neri,CharacterDefinition,JobID,job_weather_observer
+char_neri,CharacterDefinition,Gender,여성
+char_neri,CharacterDefinition,AgeDisplay,19세
+char_neri,CharacterDefinition,HeightDisplay,154cm
+char_neri,CharacterDefinition,IsAvailable,TRUE
+char_neri,CharacterDefinition,UnlockConditionID,unlock_neri_first_meeting
+char_neri,CharacterDefinition,DefaultAreaID,area_tbd
+char_neri,CharacterDefinition,Summary,“비와 습지의 숨결을 읽는 개구리 기상 관측자.”
+char_neri,CharacterDefinition,SymbolMotif,연잎 / 빗방울 / 개구리 울음
+char_neri,CharacterDefinition,ThemeColor,#6CA66F / #B9D98C / #4C6B58
+char_neri,CharacterAppearance,Hair,짙은 초록색 단발
+char_neri,CharacterAppearance,Eyes,맑은 황록색
+char_neri,CharacterAppearance,BodyImpression,작고 탄력 있는 체형
+char_neri,CharacterAppearance,Outfit,방수 조끼와 습지 장화
+char_neri,CharacterAppearance,Accessories,"연잎 모자, 기압계"
+char_neri,CharacterAppearance,Features,물갈퀴 손발과 긴 혀. 비와 습도 변화를 빠르게 감지
+char_neri,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 습지와 빗방울, 물갈퀴와 연잎"
+char_neri,CharacterAppearance,PortraitAddress,Characters/neri/Portrait
+char_neri,CharacterAppearance,FullBodyAddress,Characters/neri/FullBody
+char_neri,CharacterAppearance,PrefabAddress,Characters/neri/Prefab
+char_neri,CharacterAppearance,AnimatorControllerAddress,Characters/neri/AnimatorController
+char_neri,CharacterPersonality,PersonalityTags,"명랑함, 겁 많음, 관찰력, 끈기"
+char_neri,CharacterPersonality,SpeechStyle,짧고 튀는 말투. 놀라면 ‘개굴’ 추임새가 나옴
+char_neri,CharacterPersonality,Trauma,가뭄으로 습지 가족을 잃은 기억
+char_neri,CharacterPersonality,Desire,습지를 복원하고 비의 순환을 되살리는 것
+char_neri,CharacterPersonality,Background,네리는 안개습지 ‘네로 습원’에서 자신의 능력을 익혔다. 과거의 상처를 안고 섬에 도착해 습지 채집가 / 기상 관측자로 활동하며 플레이어와 새로운 공동체를 만들어간다.
+char_neri,CharacterPersonality,VoiceConcept,통통 튀는 밝은 여성 보이스
+char_neri,CharacterGameplayDefinition,NpcRoles,QuestGiver | Worker
+char_neri,CharacterGameplayDefinition,InteractionTypes,Dialogue | Quest | Gift
+char_neri,CharacterGameplayDefinition,ShopID,
+char_neri,CharacterGameplayDefinition,CraftingStationID,
+char_neri,CharacterGameplayDefinition,DefaultAffinity,0
+char_neri,CharacterGameplayDefinition,MaxAffinity,100
+char_neri,CharacterGameplayDefinition,GiftProfileID,gift_neri
+char_neri,CharacterGameplayDefinition,QuestGroupID,quest_neri
+char_neri,CharacterGameplayDefinition,RecruitmentConditionID,
+char_neri,CharacterGameplayDefinition,CompanionAbilityID,
+char_neri,CharacterGameplayDefinition,WorkAbilityID,work_weather
+char_neri,CharacterGameplayDefinition,ScheduleID,schedule_neri
+char_neri,CharacterGameplayDefinition,SpawnPointID,spawn_neri_default
+char_neri,CharacterDialogueSet,DialogueTableID,dlg_neri
+char_neri,CharacterDialogueSet,Greeting,“비 냄새가 나요. 곧 올 거예요.”
+char_neri,CharacterDialogueSet,RandomTalk,“개구리 울음은 비의 편지예요.”
+char_neri,CharacterDialogueSet,AffinityReactions,무관심: “아직 널 믿진 않아.” 호기심: “조금은 흥미롭네.” 신뢰: “이번 일은 함께하자.” 애정: “네 곁이 편해졌어.” 사랑: “이제 내 목표에는 네가 있어.”
+char_neri,CharacterDialogueSet,PreferredItems,"좋아함: 벌레 요리, 연잎, 비구름 수정 / 싫어함: 건조함, 큰 포식자"
+char_neri,CharacterDialogueSet,EventLines,“네가 심은 연잎이 다시 피었어요.”
+char_neri,CharacterDialogueSet,ExpressionTags,활기 / 놀람 / 수줍음 / 집중 / 안도
+char_neri,CharacterDialogueSet,LocalizationTable,Character
+char_neri,CharacterRelationship,RelationshipRaw,• 플레이어: 처음에는 경계하지만 점차 신뢰 • 기존 동료: 자신의 전문 분야를 통해 협력 • 목표: 습지를 복원하고 비의 순환을 되살리는 것
+char_neri,CharacterRelationship,RelationshipTableID,rel_neri
+char_neri,DeveloperReference,Origin,안개습지 ‘네로 습원’
+char_neri,DeveloperReference,Affiliation,습지 정찰단 기상 관측자
+char_neri,DeveloperReference,JobDisplay,습지 채집가 / 기상 관측자
+char_neri,DeveloperReference,RaceDisplay,개구리족 (Frogkin)
+char_neri,DeveloperReference,SourceSheet,원본 비교표
+char_neri,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_neri,DeveloperReference,LastReviewedDate,2026-07-31
+char_sharia,CharacterDefinition,CharacterID,char_sharia
+char_sharia,CharacterDefinition,DisplayName,샤리아
+char_sharia,CharacterDefinition,EnglishName,Sharia
+char_sharia,CharacterDefinition,NameKey,CHAR_SHARIA_NAME
+char_sharia,CharacterDefinition,RaceID,race_sharkkin
+char_sharia,CharacterDefinition,JobID,job_rescue_diver
+char_sharia,CharacterDefinition,Gender,여성
+char_sharia,CharacterDefinition,AgeDisplay,27세
+char_sharia,CharacterDefinition,HeightDisplay,175cm
+char_sharia,CharacterDefinition,IsAvailable,TRUE
+char_sharia,CharacterDefinition,UnlockConditionID,unlock_sharia_first_meeting
+char_sharia,CharacterDefinition,DefaultAreaID,area_tbd
+char_sharia,CharacterDefinition,Summary,“거친 바다에서 누구도 포기하지 않는 상어 구조대원.”
+char_sharia,CharacterDefinition,SymbolMotif,상어 이빨 / 파도 / 구조 밧줄
+char_sharia,CharacterDefinition,ThemeColor,#1D5D7A / #6CB8D8 / #E8F3F6
+char_sharia,CharacterAppearance,Hair,남청색 숏컷
+char_sharia,CharacterAppearance,Eyes,짙은 바다색
+char_sharia,CharacterAppearance,BodyImpression,탄탄한 수영선수형 체형
+char_sharia,CharacterAppearance,Outfit,해양 구조복과 벨트
+char_sharia,CharacterAppearance,Accessories,"상어 이빨 목걸이, 구조용 밧줄"
+char_sharia,CharacterAppearance,Features,"상어 지느러미와 꼬리, 여러 줄의 날카로운 이빨. 피 냄새에 민감"
+char_sharia,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 거친 바다, 상어 지느러미와 구조복"
+char_sharia,CharacterAppearance,PortraitAddress,Characters/sharia/Portrait
+char_sharia,CharacterAppearance,FullBodyAddress,Characters/sharia/FullBody
+char_sharia,CharacterAppearance,PrefabAddress,Characters/sharia/Prefab
+char_sharia,CharacterAppearance,AnimatorControllerAddress,Characters/sharia/AnimatorController
+char_sharia,CharacterPersonality,PersonalityTags,"직설적, 용감함, 경쟁심, 책임감"
+char_sharia,CharacterPersonality,SpeechStyle,시원하고 직설적인 말투. 이빨을 드러내며 웃음
+char_sharia,CharacterPersonality,Trauma,구조하지 못한 난파선 생존자에 대한 죄책감
+char_sharia,CharacterPersonality,Desire,어떤 바다에서도 사람을 구할 수 있는 구조대가 되는 것
+char_sharia,CharacterPersonality,Background,샤리아는 심해항 ‘블루 팽’에서 자신의 능력을 익혔다. 과거의 상처를 안고 섬에 도착해 해양 사냥꾼 / 구조대원으로 활동하며 플레이어와 새로운 공동체를 만들어간다.
+char_sharia,CharacterPersonality,VoiceConcept,시원하고 힘 있는 여성 보이스
+char_sharia,CharacterGameplayDefinition,NpcRoles,QuestGiver | Companion | Guard
+char_sharia,CharacterGameplayDefinition,InteractionTypes,Dialogue | Quest | Gift | Recruit
+char_sharia,CharacterGameplayDefinition,ShopID,
+char_sharia,CharacterGameplayDefinition,CraftingStationID,
+char_sharia,CharacterGameplayDefinition,DefaultAffinity,0
+char_sharia,CharacterGameplayDefinition,MaxAffinity,100
+char_sharia,CharacterGameplayDefinition,GiftProfileID,gift_sharia
+char_sharia,CharacterGameplayDefinition,QuestGroupID,quest_sharia
+char_sharia,CharacterGameplayDefinition,RecruitmentConditionID,recruit_sharia
+char_sharia,CharacterGameplayDefinition,CompanionAbilityID,ability_sharia
+char_sharia,CharacterGameplayDefinition,WorkAbilityID,work_rescue
+char_sharia,CharacterGameplayDefinition,ScheduleID,schedule_sharia
+char_sharia,CharacterGameplayDefinition,SpawnPointID,spawn_sharia_default
+char_sharia,CharacterDialogueSet,DialogueTableID,dlg_sharia
+char_sharia,CharacterDialogueSet,Greeting,“바다는 내가 지켜. 걱정 마.”
+char_sharia,CharacterDialogueSet,RandomTalk,“겁이 나도 물에 뛰어드는 게 구조대야.”
+char_sharia,CharacterDialogueSet,AffinityReactions,무관심: “아직 널 믿진 않아.” 호기심: “조금은 흥미롭네.” 신뢰: “이번 일은 함께하자.” 애정: “네 곁이 편해졌어.” 사랑: “이제 내 목표에는 네가 있어.”
+char_sharia,CharacterDialogueSet,PreferredItems,"좋아함: 생선, 소금, 수영 장비 / 싫어함: 피 낭비, 겁쟁이 행동"
+char_sharia,CharacterDialogueSet,EventLines,"“널 구한 게 아니라, 나도 네게 구원받았어.”"
+char_sharia,CharacterDialogueSet,ExpressionTags,자신감 / 결의 / 동요 / 전투 / 미소
+char_sharia,CharacterDialogueSet,LocalizationTable,Character
+char_sharia,CharacterRelationship,RelationshipRaw,• 플레이어: 처음에는 경계하지만 점차 신뢰 • 기존 동료: 자신의 전문 분야를 통해 협력 • 목표: 어떤 바다에서도 사람을 구할 수 있는 구조대가 되는 것
+char_sharia,CharacterRelationship,RelationshipTableID,rel_sharia
+char_sharia,DeveloperReference,Origin,심해항 ‘블루 팽’
+char_sharia,DeveloperReference,Affiliation,해양 구조대 부대장
+char_sharia,DeveloperReference,JobDisplay,해양 사냥꾼 / 구조대원
+char_sharia,DeveloperReference,RaceDisplay,상어족 (Sharkkin)
+char_sharia,DeveloperReference,SourceSheet,원본 비교표
+char_sharia,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_sharia,DeveloperReference,LastReviewedDate,2026-07-31
+char_aliune,CharacterDefinition,CharacterID,char_aliune
+char_aliune,CharacterDefinition,DisplayName,알리우네
+char_aliune,CharacterDefinition,EnglishName,Aliune
+char_aliune,CharacterDefinition,NameKey,CHAR_ALIUNE_NAME
+char_aliune,CharacterDefinition,RaceID,race_aliune
+char_aliune,CharacterDefinition,JobID,job_plant_healer
+char_aliune,CharacterDefinition,Gender,여성
+char_aliune,CharacterDefinition,AgeDisplay,46세 / 외형 25세
+char_aliune,CharacterDefinition,HeightDisplay,171cm
+char_aliune,CharacterDefinition,IsAvailable,TRUE
+char_aliune,CharacterDefinition,UnlockConditionID,unlock_aliune_first_meeting
+char_aliune,CharacterDefinition,DefaultAreaID,area_tbd
+char_aliune,CharacterDefinition,Summary,“상처 난 땅에 다시 꽃을 피우는 식물형 치유사 알리우네.”
+char_aliune,CharacterDefinition,SymbolMotif,꽃 / 햇살 / 씨앗
+char_aliune,CharacterDefinition,ThemeColor,#73A857 / #E8B6C8 / #F4E7B3
+char_aliune,CharacterAppearance,Hair,연녹색 웨이브 롱헤어
+char_aliune,CharacterAppearance,Eyes,꽃잎빛 연두색
+char_aliune,CharacterAppearance,BodyImpression,성숙하고 포근한 체형
+char_aliune,CharacterAppearance,Outfit,잎과 덩굴로 짠 원피스
+char_aliune,CharacterAppearance,Accessories,"씨앗 목걸이, 정원 가위"
+char_aliune,CharacterAppearance,Features,머리와 어깨에서 꽃과 덩굴이 자라며 햇빛으로 회복함
+char_aliune,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 햇빛 정원, 꽃과 덩굴이 자라는 신체"
+char_aliune,CharacterAppearance,PortraitAddress,Characters/aliune/Portrait
+char_aliune,CharacterAppearance,FullBodyAddress,Characters/aliune/FullBody
+char_aliune,CharacterAppearance,PrefabAddress,Characters/aliune/Prefab
+char_aliune,CharacterAppearance,AnimatorControllerAddress,Characters/aliune/AnimatorController
+char_aliune,CharacterPersonality,PersonalityTags,"포근함, 인내심, 보호본능, 소유욕"
+char_aliune,CharacterPersonality,SpeechStyle,느리고 따뜻한 말투. 대화 중 잎을 정리함
+char_aliune,CharacterPersonality,Trauma,화재로 정원을 잃고 뿌리 일부가 타버림
+char_aliune,CharacterPersonality,Desire,섬 전체에 치유 정원을 만드는 것
+char_aliune,CharacterPersonality,Background,알리우네는 태양정원 ‘플로라 벨’에서 자신의 능력을 익혔다. 과거의 상처를 안고 섬에 도착해 약초 재배사 / 식물 치유사로 활동하며 플레이어와 새로운 공동체를 만들어간다.
+char_aliune,CharacterPersonality,VoiceConcept,따뜻하고 포근한 여성 보이스
+char_aliune,CharacterGameplayDefinition,NpcRoles,QuestGiver | Crafter | Worker
+char_aliune,CharacterGameplayDefinition,InteractionTypes,Dialogue | Quest | Gift | Craft
+char_aliune,CharacterGameplayDefinition,ShopID,
+char_aliune,CharacterGameplayDefinition,CraftingStationID,station_aliune
+char_aliune,CharacterGameplayDefinition,DefaultAffinity,0
+char_aliune,CharacterGameplayDefinition,MaxAffinity,100
+char_aliune,CharacterGameplayDefinition,GiftProfileID,gift_aliune
+char_aliune,CharacterGameplayDefinition,QuestGroupID,quest_aliune
+char_aliune,CharacterGameplayDefinition,RecruitmentConditionID,
+char_aliune,CharacterGameplayDefinition,CompanionAbilityID,
+char_aliune,CharacterGameplayDefinition,WorkAbilityID,work_gardening
+char_aliune,CharacterGameplayDefinition,ScheduleID,schedule_aliune
+char_aliune,CharacterGameplayDefinition,SpawnPointID,spawn_aliune_default
+char_aliune,CharacterDialogueSet,DialogueTableID,dlg_aliune
+char_aliune,CharacterDialogueSet,Greeting,“햇살이 좋아요. 꽃들이 깨어났어요.”
+char_aliune,CharacterDialogueSet,RandomTalk,“상처는 햇빛과 시간으로 자라나 꽃이 돼요.”
+char_aliune,CharacterDialogueSet,AffinityReactions,무관심: “아직 널 믿진 않아.” 호기심: “조금은 흥미롭네.” 신뢰: “이번 일은 함께하자.” 애정: “네 곁이 편해졌어.” 사랑: “이제 내 목표에는 네가 있어.”
+char_aliune,CharacterDialogueSet,PreferredItems,"좋아함: 씨앗, 햇빛, 깨끗한 물 / 싫어함: 불, 제초제"
+char_aliune,CharacterDialogueSet,EventLines,“네 손길이 내 정원에 봄을 돌려줬어요.”
+char_aliune,CharacterDialogueSet,ExpressionTags,포근함 / 수줍음 / 회상 / 치유 / 분노
+char_aliune,CharacterDialogueSet,LocalizationTable,Character
+char_aliune,CharacterRelationship,RelationshipRaw,• 플레이어: 처음에는 경계하지만 점차 신뢰 • 기존 동료: 자신의 전문 분야를 통해 협력 • 목표: 섬 전체에 치유 정원을 만드는 것
+char_aliune,CharacterRelationship,RelationshipTableID,rel_aliune
+char_aliune,DeveloperReference,Origin,태양정원 ‘플로라 벨’
+char_aliune,DeveloperReference,Affiliation,치유 정원의 수호자
+char_aliune,DeveloperReference,JobDisplay,약초 재배사 / 식물 치유사
+char_aliune,DeveloperReference,RaceDisplay,"알리우네 (Aliune, 꽃 여인)"
+char_aliune,DeveloperReference,SourceSheet,원본 비교표
+char_aliune,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_aliune,DeveloperReference,LastReviewedDate,2026-07-31
+char_octavia,CharacterDefinition,CharacterID,char_octavia
+char_octavia,CharacterDefinition,DisplayName,옥타비아
+char_octavia,CharacterDefinition,EnglishName,Octavia
+char_octavia,CharacterDefinition,NameKey,CHAR_OCTAVIA_NAME
+char_octavia,CharacterDefinition,RaceID,race_krakenkin
+char_octavia,CharacterDefinition,JobID,job_deep_sea_archivist
+char_octavia,CharacterDefinition,Gender,여성
+char_octavia,CharacterDefinition,AgeDisplay,63세 / 외형 26세
+char_octavia,CharacterDefinition,HeightDisplay,상반신 166cm / 촉수 포함 300cm
+char_octavia,CharacterDefinition,IsAvailable,TRUE
+char_octavia,CharacterDefinition,UnlockConditionID,unlock_octavia_first_meeting
+char_octavia,CharacterDefinition,DefaultAreaID,area_tbd
+char_octavia,CharacterDefinition,Summary,“심해의 기억을 먹물로 남기는 크라켄 기록가.”
+char_octavia,CharacterDefinition,SymbolMotif,문어 / 먹물 / 심해등
+char_octavia,CharacterDefinition,ThemeColor,#40365F / #8066A8 / #2F6473
+char_octavia,CharacterAppearance,Hair,먹빛 보라색 장발
+char_octavia,CharacterAppearance,Eyes,청보라색
+char_octavia,CharacterAppearance,BodyImpression,유연한 상반신과 여덟 촉수
+char_octavia,CharacterAppearance,Outfit,심해용 가죽 하네스와 망토
+char_octavia,CharacterAppearance,Accessories,"잉크병 펜던트, 심해 등불"
+char_octavia,CharacterAppearance,Features,허리 아래 여덟 촉수. 먹물로 지도와 기억을 기록함
+char_octavia,CharacterAppearance,IllustrationStyle,"일본 애니풍 고정 – 심해 유적, 여덟 촉수와 먹물 문양"
+char_octavia,CharacterAppearance,PortraitAddress,Characters/octavia/Portrait
+char_octavia,CharacterAppearance,FullBodyAddress,Characters/octavia/FullBody
+char_octavia,CharacterAppearance,PrefabAddress,Characters/octavia/Prefab
+char_octavia,CharacterAppearance,AnimatorControllerAddress,Characters/octavia/AnimatorController
+char_octavia,CharacterPersonality,PersonalityTags,"지적, 조용함, 호기심, 장난기"
+char_octavia,CharacterPersonality,SpeechStyle,조용하고 우아한 말투. 촉수로 글자를 쓰는 습관
+char_octavia,CharacterPersonality,Trauma,심해에서 군체를 잃고 혼자 살아남음
+char_octavia,CharacterPersonality,Desire,심해의 잃어버린 기록을 복원하는 것
+char_octavia,CharacterPersonality,Background,옥타비아는 심해유적 ‘옥토라’에서 자신의 능력을 익혔다. 과거의 상처를 안고 섬에 도착해 심해 탐사자 / 잉크 기록가로 활동하며 플레이어와 새로운 공동체를 만들어간다.
+char_octavia,CharacterPersonality,VoiceConcept,조용하고 지적인 여성 보이스
+char_octavia,CharacterGameplayDefinition,NpcRoles,QuestGiver | Companion | Special
+char_octavia,CharacterGameplayDefinition,InteractionTypes,Dialogue | Quest | Gift | Recruit
+char_octavia,CharacterGameplayDefinition,ShopID,
+char_octavia,CharacterGameplayDefinition,CraftingStationID,
+char_octavia,CharacterGameplayDefinition,DefaultAffinity,0
+char_octavia,CharacterGameplayDefinition,MaxAffinity,100
+char_octavia,CharacterGameplayDefinition,GiftProfileID,gift_octavia
+char_octavia,CharacterGameplayDefinition,QuestGroupID,quest_octavia
+char_octavia,CharacterGameplayDefinition,RecruitmentConditionID,recruit_octavia
+char_octavia,CharacterGameplayDefinition,CompanionAbilityID,ability_octavia
+char_octavia,CharacterGameplayDefinition,WorkAbilityID,work_deep_sea_archive
+char_octavia,CharacterGameplayDefinition,ScheduleID,schedule_octavia
+char_octavia,CharacterGameplayDefinition,SpawnPointID,spawn_octavia_default
+char_octavia,CharacterDialogueSet,DialogueTableID,dlg_octavia
+char_octavia,CharacterDialogueSet,Greeting,“심해의 기록을 읽어드릴까요?”
+char_octavia,CharacterDialogueSet,RandomTalk,“먹물은 어둠이 아니라 기억의 색이에요.”
+char_octavia,CharacterDialogueSet,AffinityReactions,무관심: “아직 널 믿진 않아.” 호기심: “조금은 흥미롭네.” 신뢰: “이번 일은 함께하자.” 애정: “네 곁이 편해졌어.” 사랑: “이제 내 목표에는 네가 있어.”
+char_octavia,CharacterDialogueSet,PreferredItems,"좋아함: 잉크, 지도, 조개 / 싫어함: 건조함, 촉수 구속"
+char_octavia,CharacterDialogueSet,EventLines,“당신 이름은 가장 지워지지 않는 잉크로 기록할게요.”
+char_octavia,CharacterDialogueSet,ExpressionTags,고요 / 장난 / 수줍음 / 집중 / 회상
+char_octavia,CharacterDialogueSet,LocalizationTable,Character
+char_octavia,CharacterRelationship,RelationshipRaw,• 플레이어: 처음에는 경계하지만 점차 신뢰 • 기존 동료: 자신의 전문 분야를 통해 협력 • 목표: 심해의 잃어버린 기록을 복원하는 것
+char_octavia,CharacterRelationship,RelationshipTableID,rel_octavia
+char_octavia,DeveloperReference,Origin,심해유적 ‘옥토라’
+char_octavia,DeveloperReference,Affiliation,심해 기록단 마지막 기록가
+char_octavia,DeveloperReference,JobDisplay,심해 탐사자 / 잉크 기록가
+char_octavia,DeveloperReference,RaceDisplay,"크라켄족 (Krakenkin, 문어형)"
+char_octavia,DeveloperReference,SourceSheet,원본 비교표
+char_octavia,DeveloperReference,DataStatus,기획 기반 임시값 포함
+char_octavia,DeveloperReference,LastReviewedDate,2026-07-31

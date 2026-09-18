@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5965c6a9f8452146af23bb0d764ae92, type: 3}
+  m_Name: NpcGift_Lilica
+  m_EditorClassIdentifier: Assembly-CSharp::NpcGiftProfile
+  profileId: gift_lilica
+  sheetNote: "\uC88B\uC544\uD568: \uB2EC\uC758 \uBCF4\uC11D, \uACE0\uC11C, \uB2EC\uCF64\uD55C
+    \uAC04\uC2DD, \uAC80\uC740 \uC7A5\uBBF8 / \uC2EB\uC5B4\uD568: \uB9C8\uB298, \uC131\uC218,
+    \uBC1D\uC740 \uBE5B"
+  defaultPreference: 2
+  entries:
+  - item: {fileID: 11400000, guid: 95ca44aa8a27d41448c511db6fa0a55c, type: 2}
+    preference: 0
+    source: food_strawberry
+  - item: {fileID: 11400000, guid: eef1b375027259b42834d2262ce9dd96, type: 2}
+    preference: 1
+    source: tag:sweet
+  - item: {fileID: 11400000, guid: 250b3288a0c4e7e428748a942a5f848a, type: 2}
+    preference: 1
+    source: tag:sweet
+  - item: {fileID: 11400000, guid: 3a8ea9dc329d35c4b8b4c84410a7f15d, type: 2}
+    preference: 1
+    source: tag:sweet
+  - item: {fileID: 11400000, guid: 233c5c7467d9daa41bab4b59439b9465, type: 2}
+    preference: 3
+    source: drink_water_bottle
+  - item: {fileID: 11400000, guid: 09c927a2524bd8f409d6b8ddab61bc58, type: 2}
+    preference: 4
+    source: food_winter_radish

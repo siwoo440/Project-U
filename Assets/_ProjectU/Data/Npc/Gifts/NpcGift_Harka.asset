@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5965c6a9f8452146af23bb0d764ae92, type: 3}
+  m_Name: NpcGift_Harka
+  m_EditorClassIdentifier: Assembly-CSharp::NpcGiftProfile
+  profileId: gift_harka
+  sheetNote: "\uC88B\uC544\uD568: \uACE0\uAE30\uB958 \uC74C\uC2DD, \uD0D0\uD5D8 \uC7A5\uBE44,
+    \uD5A5\uC8FC\uBA38\uB2C8 / \uC2EB\uC5B4\uD568: \uBE44\uB098 \uC2B5\uAE30, \uC369\uC740
+    \uB0C4\uC0C8"
+  defaultPreference: 2
+  entries:
+  - item: {fileID: 11400000, guid: 2c82bd3688707a247a1d2c303d4b2589, type: 2}
+    preference: 0
+    source: tag:hearty
+  - item: {fileID: 11400000, guid: b4f9d8fea40a5c741bf6bc3778083b00, type: 2}
+    preference: 0
+    source: tag:hearty
+  - item: {fileID: 11400000, guid: 2168b2ceb2540714c8bcfcadd543b478, type: 2}
+    preference: 0
+    source: tag:hearty
+  - item: {fileID: 11400000, guid: e63787b6f7de7624f9bbb93b5512905e, type: 2}
+    preference: 0
+    source: tag:hearty
+  - item: {fileID: 11400000, guid: f256d7e940b86444db7d46375d22f42c, type: 2}
+    preference: 1
+    source: equipment_small_backpack
+  - item: {fileID: 11400000, guid: 63a6ccd99ac6288459462be53a4919a5, type: 2}
+    preference: 1
+    source: equipment_work_hat
+  - item: {fileID: 11400000, guid: f82cfee3161243747ad3a92e8c7418ba, type: 2}
+    preference: 3
+    source: resource_worm_bait

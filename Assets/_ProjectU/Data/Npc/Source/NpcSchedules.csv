@@ -1,0 +1,97 @@
+CharacterID,Plan,Priority,Days,Seasons,Weather,Hour,Location,Activity
+char_lunette,default,0,All,All,Any,6,loc_home_lunette,약초 말리기
+char_lunette,default,0,All,All,Any,8,loc_forest_edge,약초 채집
+char_lunette,default,0,All,All,Any,12,loc_cafe,점심과 차 한 잔
+char_lunette,default,0,All,All,Any,14,loc_forest_edge,약초 채집
+char_lunette,default,0,All,All,Any,17,loc_village_square,약초 손질
+char_lunette,default,0,All,All,Any,20,loc_home_lunette,치료약 만들기
+char_lunette,default,0,All,All,Any,22,loc_home_lunette,잠
+char_lunette,winter,5,All,Winter,Any,7,loc_home_lunette,난로 옆 약초 정리
+char_lunette,winter,5,All,Winter,Any,10,loc_forest_edge,겨울 약초 찾기
+char_lunette,winter,5,All,Winter,Any,13,loc_cafe,따뜻한 우유
+char_lunette,winter,5,All,Winter,Any,16,loc_village_square,산책
+char_lunette,winter,5,All,Winter,Any,19,loc_home_lunette,잠
+char_lunette,rain,10,All,All,Bad,6,loc_home_lunette,비 오는 날 약초 정리
+char_lunette,rain,10,All,All,Bad,11,loc_cafe,창가에서 책 읽기
+char_lunette,rain,10,All,All,Bad,16,loc_home_lunette,약초 달이기
+char_lunette,rain,10,All,All,Bad,22,loc_home_lunette,잠
+char_verona,default,0,All,All,Any,5,loc_home_verona,새벽 기도
+char_verona,default,0,All,All,Any,6,loc_farm_fields,밭 돌보기
+char_verona,default,0,All,All,Any,12,loc_village_square,점심
+char_verona,default,0,All,All,Any,13,loc_farm_fields,밭 돌보기
+char_verona,default,0,All,All,Any,18,loc_cafe,카페에 채소 전하기
+char_verona,default,0,All,All,Any,20,loc_home_verona,휴식
+char_verona,default,0,All,All,Any,22,loc_home_verona,잠
+char_verona,winter,5,All,Winter,Any,7,loc_home_verona,기도
+char_verona,winter,5,All,Winter,Any,9,loc_farm_fields,겨울 밭 살피기
+char_verona,winter,5,All,Winter,Any,12,loc_cafe,점심
+char_verona,winter,5,All,Winter,Any,14,loc_smithy,농기구 수리 맡기기
+char_verona,winter,5,All,Winter,Any,17,loc_home_verona,휴식
+char_verona,rain,10,All,All,Bad,6,loc_farm_fields,빗속 밭 점검
+char_verona,rain,10,All,All,Bad,9,loc_home_verona,농기구 손질
+char_verona,rain,10,All,All,Bad,14,loc_cafe,비 구경
+char_verona,rain,10,All,All,Bad,18,loc_home_verona,휴식
+char_mio,default,0,All,All,Any,9,loc_pond_dock,낚시
+char_mio,default,0,All,All,Any,12,loc_village_square,낮잠
+char_mio,default,0,All,All,Any,14,loc_pond_dock,낚시
+char_mio,default,0,All,All,Any,18,loc_cafe,오늘 잡은 생선 자랑
+char_mio,default,0,All,All,Any,21,loc_home_mio,잠
+char_mio,summer,5,All,Summer,Any,6,loc_pond_dock,새벽 낚시
+char_mio,summer,5,All,Summer,Any,11,loc_home_mio,더위 피해 낮잠
+char_mio,summer,5,All,Summer,Any,15,loc_pond_dock,저녁 낚시
+char_mio,summer,5,All,Summer,Any,19,loc_village_square,모닥불에 생선 굽기
+char_mio,summer,5,All,Summer,Any,22,loc_home_mio,잠
+char_mio,rain,10,All,All,Bad,8,loc_home_mio,낚싯줄 손질
+char_mio,rain,10,All,All,Bad,11,loc_cafe,비 피하기
+char_mio,rain,10,All,All,Bad,16,loc_home_mio,낚싯대 닦기
+char_mio,rain,10,All,All,Bad,21,loc_home_mio,잠
+char_mireille,default,0,All,All,Any,5,loc_home_mireille,일어나기
+char_mireille,default,0,All,All,Any,6,loc_animal_pens,가축 돌보기
+char_mireille,default,0,All,All,Any,10,loc_farm_fields,풀밭 산책
+char_mireille,default,0,All,All,Any,13,loc_village_square,점심
+char_mireille,default,0,All,All,Any,15,loc_animal_pens,가축 돌보기
+char_mireille,default,0,All,All,Any,18,loc_home_mireille,양털 손질
+char_mireille,default,0,All,All,Any,21,loc_home_mireille,잠
+char_mireille,rest,5,Sunday,All,Any,7,loc_home_mireille,기도
+char_mireille,rest,5,Sunday,All,Any,9,loc_animal_pens,가축 먹이 주기
+char_mireille,rest,5,Sunday,All,Any,11,loc_forest_edge,루네트와 약초 따기
+char_mireille,rest,5,Sunday,All,Any,15,loc_cafe,차 마시기
+char_mireille,rest,5,Sunday,All,Any,18,loc_home_mireille,휴식
+char_mireille,rain,10,All,All,Bad,6,loc_animal_pens,가축 달래기
+char_mireille,rain,10,All,All,Bad,10,loc_home_mireille,뜨개질
+char_mireille,rain,10,All,All,Bad,15,loc_animal_pens,가축 달래기
+char_mireille,rain,10,All,All,Bad,18,loc_home_mireille,휴식
+char_milky,default,0,All,All,Any,6,loc_home_milky,우유 데우기
+char_milky,default,0,All,All,Any,8,loc_cafe,카페 영업
+char_milky,default,0,All,All,Any,18,loc_village_square,저녁 산책
+char_milky,default,0,All,All,Any,20,loc_home_milky,가게 정리
+char_milky,default,0,All,All,Any,22,loc_home_milky,잠
+char_milky,rest,5,Wednesday,All,Any,8,loc_home_milky,늦잠
+char_milky,rest,5,Wednesday,All,Any,10,loc_animal_pens,미레유 도와주기
+char_milky,rest,5,Wednesday,All,Any,13,loc_market_stall,장보기
+char_milky,rest,5,Wednesday,All,Any,16,loc_village_square,산책
+char_milky,rest,5,Wednesday,All,Any,19,loc_home_milky,새 메뉴 연습
+char_milky,rain,10,Monday|Tuesday|Thursday|Friday|Saturday|Sunday,All,Bad,6,loc_home_milky,우유 데우기
+char_milky,rain,10,Monday|Tuesday|Thursday|Friday|Saturday|Sunday,All,Bad,8,loc_cafe,비 오는 날 영업
+char_milky,rain,10,Monday|Tuesday|Thursday|Friday|Saturday|Sunday,All,Bad,19,loc_home_milky,가게 정리
+char_dravia,default,0,All,All,Any,7,loc_home_dravia,화로 예열
+char_dravia,default,0,All,All,Any,9,loc_smithy,대장간 영업
+char_dravia,default,0,All,All,Any,13,loc_cafe,매운 점심
+char_dravia,default,0,All,All,Any,14,loc_smithy,대장간 영업
+char_dravia,default,0,All,All,Any,18,loc_village_square,저녁 산책
+char_dravia,default,0,All,All,Any,21,loc_home_dravia,잠
+char_dravia,rest,5,Sunday,All,Any,8,loc_home_dravia,늦잠
+char_dravia,rest,5,Sunday,All,Any,11,loc_forest_edge,광석 찾기
+char_dravia,rest,5,Sunday,All,Any,15,loc_pond_dock,물가에서 쉬기
+char_dravia,rest,5,Sunday,All,Any,18,loc_cafe,저녁
+char_dravia,rest,5,Sunday,All,Any,21,loc_home_dravia,잠
+char_dravia,rain,10,Monday|Tuesday|Wednesday|Thursday|Friday|Saturday,All,Bad,7,loc_home_dravia,화로 예열
+char_dravia,rain,10,Monday|Tuesday|Wednesday|Thursday|Friday|Saturday,All,Bad,9,loc_smithy,비 오는 날 제련
+char_dravia,rain,10,Monday|Tuesday|Wednesday|Thursday|Friday|Saturday,All,Bad,18,loc_home_dravia,쉬기
+char_lichel,default,0,All,All,Any,5,loc_lichel_camp,짐 정리
+char_lichel,default,0,All,All,Any,6,loc_market_stall,떠돌이 상점
+char_lichel,default,0,All,All,Any,20,loc_village_square,소문 모으기
+char_lichel,default,0,All,All,Any,22,loc_lichel_camp,잠
+char_lichel,rain,10,All,All,Bad,5,loc_lichel_camp,짐 덮개 치기
+char_lichel,rain,10,All,All,Bad,6,loc_market_stall,비 가림막 치고 장사
+char_lichel,rain,10,All,All,Bad,20,loc_lichel_camp,젖은 물건 말리기

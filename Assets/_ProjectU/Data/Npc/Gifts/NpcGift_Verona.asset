@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5965c6a9f8452146af23bb0d764ae92, type: 3}
+  m_Name: NpcGift_Verona
+  m_EditorClassIdentifier: Assembly-CSharp::NpcGiftProfile
+  profileId: gift_verona
+  sheetNote: "\uC88B\uC544\uD568: \uB18D\uC791\uBB3C, \uAE08\uC18D \uACF5\uC608\uD488,
+    \uB300\uC9C0 \uACB0\uC815 / \uC2EB\uC5B4\uD568: \uAC00\uBCBC\uC6B4 \uB18D\uB2F4,
+    \uD5DB\uB41C \uC57D\uC18D"
+  defaultPreference: 2
+  entries:
+  - item: {fileID: 11400000, guid: 60a1b7725b902114381bd98a8db8ec3b, type: 2}
+    preference: 0
+    source: food_pumpkin
+  - item: {fileID: 11400000, guid: 09c927a2524bd8f409d6b8ddab61bc58, type: 2}
+    preference: 0
+    source: food_winter_radish
+  - item: {fileID: 11400000, guid: a42d6efd666a1fc40809cbcbcd3362b4, type: 2}
+    preference: 1
+    source: tag:crop
+  - item: {fileID: 11400000, guid: 95ca44aa8a27d41448c511db6fa0a55c, type: 2}
+    preference: 1
+    source: tag:crop
+  - item: {fileID: 11400000, guid: 6fd5b0751520d284ba0ec2064ed5ea80, type: 2}
+    preference: 1
+    source: tag:crop
+  - item: {fileID: 11400000, guid: c593f671b9ae9d24e96e6cd5ee7b2a1c, type: 2}
+    preference: 1
+    source: item_iron_ore
+  - item: {fileID: 11400000, guid: de7994a6b3b2dcc479cd72a544075a60, type: 2}
+    preference: 1
+    source: tag:seed
+  - item: {fileID: 11400000, guid: b452886093be83d44a997c06ab4f6f18, type: 2}
+    preference: 1
+    source: tag:seed
+  - item: {fileID: 11400000, guid: aaca232007164504cbd41b9a9b8cbefb, type: 2}
+    preference: 1
+    source: tag:seed
+  - item: {fileID: 11400000, guid: ed2ff3bcb0baa3743bf8df1264f8d60f, type: 2}
+    preference: 1
+    source: tag:seed
+  - item: {fileID: 11400000, guid: 9139b198cba79454cbbb676d851141c5, type: 2}
+    preference: 1
+    source: tag:seed
+  - item: {fileID: 11400000, guid: 479a7e7a5dbb8df4a9ea663d4e582a1b, type: 2}
+    preference: 3
+    source: resource_stone
+  - item: {fileID: 11400000, guid: f82cfee3161243747ad3a92e8c7418ba, type: 2}
+    preference: 4
+    source: resource_worm_bait

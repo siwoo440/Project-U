@@ -1,0 +1,211 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3770e9c216b6ab74097703d430744396, type: 3}
+  m_Name: NpcDialogue_Verona
+  m_EditorClassIdentifier: Assembly-CSharp::NpcDialogueSet
+  dialogueId: dlg_verona
+  dailyTalkLimit: 1
+  expressionTags:
+  - "\uD3C9\uC628"
+  - "\uB530\uB73B\uD568"
+  - "\uACB0\uC758"
+  - "\uBD80\uB044\uB7EC\uC6C0"
+  - "\uD68C\uC0C1"
+  lines:
+  - kind: 0
+    stage: 0
+    season: 0
+    weather: 0
+    giftPreference: 2
+    text: "\uC0C8 \uC5BC\uAD74\uC774\uAD70. \uB098\uB294 \uBCA0\uB85C\uB098. \uC774
+      \uBC2D\uC740 \uB0B4\uAC00 \uB3CC\uBCF4\uACE0 \uC788\uC9C0. \uD759\uC744 \uBC1F\uC744
+      \uB550 \uC870\uC2EC\uD574 \uC918."
+  - kind: 1
+    stage: 0
+    season: 0
+    weather: 0
+    giftPreference: 2
+    text: "\uD587\uC0B4\uC774 \uC88B\uAD70. \uC624\uB298\uB3C4 \uB300\uC9C0\uB294
+      \uC6B0\uB9AC\uB97C \uC9C0\uCF1C\uBCF4\uACE0 \uC788\uC5B4."
+  - kind: 1
+    stage: 2
+    season: 0
+    weather: 0
+    giftPreference: 2
+    text: "\uAE30\uB2E4\uB838\uC5B4. \uB124 \uBC1C\uC18C\uB9AC\uB294 \uC774\uC81C
+      \uB545\uC774 \uBA3C\uC800 \uC54C\uC544."
+  - kind: 1
+    stage: 0
+    season: 0
+    weather: 0
+    giftPreference: 2
+    text: "\uC654\uAD70. \uC624\uB298\uB3C4 \uB300\uC9C0\uB294 \uC870\uC6A9\uD558\uB2E4."
+  - kind: 2
+    stage: 1
+    season: 0
+    weather: 0
+    giftPreference: 2
+    text: "\uBB3C\uC740 \uC544\uCE68\uC5D0 \uC8FC\uB294 \uAC8C \uC88B\uC544. \uD55C\uB0AE\uC758
+      \uBB3C\uC740 \uBFCC\uB9AC\uAE4C\uC9C0 \uAC00\uAE30 \uC804\uC5D0 \uB0A0\uC544\uAC00
+      \uBC84\uB9AC\uB2C8\uAE4C."
+  - kind: 2
+    stage: 0
+    season: 0
+    weather: 0
+    giftPreference: 2
+    text: "\uC528\uC557\uC740 \uC11C\uB450\uB974\uC9C0 \uC54A\uC544. \uBB3C\uACFC
+      \uD587\uBE5B, \uADF8\uB9AC\uACE0 \uC2DC\uAC04\uC774\uBA74 \uCDA9\uBD84\uD558\uC9C0."
+  - kind: 2
+    stage: 2
+    season: 0
+    weather: 0
+    giftPreference: 2
+    text: "\uC2E0\uC804\uC774 \uBB34\uB108\uC9C4 \uB0A0, \uB098\uB294 \uAE30\uB3C4\uB97C
+      \uBA48\uCDC4\uC9C0. \uC694\uC998\uC740\u2026 \uB2E4\uC2DC \uD574 \uBCFC\uAE4C
+      \uC2F6\uC5B4."
+  - kind: 2
+    stage: 0
+    season: 0
+    weather: 0
+    giftPreference: 2
+    text: "\uC0AC\uB78C\uC740 \uC27D\uAC8C \uC78A\uC9C0\uB9CC, \uB545\uC740 \uBAA8\uB4E0
+      \uAC78 \uAE30\uC5B5\uD558\uC9C0."
+  - kind: 3
+    stage: 3
+    season: 0
+    weather: 0
+    giftPreference: 2
+    text: "\uB300\uC9C0\uCC98\uB7FC\u2026 \uCC9C\uCC9C\uD788, \uAE4A\uAC8C. \uADF8\uB807\uAC8C
+      \uB108\uB97C \uD488\uACE0 \uC2F6\uC5B4."
+  - kind: 3
+    stage: 2
+    season: 0
+    weather: 0
+    giftPreference: 2
+    text: "\uB108\uC640 \uD568\uAED8 \uBC2D\uC744 \uAC08\uBA74\u2026 \uD48D\uC694\uAC00
+      \uB3CC\uC544\uC62C \uAC83 \uAC19\uC544."
+  - kind: 3
+    stage: 1
+    season: 0
+    weather: 0
+    giftPreference: 2
+    text: "\uB108\uB294 \uD759 \uBB3B\uC740 \uC190\uC744 \uB450\uB824\uC6CC\uD558\uC9C0
+      \uC54A\uB294\uAD70."
+  - kind: 3
+    stage: 0
+    season: 0
+    weather: 0
+    giftPreference: 2
+    text: "\uB300\uC9C0\uB294 \uAC70\uC9D3\uB9D0\uC744 \uD558\uC9C0 \uC54A\uC9C0.
+      \uC0AC\uB78C\uC740 \uB2E4\uB97C\uC9C0\uB3C4 \uBAA8\uB974\uC9C0\uB9CC."
+  - kind: 3
+    stage: 4
+    season: 0
+    weather: 0
+    giftPreference: 2
+    text: "\uC774\uC81C\uB294 \uC2E0\uC774 \uC544\uB2CC, \uB124\uAC00 \uB0B4 \uBBFF\uC74C\uC774\uC57C."
+  - kind: 4
+    stage: 0
+    season: 2
+    weather: 0
+    giftPreference: 2
+    text: "\uD638\uBC15\uC774 \uC5EC\uBB34\uB294 \uACC4\uC808\uC774\uB2E4. \uAC70\uB458
+      \uB54C\uB294 \uAC10\uC0AC\uD558\uB294 \uB9C8\uC74C\uC744 \uC78A\uC9C0 \uB9C8."
+  - kind: 4
+    stage: 0
+    season: 3
+    weather: 0
+    giftPreference: 2
+    text: "\uACA8\uC6B8 \uBB34\uB294 \uCD94\uC704\uB97C \uACAC\uB51C\uC218\uB85D
+      \uB2EC\uC544\uC9C0\uC9C0. \uC0AC\uB78C\uB3C4 \uBE44\uC2B7\uD574."
+  - kind: 4
+    stage: 0
+    season: 1
+    weather: 0
+    giftPreference: 2
+    text: "\uD1A0\uB9C8\uD1A0\uAC00 \uD587\uBCD5\uC744 \uBA39\uACE0 \uBD89\uC5B4\uC9C0\uB294
+      \uACC4\uC808\uC774\uC57C. \uBB3C\uC744 \uAC70\uB974\uC9C0 \uB9C8."
+  - kind: 4
+    stage: 0
+    season: 0
+    weather: 0
+    giftPreference: 2
+    text: "\uBD04\uC774\uAD70. \uAC10\uC790\uC640 \uB538\uAE30\uB97C \uC2EC\uAE30
+      \uC88B\uC740 \uB54C\uB2E4. \uB2A6\uC73C\uBA74 \uD55C \uD574\uAC00 \uB2A6\uC5B4\uC838."
+  - kind: 5
+    stage: 0
+    season: 0
+    weather: 2
+    giftPreference: 2
+    text: "\uBE44\uB294 \uB300\uC9C0\uC758 \uC120\uBB3C\uC774\uC57C. \uC624\uB298\uC740
+      \uBB3C\uBFCC\uB9AC\uAC1C\uB97C \uC26C\uAC8C \uD574\uB3C4 \uB3FC."
+  - kind: 5
+    stage: 0
+    season: 0
+    weather: 3
+    giftPreference: 2
+    text: "\uB208\uC774 \uBC2D\uC744 \uB36E\uC5C8\uAD70. \uB545\uC740 \uC9C0\uAE08
+      \uC7A0\uB4E4\uC5B4 \uC788\uC5B4. \uAE68\uC6B0\uC9C0 \uB9D0\uC790."
+  - kind: 5
+    stage: 0
+    season: 0
+    weather: 4
+    giftPreference: 2
+    text: "\uD3ED\uD48D\uC774 \uC628\uB2E4. \uBC2D\uC740 \uB0B4\uAC00 \uC9C0\uD0AC
+      \uD14C\uB2C8, \uB108\uB294 \uC548\uC73C\uB85C \uB4E4\uC5B4\uAC00."
+  - kind: 6
+    stage: 0
+    season: 0
+    weather: 0
+    giftPreference: 4
+    text: "\uC774\uB7F0 \uAC78 \uC120\uBB3C\uC774\uB77C\uACE0 \uB0B4\uBBF8\uB294
+      \uAC74\uAC00. \uC57D\uC18D\uC744 \uAC00\uBCCD\uAC8C \uC5EC\uAE30\uC9C0 \uB9C8."
+  - kind: 6
+    stage: 0
+    season: 0
+    weather: 0
+    giftPreference: 0
+    text: "\u2026\uC798 \uD0A4\uC6E0\uAD70. \uC774\uAC74 \uB300\uC9C0\uAC00 \uB108\uB97C
+      \uBBFF\uB294\uB2E4\uB294 \uC99D\uAC70\uC57C."
+  - kind: 6
+    stage: 0
+    season: 0
+    weather: 0
+    giftPreference: 1
+    text: "\uC88B\uC740 \uAC83\uC744 \uACE8\uB790\uC5B4. \uACE0\uB9D9\uAC8C \uBC1B\uC9C0."
+  - kind: 6
+    stage: 0
+    season: 0
+    weather: 0
+    giftPreference: 2
+    text: "\uADF8\uB798, \uBC1B\uC544 \uB450\uC9C0."
+  - kind: 6
+    stage: 0
+    season: 0
+    weather: 0
+    giftPreference: 3
+    text: "\u2026\uC774\uAC74 \uAC00\uBCBC\uC6B4 \uB18D\uB2F4\uC778\uAC00? \uB300\uC9C0\uB294
+      \uC6C3\uC9C0 \uC54A\uC544."
+  - kind: 7
+    stage: 0
+    season: 0
+    weather: 0
+    giftPreference: 2
+    text: "\uC0DD\uC77C\uC744 \uCC59\uACA8 \uC8FC\uB2E4\uB2C8\u2026 \uC2E0\uC804\uC5D0\uC11C\uB3C4
+      \uC774\uB7F0 \uC801\uC740 \uC5C6\uC5C8\uB294\uB370. \uACE0\uB9C8\uC6CC."
+  - kind: 8
+    stage: 0
+    season: 0
+    weather: 0
+    giftPreference: 2
+    text: "\uB108\uB294 \uC528\uC557 \uAC19\uC544. \uC791\uC9C0\uB9CC\u2026 \uC5B8\uC820\uAC00
+      \uB0B4 \uB9C8\uC74C\uC18D\uC5D0\uC11C \uAF43\uC774 \uD544 \uAC70\uC57C."

@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5965c6a9f8452146af23bb0d764ae92, type: 3}
+  m_Name: NpcGift_Eiri
+  m_EditorClassIdentifier: Assembly-CSharp::NpcGiftProfile
+  profileId: gift_eiri
+  sheetNote: "\uC88B\uC544\uD568: \uC545\uAE30, \uAE43\uD138 \uC7A5\uC2DD, \uD5A5\uAE0B\uD55C
+    \uAF43 / \uC2EB\uC5B4\uD568: \uBB34\uAC70\uC6B4 \uC7A5\uBE44, \uC1E0\uC0AC\uC2AC,
+    \uB2EB\uD78C \uACF5\uAC04"
+  defaultPreference: 2
+  entries:
+  - item: {fileID: 11400000, guid: 95ca44aa8a27d41448c511db6fa0a55c, type: 2}
+    preference: 0
+    source: food_strawberry
+  - item: {fileID: 11400000, guid: eef1b375027259b42834d2262ce9dd96, type: 2}
+    preference: 1
+    source: tag:sweet
+  - item: {fileID: 11400000, guid: 250b3288a0c4e7e428748a942a5f848a, type: 2}
+    preference: 1
+    source: tag:sweet
+  - item: {fileID: 11400000, guid: 3a8ea9dc329d35c4b8b4c84410a7f15d, type: 2}
+    preference: 1
+    source: tag:sweet
+  - item: {fileID: 11400000, guid: c593f671b9ae9d24e96e6cd5ee7b2a1c, type: 2}
+    preference: 3
+    source: tag:ore
+  - item: {fileID: 11400000, guid: 479a7e7a5dbb8df4a9ea663d4e582a1b, type: 2}
+    preference: 3
+    source: tag:ore

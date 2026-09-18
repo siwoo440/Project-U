@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5965c6a9f8452146af23bb0d764ae92, type: 3}
+  m_Name: NpcGift_Erina
+  m_EditorClassIdentifier: Assembly-CSharp::NpcGiftProfile
+  profileId: gift_erina
+  sheetNote: "\uC88B\uC544\uD568: \uD65C \uC7AC\uB8CC, \uC218\uC815, \uC57D\uCD08,
+    \uACE0\uC694\uD55C \uC74C\uC545 / \uC2EB\uC5B4\uD568: \uC18C\uC74C, \uBD88\uAE38,
+    \uD30C\uAD34\uC801\uC778 \uB9C8\uBC95"
+  defaultPreference: 2
+  entries:
+  - item: {fileID: 11400000, guid: 39da177e19117c74f96b0718ec760b34, type: 2}
+    preference: 0
+    source: weapon_bow
+  - item: {fileID: 11400000, guid: 1132e66db22cdae448d0dfb6dec7e8c1, type: 2}
+    preference: 1
+    source: item_arrow
+  - item: {fileID: 11400000, guid: 361f6079362891a468aae059667ddd1c, type: 2}
+    preference: 1
+    source: tag:herb
+  - item: {fileID: 11400000, guid: ce6c806808c6dfb4ca5fb2217dce497c, type: 2}
+    preference: 1
+    source: tag:herb
+  - item: {fileID: 11400000, guid: b9e78781ff8b2aa4bae6df0fa3d2e1c9, type: 2}
+    preference: 1
+    source: item_wood
+  - item: {fileID: 11400000, guid: 34ed2068e680c3e47b192431c37799db, type: 2}
+    preference: 3
+    source: tool_pickaxe

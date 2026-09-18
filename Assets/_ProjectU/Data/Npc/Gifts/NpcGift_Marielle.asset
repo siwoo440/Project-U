@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5965c6a9f8452146af23bb0d764ae92, type: 3}
+  m_Name: NpcGift_Marielle
+  m_EditorClassIdentifier: Assembly-CSharp::NpcGiftProfile
+  profileId: gift_marielle
+  sheetNote: "\uC88B\uC544\uD568: \uC9C4\uC8FC, \uC870\uAC1C, \uD574\uCD08 \uC694\uB9AC
+    / \uC2EB\uC5B4\uD568: \uC624\uC5FC\uB41C \uBB3C, \uD070 \uBD88"
+  defaultPreference: 2
+  entries:
+  - item: {fileID: 11400000, guid: 535bf968045572f408e41892f2d80b93, type: 2}
+    preference: 0
+    source: resource_fish_golden_carp
+  - item: {fileID: 11400000, guid: 09c927a2524bd8f409d6b8ddab61bc58, type: 2}
+    preference: 1
+    source: food_winter_radish
+  - item: {fileID: 11400000, guid: 83e8c92974737c246a6f55d31325f68b, type: 2}
+    preference: 1
+    source: resource_fish_smelt
+  - item: {fileID: 11400000, guid: f82cfee3161243747ad3a92e8c7418ba, type: 2}
+    preference: 3
+    source: resource_worm_bait

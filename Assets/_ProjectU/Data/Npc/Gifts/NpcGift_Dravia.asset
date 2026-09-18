@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5965c6a9f8452146af23bb0d764ae92, type: 3}
+  m_Name: NpcGift_Dravia
+  m_EditorClassIdentifier: Assembly-CSharp::NpcGiftProfile
+  profileId: gift_dravia
+  sheetNote: "\uC88B\uC544\uD568: \uD76C\uADC0 \uAD11\uC11D, \uB9DD\uCE58, \uB9E4\uC6B4
+    \uC74C\uC2DD / \uC2EB\uC5B4\uD568: \uC816\uC740 \uC5F0\uB8CC, \uBB34\uCC45\uC784\uD568"
+  defaultPreference: 2
+  entries:
+  - item: {fileID: 11400000, guid: e63787b6f7de7624f9bbb93b5512905e, type: 2}
+    preference: 0
+    source: food_tomato_stew
+  - item: {fileID: 11400000, guid: c593f671b9ae9d24e96e6cd5ee7b2a1c, type: 2}
+    preference: 0
+    source: item_iron_ore
+  - item: {fileID: 11400000, guid: cc96d25a17a973747bb1d11fe6839e7b, type: 2}
+    preference: 1
+    source: tag:metal_tool
+  - item: {fileID: 11400000, guid: b9e78781ff8b2aa4bae6df0fa3d2e1c9, type: 2}
+    preference: 1
+    source: item_wood
+  - item: {fileID: 11400000, guid: 479a7e7a5dbb8df4a9ea663d4e582a1b, type: 2}
+    preference: 1
+    source: resource_stone
+  - item: {fileID: 11400000, guid: d801a65a4ac6aa9488b8fe9ba94ccb15, type: 2}
+    preference: 1
+    source: tag:metal_tool
+  - item: {fileID: 11400000, guid: d835eceef0e2d324c91c9629199e0ae8, type: 2}
+    preference: 1
+    source: tag:metal_tool
+  - item: {fileID: 11400000, guid: 34ed2068e680c3e47b192431c37799db, type: 2}
+    preference: 1
+    source: tag:metal_tool
+  - item: {fileID: 11400000, guid: bc991e404803cba4292542d6a52ddd7a, type: 2}
+    preference: 3
+    source: item_plant_fiber
+  - item: {fileID: 11400000, guid: 233c5c7467d9daa41bab4b59439b9465, type: 2}
+    preference: 4
+    source: drink_water_bottle

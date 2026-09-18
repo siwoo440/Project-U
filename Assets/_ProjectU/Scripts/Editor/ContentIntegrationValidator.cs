@@ -8,6 +8,7 @@ using Object = UnityEngine.Object;
 // 88일차: 생활 콘텐츠 통합 점검
 // 1. 기능별 검사(아이템 외형 · 농사 · 낚시 · 요리 · 가축 · 판매)와 아이템 데이터 · Registry 검사를 한 번에 실행
 // 2. 기능 사이 연결 검사 : 생산물 판매 가격, 요리 재료를 구하는 곳, 씨앗 판매, 저장 목록, 날짜 처리 관리자
+// 89일차: NPC 검사와 NPC 선물을 구하는 곳 검사 추가
 public static class ContentIntegrationValidator
 {
     private const string DialogTitle = "Project U 전체 콘텐츠 검사";
@@ -85,6 +86,7 @@ public static class ContentIntegrationValidator
             ("요리", Feature(CookingContentBuilder.Validate)),
             ("가축", Feature(LivestockContentBuilder.Validate)),
             ("판매·상점", Feature(MarketContentBuilder.Validate)),
+            ("NPC", Feature(NpcContentBuilder.Validate)),
             ("아이템 데이터 (ID 규칙)", ItemDataValidator.ValidateAllItemData),
             ("Game Data Registry", () => CountLoggedErrors(GameDataRegistryEditor.ValidateDefaultRegistry, details))
         };
@@ -207,6 +209,7 @@ public static class ContentIntegrationValidator
             CheckCookingIngredients();
             CheckSeeds();
             CheckItemRegistration();
+            CheckNpcGifts();
             CheckScene();
         }
 
@@ -344,6 +347,62 @@ public static class ContentIntegrationValidator
                     Error($"{animal.AnimalId} : 먹이를 얻는 곳(제작·상인)이 없습니다.");
                 }
             }
+        }
+
+        // 89일차: NPC가 매우 좋아하는 선물을 게임 안에서 구할 수 있어야 한다
+        private void CheckNpcGifts()
+        {
+            NpcDatabase database = AssetDatabase.LoadAssetAtPath<NpcDatabase>(NpcContentBuilder.DatabasePath);
+
+            if (database == null)
+            {
+                Error("NpcDatabase가 없습니다.");
+                return;
+            }
+
+            int obtainable = 0;
+
+            foreach (NpcCharacterData character in database.Characters)
+            {
+                if (character == null || character.GiftProfile == null)
+                {
+                    continue;
+                }
+
+                bool found = false;
+
+                foreach (NpcGiftProfile.Entry entry in character.GiftProfile.Entries)
+                {
+                    if (entry?.Item == null || entry.Preference != GiftPreference.Loved)
+                    {
+                        continue;
+                    }
+
+                    if (sources.ContainsKey(entry.Item))
+                    {
+                        found = true;
+                    }
+                    else if (character.IsAlphaCast)
+                    {
+                        Warning($"{character.CharacterId} : 매우 좋아하는 선물 {entry.Item.ItemId} 를 얻는 곳을 찾지 못했습니다.");
+                    }
+                }
+
+                if (found)
+                {
+                    obtainable++;
+                }
+                else if (character.IsAlphaCast)
+                {
+                    Error($"{character.CharacterId} : 매우 좋아하는 선물을 게임 안에서 구할 수 없습니다.");
+                }
+                else
+                {
+                    Warning($"{character.CharacterId} : 매우 좋아하는 선물을 게임 안에서 구할 수 없습니다.");
+                }
+            }
+
+            Ok($"NPC {database.Characters.Count}명 중 {obtainable}명 : 매우 좋아하는 선물을 구할 수 있음");
         }
 
         // 작물마다 씨앗을 살 수 있고, 계절마다 심을 작물이 있어야 한다

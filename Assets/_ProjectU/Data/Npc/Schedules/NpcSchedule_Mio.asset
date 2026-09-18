@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94295176dd2bda648968d83c1418a684, type: 3}
+  m_Name: NpcSchedule_Mio
+  m_EditorClassIdentifier: Assembly-CSharp::NpcScheduleData
+  scheduleId: schedule_mio
+  plans:
+  - planId: default
+    priority: 0
+    days: 127
+    seasons: 15
+    weather: 0
+    stops:
+    - hour: 9
+      locationId: loc_pond_dock
+      activity: "\uB09A\uC2DC"
+    - hour: 12
+      locationId: loc_village_square
+      activity: "\uB0AE\uC7A0"
+    - hour: 14
+      locationId: loc_pond_dock
+      activity: "\uB09A\uC2DC"
+    - hour: 18
+      locationId: loc_cafe
+      activity: "\uC624\uB298 \uC7A1\uC740 \uC0DD\uC120 \uC790\uB791"
+    - hour: 21
+      locationId: loc_home_mio
+      activity: "\uC7A0"
+  - planId: summer
+    priority: 5
+    days: 127
+    seasons: 2
+    weather: 0
+    stops:
+    - hour: 6
+      locationId: loc_pond_dock
+      activity: "\uC0C8\uBCBD \uB09A\uC2DC"
+    - hour: 11
+      locationId: loc_home_mio
+      activity: "\uB354\uC704 \uD53C\uD574 \uB0AE\uC7A0"
+    - hour: 15
+      locationId: loc_pond_dock
+      activity: "\uC800\uB141 \uB09A\uC2DC"
+    - hour: 19
+      locationId: loc_village_square
+      activity: "\uBAA8\uB2E5\uBD88\uC5D0 \uC0DD\uC120 \uAD7D\uAE30"
+    - hour: 22
+      locationId: loc_home_mio
+      activity: "\uC7A0"
+  - planId: rain
+    priority: 10
+    days: 127
+    seasons: 15
+    weather: 2
+    stops:
+    - hour: 8
+      locationId: loc_home_mio
+      activity: "\uB09A\uC2EF\uC904 \uC190\uC9C8"
+    - hour: 11
+      locationId: loc_cafe
+      activity: "\uBE44 \uD53C\uD558\uAE30"
+    - hour: 16
+      locationId: loc_home_mio
+      activity: "\uB09A\uC2EF\uB300 \uB2E6\uAE30"
+    - hour: 21
+      locationId: loc_home_mio
+      activity: "\uC7A0"

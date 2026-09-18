@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5965c6a9f8452146af23bb0d764ae92, type: 3}
+  m_Name: NpcGift_Seira
+  m_EditorClassIdentifier: Assembly-CSharp::NpcGiftProfile
+  profileId: gift_seira
+  sheetNote: "\uC88B\uC544\uD568: \uBCF4\uC11D, \uC720\uB9AC\uBCD1, \uD76C\uADC0
+    \uC57D\uCD08, \uD5A5\uAE30\uB85C\uC6B4 \uAF43 / \uC2EB\uC5B4\uD568: \uD070 \uBD88\uBE5B,
+    \uB0C9\uCCA0\uD55C \uB17C\uB9AC, \uBC30\uC2E0"
+  defaultPreference: 2
+  entries:
+  - item: {fileID: 11400000, guid: ce6c806808c6dfb4ca5fb2217dce497c, type: 2}
+    preference: 0
+    source: item_wild_mushroom
+  - item: {fileID: 11400000, guid: 233c5c7467d9daa41bab4b59439b9465, type: 2}
+    preference: 1
+    source: drink_water_bottle
+  - item: {fileID: 11400000, guid: 361f6079362891a468aae059667ddd1c, type: 2}
+    preference: 1
+    source: tag:herb
+  - item: {fileID: 11400000, guid: 34ed2068e680c3e47b192431c37799db, type: 2}
+    preference: 3
+    source: tool_pickaxe
