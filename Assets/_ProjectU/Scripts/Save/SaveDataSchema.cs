@@ -53,6 +53,10 @@ public sealed class SaveGameData // 전체 저장 파일 최상위 데이터
     public bool hasLivestockData; // 가축 저장 여부
     [Tooltip("우리별 가축 상태.")]
     public LivestockSaveData livestock = new LivestockSaveData(); // 가축 데이터
+    [Tooltip("코인·상점 저장 데이터 존재 여부. (87일차)")]
+    public bool hasMarketData; // 상점 저장 여부
+    [Tooltip("코인·오늘 상인 재고·판매 기록.")]
+    public MarketSaveData market = new MarketSaveData(); // 상점 데이터
 
     public static SaveGameData CreateNew(string newSceneName) // 새로운 저장 데이터 생성
     {
@@ -263,6 +267,32 @@ public sealed class PenAnimalSaveData // 86일차: 동물 한 마리의 저장 �
     public int daysSinceProduct; // 생산 경과
     [Tooltip("꺼내기를 기다리는 생산물 수.")]
     public int productReady; // 생산물
+}
+
+[Serializable] // JSON 직렬화 허용
+public sealed class MarketSaveData // 87일차: 코인과 상점 저장 데이터
+{
+    [Tooltip("플레이어 코인.")]
+    public int coins; // 코인
+    [Tooltip("마지막으로 판매 상자를 처리한 날짜.")]
+    public int lastProcessedDay; // 처리 날짜
+    [Tooltip("상인 재고를 만든 날짜.")]
+    public int stockDay; // 재고 날짜
+    [Tooltip("오늘 상인 재고의 남은 수량.")]
+    public List<MarketStockSaveData> stock = new List<MarketStockSaveData>(); // 재고
+    [Tooltip("지금까지 판매로 받은 코인 합계.")]
+    public int totalCoinsEarned; // 누적 수입
+    [Tooltip("지금까지 판매한 아이템 수 합계.")]
+    public int totalItemsSold; // 누적 판매 수
+}
+
+[Serializable] // JSON 직렬화 허용
+public sealed class MarketStockSaveData // 87일차: 상인 재고 한 칸
+{
+    [Tooltip("아이템 ID.")]
+    public string itemId = string.Empty; // 아이템 ID
+    [Tooltip("남은 수량.")]
+    public int remaining; // 남은 수량
 }
 
 [Serializable] // JSON 직렬화 허용

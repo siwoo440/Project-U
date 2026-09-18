@@ -122,6 +122,11 @@ public static class SaveDataValidator // 저장 데이터 유효성 검사
             return false; // 전체 검사 실패
         }
 
+        if (!MarketSaveBridge.TryValidate(saveData, out errorMessage)) // 코인·상점 검사 (87일차)
+        {
+            return false; // 전체 검사 실패
+        }
+
         errorMessage = string.Empty; // 오류 내용 초기화
         return true; // 전체 검사 성공
     }

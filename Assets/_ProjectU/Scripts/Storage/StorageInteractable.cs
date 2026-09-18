@@ -8,9 +8,23 @@ public sealed class StorageInteractable : InteractableBase // 설치 보관함 �
     [Tooltip("공통 게임 UI 관리자.")]
     [SerializeField] private GameUIManager gameUIManager; // 공통 게임 UI 관리자
 
-    public override string PromptMessage => storageContainer == null
-        ? "STORAGE UNAVAILABLE"
-        : $"F - OPEN {storageContainer.DisplayName}"; // 보관함 안내 문구 제공
+    private IStorageInfoProvider infoProvider; // 판매 상자 안내 (87일차)
+
+    public override string PromptMessage // 보관함 안내 문구 제공
+    {
+        get
+        {
+            if (storageContainer == null) // 보관함 확인
+            {
+                return "STORAGE UNAVAILABLE"; // 오류 문구
+            }
+
+            string suffix = infoProvider != null ? infoProvider.PromptSuffix : string.Empty; // 추가 문구
+            return string.IsNullOrEmpty(suffix)
+                ? $"F - OPEN {storageContainer.DisplayName}"
+                : $"F - OPEN {storageContainer.DisplayName} | {suffix}"; // 결과 반환
+        }
+    }
 
     private void Awake() // 보관함 상호작용 초기화
     {
@@ -18,6 +32,8 @@ public sealed class StorageInteractable : InteractableBase // 설치 보관함 �
         {
             storageContainer = GetComponentInParent<StorageContainer>(); // 상위 보관함 검색
         }
+
+        infoProvider = storageContainer != null ? storageContainer.GetComponent<IStorageInfoProvider>() : null; // 판매 상자 안내 검색
 
         ResolveGameUIManager(); // 공통 게임 UI 관리자 검색
 

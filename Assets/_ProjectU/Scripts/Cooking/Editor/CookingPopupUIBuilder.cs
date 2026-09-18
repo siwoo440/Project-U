@@ -503,6 +503,12 @@ public static class CookingPopupUIBuilder
             ? survivalPanel.anchoredPosition.y - survivalPanel.sizeDelta.y - 8f
             : -216f;
         float left = survivalPanel != null ? survivalPanel.anchoredPosition.x : 14f;
+        RectTransform coins = MarketPopupUIBuilder.FindCoinRoot(parent); // 87일차: 코인 알약이 있으면 그 아래
+
+        if (coins != null)
+        {
+            top = coins.anchoredPosition.y - coins.sizeDelta.y - 6f;
+        }
 
         RectTransform root = CreateRect(parent, BuffRootName);
         TopLeft(root, new Vector2(left, top), new Vector2(300f, BuffChipCount * 26f + (BuffChipCount - 1) * 4f));

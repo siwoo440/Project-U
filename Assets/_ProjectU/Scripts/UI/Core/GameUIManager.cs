@@ -8,7 +8,8 @@ public enum GamePopupType // 게임 팝업 종류
     Inventory = 1, // 일반 인벤토리 팝업
     Storage = 2, // 보관함 팝업
     Cooking = 3, // 요리 팝업 (85일차)
-    AnimalPen = 4 // 우리 팝업 (86일차)
+    AnimalPen = 4, // 우리 팝업 (86일차)
+    Shop = 5 // 상인 팝업 (87일차)
 }
 
 public interface IGameScenePopup // 85·86일차: Scene에 배치해 두고 켜고 끄는 팝업
@@ -50,6 +51,8 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
     [SerializeField] private CookingPopupUI cookingPopup; // 요리 팝업
     [Tooltip("Scene에 배치된 우리 팝업. 비어 있으면 우리에서 바로 먹이 주기·수거합니다. (86일차)")]
     [SerializeField] private AnimalPenPopupUI animalPenPopup; // 우리 팝업
+    [Tooltip("Scene에 배치된 상인 팝업. (87일차)")]
+    [SerializeField] private ShopPopupUI shopPopup; // 상인 팝업
 
     private InventoryPopupController inventoryPopupInstance; // 생성된 인벤토리 팝업 인스턴스
     private StorageContainerUI storagePopupInstance; // 생성된 보관함 팝업 인스턴스
@@ -66,6 +69,7 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
     public StorageContainerUI StoragePopupInstance => storagePopupInstance; // 생성된 보관함 팝업 제공
     public CookingPopupUI CookingPopup => cookingPopup; // 요리 팝업 제공
     public AnimalPenPopupUI AnimalPenPopup => animalPenPopup; // 우리 팝업 제공
+    public ShopPopupUI ShopPopup => shopPopup; // 상인 팝업 제공
     public event Action<GamePopupType, bool> PopupStateChanged; // 팝업 상태 변경 알림
 
     private void Awake() // 게임 UI 관리자 초기화
@@ -317,6 +321,18 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
         CloseScenePopup(GamePopupType.AnimalPen, animalPenPopup); // 종료
     }
 
+    public bool OpenShop(MarketStall stall) // 지정 가판대 상인 팝업 열기 (87일차)
+    {
+        return shopPopup != null
+            && stall != null
+            && OpenScenePopup(GamePopupType.Shop, () => shopPopup.ShowFromManager(this, stall, playerInventory)); // 결과 반환
+    }
+
+    public void CloseShop() // 상인 팝업 강제 종료 (87일차)
+    {
+        CloseScenePopup(GamePopupType.Shop, shopPopup); // 종료
+    }
+
     private bool OpenScenePopup(GamePopupType popupType, Func<bool> show) // Scene 팝업 공통 열기
     {
         if (!CanUseManager()) // 관리자 확인
@@ -374,6 +390,7 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
         CloseStorage(); // 보관함 닫기
         CloseCooking(); // 요리 닫기
         CloseAnimalPen(); // 우리 닫기
+        CloseShop(); // 상인 닫기
     }
 
     public void CloseCurrentPopup() // 현재 열린 팝업 종료
@@ -394,6 +411,10 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
 
             case GamePopupType.AnimalPen: // 우리 팝업 상태
                 CloseAnimalPen(); // 우리 팝업 종료
+                return; // 종료 처리 완료
+
+            case GamePopupType.Shop: // 상인 팝업 상태
+                CloseShop(); // 상인 팝업 종료
                 return; // 종료 처리 완료
         }
 
@@ -512,6 +533,14 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
                 }
 
                 break; // 우리 처리 종료
+
+            case GamePopupType.Shop: // 상인 팝업 상태
+                if (shopPopup != null) // 상인 팝업 확인
+                {
+                    shopPopup.HideFromManager(); // 상인 팝업 숨김
+                }
+
+                break; // 상인 처리 종료
         }
 
         currentPopupType = GamePopupType.None; // 현재 팝업 상태 초기화
@@ -587,6 +616,11 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
         if (animalPenPopup != null) // 우리 팝업 존재 확인
         {
             animalPenPopup.HideFromManager(); // 우리 팝업 숨김
+        }
+
+        if (shopPopup != null) // 상인 팝업 존재 확인
+        {
+            shopPopup.HideFromManager(); // 상인 팝업 숨김
         }
 
         currentPopupType = GamePopupType.None; // 현재 팝업 상태 초기화

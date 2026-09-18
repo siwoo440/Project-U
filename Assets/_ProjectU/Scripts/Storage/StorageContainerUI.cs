@@ -20,6 +20,8 @@ public sealed class StorageContainerUI : MonoBehaviour // 보관함 화면 관�
     [SerializeField] private GridLayoutGroup storageGridLayout; // 보관함 슬롯 격자
     [Tooltip("보관함 슬롯 원본.")]
     [SerializeField] private StorageSlotView storageSlotTemplate; // 보관함 슬롯 원본
+    [Tooltip("판매 상자처럼 안내가 있는 보관함의 안내 문구 (87일차, 비어 있어도 됨).")]
+    [SerializeField] private TMP_Text infoText; // 보관함 안내 문구
 
     [Header("Close Settings")] // 보관함 종료 설정 묶음
     [Tooltip("F키 재입력 닫기 여부.")]
@@ -37,6 +39,7 @@ public sealed class StorageContainerUI : MonoBehaviour // 보관함 화면 관�
     private InventorySlotsUI[] playerInventoryViews = new InventorySlotsUI[0]; // 팝업 내부 플레이어 인벤토리 화면 목록
     private GameUIManager gameUIManager; // 공통 게임 UI 관리자
     private StorageContainer currentStorage; // 현재 열린 보관함
+    private IStorageInfoProvider currentInfo; // 현재 보관함 안내 (87일차)
     private Transform playerTransform; // 플레이어 거리 검사 대상
     private bool referencesValid; // UI 내부 참조 연결 상태
     private bool runtimeInitialized; // 런타임 외부 참조 초기화 상태
@@ -64,6 +67,12 @@ public sealed class StorageContainerUI : MonoBehaviour // 보관함 화면 관�
 
         playerInventoryViews = GetComponentsInChildren<InventorySlotsUI>(true); // 팝업 내부 인벤토리 화면 검색
         storageSlotTemplate.gameObject.SetActive(false); // 슬롯 원본 숨김
+
+        if (infoText != null) // 안내 문구 확인
+        {
+            infoText.gameObject.SetActive(false); // 기본 숨김
+        }
+
         closeButton.onClick.AddListener(Close); // 닫기 버튼 기능 연결
         panelRoot.SetActive(false); // 초기 보관함 화면 숨김
     }
@@ -186,6 +195,7 @@ public sealed class StorageContainerUI : MonoBehaviour // 보관함 화면 관�
 
         DetachCurrentStorage(); // 기존 보관함 이벤트 연결 해제
         currentStorage = storageContainer; // 새로운 보관함 저장
+        currentInfo = storageContainer.GetComponent<IStorageInfoProvider>(); // 보관함 안내 (판매 상자)
         currentStorage.StorageChanged += Refresh; // 보관함 변경 이벤트 연결
         openedFrame = Time.frameCount; // 보관함 열기 프레임 저장
         panelRoot.SetActive(true); // 보관함 화면 표시
@@ -239,6 +249,12 @@ public sealed class StorageContainerUI : MonoBehaviour // 보관함 화면 관�
         }
 
         currentStorage = null; // 현재 보관함 참조 제거
+        currentInfo = null; // 보관함 안내 제거
+
+        if (infoText != null) // 안내 문구 확인
+        {
+            infoText.gameObject.SetActive(false); // 숨김
+        }
     }
 
     private void RebuildSlotViews() // 보관함 슬롯 화면 재생성
@@ -291,6 +307,25 @@ public sealed class StorageContainerUI : MonoBehaviour // 보관함 화면 관�
         {
             InventorySlot slot = currentStorage.GetSlot(index); // 현재 보관함 슬롯 조회
             slotViews[index].SetSlot(slot, index + 1); // 슬롯 번호와 내용 표시
+        }
+
+        RefreshInfo(); // 보관함 안내 갱신
+    }
+
+    private void RefreshInfo() // 보관함 안내 문구 갱신 (87일차)
+    {
+        if (infoText == null) // 안내 문구 확인
+        {
+            return; // 생략
+        }
+
+        bool visible = currentInfo != null; // 안내 보관함 여부
+        infoText.gameObject.SetActive(visible); // 표시
+
+        if (visible) // 안내 내용
+        {
+            infoText.SetText(currentInfo.StorageInfo); // 문구
+            infoText.color = currentInfo.StorageInfoColor; // 색
         }
     }
 

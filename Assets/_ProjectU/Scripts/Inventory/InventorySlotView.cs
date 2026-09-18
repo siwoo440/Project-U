@@ -26,12 +26,7 @@ public sealed class InventorySlotView : MonoBehaviour, IPointerClickHandler // �
 
     private void Awake() // UI 참조 검사
     {
-        referencesValid = shortcutText != null // 숫자키 Text 참조 확인
-            && itemIconImage != null // 아이템 아이콘 참조 확인
-            && itemNameText != null // 아이템 이름 참조 확인
-            && quantityText != null // 아이템 수량 참조 확인
-            && selectionOutline != null // 선택 테두리 참조 확인
-            && itemSlotDragHandler != null; // 드래그 처리기 참조 확인
+        referencesValid = HasAllReferences(); // 참조 확인
 
         if (!referencesValid) // 참조 누락 확인
         {
@@ -59,8 +54,24 @@ public sealed class InventorySlotView : MonoBehaviour, IPointerClickHandler // �
         }
     }
 
+    private bool HasAllReferences() // 필수 UI 참조 확인
+    {
+        return shortcutText != null // 숫자키 Text 참조 확인
+            && itemIconImage != null // 아이템 아이콘 참조 확인
+            && itemNameText != null // 아이템 이름 참조 확인
+            && quantityText != null // 아이템 수량 참조 확인
+            && selectionOutline != null // 선택 테두리 참조 확인
+            && itemSlotDragHandler != null; // 드래그 처리기 참조 확인
+    }
+
     public void SetSlot(InventorySlot slot, int slotNumber, bool showShortcut, bool newIsSelected) // 슬롯 화면 갱신
     {
+        // 87일차: 팝업을 처음 열 때 부모 목록이 칸의 Awake보다 먼저 그리기를 요청하므로 여기서도 참조를 확인한다
+        if (!referencesValid) // Awake 전 호출 확인
+        {
+            referencesValid = HasAllReferences(); // 참조 다시 확인
+        }
+
         if (!referencesValid) // 참조 상태 확인
         {
             return; // 화면 갱신 중단

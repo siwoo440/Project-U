@@ -80,6 +80,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fca5dca8eec63c24b89e1f3525200b52, type: 2}
   - {fileID: 11400000, guid: 5c1850e385d07af4898db59a096c63aa, type: 2}
   - {fileID: 11400000, guid: d0b44cbf98324944fb11b0ea4760283c, type: 2}
+  - {fileID: 11400000, guid: 2ba65dde0ee0a8e458570e2daed43630, type: 2}
+  - {fileID: 11400000, guid: 54031d350c405424baa7f4f4d045b078, type: 2}
   - {fileID: 11400000, guid: 75647e9ebdbadc744817782679190212, type: 2}
   - {fileID: 11400000, guid: 098406d5796eada4395a9eed0df244c0, type: 2}
   - {fileID: 11400000, guid: 1d0983db947779749a12fca4ce1da6f9, type: 2}
@@ -118,7 +120,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8cfe3946eff21504f88debcf76681a85, type: 2}
   registeredItemCount: 51
   registeredCraftingRecipeCount: 8
-  registeredBuildRecipeCount: 18
+  registeredBuildRecipeCount: 20
   registeredEnemyCount: 3
   registeredCropCount: 5
   registeredFishCount: 5

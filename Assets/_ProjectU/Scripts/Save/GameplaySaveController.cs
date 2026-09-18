@@ -221,6 +221,12 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
             return; // 파일 저장 중단
         }
 
+        if (!MarketSaveBridge.TryCapture(saveData, out string marketCaptureError)) // 코인·상점 수집 (87일차)
+        {
+            Debug.LogError($"상점 상태 저장 준비 실패\n{marketCaptureError}", this); // 수집 오류 출력
+            return; // 파일 저장 중단
+        }
+
         if (!SaveFileService.TrySave(slotId, saveData, out string resultMessage)) // JSON 파일 저장 실행
         {
             Debug.LogError($"현재 게임 저장 실패\n{resultMessage}", this); // 저장 실패 내용 출력
@@ -327,6 +333,12 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
         if (!LivestockSaveBridge.TryRestore(saveData, out string livestockRestoreError)) // 가축 상태 복원 (86일차, 건축물 복원 뒤)
         {
             Debug.LogError($"가축 상태 불러오기 실패\n{livestockRestoreError}", this); // 복원 오류 출력
+            return; // 전체 불러오기 중단
+        }
+
+        if (!MarketSaveBridge.TryRestore(saveData, out string marketRestoreError)) // 코인·상점 복원 (87일차, 보관함 복원 뒤)
+        {
+            Debug.LogError($"상점 상태 불러오기 실패\n{marketRestoreError}", this); // 복원 오류 출력
             return; // 전체 불러오기 중단
         }
 

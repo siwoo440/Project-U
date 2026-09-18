@@ -121,6 +121,16 @@ public static class UISpriteFactory
         WriteIcon("Check", CheckIcon);
     }
 
+    // 87일차 추가: 코인·가격표·상자 아이콘만 따로 만든다
+    public static void GenerateMarketIcons()
+    {
+        StylizedArtAssetFactory.EnsureFolder(IconFolder);
+        WriteIcon("Coin", CoinIcon);
+        WriteIcon("Tag", TagIcon);
+        WriteIcon("Crate", CrateIcon);
+        AssetDatabase.SaveAssets();
+    }
+
     // 82일차 추가: 근처 아이템 아이콘만 따로 만든다 (다른 스프라이트는 다시 쓰지 않음)
     public static void GeneratePickupIcon()
     {
@@ -382,6 +392,35 @@ public static class UISpriteFactory
     private static float CheckIcon(float x, float y)
     {
         return Union(Capsule(x, y, -0.62f, 0.02f, -0.2f, -0.44f, 0.14f), Capsule(x, y, -0.2f, -0.44f, 0.66f, 0.5f, 0.14f));
+    }
+
+    // 87일차 추가: 코인 (테두리 홈 + 가운데 세로 홈)
+    private static float CoinIcon(float x, float y)
+    {
+        float disc = Circle(x, y, 0f, 0f, 0.8f);
+        float groove = Mathf.Abs(Circle(x, y, 0f, 0f, 0.6f)) - 0.05f;
+        float slot = Box(x, y, 0f, 0f, 0.09f, 0.3f, 0.09f);
+        return Subtract(Subtract(disc, groove), slot);
+    }
+
+    // 87일차 추가: 가격표 (끝이 뾰족한 표 + 구멍)
+    private static float TagIcon(float x, float y)
+    {
+        float rx = x * 0.707f + y * 0.707f;
+        float ry = -x * 0.707f + y * 0.707f;
+        float body = Box(rx, ry, -0.12f, 0f, 0.55f, 0.36f, 0.08f);
+        float tip = Mathf.Max(Mathf.Abs(ry) + (rx - 0.78f), -(rx - 0.3f));
+        float hole = Circle(rx, ry, 0.42f, 0f, 0.1f);
+        return Subtract(Union(body, tip), hole);
+    }
+
+    // 87일차 추가: 나무 상자 (판자 두 줄)
+    private static float CrateIcon(float x, float y)
+    {
+        float box = Box(x, y, 0f, 0f, 0.72f, 0.62f, 0.08f);
+        float lines = Union(Box(x, y, 0f, 0.2f, 0.62f, 0.035f, 0f), Box(x, y, 0f, -0.2f, 0.62f, 0.035f, 0f));
+        float inner = Subtract(Box(x, y, 0f, 0f, 0.6f, 0.5f, 0.04f), lines);
+        return Subtract(box, inner);
     }
 
     private static float CompassIcon(float x, float y)
