@@ -48,6 +48,7 @@ public sealed class NpcManager : MonoBehaviour // 90일차: 마을 NPC 일정 �
     public int CurrentDay => dayNightCycle != null ? dayNightCycle.CurrentDay : 1; // 날짜 제공
     public float CurrentHour => dayNightCycle != null ? dayNightCycle.CurrentHour : 12f; // 시각 제공
     public SeasonType CurrentSeason => seasonCycle != null ? seasonCycle.CurrentSeason : SeasonType.Spring; // 계절 제공
+    public int CurrentDayInSeason => seasonCycle != null ? seasonCycle.CurrentDayInSeason : 1; // 계절 안 날짜 제공 (91일차 생일)
     public WeatherType CurrentWeather => weatherCycle != null ? weatherCycle.CurrentWeather : WeatherType.Clear; // 날씨 제공
     public static bool HasStallMerchant => Instance != null && Instance.isActiveAndEnabled && Instance.FindAgent(Instance.stallMerchantId) != null; // 가판대 상인 NPC 여부
 

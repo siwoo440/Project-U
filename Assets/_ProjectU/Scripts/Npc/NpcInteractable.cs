@@ -3,12 +3,13 @@ using UnityEngine; // Unity 기본 기능
 
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
 [RequireComponent(typeof(NpcAgent))] // NPC 필요
-public sealed class NpcInteractable : InteractableBase // 90일차: NPC에게 다가가면 이름·하는 일 표시, 말을 걸면 짧은 대사 (대화 창은 91일차)
+public sealed class NpcInteractable : InteractableBase // 90일차: NPC에게 다가가면 이름·하는 일 표시 / 91일차: 말을 걸면 대화 창 (창이 없으면 말풍선)
 {
     [Tooltip("말풍선 표시 시간 (초).")]
     [SerializeField, Min(1f)] private float speechSeconds = 4.5f; // 말풍선 시간
 
     private NpcAgent npc; // NPC
+    private GameUIManager uiManager; // 팝업 관리자
     private int talkCount; // 오늘 말 건 횟수
     private int talkDay = -1; // 말 건 날짜
 
@@ -20,7 +21,7 @@ public sealed class NpcInteractable : InteractableBase // 90일차: NPC에게 �
 
             if (NpcManager.Instance != null && NpcManager.Instance.GetStallFor(agent) != null)
             {
-                return $"F - {agent.DisplayName} | 거래";
+                return $"F - {agent.DisplayName} | 대화 · 거래";
             }
 
             string activity = agent.HasArrived ? agent.CurrentActivity : "이동 중";
@@ -32,12 +33,15 @@ public sealed class NpcInteractable : InteractableBase // 90일차: NPC에게 �
     {
         NpcAgent agent = GetAgent();
         NpcManager manager = NpcManager.Instance;
-        MarketStall stall = manager != null ? manager.GetStallFor(agent) : null;
 
-        if (stall != null && interactor != null)
+        if (uiManager == null)
         {
-            stall.Interact(interactor); // 가판대 상인은 상점 창 열기
-            return;
+            uiManager = FindFirstObjectByType<GameUIManager>();
+        }
+
+        if (uiManager != null && uiManager.NpcDialoguePopup != null && uiManager.OpenNpcDialogue(agent))
+        {
+            return; // 대화 창 (가판대 상인은 창의 거래 버튼으로 상점)
         }
 
         if (interactor != null)

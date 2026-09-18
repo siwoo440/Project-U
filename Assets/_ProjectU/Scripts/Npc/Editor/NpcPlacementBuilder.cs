@@ -39,6 +39,11 @@ public static class NpcPlacementBuilder
         { "char_lichel", Hex(0xD0CCC6) } // 회백색
     };
 
+    public static Color GetHairColor(string characterId) // 91일차: 초상에도 같은 머리 색 사용
+    {
+        return HairColors.TryGetValue(characterId ?? string.Empty, out Color hair) ? hair : Hex(0x5A3A26);
+    }
+
     private sealed class BuildingSpec
     {
         public string Name;

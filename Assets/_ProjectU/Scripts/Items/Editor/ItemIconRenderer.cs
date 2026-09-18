@@ -84,9 +84,9 @@ public sealed class ItemIconRenderer : IDisposable
     }
 
     // 찍은 결과를 PNG 바이트로 돌려준다 (에셋 가져오기는 세션을 닫은 뒤에 한다)
-    public byte[] RenderPng(GameObject modelPrefab, Framing framing, out string error)
+    public byte[] RenderPng(GameObject modelPrefab, Framing framing, out string error, Action<GameObject> prepare = null, Func<Vector3, bool> includeVertex = null)
     {
-        Texture2D icon = Render(modelPrefab, framing, out error);
+        Texture2D icon = Render(modelPrefab, framing, out error, prepare, includeVertex);
 
         if (icon == null)
         {
@@ -98,7 +98,8 @@ public sealed class ItemIconRenderer : IDisposable
         return png;
     }
 
-    public Texture2D Render(GameObject modelPrefab, Framing framing, out string error)
+    // 91일차: prepare = 찍기 전 인스턴스 손질 (NPC 색 적용 등), includeVertex = 화면 맞춤에 쓸 꼭짓점 (초상은 가슴 위만)
+    public Texture2D Render(GameObject modelPrefab, Framing framing, out string error, Action<GameObject> prepare = null, Func<Vector3, bool> includeVertex = null)
     {
         error = string.Empty;
 
@@ -119,6 +120,7 @@ public sealed class ItemIconRenderer : IDisposable
         try
         {
             instance.transform.SetPositionAndRotation(Vector3.zero, Quaternion.Euler(framing.ModelEuler));
+            prepare?.Invoke(instance);
             MeshFilter[] filters = instance.GetComponentsInChildren<MeshFilter>(true);
 
             if (filters.Length == 0)
@@ -157,6 +159,12 @@ public sealed class ItemIconRenderer : IDisposable
                 for (int index = 0; index < vertices.Length; index++)
                 {
                     Vector3 world = matrix.MultiplyPoint3x4(vertices[index]);
+
+                    if (includeVertex != null && !includeVertex(world))
+                    {
+                        continue;
+                    }
+
                     float x = Vector3.Dot(world, right);
                     float y = Vector3.Dot(world, up);
                     float z = Vector3.Dot(world, forward);

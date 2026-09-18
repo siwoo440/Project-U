@@ -72,6 +72,8 @@ public sealed class NpcCharacterData : ScriptableObject // 89일차: 캐릭터 �
     [Header("Profile")] // 기본 정보
     [SerializeField] private ProfileText profile = new ProfileText(); // 기본 정보
     [SerializeField] private AppearanceText appearance = new AppearanceText(); // 외형
+    [Tooltip("대화 창 초상 (91일차 생성 도구가 저폴리 모델로 만듦).")]
+    [SerializeField] private Sprite portrait; // 초상
     [Tooltip("대표 색 (이름표·대화창 강조).")]
     [SerializeField] private Color themeColor = Color.white; // 대표 색
     [Tooltip("보조 색.")]
@@ -118,6 +120,7 @@ public sealed class NpcCharacterData : ScriptableObject // 89일차: 캐릭터 �
     public bool IsAvailable => isAvailable; // 사용 가능 여부 제공
     public ProfileText Profile => profile; // 기본 정보 제공
     public AppearanceText Appearance => appearance; // 외형 제공
+    public Sprite Portrait => portrait; // 초상 제공
     public Color ThemeColor => themeColor; // 대표 색 제공
     public Color AccentColor => accentColor; // 보조 색 제공
     public PersonalityText Personality => personality; // 내면 설정 제공
@@ -170,6 +173,11 @@ public sealed class NpcCharacterData : ScriptableObject // 89일차: 캐릭터 �
         birthdayDay = Mathf.Clamp(day, 1, 28);
         homeLocationId = home;
         workLocationId = work;
+    }
+
+    public void EditorAssignPortrait(Sprite sprite) // 생성 도구 전용
+    {
+        portrait = sprite;
     }
 
     public void EditorAssignLinks(NpcGiftProfile gifts, NpcDialogueSet dialogue, NpcScheduleData dailySchedule, string status, string note) // 생성 도구 전용

@@ -57,6 +57,10 @@ public sealed class SaveGameData // 전체 저장 파일 최상위 데이터
     public bool hasMarketData; // 상점 저장 여부
     [Tooltip("코인·오늘 상인 재고·판매 기록.")]
     public MarketSaveData market = new MarketSaveData(); // 상점 데이터
+    [Tooltip("NPC 관계 저장 데이터 존재 여부. (91일차)")]
+    public bool hasNpcData; // NPC 저장 여부
+    [Tooltip("NPC별 만남 · 호감도 · 하루 대화·선물 기록.")]
+    public NpcSaveData npc = new NpcSaveData(); // NPC 관계
 
     public static SaveGameData CreateNew(string newSceneName) // 새로운 저장 데이터 생성
     {

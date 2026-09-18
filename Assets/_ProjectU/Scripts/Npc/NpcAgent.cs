@@ -37,6 +37,7 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
     [SerializeField] private string currentActivity; // 하는 일
     [SerializeField] private bool isInside; // 집 안 여부
     [SerializeField] private bool arrived = true; // 도착 여부
+    [SerializeField] private bool isTalking; // 대화 창이 열려 있는지 (91일차)
 
     private NavMeshAgent agent; // 길찾기
     private Transform player; // 플레이어
@@ -49,6 +50,7 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
     private float motionTime; // 걷기·숨쉬기 시간
     private Vector3 modelBasePosition; // 모델 기본 위치
     private Vector3 modelBaseScale = Vector3.one; // 모델 기본 크기
+    private Vector3 talkTarget; // 대화 상대 위치
 
     public NpcCharacterData Character => character; // 캐릭터 제공
     public string CharacterId => character != null ? character.CharacterId : string.Empty; // ID 제공
@@ -58,6 +60,7 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
     public NpcLocationPoint CurrentPoint { get; private set; } // 위치 지점 제공
     public bool IsInside => isInside; // 집 안 여부 제공
     public bool HasArrived => arrived; // 도착 여부 제공
+    public bool IsTalking => isTalking; // 대화 중 여부 제공
     public Vector3 TargetPosition => targetPosition; // 목적지 제공
     public string StopKey { get; set; } // 관리자가 쓰는 현재 일정 칸 키
 
@@ -102,7 +105,7 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
 
         SetInside(false);
         arrived = false;
-        agent.isStopped = false;
+        agent.isStopped = isTalking; // 대화 중에는 끝날 때까지 기다렸다가 출발
 
         if (!agent.SetDestination(targetPosition))
         {
@@ -122,6 +125,33 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
         speechTimer = Mathf.Max(1f, seconds);
     }
 
+    public void SetTalking(bool talking, Vector3 partnerPosition) // 91일차: 대화 창이 열린 동안 멈춰서 상대를 바라봄
+    {
+        isTalking = talking;
+        talkTarget = partnerPosition;
+
+        if (agent != null && agent.isOnNavMesh)
+        {
+            agent.isStopped = talking;
+
+            if (talking)
+            {
+                agent.velocity = Vector3.zero; // 미끄러지지 않고 바로 멈춤
+            }
+        }
+
+        if (talking && speech != null)
+        {
+            speech.gameObject.SetActive(false);
+            speechTimer = 0f;
+        }
+
+        if (talking)
+        {
+            FaceTowards(partnerPosition);
+        }
+    }
+
     public void FaceTowards(Vector3 worldPosition) // 말을 건 사람 바라보기
     {
         Vector3 direction = worldPosition - transform.position;
@@ -137,7 +167,7 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
     {
         float deltaTime = Time.deltaTime;
 
-        if (!arrived && agent.isOnNavMesh && !agent.pathPending)
+        if (!arrived && !isTalking && agent.isOnNavMesh && !agent.pathPending)
         {
             if (agent.pathStatus == NavMeshPathStatus.PathInvalid)
             {
@@ -162,7 +192,18 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
             }
         }
 
-        if (arrived && !isInside)
+        if (isTalking && !isInside)
+        {
+            Transform partner = FindPlayer();
+            Vector3 toPartner = (partner != null ? partner.position : talkTarget) - transform.position;
+            toPartner.y = 0f;
+
+            if (toPartner.sqrMagnitude > 0.01f)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(toPartner), 1f - Mathf.Exp(-8f * deltaTime));
+            }
+        }
+        else if (arrived && !isInside)
         {
             Quaternion desired = targetFacing;
             Transform target = FindPlayer();

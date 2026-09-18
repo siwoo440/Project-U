@@ -227,6 +227,12 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
             return; // 파일 저장 중단
         }
 
+        if (!NpcSaveBridge.TryCapture(saveData, out string npcCaptureError)) // NPC 관계 수집 (91일차)
+        {
+            Debug.LogError($"NPC 관계 저장 준비 실패\n{npcCaptureError}", this); // 수집 오류 출력
+            return; // 파일 저장 중단
+        }
+
         if (!SaveFileService.TrySave(slotId, saveData, out string resultMessage)) // JSON 파일 저장 실행
         {
             Debug.LogError($"현재 게임 저장 실패\n{resultMessage}", this); // 저장 실패 내용 출력
@@ -339,6 +345,12 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
         if (!MarketSaveBridge.TryRestore(saveData, out string marketRestoreError)) // 코인·상점 복원 (87일차, 보관함 복원 뒤)
         {
             Debug.LogError($"상점 상태 불러오기 실패\n{marketRestoreError}", this); // 복원 오류 출력
+            return; // 전체 불러오기 중단
+        }
+
+        if (!NpcSaveBridge.TryRestore(saveData, out string npcRestoreError)) // NPC 관계 복원 (91일차)
+        {
+            Debug.LogError($"NPC 관계 불러오기 실패\n{npcRestoreError}", this); // 복원 오류 출력
             return; // 전체 불러오기 중단
         }
 
