@@ -17,6 +17,8 @@ using Object = UnityEngine.Object;
 // 3. 바닥 칠하기 (모래 · 눈 · 진흙 · 돌바닥) · 풀과 기존 나무 정리 · 소품 · 충돌체
 // 4. NPC 일정 위치 등록 · 섬 경계 벽과 바다 · 지도 구역 이름 · 적 생성 지점 2곳 · NavMesh 다시 굽기
 // 여러 번 실행해도 같은 결과가 된다 (구역 오브젝트는 지우고 다시 만든다). 게임 Scene은 도구가 저장한다.
+// 107일차: 무인도에서는 구역을 예전 좌표(설계 좌표)로 만든 뒤 IslandZoneLayout 자리로 통째로 옮기고, 땅 높이에 맞춘다.
+//          흙길은 마을에서 새 구역 입구까지, 석호에는 작은 선착장을 남긴다.
 public static class WorldZoneBuilder
 {
     public const string RootName = "=== World Zones ===";
@@ -106,11 +108,43 @@ public static class WorldZoneBuilder
         ("SwampPool_C", new Vector3(-68f, 0f, -86f), StylizedModelLibrary.ZoneSwampPoolRadius * 0.6f)
     };
 
-    private static readonly (string id, string template, Vector3 position)[] ZoneSpawns =
+    private static readonly (string id, string template, string zoneId, Vector3 position)[] ZoneSpawns =
     {
-        ("spawn_zone_ruins_grunt", "Spawn_MeleeGrunt_01", new Vector3(-60f, 0f, 82f)),
-        ("spawn_zone_swamp_spitter", "Spawn_RangedSpitter_01", new Vector3(-46f, 0f, -104f))
+        ("spawn_zone_ruins_grunt", "Spawn_MeleeGrunt_01", "ruins", new Vector3(-60f, 0f, 82f)),
+        ("spawn_zone_swamp_spitter", "Spawn_RangedSpitter_01", "swamp", new Vector3(-46f, 0f, -104f))
     };
+
+    private static bool islandLayout; // 107일차: 무인도 자리로 옮기는 중인지 (BuildAll · Validate 시작에서 정함)
+
+    private static Terrain ActiveTerrain => Terrain.activeTerrain != null ? Terrain.activeTerrain : Object.FindFirstObjectByType<Terrain>();
+
+    private static bool DetectIsland()
+    {
+        islandLayout = IslandTerrainBuilder.IsIslandTerrain(ActiveTerrain);
+        return islandLayout;
+    }
+
+    private static float GroundY(Vector3 position) // Terrain 높이 (무인도가 아니면 0)
+    {
+        Terrain terrain = ActiveTerrain;
+        return islandLayout && terrain != null ? terrain.SampleHeight(position) + terrain.transform.position.y : 0f;
+    }
+
+    public static Vector3 ZoneToWorld(string zoneId, Vector3 design) // 107일차: 설계 좌표 → 섬 좌표 (땅 높이)
+    {
+        if (!islandLayout)
+        {
+            return design;
+        }
+
+        Vector3 world = IslandZoneLayout.ToWorld(zoneId, design);
+        world.y = GroundY(world) + design.y;
+        return world;
+    }
+
+    public static Vector3 ZoneCenterWorld(ZoneInfo zone) => ZoneToWorld(zone.Id, zone.Center);
+
+    public static Vector3 ZoneEntranceWorld(ZoneInfo zone) => ZoneToWorld(zone.Id, zone.Entrance);
 
     private enum PropCollider
     {
@@ -189,6 +223,7 @@ public static class WorldZoneBuilder
                 Object.DestroyImmediate(child.gameObject);
             }
 
+            DetectIsland();
             EditorUtility.DisplayProgressBar(DialogTitle, "바닥 칠하기", 0.35f);
             report.AppendLine(PaintTerrain());
             report.AppendLine(HideEnvironment(scene));
@@ -204,6 +239,12 @@ public static class WorldZoneBuilder
             props += BuildSwamp(Group(root.transform, "Swamp"), building);
             props += BuildSignposts(Group(root.transform, "Signposts"));
             report.AppendLine($"구역 6곳 · 소품 {props}개 · 흙길 {Zones.Length}개 · 표지판 {Zones.Length}개");
+
+            if (islandLayout) // 107일차: 섬 곳곳으로 옮기기 · 석호 선착장
+            {
+                report.AppendLine(MoveZonesToIsland(root.transform));
+                report.AppendLine(BuildLagoonPier(Group(root.transform, "LagoonPier"), building));
+            }
 
             report.AppendLine(BuildBoundary(Group(root.transform, "Boundary")));
             report.AppendLine(BuildMapLabels(scene, Group(root.transform, "MapLabels")));
@@ -753,7 +794,9 @@ public static class WorldZoneBuilder
             AddBox(post, new Vector3(0f, 0.9f, 0f), new Vector3(0.2f, 1.8f, 0.2f));
             post.name = "Sign_" + zone.ObjectName;
             Vector3 toVillage = -along;
-            TMP_Text label = CreateText(post.transform.parent, "SignLabel_" + zone.ObjectName, $"<mark=#3A2A20C0 padding=\"16,16,6,6\">{zone.DisplayName} →</mark>", 3.2f, 6f);
+            int road = Array.FindIndex(IslandZoneLayout.Sites, site => site.ZoneId == zone.Id);
+            string distance = islandLayout && road >= 0 ? $" {Mathf.RoundToInt(IslandZoneLayout.RoadLength(road) / 10f) * 10}m" : string.Empty; // 107일차: 흙길 길이
+            TMP_Text label = CreateText(post.transform.parent, "SignLabel_" + zone.ObjectName, $"<mark=#3A2A20C0 padding=\"16,16,6,6\">{zone.DisplayName} →{distance}</mark>", 3.2f, 7.5f);
             label.transform.SetPositionAndRotation(position + Vector3.up * 2.35f, Quaternion.Euler(0f, Mathf.Atan2(-toVillage.x, -toVillage.z) * Mathf.Rad2Deg, 0f));
         }
 
@@ -798,6 +841,12 @@ public static class WorldZoneBuilder
 
     public static void GroundWeights(float x, float z, float[] zone, out float dirt)
     {
+        if (islandGround)
+        {
+            IslandGroundWeights(x, z, zone, out dirt);
+            return;
+        }
+
         float noise = Mathf.PerlinNoise(x * 0.07f + 31.7f, z * 0.07f + 12.9f) - 0.5f;
         float coast = Smooth(84.5f, 90.5f, x + noise * 5f);
 
@@ -833,6 +882,40 @@ public static class WorldZoneBuilder
 
         float forest = Ellipse(x, z, -88f, -32f, 32f, 30f, 0.3f, noise) * 0.42f;
         dirt = Mathf.Max(path, forest);
+    }
+
+    // 107일차: 무인도 바닥 비율 = 구역마다 설계 좌표로 바꿔 예전 모양 그대로 + 석호 둘레 모래 + 마을 → 구역 흙길
+    private static void IslandGroundWeights(float x, float z, float[] zone, out float dirt)
+    {
+        float noise = Mathf.PerlinNoise(x * 0.07f + 31.7f, z * 0.07f + 12.9f) - 0.5f;
+        Vector2 coast = IslandZoneLayout.OffsetOf("coast");
+        float coastX = x - coast.x;
+        float coastZ = z - coast.y;
+        float coastSand = Smooth(84.5f, 90.5f, coastX + noise * 5f) * (1f - Smooth(66f, 80f, Mathf.Abs(coastZ - 4f) + noise * 6f)) * (1f - Smooth(150f, 170f, coastX));
+        float lagoonSand = 1f - Smooth(12f, 32f, IslandTerrainBuilder.LagoonDistance(x, z) + noise * 6f);
+        Vector2 desert = IslandZoneLayout.OffsetOf("desert");
+        Vector2 snow = IslandZoneLayout.OffsetOf("snow");
+        Vector2 swamp = IslandZoneLayout.OffsetOf("swamp");
+        Vector2 ruins = IslandZoneLayout.OffsetOf("ruins");
+        Vector2 forest = IslandZoneLayout.OffsetOf("forest");
+        zone[0] = Mathf.Max(Mathf.Max(coastSand, lagoonSand), Ellipse(x - desert.x, z - desert.y, 80f, -90f, 38f, 32f, 0.25f, noise));
+        zone[1] = Ellipse(x - snow.x, z - snow.y, 24f, 120f, 64f, 36f, 0.3f, noise);
+        zone[2] = Ellipse(x - swamp.x, z - swamp.y, -60f, -96f, 29f, 23f, 0.3f, noise);
+        zone[3] = Ellipse(x - ruins.x, z - ruins.y, -80f, 80f, 21f, 21f, 0.25f, noise) * (0.35f + 0.65f * Mathf.PerlinNoise(x * 0.35f + 5.1f, z * 0.35f + 8.3f));
+        float sum = zone[0] + zone[1] + zone[2] + zone[3];
+
+        if (sum > 1f)
+        {
+            for (int index = 0; index < 4; index++)
+            {
+                zone[index] /= sum;
+            }
+        }
+
+        float half = 1.6f + noise * 0.8f;
+        float path = 1f - Smooth(half * 0.55f, half, IslandZoneLayout.RoadDistanceWorld(new Vector3(x, 0f, z)));
+        float woods = Ellipse(x - forest.x, z - forest.y, -88f, -32f, 32f, 30f, 0.3f, noise) * 0.42f;
+        dirt = Mathf.Max(path, woods);
     }
 
     private static string PaintTerrain()
@@ -1019,6 +1102,13 @@ public static class WorldZoneBuilder
 
     private static bool IsZoneCore(Vector3 position)
     {
+        if (islandGround) // 107일차: 무인도는 석호 둘레 · 흙길 · 옮긴 구역 바닥
+        {
+            float[] weights = new float[4];
+            GroundWeights(position.x, position.z, weights, out float ground);
+            return IslandTerrainBuilder.LagoonDistance(position.x, position.z) < 4f || weights[0] > 0.4f || weights[1] > 0.4f || weights[2] > 0.4f || weights[3] > 0.2f || ground > 0.5f;
+        }
+
         if (position.x > 86f)
         {
             return true; // 해안 · 바다
@@ -1154,13 +1244,13 @@ public static class WorldZoneBuilder
             return "✗ 지도 이름용 레이어를 만들 빈 칸이 없습니다.";
         }
 
-        List<(string text, Vector3 position)> labels = Zones.Select(zone => (zone.DisplayName, zone.Center)).ToList();
+        List<(string text, Vector3 position)> labels = Zones.Select(zone => (zone.DisplayName, ZoneCenterWorld(zone))).ToList(); // 107일차: 옮긴 자리
         labels.Add(("마을", new Vector3(0f, 0f, 14f)));
 
         foreach ((string text, Vector3 position) in labels)
         {
             TMP_Text label = CreateText(parent, "MapLabel_" + text, $"<mark=#1C1C20B0 padding=\"20,20,8,8\"><b>{text}</b></mark>", 60f, 80f);
-            label.transform.SetPositionAndRotation(new Vector3(position.x, 40f, position.z), Quaternion.Euler(90f, 0f, 0f));
+            label.transform.SetPositionAndRotation(new Vector3(position.x, Mathf.Max(40f, position.y + 40f), position.z), Quaternion.Euler(90f, 0f, 0f));
             label.gameObject.layer = layer;
         }
 
@@ -1224,7 +1314,7 @@ public static class WorldZoneBuilder
             GameObject holder = new GameObject(location.LocationId);
             holder.transform.SetParent(parent, false);
             Vector3 facing = spec.lookAt - spec.position;
-            holder.transform.SetPositionAndRotation(spec.position, Quaternion.Euler(0f, Mathf.Atan2(facing.x, facing.z) * Mathf.Rad2Deg, 0f));
+            holder.transform.SetPositionAndRotation(ZoneToWorld(location.ZoneId, spec.position), Quaternion.Euler(0f, Mathf.Atan2(facing.x, facing.z) * Mathf.Rad2Deg, 0f)); // 107일차: 구역 자리로
             NpcLocationPoint point = holder.AddComponent<NpcLocationPoint>();
             point.EditorAssign(location.LocationId, location.DisplayName, location.IsHome, NpcLocationAnchor.Fixed); // 101일차: 집이면 밤에 안으로
             created.Add(point);
@@ -1269,8 +1359,9 @@ public static class WorldZoneBuilder
 
         int made = 0;
 
-        foreach ((string id, string templateName, Vector3 position) in ZoneSpawns)
+        foreach ((string id, string templateName, string zoneId, Vector3 design) in ZoneSpawns)
         {
+            Vector3 position = ZoneToWorld(zoneId, design); // 107일차: 구역 자리로
             string objectName = "Spawn_" + id.Replace("spawn_", string.Empty);
             Transform existing = root.transform.Find(objectName);
             Transform template = root.transform.Find(templateName);
@@ -1347,6 +1438,174 @@ public static class WorldZoneBuilder
         EditorUtility.SetDirty(surface);
         NavMeshTriangulation triangulation = NavMesh.CalculateTriangulation();
         return $"NavMesh 다시 굽기 완료 ({Time.realtimeSinceStartup - started:0.0}초, 삼각형 {triangulation.indices.Length / 3}개)";
+    }
+
+    // ---------------------------------------------------------------- 107일차: 섬 곳곳으로 옮기기
+
+    // 구역 묶음을 설계 좌표 → 섬 자리로 옮기고, 소품을 땅 높이에 맞춘다 (해안은 높이 0 그대로)
+    private static string MoveZonesToIsland(Transform root)
+    {
+        StringBuilder report = new StringBuilder("구역 자리 : ");
+        Physics.SyncTransforms();
+
+        foreach (ZoneInfo zone in Zones)
+        {
+            Transform group = root.Find(zone.ObjectName);
+            IslandZoneLayout.Site site = IslandZoneLayout.Get(zone.Id);
+
+            if (group == null || site == null)
+            {
+                continue;
+            }
+
+            group.position = new Vector3(site.Offset.x, 0f, site.Offset.y);
+
+            if (!site.Coast)
+            {
+                foreach (Transform child in group)
+                {
+                    Vector3 position = child.position;
+                    position.y = GroundY(position) + position.y; // 설계 높이(모닥불 불꽃 0.1 등)는 그대로 더함
+                    child.position = position;
+                }
+            }
+
+            Vector3 center = ZoneCenterWorld(zone);
+            report.Append($"{zone.DisplayName} ({center.x:0}, {center.z:0}, 높이 {center.y:0.0}) · ");
+        }
+
+        return report.ToString().TrimEnd(' ', '·');
+    }
+
+    // 석호 : 해안 구역이 떠난 자리에 작은 선착장과 작은 배
+    private static string BuildLagoonPier(Transform parent, int building)
+    {
+        GameObject pier = Place(parent, "zone_dock", new Vector3(SeaLine - 3f, 0f, 10f), 90f, new Vector3(1f, 1f, 0.45f), PropCollider.None, building);
+
+        if (pier == null)
+        {
+            return "✗ 석호 선착장 모델이 없습니다.";
+        }
+
+        float length = StylizedModelLibrary.ZoneDockLength;
+        float half = StylizedModelLibrary.ZoneDockWidth * 0.5f;
+        AddBox(pier, new Vector3(0f, StylizedModelLibrary.ZoneDockDeckHeight * 0.5f, 1.2f + (length - 1.2f) * 0.5f), new Vector3(StylizedModelLibrary.ZoneDockWidth, StylizedModelLibrary.ZoneDockDeckHeight, length - 1.2f));
+        AddBox(pier, new Vector3(0f, 0.12f, 0.6f), new Vector3(StylizedModelLibrary.ZoneDockWidth - 0.4f, 0.06f, 1.3f), new Vector3(-14f, 0f, 0f));
+
+        for (int side = -1; side <= 1; side += 2)
+        {
+            AddBox(pier, new Vector3(side * (half + 0.1f), 0.9f, 3.1f + (length - 3.1f) * 0.5f), new Vector3(0.2f, 1.8f, length - 3.1f));
+        }
+
+        AddBox(pier, new Vector3(0f, 0.9f, length + 0.1f), new Vector3(StylizedModelLibrary.ZoneDockWidth + 0.4f, 1.8f, 0.2f));
+        pier.name = "LagoonPier";
+        Place(parent, "zone_boat", new Vector3(SeaLine + 5f, IslandTerrainBuilder.SeaLevel + 0.02f, 4.5f), 15f, 0.8f, PropCollider.None, 0).name = "LagoonBoat";
+        return "석호 : 작은 선착장 · 작은 배 (해안 구역은 동쪽 해변으로)";
+    }
+
+    private static void ValidateIslandSites(GameObject root, Action<string> error, StringBuilder report)
+    {
+        Terrain terrain = ActiveTerrain;
+        float Ground(float x, float z) => terrain.SampleHeight(new Vector3(x, 0f, z)) + terrain.transform.position.y;
+        float worstPad = 0f;
+        string worstPadZone = string.Empty;
+
+        foreach (ZoneInfo zone in Zones)
+        {
+            IslandZoneLayout.Site site = IslandZoneLayout.Get(zone.Id);
+            Transform group = root.transform.Find(zone.ObjectName);
+
+            if (site == null)
+            {
+                error($"{zone.DisplayName} 구역의 섬 자리가 정해지지 않았습니다 (IslandZoneLayout).");
+                continue;
+            }
+
+            if (group == null || Vector2.Distance(new Vector2(group.position.x, group.position.z), site.Offset) > 0.01f)
+            {
+                error($"{zone.DisplayName} 구역이 섬 자리로 옮겨지지 않았습니다. 18번(22번) 메뉴를 실행하세요.");
+            }
+
+            // 터 가운데 (반지름 60%)는 평평해야 함
+            if (!site.Coast)
+            {
+                float pad = IslandZoneLayout.PadHeight(zone.Id);
+                Vector2 center = site.PadCenter + site.Offset;
+
+                for (float u = -0.6f; u <= 0.6f; u += 0.2f)
+                {
+                    for (float v = -0.6f; v <= 0.6f; v += 0.2f)
+                    {
+                        if (u * u + v * v > 0.36f)
+                        {
+                            continue;
+                        }
+
+                        float delta = Mathf.Abs(Ground(center.x + u * site.PadRadius.x, center.y + v * site.PadRadius.y) - pad);
+
+                        if (delta > worstPad)
+                        {
+                            worstPad = delta;
+                            worstPadZone = zone.DisplayName;
+                        }
+                    }
+                }
+            }
+
+            // 섬 안쪽 (해안 구역은 물가)
+            Vector3 world = ZoneCenterWorld(zone);
+            float beyond = new Vector2(world.x, world.z).magnitude - IslandTerrainBuilder.CoastRadiusAt(Mathf.Atan2(world.z, world.x));
+
+            if (!site.Coast && beyond > -80f)
+            {
+                error($"{zone.DisplayName} 구역이 바닷가에 너무 가깝습니다 (해안선까지 {-beyond:0}m).");
+            }
+        }
+
+        if (worstPad > 0.35f)
+        {
+            error($"{worstPadZone} 구역 터가 평평하지 않습니다 (차이 {worstPad:0.00}m). 22번 메뉴를 실행하세요.");
+        }
+
+        // 흙길 : 가장 가파른 곳
+        float steepest = 0f;
+        string steepestRoad = string.Empty;
+        float totalLength = 0f;
+
+        for (int road = 0; road < IslandZoneLayout.Sites.Length; road++)
+        {
+            float length = IslandZoneLayout.RoadLength(road);
+            totalLength += length;
+            Vector3 previous = IslandZoneLayout.RoadPoint(road, 0f);
+            float previousHeight = Ground(previous.x, previous.z);
+
+            for (float distance = 4f; distance <= length; distance += 4f)
+            {
+                Vector3 point = IslandZoneLayout.RoadPoint(road, distance);
+                float height = Ground(point.x, point.z);
+                float grade = Mathf.Atan2(Mathf.Abs(height - previousHeight), 4f) * Mathf.Rad2Deg;
+
+                if (grade > steepest)
+                {
+                    steepest = grade;
+                    steepestRoad = IslandZoneLayout.Sites[road].ZoneId;
+                }
+
+                previousHeight = height;
+            }
+        }
+
+        if (steepest > 15f)
+        {
+            error($"{steepestRoad} 흙길이 {steepest:0}°로 가파릅니다 (15° 이하 필요). 22번 메뉴를 실행하세요.");
+        }
+
+        if (root.transform.Find("LagoonPier/LagoonPier") == null)
+        {
+            error("석호 선착장이 없습니다. 18번 메뉴를 실행하세요.");
+        }
+
+        report.AppendLine($"섬 구역 자리 {Zones.Length}곳 · 터 평평함 (가장 큰 차이 {worstPad:0.00}m) · 흙길 {IslandZoneLayout.Sites.Length}개 {totalLength:0}m (가장 가파른 곳 {steepest:0}°)");
     }
 
     // ---------------------------------------------------------------- 검증
@@ -1522,8 +1781,13 @@ public static class WorldZoneBuilder
         }
     }
 
-    private static float DistanceToWater(Vector3 position)
+    private static float DistanceToWater(Vector3 position, string zoneId)
     {
+        if (islandLayout)
+        {
+            position = IslandZoneLayout.ToDesign(zoneId, position); // 107일차: 설계 좌표로 비교
+        }
+
         float best = Mathf.Max(0f, SeaLine - position.x);
 
         foreach ((string _, Vector3 center, float radius) in Pools)
@@ -1536,6 +1800,7 @@ public static class WorldZoneBuilder
 
     private static void ValidateScene(Scene scene, NpcDatabase database, Action<string> error, StringBuilder report)
     {
+        DetectIsland();
         GameObject root = scene.GetRootGameObjects().FirstOrDefault(item => item.name == RootName);
 
         if (root == null)
@@ -1584,9 +1849,9 @@ public static class WorldZoneBuilder
                 continue;
             }
 
-            if (location.IsWaterside && DistanceToWater(position) > 3.5f)
+            if (location.IsWaterside && DistanceToWater(position, location.ZoneId) > 3.5f)
             {
-                error($"물가 위치인데 물에서 {DistanceToWater(position):0.0}m 떨어져 있습니다: {location.LocationId}");
+                error($"물가 위치인데 물에서 {DistanceToWater(position, location.ZoneId):0.0}m 떨어져 있습니다: {location.LocationId}");
                 continue;
             }
 
@@ -1606,7 +1871,7 @@ public static class WorldZoneBuilder
         {
             NavMeshPath path = new NavMeshPath();
             bool fromVillage = NavMesh.SamplePosition(zone.PathStart, out NavMeshHit start, 3f, NavMesh.AllAreas);
-            bool toZone = NavMesh.SamplePosition(zone.Entrance, out NavMeshHit end, 3f, NavMesh.AllAreas);
+            bool toZone = NavMesh.SamplePosition(ZoneEntranceWorld(zone), out NavMeshHit end, 3f, NavMesh.AllAreas); // 107일차: 옮긴 입구
 
             if (!fromVillage || !toZone || !NavMesh.CalculatePath(start.position, end.position, NavMesh.AllAreas, path) || path.status != NavMeshPathStatus.PathComplete)
             {
@@ -1667,7 +1932,7 @@ public static class WorldZoneBuilder
 
         EnemySpawnPoint[] spawns = Object.FindObjectsByType<EnemySpawnPoint>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 
-        foreach ((string id, string _, Vector3 _) in ZoneSpawns)
+        foreach ((string id, string _, string _, Vector3 _) in ZoneSpawns)
         {
             if (!spawns.Any(spawn => spawn.SpawnPointId == id))
             {
@@ -1681,5 +1946,10 @@ public static class WorldZoneBuilder
         }
 
         report.AppendLine($"새 구역 위치 {good}/{zoneLocations.Count}곳 정상 · 마을→입구 길 {reachable}/{Zones.Length}개 · 경계 {(island ? "바다 경계(ShoreGuard) · 석호 제외" : "벽")} · 바닥 층 {zoneLayers}개 · 적 생성 지점 {spawns.Length}곳");
+
+        if (island)
+        {
+            ValidateIslandSites(root, error, report); // 107일차
+        }
     }
 }

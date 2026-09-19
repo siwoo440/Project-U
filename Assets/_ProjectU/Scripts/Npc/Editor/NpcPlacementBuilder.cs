@@ -815,6 +815,7 @@ public static class NpcPlacementBuilder
     }
 
     // 101일차: 일정 이동 시간 - 다음 일정이 시작되기 전에 실제 걷는 속도로 도착할 수 있는지 (NavMesh 길 길이 기준)
+    // 107일차: 먼 길은 플레이어에게서 멀 때 빠르게 이동하므로 NpcAgent.EstimateTravelSeconds 기준
     private static void ValidateTravel(NpcManager manager, List<NpcCharacterData> cast, System.Action<string> error, StringBuilder report)
     {
         DayNightCycle dayNight = new SerializedObject(manager).FindProperty("dayNightCycle").objectReferenceValue as DayNightCycle;
@@ -834,7 +835,6 @@ public static class NpcPlacementBuilder
                 continue;
             }
 
-            float speed = Mathf.Max(0.2f, agent.WalkSpeed);
 
             foreach (NpcScheduleData.Plan plan in character.Schedule.Plans)
             {
@@ -866,7 +866,7 @@ public static class NpcPlacementBuilder
                         length += Vector3.Distance(path.corners[corner - 1], path.corners[corner]);
                     }
 
-                    float hours = length / speed / secondsPerHour;
+                    float hours = agent.EstimateTravelSeconds(length) / secondsPerHour;
                     float slot = index + 2 < plan.Stops.Count ? plan.Stops[index + 2].Hour - to.Hour : 24f; // 도착한 뒤 머무를 시간
                     legs++;
 

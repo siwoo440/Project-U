@@ -34,6 +34,16 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
     [Tooltip("100일차: 하반신 모양별 움직임 (걷기 · 미끄러지기 · 떠다니기 · 말 걸음 · 여러 다리 · 젤리 · 깡충).")]
     [SerializeField] private NpcMotionStyle motionStyle = NpcMotionStyle.Walk; // 움직임
 
+    [Header("Far Travel")] // 107일차: 섬 곳곳 구역 사이 먼 길
+    [Tooltip("플레이어에게서 이 거리보다 멀면 보이지 않는 동안 빠르게 이동합니다 (m).")]
+    [SerializeField, Min(10f)] private float farDistance = 60f; // 빠른 이동 거리
+    [Tooltip("멀리서 이동할 때 걷기 속도 배율.")]
+    [SerializeField, Min(1f)] private float farSpeedMultiplier = 16f; // 빠른 이동 배율
+    [Tooltip("보이는 곳에서 남은 길이 길 때 서둘러 걷는 배율.")]
+    [SerializeField, Min(1f)] private float longTripMultiplier = 1.8f; // 서둘러 걷기 배율
+    [Tooltip("남은 길이 이보다 길면 서둘러 걷습니다 (m).")]
+    [SerializeField, Min(5f)] private float longTripDistance = 40f; // 서둘러 걷기 거리
+
     [Header("Runtime")] // 실행 상태
     [SerializeField] private string currentLocationId; // 현재 위치 ID
     [SerializeField] private string currentActivity; // 하는 일
@@ -56,6 +66,7 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
     private string nameTagBaseText; // 의뢰 표시 없는 이름표 문구 (93일차)
     private NpcQuestMarker questMarker = NpcQuestMarker.None; // 현재 의뢰 표시
     private bool hasEventMarker; // 이벤트 표시 (94일차)
+    private int repathCount; // 먼 길 중간(부분 경로)에서 다시 길을 찾은 횟수 (107일차)
 
     public NpcCharacterData Character => character; // 캐릭터 제공
     public string CharacterId => character != null ? character.CharacterId : string.Empty; // ID 제공
@@ -72,6 +83,8 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
     public NpcMotionStyle MotionStyle => motionStyle; // 움직임 제공 (100일차)
     public float WalkSpeed => walkSpeed; // 걷기 속도 제공 (100일차)
     public string StopKey { get; set; } // 관리자가 쓰는 현재 일정 칸 키
+    public bool IsTravelingFast { get; private set; } // 107일차: 멀리서 빠르게 이동 중
+    public float FarDistance => farDistance; // 빠른 이동 거리 (테스트용)
 
     private void Awake() // 준비
     {
@@ -105,6 +118,7 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
         targetFacing = facing;
         targetPosition = NavMesh.SamplePosition(position, out NavMeshHit hit, 2.5f, NavMesh.AllAreas) ? hit.position : position;
         stuckTimer = 0f;
+        repathCount = 0;
 
         if (snap || !agent.isOnNavMesh)
         {
@@ -238,7 +252,17 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
             }
             else if (agent.remainingDistance <= arriveDistance)
             {
-                Arrive(false);
+                bool notThere = FlatDistance(transform.position, targetPosition) > arriveDistance + 0.5f;
+
+                if (agent.pathStatus == NavMeshPathStatus.PathPartial && notThere && repathCount < 6) // 107일차: 아주 먼 길은 중간까지만 찾을 수 있어 이어서 다시 찾음
+                {
+                    repathCount++;
+                    agent.SetDestination(targetPosition);
+                }
+                else
+                {
+                    Arrive(notThere); // 끝까지 못 가면 목적지로 옮김
+                }
             }
             else if (agent.velocity.sqrMagnitude < 0.01f)
             {
@@ -254,6 +278,8 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
                 stuckTimer = 0f;
             }
         }
+
+        UpdateTravelSpeed();
 
         if (isTalking && !isInside)
         {
@@ -359,6 +385,47 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
         arrived = true;
         stuckTimer = 0f;
         SetInside(hideOnArrival);
+        UpdateTravelSpeed();
+    }
+
+    // 107일차: 플레이어에게서 멀면 보이지 않는 동안 빠르게, 보이는 곳에서 먼 길이면 서둘러 걷기
+    private void UpdateTravelSpeed()
+    {
+        float multiplier = 1f;
+        bool fast = false;
+
+        if (!arrived && !isTalking)
+        {
+            Transform target = FindPlayer();
+            float playerDistance = target != null ? FlatDistance(target.position, transform.position) : float.MaxValue;
+            float remaining = agent.isOnNavMesh && !agent.pathPending ? agent.remainingDistance : float.PositiveInfinity;
+            fast = playerDistance > farDistance;
+            multiplier = fast ? farSpeedMultiplier : remaining > longTripDistance ? longTripMultiplier : 1f;
+        }
+
+        IsTravelingFast = fast;
+        float speed = walkSpeed * multiplier;
+
+        if (!Mathf.Approximately(agent.speed, speed))
+        {
+            agent.speed = speed;
+            agent.acceleration = Mathf.Max(8f, speed * 4f);
+            agent.autoBraking = !fast;
+        }
+    }
+
+    public float EstimateTravelSeconds(float pathLength) // 107일차: 일정 이동 시간 어림 (플레이어가 한쪽 끝에 있다고 봄 : 가까운 곳은 걷거나 서둘러 걷고, 나머지는 빠르게)
+    {
+        float near = Mathf.Min(pathLength, farDistance * 2f);
+        float calm = Mathf.Min(near, longTripDistance);
+        float hurry = near - calm;
+        float far = pathLength - near;
+        return calm / walkSpeed + hurry / (walkSpeed * longTripMultiplier) + far / (walkSpeed * farSpeedMultiplier);
+    }
+
+    private static float FlatDistance(Vector3 a, Vector3 b)
+    {
+        return new Vector2(a.x - b.x, a.z - b.z).magnitude;
     }
 
     private void SetInside(bool inside) // 집 안으로 들어가기 (보이지 않음)

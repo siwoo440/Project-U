@@ -15,6 +15,7 @@ using Object = UnityEngine.Object;
 // 2. 바닥 칠하기 : 기본(풀 · 흙) → 섬(해변 모래 · 바다 밑 · 눈 · 절벽 · 해변 오솔길) → 19번 메뉴(구역 바닥 · NPC 배치 · NavMesh · 초상)
 // 3. 사방 바다 · 먼 바다 밑 · 남쪽 해변 난파선 · 떠밀려 온 물건 · 시작 위치 · 기본 부활 위치 · 바다 경계 · 안개
 // 106일차: 바다 경계는 먼 바다 파도, 물속 수면 · 바닷속(해초 · 산호 · 잠수 물건)은 23번 메뉴와 같은 코드로 함께 만든다
+// 107일차: 높이에 구역 터 · 흙길(IslandZoneLayout)을 더하고, NavMesh는 섬 뭍 전체(수면 위)를 굽는다
 // 여러 번 실행해도 같은 결과가 나온다 (섬 묶음을 지우고 다시 만듦).
 public static class IslandTerrainBuilder
 {
@@ -209,7 +210,12 @@ public static class IslandTerrainBuilder
         return Mathf.PerlinNoise(x + 31.7f, z + 12.9f) * 0.6f + Mathf.PerlinNoise(x * 2.1f + 7.4f, z * 2.1f + 48.2f) * 0.28f + Mathf.PerlinNoise(x * 4.3f + 91.3f, z * 4.3f + 3.8f) * 0.12f;
     }
 
-    public static float HeightAt(float x, float z) // 월드 높이 (y)
+    public static float HeightAt(float x, float z) // 월드 높이 (y) : 자연 지형 + 107일차 구역 터 · 흙길
+    {
+        return IslandZoneLayout.Apply(x, z);
+    }
+
+    public static float NaturalHeightAt(float x, float z) // 자연 지형 높이 (구역 터 · 흙길 전)
     {
         float distance = Mathf.Sqrt(x * x + z * z);
         float coast = CoastRadiusAt(Mathf.Atan2(z, x)) - distance; // 해안선 안쪽 거리 (바다는 음수)
@@ -318,7 +324,11 @@ public static class IslandTerrainBuilder
         return $"원경 산 {count}개 정리 (섬 지형의 산으로 대신함)";
     }
 
-    private static string ConfigureNavMeshVolume() // 105일차 : 마을 · 기존 구역만 굽기 (107일차에 섬 전체로)
+    public const float NavMeshSize = 1800f; // 107일차 : 섬 뭍 전체 (해안선 약 760 ~ 850m)
+    public const float NavMeshTop = 200f; // 북쪽 산꼭대기(약 184m) 위까지
+    public static float NavMeshBottom => SeaLevel + 0.1f; // 수면 아래(바다 밑 · 석호 · 항구)는 굽지 않음
+
+    private static string ConfigureNavMeshVolume() // 105일차 : 마을 · 기존 구역 → 107일차 : 섬 뭍 전체 (NPC가 멀리 떨어진 구역까지 걸어감)
     {
         NavMeshSurface surface = Object.FindFirstObjectByType<NavMeshSurface>(FindObjectsInactive.Include);
 
@@ -328,10 +338,10 @@ public static class IslandTerrainBuilder
         }
 
         surface.collectObjects = CollectObjects.Volume;
-        surface.center = new Vector3(0f, 10f, 0f) - surface.transform.position;
-        surface.size = new Vector3(PlateauHalf * 2f + 20f, 80f, PlateauHalf * 2f + 20f);
+        surface.center = new Vector3(0f, (NavMeshBottom + NavMeshTop) * 0.5f, 0f) - surface.transform.position;
+        surface.size = new Vector3(NavMeshSize, NavMeshTop - NavMeshBottom, NavMeshSize);
         EditorUtility.SetDirty(surface);
-        return $"NavMesh 범위 : 마을 · 구역 {surface.size.x:0}m 네모";
+        return $"NavMesh 범위 : 섬 뭍 전체 {surface.size.x:0}m 네모 (수면 {NavMeshBottom:0.0}m 위만)";
     }
 
     // ---------------------------------------------------------------- 바닥 칠하기
@@ -986,9 +996,9 @@ public static class IslandTerrainBuilder
 
         NavMeshSurface surface = Object.FindFirstObjectByType<NavMeshSurface>(FindObjectsInactive.Include);
 
-        if (surface == null || surface.collectObjects != CollectObjects.Volume)
+        if (surface == null || surface.collectObjects != CollectObjects.Volume || surface.size.x < NavMeshSize - 1f || Mathf.Abs(surface.transform.position.y + surface.center.y - surface.size.y * 0.5f - NavMeshBottom) > 0.05f)
         {
-            Error("NavMesh가 섬 전체를 굽도록 되어 있습니다 (105일차는 마을 · 구역 범위만).");
+            Error("NavMesh 범위가 섬 뭍 전체(수면 위)가 아닙니다. 22번 메뉴를 실행하세요.");
         }
 
         KoreanFontBuilder.Validate(new[] { IslandShoreGuard.BlockedMessage }, Error, new StringBuilder());

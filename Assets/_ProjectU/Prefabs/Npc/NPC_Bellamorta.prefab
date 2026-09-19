@@ -486,6 +486,10 @@ MonoBehaviour:
   nameTagDistance: 14
   stuckSeconds: 4
   motionStyle: 0
+  farDistance: 60
+  farSpeedMultiplier: 16
+  longTripMultiplier: 1.8
+  longTripDistance: 40
   currentLocationId: 
   currentActivity: 
   isInside: 0
