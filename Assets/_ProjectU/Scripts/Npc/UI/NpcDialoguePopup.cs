@@ -38,6 +38,8 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
     [SerializeField] private Button questButton; // 의뢰 전달 (93일차)
     [SerializeField] private TMP_Text questLabel; // 의뢰 버튼 문구 (진행도)
     [SerializeField] private Button closeButton; // 닫기
+    [SerializeField] private Button companionButton; // 109일차: 함께 가자 · 이제 돌아가
+    [SerializeField] private TMP_Text companionLabel; // 동료 버튼 문구
 
     [Header("Event")] // 94일차: 하트 이벤트 선택지
     [SerializeField] private Button[] choiceButtons = new Button[0]; // 선택지 버튼
@@ -82,6 +84,8 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
     public bool CanTrade => tradeButton != null && tradeButton.gameObject.activeSelf; // 거래 버튼 여부 (테스트용)
     public string TradeLabel => tradeLabel != null ? tradeLabel.text : string.Empty; // 거래 버튼 문구 (테스트용)
     public bool CanDeliverQuest => questButton != null && questButton.gameObject.activeSelf; // 의뢰 버튼 여부 (테스트용)
+    public bool CanToggleCompanion => companionButton != null && companionButton.gameObject.activeSelf; // 동료 버튼 여부 (109일차 테스트용)
+    public string CompanionLabel => companionLabel != null ? companionLabel.text : string.Empty; // 동료 버튼 문구 (테스트용)
     public string QuestLabel => questLabel != null ? questLabel.text : string.Empty; // 의뢰 버튼 문구 (테스트용)
     public NpcEventBook.Event ActiveEvent => activeEvent; // 진행 중 이벤트 (테스트용)
     public bool IsChoosing => activeEvent != null && eventPhase == EventPhaseChoosing; // 선택지 표시 중 (테스트용)
@@ -94,6 +98,7 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
         if (tradeButton != null) tradeButton.onClick.AddListener(Trade);
         if (questButton != null) questButton.onClick.AddListener(DeliverQuest);
         if (closeButton != null) closeButton.onClick.AddListener(RequestClose);
+        if (companionButton != null) companionButton.onClick.AddListener(ToggleCompanion); // 109일차
         if (lineButton != null) lineButton.onClick.AddListener(FinishTyping);
         if (giftCancelButton != null) giftCancelButton.onClick.AddListener(CloseGiftPanel);
         if (giftSlotTemplate != null) giftSlotTemplate.gameObject.SetActive(false);
@@ -417,6 +422,47 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
         }
     }
 
+    public void ToggleCompanion() // 109일차: 함께 가자 · 이제 돌아가
+    {
+        NpcCompanionManager companions = NpcCompanionManager.Instance;
+
+        if (!IsOpen || companions == null || activeEvent != null)
+        {
+            return;
+        }
+
+        FinishTyping();
+        NpcCharacterData character = agent.Character;
+
+        if (companions.IsCompanion(agent))
+        {
+            string leaveLine = companions.CurrentEntry != null ? companions.CurrentEntry.leaveLine : string.Empty;
+            companions.Dismiss(false, false);
+            ShowLine(leaveLine);
+            ShowMessage($"{character.DisplayName} · {NpcCompanionManager.LeftMessage}", ProjectUUIPalette.TextSecondary);
+            RefreshHeader();
+            return;
+        }
+
+        NpcCompanionBook.Entry candidate = companions.EntryFor(character);
+
+        if (companions.Recruit(agent, out string message))
+        {
+            ShowLine(message);
+            ShowMessage($"{character.DisplayName} · {NpcCompanionManager.JoinedMessage} ({NpcCompanionBook.RoleName(candidate.role)})", ProjectUUIPalette.Accent);
+        }
+        else if (candidate != null && message == candidate.refuseLine)
+        {
+            ShowLine(message); // 아직 친하지 않음 : NPC가 직접 말함
+        }
+        else
+        {
+            ShowMessage(message, ProjectUUIPalette.TextSecondary);
+        }
+
+        RefreshHeader();
+    }
+
     private void RequestClose() // 닫기 요청
     {
         if (manager != null)
@@ -518,6 +564,18 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
             }
         }
 
+        if (companionButton != null) // 109일차: 동료가 될 수 있는 NPC만
+        {
+            NpcCompanionManager companions = NpcCompanionManager.Instance;
+            bool canCompanion = companions != null && companions.EntryFor(character) != null;
+            companionButton.gameObject.SetActive(canCompanion);
+
+            if (canCompanion && companionLabel != null)
+            {
+                companionLabel.text = companions.IsCompanion(agent) ? "이제 돌아가" : "함께 가자";
+            }
+        }
+
         RefreshEventButtons();
     }
 
@@ -531,6 +589,7 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
             if (giftButton != null) giftButton.gameObject.SetActive(false);
             if (questButton != null) questButton.gameObject.SetActive(false);
             if (tradeButton != null) tradeButton.gameObject.SetActive(false);
+            if (companionButton != null) companionButton.gameObject.SetActive(false); // 109일차
         }
         else if (giftButton != null)
         {

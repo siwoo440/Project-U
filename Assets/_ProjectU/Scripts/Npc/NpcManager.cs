@@ -123,7 +123,7 @@ public sealed class NpcManager : MonoBehaviour // 90일차: 마을 NPC 일정 �
 
         foreach (NpcAgent agent in agents)
         {
-            if (agent == null || agent.Character == null || agent.Character.Schedule == null)
+            if (agent == null || agent.Character == null || agent.Character.Schedule == null || agent.IsFollowing) // 109일차: 동료는 일정 대신 플레이어를 따라감
             {
                 continue;
             }

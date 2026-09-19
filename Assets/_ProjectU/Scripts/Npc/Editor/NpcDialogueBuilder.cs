@@ -303,7 +303,7 @@ public static class NpcDialogueBuilder
         // 대사 (누르면 전체 표시)
         Image lineArea = CreateImage(w, "LP_LineArea", null, new Color(0f, 0f, 0f, 0f));
         lineArea.raycastTarget = true;
-        TopLeft(lineArea.rectTransform, new Vector2(TextLeft, -100f), new Vector2(WindowWidth - TextLeft - ButtonWidth - Pad - 24f, 110f));
+        TopLeft(lineArea.rectTransform, new Vector2(TextLeft, -100f), new Vector2(WindowWidth - TextLeft - ButtonWidth - Pad - 24f, 102f)); // 109일차: 아래 동료 버튼 자리만큼 줄임 (3줄)
         Button lineButton = lineArea.gameObject.AddComponent<Button>();
         lineButton.transition = Selectable.Transition.None;
         TMP_Text lineText = CreateText(lineArea.rectTransform, "LP_Line", "대사", 23f, FontStyles.Normal, TextAlignmentOptions.TopLeft, ProjectUUIPalette.TextPrimary);
@@ -315,7 +315,7 @@ public static class NpcDialogueBuilder
         TMP_Text message = CreateText(w, "LP_Message", string.Empty, 15f, FontStyles.Bold, TextAlignmentOptions.BottomLeft, ProjectUUIPalette.Accent);
         message.textWrappingMode = TextWrappingModes.Normal;
         message.overflowMode = TextOverflowModes.Overflow;
-        TopLeft(message.rectTransform, new Vector2(TextLeft, -WindowHeight + 52f), new Vector2(WindowWidth - TextLeft - ButtonWidth - Pad - 24f, 40f));
+        TopLeft(message.rectTransform, new Vector2(TextLeft, -WindowHeight + 52f), new Vector2(WindowWidth - TextLeft - ButtonWidth * 2f - Pad - 36f, 40f)); // 109일차: 동료 버튼 왼쪽까지
         message.gameObject.SetActive(false);
 
         // 오른쪽 버튼 (93일차: 의뢰 버튼을 넣으려고 한 칸 40px로 줄임)
@@ -349,8 +349,14 @@ public static class NpcDialogueBuilder
             choiceLabels[index] = choiceLabel;
         }
 
+        // 109일차: 동료 버튼 (대사 칸 오른쪽 아래, 닫기와 같은 줄, 동료가 될 수 있는 NPC만 보임)
+        float companionX = buttonX - ButtonWidth - 24f;
+        Button companion = CreateButton(w, "LP_Companion", "함께 가자", 15f, new Color(0.56f, 0.8f, 0.52f, 1f), ProjectUUIPalette.TextDark, out _, out TMP_Text companionLabel);
+        TopLeft((RectTransform)companion.transform, new Vector2(companionX, -WindowHeight + Pad + 36f), new Vector2(ButtonWidth, 36f));
+        companion.gameObject.SetActive(false);
+
         TMP_Text hint = CreateText(w, "LP_Hint", "스페이스 · 엔터 : 다음 말", 12f, FontStyles.Normal, TextAlignmentOptions.MidlineRight, new Color(0.72f, 0.7f, 0.65f, 0.6f));
-        TopLeft(hint.rectTransform, new Vector2(buttonX - 250f, -WindowHeight + 30f), new Vector2(236f, 20f));
+        TopLeft(hint.rectTransform, new Vector2(companionX - 248f, -WindowHeight + 30f), new Vector2(236f, 20f));
 
         // 선물 목록 (대화 상자 위)
         Image giftWindow = CreateImage(panel, "LP_GiftPanel", UISpriteFactory.Panel, ProjectUUIPalette.PanelMid);
@@ -415,6 +421,8 @@ public static class NpcDialogueBuilder
         Set(serialized, "tradeButton", trade);
         Set(serialized, "questButton", quest);
         Set(serialized, "questLabel", questLabel);
+        Set(serialized, "companionButton", companion); // 109일차
+        Set(serialized, "companionLabel", companionLabel);
         SerializedProperty choiceButtonList = serialized.FindProperty("choiceButtons");
         SerializedProperty choiceLabelList = serialized.FindProperty("choiceLabels");
         choiceButtonList.arraySize = ChoiceCount;
@@ -477,7 +485,7 @@ public static class NpcDialogueBuilder
     private static readonly string[] PopupFields =
     {
         "panelRoot", "portraitFrame", "portrait", "nameText", "jobText", "stageText", "affinityFill", "lineText", "lineButton", "messageText",
-        "talkButton", "giftButton", "giftLabel", "tradeButton", "questButton", "questLabel", "closeButton", "giftPanel", "giftListRoot", "giftSlotTemplate", "giftEmptyText", "giftCancelButton"
+        "talkButton", "giftButton", "giftLabel", "tradeButton", "questButton", "questLabel", "closeButton", "companionButton", "companionLabel", "giftPanel", "giftListRoot", "giftSlotTemplate", "giftEmptyText", "giftCancelButton"
     };
 
     public static string Validate(out int errorCount)

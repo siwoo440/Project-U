@@ -60,6 +60,7 @@ public static class NpcCastBuilder
         report.AppendLine(Result("18. 새 구역", WorldZoneBuilder.BuildAll(false)));
         report.AppendLine(Result("8. NPC 마을 배치", NpcPlacementBuilder.BuildAll()));
         report.AppendLine(Result("9. 초상 · 대화 창", NpcDialogueBuilder.BuildAll()));
+        report.AppendLine(Result("25. NPC 동료", NpcCompanionBuilder.BuildAll(false))); // 109일차: 동료 버튼 · 화면 표시 유지
 
         if (saveScene)
         {

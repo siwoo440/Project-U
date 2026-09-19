@@ -44,6 +44,10 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
     [Tooltip("남은 길이 이보다 길면 서둘러 걷습니다 (m).")]
     [SerializeField, Min(5f)] private float longTripDistance = 40f; // 서둘러 걷기 거리
 
+    [Header("Companion")] // 109일차: 동료로 따라다니기
+    [Tooltip("플레이어가 이 거리보다 멀어지면 플레이어 가까이로 옮깁니다 (m).")]
+    [SerializeField, Min(10f)] private float followTeleportDistance = 45f; // 따라가기 순간이동 거리
+
     [Header("Runtime")] // 실행 상태
     [SerializeField] private string currentLocationId; // 현재 위치 ID
     [SerializeField] private string currentActivity; // 하는 일
@@ -67,6 +71,13 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
     private NpcQuestMarker questMarker = NpcQuestMarker.None; // 현재 의뢰 표시
     private bool hasEventMarker; // 이벤트 표시 (94일차)
     private int repathCount; // 먼 길 중간(부분 경로)에서 다시 길을 찾은 횟수 (107일차)
+    private Transform followTarget; // 109일차: 따라다니는 대상 (동료)
+    private Vector3 engagePosition; // 109일차: 전투형 동료가 다가가는 적 위치
+    private bool hasEngage; // 적에게 다가가는 중인지
+    private float followRepathTimer; // 따라가기 길 다시 찾기 간격
+    private const float ShoreSearchRadius = 90f; // 헤엄치는 플레이어 근처 물가를 찾는 거리
+    private float followSide = 1f; // 플레이어 뒤 왼쪽 · 오른쪽
+    private float shoreSearchTime; // 물가 찾기 다음 시각 (플레이어가 헤엄칠 때)
 
     public NpcCharacterData Character => character; // 캐릭터 제공
     public string CharacterId => character != null ? character.CharacterId : string.Empty; // ID 제공
@@ -85,6 +96,8 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
     public string StopKey { get; set; } // 관리자가 쓰는 현재 일정 칸 키
     public bool IsTravelingFast { get; private set; } // 107일차: 멀리서 빠르게 이동 중
     public float FarDistance => farDistance; // 빠른 이동 거리 (테스트용)
+    public bool IsFollowing => followTarget != null; // 109일차: 동료로 따라다니는 중
+    public int FollowTeleportCount { get; private set; } // 따라가다 순간이동한 횟수 (테스트용)
 
     private void Awake() // 준비
     {
@@ -244,7 +257,11 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
     {
         float deltaTime = Time.deltaTime;
 
-        if (!arrived && !isTalking && agent.isOnNavMesh && !agent.pathPending)
+        if (IsFollowing) // 109일차: 동료는 일정 대신 플레이어를 따라감
+        {
+            UpdateFollow(deltaTime);
+        }
+        else if (!arrived && !isTalking && agent.isOnNavMesh && !agent.pathPending)
         {
             if (agent.pathStatus == NavMeshPathStatus.PathInvalid)
             {
@@ -388,9 +405,167 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
         UpdateTravelSpeed();
     }
 
+    // ------------------------------------------------------------ 109일차: 동료 따라다니기
+
+    public void BeginFollow(Transform target, string activity) // 동료가 되어 따라다니기 시작
+    {
+        followTarget = target;
+        hasEngage = false;
+        CurrentPoint = null;
+        currentLocationId = string.Empty;
+        currentActivity = activity;
+        hideOnArrival = false;
+        arrived = false;
+        StopKey = null;
+        followRepathTimer = 0f;
+        followSide = (GetInstanceID() & 1) == 0 ? 1f : -1f;
+        SetInside(false);
+    }
+
+    public void EndFollow() // 동료를 그만두고 일정으로 돌아갈 준비 (NpcManager가 다음 일정 위치로 보냄)
+    {
+        followTarget = null;
+        hasEngage = false;
+        arrived = true;
+        StopKey = null;
+        currentActivity = string.Empty;
+
+        if (agent != null && agent.isOnNavMesh)
+        {
+            agent.ResetPath();
+        }
+
+        if (agent != null)
+        {
+            agent.speed = walkSpeed;
+            agent.acceleration = 8f;
+            agent.autoBraking = true;
+            agent.stoppingDistance = Mathf.Min(arriveDistance, 0.2f);
+        }
+    }
+
+    public void SetEngageTarget(bool engage, Vector3 position) // 전투형 동료 : 적에게 다가가기 (false면 다시 따라가기)
+    {
+        hasEngage = engage;
+        engagePosition = position;
+
+        if (engage)
+        {
+            followRepathTimer = 0f;
+        }
+    }
+
+    public bool TeleportNear(Vector3 position) // 가까운 걸을 수 있는 곳으로 옮기기 (없으면 false)
+    {
+        if (!NavMesh.SamplePosition(position, out NavMeshHit hit, 8f, NavMesh.AllAreas))
+        {
+            return false;
+        }
+
+        if (agent.isOnNavMesh)
+        {
+            agent.Warp(hit.position);
+        }
+        else
+        {
+            transform.position = hit.position;
+            agent.Warp(hit.position);
+        }
+
+        FollowTeleportCount++;
+        return true;
+    }
+
+    private void UpdateFollow(float deltaTime)
+    {
+        Vector3 toTarget = followTarget.position - transform.position;
+        toTarget.y = 0f;
+        float distance = toTarget.magnitude;
+        Vector3 behind = followTarget.position - followTarget.forward * 2.4f + followTarget.right * (1.3f * followSide);
+
+        if (distance > followTeleportDistance || !agent.isOnNavMesh) // 너무 멀면 플레이어 뒤로 (물 위라 설 곳이 없으면 가장 가까운 물가에서 기다림)
+        {
+            if (!TeleportNear(behind) && agent.isOnNavMesh)
+            {
+                WaitAtShore();
+            }
+
+            return;
+        }
+
+        if (isTalking)
+        {
+            return;
+        }
+
+        float speed = hasEngage ? walkSpeed * 2.2f : distance > 10f ? walkSpeed * 2.8f : distance > 5f ? walkSpeed * 1.6f : walkSpeed;
+
+        if (!Mathf.Approximately(agent.speed, speed))
+        {
+            agent.speed = speed;
+            agent.acceleration = Mathf.Max(8f, speed * 4f);
+        }
+
+        agent.autoBraking = true;
+        agent.stoppingDistance = hasEngage ? 1.6f : 0.8f;
+        followRepathTimer -= deltaTime;
+
+        if (followRepathTimer <= 0f && !agent.pathPending)
+        {
+            followRepathTimer = 0.25f;
+            Vector3 goal = hasEngage ? engagePosition : behind;
+
+            if (NavMesh.SamplePosition(goal, out NavMeshHit hit, 6f, NavMesh.AllAreas))
+            {
+                agent.SetDestination(hit.position);
+            }
+            else if (!hasEngage)
+            {
+                WaitAtShore();
+            }
+        }
+
+        if (!hasEngage && distance < 3.6f && agent.velocity.sqrMagnitude < 0.05f && toTarget.sqrMagnitude > 0.04f) // 가까이 서 있으면 플레이어를 봄
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(toTarget), 1f - Mathf.Exp(-5f * deltaTime));
+        }
+    }
+
+    private void WaitAtShore() // 플레이어가 물 위에 있으면 플레이어와 가장 가까운 물가로 가서 기다림 (1초마다 찾음)
+    {
+        if (Time.time < shoreSearchTime)
+        {
+            return;
+        }
+
+        shoreSearchTime = Time.time + 1f;
+
+        if (!NavMesh.SamplePosition(followTarget.position, out NavMeshHit shore, ShoreSearchRadius, NavMesh.AllAreas))
+        {
+            return; // 너무 먼 바다 : 지금 자리에서 기다림
+        }
+
+        float gap = FlatDistance(shore.position, transform.position);
+
+        if (gap > followTeleportDistance)
+        {
+            TeleportNear(shore.position);
+        }
+        else if (gap > 1.5f)
+        {
+            agent.SetDestination(shore.position);
+        }
+    }
+
     // 107일차: 플레이어에게서 멀면 보이지 않는 동안 빠르게, 보이는 곳에서 먼 길이면 서둘러 걷기
     private void UpdateTravelSpeed()
     {
+        if (IsFollowing) // 109일차: 동료는 따라가기 속도
+        {
+            IsTravelingFast = false;
+            return;
+        }
+
         float multiplier = 1f;
         bool fast = false;
 

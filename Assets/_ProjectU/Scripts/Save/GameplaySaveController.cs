@@ -251,6 +251,12 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
             return; // 파일 저장 중단
         }
 
+        if (!NpcCompanionSaveBridge.TryCapture(saveData, out string companionCaptureError)) // 동료 수집 (109일차)
+        {
+            Debug.LogError($"동료 저장 준비 실패\n{companionCaptureError}", this); // 수집 오류 출력
+            return; // 파일 저장 중단
+        }
+
         if (!SaveFileService.TrySave(slotId, saveData, out string resultMessage)) // JSON 파일 저장 실행
         {
             Debug.LogError($"현재 게임 저장 실패\n{resultMessage}", this); // 저장 실패 내용 출력
@@ -387,6 +393,12 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
         if (!NpcQuestSaveBridge.TryRestore(saveData, out string npcQuestRestoreError)) // NPC 의뢰 복원 (93일차, 관계 복원 뒤)
         {
             Debug.LogError($"NPC 의뢰 불러오기 실패\n{npcQuestRestoreError}", this); // 복원 오류 출력
+            return; // 전체 불러오기 중단
+        }
+
+        if (!NpcCompanionSaveBridge.TryRestore(saveData, out string companionRestoreError)) // 동료 복원 (109일차, 관계 복원 뒤)
+        {
+            Debug.LogError($"동료 불러오기 실패\n{companionRestoreError}", this); // 복원 오류 출력
             return; // 전체 불러오기 중단
         }
 

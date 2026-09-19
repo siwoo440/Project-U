@@ -73,6 +73,10 @@ public sealed class SaveGameData // 전체 저장 파일 최상위 데이터
     public bool hasNpcEventData; // NPC 이벤트 저장 여부
     [Tooltip("본 하트 이벤트 · 고른 선택지.")]
     public NpcEventSaveData npcEvents = new NpcEventSaveData(); // NPC 이벤트
+    [Tooltip("동료 저장 데이터 존재 여부. (109일차)")]
+    public bool hasCompanionData; // 동료 저장 여부
+    [Tooltip("지금 함께 다니는 NPC · 함께한 시간 · 하루 채집 · 동행 호감도.")]
+    public NpcCompanionSaveData companion = new NpcCompanionSaveData(); // 동료
 
     public static SaveGameData CreateNew(string newSceneName) // 새로운 저장 데이터 생성
     {
