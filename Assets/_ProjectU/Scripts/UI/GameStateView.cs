@@ -1,10 +1,12 @@
 using TMPro; // TextMeshPro 기능
 using UnityEngine; // Unity 기본 기능
 
-public sealed class GameStateView : MonoBehaviour // 게임 상태 표시 UI
+public sealed class GameStateView : MonoBehaviour // 게임 상태 표시 UI / 99일차: 개발용 표시는 기본 숨김
 {
     [Tooltip("상태 표시 텍스트.")]
     [SerializeField] private TMP_Text stateText; // 상태 표시 텍스트
+    [Tooltip("99일차: 개발용 상태 글자(STATE: ...)를 보여 줄지 정합니다. 알파 빌드에서는 끕니다.")]
+    [SerializeField] private bool showStateText; // 상태 글자 표시 여부 (기본 숨김)
 
     private void OnEnable() // UI 활성화 처리
     {
@@ -12,6 +14,13 @@ public sealed class GameStateView : MonoBehaviour // 게임 상태 표시 UI
         {
             Debug.LogError("State Text가 연결되지 않았습니다.", this); // 연결 오류 출력
             return; // 활성화 처리 중단
+        }
+
+        stateText.gameObject.SetActive(showStateText); // 99일차: 개발용 글자는 켤 때만 보인다
+
+        if (!showStateText) // 숨김이면 상태 연결 생략
+        {
+            return;
         }
 
         if (GameManager.Instance == null) // 게임 관리자 존재 여부 확인

@@ -2888,6 +2888,7 @@ MonoBehaviour:
   drawerPanel: {fileID: 5433330967551843548}
   mainPageRoot: {fileID: 4275260734376715078}
   settingsPanel: {fileID: 3502652093636832891}
+  settingsWindowPrefab: {fileID: 6727392936861935496, guid: 3ce7a3d4ba68130448923b4dea10e464, type: 3}
   resumeButton: {fileID: 8069512844962141362}
   settingsButton: {fileID: 1433825122089259039}
   saveButton: {fileID: 1924057320722543691}

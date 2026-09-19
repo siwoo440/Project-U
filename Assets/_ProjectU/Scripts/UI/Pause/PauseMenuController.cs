@@ -36,7 +36,7 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
 
     [Header("Scene Transition")] // Scene 전환 설정 묶음
     [Tooltip("MAIN MENU 버튼을 눌렀을 때 이동할 메인 메뉴 Scene 이름입니다.")]
-    [SerializeField] private string mainMenuSceneName = "00_MainMenu"; // 메인 메뉴 Scene 이름
+    [SerializeField] private string mainMenuSceneName = SceneFlowManager.MainMenuSceneName; // 메인 메뉴 Scene 이름 (99일차: 기본값 00_MainMenu → 10_MainMenu)
 
     [Header("Pause Settings")] // 일시정지 동작 설정 묶음
     [Tooltip("일시정지 메뉴를 열 때 Time.timeScale을 0으로 변경할지 설정합니다.")]
@@ -233,6 +233,13 @@ public sealed class PauseMenuController : MonoBehaviour // Gameplay 일시정지
         }
 
         PrepareForSceneExit(); // Scene 이동 전 일시정지 상태 정리
+
+        if (SceneFlowManager.Instance != null && mainMenuSceneName == SceneFlowManager.MainMenuSceneName) // 99일차: Bootstrap에서 시작했으면 로딩 화면을 거쳐 이동
+        {
+            SceneFlowManager.Instance.LoadMainMenu();
+            return;
+        }
+
         SceneManager.LoadScene(mainMenuSceneName); // 메인 메뉴 Scene 불러오기
     }
 

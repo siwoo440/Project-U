@@ -41206,6 +41206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameStateView
   stateText: {fileID: 954242647}
+  showStateText: 0
 --- !u!4 &606494137 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3272621177439930529, guid: 69d02b507c4e4b94ba861e109bca8f9f, type: 3}

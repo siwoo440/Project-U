@@ -16,6 +16,7 @@ using Object = UnityEngine.Object;
 // 96일차: 데이터 점검(외형 연결 · ID · 외형 설정 · 깨진 참조 · 쓰이지 않는 데이터) 추가
 // 97일차: 무기 외형(도끼 · 활 3인칭 · 1인칭) 검사 추가
 // 98일차: 건축물 · 채집 자원 외형 설정(카드) 검사 추가
+// 99일차: 메뉴 화면(설정 창 · 로딩 화면 · 메인 메뉴 · 빌드 Scene 목록) 검사 추가
 public static class ContentIntegrationValidator
 {
     private const string DialogTitle = "Project U 전체 콘텐츠 검사";
@@ -102,6 +103,7 @@ public static class ContentIntegrationValidator
             ("밸런스", Feature(BalanceBuilder.Validate)),
             ("무기 외형", Feature(WeaponViewBuilder.Validate)),
             ("건축물·자원 외형", Feature(BuildableVisualProfileBuilder.Validate)),
+            ("메뉴 화면", Feature(MenuSceneBuilder.Validate)),
             ("데이터 점검", Feature(DataAuditBuilder.Validate)),
             ("아이템 데이터 (ID 규칙)", ItemDataValidator.ValidateAllItemData),
             ("Game Data Registry", () => CountLoggedErrors(GameDataRegistryEditor.ValidateDefaultRegistry, details))

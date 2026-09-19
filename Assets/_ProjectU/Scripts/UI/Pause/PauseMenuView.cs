@@ -5,7 +5,7 @@ using UnityEngine; // Unity 기본 기능
 using UnityEngine.UI; // Unity UI Button 기능
 
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
-public sealed class PauseMenuView : MonoBehaviour // 좌측 슬라이드 일시정지 메뉴 화면
+public sealed class PauseMenuView : MonoBehaviour // 좌측 슬라이드 일시정지 메뉴 화면 / 99일차: 공용 설정 창 연결
 {
     [Header("Panel")] // 메뉴 화면 설정 묶음
     [Tooltip("화면 전체의 어두운 배경과 좌측 메뉴를 포함하는 최상위 오브젝트입니다.")]
@@ -23,6 +23,9 @@ public sealed class PauseMenuView : MonoBehaviour // 좌측 슬라이드 일시�
 
     [Tooltip("마스터 볼륨, 마우스 감도와 전체 화면 설정을 관리하는 설정 페이지입니다.")]
     [SerializeField] private PauseSettingsPanel settingsPanel; // 일시정지 설정 페이지
+
+    [Tooltip("99일차: 메인 메뉴와 같이 쓰는 공용 설정 창 Prefab입니다. 연결되어 있으면 SETTINGS 버튼이 이 창을 엽니다.")]
+    [SerializeField] private SettingsWindowUI settingsWindowPrefab; // 공용 설정 창 Prefab
 
     [Header("Main Buttons")] // 일시정지 메인 버튼 참조 묶음
     [Tooltip("일시정지를 종료하고 Gameplay로 돌아가는 버튼입니다.")]
@@ -62,6 +65,8 @@ public sealed class PauseMenuView : MonoBehaviour // 좌측 슬라이드 일시�
     private bool internalInitializationCompleted; // 내부 초기화 실행 완료 여부
     private bool listenersRegistered; // 버튼 이벤트 등록 여부
     private bool slidePositionsInitialized; // 열린 위치와 숨김 위치 계산 완료 여부
+    private SettingsWindowUI settingsWindow; // 99일차: 만들어 둔 공용 설정 창
+    private ThirdPersonCameraFollow settingsCamera; // 마우스 감도를 적용할 카메라
 
     public bool IsVisible =>
         panelRoot != null
@@ -73,8 +78,10 @@ public sealed class PauseMenuView : MonoBehaviour // 좌측 슬라이드 일시�
         transitionRoutine != null; // 현재 슬라이드 애니메이션 진행 여부 제공
 
     public bool IsSettingsPageOpen =>
-        settingsPanel != null
-        && settingsPanel.IsVisible; // 현재 설정 페이지 표시 여부 제공
+        (settingsPanel != null && settingsPanel.IsVisible)
+        || (settingsWindow != null && settingsWindow.IsOpen); // 현재 설정 페이지(또는 99일차 공용 설정 창) 표시 여부 제공
+
+    public SettingsWindowUI SettingsWindow => settingsWindow; // 공용 설정 창 (테스트용)
 
     private void Awake() // 일시정지 메뉴 내부 초기화
     {
@@ -91,6 +98,7 @@ public sealed class PauseMenuView : MonoBehaviour // 좌측 슬라이드 일시�
         }
 
         controller = owner; // 일시정지 메뉴 관리자 저장
+        settingsCamera = cameraFollow; // 99일차: 공용 설정 창 마우스 감도 적용 카메라
 
         if (!settingsPanel.Initialize(
             this,
@@ -177,6 +185,12 @@ public sealed class PauseMenuView : MonoBehaviour // 좌측 슬라이드 일시�
         }
 
         StopTransition(); // 이전 열기 또는 닫기 애니메이션 중단
+
+        if (settingsWindow != null && settingsWindow.IsOpen) // 99일차: 메뉴를 닫으면 설정 창도 닫기
+        {
+            settingsWindow.Close();
+        }
+
         rootCanvasGroup.interactable = false; // 닫기 애니메이션 중 버튼 입력 차단
         rootCanvasGroup.blocksRaycasts = true; // 닫기 완료 전 Gameplay 클릭 차단
 
@@ -210,6 +224,12 @@ public sealed class PauseMenuView : MonoBehaviour // 좌측 슬라이드 일시�
         }
 
         settingsPanel.Hide(); // 설정 페이지 숨김
+
+        if (settingsWindow != null && settingsWindow.IsOpen) // 99일차: 공용 설정 창 닫기
+        {
+            settingsWindow.Close();
+        }
+
         mainPageRoot.SetActive(true); // 일시정지 메인 페이지 표시
         actionStatusText.SetText(string.Empty); // 이전 저장과 불러오기 문구 제거
         resumeButton.Select(); // 메인 페이지 기본 선택 버튼 지정
@@ -223,8 +243,30 @@ public sealed class PauseMenuView : MonoBehaviour // 좌측 슬라이드 일시�
         }
 
         mainPageRoot.SetActive(false); // 일시정지 메인 페이지 숨김
+
+        if (settingsWindowPrefab != null) // 99일차: 공용 설정 창
+        {
+            if (settingsWindow == null)
+            {
+                settingsWindow = Instantiate(settingsWindowPrefab, panelRoot.transform); // 메뉴와 함께 숨겨지도록 메뉴 화면 아래에 만든다
+                settingsWindow.name = settingsWindowPrefab.name;
+                settingsWindow.Closed += OnSettingsWindowClosed;
+            }
+
+            settingsWindow.transform.SetAsLastSibling(); // 메뉴 위에 표시
+            settingsWindow.Show(settingsCamera);
+            return;
+        }
+
         settingsPanel.Show(); // 설정 페이지 표시
     }
+
+    private void OnSettingsWindowClosed() // 99일차: 공용 설정 창을 닫으면 메인 페이지로
+    {
+        mainPageRoot.SetActive(true);
+        resumeButton.Select();
+    }
+
 
     private IEnumerator AnimateMenu(
         Vector2 targetPosition,
@@ -497,5 +539,10 @@ public sealed class PauseMenuView : MonoBehaviour // 좌측 슬라이드 일시�
     {
         StopTransition(); // 실행 중 슬라이드 애니메이션 중단
         RemoveButtonListeners(); // 버튼 이벤트 제거
+
+        if (settingsWindow != null) // 99일차: 공용 설정 창 이벤트 해제
+        {
+            settingsWindow.Closed -= OnSettingsWindowClosed;
+        }
     }
 }
