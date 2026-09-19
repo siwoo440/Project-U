@@ -156,6 +156,7 @@ public interface IShopVendor // 92일차: 상점 창이 보여 주는 가게 (87
 public interface ICraftVendor // 102일차: 제작 주문을 받는 가게 (상점 창 제작 탭)
 {
     IReadOnlyList<NpcCraftBook.Order> CraftOrders { get; } // 제작 주문 목록 (없으면 탭 숨김)
+    bool CraftOnly { get; } // 104일차: 제작만 하는 곳 (사기 · 팔기 탭 숨김)
     string CraftLine { get; } // 제작 탭 한마디
     int GetCraftFee(NpcCraftBook.Order order); // 할인 적용 수수료
     string GetCraftLockReason(NpcCraftBook.Order order); // 아직 주문할 수 없는 이유 (없으면 null)

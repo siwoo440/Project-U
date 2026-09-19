@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c705680e20332f5478f3a6911a134984, type: 3}
+  m_Name: NpcEvents_Serena
+  m_EditorClassIdentifier: Assembly-CSharp::NpcEventBook
+  ownerId: char_serena
+  events:
+  - eventId: event_serena_curious
+    title: "\uC78A\uD600\uC9C4 \uC2DC \uD55C \uC904"
+    requiredStage: 1
+    locationId: loc_ruins_library
+    fromHour: 7
+    toHour: 11
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC774 \uCC45\uC5D0\u2026 \uD55C \uC904\uB9CC \uB0A8\uC740 \uC2DC\uAC00
+        \uC788\uC5B4\uC694. \uB098\uBA38\uC9C0\uB294 \uC9C0\uC6CC\uC84C\uC5B4\uC694."
+    - fromPlayer: 0
+      text: "\uB2F9\uC2E0\uC774\uB77C\uBA74\u2026 \uB2E4\uC74C \uC904\uC744 \uC5B4\uB5BB\uAC8C
+        \uC4F0\uACA0\uC5B4\uC694?"
+    choices:
+    - label: "\"\uADF8\uB798\uB3C4 \uB204\uAD70\uAC00\uB294 \uAE30\uC5B5\uD55C\uB2E4.\""
+      reply: "\u2026\uC88B\uC740 \uC904\uC774\uC5D0\uC694. \uC81C\uAC00 \uAC00\uC7A5
+        \uB4E3\uACE0 \uC2F6\uB358 \uB9D0\uC774\uC5D0\uC694."
+      affinity: 5
+    - label: "\uC2DC\uB294 \uC798 \uBAB0\uB77C\uC11C\u2026"
+      reply: "\uAD1C\uCC2E\uC544\uC694. \uBAA8\uB974\uB294 \uCC44\uB85C \uB4E4\uC5B4
+        \uC8FC\uB294 \uC0AC\uB78C\uB3C4\u2026 \uD544\uC694\uD574\uC694."
+      affinity: 3
+    afterLines:
+    - fromPlayer: 0
+      text: "\uC624\uB298\uC740 \uC774 \uCC45\uC5D0 \uC0C8 \uC904\uC774 \uC0DD\uACBC\uC5B4\uC694."
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_serena_trust
+    title: "\uC0AC\uB77C\uC9C0\uB294 \uC774\uB984\uB4E4"
+    requiredStage: 2
+    locationId: loc_village_square
+    fromHour: 16
+    toHour: 19
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uB9C8\uC744 \uC0AC\uB78C\uB4E4 \uC774\uB984\uC744 \uC801\uACE0 \uC788\uC5B4\uC694.
+        \uC81C \uC774\uB984\uC740\u2026 \uAC00\uB054 \uAE30\uC5B5\uC774 \uC548 \uB098\uC694."
+    - fromPlayer: 0
+      text: "\uC78A\uD600\uC9C0\uB294 \uAC8C \uBB34\uC11C\uC6CC\uC694. \uC0AC\uB77C\uC9C0\uB294
+        \uAC83\uBCF4\uB2E4 \uB354."
+    choices:
+    - label: "\uB0B4\uAC00 \uB124 \uC774\uB984\uC744 \uBD88\uB7EC \uC904\uAC8C, \uC138\uB808\uB098."
+      reply: "\u2026\uBC29\uAE08, \uC870\uAE08 \uC120\uBA85\uD574\uC84C\uC5B4\uC694.
+        \uD55C \uBC88 \uB354\u2026 \uBD88\uB7EC \uC904\uB798\uC694?"
+      affinity: 8
+    - label: "\uC885\uC774\uC5D0 \uD06C\uAC8C \uC368 \uB450\uC790."
+      reply: "\uADF8\uB798\uC694\u2026 \uB2F9\uC2E0\uC774 \uC4F4 \uAE00\uC528\uB77C\uBA74,
+        \uC78A\uC9C0 \uC54A\uC744 \uAC70\uC608\uC694."
+      affinity: 5
+    afterLines:
+    - fromPlayer: 0
+      text: "\uC624\uB298 \uAE30\uB85D \uB9E8 \uC704\uC5D0\u2026 \uC81C \uC774\uB984\uC744
+        \uC801\uC5C8\uC5B4\uC694."
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_serena_affection
+    title: "\uB9C8\uC9C0\uB9C9 \uC2DC"
+    requiredStage: 3
+    locationId: loc_ruins_plaza
+    fromHour: 12
+    toHour: 15
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uB9C8\uC9C0\uB9C9 \uC2DC\uB97C \uC644\uC131\uD588\uC5B4\uC694. \uC81C\uBAA9\uC740\u2026
+        \uC544\uC9C1 \uBE44\uBC00."
+    - fromPlayer: 0
+      text: "\uC77D\uC5B4 \uC8FC\uB294 \uC0AC\uB78C\uC774 \uC788\uC5B4\uC11C, \uC774\uC81C
+        \uC0AC\uB77C\uC838\uB3C4 \uAD1C\uCC2E\uC744 \uAC83 \uAC19\uC544\uC694. \u2026\uC544\uB2C8,
+        \uC0AC\uB77C\uC9C0\uACE0 \uC2F6\uC9C0 \uC54A\uC544\uC694."
+    choices:
+    - label: "\uC0AC\uB77C\uC9C0\uC9C0 \uB9C8. \uC606\uC5D0 \uC788\uC5B4 \uC918."
+      reply: "\u2026\uB124. \uC624\uB298\uBD80\uD130 \uC2DC\uAC00 \uC544\uB2C8\uB77C,
+        \uD558\uB8E8\uB97C \uC4F8\uAC8C\uC694."
+      affinity: 10
+    - label: "\uC81C\uBAA9\uC740 \uBB50\uC57C?"
+      reply: "\uC81C\uBAA9\uC740\u2026 \uB2F9\uC2E0\uC774\uC5D0\uC694. \uBE44\uBC00\uC774\uC5C8\uB294\uB370."
+      affinity: 8
+    afterLines:
+    - fromPlayer: 0
+      text: "\uB2F9\uC2E0\uC774 \uC88B\uC544\uD558\uB294 \uCC28\uC608\uC694. \uC2DC
+        \uB300\uC2E0\u2026 \uC624\uB298\uC740 \uC774\uAC78\uB85C."
+    rewardItem: {fileID: 11400000, guid: 361f6079362891a468aae059667ddd1c, type: 2}
+    rewardItemAmount: 3

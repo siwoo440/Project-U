@@ -347,6 +347,17 @@ public sealed class GameUIManager : MonoBehaviour // 게임 팝업 생성과 실
             && OpenScenePopup(GamePopupType.Shop, () => shopPopup.ShowVendor(this, new NpcShopVendor(shops, shop, npc), playerInventory)); // 결과 반환
     }
 
+    public bool OpenNpcCraft(NpcAgent npc) // 104일차: 상점 없이 제작만 하는 NPC의 제작 창 (상인 창 제작 탭 재사용)
+    {
+        NpcShopManager shops = NpcShopManager.Instance; // NPC 상점 관리자
+
+        return shopPopup != null
+            && npc != null
+            && shops != null
+            && shops.TryGetCraftStation(npc.Character, out NpcCraftBook book)
+            && OpenScenePopup(GamePopupType.Shop, () => shopPopup.ShowVendor(this, new NpcCraftVendor(shops, book, npc), playerInventory)); // 결과 반환
+    }
+
     public void CloseShop() // 상인 팝업 강제 종료 (87일차)
     {
         CloseScenePopup(GamePopupType.Shop, shopPopup); // 종료

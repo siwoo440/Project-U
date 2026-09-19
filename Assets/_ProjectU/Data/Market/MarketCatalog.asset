@@ -121,6 +121,22 @@ MonoBehaviour:
     basePrice: 22
     goodsType: 8
     freshSeasons: 
+  - item: {fileID: 11400000, guid: 2f1df630320255844a0117b89edfaaae, type: 2}
+    basePrice: 30
+    goodsType: 6
+    freshSeasons: 
+  - item: {fileID: 11400000, guid: bd2cc3c8964779742a9d528556969a3a, type: 2}
+    basePrice: 12
+    goodsType: 4
+    freshSeasons: 
+  - item: {fileID: 11400000, guid: 9fef98d8cab0d6248a06e90e944f331c, type: 2}
+    basePrice: 16
+    goodsType: 4
+    freshSeasons: 
+  - item: {fileID: 11400000, guid: 0687865a489c4354db5fb1baa7331fd0, type: 2}
+    basePrice: 14
+    goodsType: 8
+    freshSeasons: 
   - item: {fileID: 11400000, guid: 57290689e97387440ab6d1bcbf4ef495, type: 2}
     basePrice: 35
     goodsType: 2

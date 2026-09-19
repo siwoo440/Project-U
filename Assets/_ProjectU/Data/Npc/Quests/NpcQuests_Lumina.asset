@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4bf3c4498412d4d8c95a03bab470e9, type: 3}
+  m_Name: NpcQuests_Lumina
+  m_EditorClassIdentifier: Assembly-CSharp::NpcQuestBook
+  groupId: quest_lumina
+  ownerId: char_lumina
+  quests:
+  - questId: quest_lumina_strawberry
+    title: "\uB538\uAE30\uAF43 \uD45C\uBCF8"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 95ca44aa8a27d41448c511db6fa0a55c, type: 2}
+      amount: 3
+    rewardCoins: 28
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 0000000001000000
+    requiredStage: 0
+    requestLine: "\uB538\uAE30 \uC138 \uAC1C\u2026 \uAF43\uAC00\uB8E8\uAC00 \uB0A8\uC544
+      \uC788\uB294\uC9C0 \uBCF4\uACE0 \uC2F6\uC5B4\uC694."
+    thanksLine: "\u2026\uC544\uC9C1 \uD5A5\uC774 \uB0A8\uC544 \uC788\uC5B4\uC694.
+      \uACE0\uB9C8\uC6CC\uC694."
+    requiredEventId: 
+  - questId: quest_lumina_berry
+    title: "\uAF43\uBC2D \uCE5C\uAD6C\uB4E4 \uAC04\uC2DD"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 3a8ea9dc329d35c4b8b4c84410a7f15d, type: 2}
+      amount: 5
+    rewardCoins: 22
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uC5F4\uB9E4 \uB2E4\uC12F \uAC1C\u2026 \uAF43\uBC2D \uBC8C\uB4E4\uD55C\uD14C
+      \uB098\uB220 \uC8FC\uACE0 \uC2F6\uC5B4\uC694."
+    thanksLine: "\uBC8C\uB4E4\uC774 \uB0A0\uAC1C\uB97C \uD754\uB4E4\uC5B4\uC694.
+      \uACE0\uB9D9\uB2E4\uB294 \uB73B\uC774\uC5D0\uC694."
+    requiredEventId: 
+  - questId: quest_lumina_pumpkin
+    title: "\uAC00\uC744\uAF43 \uC528\uC557"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 60a1b7725b902114381bd98a8db8ec3b, type: 2}
+      amount: 1
+    rewardCoins: 40
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 02000000
+    requiredStage: 0
+    requestLine: "\uD638\uBC15 \uD55C \uB369\uC774\u2026 \uC18D\uC758 \uC528\uC557\uC73C\uB85C
+      \uB0B4\uB144 \uAF43\uC744 \uC900\uBE44\uD560\uB798\uC694."
+    thanksLine: "\uC528\uC557\uC774 \uB9CE\uB124\uC694\u2026 \uB0B4\uB144 \uAF43\uBC2D\uC774
+      \uAE30\uB300\uB3FC\uC694."
+    requiredEventId: 
+  - questId: quest_lumina_special
+    title: "\uB2EC\uBE5B \uAF43 \uAD00\uCC30"
+    kind: 1
+    requirements:
+    - item: {fileID: 11400000, guid: 95ca44aa8a27d41448c511db6fa0a55c, type: 2}
+      amount: 4
+    - item: {fileID: 11400000, guid: a3a22e114d5dd36498ccd4cc83dd2ffb, type: 2}
+      amount: 2
+    rewardCoins: 110
+    rewardAffinity: 10
+    rewardItem: {fileID: 11400000, guid: aaca232007164504cbd41b9a9b8cbefb, type: 2}
+    rewardItemAmount: 6
+    days: 5
+    seasons: 0000000001000000
+    requiredStage: 2
+    requestLine: "\uB2EC\uBE5B\uC5D0\uB9CC \uD53C\uB294 \uAF43\uC744 \uAD00\uCC30\uD558\uB824\uACE0\uC694.
+      \uBBF8\uB07C\uAC00 \uB420 \uB538\uAE30 \uB124 \uAC1C\uB791, \uACE0\uCE58\uB97C
+      \uBCF4\uC218\uD560 \uAC70\uBBF8 \uC2E4 \uB450 \uD0C0\uB798\u2026 \uAC19\uC774
+      \uBD10 \uC904\uB798\uC694?"
+    thanksLine: "\u2026\uD53C\uC5C8\uC5B4\uC694. \uB2F9\uC2E0\uC774\uB791 \uBD10\uC11C
+      \uB354 \uC608\uBEE4\uC5B4\uC694. \uC774 \uC528\uC557\uC744 \uC2EC\uC5B4 \uC918\uC694."
+    requiredEventId: event_lumina_trust

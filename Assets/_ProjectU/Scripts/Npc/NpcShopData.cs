@@ -2,8 +2,14 @@ using System; // Serializable
 using System.Collections.Generic; // 목록
 using UnityEngine; // Unity 기본 기능
 
+public interface INpcWorkplace // 104일차: 주인이 일정상 정해진 위치에 있을 때 여는 곳 (NPC 상점 · 상점 없는 제작 작업장)
+{
+    string OwnerId { get; } // 주인 캐릭터 ID
+    bool IsOpenLocation(string locationId); // 영업 위치 여부
+}
+
 [CreateAssetMenu(fileName = "NpcShop_New", menuName = "Project U/NPC/Shop")] // NPC 상점 생성 메뉴
-public sealed class NpcShopData : ScriptableObject // 92일차: NPC 상점 한 곳 (판매 목록 · 가격 · 사 주는 물건 · 영업 위치)
+public sealed class NpcShopData : ScriptableObject, INpcWorkplace // 92일차: NPC 상점 한 곳 (판매 목록 · 가격 · 사 주는 물건 · 영업 위치)
 {
     [Serializable]
     public sealed class StockEntry // 파는 물건 한 종류
@@ -89,6 +95,7 @@ public sealed class NpcShopData : ScriptableObject // 92일차: NPC 상점 한 �
     [SerializeField] private int stockSeed = 1; // 재고 기준 값
     [Tooltip("관계 단계별 할인율 % (무관심 · 호기심 · 신뢰 · 애정 · 사랑).")]
     [SerializeField] private int[] discountByStage = { 0, 0, 5, 10, 15 }; // 할인율
+    public static readonly int[] DefaultDiscounts = { 0, 0, 5, 10, 15 }; // 104일차: 상점 없는 제작 NPC의 수수료 할인율
 
     [Header("Buying")] // 사 주는 물건
     [SerializeField] private List<BuyRule> buyRules = new List<BuyRule>(); // 사 주는 규칙

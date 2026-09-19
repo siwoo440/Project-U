@@ -306,6 +306,7 @@ public static class MarketPopupUIBuilder
         so.FindProperty("craftTabButton").objectReferenceValue = craftTab;
         so.FindProperty("craftTabImage").objectReferenceValue = craftTabImage;
         so.FindProperty("craftTabLabel").objectReferenceValue = craftTabLabel;
+        so.FindProperty("tabHintText").objectReferenceValue = tabHint;
         so.FindProperty("listRoot").objectReferenceValue = list;
         so.FindProperty("listScroll").objectReferenceValue = scroll;
         so.FindProperty("rowTemplate").objectReferenceValue = rowTemplate;

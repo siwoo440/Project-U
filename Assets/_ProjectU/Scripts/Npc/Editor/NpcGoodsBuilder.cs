@@ -6,8 +6,8 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-// 102일차: 2차 NPC 가게 · 제작 한 번에 갱신
-// 1. 2차 NPC 물건 7종(물약 · 거미 실 · 젤리 · 유부초밥 · 해독제 · 고철 부품 · 사막 연고) 아이템 데이터를 만들고 ItemDatabase에 등록
+// 102일차: 2차 NPC 가게 · 제작 한 번에 갱신 (104일차: 3차 마리엘 · 알리우네 물건 추가, 폴더는 Day102 그대로)
+// 1. NPC 가게 물건(102일차 7종 + 104일차 4종) 아이템 데이터를 만들고 ItemDatabase에 등록
 // 2. 1번(아이템 외형 : 모델 · 아이콘 · 바닥용 Prefab · 손 외형) → 판매 상자 가격표 → 10번(NPC 상점 · 제작 주문) 순서로 실행하고 게임 Scene을 저장
 // 여러 번 실행해도 같은 Asset을 갱신한다.
 public static class NpcGoodsBuilder
@@ -53,7 +53,18 @@ public static class NpcGoodsBuilder
         new GoodsSpec { AssetName = "ItemData_ScrapParts", Id = "item_scrap_parts", Owner = "char_pipi", DisplayName = "SCRAP PARTS", Category = ItemCategory.CraftingMaterial,
             Stack = 50, Description = "Gears, bolts and copper bits sorted by Pipi. Tinkerers turn them into tools." },
         new GoodsSpec { AssetName = "ItemData_DesertSalve", Id = "medicine_desert_salve", Owner = "char_safira", DisplayName = "DESERT SALVE", Category = ItemCategory.Medicine,
-            Health = 55f, Stack = 5, Description = "Safira's cooling ointment from oasis herbs. Heals deep wounds quickly." }
+            Health = 55f, Stack = 5, Description = "Safira's cooling ointment from oasis herbs. Heals deep wounds quickly." },
+        // 104일차: 3차 NPC (마리엘 가게 · 알리우네 제작)
+        new GoodsSpec { AssetName = "ItemData_Pearl", Id = "item_pearl", Owner = "char_marielle", DisplayName = "PEARL", Category = ItemCategory.CraftingMaterial,
+            Stack = 20, Description = "A lustrous pearl Marielle found under the tide rocks. Collectors pay well for it." },
+        new GoodsSpec { AssetName = "ItemData_SeaweedSalad", Id = "food_seaweed_salad", Owner = "char_marielle", DisplayName = "SEAWEED SALAD", Category = ItemCategory.Food,
+            Hunger = 18f, FoodThirst = 10f, Buff = FoodBuffType.Satiety, BuffStrength = 25f, BuffDuration = 240f, Stack = 10,
+            Description = "Crunchy seaweed tossed with sesame. Light, salty, and keeps hunger away for a while." },
+        new GoodsSpec { AssetName = "ItemData_GrilledClams", Id = "food_grilled_clams", Owner = "char_marielle", DisplayName = "GRILLED CLAMS", Category = ItemCategory.Food,
+            Hunger = 28f, FoodHealth = 10f, Buff = FoodBuffType.StaminaRecovery, BuffStrength = 25f, BuffDuration = 180f, Stack = 10,
+            Description = "Clams grilled in their shells with a drop of butter. Warm, savory and restoring." },
+        new GoodsSpec { AssetName = "ItemData_FlowerBalm", Id = "medicine_flower_balm", Owner = "char_aliune", DisplayName = "FLOWER BALM", Category = ItemCategory.Medicine,
+            Health = 35f, Stack = 5, Description = "Aliune's soft pink balm pressed from healing petals. Soothes scrapes and bruises." }
     };
 
     [MenuItem(MarketContentBuilder.BuildMenuRoot + "20. Island NPC Shops (Goods + Shops + Craft Orders)", false, 39)]
@@ -61,7 +72,7 @@ public static class NpcGoodsBuilder
     {
         bool confirmed = EditorUtility.DisplayDialog(
             DialogTitle,
-            "2차 NPC 가게 물건 7종을 만들고, 1번(아이템 외형) → 판매 상자 가격표 → 10번(NPC 상점 · 제작 주문) 순서로 실행한 뒤 게임 Scene을 저장합니다.\n\n"
+            "NPC 가게 물건(2 · 3차)을 만들고, 1번(아이템 외형) → 판매 상자 가격표 → 10번(NPC 상점 · 제작 주문 · 작업장) 순서로 실행한 뒤 게임 Scene을 저장합니다.\n\n"
             + "먼저 19번(섬 NPC 차수) 메뉴를 실행해 두어야 합니다. 게임 Scene을 열고 실행하세요 (1분 정도 걸릴 수 있습니다).",
             "실행",
             "취소");
@@ -176,7 +187,7 @@ public static class NpcGoodsBuilder
         databaseObject.ApplyModifiedPropertiesWithoutUndo();
         EditorUtility.SetDirty(database);
         AssetDatabase.SaveAssets();
-        return $"2차 NPC 물건 {Goods.Length}종 ({ItemFolder}), ItemDatabase 추가 {added}개";
+        return $"NPC 가게 물건 {Goods.Length}종 ({ItemFolder}), ItemDatabase 추가 {added}개";
     }
 
     // ---------------------------------------------------------------- 검증

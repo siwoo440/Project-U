@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e0400e98af48c04c9215e63bfbc48d8, type: 3}
+  m_Name: NpcCraft_Aliune
+  m_EditorClassIdentifier: Assembly-CSharp::NpcCraftBook
+  ownerId: char_aliune
+  craftLine: "\uC7AC\uB8CC\uB97C \uC8FC\uBA74\u2026 \uCC9C\uCC9C\uD788, \uC815\uC131\uAECF
+    \uB9CC\uB4E4\uC5B4 \uB4DC\uB9B4\uAC8C\uC694."
+  orders:
+  - orderId: craft_aliune_balm
+    result: {fileID: 11400000, guid: 0687865a489c4354db5fb1baa7331fd0, type: 2}
+    resultAmount: 1
+    ingredients:
+    - item: {fileID: 11400000, guid: 3a8ea9dc329d35c4b8b4c84410a7f15d, type: 2}
+      amount: 3
+    - item: {fileID: 11400000, guid: 361f6079362891a468aae059667ddd1c, type: 2}
+      amount: 1
+    fee: 10
+    requiredStage: 0
+  - orderId: craft_aliune_tea
+    result: {fileID: 11400000, guid: 361f6079362891a468aae059667ddd1c, type: 2}
+    resultAmount: 2
+    ingredients:
+    - item: {fileID: 11400000, guid: bc991e404803cba4292542d6a52ddd7a, type: 2}
+      amount: 3
+    - item: {fileID: 11400000, guid: eef1b375027259b42834d2262ce9dd96, type: 2}
+      amount: 2
+    fee: 6
+    requiredStage: 0
+  - orderId: craft_aliune_tomato_seeds
+    result: {fileID: 11400000, guid: ed2ff3bcb0baa3743bf8df1264f8d60f, type: 2}
+    resultAmount: 3
+    ingredients:
+    - item: {fileID: 11400000, guid: 6fd5b0751520d284ba0ec2064ed5ea80, type: 2}
+      amount: 1
+    fee: 4
+    requiredStage: 0
+  - orderId: craft_aliune_strawberry_seeds
+    result: {fileID: 11400000, guid: aaca232007164504cbd41b9a9b8cbefb, type: 2}
+    resultAmount: 3
+    ingredients:
+    - item: {fileID: 11400000, guid: 95ca44aa8a27d41448c511db6fa0a55c, type: 2}
+      amount: 1
+    fee: 5
+    requiredStage: 0
+  - orderId: craft_aliune_balm_batch
+    result: {fileID: 11400000, guid: 0687865a489c4354db5fb1baa7331fd0, type: 2}
+    resultAmount: 3
+    ingredients:
+    - item: {fileID: 11400000, guid: 3a8ea9dc329d35c4b8b4c84410a7f15d, type: 2}
+      amount: 8
+    - item: {fileID: 11400000, guid: 361f6079362891a468aae059667ddd1c, type: 2}
+      amount: 2
+    fee: 25
+    requiredStage: 2
+  stationName: "\uCE58\uC720 \uC628\uC2E4"
+  openLocationIds:
+  - loc_forest_edge
+  - loc_farm_fields
+  farewell: "\uC624\uB298 \uCE58\uC720\uB294 \uC5EC\uAE30\uAE4C\uC9C0\uC608\uC694.
+    \uBFCC\uB9AC\uB3C4 \uC26C\uC5B4\uC57C \uD558\uB2C8\uAE4C\uC694."

@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c705680e20332f5478f3a6911a134984, type: 3}
+  m_Name: NpcEvents_Marielle
+  m_EditorClassIdentifier: Assembly-CSharp::NpcEventBook
+  ownerId: char_marielle
+  events:
+  - eventId: event_marielle_curious
+    title: "\uC870\uAC1C \uC18D \uB178\uB798"
+    requiredStage: 1
+    locationId: loc_coast_rocks
+    fromHour: 6
+    toHour: 10
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC74C~ \uD760~ \uC870\uAC1C\uC5D0 \uADC0\uB97C \uB300 \uBCF4\uC138\uC694.
+        \uBC14\uB2E4 \uB178\uB798\uAC00 \uB4E4\uB824\uC694."
+    - fromPlayer: 0
+      text: "\uC81C \uACE0\uD5A5 \uB178\uB798\uC608\uC694. \uC774\uC81C\uB294 \uC800\uB9CC
+        \uAE30\uC5B5\uD558\uC9C0\uB9CC\uC694."
+    choices:
+    - label: "\uAC19\uC774 \uBD88\uB7EC \uC904\uB798?"
+      reply: "\uC74C~ \uD760~ \u2026\uB2F9\uC2E0 \uBAA9\uC18C\uB9AC\uAC00 \uC11E\uC774\uB2C8
+        \uC0C8 \uB178\uB798 \uAC19\uC544\uC694."
+      affinity: 5
+    - label: "\uC2AC\uD508 \uB178\uB798\uC57C?"
+      reply: "\uC870\uAE08\uC694. \uADF8\uB798\uB3C4 \uBD80\uB974\uBA74 \uB35C \uC2AC\uD37C\uC838\uC694."
+      affinity: 3
+    afterLines:
+    - fromPlayer: 0
+      text: "\uB0B4\uC77C\uB3C4 \uBB3C \uBE60\uC9C8 \uB54C \uC640\uC694. \uC0C8 \uC870\uAC1C
+        \uCC3E\uC544 \uB458\uAC8C\uC694."
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_marielle_trust
+    title: "\uD3ED\uD48D\uC774 \uAC00\uC838\uAC04 \uB9C8\uC744"
+    requiredStage: 2
+    locationId: loc_coast_dock
+    fromHour: 10
+    toHour: 13
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uD3ED\uD48D\uC774 \uC624\uB358 \uBC24, \uC0B0\uD638 \uB9C8\uC744\uC774
+        \uB2E4 \uBD80\uC11C\uC84C\uC5B4\uC694. \uCE5C\uAD6C\uB4E4\uB3C4 \uBFD4\uBFD4\uC774
+        \uD769\uC5B4\uC9C0\uACE0."
+    - fromPlayer: 0
+      text: "\uADF8 \uB4A4\uB85C \uD3ED\uD48D \uC18C\uB9AC\uB9CC \uB4E4\uB9AC\uBA74\u2026
+        \uAF2C\uB9AC\uAC00 \uAD73\uC5B4\uC694."
+    choices:
+    - label: "\uC774\uC81C \uC774 \uC12C\uC774 \uB124 \uC9D1\uC774\uC57C."
+      reply: "\u2026\uC9D1. \uC624\uB79C\uB9CC\uC5D0 \uB4E4\uC5B4 \uBCF4\uB294 \uB9D0\uC774\uC5D0\uC694.
+        \uC74C~"
+      affinity: 8
+    - label: "\uD3ED\uD48D \uCE58\uB294 \uB0A0\uC5D4 \uACC1\uC5D0 \uC788\uC744\uAC8C."
+      reply: "\uADF8\uB7FC \uD3ED\uD48D\uB3C4 \uC870\uAE08\uC740\u2026 \uAD1C\uCC2E\uC744\uC9C0\uB3C4
+        \uBAB0\uB77C\uC694."
+      affinity: 5
+    afterLines:
+    - fromPlayer: 0
+      text: "\uC624\uB298\uC740 \uCF67\uB178\uB798\uAC00 \uC800\uC808\uB85C \uB098\uC640\uC694."
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_marielle_affection
+    title: "\uC5F0\uBABB\uC758 \uC9C4\uC8FC"
+    requiredStage: 3
+    locationId: loc_pond_dock
+    fromHour: 13
+    toHour: 17
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uBC14\uB2E4\uC5D0\uC11C \uAC00\uC7A5 \uC608\uC05C \uC9C4\uC8FC\uB97C
+        \uCC3E\uC558\uC5B4\uC694. \uB2F9\uC2E0\uD55C\uD14C \uC8FC\uB824\uACE0 \uC5F0\uBABB\uAE4C\uC9C0
+        \uC654\uC5B4\uC694."
+    - fromPlayer: 0
+      text: "\uC778\uC5B4\uB294 \uAC00\uC7A5 \uC18C\uC911\uD55C \uC0AC\uB78C\uD55C\uD14C\uB9CC
+        \uC9C4\uC8FC\uB97C \uC918\uC694. \u2026\uC54C\uACE0 \uBC1B\uB294 \uAC70\uC8E0?"
+    choices:
+    - label: "\uC54C\uACE0 \uBC1B\uC744\uAC8C."
+      reply: "\uC74C~ \uD760~ \u2026\uC2EC\uC7A5\uC774 \uD30C\uB3C4\uCC98\uB7FC \uB6F0\uC5B4\uC694."
+      affinity: 10
+    - label: "\uB300\uC2E0 \uB9E4\uC77C \uBCF4\uB7EC \uAC08\uAC8C."
+      reply: "\uC57D\uC18D\uC774\uC5D0\uC694. \uBB3C\uAC00\uC5D0\uC11C \uAE30\uB2E4\uB9B4\uAC8C\uC694."
+      affinity: 8
+    afterLines:
+    - fromPlayer: 0
+      text: "\uC5EC\uAE30\uC694. \uBC14\uB2E4\uAC00 \uC900 \uC120\uBB3C\uC774\uC790,
+        \uC81C \uB9C8\uC74C\uC774\uC5D0\uC694."
+    rewardItem: {fileID: 11400000, guid: 2f1df630320255844a0117b89edfaaae, type: 2}
+    rewardItemAmount: 1

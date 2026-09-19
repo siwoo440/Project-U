@@ -167,7 +167,7 @@ public static class NpcCastBuilder
             List<NpcCharacterData> members = wave.ToList();
             int shops = members.Count(character => character.HasRole(NpcRole.Merchant) && allShops.Any(shop => shop.OwnerId == character.CharacterId));
             int merchants = members.Count(character => character.HasRole(NpcRole.Merchant));
-            bool ShopCrafter(NpcCharacterData character) => character.HasRole(NpcRole.Merchant) && character.HasRole(NpcRole.Crafter) && character.CanInteract(NpcInteraction.Craft); // 상점 창 제작 탭
+            bool ShopCrafter(NpcCharacterData character) => character.HasRole(NpcRole.Crafter) && character.CanInteract(NpcInteraction.Craft); // 104일차: 상점 제작 탭 · 작업장 제작 창 모두
             int crafters = members.Count(ShopCrafter);
             int books = members.Count(character => ShopCrafter(character) && allBooks.Any(book => book.OwnerId == character.CharacterId));
             int quests = members.Count(character => questBooks.Any(book => book.OwnerId == character.CharacterId));

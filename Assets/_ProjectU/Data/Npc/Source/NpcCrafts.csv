@@ -15,3 +15,10 @@ craft_safira_salve,char_safira,medicine_desert_salve,1,item_herbal_tea:1|item_pl
 craft_safira_salve_batch,char_safira,medicine_desert_salve,3,item_herbal_tea:2|item_plant_fiber:10|food_berry:3,30,Trust
 craft_dravia_iron_axe,char_dravia,item_iron_axe,1,tool_axe:1|item_iron_ore:4|item_wood:3,80,Curious
 craft_dravia_arrows,char_dravia,item_arrow,20,item_wood:2|item_iron_ore:1,5,
+craft_aliune_balm,char_aliune,medicine_flower_balm,1,food_berry:3|item_herbal_tea:1,10,
+craft_aliune_tea,char_aliune,item_herbal_tea,2,item_plant_fiber:3|food_apple:2,6,
+craft_aliune_tomato_seeds,char_aliune,seed_tomato,3,food_tomato:1,4,
+craft_aliune_strawberry_seeds,char_aliune,seed_strawberry,3,food_strawberry:1,5,
+craft_aliune_balm_batch,char_aliune,medicine_flower_balm,3,food_berry:8|item_herbal_tea:2,25,Trust
+craft_lunette_bandage,char_lunette,medicine_bandage,2,item_plant_fiber:4|item_wild_mushroom:1,6,
+craft_lunette_tea,char_lunette,item_herbal_tea,2,item_wild_mushroom:1|food_berry:2,5,

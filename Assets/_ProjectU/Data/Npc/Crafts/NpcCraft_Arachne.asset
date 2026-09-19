@@ -44,3 +44,6 @@ MonoBehaviour:
       amount: 4
     fee: 30
     requiredStage: 1
+  stationName: 
+  openLocationIds: []
+  farewell: 

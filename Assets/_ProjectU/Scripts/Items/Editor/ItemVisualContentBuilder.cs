@@ -103,7 +103,12 @@ public static class ItemVisualContentBuilder
         { "food_inari_sushi", "item_inari_sushi" },
         { "medicine_antidote", "item_antidote" },
         { "item_scrap_parts", "item_scrap_parts" },
-        { "medicine_desert_salve", "item_desert_salve" }
+        { "medicine_desert_salve", "item_desert_salve" },
+        // 104일차 3차 NPC
+        { "item_pearl", "item_pearl" },
+        { "food_seaweed_salad", "item_seaweed_salad" },
+        { "food_grilled_clams", "item_grilled_clams" },
+        { "medicine_flower_balm", "item_flower_balm" }
     };
 
     // 84·85일차에 새로 만든 모델 (코드 변경을 반영하도록 항상 다시 만든다)
@@ -112,7 +117,8 @@ public static class ItemVisualContentBuilder
         "item_baked_apple", "item_arrow_bundle",
         "item_baked_potato", "item_grilled_fish", "item_mushroom_skewer", "item_pumpkin_soup", "item_tomato_stew", "item_golden_feast",
         "item_egg", "item_milk", "item_animal_feed", "item_fried_egg", "item_veggie_omelette", "item_warm_milk",
-        "item_vitality_potion", "item_spider_silk", "item_sweet_jelly", "item_inari_sushi", "item_antidote", "item_scrap_parts", "item_desert_salve"
+        "item_vitality_potion", "item_spider_silk", "item_sweet_jelly", "item_inari_sushi", "item_antidote", "item_scrap_parts", "item_desert_salve",
+        "item_pearl", "item_seaweed_salad", "item_grilled_clams", "item_flower_balm"
     };
 
     private sealed class PickupSpec
@@ -151,7 +157,12 @@ public static class ItemVisualContentBuilder
         { "food_inari_sushi", new PickupSpec { Name = "InariSushiPickup", Scale = 1.4f } },
         { "medicine_antidote", new PickupSpec { Name = "AntidotePickup", Scale = 1.1f } },
         { "item_scrap_parts", new PickupSpec { Name = "ScrapPartsPickup", Scale = 1.3f } },
-        { "medicine_desert_salve", new PickupSpec { Name = "DesertSalvePickup", Scale = 1.1f } }
+        { "medicine_desert_salve", new PickupSpec { Name = "DesertSalvePickup", Scale = 1.1f } },
+        // 104일차 3차 NPC
+        { "item_pearl", new PickupSpec { Name = "PearlPickup", Scale = 1.0f } },
+        { "food_seaweed_salad", new PickupSpec { Name = "SeaweedSaladPickup", Scale = 1.15f } },
+        { "food_grilled_clams", new PickupSpec { Name = "GrilledClamsPickup", Scale = 1.3f } },
+        { "medicine_flower_balm", new PickupSpec { Name = "FlowerBalmPickup", Scale = 1.0f } }
     };
 
     // 86일차: 동물 아이콘 (가축 창·HUD)

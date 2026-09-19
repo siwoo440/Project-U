@@ -95,7 +95,7 @@ public sealed class NpcShopManager : MonoBehaviour // 92일차: NPC 상점 (영�
 
     public event Action StockChanged; // 재고 · 매입 변경
     public event Action<NpcShopData, ItemData, int, int> Traded; // 거래 (상점, 아이템, 수량 : 산 수 + / 판 수 -, 코인 변화)
-    public event Action<NpcShopData, NpcCraftBook.Order> Crafted; // 102일차: 제작 주문 완료
+    public event Action<NpcCraftBook, NpcCraftBook.Order> Crafted; // 102일차: 제작 주문 완료 (104일차: 주문서 기준)
 
     public IReadOnlyList<NpcShopData> Shops => shops; // 상점 제공
     public IReadOnlyList<NpcCraftBook> CraftBooks => craftBooks; // 제작 주문서 제공
@@ -192,21 +192,21 @@ public sealed class NpcShopManager : MonoBehaviour // 92일차: NPC 상점 (영�
         return !string.IsNullOrEmpty(shopId) && states.TryGetValue(shopId, out ShopState state) ? state.Data : null;
     }
 
-    public NpcCharacterData GetOwner(NpcShopData shop) // 상점 주인 데이터
+    public NpcCharacterData GetOwner(INpcWorkplace place) // 상점 · 작업장 주인 데이터
     {
         NpcCharacterData owner = null;
 
-        if (shop != null && npcManager != null && npcManager.Database != null)
+        if (place != null && npcManager != null && npcManager.Database != null)
         {
-            npcManager.Database.TryGet(shop.OwnerId, out owner);
+            npcManager.Database.TryGet(place.OwnerId, out owner);
         }
 
         return owner;
     }
 
-    public NpcAgent GetOwnerAgent(NpcShopData shop) // 상점 주인 NPC
+    public NpcAgent GetOwnerAgent(INpcWorkplace place) // 상점 · 작업장 주인 NPC
     {
-        return shop != null && npcManager != null ? npcManager.FindAgent(shop.OwnerId) : null;
+        return place != null && npcManager != null ? npcManager.FindAgent(place.OwnerId) : null;
     }
 
     private ShopState GetState(NpcShopData shop) // 상태 (오늘 재고가 없으면 채움)
@@ -226,12 +226,12 @@ public sealed class NpcShopManager : MonoBehaviour // 92일차: NPC 상점 (영�
 
     // ------------------------------------------------------------ 영업 시간 (일정 데이터 기준)
 
-    public List<(float start, float end)> GetOpenIntervals(NpcShopData shop, int day, WeatherType weather) // 그날 주인이 영업 위치에 있는 시간
+    public List<(float start, float end)> GetOpenIntervals(INpcWorkplace shop, int day, WeatherType weather) // 그날 주인이 영업 위치에 있는 시간
     {
         return ComputeOpenIntervals(shop, GetPlan(shop, day, weather));
     }
 
-    public static List<(float start, float end)> ComputeOpenIntervals(NpcShopData shop, NpcScheduleData.Plan plan) // 계획에서 영업 위치에 있는 시간 구간 (검사 도구도 사용)
+    public static List<(float start, float end)> ComputeOpenIntervals(INpcWorkplace shop, NpcScheduleData.Plan plan) // 계획에서 영업 위치에 있는 시간 구간 (검사 도구도 사용)
     {
         List<(float start, float end)> result = new List<(float, float)>();
 
@@ -292,23 +292,23 @@ public sealed class NpcShopManager : MonoBehaviour // 92일차: NPC 상점 (영�
         return hour >= 24f ? "24:00" : MarketStall.FormatHour(hour);
     }
 
-    public bool IsScheduledOpen(NpcShopData shop, int day, float hour, WeatherType weather) // 일정상 영업 시간인지
+    public bool IsScheduledOpen(INpcWorkplace shop, int day, float hour, WeatherType weather) // 일정상 영업 시간인지
     {
         NpcScheduleData.Stop stop = GetPlan(shop, day, weather)?.GetStop(hour);
         return stop != null && shop.IsOpenLocation(stop.LocationId);
     }
 
-    public bool IsScheduledOpenNow(NpcShopData shop) // 지금 영업 시간인지 (창이 열린 동안 확인)
+    public bool IsScheduledOpenNow(INpcWorkplace shop) // 지금 영업 시간인지 (창이 열린 동안 확인)
     {
         return IsScheduledOpen(shop, CurrentDay, CurrentHour, CurrentWeather);
     }
 
-    public string DescribeHours(NpcShopData shop, int day, WeatherType weather) // 그날 영업 시간 문구
+    public string DescribeHours(INpcWorkplace shop, int day, WeatherType weather) // 그날 영업 시간 문구
     {
         return FormatIntervals(GetOpenIntervals(shop, day, weather));
     }
 
-    public NpcShopStatus GetStatus(NpcShopData shop, NpcAgent owner) // 지금 거래할 수 있는지와 이유
+    public NpcShopStatus GetStatus(INpcWorkplace shop, NpcAgent owner) // 지금 거래할 수 있는지와 이유 (104일차: 상점 없는 제작 작업장도)
     {
         if (shop == null || owner == null || npcManager == null)
         {
@@ -337,7 +337,7 @@ public sealed class NpcShopManager : MonoBehaviour // 92일차: NPC 상점 (영�
         return new NpcShopStatus(true, string.Empty, hours);
     }
 
-    private string ClosedReason(NpcShopData shop) // 닫힌 이유 + 다음 영업 시각
+    private string ClosedReason(INpcWorkplace shop) // 닫힌 이유 + 다음 영업 시각
     {
         int day = CurrentDay;
         float hour = CurrentHour;
@@ -370,7 +370,7 @@ public sealed class NpcShopManager : MonoBehaviour // 92일차: NPC 상점 (영�
         return WeekdayNames[((Mathf.Max(1, day) - 1) % NpcCalendar.DaysPerWeek + NpcCalendar.DaysPerWeek) % NpcCalendar.DaysPerWeek];
     }
 
-    private NpcScheduleData.Plan GetPlan(NpcShopData shop, int day, WeatherType weather) // 주인의 그날 계획
+    private NpcScheduleData.Plan GetPlan(INpcWorkplace shop, int day, WeatherType weather) // 주인의 그날 계획
     {
         NpcCharacterData owner = GetOwner(shop);
         return owner != null && owner.Schedule != null && npcManager != null ? owner.Schedule.SelectPlan(day, npcManager.GetSeasonForDay(day), weather) : null;
@@ -652,18 +652,18 @@ public sealed class NpcShopManager : MonoBehaviour // 92일차: NPC 상점 (영�
         return true;
     }
 
-    // ------------------------------------------------------------ 제작 주문 (102일차)
+    // ------------------------------------------------------------ 제작 주문 (102일차 · 104일차: 상점 없는 제작 NPC)
 
-    public NpcCraftBook GetCraftBook(NpcShopData shop) // 상점 주인의 제작 주문서
+    public NpcCraftBook GetCraftBook(string ownerId) // 주인의 제작 주문서
     {
-        if (shop == null)
+        if (string.IsNullOrEmpty(ownerId))
         {
             return null;
         }
 
         foreach (NpcCraftBook book in craftBooks)
         {
-            if (book != null && book.OwnerId == shop.OwnerId)
+            if (book != null && book.OwnerId == ownerId)
             {
                 return book;
             }
@@ -672,26 +672,96 @@ public sealed class NpcShopManager : MonoBehaviour // 92일차: NPC 상점 (영�
         return null;
     }
 
+    public NpcCraftBook GetCraftBook(NpcShopData shop) // 상점 주인의 제작 주문서
+    {
+        return shop != null ? GetCraftBook(shop.OwnerId) : null;
+    }
+
+    public bool TryGetCraftStation(NpcCharacterData character, out NpcCraftBook book) // 104일차: 상점 없이 제작만 하는 NPC의 주문서
+    {
+        book = null;
+
+        if (character == null || TryGetShop(character, out _))
+        {
+            return false;
+        }
+
+        book = GetCraftBook(character.CharacterId);
+        return book != null && book.HasStation;
+    }
+
+    private INpcWorkplace WorkplaceOf(NpcCraftBook book) // 주문을 받는 곳 (상점이 있으면 상점, 없으면 작업장)
+    {
+        if (book == null)
+        {
+            return null;
+        }
+
+        foreach (NpcShopData shop in shops)
+        {
+            if (shop != null && shop.OwnerId == book.OwnerId)
+            {
+                return shop;
+            }
+        }
+
+        return book.HasStation ? book : null;
+    }
+
+    public bool IsCraftOpenNow(NpcCraftBook book) // 지금 주문을 받는지
+    {
+        INpcWorkplace place = WorkplaceOf(book);
+        return place != null && IsScheduledOpenNow(place);
+    }
+
+    public string DescribeCraftHours(NpcCraftBook book) // 오늘 주문 받는 시간
+    {
+        INpcWorkplace place = WorkplaceOf(book);
+        return place != null ? DescribeHours(place, CurrentDay, CurrentWeather) : NpcShopManager.FormatIntervals(null);
+    }
+
+    public int GetCraftDiscountPercent(NpcCraftBook book) // 수수료 할인율 (상점 할인율 또는 기본 할인율)
+    {
+        if (book == null)
+        {
+            return 0;
+        }
+
+        if (WorkplaceOf(book) is NpcShopData shop)
+        {
+            return GetDiscountPercent(shop);
+        }
+
+        int stage = (int)(relations != null ? relations.PeekStage(GetOwner(book)) : AffinityStage.Uninterested);
+        return stage >= 0 && stage < NpcShopData.DefaultDiscounts.Length ? NpcShopData.DefaultDiscounts[stage] : 0;
+    }
+
     public IReadOnlyList<NpcCraftBook.Order> GetCraftOrders(NpcShopData shop) // 제작 주문 목록
     {
         NpcCraftBook book = GetCraftBook(shop);
         return book != null ? book.Orders : (IReadOnlyList<NpcCraftBook.Order>)Array.Empty<NpcCraftBook.Order>();
     }
 
-    public int GetCraftFee(NpcShopData shop, NpcCraftBook.Order order) // 할인 적용 수수료 (0이면 0)
+    public int GetCraftFee(NpcCraftBook book, NpcCraftBook.Order order) // 할인 적용 수수료 (0이면 0)
     {
-        return order == null || order.Fee <= 0 ? 0 : NpcShopData.DiscountedPrice(order.Fee, GetDiscountPercent(shop));
+        return order == null || order.Fee <= 0 ? 0 : NpcShopData.DiscountedPrice(order.Fee, GetCraftDiscountPercent(book));
     }
 
-    public string GetCraftLockReason(NpcShopData shop, NpcCraftBook.Order order) // 관계 단계가 부족하면 이유
+    public int GetCraftFee(NpcShopData shop, NpcCraftBook.Order order) => GetCraftFee(GetCraftBook(shop), order); // 상점 기준
+
+    public string GetCraftLockReason(NpcCraftBook book, NpcCraftBook.Order order) // 관계 단계가 부족하면 이유
     {
-        if (order == null || order.RequiredStage <= GetOwnerStage(shop))
+        AffinityStage stage = relations != null && book != null ? relations.PeekStage(GetOwner(book)) : AffinityStage.Uninterested;
+
+        if (order == null || order.RequiredStage <= stage)
         {
             return null;
         }
 
         return $"'{NpcDialogueSelector.StageName(order.RequiredStage)}' 단계부터 주문할 수 있어요";
     }
+
+    public string GetCraftLockReason(NpcShopData shop, NpcCraftBook.Order order) => GetCraftLockReason(GetCraftBook(shop), order); // 상점 기준
 
     public static bool HasIngredients(NpcCraftBook.Order order, PlayerInventory inventory) // 재료가 모두 있는지
     {
@@ -711,21 +781,21 @@ public sealed class NpcShopManager : MonoBehaviour // 92일차: NPC 상점 (영�
         return true;
     }
 
-    public string GetCraftBlockReason(NpcShopData shop, NpcCraftBook.Order order, PlayerInventory inventory) // 지금 주문할 수 없는 이유 (가능하면 null)
+    public string GetCraftBlockReason(NpcCraftBook book, NpcCraftBook.Order order, PlayerInventory inventory) // 지금 주문할 수 없는 이유 (가능하면 null)
     {
         PlayerWallet wallet = Wallet;
 
-        if (shop == null || order == null || order.Result == null || inventory == null || wallet == null || GetCraftBook(shop) == null)
+        if (book == null || order == null || order.Result == null || inventory == null || wallet == null || WorkplaceOf(book) == null)
         {
             return "CANNOT CRAFT RIGHT NOW";
         }
 
-        if (!IsScheduledOpenNow(shop))
+        if (!IsCraftOpenNow(book))
         {
             return "THE SHOP IS CLOSED";
         }
 
-        string locked = GetCraftLockReason(shop, order);
+        string locked = GetCraftLockReason(book, order);
 
         if (locked != null)
         {
@@ -737,7 +807,7 @@ public sealed class NpcShopManager : MonoBehaviour // 92일차: NPC 상점 (영�
             return "MISSING MATERIALS";
         }
 
-        int fee = GetCraftFee(shop, order);
+        int fee = GetCraftFee(book, order);
 
         if (!wallet.CanAfford(fee))
         {
@@ -747,17 +817,21 @@ public sealed class NpcShopManager : MonoBehaviour // 92일차: NPC 상점 (영�
         return null;
     }
 
-    public bool TryCraft(NpcShopData shop, NpcCraftBook.Order order, PlayerInventory inventory, out string message) // 재료 + 수수료로 제작 주문
+    public string GetCraftBlockReason(NpcShopData shop, NpcCraftBook.Order order, PlayerInventory inventory) => GetCraftBlockReason(GetCraftBook(shop), order, inventory); // 상점 기준
+
+    public bool TryCraft(NpcCraftBook book, NpcCraftBook.Order order, PlayerInventory inventory, out string message) // 재료 + 수수료로 제작 주문
     {
-        IReadOnlyList<NpcCraftBook.Order> orders = GetCraftOrders(shop);
         bool known = false;
 
-        for (int index = 0; index < orders.Count && !known; index++)
+        if (book != null)
         {
-            known = orders[index] == order;
+            for (int index = 0; index < book.Orders.Count && !known; index++)
+            {
+                known = book.Orders[index] == order;
+            }
         }
 
-        message = known ? GetCraftBlockReason(shop, order, inventory) : "CANNOT CRAFT RIGHT NOW";
+        message = known ? GetCraftBlockReason(book, order, inventory) : "CANNOT CRAFT RIGHT NOW";
 
         if (message != null)
         {
@@ -765,7 +839,7 @@ public sealed class NpcShopManager : MonoBehaviour // 92일차: NPC 상점 (영�
         }
 
         PlayerWallet wallet = Wallet;
-        int fee = GetCraftFee(shop, order);
+        int fee = GetCraftFee(book, order);
 
         foreach (NpcCraftBook.Ingredient ingredient in order.Ingredients) // 재료를 먼저 빼야 가방 칸이 비는 경우가 있음
         {
@@ -797,7 +871,8 @@ public sealed class NpcShopManager : MonoBehaviour // 92일차: NPC 상점 (영�
             return false;
         }
 
-        ShopState state = GetState(shop);
+        NpcShopData shop = WorkplaceOf(book) as NpcShopData;
+        ShopState state = shop != null ? GetState(shop) : null;
 
         if (state != null && fee > 0)
         {
@@ -805,10 +880,12 @@ public sealed class NpcShopManager : MonoBehaviour // 92일차: NPC 상점 (영�
         }
 
         StockChanged?.Invoke();
-        Crafted?.Invoke(shop, order);
+        Crafted?.Invoke(book, order);
         message = $"CRAFTED {order.ResultAmount} {order.Result.DisplayName}{(fee > 0 ? $"  -{fee}" : string.Empty)}";
         return true;
     }
+
+    public bool TryCraft(NpcShopData shop, NpcCraftBook.Order order, PlayerInventory inventory, out string message) => TryCraft(GetCraftBook(shop), order, inventory, out message); // 상점 기준
 
     private static void RestoreIngredients(NpcCraftBook.Order order, PlayerInventory inventory) // 재료 되돌리기
     {
@@ -916,6 +993,14 @@ public sealed class NpcShopManager : MonoBehaviour // 92일차: NPC 상점 (영�
             foreach (NpcCraftBook.Order order in GetCraftOrders(shop))
             {
                 text.Append($"\n   제작 {order.OrderId} → {order.Result?.ItemId} x{order.ResultAmount} 수수료 {GetCraftFee(shop, order)}{(GetCraftLockReason(shop, order) != null ? " 잠김" : string.Empty)}");
+            }
+        }
+
+        foreach (NpcCraftBook book in craftBooks)
+        {
+            if (book != null && book.HasStation && !(WorkplaceOf(book) is NpcShopData)) // 상점 없는 제작 NPC
+            {
+                text.Append($"\n{book.OwnerId} ({book.StationName}) : {(IsCraftOpenNow(book) ? "제작 중" : "쉬는 중")} · 오늘 {DescribeCraftHours(book)} · 주문 {book.Orders.Count}개");
             }
         }
 

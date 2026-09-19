@@ -129,3 +129,11 @@ MonoBehaviour:
     pickupPrefab: {fileID: 3181927310554862687, guid: dfaed5571a78e2844bb762a2316700c9, type: 3}
   - itemData: {fileID: 11400000, guid: 2fbbf00934b2d404d946399b07a29fec, type: 2}
     pickupPrefab: {fileID: 3181927310554862687, guid: b9c742d43a8eace4f9c2f0b5ea8ef092, type: 3}
+  - itemData: {fileID: 11400000, guid: 9fef98d8cab0d6248a06e90e944f331c, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 0fc49966009a9854ca79ce947594ed6e, type: 3}
+  - itemData: {fileID: 11400000, guid: bd2cc3c8964779742a9d528556969a3a, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: d30185e3f17e1fc4f902877847a7dd42, type: 3}
+  - itemData: {fileID: 11400000, guid: 2f1df630320255844a0117b89edfaaae, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 9ef12039308dc01428d2114ac3871b39, type: 3}
+  - itemData: {fileID: 11400000, guid: 0687865a489c4354db5fb1baa7331fd0, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 5752ae31b06c0ec49bb03e1e79ac1011, type: 3}

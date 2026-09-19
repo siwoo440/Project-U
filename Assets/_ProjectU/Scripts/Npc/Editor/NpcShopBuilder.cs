@@ -25,11 +25,13 @@ public static class NpcShopBuilder
     private const string StockCsv = NpcContentBuilder.SourceFolder + "/NpcShopStock.csv";
     public const string CraftFolder = NpcContentBuilder.DataFolder + "/Crafts";
     private const string CraftCsv = NpcContentBuilder.SourceFolder + "/NpcCrafts.csv";
+    private const string StationCsv = NpcContentBuilder.SourceFolder + "/NpcCraftStations.csv"; // 104일차: 상점 없는 제작 NPC의 작업장
 
     public static readonly string[] ExpectedShops =
     {
         "shop_milky", "shop_dravia", "shop_lichel",
-        "shop_bellamorta", "shop_arachne", "shop_milu", "shop_kasumi", "shop_seira", "shop_pipi", "shop_safira"
+        "shop_bellamorta", "shop_arachne", "shop_milu", "shop_kasumi", "shop_seira", "shop_pipi", "shop_safira",
+        "shop_marielle" // 104일차: 3차
     };
     private static readonly Regex OrderIdPattern = new Regex("^craft_[a-z0-9]+(?:_[a-z0-9]+)*$");
     private static readonly Regex ShopIdPattern = new Regex("^shop_[a-z0-9]+(?:_[a-z0-9]+)*$");
@@ -42,7 +44,7 @@ public static class NpcShopBuilder
         "가게 주인이 없어요.", "가판대가 있어야 물건을 펼칠 수 있어요. 상인 가판대를 지어 주세요.", "가게로 가는 중이에요. 도착하면 거래할 수 있어요.",
         "오늘은 쉬는 날이에요.", "오늘 영업은 끝났어요.", "지금은 영업 시간이 아니에요.", "내일 월화수목금토일요일 에 열어요.", "당분간 문을 열지 않아요.",
         "' 단계부터 살 수 있어요", "무관심 호기심 신뢰 애정 사랑", "상점 창을 열 수 없어요. Build Content > 10. NPC Shops를 실행하세요.",
-        "' 단계부터 주문할 수 있어요"
+        "' 단계부터 주문할 수 있어요", "제작", "제작 (닫힘)", "오늘 제작 : ", "제작 창을 열 수 없어요. Build Content > 20번 메뉴를 실행하세요."
     };
 
     // ---------------------------------------------------------------- 메뉴
@@ -257,6 +259,30 @@ public static class NpcShopBuilder
             orders.Add(new NpcCraftBook.Order(id, result, ParseInt(row["Amount"], 1), ingredients, ParseInt(row["Fee"], 0), stage));
         }
 
+        // 104일차: 상점 없는 제작 NPC의 작업장 (제목 · 작업 위치 · 한마디 · 마감 인사)
+        Dictionary<string, NpcCsv.Row> stations = new Dictionary<string, NpcCsv.Row>(StringComparer.Ordinal);
+
+        foreach (NpcCsv.Row row in NpcCsv.Read(StationCsv, errors))
+        {
+            string where = $"NpcCraftStations.csv {row.LineNumber}줄";
+
+            if (!database.TryGet(row["Owner"], out NpcCharacterData stationOwner) || !stations.TryAdd(stationOwner.CharacterId, row))
+            {
+                errors.Add($"{where} : 주인 {row["Owner"]} 이(가) 없거나 중복입니다.");
+                continue;
+            }
+
+            if (craftLines.ContainsKey(stationOwner.CharacterId))
+            {
+                errors.Add($"{where} : {stationOwner.CharacterId} 은(는) 상점이 있어 작업장이 필요 없습니다 (상점 창 제작 탭 사용).");
+            }
+
+            if (!byOwner.ContainsKey(stationOwner.CharacterId))
+            {
+                errors.Add($"{where} : {stationOwner.CharacterId} 의 제작 주문이 NpcCrafts.csv에 없습니다.");
+            }
+        }
+
         List<NpcCraftBook> created = new List<NpcCraftBook>();
         int orderCount = 0;
 
@@ -264,8 +290,17 @@ public static class NpcShopBuilder
         {
             database.TryGet(pair.Key, out NpcCharacterData owner);
             NpcCraftBook book = LoadOrCreateAsset<NpcCraftBook>($"{CraftFolder}/NpcCraft_{owner.EnglishName.Replace(" ", string.Empty)}.asset");
-            craftLines.TryGetValue(pair.Key, out string line);
-            book.EditorAssign(pair.Key, line, pair.Value);
+
+            if (stations.TryGetValue(pair.Key, out NpcCsv.Row station))
+            {
+                book.EditorAssign(pair.Key, station["CraftLine"], pair.Value, station["Name"], Split(station["OpenLocations"]), station["Farewell"]);
+            }
+            else
+            {
+                craftLines.TryGetValue(pair.Key, out string line);
+                book.EditorAssign(pair.Key, line, pair.Value);
+            }
+
             EditorUtility.SetDirty(book);
             created.Add(book);
             orderCount += pair.Value.Count;
@@ -278,7 +313,7 @@ public static class NpcShopBuilder
         }
 
         created.Sort((left, right) => string.CompareOrdinal(left.OwnerId, right.OwnerId));
-        report.AppendLine($"제작 주문서 {created.Count}권 · 주문 {orderCount}개 ({CraftFolder})");
+        report.AppendLine($"제작 주문서 {created.Count}권 (상점 없는 작업장 {created.Count(book => book.HasStation)}곳) · 주문 {orderCount}개 ({CraftFolder})");
 
         foreach (string error in errors)
         {
@@ -486,6 +521,8 @@ public static class NpcShopBuilder
         foreach (NpcCraftBook book in LoadCraftBooks())
         {
             yield return book.CraftLine;
+            yield return book.StationName;
+            yield return book.Farewell;
         }
 
         foreach (string text in RuntimeTexts)
@@ -836,16 +873,16 @@ public static class NpcShopBuilder
             }
 
             NpcShopData shop = shops.FirstOrDefault(candidate => candidate.OwnerId == owner.CharacterId);
+            int maxDiscount = shop != null ? shop.MaxDiscountPercent : NpcShopData.DefaultDiscounts.Max();
 
-            if (shop == null)
+            if (shop == null && !ValidateStation(book, owner, database, report, error)) // 104일차: 상점 없는 제작 NPC는 작업장으로 주문을 받음
             {
-                error($"{book.name} : 주인 {owner.CharacterId} 의 상점이 없어 제작 탭을 열 수 없습니다.");
                 continue;
             }
 
             if (string.IsNullOrWhiteSpace(book.CraftLine))
             {
-                error($"{book.name} : 제작 탭 한마디(NpcShops.csv CraftLine)가 비어 있습니다.");
+                error($"{book.name} : 제작 한마디(NpcShops.csv · NpcCraftStations.csv CraftLine)가 비어 있습니다.");
             }
 
             if (!book.Orders.Any(order => order != null && order.RequiredStage == AffinityStage.Uninterested))
@@ -883,7 +920,7 @@ public static class NpcShopBuilder
                 }
 
                 // 재료를 모두 NPC 상점에서 (최대 할인으로) 살 수 있으면, 재료 값 + 수수료가 결과를 되팔 값보다 커야 한다
-                int cost = order.Fee > 0 ? NpcShopData.DiscountedPrice(order.Fee, shop.MaxDiscountPercent) : 0;
+                int cost = order.Fee > 0 ? NpcShopData.DiscountedPrice(order.Fee, maxDiscount) : 0;
                 bool allBuyable = true;
 
                 foreach (NpcCraftBook.Ingredient ingredient in order.Ingredients)
@@ -904,14 +941,70 @@ public static class NpcShopBuilder
             report.AppendLine($"{book.OwnerId} 제작 {book.Orders.Count}개 : {string.Join(" / ", book.Orders.Where(order => order?.Result != null).Select(order => $"{order.Result.ItemId} x{order.ResultAmount} ({order.Fee})"))}");
         }
 
-        // 제작 탭은 상점 창 안에 있으므로 상인 + 제작 NPC만 주문서가 꼭 필요하다 (상점 없는 제작 NPC는 나중에 따로)
-        foreach (NpcCharacterData character in database.GetPlacedCast().Where(character => character.HasRole(NpcRole.Merchant) && character.HasRole(NpcRole.Crafter) && character.CanInteract(NpcInteraction.Craft)))
+        // 104일차: 배치된 제작 NPC는 모두 주문서가 필요하다 (상점이 있으면 상점 창 제작 탭, 없으면 작업장 제작 창)
+        foreach (NpcCharacterData character in database.GetPlacedCast().Where(character => character.HasRole(NpcRole.Crafter) && character.CanInteract(NpcInteraction.Craft)))
         {
             if (!owners.Contains(character.CharacterId))
             {
                 error($"{character.CharacterId} : 제작 역할인데 제작 주문서가 없습니다 (NpcCrafts.csv).");
             }
         }
+    }
+
+    // 104일차: 상점 없는 제작 작업장 : 제목 · 마감 인사 · 작업 위치 · 계절마다 주문 받는 날
+    private static bool ValidateStation(NpcCraftBook book, NpcCharacterData owner, NpcDatabase database, StringBuilder report, Action<string> error)
+    {
+        if (!book.HasStation)
+        {
+            error($"{book.name} : 주인 {owner.CharacterId} 의 상점도 작업장(NpcCraftStations.csv)도 없어 주문을 받을 수 없습니다.");
+            return false;
+        }
+
+        if (string.IsNullOrWhiteSpace(book.Farewell))
+        {
+            error($"{book.name} : 작업장 마감 인사가 비어 있습니다.");
+        }
+
+        foreach (string location in book.OpenLocationIds)
+        {
+            if (!database.HasLocation(location))
+            {
+                error($"{book.name} : 작업 위치 {location} 이(가) NPC 위치 목록에 없습니다.");
+            }
+        }
+
+        if (owner.Schedule == null)
+        {
+            error($"{book.name} : 주인 {owner.CharacterId} 의 일정이 없습니다.");
+            return false;
+        }
+
+        List<string> week = new List<string>();
+
+        for (int season = 0; season < 4; season++)
+        {
+            int openDays = 0;
+
+            for (int weekday = 0; weekday < NpcCalendar.DaysPerWeek; weekday++)
+            {
+                int day = season * 28 + weekday + 1;
+                List<(float start, float end)> intervals = NpcShopManager.ComputeOpenIntervals(book, owner.Schedule.SelectPlan(day, (SeasonType)season, WeatherType.Clear));
+                openDays += intervals.Count > 0 ? 1 : 0;
+
+                if (season == 0 && weekday == 0)
+                {
+                    week.Add(NpcShopManager.FormatIntervals(intervals));
+                }
+            }
+
+            if (openDays == 0)
+            {
+                error($"{book.name} : {(SeasonType)season} 에 주문을 받는 날이 없습니다 (일정의 작업 위치 확인).");
+            }
+        }
+
+        report.AppendLine($"{owner.CharacterId} ({owner.DisplayName} · {book.StationName}) 작업장 봄 월요일 : {string.Join(" / ", week)}");
+        return true;
     }
 
     private static int CheapestShopPrice(ItemData item, List<NpcShopData> shops) // NPC 상점에서 가장 싸게 살 수 있는 값 (0 = 파는 곳 없음)

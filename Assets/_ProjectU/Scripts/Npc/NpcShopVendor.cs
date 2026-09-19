@@ -77,6 +77,7 @@ public sealed class NpcShopVendor : IShopVendor, ICraftVendor // 92일차: NPC �
 
     public IReadOnlyList<NpcCraftBook.Order> CraftOrders => manager.GetCraftOrders(shop); // 102일차: 제작 주문
     public string CraftLine => manager.GetCraftBook(shop)?.CraftLine ?? string.Empty; // 제작 탭 한마디
+    public bool CraftOnly => false; // 상점 (사기 · 팔기 탭 있음)
     public int GetCraftFee(NpcCraftBook.Order order) => manager.GetCraftFee(shop, order); // 수수료
     public string GetCraftLockReason(NpcCraftBook.Order order) => manager.GetCraftLockReason(shop, order); // 잠긴 이유
     public string GetCraftBlockReason(NpcCraftBook.Order order, PlayerInventory inventory) => manager.GetCraftBlockReason(shop, order, inventory); // 불가 이유

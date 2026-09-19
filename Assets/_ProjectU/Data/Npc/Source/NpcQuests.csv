@@ -56,3 +56,31 @@ quest_safira_fiber,char_safira,Board,천막 끈,item_plant_fiber:12,32,3,,2,All,
 quest_safira_water,char_safira,Board,사막의 물,drink_water_bottle:4,18,3,,2,All,,물 네 병. 오아시스까지 가기 귀찮다.,고맙다. …목이 말랐다.,
 quest_safira_potato,char_safira,Board,모래 구이 감자,food_potato:4,45,4,,3,Spring,,감자 네 개. 뜨거운 모래에 묻으면 맛있다.,…같이 먹을래? 아니면 됐다.,
 quest_safira_special,char_safira,Special,별자리 지도,medicine_bandage:3|food_grilled_fish:2,110,10,medicine_desert_salve:3,5,All,Trust,"밤 사막을 건너려면 별자리 지도가 필요하다. 붕대 세 개, 구운 생선 두 개. 길이 멀다.",지도를 다 그렸다. 길은… 너와 같이 걷고 싶다. 연고 받아.,event_safira_trust
+quest_serena_tea,char_serena,Board,밤샘 필사의 차,item_herbal_tea:2,25,3,,2,All,,"약초 차 두 잔… 밤새 필사하려면, 따뜻한 향이 필요해요.",…향이 좋아요. 오늘 밤은 한 권을 다 옮길 수 있겠어요.,
+quest_serena_fiber,char_serena,Board,낡은 책 제본,item_plant_fiber:8,20,3,,3,All,,떨어진 책장을 묶을 섬유 여덟 개… 부탁해도 될까요.,이제 이 책은… 조금 더 오래 남을 거예요.,
+quest_serena_apple,char_serena,Board,기억 속 구운 사과,food_baked_apple:2,25,4,,3,All,,구운 사과 냄새를… 기억하는 것 같아요. 두 개만 가져와 줄래요.,…맞아요. 이 냄새. 조금 더 선명해졌어요.,
+quest_serena_special,char_serena,Special,마지막 시의 잉크,food_berry:10|item_spider_silk:2,120,10,item_herbal_tea:3,5,All,Trust,마지막 시를 쓸 잉크가 필요해요. 열매 열 개와 붓으로 쓸 거미 실 두 타래… 당신에게만 부탁해요.,다 썼어요. 첫 줄에는… 당신 이야기가 있어요. 이 차는 답례예요.,event_serena_trust
+quest_liriel_berry,char_liriel,Board,요정 간식,food_berry:6,25,3,,2,All,,열매 여섯 개 줄 거지! 요정 친구들이랑 나눠 먹을 거야!,와! 숲이 반짝반짝해졌어! 고마워!,
+quest_liriel_apple,char_liriel,Board,사과꽃 축제 준비,food_apple:4,25,3,,2,All,,사과 네 개! 축제 때 나무 위에 올려 둘 거야!,완벽해! 이번 축제는 최고가 될 거야!,
+quest_liriel_strawberry,char_liriel,Board,딸기 요정 모자,food_strawberry:4,36,4,,2,Spring|Summer,,딸기 네 개! 꼭지로 요정 모자를 만들 거야!,봐! 딸기 모자 잘 어울리지!,
+quest_liriel_special,char_liriel,Special,빛의 정원 되살리기,seed_strawberry:6|drink_water_bottle:4,110,10,seed_winter_radish:6,5,All,Trust,사라진 빛의 정원을 되살릴 거야! 딸기 씨앗 여섯 개랑 깨끗한 물 네 병이 필요해!,빛이 돌아왔어! 너 덕분이야! 이 씨앗은 겨울에도 자라는 거야!,event_liriel_trust
+quest_chesca_ore,char_chesca,Board,보물 칸 채우기,item_iron_ore:2,30,3,,3,All,,…탁. 광석 두 개. 보물 칸이 비어서 허전해.,"…반짝여. 탁, 탁. 좋아.",
+quest_chesca_fiber,char_chesca,Board,상자 안감,item_plant_fiber:10,25,3,,3,All,,상자 안쪽이 까끌해. 섬유 열 개면… 폭신해질 거야.,…폭신해. 오늘은 푹 잘 수 있겠어.,
+quest_chesca_scrap,char_chesca,Board,반짝이는 부품,item_scrap_parts:3,40,4,,3,All,,피피네 반짝이는 부품… 세 개만. 직접 가긴 무서워.,탁. 고마워. …다음엔 같이 가 줄래?,
+quest_chesca_special,char_chesca,Special,봉인된 유물,resource_fish_golden_carp:1|item_iron_ore:5,130,10,item_pearl:1,5,All,Trust,유적 깊은 곳 봉인을 풀려면… 황금 잉어 비늘이랑 광석 다섯 개가 필요해. 너라면… 믿어.,"열렸어. 안에 있던 진주… 네 거야. 빼앗는 게 아니라, 주는 거야.",event_chesca_trust
+quest_marielle_water,char_marielle,Board,해초 씻을 물,drink_water_bottle:3,14,3,,2,All,,음~ 해초를 씻을 맑은 물이 세 병 필요해요.,고마워요~ 오늘 해초는 더 반짝이겠어요.,
+quest_marielle_crucian,char_marielle,Board,산호 친구의 저녁,resource_fish_crucian:2,45,4,,3,Spring|Summer|Autumn,,붕어 두 마리… 바다 친구들이 궁금해해요. 민물 물고기는 처음 본대요.,음~ 모두 신기해해요. 고마워요.,
+quest_marielle_smelt,char_marielle,Board,겨울 바다 선물,resource_fish_smelt:2,50,4,,3,Winter,,겨울엔 바다가 조용해요. 빙어 두 마리로 친구들한테 편지를 보내고 싶어요.,음~ 차가운 은빛이네요. 좋은 편지가 되겠어요.,
+quest_marielle_special,char_marielle,Special,새 산호 마을,resource_stone:20|resource_fish_trout:1,120,10,item_pearl:2,5,Spring|Autumn,Trust,이 섬에 작은 산호 마을을 만들고 싶어요. 받침돌 스무 개랑… 첫 손님이 될 송어 한 마리.,마을이 생겼어요. 당신 이름을 첫 번째 돌에 새겼어요. 이 진주도 받아 줘요.,event_marielle_trust
+quest_lumina_strawberry,char_lumina,Board,딸기꽃 표본,food_strawberry:3,28,3,,2,Spring|Summer,,딸기 세 개… 꽃가루가 남아 있는지 보고 싶어요.,…아직 향이 남아 있어요. 고마워요.,
+quest_lumina_berry,char_lumina,Board,꽃밭 친구들 간식,food_berry:5,22,3,,2,All,,열매 다섯 개… 꽃밭 벌들한테 나눠 주고 싶어요.,벌들이 날개를 흔들어요. 고맙다는 뜻이에요.,
+quest_lumina_pumpkin,char_lumina,Board,가을꽃 씨앗,food_pumpkin:1,40,4,,3,Autumn,,호박 한 덩이… 속의 씨앗으로 내년 꽃을 준비할래요.,씨앗이 많네요… 내년 꽃밭이 기대돼요.,
+quest_lumina_special,char_lumina,Special,달빛 꽃 관찰,food_strawberry:4|item_spider_silk:2,110,10,seed_strawberry:6,5,Spring|Summer,Trust,"달빛에만 피는 꽃을 관찰하려고요. 미끼가 될 딸기 네 개랑, 고치를 보수할 거미 실 두 타래… 같이 봐 줄래요?",…피었어요. 당신이랑 봐서 더 예뻤어요. 이 씨앗을 심어 줘요.,event_lumina_trust
+quest_neri_bait,char_neri,Board,벌레 간식,resource_worm_bait:6,10,3,,2,All,,개굴! 지렁이 여섯 마리! 관측하다 보면 배고파!,냠! 이제 하루 종일 관측할 수 있어!,
+quest_neri_water,char_neri,Board,빗물 대신,drink_water_bottle:4,18,3,,2,All,,비가 안 와서 피부가 말라! 물 네 병만! 개굴!,촉촉해! 살았다! 개굴개굴!,
+quest_neri_smelt,char_neri,Board,겨울잠 도시락,resource_fish_smelt:2,45,4,,3,Winter,,겨울잠 자기 전에 빙어 두 마리 먹고 싶어… 개굴…,든든해! 이제 푹 잘 수 있어… 개굴…,
+quest_neri_special,char_neri,Special,습지 되살리기,drink_water_bottle:10|item_plant_fiber:10,110,10,resource_worm_bait:20,5,All,Trust,"말라 가는 웅덩이를 살리고 싶어! 물 열 병이랑 물가 풀을 심을 섬유 열 개! 같이 하자, 개굴!",웅덩이가 살아났어! 가족들이 돌아올지도 몰라! 이건 내 보물 지렁이야!,event_neri_trust
+quest_aliune_water,char_aliune,Board,새싹의 물,drink_water_bottle:3,14,3,,2,All,,어린 새싹에게 줄 깨끗한 물이 세 병 필요해요.,새싹들이 고개를 들었어요. 고마워요.,
+quest_aliune_seeds,char_aliune,Board,새 정원 씨앗,seed_potato:4,18,3,,3,Spring,,봄 정원에 심을 감자 씨앗 네 개… 부탁해도 될까요.,좋은 씨앗이에요. 튼튼하게 자랄 거예요.,
+quest_aliune_fiber,char_aliune,Board,덩굴 지지대,item_plant_fiber:8,20,3,,3,All,,덩굴이 기댈 지지대를 묶으려고요. 섬유 여덟 개면 돼요.,덩굴이 편안해 보여요. 고마워요.,
+quest_aliune_special,char_aliune,Special,섬의 치유 정원,seed_pumpkin:4|food_berry:10,120,10,medicine_flower_balm:3,5,All,Trust,섬 전체를 치유 정원으로 만드는 첫걸음이에요. 호박 씨앗 네 개와 열매 열 개… 함께 심어 줄래요?,첫 정원이 생겼어요. 이 꽃잎 연고는… 당신 손을 위해 만든 거예요.,event_aliune_trust

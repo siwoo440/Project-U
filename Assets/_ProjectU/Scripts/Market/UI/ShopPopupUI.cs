@@ -42,6 +42,8 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
     [SerializeField] private Button craftTabButton; // 제작 탭
     [SerializeField] private Image craftTabImage; // 제작 탭 배경
     [SerializeField] private TMP_Text craftTabLabel; // 제작 탭 문구
+    [Tooltip("104일차: 탭 옆 'TAB' 안내 (제작만 하는 NPC는 숨김).")]
+    [SerializeField] private TMP_Text tabHintText; // TAB 안내
 
     [Header("List")] // 목록
     [Tooltip("목록 줄 부모.")]
@@ -114,6 +116,10 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
     private ICraftVendor CraftVendor => vendor as ICraftVendor; // 102일차: 제작 주문 가게
     public bool HasCraftTab => CraftVendor != null && CraftVendor.CraftOrders.Count > 0; // 제작 탭 표시 여부
     public bool CraftTabVisible => craftTabButton != null && craftTabButton.gameObject.activeSelf; // 제작 탭 버튼 표시 (테스트용)
+    public bool CraftOnly => CraftVendor != null && CraftVendor.CraftOnly; // 104일차: 제작만 하는 NPC (사기 · 팔기 탭 숨김)
+    public bool BuyTabVisible => buyTabButton != null && buyTabButton.gameObject.activeSelf; // 사기 탭 버튼 표시 (테스트용)
+    private Vector2 craftTabHome; // 제작 탭 원래 자리
+    private bool craftTabHomeSaved; // 원래 자리 기록 여부
 
     private void Awake() // 버튼 연결
     {
@@ -164,8 +170,8 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
         wallet.CoinsChanged += HandleCoins; // 코인 변경 구독
         inventory.InventoryChanged += MarkDirty; // 인벤토리 변경 구독
         vendor.Opened(inventory.transform); // 주인 멈추기 등
-        tab = ShopTab.Buy; // 사기 탭
-        selectedIndex = FirstAvailableOffer(); // 첫 물건
+        tab = CraftOnly ? ShopTab.Craft : ShopTab.Buy; // 사기 탭 (104일차: 제작만 하는 NPC는 제작 탭)
+        selectedIndex = CraftOnly ? 0 : FirstAvailableOffer(); // 첫 물건
         quantity = 1; // 수량
         BuildPriceEntries(); // 가격표 정렬
         panelRoot.SetActive(true); // 표시
@@ -270,7 +276,11 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
             return; // 생략
         }
 
-        if (next == ShopTab.Prices || next == ShopTab.Sell) // 두 번째 탭은 가게 종류에 맞춤
+        if (CraftOnly) // 104일차: 제작만 하는 NPC
+        {
+            next = ShopTab.Craft; // 제작 탭만
+        }
+        else if (next == ShopTab.Prices || next == ShopTab.Sell) // 두 번째 탭은 가게 종류에 맞춤
         {
             next = SecondTab; // 가격표 또는 팔기
         }
@@ -301,7 +311,7 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
         Rebuild(); // 다시 그리기
     }
 
-    private ShopTab NextTab => tab == ShopTab.Buy ? SecondTab : tab != ShopTab.Craft && HasCraftTab ? ShopTab.Craft : ShopTab.Buy; // Tab 키 다음 탭
+    private ShopTab NextTab => CraftOnly ? ShopTab.Craft : tab == ShopTab.Buy ? SecondTab : tab != ShopTab.Craft && HasCraftTab ? ShopTab.Craft : ShopTab.Buy; // Tab 키 다음 탭
 
     private static string TabName(ShopTab target) // 탭 이름 (안내 문구)
     {
@@ -546,9 +556,22 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
         buyTabLabel.SetText($"BUY  ({vendor.Offers.Count})"); // 사기 탭 문구
         pricesTabLabel.SetText(SecondTab == ShopTab.Sell ? $"SELL  ({sellItems.Count})" : "SELL PRICES"); // 두 번째 탭 문구
         bool hasCraft = HasCraftTab; // 제작 탭
+        bool craftOnly = CraftOnly; // 104일차: 제작만 하는 NPC
+        buyTabButton.gameObject.SetActive(!craftOnly); // 사기 탭
+        pricesTabButton.gameObject.SetActive(!craftOnly); // 두 번째 탭
+        if (tabHintText != null) tabHintText.gameObject.SetActive(!craftOnly); // Tab 전환 없음
 
         if (craftTabButton != null) // 102일차: 제작 탭
         {
+            RectTransform craftRect = (RectTransform)craftTabButton.transform; // 제작 탭 자리
+
+            if (!craftTabHomeSaved) // 원래 자리 기록
+            {
+                craftTabHome = craftRect.anchoredPosition;
+                craftTabHomeSaved = true;
+            }
+
+            craftRect.anchoredPosition = craftOnly ? ((RectTransform)buyTabButton.transform).anchoredPosition : craftTabHome; // 제작만 하면 첫 칸으로
             craftTabButton.gameObject.SetActive(hasCraft); // 표시
             SetTabVisual(craftTabImage, craftTabLabel, tab == ShopTab.Craft); // 모양
             craftTabLabel.SetText(hasCraft ? $"CRAFT  ({CraftVendor.CraftOrders.Count})" : "CRAFT"); // 문구
@@ -753,7 +776,7 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
         emptyListText.gameObject.SetActive(orders.Count == 0); // 빈 목록
         emptyListText.SetText("NO CRAFT ORDERS"); // 문구
         buyGroup.SetActive(true); // 주문 묶음
-        hintText.SetText($"BRING MATERIALS + FEE  ·  MADE ON THE SPOT  ·  TAB: {TabName(NextTab)}"); // 안내
+        hintText.SetText(CraftOnly ? "BRING MATERIALS + FEE  ·  MADE ON THE SPOT" : $"BRING MATERIALS + FEE  ·  MADE ON THE SPOT  ·  TAB: {TabName(NextTab)}"); // 안내
 
         NpcCraftBook.Order selected = SelectedOrder; // 선택
 

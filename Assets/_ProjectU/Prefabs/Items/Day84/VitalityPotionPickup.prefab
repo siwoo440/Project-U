@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 8158290303749059170}
+  - component: {fileID: 5549974174654665732}
   m_Layer: 3
   m_Name: VitalityPotionPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 5227361214458472791}
+  - {fileID: 4854400418595492727}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &8158290303749059170
+--- !u!114 &5549974174654665732
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: item_vitality_potion
-  generatedVisual: {fileID: 799863360546652469}
+  generatedVisual: {fileID: 57620315910191893}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &2472875725233760654
+--- !u!1001 &2991640833757369262
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b5310068b88e9e408918a9db4d787c2, type: 3}
---- !u!1 &799863360546652469 stripped
+--- !u!1 &57620315910191893 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2974843212138899643, guid: 4b5310068b88e9e408918a9db4d787c2, type: 3}
-  m_PrefabInstance: {fileID: 2472875725233760654}
+  m_PrefabInstance: {fileID: 2991640833757369262}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &5227361214458472791 stripped
+--- !u!4 &4854400418595492727 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7699530331397619929, guid: 4b5310068b88e9e408918a9db4d787c2, type: 3}
-  m_PrefabInstance: {fileID: 2472875725233760654}
+  m_PrefabInstance: {fileID: 2991640833757369262}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

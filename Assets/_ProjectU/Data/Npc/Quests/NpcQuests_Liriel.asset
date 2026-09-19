@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4bf3c4498412d4d8c95a03bab470e9, type: 3}
+  m_Name: NpcQuests_Liriel
+  m_EditorClassIdentifier: Assembly-CSharp::NpcQuestBook
+  groupId: quest_liriel
+  ownerId: char_liriel
+  quests:
+  - questId: quest_liriel_berry
+    title: "\uC694\uC815 \uAC04\uC2DD"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 3a8ea9dc329d35c4b8b4c84410a7f15d, type: 2}
+      amount: 6
+    rewardCoins: 25
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uC5F4\uB9E4 \uC5EC\uC12F \uAC1C \uC904 \uAC70\uC9C0! \uC694\uC815
+      \uCE5C\uAD6C\uB4E4\uC774\uB791 \uB098\uB220 \uBA39\uC744 \uAC70\uC57C!"
+    thanksLine: "\uC640! \uC232\uC774 \uBC18\uC9DD\uBC18\uC9DD\uD574\uC84C\uC5B4!
+      \uACE0\uB9C8\uC6CC!"
+    requiredEventId: 
+  - questId: quest_liriel_apple
+    title: "\uC0AC\uACFC\uAF43 \uCD95\uC81C \uC900\uBE44"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: eef1b375027259b42834d2262ce9dd96, type: 2}
+      amount: 4
+    rewardCoins: 25
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uC0AC\uACFC \uB124 \uAC1C! \uCD95\uC81C \uB54C \uB098\uBB34 \uC704\uC5D0
+      \uC62C\uB824 \uB458 \uAC70\uC57C!"
+    thanksLine: "\uC644\uBCBD\uD574! \uC774\uBC88 \uCD95\uC81C\uB294 \uCD5C\uACE0\uAC00
+      \uB420 \uAC70\uC57C!"
+    requiredEventId: 
+  - questId: quest_liriel_strawberry
+    title: "\uB538\uAE30 \uC694\uC815 \uBAA8\uC790"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 95ca44aa8a27d41448c511db6fa0a55c, type: 2}
+      amount: 4
+    rewardCoins: 36
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 0000000001000000
+    requiredStage: 0
+    requestLine: "\uB538\uAE30 \uB124 \uAC1C! \uAF2D\uC9C0\uB85C \uC694\uC815 \uBAA8\uC790\uB97C
+      \uB9CC\uB4E4 \uAC70\uC57C!"
+    thanksLine: "\uBD10! \uB538\uAE30 \uBAA8\uC790 \uC798 \uC5B4\uC6B8\uB9AC\uC9C0!"
+    requiredEventId: 
+  - questId: quest_liriel_special
+    title: "\uBE5B\uC758 \uC815\uC6D0 \uB418\uC0B4\uB9AC\uAE30"
+    kind: 1
+    requirements:
+    - item: {fileID: 11400000, guid: aaca232007164504cbd41b9a9b8cbefb, type: 2}
+      amount: 6
+    - item: {fileID: 11400000, guid: 233c5c7467d9daa41bab4b59439b9465, type: 2}
+      amount: 4
+    rewardCoins: 110
+    rewardAffinity: 10
+    rewardItem: {fileID: 11400000, guid: 9139b198cba79454cbbb676d851141c5, type: 2}
+    rewardItemAmount: 6
+    days: 5
+    seasons: 
+    requiredStage: 2
+    requestLine: "\uC0AC\uB77C\uC9C4 \uBE5B\uC758 \uC815\uC6D0\uC744 \uB418\uC0B4\uB9B4
+      \uAC70\uC57C! \uB538\uAE30 \uC528\uC557 \uC5EC\uC12F \uAC1C\uB791 \uAE68\uB057\uD55C
+      \uBB3C \uB124 \uBCD1\uC774 \uD544\uC694\uD574!"
+    thanksLine: "\uBE5B\uC774 \uB3CC\uC544\uC654\uC5B4! \uB108 \uB355\uBD84\uC774\uC57C!
+      \uC774 \uC528\uC557\uC740 \uACA8\uC6B8\uC5D0\uB3C4 \uC790\uB77C\uB294 \uAC70\uC57C!"
+    requiredEventId: event_liriel_trust

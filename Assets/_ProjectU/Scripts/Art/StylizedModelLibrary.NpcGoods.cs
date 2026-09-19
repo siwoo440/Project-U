@@ -13,6 +13,11 @@ public static partial class StylizedModelLibrary
         Register("item_antidote", FitMode.UniformLargest, BuildAntidote);
         Register("item_scrap_parts", FitMode.UniformLargest, BuildScrapParts);
         Register("item_desert_salve", FitMode.UniformLargest, BuildDesertSalve);
+        // 104일차: 3차 NPC (마리엘 · 알리우네)
+        Register("item_pearl", FitMode.UniformLargest, BuildPearl);
+        Register("item_seaweed_salad", FitMode.UniformLargest, BuildSeaweedSalad);
+        Register("item_grilled_clams", FitMode.UniformLargest, BuildGrilledClams);
+        Register("item_flower_balm", FitMode.UniformLargest, BuildFlowerBalm);
     }
 
     // 벨라모르타 : 둥근 플라스크 (붉은 물약 · 금 고리 · 코르크)
@@ -116,5 +121,77 @@ public static partial class StylizedModelLibrary
         b.AddFrustum(StylizedColor.Sandstone, Vector3.zero, 0.135f, 0.135f, 0.03f, 12);
         b.AddLowPolySphere(StylizedColor.ScorpionShell, new Vector3(0f, 0.035f, 0f), new Vector3(0.05f, 0.01f, 0.03f), 0, 0f, 10242);
         b.Pop();
+    }
+
+    // 마리엘 : 벌어진 조개껍데기 속 진주
+    private static void BuildPearl(LowPolyMeshBuilder b)
+    {
+        b.AddLowPolySphere(StylizedColor.Sand, new Vector3(0f, 0.04f, 0f), new Vector3(0.2f, 0.05f, 0.17f), 1, 0.05f, 10401);
+        b.Push(new Vector3(0f, 0.07f, -0.12f), Euler(-50f, 0f, 0f), Vector3.one);
+        b.AddLowPolySphere(StylizedColor.Sand, new Vector3(0f, 0f, 0.12f), new Vector3(0.2f, 0.04f, 0.16f), 1, 0.05f, 10402);
+        b.Pop();
+
+        for (int rib = -2; rib <= 2; rib++)
+        {
+            b.AddLimb(StylizedColor.Caramel, new Vector3(rib * 0.06f, 0.085f, 0.13f), new Vector3(rib * 0.02f, 0.085f, -0.1f), 0.008f, 0.006f, 3);
+        }
+
+        b.AddLowPolySphere(StylizedColor.White, new Vector3(0f, 0.12f, 0.02f), Vector3.one * 0.075f, 2, 0f, 10403);
+        b.AddLowPolySphere(StylizedColor.Flower, new Vector3(0.025f, 0.16f, 0.05f), Vector3.one * 0.02f, 0, 0f, 10404);
+    }
+
+    // 마리엘 : 해초 샐러드 (나무 그릇 · 초록 해초 · 깨)
+    private static void BuildSeaweedSalad(LowPolyMeshBuilder b)
+    {
+        b.AddFrustum(StylizedColor.WoodLight, Vector3.zero, 0.12f, 0.2f, 0.12f, 12, true, false);
+        b.AddDisc(StylizedColor.WoodDark, new Vector3(0f, 0.1f, 0f), 0.19f, 12);
+
+        for (int index = 0; index < 7; index++)
+        {
+            float angle = index * 51f * Mathf.Deg2Rad;
+            Vector3 center = new Vector3(Mathf.Cos(angle) * 0.08f, 0.14f, Mathf.Sin(angle) * 0.08f);
+            b.Push(center, Euler(20f, index * 51f, 10f), Vector3.one);
+            b.AddLowPolySphere(index % 3 == 0 ? StylizedColor.LeafDark : StylizedColor.CropGreen, Vector3.zero, new Vector3(0.09f, 0.03f, 0.035f), 1, 0.15f, 10410 + index);
+            b.Pop();
+        }
+
+        b.AddLowPolySphere(StylizedColor.LeafLight, new Vector3(0f, 0.17f, 0f), new Vector3(0.06f, 0.03f, 0.06f), 1, 0.15f, 10418);
+        b.AddLowPolySphere(StylizedColor.White, new Vector3(0.03f, 0.19f, 0.02f), Vector3.one * 0.01f, 0, 0f, 10419);
+        b.AddLowPolySphere(StylizedColor.White, new Vector3(-0.04f, 0.185f, -0.01f), Vector3.one * 0.01f, 0, 0f, 10420);
+    }
+
+    // 마리엘 : 조개구이 (접시 위 벌어진 조개 세 개 · 김)
+    private static void BuildGrilledClams(LowPolyMeshBuilder b)
+    {
+        AddPlate(b, 0.3f, StylizedColor.StoneLight);
+
+        for (int index = 0; index < 3; index++)
+        {
+            float angle = (index * 120f + 30f) * Mathf.Deg2Rad;
+            Vector3 center = new Vector3(Mathf.Cos(angle) * 0.12f, 0.05f, Mathf.Sin(angle) * 0.12f);
+            b.AddLowPolySphere(StylizedColor.Charred, center, new Vector3(0.08f, 0.025f, 0.07f), 1, 0.08f, 10430 + index * 2);
+            b.AddLowPolySphere(StylizedColor.Butter, center + new Vector3(0f, 0.025f, 0f), new Vector3(0.05f, 0.02f, 0.045f), 1, 0f, 10431 + index * 2);
+        }
+
+        b.AddLowPolySphere(StylizedColor.Herb, new Vector3(0f, 0.07f, 0f), new Vector3(0.03f, 0.008f, 0.02f), 0, 0f, 10440);
+        AddSteam(b, new Vector3(0f, 0.12f, 0f), 10441);
+    }
+
+    // 알리우네 : 꽃잎 연고 (낮은 유리 병 · 분홍 연고 · 꽃잎 뚜껑)
+    private static void BuildFlowerBalm(LowPolyMeshBuilder b)
+    {
+        b.AddFrustum(StylizedColor.Glass, Vector3.zero, 0.12f, 0.12f, 0.12f, 10, true, false);
+        b.AddFrustum(StylizedColor.Flower, new Vector3(0f, 0.01f, 0f), 0.11f, 0.11f, 0.09f, 10);
+        b.AddFrustum(StylizedColor.WoodLight, new Vector3(0f, 0.12f, 0f), 0.125f, 0.12f, 0.035f, 10);
+
+        for (int petal = 0; petal < 5; petal++)
+        {
+            b.Push(new Vector3(0f, 0.16f, 0f), Euler(0f, petal * 72f, 0f), Vector3.one);
+            b.AddLowPolySphere(petal % 2 == 0 ? StylizedColor.Flower : StylizedColor.White, new Vector3(0f, 0f, 0.045f), new Vector3(0.03f, 0.012f, 0.05f), 0, 0f, 10450 + petal);
+            b.Pop();
+        }
+
+        b.AddLowPolySphere(StylizedColor.FlowerYellow, new Vector3(0f, 0.17f, 0f), Vector3.one * 0.025f, 0, 0f, 10456);
+        b.AddLimb(StylizedColor.Leaf, new Vector3(0.1f, 0.13f, 0f), new Vector3(0.17f, 0.2f, 0.03f), 0.01f, 0.006f, 4);
     }
 }

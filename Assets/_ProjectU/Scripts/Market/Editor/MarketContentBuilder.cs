@@ -61,7 +61,12 @@ public static class MarketContentBuilder
         ("food_inari_sushi", 14, MarketGoodsType.Cooked),
         ("medicine_antidote", 16, MarketGoodsType.Supply),
         ("item_scrap_parts", 6, MarketGoodsType.Material),
-        ("medicine_desert_salve", 22, MarketGoodsType.Supply)
+        ("medicine_desert_salve", 22, MarketGoodsType.Supply),
+        // 104일차: 3차 NPC (마리엘 가게 · 알리우네 제작)
+        ("item_pearl", 30, MarketGoodsType.Material),
+        ("food_seaweed_salad", 12, MarketGoodsType.Cooked),
+        ("food_grilled_clams", 16, MarketGoodsType.Cooked),
+        ("medicine_flower_balm", 14, MarketGoodsType.Supply)
     };
 
     // 물고기 : 기본 14 × 희귀도 배율 × (1 + 난이도 × 0.5)

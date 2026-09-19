@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4bf3c4498412d4d8c95a03bab470e9, type: 3}
+  m_Name: NpcQuests_Marielle
+  m_EditorClassIdentifier: Assembly-CSharp::NpcQuestBook
+  groupId: quest_marielle
+  ownerId: char_marielle
+  quests:
+  - questId: quest_marielle_water
+    title: "\uD574\uCD08 \uC53B\uC744 \uBB3C"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 233c5c7467d9daa41bab4b59439b9465, type: 2}
+      amount: 3
+    rewardCoins: 14
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uC74C~ \uD574\uCD08\uB97C \uC53B\uC744 \uB9D1\uC740 \uBB3C\uC774
+      \uC138 \uBCD1 \uD544\uC694\uD574\uC694."
+    thanksLine: "\uACE0\uB9C8\uC6CC\uC694~ \uC624\uB298 \uD574\uCD08\uB294 \uB354
+      \uBC18\uC9DD\uC774\uACA0\uC5B4\uC694."
+    requiredEventId: 
+  - questId: quest_marielle_crucian
+    title: "\uC0B0\uD638 \uCE5C\uAD6C\uC758 \uC800\uB141"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: bad80e6a70bf78a4a81937454f7a8f95, type: 2}
+      amount: 2
+    rewardCoins: 45
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 000000000100000002000000
+    requiredStage: 0
+    requestLine: "\uBD95\uC5B4 \uB450 \uB9C8\uB9AC\u2026 \uBC14\uB2E4 \uCE5C\uAD6C\uB4E4\uC774
+      \uAD81\uAE08\uD574\uD574\uC694. \uBBFC\uBB3C \uBB3C\uACE0\uAE30\uB294 \uCC98\uC74C
+      \uBCF8\uB300\uC694."
+    thanksLine: "\uC74C~ \uBAA8\uB450 \uC2E0\uAE30\uD574\uD574\uC694. \uACE0\uB9C8\uC6CC\uC694."
+    requiredEventId: 
+  - questId: quest_marielle_smelt
+    title: "\uACA8\uC6B8 \uBC14\uB2E4 \uC120\uBB3C"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 83e8c92974737c246a6f55d31325f68b, type: 2}
+      amount: 2
+    rewardCoins: 50
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 03000000
+    requiredStage: 0
+    requestLine: "\uACA8\uC6B8\uC5D4 \uBC14\uB2E4\uAC00 \uC870\uC6A9\uD574\uC694.
+      \uBE59\uC5B4 \uB450 \uB9C8\uB9AC\uB85C \uCE5C\uAD6C\uB4E4\uD55C\uD14C \uD3B8\uC9C0\uB97C
+      \uBCF4\uB0B4\uACE0 \uC2F6\uC5B4\uC694."
+    thanksLine: "\uC74C~ \uCC28\uAC00\uC6B4 \uC740\uBE5B\uC774\uB124\uC694. \uC88B\uC740
+      \uD3B8\uC9C0\uAC00 \uB418\uACA0\uC5B4\uC694."
+    requiredEventId: 
+  - questId: quest_marielle_special
+    title: "\uC0C8 \uC0B0\uD638 \uB9C8\uC744"
+    kind: 1
+    requirements:
+    - item: {fileID: 11400000, guid: 479a7e7a5dbb8df4a9ea663d4e582a1b, type: 2}
+      amount: 20
+    - item: {fileID: 11400000, guid: eee016df450094545b4a90688d3bce9b, type: 2}
+      amount: 1
+    rewardCoins: 120
+    rewardAffinity: 10
+    rewardItem: {fileID: 11400000, guid: 2f1df630320255844a0117b89edfaaae, type: 2}
+    rewardItemAmount: 2
+    days: 5
+    seasons: 0000000002000000
+    requiredStage: 2
+    requestLine: "\uC774 \uC12C\uC5D0 \uC791\uC740 \uC0B0\uD638 \uB9C8\uC744\uC744
+      \uB9CC\uB4E4\uACE0 \uC2F6\uC5B4\uC694. \uBC1B\uCE68\uB3CC \uC2A4\uBB34 \uAC1C\uB791\u2026
+      \uCCAB \uC190\uB2D8\uC774 \uB420 \uC1A1\uC5B4 \uD55C \uB9C8\uB9AC."
+    thanksLine: "\uB9C8\uC744\uC774 \uC0DD\uACBC\uC5B4\uC694. \uB2F9\uC2E0 \uC774\uB984\uC744
+      \uCCAB \uBC88\uC9F8 \uB3CC\uC5D0 \uC0C8\uACBC\uC5B4\uC694. \uC774 \uC9C4\uC8FC\uB3C4
+      \uBC1B\uC544 \uC918\uC694."
+    requiredEventId: event_marielle_trust

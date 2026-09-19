@@ -3,7 +3,7 @@ using System.Collections.Generic; // 목록
 using UnityEngine; // Unity 기본 기능
 
 [CreateAssetMenu(fileName = "NpcCraftBook_New", menuName = "Project U/NPC/Craft Book")] // NPC 제작 주문서 생성 메뉴
-public sealed class NpcCraftBook : ScriptableObject // 102일차: NPC 제작 주문서 (재료를 가져가면 수수료를 받고 물건을 만들어 줌)
+public sealed class NpcCraftBook : ScriptableObject, INpcWorkplace // 102일차: NPC 제작 주문서 (재료를 가져가면 수수료를 받고 물건을 만들어 줌) / 104일차: 상점 없는 제작 NPC의 작업 장소
 {
     [Serializable]
     public sealed class Ingredient // 재료 한 종류
@@ -63,16 +63,36 @@ public sealed class NpcCraftBook : ScriptableObject // 102일차: NPC 제작 주
     [SerializeField] private string craftLine = string.Empty; // 인사
     [SerializeField] private List<Order> orders = new List<Order>(); // 주문 목록
 
+    [Header("Station")] // 104일차: 상점 없는 제작 NPC (상점이 있으면 상점 영업을 따름)
+    [Tooltip("제작 창 제목 (상점 없는 제작 NPC).")]
+    [SerializeField] private string stationName = string.Empty; // 작업장 이름
+    [Tooltip("주인이 일정상 이 위치에 있을 때 주문을 받습니다 (상점 없는 제작 NPC).")]
+    [SerializeField] private string[] openLocationIds = new string[0]; // 작업 위치
+    [Tooltip("작업 시간이 끝나 창이 닫힐 때 말풍선.")]
+    [SerializeField] private string farewell = string.Empty; // 마감 인사
+
     public string OwnerId => ownerId; // 주인 제공
     public string CraftLine => craftLine; // 인사 제공
     public IReadOnlyList<Order> Orders => orders; // 주문 제공
+    public string StationName => stationName; // 작업장 이름 제공
+    public IReadOnlyList<string> OpenLocationIds => openLocationIds; // 작업 위치 제공
+    public string Farewell => farewell; // 마감 인사 제공
+    public bool HasStation => !string.IsNullOrEmpty(stationName) && openLocationIds != null && openLocationIds.Length > 0; // 상점 없이 주문을 받는지
+
+    public bool IsOpenLocation(string locationId) // 작업 위치 여부
+    {
+        return !string.IsNullOrEmpty(locationId) && openLocationIds != null && Array.IndexOf(openLocationIds, locationId) >= 0;
+    }
 
 #if UNITY_EDITOR
-    public void EditorAssign(string owner, string line, List<Order> entries) // 생성 도구 전용
+    public void EditorAssign(string owner, string line, List<Order> entries, string station = "", string[] locations = null, string closing = "") // 생성 도구 전용
     {
         ownerId = owner;
         craftLine = line ?? string.Empty;
         orders = entries ?? new List<Order>();
+        stationName = station ?? string.Empty;
+        openLocationIds = locations ?? new string[0];
+        farewell = closing ?? string.Empty;
     }
 #endif
 }

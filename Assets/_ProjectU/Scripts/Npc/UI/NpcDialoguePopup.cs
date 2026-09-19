@@ -366,6 +366,25 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
 
         NpcShopManager shops = NpcShopManager.Instance;
 
+        if (shops != null && !shops.TryGetShop(agent.Character, out _) && shops.TryGetCraftStation(agent.Character, out NpcCraftBook station)) // 104일차: 상점 없는 제작 NPC
+        {
+            NpcShopStatus craftStatus = shops.GetStatus(station, agent);
+
+            if (!craftStatus.IsOpen)
+            {
+                FinishTyping();
+                ShowMessage($"{craftStatus.Reason}\n오늘 제작 : {craftStatus.TodayHours}", ProjectUUIPalette.TextSecondary);
+                return;
+            }
+
+            if (manager == null || !manager.OpenNpcCraft(agent))
+            {
+                ShowMessage("제작 창을 열 수 없어요. Build Content > 20번 메뉴를 실행하세요.", ProjectUUIPalette.Danger);
+            }
+
+            return;
+        }
+
         if (shops != null && shops.TryGetShop(agent.Character, out NpcShopData shop))
         {
             NpcShopStatus status = shops.GetStatus(shop, agent);
@@ -481,9 +500,11 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
         {
             NpcShopManager shops = NpcShopManager.Instance;
             NpcShopData shop = null;
+            NpcCraftBook station = null;
             bool hasShop = shops != null && shops.TryGetShop(character, out shop);
-            bool open = hasShop ? shops.GetStatus(shop, agent).IsOpen : npcManager.GetStallFor(agent) != null;
-            tradeButton.gameObject.SetActive(hasShop || open); // 92일차: 상점 주인은 영업 시간이 아니어도 버튼을 보여 주고 이유를 안내
+            bool hasStation = !hasShop && shops != null && shops.TryGetCraftStation(character, out station); // 104일차: 상점 없는 제작 NPC
+            bool open = hasShop ? shops.GetStatus(shop, agent).IsOpen : hasStation ? shops.GetStatus(station, agent).IsOpen : npcManager.GetStallFor(agent) != null;
+            tradeButton.gameObject.SetActive(hasShop || hasStation || open); // 92일차: 상점 주인은 영업 시간이 아니어도 버튼을 보여 주고 이유를 안내
 
             if (tradeLabel == null)
             {
@@ -492,7 +513,8 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
 
             if (tradeLabel != null)
             {
-                tradeLabel.text = open ? "거래" : "거래 (닫힘)";
+                string label = hasStation ? "제작" : "거래"; // 104일차: 제작만 하는 NPC
+                tradeLabel.text = open ? label : $"{label} (닫힘)";
             }
         }
 

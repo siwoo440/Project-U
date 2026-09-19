@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 8448324078811196339}
+  - component: {fileID: 7115255399803181351}
   m_Layer: 3
   m_Name: BakedApplePickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 2930432005313185669}
+  - {fileID: 416586087019549038}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &8448324078811196339
+--- !u!114 &7115255399803181351
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: item_baked_apple
-  generatedVisual: {fileID: 7209468516969493221}
+  generatedVisual: {fileID: 5291681029187134478}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &200067449911468720
+--- !u!1001 &3432929281034695771
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbf7d98804293404c8e2b4f99d5c7789, type: 3}
---- !u!4 &2930432005313185669 stripped
+--- !u!4 &416586087019549038 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3056875597108585781, guid: cbf7d98804293404c8e2b4f99d5c7789, type: 3}
-  m_PrefabInstance: {fileID: 200067449911468720}
+  m_PrefabInstance: {fileID: 3432929281034695771}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7209468516969493221 stripped
+--- !u!1 &5291681029187134478 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7407265946706071637, guid: cbf7d98804293404c8e2b4f99d5c7789, type: 3}
-  m_PrefabInstance: {fileID: 200067449911468720}
+  m_PrefabInstance: {fileID: 3432929281034695771}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

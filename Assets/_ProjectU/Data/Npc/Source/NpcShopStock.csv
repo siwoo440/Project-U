@@ -64,3 +64,8 @@ shop_safira,medicine_desert_salve,40,3,All,1,
 shop_safira,item_herbal_tea,20,4,All,1,
 shop_safira,medicine_bandage,18,3,All,1,
 shop_safira,drink_water_bottle,7,8,All,1,
+shop_marielle,food_seaweed_salad,30,4,All,1,
+shop_marielle,food_grilled_clams,40,3,All,1,
+shop_marielle,resource_worm_bait,3,20,All,1,
+shop_marielle,tool_fishing_rod_basic,70,1,All,1,Curious
+shop_marielle,item_pearl,95,1,All,0.3,Trust

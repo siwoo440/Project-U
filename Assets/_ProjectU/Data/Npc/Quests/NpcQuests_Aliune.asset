@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4bf3c4498412d4d8c95a03bab470e9, type: 3}
+  m_Name: NpcQuests_Aliune
+  m_EditorClassIdentifier: Assembly-CSharp::NpcQuestBook
+  groupId: quest_aliune
+  ownerId: char_aliune
+  quests:
+  - questId: quest_aliune_water
+    title: "\uC0C8\uC2F9\uC758 \uBB3C"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 233c5c7467d9daa41bab4b59439b9465, type: 2}
+      amount: 3
+    rewardCoins: 14
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uC5B4\uB9B0 \uC0C8\uC2F9\uC5D0\uAC8C \uC904 \uAE68\uB057\uD55C
+      \uBB3C\uC774 \uC138 \uBCD1 \uD544\uC694\uD574\uC694."
+    thanksLine: "\uC0C8\uC2F9\uB4E4\uC774 \uACE0\uAC1C\uB97C \uB4E4\uC5C8\uC5B4\uC694.
+      \uACE0\uB9C8\uC6CC\uC694."
+    requiredEventId: 
+  - questId: quest_aliune_seeds
+    title: "\uC0C8 \uC815\uC6D0 \uC528\uC557"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: de7994a6b3b2dcc479cd72a544075a60, type: 2}
+      amount: 4
+    rewardCoins: 18
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 00000000
+    requiredStage: 0
+    requestLine: "\uBD04 \uC815\uC6D0\uC5D0 \uC2EC\uC744 \uAC10\uC790 \uC528\uC557
+      \uB124 \uAC1C\u2026 \uBD80\uD0C1\uD574\uB3C4 \uB420\uAE4C\uC694."
+    thanksLine: "\uC88B\uC740 \uC528\uC557\uC774\uC5D0\uC694. \uD2BC\uD2BC\uD558\uAC8C
+      \uC790\uB784 \uAC70\uC608\uC694."
+    requiredEventId: 
+  - questId: quest_aliune_fiber
+    title: "\uB369\uAD74 \uC9C0\uC9C0\uB300"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: bc991e404803cba4292542d6a52ddd7a, type: 2}
+      amount: 8
+    rewardCoins: 20
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uB369\uAD74\uC774 \uAE30\uB308 \uC9C0\uC9C0\uB300\uB97C \uBB36\uC73C\uB824\uACE0\uC694.
+      \uC12C\uC720 \uC5EC\uB35F \uAC1C\uBA74 \uB3FC\uC694."
+    thanksLine: "\uB369\uAD74\uC774 \uD3B8\uC548\uD574 \uBCF4\uC5EC\uC694. \uACE0\uB9C8\uC6CC\uC694."
+    requiredEventId: 
+  - questId: quest_aliune_special
+    title: "\uC12C\uC758 \uCE58\uC720 \uC815\uC6D0"
+    kind: 1
+    requirements:
+    - item: {fileID: 11400000, guid: b452886093be83d44a997c06ab4f6f18, type: 2}
+      amount: 4
+    - item: {fileID: 11400000, guid: 3a8ea9dc329d35c4b8b4c84410a7f15d, type: 2}
+      amount: 10
+    rewardCoins: 120
+    rewardAffinity: 10
+    rewardItem: {fileID: 11400000, guid: 0687865a489c4354db5fb1baa7331fd0, type: 2}
+    rewardItemAmount: 3
+    days: 5
+    seasons: 
+    requiredStage: 2
+    requestLine: "\uC12C \uC804\uCCB4\uB97C \uCE58\uC720 \uC815\uC6D0\uC73C\uB85C
+      \uB9CC\uB4DC\uB294 \uCCAB\uAC78\uC74C\uC774\uC5D0\uC694. \uD638\uBC15 \uC528\uC557
+      \uB124 \uAC1C\uC640 \uC5F4\uB9E4 \uC5F4 \uAC1C\u2026 \uD568\uAED8 \uC2EC\uC5B4
+      \uC904\uB798\uC694?"
+    thanksLine: "\uCCAB \uC815\uC6D0\uC774 \uC0DD\uACBC\uC5B4\uC694. \uC774 \uAF43\uC78E
+      \uC5F0\uACE0\uB294\u2026 \uB2F9\uC2E0 \uC190\uC744 \uC704\uD574 \uB9CC\uB4E0
+      \uAC70\uC608\uC694."
+    requiredEventId: event_aliune_trust

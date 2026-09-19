@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c705680e20332f5478f3a6911a134984, type: 3}
+  m_Name: NpcEvents_Aliune
+  m_EditorClassIdentifier: Assembly-CSharp::NpcEventBook
+  ownerId: char_aliune
+  events:
+  - eventId: event_aliune_curious
+    title: "\uB2E4\uCE5C \uC0C8\uC2F9"
+    requiredStage: 1
+    locationId: loc_forest_edge
+    fromHour: 9
+    toHour: 13
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC774 \uC0C8\uC2F9, \uB204\uAC00 \uBC1F\uC558\uB098 \uBD10\uC694. \uADF8\uB798\uB3C4
+        \uBFCC\uB9AC\uB294 \uC0B4\uC544 \uC788\uC5B4\uC694."
+    - fromPlayer: 0
+      text: "\uC190\uC744 \uB300 \uC8FC\uC138\uC694. \uB530\uB73B\uD55C \uC190\uC740\u2026
+        \uC2DD\uBB3C\uB3C4 \uC54C\uC544\uC694."
+    choices:
+    - label: "\uC870\uC2EC\uD788 \uAC10\uC2F8 \uC904\uAC8C."
+      reply: "\u2026\uBCF4\uC138\uC694, \uC78E\uC774 \uD3B4\uC84C\uC5B4\uC694. \uB2F9\uC2E0
+        \uC190\uC774 \uB530\uB73B\uD574\uC11C\uC608\uC694."
+      affinity: 5
+    - label: "\uB0B4\uAC00 \uBC1F\uC740 \uAC70 \uC544\uB2C8\uC57C!"
+      reply: "\uD6C4\uD6C4, \uC54C\uC544\uC694. \uADF8\uB798\uB3C4 \uAC19\uC774 \uB3CC\uBD10
+        \uC918\uC11C \uACE0\uB9C8\uC6CC\uC694."
+      affinity: 3
+    afterLines:
+    - fromPlayer: 0
+      text: "\uB0B4\uC77C \uC774 \uC0C8\uC2F9, \uD55C \uBF18 \uC790\uB77C \uC788\uC744
+        \uAC70\uC608\uC694."
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_aliune_trust
+    title: "\uD0C0 \uBC84\uB9B0 \uC815\uC6D0"
+    requiredStage: 2
+    locationId: loc_farm_fields
+    fromHour: 13
+    toHour: 16
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC608\uC804 \uC815\uC6D0\uC774 \uBD88\uC5D0 \uD0D4\uC744 \uB54C\u2026
+        \uC81C \uBFCC\uB9AC \uB05D\uB3C4 \uAC19\uC774 \uD0D4\uC5B4\uC694."
+    - fromPlayer: 0
+      text: "\uADF8\uB798\uC11C \uBD88 \uB0C4\uC0C8\uB9CC \uB098\uBA74 \uC78E\uC774
+        \uC624\uADF8\uB77C\uB4E4\uC5B4\uC694. \uC774\uC0C1\uD558\uC8E0."
+    choices:
+    - label: "\uC774 \uC12C\uC5D0\uC120 \uB0B4\uAC00 \uC9C0\uCF1C \uC904\uAC8C."
+      reply: "\u2026\uC9C0\uCF1C \uC900\uB2E4\uB294 \uB9D0, \uBFCC\uB9AC\uAE4C\uC9C0
+        \uB2FF\uC558\uC5B4\uC694."
+      affinity: 8
+    - label: "\uC0C8 \uC815\uC6D0\uC744 \uAC19\uC774 \uB9CC\uB4E4\uC790."
+      reply: "\uAC19\uC774\uB77C\uBA74\u2026 \uB2E4\uC2DC \uC2DC\uC791\uD560 \uC218
+        \uC788\uC744 \uAC83 \uAC19\uC544\uC694."
+      affinity: 5
+    afterLines:
+    - fromPlayer: 0
+      text: "\uC624\uB298\uC740 \uBC2D \uD759\uC774 \uC720\uB09C\uD788 \uD3EC\uADFC\uD574\uC694."
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_aliune_affection
+    title: "\uB2F9\uC2E0 \uC774\uB984\uC758 \uAF43"
+    requiredStage: 3
+    locationId: loc_forest_flower_garden
+    fromHour: 6
+    toHour: 9
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC0C8 \uAF43\uC744 \uD53C\uC6E0\uC5B4\uC694. \uC774\uB984\uC740\u2026
+        \uB2F9\uC2E0 \uC774\uB984\uC73C\uB85C \uC9C0\uC5C8\uC5B4\uC694."
+    - fromPlayer: 0
+      text: "\uC81C \uC815\uC6D0\uC5D0\uC11C \uAC00\uC7A5 \uBA3C\uC800 \uD53C\uB294
+        \uAF43\uC774 \uB420 \uAC70\uC608\uC694. \u2026\uC2EB\uC9C0 \uC54A\uC8E0?"
+    choices:
+    - label: "\uC815\uB9D0 \uAE30\uBED0."
+      reply: "\u2026\uB2E4\uD589\uC774\uC5D0\uC694. \uADF8 \uAF43, \uB9E4\uC77C \uC81C\uC77C
+        \uBA3C\uC800 \uBB3C\uC744 \uC904\uAC8C\uC694."
+      affinity: 10
+    - label: "\uB124 \uC774\uB984 \uAF43\uB3C4 \uB9CC\uB4E4\uC790."
+      reply: "\uADF8\uB7FC \uB450 \uAF43\uC744 \uB098\uB780\uD788 \uC2EC\uC5B4\uC694.
+        \uC624\uB798\uC624\uB798."
+      affinity: 8
+    afterLines:
+    - fromPlayer: 0
+      text: "\uAF43\uC78E \uC5F0\uACE0\uC608\uC694. \uB2E4\uCE58\uC9C0 \uB9D0\uB77C\uACE0\u2026
+        \uB9E4\uC77C \uBE4C\uBA74\uC11C \uB9CC\uB4E4\uC5C8\uC5B4\uC694."
+    rewardItem: {fileID: 11400000, guid: 0687865a489c4354db5fb1baa7331fd0, type: 2}
+    rewardItemAmount: 2

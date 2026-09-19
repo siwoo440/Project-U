@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4bf3c4498412d4d8c95a03bab470e9, type: 3}
+  m_Name: NpcQuests_Neri
+  m_EditorClassIdentifier: Assembly-CSharp::NpcQuestBook
+  groupId: quest_neri
+  ownerId: char_neri
+  quests:
+  - questId: quest_neri_bait
+    title: "\uBC8C\uB808 \uAC04\uC2DD"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: f82cfee3161243747ad3a92e8c7418ba, type: 2}
+      amount: 6
+    rewardCoins: 10
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uAC1C\uAD74! \uC9C0\uB801\uC774 \uC5EC\uC12F \uB9C8\uB9AC! \uAD00\uCE21\uD558\uB2E4
+      \uBCF4\uBA74 \uBC30\uACE0\uD30C!"
+    thanksLine: "\uB0E0! \uC774\uC81C \uD558\uB8E8 \uC885\uC77C \uAD00\uCE21\uD560
+      \uC218 \uC788\uC5B4!"
+    requiredEventId: 
+  - questId: quest_neri_water
+    title: "\uBE57\uBB3C \uB300\uC2E0"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 233c5c7467d9daa41bab4b59439b9465, type: 2}
+      amount: 4
+    rewardCoins: 18
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uBE44\uAC00 \uC548 \uC640\uC11C \uD53C\uBD80\uAC00 \uB9D0\uB77C!
+      \uBB3C \uB124 \uBCD1\uB9CC! \uAC1C\uAD74!"
+    thanksLine: "\uCD09\uCD09\uD574! \uC0B4\uC558\uB2E4! \uAC1C\uAD74\uAC1C\uAD74!"
+    requiredEventId: 
+  - questId: quest_neri_smelt
+    title: "\uACA8\uC6B8\uC7A0 \uB3C4\uC2DC\uB77D"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 83e8c92974737c246a6f55d31325f68b, type: 2}
+      amount: 2
+    rewardCoins: 45
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 03000000
+    requiredStage: 0
+    requestLine: "\uACA8\uC6B8\uC7A0 \uC790\uAE30 \uC804\uC5D0 \uBE59\uC5B4 \uB450
+      \uB9C8\uB9AC \uBA39\uACE0 \uC2F6\uC5B4\u2026 \uAC1C\uAD74\u2026"
+    thanksLine: "\uB4E0\uB4E0\uD574! \uC774\uC81C \uD479 \uC798 \uC218 \uC788\uC5B4\u2026
+      \uAC1C\uAD74\u2026"
+    requiredEventId: 
+  - questId: quest_neri_special
+    title: "\uC2B5\uC9C0 \uB418\uC0B4\uB9AC\uAE30"
+    kind: 1
+    requirements:
+    - item: {fileID: 11400000, guid: 233c5c7467d9daa41bab4b59439b9465, type: 2}
+      amount: 10
+    - item: {fileID: 11400000, guid: bc991e404803cba4292542d6a52ddd7a, type: 2}
+      amount: 10
+    rewardCoins: 110
+    rewardAffinity: 10
+    rewardItem: {fileID: 11400000, guid: f82cfee3161243747ad3a92e8c7418ba, type: 2}
+    rewardItemAmount: 20
+    days: 5
+    seasons: 
+    requiredStage: 2
+    requestLine: "\uB9D0\uB77C \uAC00\uB294 \uC6C5\uB369\uC774\uB97C \uC0B4\uB9AC\uACE0
+      \uC2F6\uC5B4! \uBB3C \uC5F4 \uBCD1\uC774\uB791 \uBB3C\uAC00 \uD480\uC744 \uC2EC\uC744
+      \uC12C\uC720 \uC5F4 \uAC1C! \uAC19\uC774 \uD558\uC790, \uAC1C\uAD74!"
+    thanksLine: "\uC6C5\uB369\uC774\uAC00 \uC0B4\uC544\uB0AC\uC5B4! \uAC00\uC871\uB4E4\uC774
+      \uB3CC\uC544\uC62C\uC9C0\uB3C4 \uBAB0\uB77C! \uC774\uAC74 \uB0B4 \uBCF4\uBB3C
+      \uC9C0\uB801\uC774\uC57C!"
+    requiredEventId: event_neri_trust

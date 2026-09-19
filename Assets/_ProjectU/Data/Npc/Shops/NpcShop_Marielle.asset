@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 862bff83c5e89624b8b5daae52fdb7f1, type: 3}
+  m_Name: NpcShop_Marielle
+  m_EditorClassIdentifier: Assembly-CSharp::NpcShopData
+  shopId: shop_marielle
+  ownerId: char_marielle
+  shopName: "\uD30C\uB3C4 \uC18C\uB9AC \uAC00\uAC8C"
+  openLocationIds:
+  - loc_coast_rocks
+  - loc_pond_dock
+  stock:
+  - item: {fileID: 11400000, guid: bd2cc3c8964779742a9d528556969a3a, type: 2}
+    price: 30
+    dailyStock: 4
+    seasons: 
+    dailyChance: 1
+    requiredStage: 0
+  - item: {fileID: 11400000, guid: 9fef98d8cab0d6248a06e90e944f331c, type: 2}
+    price: 40
+    dailyStock: 3
+    seasons: 
+    dailyChance: 1
+    requiredStage: 0
+  - item: {fileID: 11400000, guid: f82cfee3161243747ad3a92e8c7418ba, type: 2}
+    price: 3
+    dailyStock: 20
+    seasons: 
+    dailyChance: 1
+    requiredStage: 0
+  - item: {fileID: 11400000, guid: 28689924401732340b18d9b6429728b1, type: 2}
+    price: 70
+    dailyStock: 1
+    seasons: 
+    dailyChance: 1
+    requiredStage: 1
+  - item: {fileID: 11400000, guid: 2f1df630320255844a0117b89edfaaae, type: 2}
+    price: 95
+    dailyStock: 1
+    seasons: 
+    dailyChance: 0.3
+    requiredStage: 2
+  stockSeed: 3501
+  discountByStage: 0000000000000000050000000a0000000f000000
+  buyRules:
+  - item: {fileID: 0}
+    anyGoods: 0
+    goodsType: 2
+    multiplier: 1.2
+  - item: {fileID: 11400000, guid: 2f1df630320255844a0117b89edfaaae, type: 2}
+    anyGoods: 0
+    goodsType: 0
+    multiplier: 1
+  dailyBuyLimit: 20
+  greetings:
+  - "\uC74C~ \uD760~ \uC5B4\uC11C \uC640\uC694. \uC624\uB298 \uBC14\uB2E4\uC5D0\uC11C
+    \uAC74\uC9C4 \uAC83\uB4E4\uC774\uC5D0\uC694."
+  - "\uBB3C\uACE0\uAE30\uB97C \uAC00\uC838\uC624\uBA74 \uC88B\uC740 \uAC12\uC5D0
+    \uBC1B\uC544 \uC904\uAC8C\uC694. \uBC14\uB2E4 \uCE5C\uAD6C\uB4E4\uC774\uB2C8\uAE4C."
+  - "\uC9C4\uC8FC\uB294 \uAC00\uB054\uB9CC \uB098\uC640\uC694\u2026 \uBC14\uB2E4\uAC00
+    \uAE30\uBD84 \uC88B\uC740 \uB0A0\uC5D0\uB9CC\uC694."
+  farewell: "\uC74C~ \uBB3C\uB54C\uAC00 \uBC14\uB00C\uC5C8\uC5B4\uC694. \uB0B4\uC77C
+    \uB610 \uC640\uC694."
