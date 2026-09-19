@@ -654,7 +654,7 @@ public static class BalanceReport
                 row.Max[stage] = int.MinValue;
             }
 
-            foreach (NpcCharacterData character in database.GetAlphaCast())
+            foreach (NpcCharacterData character in database.GetStoryCast())
             {
                 NpcEventBook book = events.FirstOrDefault(candidate => candidate.OwnerId == character.CharacterId);
                 int[] days = Simulate(database, character, gift, useEvents ? book : null);

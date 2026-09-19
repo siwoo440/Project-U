@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4bf3c4498412d4d8c95a03bab470e9, type: 3}
+  m_Name: NpcQuests_Bellamorta
+  m_EditorClassIdentifier: Assembly-CSharp::NpcQuestBook
+  groupId: quest_bellamorta
+  ownerId: char_bellamorta
+  quests:
+  - questId: quest_bellamorta_mushroom
+    title: "\uB2EC\uC774\uAE30 \uC88B\uC740 \uBC84\uC12F"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: ce6c806808c6dfb4ca5fb2217dce497c, type: 2}
+      amount: 5
+    rewardCoins: 45
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uC232 \uBC84\uC12F \uB2E4\uC12F \uAC1C. \uD5A5\uC774 \uC9D9\uC740
+      \uAC78\uB85C\uC694. \u2026\uC5B4\uB5A4 \uAC78 \uACE8\uB77C \uC62C\uC9C0 \uAD81\uAE08\uD558\uB124\uC694."
+    thanksLine: "\uC5ED\uC2DC. \uC88B\uC740 \uAC78 \uACE0\uB974\uB294 \uB208\uC774
+      \uC788\uC5C8\uAD70\uC694."
+    requiredEventId: 
+  - questId: quest_bellamorta_crucian
+    title: "\uBE44\uB298 \uAC00\uB8E8 \uC7AC\uB8CC"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: bad80e6a70bf78a4a81937454f7a8f95, type: 2}
+      amount: 2
+    rewardCoins: 50
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 000000000100000002000000
+    requiredStage: 0
+    requestLine: "\uBD95\uC5B4 \uBE44\uB298\uB85C \uBC18\uC9DD\uC774\uB294 \uAC00\uB8E8\uB97C
+      \uB9CC\uB4E4 \uAC70\uC608\uC694. \uB450 \uB9C8\uB9AC\uBA74 \uCDA9\uBD84\uD574\uC694."
+    thanksLine: "\uBE44\uB298\uC774 \uACF1\uB124\uC694. \uC624\uB298 \uBC24 \uC57D\uC774
+      \uC608\uC058\uAC8C \uBE5B\uB098\uACA0\uC5B4\uC694."
+    requiredEventId: 
+  - questId: quest_bellamorta_radish
+    title: "\uACA8\uC6B8 \uBFCC\uB9AC \uC57D\uC7AC"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 09c927a2524bd8f409d6b8ddab61bc58, type: 2}
+      amount: 3
+    rewardCoins: 55
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 03000000
+    requiredStage: 0
+    requestLine: "\uACA8\uC6B8\uBB34\uC758 \uB9E4\uC6B4 \uBFCC\uB9AC\uB294 \uBAB8\uC744
+      \uB370\uC6B0\uB294 \uC57D\uC774 \uB3FC\uC694. \uC138 \uAC1C\uB9CC \uAC00\uC838\uC640\uC694."
+    thanksLine: "\uCC28\uAC00\uC6B4 \uC190\uC73C\uB85C \uCE90 \uC654\uAD70\uC694.
+      \u2026\uACE0\uB9C8\uC6CC\uC694."
+    requiredEventId: 
+  - questId: quest_bellamorta_special
+    title: "\uC9C4\uC2EC\uC744 \uBE44\uCD94\uB294 \uBB3C\uC57D"
+    kind: 1
+    requirements:
+    - item: {fileID: 11400000, guid: 361f6079362891a468aae059667ddd1c, type: 2}
+      amount: 3
+    - item: {fileID: 11400000, guid: c593f671b9ae9d24e96e6cd5ee7b2a1c, type: 2}
+      amount: 3
+    rewardCoins: 120
+    rewardAffinity: 10
+    rewardItem: {fileID: 11400000, guid: 23d094edda8e80c47baf710a0785816f, type: 2}
+    rewardItemAmount: 3
+    days: 5
+    seasons: 
+    requiredStage: 2
+    requestLine: "\uAC70\uC9D3\uB9D0\uC744 \uBABB \uD558\uAC8C \uD558\uB294 \uBB3C\uC57D\u2026
+      \uC544\uB2C8, \uADF8\uB0E5 \uC9C4\uC2EC\uC774 \uC870\uAE08 \uBCF4\uC774\uB294
+      \uBB3C\uC57D\uC774\uC5D0\uC694. \uC57D\uCD08 \uCC28 \uC138 \uC794\uACFC \uAD11\uC11D
+      \uC138 \uAC1C\uAC00 \uD544\uC694\uD574\uC694."
+    thanksLine: "\uC644\uC131\uB410\uC5B4\uC694. \uCCAB \uBAA8\uAE08\uC740\u2026
+      \uC544\uC9C1 \uBE44\uBC00. \uB300\uC2E0 \uC774 \uBB3C\uC57D\uC744 \uAC00\uC838\uAC00\uC694."
+    requiredEventId: event_bellamorta_trust

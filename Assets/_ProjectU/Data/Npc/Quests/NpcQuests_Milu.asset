@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4bf3c4498412d4d8c95a03bab470e9, type: 3}
+  m_Name: NpcQuests_Milu
+  m_EditorClassIdentifier: Assembly-CSharp::NpcQuestBook
+  groupId: quest_milu
+  ownerId: char_milu
+  quests:
+  - questId: quest_milu_berry
+    title: "\uC5F4\uB9E4 \uBAA9\uC695"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 3a8ea9dc329d35c4b8b4c84410a7f15d, type: 2}
+      amount: 6
+    rewardCoins: 28
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uC5F4\uB9E4 \uC5EC\uC12F \uAC1C \uC8FC\uBA74~ \uBBF8\uB8E8\uAC00
+      \uBAB8\uC5D0 \uB123\uACE0 \uB3D9\uB3D9 \uB744\uC6B8\uB798~ \uC54C\uB85D\uB2EC\uB85D\uD574\uC838~"
+    thanksLine: "\uC640\uC544~ \uBBF8\uB8E8 \uBAB8\uC774 \uBCF4\uB77C\uC0C9 \uB410\uC5B4~
+      \uC608\uC058\uC9C0~?"
+    requiredEventId: 
+  - questId: quest_milu_strawberry
+    title: "\uB538\uAE30 \uC824\uB9AC \uC5F0\uAD6C"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 95ca44aa8a27d41448c511db6fa0a55c, type: 2}
+      amount: 4
+    rewardCoins: 38
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 0000000001000000
+    requiredStage: 0
+    requestLine: "\uB538\uAE30 \uB124 \uAC1C~ \uBBF8\uB8E8\uAC00 \uB538\uAE30 \uB9DB
+      \uBBF8\uB8E8\uAC00 \uB3FC \uBCFC\uB798~"
+    thanksLine: "\uD5E4\uD5E4~ \uC774\uC81C \uBBF8\uB8E8\uD55C\uD14C\uC11C \uB538\uAE30
+      \uB0C4\uC0C8 \uB098~"
+    requiredEventId: 
+  - questId: quest_milu_smelt
+    title: "\uACA8\uC6B8 \uBB3C\uACE0\uAE30 \uCE5C\uAD6C"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 83e8c92974737c246a6f55d31325f68b, type: 2}
+      amount: 2
+    rewardCoins: 50
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 03000000
+    requiredStage: 0
+    requestLine: "\uACA8\uC6B8\uC5D4 \uC6C5\uB369\uC774\uAC00 \uC2EC\uC2EC\uD574~
+      \uBE59\uC5B4 \uB450 \uB9C8\uB9AC\uB791 \uB180\uACE0 \uC2F6\uC5B4~ \uBA39\uB294
+      \uAC70 \uC544\uB2C8\uC57C~"
+    thanksLine: "\uBE59\uC5B4 \uCE5C\uAD6C \uC0DD\uACBC\uB2E4~ \u2026\uC870\uAE08\uB9CC
+      \uCCD0\uB2E4\uBCFC\uAC8C~"
+    requiredEventId: 
+  - questId: quest_milu_special
+    title: "\uC6C5\uB369\uC774 \uCD95\uC81C"
+    kind: 1
+    requirements:
+    - item: {fileID: 11400000, guid: 233c5c7467d9daa41bab4b59439b9465, type: 2}
+      amount: 5
+    - item: {fileID: 11400000, guid: 3a8ea9dc329d35c4b8b4c84410a7f15d, type: 2}
+      amount: 10
+    rewardCoins: 80
+    rewardAffinity: 10
+    rewardItem: {fileID: 11400000, guid: 79f4e609f841fa44e80c8947008b3560, type: 2}
+    rewardItemAmount: 4
+    days: 5
+    seasons: 
+    requiredStage: 2
+    requestLine: "\uBBF8\uB8E8\uAC00~ \uC2B5\uC9C0 \uCE5C\uAD6C\uB4E4\uC774\uB791
+      \uC6C5\uB369\uC774 \uCD95\uC81C \uD560 \uAC70\uC57C~ \uBB3C \uB2E4\uC12F \uBCD1\uC774\uB791
+      \uC5F4\uB9E4 \uC5F4 \uAC1C \uD544\uC694\uD574~"
+    thanksLine: "\uCD95\uC81C \uB300\uC131\uACF5\uC774\uC57C~ \uC774\uAC74 \uBBF8\uB8E8\uAC00
+      \uAFB9\uAFB9 \uB9CC\uB4E0 \uC824\uB9AC~ \uB108 \uAC70\uC57C~"
+    requiredEventId: event_milu_trust

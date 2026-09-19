@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4bf3c4498412d4d8c95a03bab470e9, type: 3}
+  m_Name: NpcQuests_Seira
+  m_EditorClassIdentifier: Assembly-CSharp::NpcQuestBook
+  groupId: quest_seira
+  ownerId: char_seira
+  quests:
+  - questId: quest_seira_mushroom
+    title: "\uB3C5\uBC84\uC12F \uD45C\uBCF8"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: ce6c806808c6dfb4ca5fb2217dce497c, type: 2}
+      amount: 4
+    rewardCoins: 38
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uBC84\uC12F \uB124 \uAC1C. \uB3C5\uC774 \uC788\uB4E0 \uC5C6\uB4E0
+      \uAD1C\uCC2E\uC544\uC694. \uC81C\uAC00 \uAC00\uB824\uB0BC \uC218 \uC788\uC73C\uB2C8\uAE4C."
+    thanksLine: "\uC88B\uC740 \uD45C\uBCF8\uC774\uC5D0\uC694. \u2026\uB9E8\uC190\uC73C\uB85C
+      \uB9CC\uC9C0\uC9C4 \uC54A\uC558\uC8E0?"
+    requiredEventId: 
+  - questId: quest_seira_trout
+    title: "\uBE44\uB298 \uBE44\uAD50 \uC5F0\uAD6C"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: eee016df450094545b4a90688d3bce9b, type: 2}
+      amount: 1
+    rewardCoins: 55
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 0000000002000000
+    requiredStage: 0
+    requestLine: "\uC1A1\uC5B4 \uD55C \uB9C8\uB9AC. \uC81C \uBE44\uB298\uACFC \uBE44\uAD50\uD574
+      \uBCF4\uACE0 \uC2F6\uC5B4\uC694. \u2026\uC774\uC0C1\uD55C \uBD80\uD0C1\uC778\uAC00\uC694?"
+    thanksLine: "\uBE44\uB298 \uBAA8\uC591\uC774 \uB2E4\uB974\uB124\uC694. \uAE30\uB85D\uD574
+      \uB458\uAC8C\uC694. \uACE0\uB9C8\uC6CC\uC694."
+    requiredEventId: 
+  - questId: quest_seira_tea
+    title: "\uBAB8\uC744 \uB370\uC6B0\uB294 \uCC28"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 361f6079362891a468aae059667ddd1c, type: 2}
+      amount: 2
+    rewardCoins: 28
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uC57D\uCD08 \uCC28 \uB450 \uC794. \uBAB8\uC774 \uCC28\uAC00\uC6CC\uC9C0\uBA74\u2026
+      \uC0DD\uAC01\uC774 \uB290\uB824\uC838\uC694."
+    thanksLine: "\uB530\uB73B\uD574\uC694. \uC774\uC81C \uC870\uAE08 \uB354 \uC5F0\uAD6C\uD560
+      \uC218 \uC788\uACA0\uC5B4\uC694."
+    requiredEventId: 
+  - questId: quest_seira_special
+    title: "\uC644\uC804\uD55C \uD574\uB3C5\uC81C"
+    kind: 1
+    requirements:
+    - item: {fileID: 11400000, guid: ce6c806808c6dfb4ca5fb2217dce497c, type: 2}
+      amount: 6
+    - item: {fileID: 11400000, guid: 57290689e97387440ab6d1bcbf4ef495, type: 2}
+      amount: 1
+    rewardCoins: 120
+    rewardAffinity: 10
+    rewardItem: {fileID: 11400000, guid: 46d53aca2110e46489ca54e6892f7daa, type: 2}
+    rewardItemAmount: 3
+    days: 5
+    seasons: 0100000002000000
+    requiredStage: 2
+    requestLine: "\uC5B4\uB5A4 \uB3C5\uC774\uB4E0 \uD478\uB294 \uD574\uB3C5\uC81C\u2026
+      \uAC70\uC758 \uB2E4 \uB410\uC5B4\uC694. \uBC84\uC12F \uC5EC\uC12F \uAC1C\uB791
+      \uBA54\uAE30 \uD55C \uB9C8\uB9AC. \uBA54\uAE30 \uC4F8\uAC1C\uAC00 \uB9C8\uC9C0\uB9C9
+      \uC5F4\uC1E0\uC608\uC694."
+    thanksLine: "\uC644\uC131\uC774\uC5D0\uC694. \u2026\uCC98\uC74C\uC73C\uB85C \uB204\uAD70\uAC00\uB97C
+      \uC704\uD574 \uB9CC\uB4E0 \uC57D\uC774\uC5D0\uC694. \uBC1B\uC544 \uC918\uC694."
+    requiredEventId: event_seira_trust

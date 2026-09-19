@@ -40,3 +40,10 @@ loc_home_arachne,아라크네의 지하 공방,봉인된 지하 유적 문 오�
 loc_home_milu,미루의 웅덩이,습지 웅덩이 가장자리 (미루가 잠드는 물속),swamp,TRUE,TRUE
 loc_home_kasumi,카스미의 사당 집,산기슭 사당 옆 작은 집,snow,FALSE,TRUE
 loc_home_safira,사피라의 천막,사막 천막 안쪽,desert,FALSE,TRUE
+loc_home_serena,세레나의 서고,무너진 도서관 책장 끝 (촛불이 남은 자리),ruins,FALSE,TRUE
+loc_home_chesca,체스카의 보물 더미,유적 뒤편 보물 더미 속 (상자 뚜껑을 닫고 잠듦),ruins,FALSE,TRUE
+loc_home_liriel,리리엘의 버섯 집,깊은 숲 큰 버섯 아래 작은 문,forest,FALSE,TRUE
+loc_home_lumina,루미나의 고치 집,빛나는 꽃밭 옆 나뭇가지에 매달린 고치,forest,FALSE,TRUE
+loc_home_aliune,알리우네의 온실,깊은 숲 남쪽 유리 온실,forest,FALSE,TRUE
+loc_home_marielle,마리엘의 산호 동굴,등대 아래 바닷물이 드나드는 산호 동굴,coast,TRUE,TRUE
+loc_home_neri,네리의 관측 오두막,습지 기둥 오두막 안 (빗물 측정기 옆),swamp,FALSE,TRUE

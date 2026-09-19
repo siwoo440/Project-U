@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: "\uB124\uB9AC"
   englishName: Neri
   isAlphaCast: 0
-  castWave: 0
+  castWave: 3
   isAvailable: 1
   profile:
     raceId: race_frogkin
@@ -46,7 +46,7 @@ MonoBehaviour:
       \uC2B5\uB3C4 \uBCC0\uD654\uB97C \uBE60\uB974\uAC8C \uAC10\uC9C0"
     illustrationStyle: "\uC77C\uBCF8 \uC560\uB2C8\uD48D \uACE0\uC815 \u2013 \uC2B5\uC9C0\uC640
       \uBE57\uBC29\uC6B8, \uBB3C\uAC08\uD034\uC640 \uC5F0\uC78E"
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 22365167456b5764a9f5652089e8e6ba, type: 3}
   themeColor: {r: 0.42352942, g: 0.6509804, b: 0.43529412, a: 1}
   accentColor: {r: 0.7254902, g: 0.8509804, b: 0.54901963, a: 1}
   personality:
@@ -83,13 +83,14 @@ MonoBehaviour:
   maxAffinity: 100
   birthdaySeason: 1
   birthdayDay: 21
-  homeLocationId: 
-  workLocationId: 
+  homeLocationId: loc_home_neri
+  workLocationId: loc_swamp_hut
   giftProfile: {fileID: 11400000, guid: fd2040201e81c264b8a296ddbbe82885, type: 2}
   dialogueSet: {fileID: 11400000, guid: 03e5864124fa82445b6493820f45af95, type: 2}
-  schedule: {fileID: 0}
+  schedule: {fileID: 11400000, guid: a06841a1f790d16469226eb8e1fd1298, type: 2}
   dataStatus: "\uAE30\uD68D \uAE30\uBC18 \uC784\uC2DC\uAC12 \uD3EC\uD568"
-  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 89\uC77C\uCC28
-    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uACF5\uD1B5 \uACC4\uC808\xB7\uB0A0\uC528\xB7\uC120\uBB3C
-    \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758 \uC120\uD638
-    \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0 \uC5F0\uACB0."
+  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 103\uC77C\uCC28
+    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uC9D1\xB7\uC77C\uD130 \xB7 \uD558\uB8E8
+    \uC77C\uC815 \xB7 \uCD94\uAC00 \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758
+    \uC120\uD638 \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0
+    \uC5F0\uACB0."

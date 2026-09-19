@@ -11,7 +11,7 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 // 94일차: NPC 하트 이벤트 도구
-// 1. 원본 CSV(NpcEvents)로 알파 NPC 7명의 이벤트 묶음(호기심 · 신뢰 · 애정 장면)을 만든다
+// 1. 원본 CSV(NpcEvents)로 1 · 2차 NPC 14명의 이벤트 묶음(호기심 · 신뢰 · 애정 장면)을 만든다 (103일차: 2차 추가)
 // 2. 의뢰 CSV를 다시 읽어 특별 의뢰의 필요 이벤트를 연결한다
 // 3. 게임 Scene의 NPC 관리자에 이벤트 관리자를 붙이고, 대화 창을 다시 만들어 선택지 버튼을 넣는다
 // 4. 검사 : 이벤트 ID · 대사 · 선택지 · 단계별 이벤트 · 장소 · 일정상 그 시간에 그 장소에 있는지 · 한글 글꼴 · Scene 연결
@@ -36,7 +36,7 @@ public static class NpcEventBuilder
     {
         bool confirmed = EditorUtility.DisplayDialog(
             DialogTitle,
-            "알파 NPC 7명의 하트 이벤트(호기심 · 신뢰 · 애정 장면)를 원본 CSV로 만들고,\n"
+            "1 · 2차 NPC 14명의 하트 이벤트(호기심 · 신뢰 · 애정 장면)를 원본 CSV로 만들고,\n"
             + "특별 의뢰가 '신뢰' 이벤트를 본 뒤에 나오도록 의뢰 데이터를 갱신합니다.\n"
             + "현재 게임 Scene(20_Gameplay)에 이벤트 관리자를 추가하고, 대화 창을 선택지 버튼을 넣어 다시 만듭니다.\n\n"
             + "먼저 9번(NPC 대화) · 11번(NPC 의뢰) 메뉴를 실행해 두어야 합니다.\n"
@@ -197,7 +197,7 @@ public static class NpcEventBuilder
         StylizedArtAssetFactory.EnsureFolder(EventFolder);
         List<NpcEventBook> books = new List<NpcEventBook>();
 
-        foreach (NpcCharacterData owner in database.GetAlphaCast())
+        foreach (NpcCharacterData owner in database.GetStoryCast())
         {
             List<Draft> own = drafts.Where(draft => draft.OwnerId == owner.CharacterId).OrderBy(draft => draft.Stage).ToList();
 
@@ -394,7 +394,7 @@ public static class NpcEventBuilder
         HashSet<string> ids = new HashSet<string>(StringComparer.Ordinal);
         int eventCount = 0;
 
-        foreach (NpcCharacterData character in database.GetAlphaCast())
+        foreach (NpcCharacterData character in database.GetStoryCast())
         {
             NpcEventBook book = books.FirstOrDefault(candidate => candidate.OwnerId == character.CharacterId);
 

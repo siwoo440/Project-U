@@ -11,7 +11,7 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 // 93일차: NPC 의뢰 도구
-// 1. 원본 CSV(NpcQuests)로 알파 NPC 7명의 의뢰 묶음(게시판 의뢰 · 특별 의뢰)을 만든다
+// 1. 원본 CSV(NpcQuests)로 1 · 2차 NPC 14명의 의뢰 묶음(게시판 의뢰 · 특별 의뢰)을 만든다 (103일차: 2차 추가)
 // 2. 게임 Scene의 NPC 관리자에 의뢰 관리자를 붙이고, 광장 게시판에 상호작용을 달고,
 //    게시판 창 · 진행 중 의뢰 표시를 만들고, 대화 창을 다시 만들어 의뢰 전달 버튼을 넣는다
 // 3. 검사 : 의뢰 ID · 대사 · 필요 물건 · 계절 · 보상(되사기 이익) · 계절별 의뢰 · 특별 의뢰 · 한글 글꼴 · Scene 연결
@@ -45,7 +45,7 @@ public static class NpcQuestBuilder
     {
         bool confirmed = EditorUtility.DisplayDialog(
             DialogTitle,
-            "알파 NPC 7명의 의뢰(게시판 의뢰 · 특별 의뢰)를 원본 CSV로 만들고,\n"
+            "1 · 2차 NPC 14명의 의뢰(게시판 의뢰 · 특별 의뢰)를 원본 CSV로 만들고,\n"
             + "현재 게임 Scene(20_Gameplay)에 의뢰 관리자 · 광장 게시판 상호작용 · 게시판 창 · 진행 중 의뢰 표시를 추가합니다.\n"
             + "NPC 대화 창은 의뢰 전달 버튼을 넣어 다시 만듭니다.\n\n"
             + "먼저 8번(NPC 배치) · 9번(NPC 대화) · 10번(NPC 상점) 메뉴를 실행해 두어야 합니다.\n"
@@ -215,7 +215,7 @@ public static class NpcQuestBuilder
         StylizedArtAssetFactory.EnsureFolder(QuestFolder);
         List<NpcQuestBook> books = new List<NpcQuestBook>();
 
-        foreach (NpcCharacterData owner in database.GetAlphaCast())
+        foreach (NpcCharacterData owner in database.GetStoryCast())
         {
             if (!byOwner.TryGetValue(owner.CharacterId, out List<NpcQuestBook.Quest> quests))
             {
@@ -490,7 +490,7 @@ public static class NpcQuestBuilder
         int questCount = 0;
         int specialCount = 0;
 
-        foreach (NpcCharacterData character in database.GetAlphaCast())
+        foreach (NpcCharacterData character in database.GetStoryCast())
         {
             NpcQuestBook book = books.FirstOrDefault(candidate => candidate.OwnerId == character.CharacterId);
 

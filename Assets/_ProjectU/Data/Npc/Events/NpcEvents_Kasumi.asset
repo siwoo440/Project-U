@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c705680e20332f5478f3a6911a134984, type: 3}
+  m_Name: NpcEvents_Kasumi
+  m_EditorClassIdentifier: Assembly-CSharp::NpcEventBook
+  ownerId: char_kasumi
+  events:
+  - eventId: event_kasumi_curious
+    title: "\uC810\uAD18 \uD55C \uC7A5"
+    requiredStage: 1
+    locationId: loc_village_square
+    fromHour: 10
+    toHour: 14
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uD6C4\uD6C4, \uC624\uB298 \uB2F9\uC2E0 \uC810\uAD18\uB97C \uBF51\uC544
+        \uBD24\uC5B4\uC694."
+    - fromPlayer: 0
+      text: "\uB300\uAE38\u2026 \uC774\uB77C\uACE0 \uD558\uBA74 \uBBFF\uC744\uB798\uC694?"
+    choices:
+    - label: "\uCE74\uC2A4\uBBF8\uAC00 \uB9D0\uD558\uBA74 \uBBFF\uC5B4."
+      reply: "\uC5B4\uBA38, \uADF8\uB7F0 \uB9D0\uC740 \uC810\uAD18\uBCF4\uB2E4 \uBB34\uC11C\uC6B4\uB370\uC694.
+        \uD6C4\uD6C4."
+      affinity: 5
+    - label: "\uD749\uC774\uBA74 \uC5B4\uB5A1\uD574?"
+      reply: "\uD749\uC774\uBA74 \uC81C\uAC00 \uBD80\uC801\uC744 \uC368 \uB4DC\uB9AC\uC8E0.
+        \uACF5\uC9DC\uB85C\uC694."
+      affinity: 3
+    afterLines:
+    - fromPlayer: 0
+      text: "\uC9C4\uC9DC \uC810\uAD18\uB294 \uBE44\uBC00\uC774\uC5D0\uC694. \uB300\uC2E0
+        \uC88B\uC740 \uD558\uB8E8 \uB418\uC138\uC694."
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_kasumi_trust
+    title: "\uC11D\uB4F1\uC758 \uC57D\uC18D"
+    requiredStage: 2
+    locationId: loc_snow_shrine
+    fromHour: 19
+    toHour: 21
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC774 \uC11D\uB4F1\uC740 \uB5A0\uB09C \uC0AC\uB78C\uC744 \uAE30\uB2E4\uB9AC\uB294
+        \uBD88\uC774\uC5D0\uC694."
+    - fromPlayer: 0
+      text: "\uC800\uB3C4 \uB204\uAD70\uAC00\uB97C \uAE30\uB2E4\uB9AC\uBA70 \uBD88\uC744
+        \uCF30\uB294\uB370\u2026 \uC624\uC9C0 \uC54A\uC558\uC5B4\uC694."
+    choices:
+    - label: "\uC774\uC81C \uB0B4\uAC00 \uBD88 \uCF1C\uB7EC \uC62C\uAC8C."
+      reply: "\u2026\uADF8\uB7FC \uC774 \uBD88\uC740, \uAE30\uB2E4\uB9AC\uB294 \uBD88\uC774
+        \uC544\uB2C8\uB77C \uBC18\uAE30\uB294 \uBD88\uC774 \uB418\uACA0\uB124\uC694."
+      affinity: 8
+    - label: "\uAC19\uC774 \uAE30\uB2E4\uB824 \uC904\uAC8C."
+      reply: "\uD6C4\uD6C4, \uAE30\uB2E4\uB9BC\uC774 \uB35C \uCDA5\uB124\uC694. \uACE0\uB9C8\uC6CC\uC694."
+      affinity: 5
+    afterLines:
+    - fromPlayer: 0
+      text: "\uC624\uB298 \uC11D\uB4F1\uC740 \uC870\uAE08 \uB354 \uBC1D\uAC8C \uD0C0\uB294
+        \uAC83 \uAC19\uC544\uC694."
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_kasumi_affection
+    title: "\uC5EC\uC6B0 \uAC00\uBA74 \uC544\uB798"
+    requiredStage: 3
+    locationId: loc_cafe
+    fromHour: 14
+    toHour: 17
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC0AC\uB2F9\uC5D0\uC120 \uB298 \uAC00\uBA74 \uAC19\uC740 \uC6C3\uC74C\uC744
+        \uC9D3\uACE0 \uC788\uC5B4\uC694."
+    - fromPlayer: 0
+      text: "\uB2F9\uC2E0 \uC55E\uC5D0\uC11C\uB294\u2026 \uAC00\uBA74\uC744 \uBC97\uC5B4\uB3C4
+        \uB420\uAE4C\uC694?"
+    choices:
+    - label: "\uC788\uB294 \uADF8\uB300\uB85C\uAC00 \uC88B\uC544."
+      reply: "\u2026\uD6C4\uD6C4, \uC774\uC0C1\uD558\uB124\uC694. \uC6C3\uC74C\uC774
+        \uC800\uC808\uB85C \uB098\uC640\uC694."
+      affinity: 10
+    - label: "\uAC00\uBA74\uB3C4 \uC608\uBED0."
+      reply: "\uADF8\uB7FC \uAC00\uB054\uC740 \uC4F0\uACE0 \uC62C\uAC8C\uC694. \uB2F9\uC2E0\uB9CC
+        \uC54C\uC544\uBCF4\uAC8C."
+      affinity: 7
+    afterLines:
+    - fromPlayer: 0
+      text: "\uC81C\uAC00 \uB9CC\uB4E0 \uC720\uBD80\uCD08\uBC25\uC774\uC5D0\uC694.
+        \uAC00\uBA74 \uC5C6\uC774 \uB4DC\uB9AC\uB294 \uAC70\uC608\uC694."
+    rewardItem: {fileID: 11400000, guid: 48be12fb6511fee4f84f6ada2469834f, type: 2}
+    rewardItemAmount: 3

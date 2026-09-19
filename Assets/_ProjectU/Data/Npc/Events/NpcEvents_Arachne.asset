@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c705680e20332f5478f3a6911a134984, type: 3}
+  m_Name: NpcEvents_Arachne
+  m_EditorClassIdentifier: Assembly-CSharp::NpcEventBook
+  ownerId: char_arachne
+  events:
+  - eventId: event_arachne_curious
+    title: "\uB3C4\uC548 \uC18D\uC758 \uC637"
+    requiredStage: 1
+    locationId: loc_ruins_library
+    fromHour: 11
+    toHour: 15
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC5B4, \uB3C4\uC548 \uBCF4\uC9C0 \uB9C8. \u2026\uC544\uB2C8, \uBD10\uB3C4
+        \uB3FC."
+    - fromPlayer: 0
+      text: "\uC774\uAC74 \uC0AC\uB78C\uB4E4\uC774 \uC785\uC744 \uC637\uC774\uC57C.
+        \uB0B4\uAC00 \uB9CC\uB4E0 \uC637\uC774\uB77C\uBA74 \uB2E4\uB4E4 \uBB34\uC11C\uC6CC\uD558\uC9C0\uB9CC."
+    choices:
+    - label: "\uC815\uB9D0 \uC608\uC05C \uC637\uC774\uC57C."
+      reply: "\u2026\uC9C4\uC9DC? \uAC70\uC9D3\uB9D0\uC774\uBA74 \uAC70\uBBF8\uC904\uB85C
+        \uBB36\uC5B4 \uBC84\uB9B4 \uAC70\uC57C."
+      affinity: 5
+    - label: "\uB098\uD55C\uD14C\uB3C4 \uB9CC\uB4E4\uC5B4 \uC918."
+      reply: "\uD765, \uC904 \uC11C. \u2026\uADF8\uB798\uB3C4 \uCE58\uC218\uB294
+        \uC7AC \uB458\uAC8C."
+      affinity: 4
+    afterLines:
+    - fromPlayer: 0
+      text: "\uB2E4\uC74C \uB3C4\uC548\uC740 \uC870\uAE08 \uB354 \uBC1D\uAC8C \uADF8\uB824
+        \uBCFC\uAE4C."
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_arachne_trust
+    title: "\uB2E4\uB9AC\uAC00 \uB9CE\uC544\uC11C"
+    requiredStage: 2
+    locationId: loc_village_square
+    fromHour: 15
+    toHour: 19
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uAD11\uC7A5\uC5D0 \uC624\uBA74 \uC544\uC774\uB4E4\uC774 \uB3C4\uB9DD\uAC00.
+        \uB2E4\uB9AC\uAC00 \uB9CE\uC544\uC11C\uACA0\uC9C0."
+    - fromPlayer: 0
+      text: "\uADF8\uB798\uC11C \uD574 \uC9C8 \uB158\uC5D0\uB9CC \uC640. \uADF8\uB9BC\uC790\uAC00
+        \uAE38\uC5B4\uC9C0\uBA74 \uB098\uB3C4 \uC870\uAE08 \uB35C \uC774\uC0C1\uD574
+        \uBCF4\uC774\uB2C8\uAE4C."
+    choices:
+    - label: "\uB2E4\uC74C\uC5D4 \uB0AE\uC5D0 \uAC19\uC774 \uC624\uC790."
+      reply: "\u2026\uB124\uAC00 \uC606\uC5D0 \uC788\uC73C\uBA74, \uD55C \uBC88 \uD574
+        \uBCFC\uAC8C."
+      affinity: 8
+    - label: "\uB2E4\uB9AC \uB9CE\uC740 \uAC70 \uBA4B\uC788\uC5B4."
+      reply: "\uBA4B\uC788\uB2E4\uACE0? \uC774\uC0C1\uD55C \uB140\uC11D\uC774\uB124.
+        \u2026\uACE0\uB9C8\uC6CC."
+      affinity: 5
+    afterLines:
+    - fromPlayer: 0
+      text: "\uC2E4\uC740 \uC624\uB298 \uCC98\uC74C\uC73C\uB85C \uB204\uAC00 \uBA3C\uC800
+        \uB9D0\uC744 \uAC78\uC5B4 \uC92C\uC5B4."
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_arachne_affection
+    title: "\uB108\uB97C \uC704\uD55C \uC2E4"
+    requiredStage: 3
+    locationId: loc_ruins_gate
+    fromHour: 7
+    toHour: 11
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC0C8\uBCBD\uC5D0 \uC790\uC740 \uC2E4\uC740 \uC81C\uC77C \uD2BC\uD2BC\uD574.
+        \uC774\uAC74 \uB108\uB97C \uC704\uD574 \uC790\uC740 \uAC70\uC57C."
+    - fromPlayer: 0
+      text: "\uC637\uC73C\uB85C \uC9C0\uC5B4 \uB480\uC5B4. \uCE58\uC218\uB294 \uBAB0\uB798
+        \uC7C0\uC9C0."
+    choices:
+    - label: "\uD3C9\uC0DD \uC544\uAEF4 \uC785\uC744\uAC8C."
+      reply: "\uD3C9\uC0DD? \u2026\uADF8\uB7FC \uD574\uC9C8 \uB54C\uB9C8\uB2E4 \uB0B4\uAC00
+        \uACE0\uCCD0 \uC918\uC57C\uACA0\uB124."
+      affinity: 10
+    - label: "\uC5B8\uC81C \uC7C0\uC5B4?!"
+      reply: "\uBE44\uBC00. \uB514\uC790\uC774\uB108\uB294 \uC6D0\uB798 \uB2E4 \uC54C\uC544."
+      affinity: 7
+    afterLines:
+    - fromPlayer: 0
+      text: "\uC785\uC5B4 \uBD10. \uC5ED\uC2DC \uB0B4 \uC637\uC774 \uC81C\uC77C \uC798
+        \uC5B4\uC6B8\uB824."
+    rewardItem: {fileID: 11400000, guid: 3a8d5e1739f820a40882f0ae4c0d09f4, type: 2}
+    rewardItemAmount: 1

@@ -26,6 +26,9 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 7d594dbe78795334dbb0b72bfc9e9c0b, type: 2}
     preference: 1
     source: food_warm_milk
+  - item: {fileID: 11400000, guid: 2e83945f5dda2f34bb4e993074cfc81c, type: 2}
+    preference: 1
+    source: medicine_bandage
   - item: {fileID: 11400000, guid: d801a65a4ac6aa9488b8fe9ba94ccb15, type: 2}
     preference: 3
     source: tool_axe

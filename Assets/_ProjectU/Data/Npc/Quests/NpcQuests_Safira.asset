@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4bf3c4498412d4d8c95a03bab470e9, type: 3}
+  m_Name: NpcQuests_Safira
+  m_EditorClassIdentifier: Assembly-CSharp::NpcQuestBook
+  groupId: quest_safira
+  ownerId: char_safira
+  quests:
+  - questId: quest_safira_fiber
+    title: "\uCC9C\uB9C9 \uB048"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: bc991e404803cba4292542d6a52ddd7a, type: 2}
+      amount: 12
+    rewardCoins: 32
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uC12C\uC720 \uC5F4\uB450 \uAC1C. \uCC9C\uB9C9 \uB048\uC774 \uB04A\uC5B4\uC84C\uB2E4."
+    thanksLine: "\u2026\uB410\uB2E4. \uBAA8\uB798\uBC14\uB78C\uC5D0\uB3C4 \uBC84\uD2F4\uB2E4."
+    requiredEventId: 
+  - questId: quest_safira_water
+    title: "\uC0AC\uB9C9\uC758 \uBB3C"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 233c5c7467d9daa41bab4b59439b9465, type: 2}
+      amount: 4
+    rewardCoins: 18
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uBB3C \uB124 \uBCD1. \uC624\uC544\uC2DC\uC2A4\uAE4C\uC9C0 \uAC00\uAE30
+      \uADC0\uCC2E\uB2E4."
+    thanksLine: "\uACE0\uB9D9\uB2E4. \u2026\uBAA9\uC774 \uB9D0\uB790\uB2E4."
+    requiredEventId: 
+  - questId: quest_safira_potato
+    title: "\uBAA8\uB798 \uAD6C\uC774 \uAC10\uC790"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: a42d6efd666a1fc40809cbcbcd3362b4, type: 2}
+      amount: 4
+    rewardCoins: 45
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 00000000
+    requiredStage: 0
+    requestLine: "\uAC10\uC790 \uB124 \uAC1C. \uB728\uAC70\uC6B4 \uBAA8\uB798\uC5D0
+      \uBB3B\uC73C\uBA74 \uB9DB\uC788\uB2E4."
+    thanksLine: "\u2026\uAC19\uC774 \uBA39\uC744\uB798? \uC544\uB2C8\uBA74 \uB410\uB2E4."
+    requiredEventId: 
+  - questId: quest_safira_special
+    title: "\uBCC4\uC790\uB9AC \uC9C0\uB3C4"
+    kind: 1
+    requirements:
+    - item: {fileID: 11400000, guid: 2e83945f5dda2f34bb4e993074cfc81c, type: 2}
+      amount: 3
+    - item: {fileID: 11400000, guid: b4f9d8fea40a5c741bf6bc3778083b00, type: 2}
+      amount: 2
+    rewardCoins: 110
+    rewardAffinity: 10
+    rewardItem: {fileID: 11400000, guid: 2fbbf00934b2d404d946399b07a29fec, type: 2}
+    rewardItemAmount: 3
+    days: 5
+    seasons: 
+    requiredStage: 2
+    requestLine: "\uBC24 \uC0AC\uB9C9\uC744 \uAC74\uB108\uB824\uBA74 \uBCC4\uC790\uB9AC
+      \uC9C0\uB3C4\uAC00 \uD544\uC694\uD558\uB2E4. \uBD95\uB300 \uC138 \uAC1C, \uAD6C\uC6B4
+      \uC0DD\uC120 \uB450 \uAC1C. \uAE38\uC774 \uBA40\uB2E4."
+    thanksLine: "\uC9C0\uB3C4\uB97C \uB2E4 \uADF8\uB838\uB2E4. \uAE38\uC740\u2026
+      \uB108\uC640 \uAC19\uC774 \uAC77\uACE0 \uC2F6\uB2E4. \uC5F0\uACE0 \uBC1B\uC544."
+    requiredEventId: event_safira_trust

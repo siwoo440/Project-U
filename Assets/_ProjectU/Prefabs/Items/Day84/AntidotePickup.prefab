@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 1431908223401265244}
+  - component: {fileID: 3754543194456124664}
   m_Layer: 3
   m_Name: AntidotePickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 4060114366577619082}
+  - {fileID: 2964326042902923157}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &1431908223401265244
+--- !u!114 &3754543194456124664
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: item_antidote
-  generatedVisual: {fileID: 621679456343287412}
+  generatedVisual: {fileID: 1863272528576074091}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &1404212886833142759
+--- !u!1001 &146312543043693816
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d3b183632247c4499f29e70850c0bc8, type: 3}
---- !u!1 &621679456343287412 stripped
+--- !u!1 &1863272528576074091 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2007587310531050899, guid: 6d3b183632247c4499f29e70850c0bc8, type: 3}
-  m_PrefabInstance: {fileID: 1404212886833142759}
+  m_PrefabInstance: {fileID: 146312543043693816}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &4060114366577619082 stripped
+--- !u!4 &2964326042902923157 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3108795112430676845, guid: 6d3b183632247c4499f29e70850c0bc8, type: 3}
-  m_PrefabInstance: {fileID: 1404212886833142759}
+  m_PrefabInstance: {fileID: 146312543043693816}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

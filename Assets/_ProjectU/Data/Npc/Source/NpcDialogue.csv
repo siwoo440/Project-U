@@ -273,3 +273,129 @@ char_safira,Gift,Liked,쓸 만한 약초야. 받아 두지.
 char_safira,Gift,Neutral,고맙다.
 char_safira,Gift,Hated,…물이라니. 사막 사람에게 물을 건네는 건 모욕이야. 넌 모르고 줬겠지만.
 char_safira,Birthday,,생일인 걸 기억했군. …사막에선 이런 날을 챙기지 않았어. 고맙다.
+char_serena,FirstMeeting,,"…아, 놀라게 했나요. 저는 세레나. 이 도서관의 마지막 페이지를… 지키고 있어요."
+char_serena,Greeting,Curious,또 오셨네요. 오늘은… 어떤 이야기를 가져왔나요.
+char_serena,Greeting,Trust,당신 발소리는… 이제 알아요. 책장 사이로도 들려요.
+char_serena,Talk,,책은 잊혀져도 먼지는 기억해요. 누가 마지막으로 펼쳤는지.
+char_serena,Talk,Curious,제 몸이 조금씩 흐려져요. 그래서 오늘 일을… 꼭 적어 둬요.
+char_serena,Talk,Trust,마지막 시를 완성하고 싶어요. 그 시에… 당신 이름이 들어가도 될까요.
+char_serena,Season,Spring,봄바람이 책장을 넘겨요. 제가 넘기지 않아도.
+char_serena,Season,Summer,여름 햇빛은… 조금 무서워요. 저를 지워 버릴 것 같아서.
+char_serena,Season,Autumn,낙엽은 나무가 쓴 편지 같아요. 한 장씩… 읽어 보고 싶어요.
+char_serena,Season,Winter,겨울밤은 길어서 좋아요. 촛불 하나로 한 권을 다 읽을 수 있어요.
+char_serena,Weather,Rain,빗소리는… 누군가 조용히 책을 읽는 소리 같아요.
+char_serena,Weather,Snow,눈이 오면 발자국이 남죠. 저는… 남지 않지만.
+char_serena,Weather,Storm,폭풍이 치면 책장이 흔들려요. 오늘은… 곁에 있어 줄래요.
+char_serena,Gift,Loved,"따뜻한 차… 손에 쥘 수는 없어도, 향은 느껴져요. 고마워요."
+char_serena,Gift,Liked,다정한 선물이네요. 오늘 일기에 적어 둘게요.
+char_serena,Gift,Neutral,…고마워요. 어디에 둘지 천천히 생각해 볼게요.
+char_serena,Gift,Disliked,쿵쿵거리는 도구는… 책들이 놀라요.
+char_serena,Birthday,,"생일… 저에게도 있었군요. 기억해 준 사람이 있으니, 오늘은 조금 더 선명해질 것 같아요."
+char_liriel,FirstMeeting,,"와, 사람이다! 나는 리리엘, 이 숲의 빛을 지키는 요정이야! 나쁜 짓 하면 간지럼 태울 거야!"
+char_liriel,Greeting,Curious,또 왔지! 오늘은 숲에서 뭐 찾았어?
+char_liriel,Greeting,Trust,"네가 오면 날개가 반짝반짝해! 봐, 지금도 그렇지!"
+char_liriel,Talk,,버섯 고리 안에 들어가면 안 돼! 요정들 무도회장이거든!
+char_liriel,Talk,Curious,예전엔 요정이 엄청 많았어. 지금은… 나랑 버섯들뿐이야.
+char_liriel,Talk,Trust,"숲이 다치면 나도 아파. 그러니까 너도 나무 함부로 베면 안 돼, 약속한 거야!"
+char_liriel,Season,Spring,봄이다! 꽃들 깨우느라 엄청 바빠! 너도 도와줄 거지!
+char_liriel,Season,Summer,여름엔 반딧불이랑 경주해! 내가 늘 이겼지!
+char_liriel,Season,Autumn,가을 낙엽은 요정 침대야! 폭신폭신하거든!
+char_liriel,Season,Winter,겨울엔 날개가 얼어… 버섯 집에서 꼭 붙어 있을 거야.
+char_liriel,Weather,Rain,빗방울 하나하나에 빛이 들어 있어! 세어 보자!
+char_liriel,Weather,Snow,눈송이 타고 날아 볼래! …안 되는구나.
+char_liriel,Weather,Storm,천둥 무서운 거 아니야! 그냥… 조금 가까이 있을 거야!
+char_liriel,Gift,Loved,열매다! 달콤한 거 제일 좋아! 너 최고야!
+char_liriel,Gift,Liked,고마워! 숲 친구들이랑 나눠 먹을 거야!
+char_liriel,Gift,Neutral,"음, 이건 뭐에 쓰는 거야? 궁금해!"
+char_liriel,Gift,Disliked,쇠 냄새… 나무들이 무서워해. 치워 줘!
+char_liriel,Birthday,,내 생일 기억했어?! 오늘은 숲 전체에 빛 축제 열 거야! 너도 와야 해!
+char_chesca,FirstMeeting,,"…탁. 가까이 오지 마. 아니, 조금은… 괜찮아. 체스카야. 상자 안은 보지 마."
+char_chesca,Greeting,Curious,…또 왔네. 탁. 오늘은 뚜껑 조금만 열어 둘게.
+char_chesca,Greeting,Trust,왔구나. 뚜껑… 활짝 열어 둘게. 너니까.
+char_chesca,Talk,,유물은 말을 안 해. 그래서 좋아. …사람은 말이 너무 많아.
+char_chesca,Talk,Curious,예전에 사람들이 날 열고 보물만 가져갔어. 탁. …그 뒤로 뚜껑을 잘 안 열어.
+char_chesca,Talk,Trust,열쇠 없이 날 연 사람은 네가 처음이야. …이상한 기분이야.
+char_chesca,Season,Spring,봄엔 흙 속에서 유물이 올라와. 땅이 숨 쉬니까.
+char_chesca,Season,Summer,여름엔 상자 안이 더워. …그래도 안 나가.
+char_chesca,Season,Autumn,"가을 낙엽 밑에 반짝이는 게 많아. 탁, 하나 찾았다."
+char_chesca,Season,Winter,겨울엔 경첩이 얼어. 열려도 잘 안 닫혀. …곤란해.
+char_chesca,Weather,Rain,비 오면 뚜껑 꼭 닫아. 녹슬면… 아파.
+char_chesca,Weather,Snow,눈이 쌓이면 나도 그냥 돌 같아 보여. 편해.
+char_chesca,Weather,Storm,"천둥… 탁, 탁. 무서운 거 아니야. 뚜껑이 떨리는 거야."
+char_chesca,Gift,Loved,광석… 반짝여. 이건 내 보물 칸 제일 안쪽에 넣을래.
+char_chesca,Gift,Liked,…고마워. 천 조각은 안쪽을 폭신하게 해 줘.
+char_chesca,Gift,Neutral,탁. …일단 넣어 둘게.
+char_chesca,Gift,Disliked,망치 같은 건 싫어. 억지로 열 때 쓰는 거잖아.
+char_chesca,Birthday,,생일 선물…? 받기만 하고 빼앗기지 않는 선물은 처음이야. 탁… 고마워.
+char_marielle,FirstMeeting,,"음~ 흠~ 어머, 손님이네요. 저는 마리엘, 바다에서 조개랑 진주를 캐요. 파도 소리 좋아해요?"
+char_marielle,Greeting,Curious,음~ 또 왔네요. 오늘 바다는 잔잔해요.
+char_marielle,Greeting,Trust,당신이 오면 콧노래가 저절로 나와요. 음~ 흠~
+char_marielle,Talk,,갯바위 조개는 물이 빠질 때 캐야 해요. 바다가 잠깐 허락해 주는 시간이에요.
+char_marielle,Talk,Curious,예전엔 산호 마을에 살았어요. 폭풍이 다 가져가 버렸지만요.
+char_marielle,Talk,Trust,"이 섬이… 새 집이 되어 줄까요. 당신이 있으면, 그럴 것 같아요."
+char_marielle,Season,Spring,봄 바다는 아직 차가워요. 그래도 해초가 쑥쑥 자라요.
+char_marielle,Season,Summer,여름엔 진주가 제일 예쁘게 빛나요. 새벽에 같이 캐러 갈래요?
+char_marielle,Season,Autumn,가을 파도는 높아요. 조개들이 모래 속으로 숨어 버려요.
+char_marielle,Season,Winter,겨울 바다는 조용해요. 비늘이 조금 시려도… 좋아요.
+char_marielle,Weather,Rain,비가 오면 바다랑 하늘이 이어져요. 음~ 좋아요.
+char_marielle,Weather,Snow,바다에 눈이 내리면 소리 없이 녹아요. 신기하죠.
+char_marielle,Weather,Storm,폭풍은… 싫어요. 오늘은 동굴 깊이 있을게요.
+char_marielle,Gift,Loved,황금 잉어…! 진주보다 반짝여요. 정말 고마워요.
+char_marielle,Gift,Liked,음~ 좋아요. 바다 냄새가 나는 선물이네요.
+char_marielle,Gift,Neutral,고마워요. 동굴 선반에 올려 둘게요.
+char_marielle,Gift,Disliked,지렁이는… 물을 탁하게 해요. 미안해요.
+char_marielle,Birthday,,제 생일을 기억했어요? 음~ 오늘은 파도도 축하해 주는 것 같아요.
+char_lumina,FirstMeeting,,…안녕하세요. 루미나예요. 날개 가루가 무서우면… 조금 떨어져 있을게요.
+char_lumina,Greeting,Curious,다시 만났네요… 오늘 날개 색이 조금 밝아졌어요.
+char_lumina,Greeting,Trust,당신이 오면… 날개가 저절로 펴져요. 신기하죠.
+char_lumina,Talk,,꽃가루는 꽃들의 편지예요. 저는 그 편지를 대신 전해 줘요.
+char_lumina,Talk,Curious,예전 마을 사람들은 제 날개 가루가 병을 옮긴다고 했어요. …그렇지 않은데.
+char_lumina,Talk,Trust,제 날개를 예쁘다고 해 준 사람은… 당신이 처음이에요.
+char_lumina,Season,Spring,봄은 꽃가루가 제일 많은 계절이에요. 날개가 무거울 만큼요.
+char_lumina,Season,Summer,여름밤엔 달빛 꽃이 피어요. 같이 기다려 줄래요?
+char_lumina,Season,Autumn,"가을엔 꽃이 지지만, 씨앗이 남아요. 끝이 아니에요."
+char_lumina,Season,Winter,겨울엔 고치 안에서 지내요. …조금 외로워요.
+char_lumina,Weather,Rain,비가 오면 날개가 젖어서… 날 수 없어요.
+char_lumina,Weather,Snow,눈송이가 날개에 앉으면… 간지러워요.
+char_lumina,Weather,Storm,바람이 세면 날개가 찢어질까 봐… 고치 안에 있을게요.
+char_lumina,Gift,Loved,딸기꽃 향기가 나요… 정말 고마워요.
+char_lumina,Gift,Liked,…고마워요. 꽃밭에 두면 좋겠어요.
+char_lumina,Gift,Neutral,이건… 어떤 꽃이랑 어울릴까요.
+char_lumina,Gift,Disliked,나무 타는 연기는… 날개가 아파요.
+char_lumina,Birthday,,생일을… 기억해 줬네요. 오늘은 날개 가루가 무지개색이에요.
+char_neri,FirstMeeting,,"개굴! 깜짝이야! 나는 네리, 날씨 관측가야! 내일 비 올지 궁금해? 물어봐!"
+char_neri,Greeting,Curious,왔다! 오늘 습도는 딱 좋아! 개굴!
+char_neri,Greeting,Trust,너 오는 거 미리 알았어! 공기가 살짝 떨렸거든!
+char_neri,Talk,,구름 모양 보면 내일 날씨가 보여! 저건 비구름이야! …아마도!
+char_neri,Talk,Curious,가뭄 때 습지가 말라서… 가족이 흩어졌어. 그래서 비가 좋아.
+char_neri,Talk,Trust,습지를 다시 촉촉하게 만들 거야! 너도 도와줄 거지? 개굴!
+char_neri,Season,Spring,봄비는 부드러워! 피부가 촉촉해져!
+char_neri,Season,Summer,여름은 너무 말라! 개굴… 물가에만 있을래.
+char_neri,Season,Autumn,가을엔 바람 방향이 자주 바뀌어! 관측할 게 많아!
+char_neri,Season,Winter,겨울엔 졸려… 개굴… 겨울잠 자고 싶어…
+char_neri,Weather,Rain,비다! 비다! 개굴개굴! 오늘 최고의 날이야!
+char_neri,Weather,Snow,눈은 비가 얼어 버린 거야. 불쌍한 비!
+char_neri,Weather,Storm,개굴?! 천둥은 무서워! 관측은… 창문 안에서 할래!
+char_neri,Gift,Loved,지렁이다! 개굴! 이거 진짜 맛있어!
+char_neri,Gift,Liked,"오, 고마워! 촉촉한 선물 좋아!"
+char_neri,Gift,Neutral,"음, 이건 관측 도구로 쓸 수 있을까?"
+char_neri,Gift,Disliked,바싹 마른 건 싫어… 피부가 따가워.
+char_neri,Birthday,,"내 생일! 개굴! 오늘 비 오면 완벽한데! …안 와도 좋아, 네가 왔으니까!"
+char_aliune,FirstMeeting,,"어서 와요. 저는 알리우네. 다친 땅에 꽃을 피우는 일을 해요. …발밑 새싹, 조심해 줄래요?"
+char_aliune,Greeting,Curious,또 와 줬네요. 햇살이 좋아서 잎이 반짝여요.
+char_aliune,Greeting,Trust,당신이 오면… 제 꽃이 먼저 알아채고 피어요.
+char_aliune,Talk,,시든 잎도 뿌리가 살아 있으면 다시 자라요. 사람 마음도 그렇고요.
+char_aliune,Talk,Curious,예전 정원이 불에 탔어요. 뿌리 끝이 아직도… 조금 아파요.
+char_aliune,Talk,Trust,이 섬 전체를 치유 정원으로 만들고 싶어요. 당신 밭부터… 괜찮을까요.
+char_aliune,Season,Spring,봄엔 씨앗이 눈을 떠요. 하나하나 인사해 주고 싶어요.
+char_aliune,Season,Summer,"여름 햇살은 좋지만, 물을 자주 줘야 해요. 당신도요."
+char_aliune,Season,Autumn,가을엔 잎을 떨어뜨려요. 쉬어야 다시 자랄 수 있으니까.
+char_aliune,Season,Winter,겨울엔 온실에서 지내요. 따뜻한 곳에서 뿌리를 쉬게 해요.
+char_aliune,Weather,Rain,비는 식물들의 식사 시간이에요. 모두 기뻐하고 있어요.
+char_aliune,Weather,Snow,눈은 이불 같아요. 땅속 씨앗들을 덮어 줘요.
+char_aliune,Weather,Storm,바람이 거세면 어린 줄기가 꺾여요. 오늘은 곁을 지켜야겠어요.
+char_aliune,Gift,Loved,씨앗이네요…! 어떤 꽃이 필지 벌써 설레요.
+char_aliune,Gift,Liked,고마워요. 잎이 기뻐서 흔들리네요.
+char_aliune,Gift,Neutral,고마워요. 어디에 두면 좋을지 생각해 볼게요.
+char_aliune,Gift,Disliked,나무 장작은… 불이 생각나요. 미안해요.
+char_aliune,Birthday,,제 생일에 와 줬네요. 오늘 핀 꽃은… 전부 당신 거예요.

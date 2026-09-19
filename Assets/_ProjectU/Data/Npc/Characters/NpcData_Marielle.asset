@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: "\uB9C8\uB9AC\uC5D8"
   englishName: Marielle
   isAlphaCast: 0
-  castWave: 0
+  castWave: 3
   isAvailable: 1
   profile:
     raceId: race_mermaid
@@ -46,7 +46,7 @@ MonoBehaviour:
       \uC721\uC9C0\uC5D0\uC11C \uC7A0\uC2DC \uB2E4\uB9AC\uB97C \uD615\uC131"
     illustrationStyle: "\uC77C\uBCF8 \uC560\uB2C8\uD48D \uACE0\uC815 \u2013 \uD574\uC548\uACFC
       \uC0B0\uD638, \uBC18\uC9DD\uC774\uB294 \uC778\uC5B4 \uAF2C\uB9AC"
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 0b69493580c5e7d48b17d470d1fc1f80, type: 3}
   themeColor: {r: 0.3882353, g: 0.78039217, b: 0.77254903, a: 1}
   accentColor: {r: 0.78039217, g: 0.94509804, b: 0.9411765, a: 1}
   personality:
@@ -83,13 +83,14 @@ MonoBehaviour:
   maxAffinity: 100
   birthdaySeason: 1
   birthdayDay: 17
-  homeLocationId: 
-  workLocationId: 
+  homeLocationId: loc_home_marielle
+  workLocationId: loc_coast_rocks
   giftProfile: {fileID: 11400000, guid: 97bbcf82b4c5ea34f8fb09ee7ab829b2, type: 2}
   dialogueSet: {fileID: 11400000, guid: aafce90b0577a4140a44d4144c978de3, type: 2}
-  schedule: {fileID: 0}
+  schedule: {fileID: 11400000, guid: 9f3b2f247a491904784d18457ca9c815, type: 2}
   dataStatus: "\uAE30\uD68D \uAE30\uBC18 \uC784\uC2DC\uAC12 \uD3EC\uD568"
-  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 89\uC77C\uCC28
-    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uACF5\uD1B5 \uACC4\uC808\xB7\uB0A0\uC528\xB7\uC120\uBB3C
-    \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758 \uC120\uD638
-    \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0 \uC5F0\uACB0."
+  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 103\uC77C\uCC28
+    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uC9D1\xB7\uC77C\uD130 \xB7 \uD558\uB8E8
+    \uC77C\uC815 \xB7 \uCD94\uAC00 \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758
+    \uC120\uD638 \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0
+    \uC5F0\uACB0."

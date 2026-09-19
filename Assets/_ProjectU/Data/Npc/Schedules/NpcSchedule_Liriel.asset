@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94295176dd2bda648968d83c1418a684, type: 3}
+  m_Name: NpcSchedule_Liriel
+  m_EditorClassIdentifier: Assembly-CSharp::NpcScheduleData
+  scheduleId: schedule_liriel
+  plans:
+  - planId: default
+    priority: 0
+    days: 127
+    seasons: 15
+    weather: 0
+    stops:
+    - hour: 6
+      locationId: loc_forest_fairy_ring
+      activity: "\uBC84\uC12F \uACE0\uB9AC \uC9C0\uD0A4\uAE30"
+    - hour: 10
+      locationId: loc_forest_flower_garden
+      activity: "\uAF43\uBC2D\uC5D0 \uBE5B \uB098\uB220 \uC8FC\uAE30"
+    - hour: 13
+      locationId: loc_forest_edge
+      activity: "\uC232 \uC785\uAD6C \uC21C\uCC30"
+    - hour: 17
+      locationId: loc_forest_fairy_ring
+      activity: "\uD574 \uC9C8 \uB158 \uC21C\uCC30"
+    - hour: 20
+      locationId: loc_home_liriel
+      activity: "\uC7A0"
+  - planId: spring
+    priority: 5
+    days: 127
+    seasons: 1
+    weather: 0
+    stops:
+    - hour: 5
+      locationId: loc_forest_fairy_ring
+      activity: "\uBD04\uAF43 \uAE68\uC6B0\uAE30"
+    - hour: 8
+      locationId: loc_forest_flower_garden
+      activity: "\uC0C8\uC2F9 \uC778\uC0AC"
+    - hour: 11
+      locationId: loc_farm_fields
+      activity: "\uBC2D\uC5D0 \uBD04 \uCD95\uBCF5 \uBFCC\uB9AC\uAE30"
+    - hour: 16
+      locationId: loc_forest_edge
+      activity: "\uC232\uC73C\uB85C \uB3CC\uC544\uAC00\uB294 \uAE38"
+    - hour: 19
+      locationId: loc_home_liriel
+      activity: "\uC7A0"
+  - planId: rain
+    priority: 10
+    days: 127
+    seasons: 15
+    weather: 2
+    stops:
+    - hour: 7
+      locationId: loc_forest_fairy_ring
+      activity: "\uBE57\uBC29\uC6B8 \uC138\uAE30"
+    - hour: 12
+      locationId: loc_home_liriel
+      activity: "\uBC84\uC12F \uAC13 \uC544\uB798 \uBE44 \uD53C\uD558\uAE30"
+    - hour: 16
+      locationId: loc_forest_fairy_ring
+      activity: "\uC816\uC740 \uB0A0\uAC1C \uB9D0\uB9AC\uAE30"
+    - hour: 20
+      locationId: loc_home_liriel
+      activity: "\uC7A0"

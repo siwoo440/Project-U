@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c705680e20332f5478f3a6911a134984, type: 3}
+  m_Name: NpcEvents_Bellamorta
+  m_EditorClassIdentifier: Assembly-CSharp::NpcEventBook
+  ownerId: char_bellamorta
+  events:
+  - eventId: event_bellamorta_curious
+    title: "\uC57D\uBCD1 \uC18D\uC758 \uC0C9"
+    requiredStage: 1
+    locationId: loc_alchemy_lab
+    fromHour: 8
+    toHour: 11
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC774 \uC57D\uBCD1, \uBCF4\uB294 \uC0AC\uB78C\uB9C8\uB2E4 \uC0C9\uC774
+        \uB2E4\uB974\uAC8C \uBCF4\uC5EC\uC694."
+    - fromPlayer: 0
+      text: "\uB2F9\uC2E0 \uB208\uC5D4\u2026 \uBB34\uC2A8 \uC0C9\uC73C\uB85C \uBCF4\uC774\uC8E0?"
+    choices:
+    - label: "\uB530\uB73B\uD55C \uC7A5\uBC0B\uBE5B."
+      reply: "\uC7A5\uBC0B\uBE5B\uC774\uB77C\u2026 \uC0DD\uAC01\uBCF4\uB2E4 \uB2E4\uC815\uD55C
+        \uC0AC\uB78C\uC774\uB124\uC694."
+      affinity: 5
+    - label: "\uADF8\uB0E5 \uBB3C \uC0C9\uC778\uB370?"
+      reply: "\uD6C4\uD6C4, \uC194\uC9C1\uD574\uC11C \uC7AC\uBBF8\uC5C6\uB124\uC694.
+        \uADF8\uB798\uB3C4 \uC2EB\uC9C0 \uC54A\uC544\uC694."
+      affinity: 3
+    afterLines:
+    - fromPlayer: 0
+      text: "\uB2E4\uC74C\uC5D0 \uB610 \uBB3C\uC5B4\uBCFC\uAC8C\uC694. \uC0C9\uC774
+        \uBC14\uB00C\uC5C8\uB294\uC9C0."
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_bellamorta_trust
+    title: "\uD574 \uC9C8 \uB158\uC758 \uACC4\uC57D\uC11C"
+    requiredStage: 2
+    locationId: loc_ruins_plaza
+    fromHour: 18
+    toHour: 20
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC608\uC804\uC5D0 \uC0AC\uB78C\uACFC \uACC4\uC57D\uC744 \uD55C \uC801\uC774
+        \uC788\uC5B4\uC694. \uC0AC\uB791\uC744 \uC57D\uC18D\uD558\uB294 \uACC4\uC57D."
+    - fromPlayer: 0
+      text: "\uADF8 \uC0AC\uB78C\uC740 \uBA3C\uC800 \uB5A0\uB0AC\uACE0\u2026 \uACC4\uC57D\uC11C\uB9CC
+        \uB0A8\uC558\uC8E0."
+    choices:
+    - label: "\uACC4\uC57D \uC5C6\uC774\uB3C4 \uACC1\uC5D0 \uC788\uC744\uAC8C."
+      reply: "\u2026\uADF8\uB7F0 \uB9D0\uC740 \uACC4\uC57D\uBCF4\uB2E4 \uBB34\uC12D\uB124\uC694.
+        \uADF8\uB798\uB3C4, \uBBFF\uC5B4 \uBCFC\uAC8C\uC694."
+      affinity: 8
+    - label: "\uADF8 \uACC4\uC57D\uC11C, \uD0DC\uC6CC \uBC84\uB9AC\uC790."
+      reply: "\uACFC\uAC10\uD558\uB124\uC694. \uBD88\uC740\u2026 \uB2F9\uC2E0\uC774
+        \uBD99\uC5EC \uC904\uB798\uC694?"
+      affinity: 5
+    afterLines:
+    - fromPlayer: 0
+      text: "\uC774\uC0C1\uD558\uC8E0. \uC624\uB298\uC740 \uC800\uB141\uB178\uC744\uC774
+        \uB35C \uC4F8\uC4F8\uD574\uC694."
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_bellamorta_affection
+    title: "\uB2F9\uC2E0 \uBAAB\uC758 \uD64D\uCC28"
+    requiredStage: 3
+    locationId: loc_cafe
+    fromHour: 13
+    toHour: 15
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uD64D\uCC28 \uB450 \uC794\uC744 \uC2DC\uCF30\uC5B4\uC694. \uD55C \uC794\uC740
+        \uB2F9\uC2E0 \uAC70."
+    - fromPlayer: 0
+      text: "\uB2F9\uC2E0\uC774 \uC62C \uC904 \uC54C\uC558\uB0D0\uACE0\uC694? \uC544\uB2C8\uC694.
+        \uC624\uAE38 \uBC14\uB790\uC744 \uBFD0\uC774\uC5D0\uC694."
+    choices:
+    - label: "\uB098\uB3C4 \uC624\uACE0 \uC2F6\uC5C8\uC5B4."
+      reply: "\u2026\uADF8 \uB9D0, \uBB3C\uC57D\uBCF4\uB2E4 \uD6A8\uACFC\uAC00 \uC88B\uB124\uC694."
+      affinity: 10
+    - label: "\uD64D\uCC28 \uC2DD\uACA0\uB2E4, \uB9C8\uC2DC\uC790."
+      reply: "\uD6C4\uD6C4, \uB124. \uAC19\uC774 \uB9C8\uC154\uC694. \uCC9C\uCC9C\uD788."
+      affinity: 7
+    afterLines:
+    - fromPlayer: 0
+      text: "\uACF5\uBC29\uC5D0\uC11C \uB9CC\uB4E0 \uBB3C\uC57D\uC774\uC5D0\uC694.
+        \uB2F9\uC2E0\uD55C\uD14C\uB9CC \uC8FC\uB294 \uAC70\uC608\uC694."
+    rewardItem: {fileID: 11400000, guid: 23d094edda8e80c47baf710a0785816f, type: 2}
+    rewardItemAmount: 2

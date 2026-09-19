@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: "\uB8E8\uBBF8\uB098"
   englishName: Lumina
   isAlphaCast: 0
-  castWave: 0
+  castWave: 3
   isAvailable: 1
   profile:
     raceId: race_butterflykin
@@ -47,7 +47,7 @@ MonoBehaviour:
       \uAC10\uC815\uC5D0 \uB530\uB77C \uC0C9\uC744 \uBC14\uAFC8"
     illustrationStyle: "\uC77C\uBCF8 \uC560\uB2C8\uD48D \uACE0\uC815 \u2013 \uC57C\uAD11
       \uAF43\uBC2D, \uBC18\uD22C\uBA85 \uB098\uBE44 \uB0A0\uAC1C"
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: f3a0db615a4198e4483348d1f9700fca, type: 3}
   themeColor: {r: 0.9098039, g: 0.6627451, b: 0.81960785, a: 1}
   accentColor: {r: 0.56078434, g: 0.84313726, b: 0.9098039, a: 1}
   personality:
@@ -84,13 +84,14 @@ MonoBehaviour:
   maxAffinity: 100
   birthdaySeason: 0
   birthdayDay: 14
-  homeLocationId: 
-  workLocationId: 
+  homeLocationId: loc_home_lumina
+  workLocationId: loc_forest_flower_garden
   giftProfile: {fileID: 11400000, guid: 7b869c57c7cd285458665882c8961237, type: 2}
   dialogueSet: {fileID: 11400000, guid: 0da3caa51c5761748b8de9018300707c, type: 2}
-  schedule: {fileID: 0}
+  schedule: {fileID: 11400000, guid: 154fb37d6f96d3547a3b6421ba999c02, type: 2}
   dataStatus: "\uAE30\uD68D \uAE30\uBC18 \uC784\uC2DC\uAC12 \uD3EC\uD568"
-  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 89\uC77C\uCC28
-    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uACF5\uD1B5 \uACC4\uC808\xB7\uB0A0\uC528\xB7\uC120\uBB3C
-    \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758 \uC120\uD638
-    \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0 \uC5F0\uACB0."
+  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 103\uC77C\uCC28
+    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uC9D1\xB7\uC77C\uD130 \xB7 \uD558\uB8E8
+    \uC77C\uC815 \xB7 \uCD94\uAC00 \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758
+    \uC120\uD638 \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0
+    \uC5F0\uACB0."

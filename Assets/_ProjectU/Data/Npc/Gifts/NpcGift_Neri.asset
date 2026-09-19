@@ -23,6 +23,9 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 233c5c7467d9daa41bab4b59439b9465, type: 2}
     preference: 1
     source: drink_water_bottle
+  - item: {fileID: 11400000, guid: 79f4e609f841fa44e80c8947008b3560, type: 2}
+    preference: 1
+    source: food_sweet_jelly
   - item: {fileID: 11400000, guid: 83e8c92974737c246a6f55d31325f68b, type: 2}
     preference: 1
     source: resource_fish_smelt

@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c705680e20332f5478f3a6911a134984, type: 3}
+  m_Name: NpcEvents_Pipi
+  m_EditorClassIdentifier: Assembly-CSharp::NpcEventBook
+  ownerId: char_pipi
+  events:
+  - eventId: event_pipi_curious
+    title: "\uACE0\uC7A5 \uB09C \uD0DC\uC5FD"
+    requiredStage: 1
+    locationId: loc_scrap_yard
+    fromHour: 6
+    toHour: 10
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC774 \uD0DC\uC5FD \uC778\uD615, \uD574\uBCC0\uC5D0\uC11C \uC8FC\uC6E0\uC5B4!
+        \uADFC\uB370 \uC548 \uC6C0\uC9C1\uC5EC!"
+    - fromPlayer: 0
+      text: "\uD53C\uD53C\uAC00 \uACE0\uCE58\uBA74 \uD314 \uC218 \uC788\uC5B4! \uB3C4\uC640\uC904\uB798?"
+    choices:
+    - label: "\uAC19\uC774 \uACE0\uCCD0 \uBCF4\uC790."
+      reply: "\uC6C0\uC9C1\uC778\uB2E4! \uD5E4\uD5E4, \uB108 \uC190\uC7AC\uC8FC \uC88B\uB2E4!
+        \uC218\uC218\uB8CC\uB294 \uBC18\uBC18!"
+      affinity: 5
+    - label: "\uD314\uC9C0 \uB9D0\uACE0 \uAC00\uC838."
+      reply: "\uAC00, \uAC00\uC9C0\uB77C\uACE0? \u2026\uD53C\uD53C\uB3C4 \uC0AC\uC2E4
+        \uAC16\uACE0 \uC2F6\uC5C8\uC5B4."
+      affinity: 4
+    afterLines:
+    - fromPlayer: 0
+      text: "\uB2E4\uC74C\uC5D0 \uC8FC\uC6B4 \uAC83\uB3C4 \uC81C\uC77C \uBA3C\uC800
+        \uBCF4\uC5EC \uC904\uAC8C!"
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_pipi_trust
+    title: "\uC218\uC785 \uC7A5\uBD80"
+    requiredStage: 2
+    locationId: loc_cafe
+    fromHour: 19
+    toHour: 21
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC624\uB298 \uC218\uC785\u2026 \uB610 \uB9C8\uC774\uB108\uC2A4\uC57C.
+        \uD53C\uD53C\uB294 \uC7A5\uC0AC\uAFBC\uC778\uB370."
+    - fromPlayer: 0
+      text: "\uACE0\uBE14\uB9B0\uC774\uB77C\uC11C \uC544\uBB34\uB3C4 \uC548 \uBBFF\uC5B4
+        \uC918. \uADF8\uB798\uC11C \uC2F8\uAC8C \uD314 \uC218\uBC16\uC5D0 \uC5C6\uC5B4."
+    choices:
+    - label: "\uB098\uB294 \uD53C\uD53C\uB97C \uBBFF\uC5B4."
+      reply: "\u2026\uC9C4\uC9DC? \uADF8\uB7FC \uD53C\uD53C\uB3C4 \uC774\uC81C \uC815\uAC00
+        \uBC1B\uC744 \uAC70\uC57C! \uB108\uB9CC \uBE7C\uACE0!"
+      affinity: 8
+    - label: "\uC7A5\uBD80 \uAC19\uC774 \uBD10 \uC904\uAC8C."
+      reply: "\uC640, \uACC4\uC0B0 \uBE60\uB974\uB2E4! \uD53C\uD53C \uB3D9\uC5C5\uC790
+        \uD560\uB798?"
+      affinity: 5
+    afterLines:
+    - fromPlayer: 0
+      text: "\uB0B4\uC77C\uC740 \uD751\uC790\uB2E4! \uD53C\uD53C\uAC00 \uC57D\uC18D\uD560\uAC8C!"
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_pipi_affection
+    title: "\uD53C\uD53C\uC758 \uBC1C\uBA85\uD488"
+    requiredStage: 3
+    locationId: loc_scrap_yard
+    fromHour: 15
+    toHour: 19
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC9DC\uC794! \uB108\uB97C \uC704\uD55C \uBC1C\uBA85\uD488! \uC774\uB984\uC740\u2026
+        \uC544\uC9C1 \uC5C6\uC5B4!"
+    - fromPlayer: 0
+      text: "\uD3ED\uBC1C\uC740 \uC548 \uD574! \uC544\uB9C8\uB3C4! \uBC1B\uC544 \uC904
+        \uAC70\uC9C0?"
+    choices:
+    - label: "\uC774\uB984\uC740 \uD53C\uD53C \uD638\uB85C \uD558\uC790."
+      reply: "\uD53C\uD53C \uD638! \uCD5C\uACE0\uC758 \uC774\uB984\uC774\uC57C! \uB300\uB7C9
+        \uC0DD\uC0B0 \uB4E4\uC5B4\uAC04\uB2E4!"
+      affinity: 10
+    - label: "\uD3ED\uBC1C\uD558\uBA74 \uAC19\uC774 \uB3C4\uB9DD\uAC00\uC790."
+      reply: "\uD5E4\uD5E4, \uAC19\uC774\uB77C\uBA74 \uD3ED\uBC1C\uB3C4 \uC7AC\uBC0C\uACA0\uB2E4!"
+      affinity: 8
+    afterLines:
+    - fromPlayer: 0
+      text: "\uC774\uAC74 \uB0A8\uC740 \uBD80\uD488\uC774\uC57C. \uB108\uB77C\uBA74
+        \uC88B\uC740 \uB370 \uC4F8 \uAC70\uC57C!"
+    rewardItem: {fileID: 11400000, guid: 342d1ac3d9605574e949adea087b15eb, type: 2}
+    rewardItemAmount: 6

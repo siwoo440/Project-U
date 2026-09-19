@@ -23,7 +23,7 @@ MonoBehaviour:
     source: food_berry
   - item: {fileID: 11400000, guid: eef1b375027259b42834d2262ce9dd96, type: 2}
     preference: 1
-    source: tag:sweet
+    source: food_apple
   - item: {fileID: 11400000, guid: 250b3288a0c4e7e428748a942a5f848a, type: 2}
     preference: 1
     source: tag:sweet

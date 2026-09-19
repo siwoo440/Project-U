@@ -28,3 +28,31 @@ quest_mireille_special,char_mireille,Special,겨울 양털 목도리,food_warm_m
 quest_milky_special,char_milky,Special,황금 잉어 만찬 준비,resource_fish_golden_carp:1|drink_milk:2,180,12,food_warm_milk:2,5,All,Trust,"특별한 날에 황금 잉어 만찬을 내고 싶어요~ 황금 잉어랑 우유 두 병, 부탁해도 될까요?",정말 가져왔네요…! 첫 접시는 당신 거예요. 이건 따뜻한 우유예요~,event_milky_trust
 quest_dravia_special,char_dravia,Special,네 손에 맞는 도끼,item_iron_ore:10|food_grilled_fish:2,50,10,item_iron_axe:1,5,All,Trust,철광석 열 개랑 구운 생선 두 개. …네 도끼를 만들어 줄 생각이다.,받아. 네 손에 맞춰 두드린 도끼다. 함부로 쓰지 마.,event_dravia_trust
 quest_lichel_special,char_lichel,Special,큰손 손님의 주문,resource_fish_golden_carp:1|resource_fish_catfish:2,120,10,equipment_small_backpack:1,5,Summer|Autumn,Trust,큰손 손님이 황금 잉어랑 메기 두 마리를 찾아. …너한테만 말하는 거야.,"대박 거래였어! 이건 네 몫이야. 가방, 필요했지? 흥.",event_lichel_trust
+quest_bellamorta_mushroom,char_bellamorta,Board,달이기 좋은 버섯,item_wild_mushroom:5,45,4,,3,All,,숲 버섯 다섯 개. 향이 짙은 걸로요. …어떤 걸 골라 올지 궁금하네요.,역시. 좋은 걸 고르는 눈이 있었군요.,
+quest_bellamorta_crucian,char_bellamorta,Board,비늘 가루 재료,resource_fish_crucian:2,50,4,,3,Spring|Summer|Autumn,,붕어 비늘로 반짝이는 가루를 만들 거예요. 두 마리면 충분해요.,비늘이 곱네요. 오늘 밤 약이 예쁘게 빛나겠어요.,
+quest_bellamorta_radish,char_bellamorta,Board,겨울 뿌리 약재,food_winter_radish:3,55,4,,3,Winter,,겨울무의 매운 뿌리는 몸을 데우는 약이 돼요. 세 개만 가져와요.,차가운 손으로 캐 왔군요. …고마워요.,
+quest_bellamorta_special,char_bellamorta,Special,진심을 비추는 물약,item_herbal_tea:3|item_iron_ore:3,120,10,item_vitality_potion:3,5,All,Trust,"거짓말을 못 하게 하는 물약… 아니, 그냥 진심이 조금 보이는 물약이에요. 약초 차 세 잔과 광석 세 개가 필요해요.",완성됐어요. 첫 모금은… 아직 비밀. 대신 이 물약을 가져가요.,event_bellamorta_trust
+quest_arachne_fiber,char_arachne,Board,실 잣기용 섬유,item_plant_fiber:15,40,4,,3,All,,"풀 섬유 열다섯 개. 거칠어도 괜찮아, 내가 부드럽게 만들 거니까.",좋아. 이걸로 오늘 밤 실을 잔뜩 자을 수 있겠어.,
+quest_arachne_berry,char_arachne,Board,보랏빛 염료,food_berry:8,35,3,,2,All,,열매 여덟 개. 즙을 짜서 실을 물들일 거야. 보랏빛이 제일 예쁘거든.,색이 곱게 나오겠어. 너도 한 벌 입어 볼래?,
+quest_arachne_pumpkin,char_arachne,Board,가을 주황 염료,food_pumpkin:1,45,4,,3,Autumn,,가을엔 주황색이 유행이야. 호박 한 덩이만 구해 줘.,완벽한 주황이야. 이번 가을 옷은 이걸로 정했어.,
+quest_arachne_special,char_arachne,Special,밤하늘 드레스,item_spider_silk:6|item_iron_ore:2,100,10,equipment_cloth_shirt:1,5,All,Trust,밤하늘처럼 반짝이는 옷을 짓고 싶어. 거미 실 여섯 타래랑 단추로 쓸 광석 두 개. …너한테만 부탁하는 거야.,"다 지었어. 드레스는 내 거, 이 셔츠는 네 거. 거절은 안 받아.",event_arachne_trust
+quest_milu_berry,char_milu,Board,열매 목욕,food_berry:6,28,3,,2,All,,열매 여섯 개 주면~ 미루가 몸에 넣고 동동 띄울래~ 알록달록해져~,와아~ 미루 몸이 보라색 됐어~ 예쁘지~?,
+quest_milu_strawberry,char_milu,Board,딸기 젤리 연구,food_strawberry:4,38,4,,2,Spring|Summer,,딸기 네 개~ 미루가 딸기 맛 미루가 돼 볼래~,헤헤~ 이제 미루한테서 딸기 냄새 나~,
+quest_milu_smelt,char_milu,Board,겨울 물고기 친구,resource_fish_smelt:2,50,4,,3,Winter,,겨울엔 웅덩이가 심심해~ 빙어 두 마리랑 놀고 싶어~ 먹는 거 아니야~,빙어 친구 생겼다~ …조금만 쳐다볼게~,
+quest_milu_special,char_milu,Special,웅덩이 축제,drink_water_bottle:5|food_berry:10,80,10,food_sweet_jelly:4,5,All,Trust,미루가~ 습지 친구들이랑 웅덩이 축제 할 거야~ 물 다섯 병이랑 열매 열 개 필요해~,축제 대성공이야~ 이건 미루가 꾹꾹 만든 젤리~ 너 거야~,event_milu_trust
+quest_kasumi_apple,char_kasumi,Board,공양 사과,food_apple:5,32,3,,2,All,,"후후, 사당에 올릴 사과가 다섯 개 필요해요. 반짝이는 걸로요.","신님도 기뻐하실 거예요. 물론 저도요, 후후.",
+quest_kasumi_egg,char_kasumi,Board,유부초밥 달걀,food_egg:3,40,4,,2,All,,유부초밥에 넣을 달걀 세 개. 달걀 없는 유부초밥은 쓸쓸하니까요.,이걸로 오늘 공양은 풍성하겠네요. 한 개는 몰래 드릴게요.,
+quest_kasumi_radish,char_kasumi,Board,겨울 제물,food_winter_radish:3,55,4,,3,Winter,,눈이 오면 사당에 무를 올리는 풍습이 있어요. 세 개만 부탁해요.,하얀 무가 눈 같네요. 올해 겨울도 무사할 거예요.,
+quest_kasumi_special,char_kasumi,Special,여우불 축제,food_baked_potato:3|item_herbal_tea:2,110,10,food_inari_sushi:3,5,All,Trust,"여우불 축제에 올릴 구운 감자 세 개와 약초 차 두 잔. 후후, 축제엔 당신도 와야 해요.",여우불이 참 곱게 탔어요. 이건 축제 음식이에요. 같이 먹어요.,event_kasumi_trust
+quest_seira_mushroom,char_seira,Board,독버섯 표본,item_wild_mushroom:4,38,4,,3,All,,버섯 네 개. 독이 있든 없든 괜찮아요. 제가 가려낼 수 있으니까.,좋은 표본이에요. …맨손으로 만지진 않았죠?,
+quest_seira_trout,char_seira,Board,비늘 비교 연구,resource_fish_trout:1,55,4,,3,Spring|Autumn,,송어 한 마리. 제 비늘과 비교해 보고 싶어요. …이상한 부탁인가요?,비늘 모양이 다르네요. 기록해 둘게요. 고마워요.,
+quest_seira_tea,char_seira,Board,몸을 데우는 차,item_herbal_tea:2,28,3,,2,All,,약초 차 두 잔. 몸이 차가워지면… 생각이 느려져요.,따뜻해요. 이제 조금 더 연구할 수 있겠어요.,
+quest_seira_special,char_seira,Special,완전한 해독제,item_wild_mushroom:6|resource_fish_catfish:1,120,10,medicine_antidote:3,5,Summer|Autumn,Trust,어떤 독이든 푸는 해독제… 거의 다 됐어요. 버섯 여섯 개랑 메기 한 마리. 메기 쓸개가 마지막 열쇠예요.,완성이에요. …처음으로 누군가를 위해 만든 약이에요. 받아 줘요.,event_seira_trust
+quest_pipi_stone,char_pipi,Board,작업대 받침돌,resource_stone:15,30,3,,2,All,,돌 열다섯 개! 작업대가 삐걱삐걱해! 빨리빨리!,"헤헤, 이제 흔들리지 않아! 피피 작업대 최고!",
+quest_pipi_ore,char_pipi,Board,고철 녹이기,item_iron_ore:3,45,4,,3,All,,"철광석 세 개! 녹여서 톱니바퀴 만들 거야. 값은 제대로 쳐 줄게, 진짜!",반짝반짝! 이걸로 엄청난 거 만든다!,
+quest_pipi_wood,char_pipi,Board,발명품 뼈대,item_wood:15,25,3,,2,All,,나무 열다섯 개! 발명품 뼈대가 필요해. 무슨 발명품인지는 비밀!,좋아좋아! 완성되면 너한테 제일 먼저 보여 줄게!,
+quest_pipi_special,char_pipi,Special,저절로 물 주는 기계,item_scrap_parts:8|item_spider_silk:4,100,10,tool_watering_can:1,5,All,Trust,피피 인생 최고의 발명! 고철 부품 여덟 개랑 거미 실 네 타래만 있으면 돼! 이번엔 진짜야!,…폭발은 안 했어! 대신 이 물뿌리개를 줄게. 피피가 고친 거라 튼튼해!,event_pipi_trust
+quest_safira_fiber,char_safira,Board,천막 끈,item_plant_fiber:12,32,3,,2,All,,섬유 열두 개. 천막 끈이 끊어졌다.,…됐다. 모래바람에도 버틴다.,
+quest_safira_water,char_safira,Board,사막의 물,drink_water_bottle:4,18,3,,2,All,,물 네 병. 오아시스까지 가기 귀찮다.,고맙다. …목이 말랐다.,
+quest_safira_potato,char_safira,Board,모래 구이 감자,food_potato:4,45,4,,3,Spring,,감자 네 개. 뜨거운 모래에 묻으면 맛있다.,…같이 먹을래? 아니면 됐다.,
+quest_safira_special,char_safira,Special,별자리 지도,medicine_bandage:3|food_grilled_fish:2,110,10,medicine_desert_salve:3,5,All,Trust,"밤 사막을 건너려면 별자리 지도가 필요하다. 붕대 세 개, 구운 생선 두 개. 길이 멀다.",지도를 다 그렸다. 길은… 너와 같이 걷고 싶다. 연고 받아.,event_safira_trust

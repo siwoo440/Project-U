@@ -107,6 +107,8 @@ public static class NpcCastBuilder
         List<NpcCharacterData> cast = database.GetPlacedCast();
         List<NpcShopData> allShops = NpcShopBuilder.LoadShops();
         List<NpcCraftBook> allBooks = NpcShopBuilder.LoadCraftBooks(); // 102일차
+        List<NpcQuestBook> questBooks = NpcQuestBuilder.LoadBooks(); // 103일차
+        List<NpcEventBook> eventBooks = NpcEventBuilder.LoadBooks(); // 103일차
 
         foreach (IGrouping<int, NpcCharacterData> wave in cast.GroupBy(character => character.CastWave).OrderBy(group => group.Key))
         {
@@ -161,14 +163,16 @@ public static class NpcCastBuilder
                 ready += errors == before ? 1 : 0;
             }
 
-            // 상점 · 제작 · 의뢰 · 이벤트는 차수마다 뒤이어 붙인다 (102일차: 2차 상점 · 제작)
+            // 상점 · 제작 · 의뢰 · 이벤트는 차수마다 뒤이어 붙인다 (102일차: 2차 상점 · 제작, 103일차: 2차 의뢰 · 이벤트)
             List<NpcCharacterData> members = wave.ToList();
             int shops = members.Count(character => character.HasRole(NpcRole.Merchant) && allShops.Any(shop => shop.OwnerId == character.CharacterId));
             int merchants = members.Count(character => character.HasRole(NpcRole.Merchant));
             bool ShopCrafter(NpcCharacterData character) => character.HasRole(NpcRole.Merchant) && character.HasRole(NpcRole.Crafter) && character.CanInteract(NpcInteraction.Craft); // 상점 창 제작 탭
             int crafters = members.Count(ShopCrafter);
             int books = members.Count(character => ShopCrafter(character) && allBooks.Any(book => book.OwnerId == character.CharacterId));
-            report.AppendLine($"{wave.Key}차 {members.Count}명 준비 {ready}/{members.Count} ({string.Join(" · ", members.Select(character => character.DisplayName))}) · 상점 {shops}/{merchants} · 제작 {books}/{crafters}");
+            int quests = members.Count(character => questBooks.Any(book => book.OwnerId == character.CharacterId));
+            int events = members.Count(character => eventBooks.Any(book => book.OwnerId == character.CharacterId && book.Events.Count >= 3));
+            report.AppendLine($"{wave.Key}차 {members.Count}명 준비 {ready}/{members.Count} ({string.Join(" · ", members.Select(character => character.DisplayName))}) · 상점 {shops}/{merchants} · 제작 {books}/{crafters} · 의뢰 {quests}/{members.Count} · 이벤트 {events}/{members.Count}");
         }
 
         if (!sceneOpen)

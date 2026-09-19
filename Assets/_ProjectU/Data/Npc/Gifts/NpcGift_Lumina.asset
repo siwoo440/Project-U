@@ -23,6 +23,9 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 3a8ea9dc329d35c4b8b4c84410a7f15d, type: 2}
     preference: 1
     source: food_berry
+  - item: {fileID: 11400000, guid: a3a22e114d5dd36498ccd4cc83dd2ffb, type: 2}
+    preference: 1
+    source: item_spider_silk
   - item: {fileID: 11400000, guid: de7994a6b3b2dcc479cd72a544075a60, type: 2}
     preference: 1
     source: tag:seed

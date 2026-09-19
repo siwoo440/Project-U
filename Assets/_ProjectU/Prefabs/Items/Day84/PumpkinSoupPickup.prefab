@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 5323803264307760234}
+  - component: {fileID: 4570626492473930628}
   m_Layer: 3
   m_Name: PumpkinSoupPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 8951641637157099373}
+  - {fileID: 2235091637617481890}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &5323803264307760234
+--- !u!114 &4570626492473930628
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: item_pumpkin_soup
-  generatedVisual: {fileID: 5184960499242670899}
+  generatedVisual: {fileID: 2651094878254011644}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &1117482520882968096
+--- !u!1001 &7835175703301945839
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92ddb174554893b4c83f2bafb33c76d5, type: 3}
---- !u!1 &5184960499242670899 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5221561430538808595, guid: 92ddb174554893b4c83f2bafb33c76d5, type: 3}
-  m_PrefabInstance: {fileID: 1117482520882968096}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8951641637157099373 stripped
+--- !u!4 &2235091637617481890 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8338562915317031245, guid: 92ddb174554893b4c83f2bafb33c76d5, type: 3}
-  m_PrefabInstance: {fileID: 1117482520882968096}
+  m_PrefabInstance: {fileID: 7835175703301945839}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2651094878254011644 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5221561430538808595, guid: 92ddb174554893b4c83f2bafb33c76d5, type: 3}
+  m_PrefabInstance: {fileID: 7835175703301945839}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

@@ -185,3 +185,94 @@ char_safira,rain,10,All,All,Bad,7,loc_desert_camp,천막 모래주머니 쌓기
 char_safira,rain,10,All,All,Bad,12,loc_home_safira,비를 피해 천막 안 정리
 char_safira,rain,10,All,All,Bad,18,loc_desert_camp,젖은 모래 말리기
 char_safira,rain,10,All,All,Bad,21,loc_home_safira,잠
+char_serena,default,0,All,All,Any,6,loc_ruins_library,고문서 먼지 털기
+char_serena,default,0,All,All,Any,12,loc_ruins_plaza,석상 비문 읽기
+char_serena,default,0,All,All,Any,15,loc_village_square,마을 이야기 받아 적기
+char_serena,default,0,All,All,Any,19,loc_home_serena,촛불 아래 시 쓰기
+char_serena,friday,5,Friday,All,Any,7,loc_ruins_library,낭독할 시 고르기
+char_serena,friday,5,Friday,All,Any,12,loc_cafe,사람들 목소리 듣기
+char_serena,friday,5,Friday,All,Any,16,loc_village_square,옛이야기 들려주기
+char_serena,friday,5,Friday,All,Any,19,loc_home_serena,오늘 들은 이야기 옮겨 적기
+char_serena,rain,10,All,All,Bad,7,loc_ruins_library,빗소리 속 필사
+char_serena,rain,10,All,All,Bad,13,loc_ruins_gate,지하 문 너머 기록 찾기
+char_serena,rain,10,All,All,Bad,17,loc_home_serena,젖은 책 말리기
+char_liriel,default,0,All,All,Any,6,loc_forest_fairy_ring,버섯 고리 지키기
+char_liriel,default,0,All,All,Any,10,loc_forest_flower_garden,꽃밭에 빛 나눠 주기
+char_liriel,default,0,All,All,Any,13,loc_forest_edge,숲 입구 순찰
+char_liriel,default,0,All,All,Any,17,loc_forest_fairy_ring,해 질 녘 순찰
+char_liriel,default,0,All,All,Any,20,loc_home_liriel,잠
+char_liriel,spring,5,All,Spring,Any,5,loc_forest_fairy_ring,봄꽃 깨우기
+char_liriel,spring,5,All,Spring,Any,8,loc_forest_flower_garden,새싹 인사
+char_liriel,spring,5,All,Spring,Any,11,loc_farm_fields,밭에 봄 축복 뿌리기
+char_liriel,spring,5,All,Spring,Any,16,loc_forest_edge,숲으로 돌아가는 길
+char_liriel,spring,5,All,Spring,Any,19,loc_home_liriel,잠
+char_liriel,rain,10,All,All,Bad,7,loc_forest_fairy_ring,빗방울 세기
+char_liriel,rain,10,All,All,Bad,12,loc_home_liriel,버섯 갓 아래 비 피하기
+char_liriel,rain,10,All,All,Bad,16,loc_forest_fairy_ring,젖은 날개 말리기
+char_liriel,rain,10,All,All,Bad,20,loc_home_liriel,잠
+char_chesca,default,0,All,All,Any,7,loc_ruins_plaza,유물 닦기
+char_chesca,default,0,All,All,Any,11,loc_ruins_library,유물 기록 찾기
+char_chesca,default,0,All,All,Any,14,loc_ruins_gate,지하 문 틈 구경
+char_chesca,default,0,All,All,Any,17,loc_ruins_plaza,해 질 녘 유물 세기
+char_chesca,default,0,All,All,Any,20,loc_home_chesca,뚜껑 닫고 잠
+char_chesca,wednesday,5,Wednesday,All,Any,6,loc_ruins_plaza,짐 꾸리기
+char_chesca,wednesday,5,Wednesday,All,Any,9,loc_village_square,마을 사람 물건 구경
+char_chesca,wednesday,5,Wednesday,All,Any,13,loc_cafe,찻잔 감정하기
+char_chesca,wednesday,5,Wednesday,All,Any,15,loc_ruins_plaza,마을에서 본 물건 기록
+char_chesca,wednesday,5,Wednesday,All,Any,20,loc_home_chesca,뚜껑 닫고 잠
+char_chesca,rain,10,All,All,Bad,8,loc_home_chesca,뚜껑 닫고 비 피하기
+char_chesca,rain,10,All,All,Bad,13,loc_ruins_library,책장 사이 유물 찾기
+char_chesca,rain,10,All,All,Bad,17,loc_home_chesca,보물 세며 잠들기
+char_marielle,default,0,All,All,Any,6,loc_coast_rocks,갯바위 조개 캐기
+char_marielle,default,0,All,All,Any,10,loc_coast_dock,부두에서 해초 말리기
+char_marielle,default,0,All,All,Any,13,loc_pond_dock,마을 연못 손님 맞기
+char_marielle,default,0,All,All,Any,17,loc_coast_rocks,저녁 조개 캐기
+char_marielle,default,0,All,All,Any,20,loc_home_marielle,산호 동굴에서 잠
+char_marielle,summer,5,All,Summer,Any,5,loc_coast_rocks,새벽 진주 캐기
+char_marielle,summer,5,All,Summer,Any,9,loc_coast_dock,뱃사람과 이야기
+char_marielle,summer,5,All,Summer,Any,12,loc_pond_dock,연못에서 콧노래
+char_marielle,summer,5,All,Summer,Any,17,loc_coast_dock,노을 보며 헤엄
+char_marielle,summer,5,All,Summer,Any,21,loc_home_marielle,산호 동굴에서 잠
+char_marielle,rain,10,All,All,Bad,7,loc_coast_rocks,비 오는 날 조개 줍기
+char_marielle,rain,10,All,All,Bad,11,loc_coast_dock,빗속 헤엄
+char_marielle,rain,10,All,All,Bad,16,loc_home_marielle,파도 소리 듣기
+char_lumina,default,0,All,All,Any,7,loc_forest_flower_garden,꽃가루 모으기
+char_lumina,default,0,All,All,Any,10,loc_farm_fields,밭 꽃가루 조사
+char_lumina,default,0,All,All,Any,15,loc_village_square,마을 꽃 관찰
+char_lumina,default,0,All,All,Any,17,loc_forest_flower_garden,달빛 꽃 기다리기
+char_lumina,default,0,All,All,Any,21,loc_home_lumina,고치 안에서 잠
+char_lumina,spring,5,All,Spring,Any,6,loc_forest_flower_garden,봄 첫 꽃가루
+char_lumina,spring,5,All,Spring,Any,9,loc_forest_edge,숲 입구 꽃 조사
+char_lumina,spring,5,All,Spring,Any,13,loc_farm_fields,딸기꽃 관찰
+char_lumina,spring,5,All,Spring,Any,17,loc_forest_flower_garden,꽃가루 기록 정리
+char_lumina,spring,5,All,Spring,Any,21,loc_home_lumina,고치 안에서 잠
+char_lumina,rain,10,All,All,Bad,8,loc_home_lumina,고치 안에서 날개 말리기
+char_lumina,rain,10,All,All,Bad,13,loc_forest_fairy_ring,비에 젖은 버섯 관찰
+char_lumina,rain,10,All,All,Bad,17,loc_home_lumina,빗소리 들으며 잠
+char_neri,default,0,All,All,Any,5,loc_swamp_hut,새벽 날씨 관측
+char_neri,default,0,All,All,Any,8,loc_village_square,오늘의 날씨 알리기
+char_neri,default,0,All,All,Any,13,loc_pond_dock,연못 개구리 친구 만나기
+char_neri,default,0,All,All,Any,16,loc_swamp_hut,구름 기록
+char_neri,default,0,All,All,Any,21,loc_home_neri,빗물 측정기 옆에서 잠
+char_neri,summer,5,All,Summer,Any,5,loc_swamp_hut,새벽 습도 재기
+char_neri,summer,5,All,Summer,Any,8,loc_swamp_boardwalk,여름 무지개 관측
+char_neri,summer,5,All,Summer,Any,14,loc_swamp_hut,뜨거운 낮 피하기
+char_neri,summer,5,All,Summer,Any,18,loc_swamp_boardwalk,저녁 개골개골 노래
+char_neri,summer,5,All,Summer,Any,21,loc_home_neri,잠
+char_neri,rain,10,All,All,Bad,5,loc_swamp_boardwalk,빗속 개골개골 노래
+char_neri,rain,10,All,All,Bad,8,loc_village_square,비 소식 알리기
+char_neri,rain,10,All,All,Bad,13,loc_pond_dock,빗속 연못 수영
+char_neri,rain,10,All,All,Bad,16,loc_swamp_hut,빗물 양 재기
+char_neri,rain,10,All,All,Bad,21,loc_home_neri,잠
+char_aliune,default,0,All,All,Any,6,loc_forest_flower_garden,꽃 상처 돌보기
+char_aliune,default,0,All,All,Any,9,loc_forest_edge,숲 입구 약초 치료
+char_aliune,default,0,All,All,Any,13,loc_farm_fields,시든 작물 살피기
+char_aliune,default,0,All,All,Any,16,loc_forest_edge,약초 물 주기
+char_aliune,default,0,All,All,Any,19,loc_home_aliune,온실에서 잠
+char_aliune,summer,5,All,Summer,Any,5,loc_forest_flower_garden,한여름 물 주기
+char_aliune,summer,5,All,Summer,Any,8,loc_farm_fields,밭에 그늘 만들기
+char_aliune,summer,5,All,Summer,Any,15,loc_forest_edge,마른 잎 치료
+char_aliune,summer,5,All,Summer,Any,19,loc_home_aliune,온실에서 잠
+char_aliune,rain,10,All,All,Bad,7,loc_home_aliune,온실 창문 닫기
+char_aliune,rain,10,All,All,Bad,11,loc_forest_flower_garden,빗물 모으기
+char_aliune,rain,10,All,All,Bad,16,loc_home_aliune,젖은 뿌리 쉬게 하기

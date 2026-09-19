@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: "\uC54C\uB9AC\uC6B0\uB124"
   englishName: Aliune
   isAlphaCast: 0
-  castWave: 0
+  castWave: 3
   isAvailable: 1
   profile:
     raceId: race_aliune
@@ -46,7 +46,7 @@ MonoBehaviour:
       \uC790\uB77C\uBA70 \uD587\uBE5B\uC73C\uB85C \uD68C\uBCF5\uD568"
     illustrationStyle: "\uC77C\uBCF8 \uC560\uB2C8\uD48D \uACE0\uC815 \u2013 \uD587\uBE5B
       \uC815\uC6D0, \uAF43\uACFC \uB369\uAD74\uC774 \uC790\uB77C\uB294 \uC2E0\uCCB4"
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 702e7e954db84ae4784fdb3c459b2d7b, type: 3}
   themeColor: {r: 0.4509804, g: 0.65882355, b: 0.34117648, a: 1}
   accentColor: {r: 0.9098039, g: 0.7137255, b: 0.78431374, a: 1}
   personality:
@@ -83,13 +83,14 @@ MonoBehaviour:
   maxAffinity: 100
   birthdaySeason: 3
   birthdayDay: 9
-  homeLocationId: 
-  workLocationId: 
+  homeLocationId: loc_home_aliune
+  workLocationId: loc_forest_edge
   giftProfile: {fileID: 11400000, guid: e5f60e4f6837229418ba35ffbe2ad104, type: 2}
   dialogueSet: {fileID: 11400000, guid: 42b603611c7e0c944b88ea24d6e4e732, type: 2}
-  schedule: {fileID: 0}
+  schedule: {fileID: 11400000, guid: 1bb872e30b2f7564bade8dab801415e2, type: 2}
   dataStatus: "\uAE30\uD68D \uAE30\uBC18 \uC784\uC2DC\uAC12 \uD3EC\uD568"
-  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 89\uC77C\uCC28
-    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uACF5\uD1B5 \uACC4\uC808\xB7\uB0A0\uC528\xB7\uC120\uBB3C
-    \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758 \uC120\uD638
-    \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0 \uC5F0\uACB0."
+  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 103\uC77C\uCC28
+    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uC9D1\xB7\uC77C\uD130 \xB7 \uD558\uB8E8
+    \uC77C\uC815 \xB7 \uCD94\uAC00 \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758
+    \uC120\uD638 \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0
+    \uC5F0\uACB0."

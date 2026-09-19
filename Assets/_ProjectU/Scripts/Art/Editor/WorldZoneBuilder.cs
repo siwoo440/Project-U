@@ -33,6 +33,13 @@ public static class WorldZoneBuilder
     private const float SeaLine = 100f; // 이 x보다 동쪽은 바다
     private const float ShrineHouseYaw = 270f; // 101일차: 카스미의 사당 집 (문이 사당 쪽 서쪽)
     private static readonly Vector3 ShrineHousePosition = new Vector3(50f, 0f, 104f); // 아래 위치 표보다 먼저 초기화되어야 한다
+    // 103일차: 3차 NPC 집 (입구 +Z를 바라보는 방향)
+    private static readonly Vector3 CoralGrottoPosition = new Vector3(98.2f, 0f, -15.5f); // 마리엘 (등대 아래 바닷가)
+    private const float CoralGrottoYaw = 270f;
+    private static readonly Vector3 CocoonHousePosition = new Vector3(-71.5f, 0f, -46.5f); // 루미나 (빛나는 꽃밭 동쪽)
+    private const float CocoonHouseYaw = 291f;
+    private static readonly Vector3 GreenhousePosition = new Vector3(-91f, 0f, -47f); // 알리우네 (깊은 숲 남쪽)
+    private const float GreenhouseYaw = 11f;
 
     public static readonly string[] ZoneLayerNames = { "ZoneSand", "ZoneSnow", "ZoneMud", "ZoneFlagstone" };
 
@@ -79,7 +86,15 @@ public static class WorldZoneBuilder
         { "loc_home_arachne", (new Vector3(-70.3f, 0f, 93.3f), new Vector3(-71f, 0f, 97f)) },
         { "loc_home_milu", (new Vector3(-64.6f, 0f, -86f), new Vector3(-68f, 0f, -86f)) },
         { "loc_home_kasumi", (Local(ShrineHousePosition, ShrineHouseYaw, new Vector3(0f, 0f, 2.9f)), ShrineHousePosition) },
-        { "loc_home_safira", (Local(new Vector3(68f, 0f, -79f), 315f, new Vector3(0f, 0f, 0.3f)), Local(new Vector3(68f, 0f, -79f), 315f, new Vector3(0f, 0f, 3f))) }
+        { "loc_home_safira", (Local(new Vector3(68f, 0f, -79f), 315f, new Vector3(0f, 0f, 0.3f)), Local(new Vector3(68f, 0f, -79f), 315f, new Vector3(0f, 0f, 3f))) },
+        // 103일차: 3차 NPC 집
+        { "loc_home_serena", (new Vector3(-88.4f, 0f, 87.6f), new Vector3(-90f, 0f, 89.2f)) }, // 무너진 도서관 책장 끝 (촛불 자리)
+        { "loc_home_chesca", (new Vector3(-79.4f, 0f, 95.3f), new Vector3(-80f, 0f, 97.5f)) }, // 유적 보물 더미 앞
+        { "loc_home_liriel", (new Vector3(-81f, 0f, -21.9f), new Vector3(-81f, 0f, -24f)) }, // 큰 버섯 아래
+        { "loc_home_lumina", (Local(CocoonHousePosition, CocoonHouseYaw, new Vector3(0f, 0f, 1.9f)), CocoonHousePosition) },
+        { "loc_home_aliune", (Local(GreenhousePosition, GreenhouseYaw, new Vector3(0f, 0f, 2.6f)), GreenhousePosition) },
+        { "loc_home_marielle", (Local(CoralGrottoPosition, CoralGrottoYaw, new Vector3(0f, 0f, 1.3f)), CoralGrottoPosition) },
+        { "loc_home_neri", (Local(new Vector3(-72f, 0f, -106f), 45f, new Vector3(1.2f, 0f, 2.4f)), new Vector3(-72f, 0f, -106f)) } // 기둥 위 관측 오두막
     };
 
     // 물 (물가 검사 · 지도) : 가운데 · 반지름
@@ -447,6 +462,11 @@ public static class WorldZoneBuilder
         AddCapsule(lighthouse, new Vector3(0f, 4f, 0f), 1.4f, 8f);
         lighthouse.name = "Lighthouse";
         Place(parent, "zone_tide_rocks", new Vector3(99.9f, 0f, -8f), 180f, 1f, PropCollider.Bounds, building);
+        GameObject grotto = Place(parent, "zone_coral_grotto", CoralGrottoPosition, CoralGrottoYaw, 1f, PropCollider.None, building); // 103일차: 마리엘의 집
+        AddBox(grotto, new Vector3(0f, 1.1f, -0.95f), new Vector3(3.6f, 2.2f, 0.9f));
+        AddBox(grotto, new Vector3(-1.5f, 0.9f, 0.05f), new Vector3(0.9f, 1.8f, 1.6f));
+        AddBox(grotto, new Vector3(1.5f, 0.9f, 0.05f), new Vector3(0.9f, 1.8f, 1.6f));
+        grotto.name = "CoralGrotto_Marielle";
         Place(parent, "prop_crate", new Vector3(95f, 0f, 7f), 15f, 1f, PropCollider.Bounds, building);
         Place(parent, "prop_barrel", new Vector3(95.6f, 0f, 6.2f), 0f, 1f, PropCollider.Bounds, building);
         Place(parent, "prop_barrel", new Vector3(95.4f, 0f, 13.3f), 0f, 1f, PropCollider.Bounds, building);
@@ -456,7 +476,7 @@ public static class WorldZoneBuilder
         System.Random random = new System.Random(Seed + 1);
         List<Vector3> placed = new List<Vector3> { new Vector3(90f, 0f, 20f), new Vector3(95.5f, 0f, -24f) };
         count += Scatter(random, parent, new[] { "rock_large", "rock_small", "pebbles" }, 10, () => new Vector3(Rand(random, 88f, 98.5f), 0f, Rand(random, -60f, 60f)),
-            new[] { (new Vector3(95f, 0f, 10f), 6f), (new Vector3(91f, 0f, 16f), 5f), (new Vector3(97f, 0f, -8f), 4f) }, 4f, 0.8f, 1.6f, PropCollider.None, 0, placed);
+            new[] { (new Vector3(95f, 0f, 10f), 6f), (new Vector3(91f, 0f, 16f), 5f), (new Vector3(97f, 0f, -8f), 4f), (CoralGrottoPosition, 4.5f) }, 4f, 0.8f, 1.6f, PropCollider.None, 0, placed);
         return count;
     }
 
@@ -537,6 +557,13 @@ public static class WorldZoneBuilder
         AddBox(hut, new Vector3(0f, 1.5f, 0f), new Vector3(3.9f, 3f, 3.7f));
         AddCapsule(hut, new Vector3(1.9f, 0.5f, 2.3f), 0.5f, 1f);
         hut.name = "WitchHut";
+        GameObject cocoon = Place(parent, "zone_cocoon_house", CocoonHousePosition, CocoonHouseYaw, 1f, PropCollider.None, building); // 103일차: 루미나의 집
+        AddCapsule(cocoon, new Vector3(0f, 1.75f, 0.1f), 0.9f, 2.4f);
+        AddCapsule(cocoon, new Vector3(0f, 1.6f, -1.25f), 0.3f, 3.2f);
+        cocoon.name = "CocoonHouse_Lumina";
+        GameObject greenhouse = Place(parent, "zone_flower_greenhouse", GreenhousePosition, GreenhouseYaw, 1f, PropCollider.None, building); // 103일차: 알리우네의 집
+        AddCapsule(greenhouse, new Vector3(0f, 1.3f, 0f), 1.95f, 2.6f);
+        greenhouse.name = "Greenhouse_Aliune";
         GameObject great = Place(parent, "zone_great_stump", stump, 30f, 1f, PropCollider.None, building);
         AddCapsule(great, new Vector3(0f, 1.3f, 0f), 2.9f, 2.6f);
         great.name = "GreatStump";
@@ -556,7 +583,8 @@ public static class WorldZoneBuilder
 
         // 빈터를 둘러싼 큰 나무 숲
         System.Random random = new System.Random(Seed + 3);
-        (Vector3, float)[] clearings = { (ring, 5f), (garden, 5.5f), (hutPosition, 7f), (stump, 6f), (center, 9f), (new Vector3(-81f, 0f, -24f), 2.5f), (new Vector3(-93f, 0f, -25f), 2.5f) };
+        (Vector3, float)[] clearings = { (ring, 5f), (garden, 5.5f), (hutPosition, 7f), (stump, 6f), (center, 9f), (new Vector3(-81f, 0f, -23f), 3.5f), (new Vector3(-93f, 0f, -25f), 2.5f),
+            (CocoonHousePosition, 5f), (GreenhousePosition, 5.5f) }; // 103일차: 3차 NPC 집 둘레 비움
         List<Vector3> placed = new List<Vector3>();
         count += Scatter(random, parent, new[] { "tree_round", "tree_round_b", "tree_pine", "tree_round" }, 46, () => InEllipse(random, center, 32f, 30f), clearings, 3.4f, 1.5f, 2.1f, PropCollider.Trunk, 0, placed);
         count += Scatter(random, parent, new[] { "bush", "bush_berry", "mushroom_cluster", "fallen_log", "stump" }, 22, () => InEllipse(random, center, 30f, 28f), clearings, 2.2f, 0.9f, 1.4f, PropCollider.None, 0, placed);

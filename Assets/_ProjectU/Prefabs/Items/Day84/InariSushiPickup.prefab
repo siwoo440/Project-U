@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 8915097173887633950}
+  - component: {fileID: 151791773705900817}
   m_Layer: 3
   m_Name: InariSushiPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 7714683519375812095}
+  - {fileID: 8657326235382545602}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &8915097173887633950
+--- !u!114 &151791773705900817
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: item_inari_sushi
-  generatedVisual: {fileID: 3913169415616050810}
+  generatedVisual: {fileID: 2700841767223586631}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &3711132114751346344
+--- !u!1001 &2356958618200149909
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a120d86c5edc954d91d7402c7ca90ec, type: 3}
---- !u!1 &3913169415616050810 stripped
+--- !u!1 &2700841767223586631 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 418491886127014098, guid: 6a120d86c5edc954d91d7402c7ca90ec, type: 3}
-  m_PrefabInstance: {fileID: 3711132114751346344}
+  m_PrefabInstance: {fileID: 2356958618200149909}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &7714683519375812095 stripped
+--- !u!4 &8657326235382545602 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6381769135914283863, guid: 6a120d86c5edc954d91d7402c7ca90ec, type: 3}
-  m_PrefabInstance: {fileID: 3711132114751346344}
+  m_PrefabInstance: {fileID: 2356958618200149909}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

@@ -35,7 +35,7 @@ public static class NpcContentBuilder
 
     private const string CommonDialogueId = "*"; // 모든 NPC 공통 대사 (자기 대사가 없을 때 사용)
     public const int ExpectedAlphaCast = 7;
-    public static readonly int[] ExpectedCastPerWave = { 7, 7 }; // 101일차: 차수별 배치 인원 (1차 알파 · 2차 상인 · 제작형)
+    public static readonly int[] ExpectedCastPerWave = { 7, 7, 7 }; // 101일차: 차수별 배치 인원 (1차 알파 · 2차 상인 · 제작형 · 103일차: 3차 자연 · 기록형)
 
     private static readonly Regex IdPattern = new Regex("^char_[a-z0-9]+(?:_[a-z0-9]+)*$");
     private static readonly Regex ColorPattern = new Regex("#[0-9A-Fa-f]{6}");

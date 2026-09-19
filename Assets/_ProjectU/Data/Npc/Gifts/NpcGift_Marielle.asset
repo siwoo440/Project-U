@@ -23,6 +23,9 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 09c927a2524bd8f409d6b8ddab61bc58, type: 2}
     preference: 1
     source: food_winter_radish
+  - item: {fileID: 11400000, guid: bad80e6a70bf78a4a81937454f7a8f95, type: 2}
+    preference: 1
+    source: resource_fish_crucian
   - item: {fileID: 11400000, guid: 83e8c92974737c246a6f55d31325f68b, type: 2}
     preference: 1
     source: resource_fish_smelt

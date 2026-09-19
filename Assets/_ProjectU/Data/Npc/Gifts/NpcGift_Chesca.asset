@@ -27,6 +27,9 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: bc991e404803cba4292542d6a52ddd7a, type: 2}
     preference: 1
     source: item_plant_fiber
+  - item: {fileID: 11400000, guid: 342d1ac3d9605574e949adea087b15eb, type: 2}
+    preference: 1
+    source: item_scrap_parts
   - item: {fileID: 11400000, guid: 34ed2068e680c3e47b192431c37799db, type: 2}
     preference: 3
     source: tool_pickaxe

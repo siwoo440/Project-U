@@ -114,7 +114,7 @@ Material:
     - _Smoothness: 0.8
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SrcBlend: 5
+    - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 1
     - _WorkflowMode: 1
@@ -122,7 +122,7 @@ Material:
     - _ZWrite: 0
     m_Colors:
     - _BaseColor: {r: 0.72, g: 0.97, b: 0.88, a: 0.45}
-    - _Color: {r: 0.72, g: 0.97, b: 0.88, a: 0.45}
+    - _Color: {r: 0.72, g: 0.96999997, b: 0.88, a: 0.45}
     - _EmissionColor: {r: 0.252, g: 0.3395, b: 0.308, a: 0.1575}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
