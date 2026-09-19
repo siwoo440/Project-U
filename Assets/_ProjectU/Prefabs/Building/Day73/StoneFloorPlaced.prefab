@@ -451,6 +451,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1234262305332111169}
   - component: {fileID: 4380375643784443883}
+  - component: {fileID: 5657062476708117657}
   m_Layer: 9
   m_Name: StoneFloorPlaced
   m_TagString: Untagged
@@ -496,6 +497,24 @@ MonoBehaviour:
   - {fileID: 4070393527729323997}
   originalMeshes:
   - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &5657062476708117657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6841630739043241179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b77acd122b5a59348a17ad9eb55e1613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ContentVisualIdentity
+  category: 3
+  contentId: structure_stone_floor
+  useExplicitVisualProfileId: 0
+  explicitVisualProfileId: 
+  resolvedVisualProfileId: visual_buildable_stone_floor
+  isIdentityValid: 1
 --- !u!1 &8715424258654873821
 GameObject:
   m_ObjectHideFlags: 0

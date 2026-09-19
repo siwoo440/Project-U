@@ -244,6 +244,7 @@ GameObject:
   - component: {fileID: 8397334461504662250}
   - component: {fileID: 8802025950628228665}
   - component: {fileID: 2081967643490259815}
+  - component: {fileID: 7585487841027611193}
   m_Layer: 3
   m_Name: TreeResource_01
   m_TagString: Untagged
@@ -342,6 +343,24 @@ MonoBehaviour:
   originalMeshes:
   - {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &7585487841027611193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5053653304088510095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b77acd122b5a59348a17ad9eb55e1613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ContentVisualIdentity
+  category: 4
+  contentId: item_wood
+  useExplicitVisualProfileId: 1
+  explicitVisualProfileId: visual_resource_tree
+  resolvedVisualProfileId: visual_resource_tree
+  isIdentityValid: 1
 --- !u!1001 &2430698227380603256
 PrefabInstance:
   m_ObjectHideFlags: 0

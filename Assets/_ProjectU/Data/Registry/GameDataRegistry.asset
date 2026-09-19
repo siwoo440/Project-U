@@ -112,11 +112,32 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2de8045cc43cf9f4b8880bae6a5e5b07, type: 2}
   - {fileID: 11400000, guid: 61ab654eb89704c458884ec97f8f5522, type: 2}
   visualProfiles:
+  - {fileID: 11400000, guid: 16d7ace889bcf044b8157fc5c8ff850a, type: 2}
+  - {fileID: 11400000, guid: f0642dd7c7ea9a547b3eb1b108fab45e, type: 2}
+  - {fileID: 11400000, guid: 0fa3d59ac767f344a819d3aa51afc417, type: 2}
+  - {fileID: 11400000, guid: 35abd64a36a63474eaa7db4237153d8a, type: 2}
+  - {fileID: 11400000, guid: 820a89fff85b13f4e889f4b57039e2d5, type: 2}
+  - {fileID: 11400000, guid: a202a7f999b993c4392177751e176349, type: 2}
+  - {fileID: 11400000, guid: 659d02a0798da9b4fad3ff545b22898b, type: 2}
+  - {fileID: 11400000, guid: c21029a94806f694184ba8e2eab8dcba, type: 2}
+  - {fileID: 11400000, guid: 7c4acef0e2f5d6b43b26fe5f2be3bcf0, type: 2}
+  - {fileID: 11400000, guid: 2c22a1b538b67f44ab43f4f680ad6b61, type: 2}
+  - {fileID: 11400000, guid: 325e30462d03a494fa89d8869c63ccbd, type: 2}
+  - {fileID: 11400000, guid: d53d58dad514d2446be088542799cf89, type: 2}
+  - {fileID: 11400000, guid: 481c20573b81c4d45840f71f91252f69, type: 2}
+  - {fileID: 11400000, guid: 0ea061351cfd15a4f9439b23471a0807, type: 2}
+  - {fileID: 11400000, guid: d96b884f49e94734b90b394955334140, type: 2}
   - {fileID: 11400000, guid: a2b63d4407ce3ba4487452a927419c7b, type: 2}
+  - {fileID: 11400000, guid: cc1f254f69c13a74b8c477ea223af422, type: 2}
+  - {fileID: 11400000, guid: fd4b21a3bf37a2e488bd8f4c0d7a3d5d, type: 2}
+  - {fileID: 11400000, guid: 240e49cf55133dd468052074e4b4c621, type: 2}
+  - {fileID: 11400000, guid: 712c2287c1f9ffa4b91b93f9ce1ed0f7, type: 2}
   - {fileID: 11400000, guid: af3263318ebcdf343866d5092de005c7, type: 2}
   - {fileID: 11400000, guid: 22fec522eda002541bc7f1a4a5619c64, type: 2}
   - {fileID: 11400000, guid: 5a34511c6c255bc4385f22c5ac719ee4, type: 2}
   - {fileID: 11400000, guid: 1d079380262c135438299fb860a67faf, type: 2}
+  - {fileID: 11400000, guid: a96e912cdb2536b458e8d04798c1e68f, type: 2}
+  - {fileID: 11400000, guid: 3cf12d5e0f6f8ac4aabf02266a25bf5e, type: 2}
   - {fileID: 11400000, guid: 8cfe3946eff21504f88debcf76681a85, type: 2}
   - {fileID: 11400000, guid: bf24b6325ec487c4e8352ed47333c333, type: 2}
   npcs:
@@ -161,7 +182,7 @@ MonoBehaviour:
   registeredEnemyCount: 3
   registeredCropCount: 5
   registeredFishCount: 5
-  registeredVisualProfileCount: 7
+  registeredVisualProfileCount: 28
   registeredNpcCount: 35
   duplicateIdCount: 0
   crossCategoryDuplicateIdCount: 0

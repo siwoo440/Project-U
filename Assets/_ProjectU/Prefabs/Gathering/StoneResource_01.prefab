@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7783610158600917720}
   - component: {fileID: 7226708158024351563}
   - component: {fileID: 3345668248265141496}
+  - component: {fileID: 2576714111441072945}
   m_Layer: 3
   m_Name: StoneResource_01
   m_TagString: Untagged
@@ -109,6 +110,24 @@ MonoBehaviour:
   - {fileID: 1957329058001186780}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2576714111441072945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769872257071488454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b77acd122b5a59348a17ad9eb55e1613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ContentVisualIdentity
+  category: 4
+  contentId: resource_stone
+  useExplicitVisualProfileId: 1
+  explicitVisualProfileId: visual_resource_stone
+  resolvedVisualProfileId: visual_resource_stone
+  isIdentityValid: 1
 --- !u!1 &3307413913750336772
 GameObject:
   m_ObjectHideFlags: 0

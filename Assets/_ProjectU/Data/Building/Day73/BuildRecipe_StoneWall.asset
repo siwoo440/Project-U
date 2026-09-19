@@ -20,7 +20,7 @@ MonoBehaviour:
   rotationStep: 45
   previewOffset: {x: 0, y: 0, z: 0}
   placedPrefab: {fileID: 6959754206177827809, guid: 041ca82ac8e04654a919ab97408ec97c, type: 3}
-  previewPrefab: {fileID: 6959754206177827809, guid: 5d59fd4ec470e524386d3d1b46b6dc72, type: 3}
+  previewPrefab: {fileID: 6959754206177827809, guid: 9d7d915bbf74c2548a9086a0c8200817, type: 3}
   placementCheckCenter: {x: 0, y: 0.75, z: 0}
   placementCheckHalfExtents: {x: 0.47, y: 0.74, z: 0.035}
   maximumSlopeAngle: 20
@@ -28,4 +28,5 @@ MonoBehaviour:
   ingredients:
   - itemData: {fileID: 11400000, guid: 479a7e7a5dbb8df4a9ea663d4e582a1b, type: 2}
     amount: 5
+  requiredTool: 0
   demolitionRefundRatio: 0.5

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 68519198494625962}
   - component: {fileID: 5829417526865156442}
+  - component: {fileID: 8637922126785463503}
   m_Layer: 9
   m_Name: StandingLampPreview
   m_TagString: Untagged
@@ -51,6 +52,24 @@ MonoBehaviour:
   - {fileID: 7612043470084079851}
   originalMeshes:
   - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &8637922126785463503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 975204068277660361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b77acd122b5a59348a17ad9eb55e1613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ContentVisualIdentity
+  category: 3
+  contentId: structure_standing_lamp
+  useExplicitVisualProfileId: 0
+  explicitVisualProfileId: 
+  resolvedVisualProfileId: visual_buildable_standing_lamp
+  isIdentityValid: 1
 --- !u!1 &6892342615222800077
 GameObject:
   m_ObjectHideFlags: 0

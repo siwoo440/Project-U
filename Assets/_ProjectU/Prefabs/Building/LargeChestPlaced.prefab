@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2149484878195205206}
   - component: {fileID: 579932955422310549}
   - component: {fileID: 2621975243598105198}
+  - component: {fileID: 6684612998927590482}
   m_Layer: 9
   m_Name: LargeChestPlaced
   m_TagString: Untagged
@@ -187,6 +188,24 @@ MonoBehaviour:
   - {fileID: 7159151901442406991}
   originalMeshes:
   - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &6684612998927590482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3949410000305173083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b77acd122b5a59348a17ad9eb55e1613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ContentVisualIdentity
+  category: 3
+  contentId: structure_large_chest
+  useExplicitVisualProfileId: 0
+  explicitVisualProfileId: 
+  resolvedVisualProfileId: visual_buildable_large_chest
+  isIdentityValid: 1
 --- !u!1 &6590743020251565579
 GameObject:
   m_ObjectHideFlags: 0

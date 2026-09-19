@@ -66,6 +66,7 @@ GameObject:
   - component: {fileID: 8444869827539894179}
   - component: {fileID: 2162082886844157602}
   - component: {fileID: 2252115497005293147}
+  - component: {fileID: 4462429903873404734}
   m_Layer: 9
   m_Name: MarketStallPlaced
   m_TagString: Untagged
@@ -161,6 +162,24 @@ MonoBehaviour:
   - {fileID: 8086974967134668781}
   originalMeshes:
   - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &4462429903873404734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2504937612240954639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b77acd122b5a59348a17ad9eb55e1613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ContentVisualIdentity
+  category: 3
+  contentId: structure_market_stall
+  useExplicitVisualProfileId: 0
+  explicitVisualProfileId: 
+  resolvedVisualProfileId: visual_buildable_market_stall
+  isIdentityValid: 1
 --- !u!1 &5276045622078843369
 GameObject:
   m_ObjectHideFlags: 0

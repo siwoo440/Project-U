@@ -123,6 +123,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5955927068262237828}
   - component: {fileID: 9055807768936368753}
+  - component: {fileID: 29394981054165490}
   m_Layer: 9
   m_Name: WoodWallPreview
   m_TagString: Untagged
@@ -164,6 +165,24 @@ MonoBehaviour:
   - {fileID: 1092936050894052663}
   originalMeshes:
   - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &29394981054165490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6959754206177827809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b77acd122b5a59348a17ad9eb55e1613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ContentVisualIdentity
+  category: 3
+  contentId: structure_wood_wall
+  useExplicitVisualProfileId: 0
+  explicitVisualProfileId: 
+  resolvedVisualProfileId: visual_buildable_wood_wall
+  isIdentityValid: 1
 --- !u!1001 &4467206994846648521
 PrefabInstance:
   m_ObjectHideFlags: 0

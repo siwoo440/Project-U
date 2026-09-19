@@ -105,6 +105,7 @@ GameObject:
   - component: {fileID: 6314441470703760782}
   - component: {fileID: 4059316285255899706}
   - component: {fileID: 526379725325951323}
+  - component: {fileID: 3653022778536950621}
   m_Layer: 9
   m_Name: SmallChestPlaced
   m_TagString: Untagged
@@ -254,6 +255,24 @@ MonoBehaviour:
   - {fileID: 2863221438306447535}
   originalMeshes:
   - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &3653022778536950621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4593092955796640854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b77acd122b5a59348a17ad9eb55e1613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ContentVisualIdentity
+  category: 3
+  contentId: structure_small_chest
+  useExplicitVisualProfileId: 0
+  explicitVisualProfileId: 
+  resolvedVisualProfileId: visual_buildable_small_chest
+  isIdentityValid: 1
 --- !u!1001 &3813372445649908785
 PrefabInstance:
   m_ObjectHideFlags: 0

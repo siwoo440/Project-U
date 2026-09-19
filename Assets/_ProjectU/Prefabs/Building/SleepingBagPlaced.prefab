@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 995629101835086808}
   - component: {fileID: 4483808782862477037}
   - component: {fileID: 8030207057179463679}
+  - component: {fileID: 1801713768961078907}
   m_Layer: 9
   m_Name: SleepingBagPlaced
   m_TagString: Untagged
@@ -162,6 +163,24 @@ MonoBehaviour:
   - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1801713768961078907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2152217460935451638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b77acd122b5a59348a17ad9eb55e1613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ContentVisualIdentity
+  category: 3
+  contentId: structure_sleeping_bag
+  useExplicitVisualProfileId: 0
+  explicitVisualProfileId: 
+  resolvedVisualProfileId: visual_buildable_sleeping_bag
+  isIdentityValid: 1
 --- !u!1 &4677494672544465460
 GameObject:
   m_ObjectHideFlags: 0
