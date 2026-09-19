@@ -118,6 +118,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5a34511c6c255bc4385f22c5ac719ee4, type: 2}
   - {fileID: 11400000, guid: 1d079380262c135438299fb860a67faf, type: 2}
   - {fileID: 11400000, guid: 8cfe3946eff21504f88debcf76681a85, type: 2}
+  - {fileID: 11400000, guid: bf24b6325ec487c4e8352ed47333c333, type: 2}
   npcs:
   - {fileID: 11400000, guid: a27098d463bb2694bab04676caae9981, type: 2}
   - {fileID: 11400000, guid: e81950d7e0dfc4347ba85eabb6babbc4, type: 2}
@@ -160,7 +161,7 @@ MonoBehaviour:
   registeredEnemyCount: 3
   registeredCropCount: 5
   registeredFishCount: 5
-  registeredVisualProfileCount: 6
+  registeredVisualProfileCount: 7
   registeredNpcCount: 35
   duplicateIdCount: 0
   crossCategoryDuplicateIdCount: 0

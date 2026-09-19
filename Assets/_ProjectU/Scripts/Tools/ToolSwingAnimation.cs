@@ -1,7 +1,7 @@
 using System.Collections; // 코루틴 기능
 using UnityEngine; // Unity 기본 기능
 
-public sealed class ToolSwingAnimation : MonoBehaviour // 도구와 근접 무기 휘두르기 연출
+public sealed class ToolSwingAnimation : MonoBehaviour // 도구와 근접 무기 휘두르기 연출 / 97일차: 1인칭 거치대 함께 휘두르기
 {
     [Header("References")] // 참조 설정 묶음
     [Tooltip("회전할 도구 보관 위치.")]
@@ -26,7 +26,14 @@ public sealed class ToolSwingAnimation : MonoBehaviour // 도구와 근접 무�
         new Vector3(85f, 0f, -5f)
     }; // 기본 3단 휘두르기 방향
 
+    [Header("First Person")] // 97일차: 1인칭 무기 거치대도 함께 휘두르기
+    [Tooltip("함께 휘두를 1인칭 무기 거치대(Camera 앞)입니다. 비어 있으면 3인칭만 휘두릅니다.")]
+    [SerializeField] private Transform firstPersonHolder; // 1인칭 무기 거치대
+    [Tooltip("1인칭 휘두르기 회전 배율입니다. 화면을 크게 가리지 않도록 3인칭보다 작게 돌립니다.")]
+    [SerializeField, Range(0f, 1.5f)] private float firstPersonSwingScale = 0.6f; // 1인칭 회전 배율
+
     private Quaternion idleLocalRotation; // 기본 로컬 회전값
+    private Quaternion firstPersonIdleRotation = Quaternion.identity; // 1인칭 거치대 기본 회전값
     private Coroutine swingCoroutine; // 실행 중인 휘두르기 코루틴
 
     private void Awake() // 도구 회전값 초기화
@@ -37,6 +44,11 @@ public sealed class ToolSwingAnimation : MonoBehaviour // 도구와 근접 무�
         }
 
         idleLocalRotation = toolHolder.localRotation; // 기본 회전값 저장
+
+        if (firstPersonHolder != null) // 1인칭 거치대 기본 회전값 저장
+        {
+            firstPersonIdleRotation = firstPersonHolder.localRotation;
+        }
     }
 
     private void OnValidate() // Inspector 값 검증
@@ -84,7 +96,7 @@ public sealed class ToolSwingAnimation : MonoBehaviour // 도구와 근접 무�
 
         if (toolHolder != null) // 도구 위치 존재 확인
         {
-            toolHolder.localRotation = idleLocalRotation; // 기본 회전값 복구
+            ApplyRotation(idleLocalRotation); // 기본 회전값 복구
         }
     }
 
@@ -119,7 +131,7 @@ public sealed class ToolSwingAnimation : MonoBehaviour // 도구와 근접 무�
             idleLocalRotation,
             adjustedReturnDuration); // 기본 자세 복귀 대기
 
-        toolHolder.localRotation = idleLocalRotation; // 최종 기본 회전값 적용
+        ApplyRotation(idleLocalRotation); // 최종 기본 회전값 적용
         swingCoroutine = null; // 코루틴 상태 초기화
     }
 
@@ -135,13 +147,30 @@ public sealed class ToolSwingAnimation : MonoBehaviour // 도구와 근접 무�
             elapsedTime += Time.deltaTime; // 프레임 시간 누적
             float normalizedTime = Mathf.Clamp01(elapsedTime / duration); // 진행 비율 계산
             float smoothTime = Mathf.SmoothStep(0f, 1f, normalizedTime); // 부드러운 진행 비율 계산
-            toolHolder.localRotation =
-                Quaternion.Slerp(startRotation, endRotation, smoothTime); // 현재 회전값 적용
+            ApplyRotation(Quaternion.Slerp(startRotation, endRotation, smoothTime)); // 현재 회전값 적용
             yield return null; // 다음 프레임까지 대기
         }
 
-        toolHolder.localRotation = endRotation; // 목표 회전값 확정
+        ApplyRotation(endRotation); // 목표 회전값 확정
     }
+
+    private void ApplyRotation(Quaternion rotation) // 3인칭 거치대 회전 + 97일차: 1인칭 거치대에 같은 휘두르기 차이를 작게 적용
+    {
+        toolHolder.localRotation = rotation; // 3인칭 회전 적용
+
+        if (firstPersonHolder != null) // 1인칭 거치대 확인
+        {
+            Quaternion swing = Quaternion.Inverse(idleLocalRotation) * rotation; // 기본 자세에서 벗어난 만큼
+            firstPersonHolder.localRotation = firstPersonIdleRotation * Quaternion.SlerpUnclamped(Quaternion.identity, swing, firstPersonSwingScale); // 1인칭 회전 적용
+        }
+    }
+
+#if UNITY_EDITOR
+    public void EditorAssignFirstPersonHolder(Transform holder) // 97일차: 생성 도구 전용
+    {
+        firstPersonHolder = holder;
+    }
+#endif
 
     private void OnDisable() // 비활성화 상태 정리
     {

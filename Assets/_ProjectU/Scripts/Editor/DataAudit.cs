@@ -521,6 +521,16 @@ public static class DataAudit
                 }
             }
 
+            foreach (EquippedToolView view in root.GetComponentsInChildren<EquippedToolView>(true)) // 97일차: 장착 외형이 쓰는 무기 외형 설정
+            {
+                SerializedProperty weapons = new SerializedObject(view).FindProperty("weaponProfiles");
+
+                for (int index = 0; weapons != null && index < weapons.arraySize; index++)
+                {
+                    AddUser(users, weapons.GetArrayElementAtIndex(index).objectReferenceValue as ContentVisualProfile, $"{owner} (장착 외형)");
+                }
+            }
+
             foreach (ContentVisualProfileBinder binder in root.GetComponentsInChildren<ContentVisualProfileBinder>(true))
             {
                 SerializedObject serialized = new SerializedObject(binder);

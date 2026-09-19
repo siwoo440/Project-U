@@ -91,6 +91,36 @@ public sealed class ContentVisualProfile : ScriptableObject // 콘텐츠 외형�
     [Tooltip("향후 EffectOrigin에 생성할 대표 VFX Prefab입니다.")] // Inspector 대표 VFX 설명
     [SerializeField] private GameObject primaryVfxPrefab; // 대표 VFX Prefab
 
+    [Header("Held Views")] // 97일차: 손에 든 무기 외형 (3인칭 몸 · 1인칭 화면)
+    [Tooltip("켜면 이 무기를 손에 들었을 때 Visual Prefab을 3인칭 · 1인칭 위치에 따로 보여 줍니다.")] // Inspector 손 외형 사용 설명
+    [SerializeField] private bool useHeldViews; // 손 외형 사용 여부
+
+    [Tooltip("3인칭 : 플레이어 도구 거치대(ToolHolder) 기준 모델 위치입니다.")]
+    [SerializeField] private Vector3 thirdPersonPosition = Vector3.zero; // 3인칭 위치
+
+    [Tooltip("3인칭 : 도구 거치대 기준 모델 회전입니다.")]
+    [SerializeField] private Vector3 thirdPersonEulerAngles = Vector3.zero; // 3인칭 회전
+
+    [Tooltip("3인칭 : 모델 크기입니다.")]
+    [SerializeField] private Vector3 thirdPersonScale = Vector3.one; // 3인칭 크기
+
+    [Tooltip("1인칭 : Camera 앞 무기 거치대(FirstPersonToolHolder) 기준 모델 위치입니다.")]
+    [SerializeField] private Vector3 firstPersonPosition = new Vector3(0.3f, -0.3f, 0.6f); // 1인칭 위치
+
+    [Tooltip("1인칭 : Camera 앞 무기 거치대 기준 모델 회전입니다.")]
+    [SerializeField] private Vector3 firstPersonEulerAngles = Vector3.zero; // 1인칭 회전
+
+    [Tooltip("1인칭 : 모델 크기입니다.")]
+    [SerializeField] private Vector3 firstPersonScale = Vector3.one; // 1인칭 크기
+
+    public bool UseHeldViews => useHeldViews && visualPrefab != null; // 손 외형 사용 가능 여부 제공
+    public Vector3 ThirdPersonPosition => thirdPersonPosition; // 3인칭 위치 제공
+    public Vector3 ThirdPersonEulerAngles => thirdPersonEulerAngles; // 3인칭 회전 제공
+    public Vector3 ThirdPersonScale => thirdPersonScale; // 3인칭 크기 제공
+    public Vector3 FirstPersonPosition => firstPersonPosition; // 1인칭 위치 제공
+    public Vector3 FirstPersonEulerAngles => firstPersonEulerAngles; // 1인칭 회전 제공
+    public Vector3 FirstPersonScale => firstPersonScale; // 1인칭 크기 제공
+
     public string ProfileId => profileId; // Visual Profile ID 제공
     public string DisplayName => displayName; // Visual Profile 표시 이름 제공
     public ContentVisualCategory Category => category; // 적용 대상 분류 제공

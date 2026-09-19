@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 510b0c83df47b36439aa53dce257a125, type: 3}
-  m_Name: VP_Weapon_Axe
+  m_Name: VP_Weapon_Bow
   m_EditorClassIdentifier: Assembly-CSharp::ContentVisualProfile
-  profileId: visual_weapon_axe
-  displayName: AXE VISUAL
+  profileId: visual_weapon_bow
+  displayName: BOW VISUAL
   category: 2
-  visualPrefab: {fileID: 8772382895775079440, guid: d0ff055341cc69441a30d54a8e096a60, type: 3}
+  visualPrefab: {fileID: 3423721016102254195, guid: 5f96ed7cf42f373428c367ee19fcdf36, type: 3}
   icon: {fileID: 0}
   materialOverride: {fileID: 0}
   animatorController: {fileID: 0}
   createPlaceholderWhenPrefabMissing: 1
   placeholderPrimitive: 3
-  placeholderMaterial: {fileID: 2100000, guid: afcb74a3794ffd34987b570d0d480b99, type: 2}
+  placeholderMaterial: {fileID: 0}
   placeholderColor: {r: 1, g: 1, b: 1, a: 1}
-  usePlaceholderColor: 0
+  usePlaceholderColor: 1
   visualLocalPosition: {x: 0, y: 0, z: 0}
   visualLocalEulerAngles: {x: 0, y: 0, z: 0}
   visualLocalScale: {x: 1, y: 1, z: 1}
@@ -36,9 +36,9 @@ MonoBehaviour:
   primaryAudioClip: {fileID: 0}
   primaryVfxPrefab: {fileID: 0}
   useHeldViews: 1
-  thirdPersonPosition: {x: 0, y: -0.3, z: 0.1396}
+  thirdPersonPosition: {x: 0, y: -0.3081, z: 0.1068}
   thirdPersonEulerAngles: {x: 0, y: 270, z: 0}
-  thirdPersonScale: {x: 0.6523, y: 0.6523, z: 0.6523}
-  firstPersonPosition: {x: 0.4137, y: -0.4309, z: 0.5203}
-  firstPersonEulerAngles: {x: 9.4297, y: 262.5445, z: 321.3842}
-  firstPersonScale: {x: 0.55, y: 0.55, z: 0.55}
+  thirdPersonScale: {x: 0.8054, y: 0.8054, z: 0.8054}
+  firstPersonPosition: {x: -0.2977, y: -0.4499, z: 0.72}
+  firstPersonEulerAngles: {x: 14, y: 270, z: 0}
+  firstPersonScale: {x: 0.46, y: 0.46, z: 0.46}
