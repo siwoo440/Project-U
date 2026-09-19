@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: "\uB9C8\uB9AC\uC5D8"
   englishName: Marielle
   isAlphaCast: 0
+  castWave: 0
   isAvailable: 1
   profile:
     raceId: race_mermaid

@@ -64,8 +64,10 @@ public sealed class NpcCharacterData : ScriptableObject // 89일차: 캐릭터 �
     [SerializeField] private string displayName = "새 캐릭터"; // 표시 이름
     [Tooltip("영문 이름.")]
     [SerializeField] private string englishName = "New"; // 영문 이름
-    [Tooltip("알파 마을에 실제로 배치하는 NPC인지 여부.")]
+    [Tooltip("알파 마을에 실제로 배치하는 NPC인지 여부 (1차 배치 = 의뢰 · 이벤트까지 갖춘 NPC).")]
     [SerializeField] private bool isAlphaCast; // 알파 배치 여부
+    [Tooltip("101일차: 섬에 배치되는 차수 (0 = 아직 없음, 1 = 알파 7명, 2 = 2차 상인 · 제작형 ...).")]
+    [SerializeField, Min(0)] private int castWave; // 배치 차수
     [Tooltip("시트의 IsAvailable 값.")]
     [SerializeField] private bool isAvailable = true; // 사용 가능 여부
 
@@ -104,7 +106,7 @@ public sealed class NpcCharacterData : ScriptableObject // 89일차: 캐릭터 �
     [SerializeField] private NpcGiftProfile giftProfile; // 선물 반응
     [Tooltip("대사 묶음.")]
     [SerializeField] private NpcDialogueSet dialogueSet; // 대사
-    [Tooltip("하루 일정 (알파 배치 NPC만).")]
+    [Tooltip("하루 일정 (섬에 배치되는 NPC만).")]
     [SerializeField] private NpcScheduleData schedule; // 일정
 
     [Header("Source")] // 출처
@@ -117,6 +119,8 @@ public sealed class NpcCharacterData : ScriptableObject // 89일차: 캐릭터 �
     public string DisplayName => displayName; // 표시 이름 제공
     public string EnglishName => englishName; // 영문 이름 제공
     public bool IsAlphaCast => isAlphaCast; // 알파 배치 여부 제공
+    public int CastWave => castWave > 0 ? castWave : isAlphaCast ? 1 : 0; // 배치 차수 제공 (101일차, 이전 데이터는 알파 = 1)
+    public bool IsPlaced => CastWave > 0; // 섬에 배치되는 NPC인지 (101일차)
     public bool IsAvailable => isAvailable; // 사용 가능 여부 제공
     public ProfileText Profile => profile; // 기본 정보 제공
     public AppearanceText Appearance => appearance; // 외형 제공
@@ -144,12 +148,13 @@ public sealed class NpcCharacterData : ScriptableObject // 89일차: 캐릭터 �
     public bool IsBirthday(SeasonType season, int dayInSeason) => season == birthdaySeason && dayInSeason == birthdayDay; // 생일 확인
 
 #if UNITY_EDITOR
-    public void EditorAssignIdentity(string id, string koreanName, string latinName, bool alphaCast, bool available) // 생성 도구 전용
+    public void EditorAssignIdentity(string id, string koreanName, string latinName, int wave, bool available) // 생성 도구 전용
     {
         characterId = id;
         displayName = koreanName;
         englishName = latinName;
-        isAlphaCast = alphaCast;
+        castWave = Mathf.Max(0, wave);
+        isAlphaCast = castWave == 1;
         isAvailable = available;
     }
 

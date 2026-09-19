@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: "\uC54C\uB9AC\uC6B0\uB124"
   englishName: Aliune
   isAlphaCast: 0
+  castWave: 0
   isAvailable: 1
   profile:
     raceId: race_aliune

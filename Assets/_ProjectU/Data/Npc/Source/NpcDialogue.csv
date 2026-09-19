@@ -146,3 +146,130 @@ char_lichel,Gift,Neutral,"뭐, 고마워. 팔면 얼마 나오려나."
 char_lichel,Gift,Disliked,시끄러운 건 질색이야. 도로 가져가.
 char_lichel,Gift,Hated,사료? 나를 가축 취급하는 거야?!
 char_lichel,Birthday,,생일 같은 거 챙겨 준 사람 처음이야. …고마워. 진짜로.
+char_bellamorta,FirstMeeting,,"어머, 새 얼굴이네. 나는 벨라모르타. 이 섬의 비밀은 대부분 내 손을 거쳐 가지… 너도 언젠가 뭔가를 사러 오겠지?"
+char_bellamorta,Greeting,Curious,그 눈빛… 오늘은 뭔가 숨기고 온 얼굴인데?
+char_bellamorta,Greeting,Trust,왔구나. 기다린 건 아니야. …조금은 기다렸을지도.
+char_bellamorta,Talk,,향기로 사람을 알아볼 수 있어. 넌… 흙 냄새와 모닥불 냄새가 나.
+char_bellamorta,Talk,Curious,연금술의 첫 번째 규칙? 무언가를 얻으려면 같은 값의 무언가를 내놓아야 해. 계약도 마찬가지고.
+char_bellamorta,Talk,Trust,예전에 한 인간과 계약했어. 목숨을 구해 줬더니 더 많은 걸 원하더라. …그 뒤로 계약은 안 해.
+char_bellamorta,Season,Spring,봄꽃 향은 달콤하지만 금방 사라져. 그래서 병에 담아 두는 거야.
+char_bellamorta,Season,Summer,더운 날엔 물약이 쉽게 상해. 공방 그늘에 있는 게 좋아.
+char_bellamorta,Season,Autumn,가을은 재료가 가장 여무는 계절이야. 버섯 하나에도 비밀이 들어 있지.
+char_bellamorta,Season,Winter,추운 밤엔 가마솥 불빛이 제일 따뜻해. 가끔은… 누가 옆에 있으면 더 좋겠고.
+char_bellamorta,Weather,Rain,빗물은 모든 향을 씻어 내. 오늘은 누구의 욕망도 읽기 어렵네.
+char_bellamorta,Weather,Snow,눈은 소리를 삼켜. 비밀 얘기하기 좋은 날이지?
+char_bellamorta,Weather,Storm,폭풍이 치면 오벨리스크의 룬이 울어. 오늘은 밖에 오래 있지 마.
+char_bellamorta,Gift,Loved,…이런 걸 나한테? 계약서도 없이? 이상한 인간이네. 고마워.
+char_bellamorta,Gift,Liked,안목이 나쁘지 않네. 받아 둘게.
+char_bellamorta,Gift,Neutral,"흐응, 고마워. 쓸 데를 찾아볼게."
+char_bellamorta,Gift,Disliked,맹물은 연금술에서 제일 재미없는 재료야.
+char_bellamorta,Gift,Hated,이건… 성수 냄새가 나. 당장 치워 줘.
+char_bellamorta,Birthday,,"내 생일을 알고 있었어? …누가 알려 준 거야? 됐어, 오늘만은 묻지 않을게."
+char_arachne,FirstMeeting,,…놀라지 않네. 나는 아라크네. 옷을 짓는 사람이야. 너무 가까이 오진 마. 실이 엉키니까.
+char_arachne,Greeting,Curious,또 왔구나. 오늘은 발소리가 조용하네… 좋아.
+char_arachne,Greeting,Trust,"기다리고 있었어. 네 옷깃, 조금 풀렸는데… 가만히 있어 봐."
+char_arachne,Talk,,"실 한 올에도 방향이 있어. 거스르면 끊어지고, 따라가면 무늬가 돼."
+char_arachne,Talk,Curious,밝은 빛은 눈이 아파. 그래서 나는 해 질 녘에만 마을에 가.
+char_arachne,Talk,Trust,예전엔 다들 나를 괴물이라 불렀어. …넌 내 다리를 보고도 옷 얘기부터 했지.
+char_arachne,Season,Spring,봄 누에고치는 실이 곱다. 올해는 연한 색으로 한 벌 지어 볼까.
+char_arachne,Season,Summer,여름 햇빛은 싫어. 그늘 속 거미줄이 이슬을 머금는 새벽이 좋아.
+char_arachne,Season,Autumn,가을 거미줄은 가장 튼튼해. 추위를 견디려고 단단히 짜거든.
+char_arachne,Season,Winter,겨울엔 두꺼운 천을 짜. 누군가 추위에 떨지 않게.
+char_arachne,Weather,Rain,비 오는 날엔 거미줄마다 물방울 목걸이가 걸려. 예쁘지?
+char_arachne,Weather,Snow,눈송이에도 결정 무늬가 있어. 실로 흉내 내 보고 싶어.
+char_arachne,Weather,Storm,천둥소리는… 싫어. 오늘은 지하에 있을게.
+char_arachne,Gift,Loved,"좋은 천이야… 결이 살아 있어. 고마워, 소중히 쓸게."
+char_arachne,Gift,Liked,쓸모 있는 선물이네. 실을 뽑는 데 도움이 되겠어.
+char_arachne,Gift,Neutral,…고마워.
+char_arachne,Gift,Disliked,곡괭이 소리는 머리가 울려. 장작은 불을 부르고. 이건 가져가 줘.
+char_arachne,Birthday,,생일… 그런 날을 챙겨 주는 사람이 있었네. 답례로 네 치수를 재 둘게.
+char_milu,FirstMeeting,,"헤에~? 처음 보는 사람이다~ 난 미루! 슬라임이야~ 만져 봐도 돼, 조금 차가워~"
+char_milu,Greeting,Curious,왔다~! 오늘은 무슨 놀이 할까~?
+char_milu,Greeting,Trust,너 오면 몸이 말랑말랑해져~ 이상하지~?
+char_milu,Talk,,습지 물은 미끄덩해서 좋아~ 몸이 쭉쭉 늘어나거든~
+char_milu,Talk,Curious,사람들은 왜 매일 같은 모양이야~? 난 기분 따라 바뀌는데~
+char_milu,Talk,Trust,예전에 병 속에 갇혀 있었어… 그때 생각하면 몸이 흐려져~ 그래도 지금은 괜찮아~
+char_milu,Season,Spring,봄비 맛은 달달해~ 꽃잎이 녹아 있어서 그런가~?
+char_milu,Season,Summer,더우면 몸이 줄어들어~ 연못에 풍덩 하고 싶다~
+char_milu,Season,Autumn,가을 열매는 탱글탱글~ 나랑 닮았어~
+char_milu,Season,Winter,추우면 몸이 굳어서 말이 느려져~~ 으으음~
+char_milu,Weather,Rain,비다~! 비가 제일 좋아~ 몸이 커지는 기분이야~
+char_milu,Weather,Snow,눈은 차가운데 폭신해~ 먹어 봐도 돼~?
+char_milu,Weather,Storm,번개 무서워~ 웅덩이 속에 쏙 숨을래~
+char_milu,Gift,Loved,우와아~! 이거 나 주는 거야~? 몸이 분홍색이 됐어~ 기뻐서 그래~
+char_milu,Gift,Liked,헤헤~ 고마워~ 몸속에 넣어 둘게~
+char_milu,Gift,Neutral,으으음~ 이건 뭐에 쓰는 거야~?
+char_milu,Gift,Disliked,이건 너무 바삭바삭해~ 몸이 말라 버릴 것 같아~
+char_milu,Birthday,,내 생일~? 난 언제 태어났는지 몰랐는데~ 네가 챙겨 준 날이 내 생일이야~!
+char_kasumi,FirstMeeting,,"어머, 안개 속에서 길을 잃은 건 아니지? 나는 카스미. 저 위 사당을 지키는 무녀야. 후후, 너무 믿지는 마."
+char_kasumi,Greeting,Curious,"또 만났네. 오늘은 진짜 너야, 아니면 내가 보는 환상일까?"
+char_kasumi,Greeting,Trust,왔구나. 오늘은 환술 없이 맞이해 줄게.
+char_kasumi,Talk,,여우는 거짓말을 하지 않아. 사람들이 멋대로 믿을 뿐이지. 후후.
+char_kasumi,Talk,Curious,"소문은 안개 같아. 가까이 가면 흩어지고, 멀리서 보면 모양이 생기지."
+char_kasumi,Talk,Trust,예전에 내 환술 때문에 많은 사람이 다쳤어. …그래서 요즘은 진짜만 보여 주려고 해.
+char_kasumi,Season,Spring,"꽃이 지는 속도가 딱 좋아. 너무 빠르지도, 느리지도 않게."
+char_kasumi,Season,Summer,여름 축제의 등불은 환술보다 예뻐. 인정하긴 싫지만.
+char_kasumi,Season,Autumn,단풍잎으로 점을 치면 잘 맞아. 한 장 뽑아 볼래?
+char_kasumi,Season,Winter,눈 덮인 사당은 조용해서 좋아. 발자국은 거짓말을 못 하거든.
+char_kasumi,Weather,Rain,해가 났는데 비가 오면 여우가 시집가는 날이래. 오늘은 누가 가려나.
+char_kasumi,Weather,Snow,"눈이 오면 꼬리가 따뜻해져. 만져 보고 싶어? 후후, 안 돼."
+char_kasumi,Weather,Storm,폭풍 치는 밤엔 사당 방울이 멋대로 울어. 오늘은 조심해.
+char_kasumi,Gift,Loved,"어머, 이렇게 빨간 걸… 내 취향을 어떻게 알았어? 조금 놀랐어."
+char_kasumi,Gift,Liked,고마워. 부적 옆에 잘 놓아둘게.
+char_kasumi,Gift,Neutral,"후후, 성의는 받아 둘게."
+char_kasumi,Gift,Disliked,쇠붙이는 여우랑 안 맞아. 손이 저릿해.
+char_kasumi,Birthday,,생일을 기억해 줬네. 이번만큼은 환술이 아니라 진심으로 기뻐.
+char_seira,FirstMeeting,,…발소리가 가볍네. 나는 세이라. 이 유적의 기록을 지키고 있어. 무서우면… 돌아가도 괜찮아.
+char_seira,Greeting,Curious,또 왔구나… 이번엔 무엇을 알고 싶어서?
+char_seira,Greeting,Trust,"기다렸어… 아니, 그냥 네 발소리가 반가웠을 뿐이야."
+char_seira,Talk,,뱀은 몸이 차가워서… 햇볕이 좋은 날엔 광장 돌 위에 누워 있곤 해.
+char_seira,Talk,Curious,이 책장엔 천 년 전의 독 조합이 적혀 있어. 읽고 싶어? 대가는… 나중에 받을게.
+char_seira,Talk,Trust,나도 예전엔 인간이었어. 불멸을 연구하다가… 친구에게 배신당했지. 이 비늘은 그 대가야.
+char_seira,Season,Spring,봄 독초는 새싹일 때 가장 독해. 예쁜 것일수록 조심해야지.
+char_seira,Season,Summer,여름은 좋아… 비늘이 반짝이는 계절이니까.
+char_seira,Season,Autumn,가을 버섯은 향이 깊어. 독인지 약인지는… 맛보기 전엔 몰라.
+char_seira,Season,Winter,추워… 몸이 느려져. 오늘은 조금 가까이 있어도 돼.
+char_seira,Weather,Rain,빗물이 유적 틈으로 스며들어… 오래된 잉크 냄새가 나.
+char_seira,Weather,Snow,눈 오는 날은… 꼬리를 말고 가만히 있고 싶어.
+char_seira,Weather,Storm,폭풍이 치면 지하 수로가 불어나. 오늘은 내려오지 마.
+char_seira,Gift,Loved,"이 버섯… 향이 완벽해. 너, 나를 꽤 잘 알고 있구나."
+char_seira,Gift,Liked,고마워… 유리병에 담아 둘게.
+char_seira,Gift,Neutral,…받아 둘게.
+char_seira,Gift,Disliked,곡괭이로 유적을 두드리는 소리… 떠올리기도 싫어.
+char_seira,Birthday,,생일이라니… 몇백 년 만에 듣는 말이야. …고마워. 진심이야.
+char_pipi,FirstMeeting,,"오, 손님이다! 난 피피, 폐품 기술자! 부서진 거 있으면 가져와. 싸게 고쳐 줄게. 아, 공짜는 없어!"
+char_pipi,Greeting,Curious,또 왔네! 오늘은 팔 거 없어? 녹슨 못 하나라도 좋아!
+char_pipi,Greeting,Trust,"왔구나, 단골! 너한텐 특별히 계산 안 할게. …조금만 할게."
+char_pipi,Talk,,톱니 하나 빠지면 기계는 멈춰. 마을도 똑같아. 다들 톱니야!
+char_pipi,Talk,Curious,동전은 소리가 좋아. 짤랑짤랑! 그 소리 들으면 힘이 나.
+char_pipi,Talk,Trust,어릴 때 가난해서 가족이 흩어졌어. 그래서 난 뭐든 안 버려. …사람도.
+char_pipi,Season,Spring,봄엔 다들 대청소를 하잖아? 폐품 줍기 제일 좋은 계절!
+char_pipi,Season,Summer,더우면 쇠가 뜨거워져서 손 데여. 그래도 일은 해야지!
+char_pipi,Season,Autumn,가을바람 불 때 풍차를 만들어 볼까? 바람은 공짜니까!
+char_pipi,Season,Winter,겨울엔 고철이 얼어서 잘 부러져. 조심해서 만져야 해.
+char_pipi,Weather,Rain,비 오면 녹슬어! 빨리 덮개 덮어!
+char_pipi,Weather,Snow,눈 오는 날엔 난로 고쳐 달라는 손님이 많아. 돈 벌 날이다!
+char_pipi,Weather,Storm,폭풍이 지나가면 해변에 쓸 만한 게 잔뜩 밀려와. 내일 새벽에 가 봐야지!
+char_pipi,Gift,Loved,이거 진짜 좋은 공구잖아! 나 줘도 돼? 물릴 수 없어!
+char_pipi,Gift,Liked,"오, 재료다! 딱 필요했어. 고마워!"
+char_pipi,Gift,Neutral,"음, 어디 쓸지 계산해 볼게."
+char_pipi,Gift,Disliked,지렁이는 부품이 안 돼… 꿈틀거리잖아.
+char_pipi,Birthday,,"내 생일 선물? 공짜로? …에이, 그럼 나도 다음 수리비 깎아 줄게!"
+char_safira,FirstMeeting,,"…사막 바람이 너를 데려왔군. 나는 사피라. 독을 다루지만, 약도 만든다. 겁먹을 필요는 없어."
+char_safira,Greeting,Curious,왔군. 모래 위 발자국이 네 거였어.
+char_safira,Greeting,Trust,기다렸다. 오늘은 차를 끓여 두었어. …독은 안 넣었어.
+char_safira,Talk,,사막에서 제일 무서운 건 전갈이 아니야. 물이 떨어지는 거지.
+char_safira,Talk,Curious,꼬리로 모래에 그림을 그리면 생각이 정리돼. 오늘은 네 얼굴을 그려 볼까.
+char_safira,Talk,Trust,예전에 내 독 때문에 동료를 잃었어. 그래서 이제는 해독제부터 만든다.
+char_safira,Season,Spring,봄 사막엔 짧게 꽃이 피어. 사흘이면 져 버리지만.
+char_safira,Season,Summer,한낮 사막은 목숨을 걸어야 해. 해 질 녘에 움직여.
+char_safira,Season,Autumn,가을 밤하늘은 길을 알려 줘. 별만 보면 어디든 갈 수 있다.
+char_safira,Season,Winter,사막의 겨울밤은 생각보다 추워. 모래가 식으면 금방이야.
+char_safira,Weather,Rain,비는… 싫다. 모래가 진흙이 되고 꼬리가 무거워져.
+char_safira,Weather,Snow,사막에 눈이라니. 오래 살고 볼 일이군.
+char_safira,Weather,Storm,모래 폭풍이 오면 천막 밖으로 나오지 마. 눈을 뜰 수 없게 될 거야.
+char_safira,Gift,Loved,좋은 버섯이군. 이걸로 해독제를 만들 수 있어. …고맙다.
+char_safira,Gift,Liked,쓸 만한 약초야. 받아 두지.
+char_safira,Gift,Neutral,고맙다.
+char_safira,Gift,Hated,…물이라니. 사막 사람에게 물을 건네는 건 모욕이야. 넌 모르고 줬겠지만.
+char_safira,Birthday,,생일인 걸 기억했군. …사막에선 이런 날을 챙기지 않았어. 고맙다.

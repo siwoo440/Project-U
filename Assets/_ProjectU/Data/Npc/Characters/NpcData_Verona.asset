@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: "\uBCA0\uB85C\uB098"
   englishName: Verona
   isAlphaCast: 1
+  castWave: 1
   isAvailable: 1
   profile:
     raceId: race_bullkin

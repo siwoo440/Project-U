@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: "\uBC00\uD0A4"
   englishName: Milky
   isAlphaCast: 1
+  castWave: 1
   isAvailable: 1
   profile:
     raceId: race_cowkin

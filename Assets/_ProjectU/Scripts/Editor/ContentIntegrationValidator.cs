@@ -105,6 +105,7 @@ public static class ContentIntegrationValidator
             ("건축물·자원 외형", Feature(BuildableVisualProfileBuilder.Validate)),
             ("메뉴 화면", Feature(MenuSceneBuilder.Validate)),
             ("새 구역 · 특수 체형", Feature(WorldZoneBuilder.Validate)),
+            ("섬 NPC 차수", Feature(NpcCastBuilder.Validate)),
             ("데이터 점검", Feature(DataAuditBuilder.Validate)),
             ("아이템 데이터 (ID 규칙)", ItemDataValidator.ValidateAllItemData),
             ("Game Data Registry", () => CountLoggedErrors(GameDataRegistryEditor.ValidateDefaultRegistry, details))
@@ -407,7 +408,7 @@ public static class ContentIntegrationValidator
                     {
                         found = true;
                     }
-                    else if (character.IsAlphaCast)
+                    else if (character.IsPlaced)
                     {
                         Warning($"{character.CharacterId} : 매우 좋아하는 선물 {entry.Item.ItemId} 를 얻는 곳을 찾지 못했습니다.");
                     }
@@ -417,7 +418,7 @@ public static class ContentIntegrationValidator
                 {
                     obtainable++;
                 }
-                else if (character.IsAlphaCast)
+                else if (character.IsPlaced)
                 {
                     Error($"{character.CharacterId} : 매우 좋아하는 선물을 게임 안에서 구할 수 없습니다.");
                 }

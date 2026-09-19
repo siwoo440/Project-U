@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: "\uC544\uB77C\uD06C\uB124"
   englishName: Arachne
   isAlphaCast: 0
+  castWave: 2
   isAvailable: 1
   profile:
     raceId: race_arachnia
@@ -63,7 +64,7 @@ MonoBehaviour:
     illustrationStyle: "\uC77C\uBCF8 \uC560\uB2C8\uD48D \uACE0\uC815 \u2013 \uC5B4\uB450\uC6B4
       \uC9C0\uD558 \uBC30\uACBD, \uC740\uC740\uD55C \uBCF4\uB78F\uBE5B, \uC12C\uC138\uD55C
       \uAC70\uBBF8\uC904 \uBB18\uC0AC \uAC15\uC870"
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: a221a26d982999044adbd313a6759103, type: 3}
   themeColor: {r: 0.18039216, g: 0.12156863, b: 0.20784314, a: 1}
   accentColor: {r: 0.7176471, g: 0.6156863, b: 0.79607844, a: 1}
   personality:
@@ -108,13 +109,14 @@ MonoBehaviour:
   maxAffinity: 100
   birthdaySeason: 2
   birthdayDay: 18
-  homeLocationId: 
-  workLocationId: 
+  homeLocationId: loc_home_arachne
+  workLocationId: loc_ruins_library
   giftProfile: {fileID: 11400000, guid: b75fc7017f8ea914d999fcf9be5758a6, type: 2}
   dialogueSet: {fileID: 11400000, guid: fe346e18a4927374c9efd4839af584ef, type: 2}
-  schedule: {fileID: 0}
+  schedule: {fileID: 11400000, guid: 1ed0b5778d2b8e84e8c717a2a2aa6d94, type: 2}
   dataStatus: "\uAE30\uD68D \uAE30\uBC18 \uC784\uC2DC\uAC12 \uD3EC\uD568"
-  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 89\uC77C\uCC28
-    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uACF5\uD1B5 \uACC4\uC808\xB7\uB0A0\uC528\xB7\uC120\uBB3C
-    \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758 \uC120\uD638
-    \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0 \uC5F0\uACB0."
+  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 101\uC77C\uCC28
+    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uC9D1\xB7\uC77C\uD130 \xB7 \uD558\uB8E8
+    \uC77C\uC815 \xB7 \uCD94\uAC00 \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758
+    \uC120\uD638 \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0
+    \uC5F0\uACB0."

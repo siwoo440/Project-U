@@ -75,7 +75,7 @@ public static class NpcDialogueBuilder
                 return report.ToString();
             }
 
-            report.AppendLine(CreatePortraits(database.GetAlphaCast()));
+            report.AppendLine(CreatePortraits(database.GetPlacedCast())); // 101일차: 섬에 배치되는 NPC 모두
 
             EditorUtility.DisplayProgressBar(DialogTitle, "대화 창", 0.6f);
             report.Append(WireScene(database));
@@ -116,6 +116,7 @@ public static class NpcDialogueBuilder
 
                 float height = model.GetComponentInChildren<MeshFilter>().sharedMesh.bounds.max.y;
                 float cut = height * 0.6f; // 가슴 위만 화면에 맞춤
+                bool special = StylizedModelLibrary.TryGetNpcPortraitBox(StylizedModelLibrary.GetNpcModelId(character.CharacterId), out Bounds upper); // 101일차: 특수 체형 · 날개
                 Color outfit = character.ThemeColor;
                 Color accent = character.AccentColor;
                 Color hair = NpcPlacementBuilder.GetHairColor(character.CharacterId);
@@ -130,7 +131,7 @@ public static class NpcDialogueBuilder
                         appearance.EditorAssignRenderers(instance.GetComponentsInChildren<Renderer>(true));
                         appearance.SetColors(outfit, accent, hair);
                     },
-                    world => world.y >= cut);
+                    world => special ? upper.Contains(world) : world.y >= cut);
 
                 if (png == null)
                 {
@@ -491,7 +492,7 @@ public static class NpcDialogueBuilder
         }
 
         NpcDatabase database = AssetDatabase.LoadAssetAtPath<NpcDatabase>(NpcContentBuilder.DatabasePath);
-        List<NpcCharacterData> cast = database != null ? database.GetAlphaCast() : new List<NpcCharacterData>();
+        List<NpcCharacterData> cast = database != null ? database.GetPlacedCast() : new List<NpcCharacterData>();
         int portraits = cast.Count(character => character.Portrait != null);
 
         foreach (NpcCharacterData character in cast.Where(character => character.Portrait == null))

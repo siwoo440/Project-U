@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: "\uC625\uD0C0\uBE44\uC544"
   englishName: Octavia
   isAlphaCast: 0
+  castWave: 0
   isAvailable: 1
   profile:
     raceId: race_krakenkin

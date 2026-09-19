@@ -20,6 +20,9 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 3a8ea9dc329d35c4b8b4c84410a7f15d, type: 2}
     preference: 0
     source: food_berry
+  - item: {fileID: 11400000, guid: 0beb83d291e4ab6438e2b2ea00a83f5d, type: 2}
+    preference: 1
+    source: drink_milk
   - item: {fileID: 11400000, guid: 233c5c7467d9daa41bab4b59439b9465, type: 2}
     preference: 1
     source: drink_water_bottle
@@ -31,7 +34,7 @@ MonoBehaviour:
     source: tag:sweet
   - item: {fileID: 11400000, guid: 95ca44aa8a27d41448c511db6fa0a55c, type: 2}
     preference: 1
-    source: tag:sweet
+    source: food_strawberry
   - item: {fileID: 11400000, guid: bc991e404803cba4292542d6a52ddd7a, type: 2}
     preference: 3
     source: item_plant_fiber

@@ -162,3 +162,19 @@ char_aliune,Hated,tool_hoe,제초
 char_octavia,Loved,resource_fish_trout,
 char_octavia,Liked,tag:fish,
 char_octavia,Disliked,item_plant_fiber,촉수 구속
+char_bellamorta,Liked,item_herbal_tea,향기로운 차
+char_bellamorta,Liked,tag:ore,보석 대신 광석
+char_bellamorta,Liked,item_wild_mushroom,연금 재료
+char_arachne,Liked,tag:cloth,천
+char_arachne,Disliked,item_wood,불을 부르는 장작
+char_milu,Liked,food_strawberry,달콤한 열매
+char_milu,Liked,drink_milk,말랑한 음료
+char_kasumi,Liked,food_strawberry,붉은 것
+char_kasumi,Liked,item_herbal_tea,향초 대신 차
+char_kasumi,Disliked,item_iron_ore,쇠붙이
+char_seira,Liked,food_mushroom_skewer,버섯 요리
+char_seira,Liked,item_herbal_tea,희귀 약초 차
+char_pipi,Liked,tag:gear,장비 부품
+char_pipi,Liked,tag:ore,광석
+char_safira,Liked,item_herbal_tea,약초 차
+char_safira,Liked,medicine_bandage,약

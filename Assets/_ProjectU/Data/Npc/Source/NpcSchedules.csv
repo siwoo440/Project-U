@@ -95,3 +95,93 @@ char_lichel,default,0,All,All,Any,22,loc_lichel_camp,잠
 char_lichel,rain,10,All,All,Bad,5,loc_lichel_camp,짐 덮개 치기
 char_lichel,rain,10,All,All,Bad,6,loc_market_stall,비 가림막 치고 장사
 char_lichel,rain,10,All,All,Bad,20,loc_lichel_camp,젖은 물건 말리기
+char_bellamorta,default,0,All,All,Any,7,loc_alchemy_lab,아침 물약 달이기
+char_bellamorta,default,0,All,All,Any,11,loc_village_square,비밀 거래 손님 찾기
+char_bellamorta,default,0,All,All,Any,13,loc_cafe,홍차 마시며 사람 구경
+char_bellamorta,default,0,All,All,Any,15,loc_alchemy_lab,손님 맞기
+char_bellamorta,default,0,All,All,Any,18,loc_ruins_plaza,해 질 녘 유적 산책
+char_bellamorta,default,0,All,All,Any,20,loc_home_bellamorta,잠
+char_bellamorta,rest,5,Sunday,All,Any,8,loc_alchemy_lab,한 주 재고 정리
+char_bellamorta,rest,5,Sunday,All,Any,11,loc_ruins_library,금서 읽기
+char_bellamorta,rest,5,Sunday,All,Any,16,loc_village_square,소문 모으기
+char_bellamorta,rest,5,Sunday,All,Any,20,loc_home_bellamorta,잠
+char_bellamorta,rain,10,All,All,Bad,7,loc_alchemy_lab,비 오는 날의 증류
+char_bellamorta,rain,10,All,All,Bad,12,loc_cafe,빗소리 들으며 홍차
+char_bellamorta,rain,10,All,All,Bad,16,loc_alchemy_lab,젖은 재료 말리기
+char_bellamorta,rain,10,All,All,Bad,21,loc_home_bellamorta,잠
+char_arachne,default,0,All,All,Any,7,loc_ruins_gate,거미줄 실 잣기
+char_arachne,default,0,All,All,Any,11,loc_ruins_library,옷 도안 그리기
+char_arachne,default,0,All,All,Any,15,loc_village_square,해 질 녘 마을 옷차림 구경
+char_arachne,default,0,All,All,Any,19,loc_home_arachne,잠
+char_arachne,summer,5,All,Summer,Any,6,loc_ruins_gate,새벽 실 잣기
+char_arachne,summer,5,All,Summer,Any,10,loc_ruins_library,그늘에서 바느질
+char_arachne,summer,5,All,Summer,Any,18,loc_ruins_plaza,시원한 밤공기 쐬기
+char_arachne,summer,5,All,Summer,Any,20,loc_home_arachne,잠
+char_arachne,rain,10,All,All,Bad,8,loc_ruins_gate,젖은 거미줄 고치기
+char_arachne,rain,10,All,All,Bad,14,loc_ruins_library,비 오는 날 자수
+char_arachne,rain,10,All,All,Bad,20,loc_home_arachne,잠
+char_milu,default,0,All,All,Any,6,loc_swamp_boardwalk,이슬 머금은 연잎 모으기
+char_milu,default,0,All,All,Any,9,loc_pond_dock,연못에서 물놀이
+char_milu,default,0,All,All,Any,15,loc_village_square,마을 구경
+char_milu,default,0,All,All,Any,17,loc_home_milu,잠
+char_milu,summer,5,All,Summer,Any,6,loc_swamp_boardwalk,아침 물놀이
+char_milu,summer,5,All,Summer,Any,10,loc_pond_dock,시원한 연못 물놀이
+char_milu,summer,5,All,Summer,Any,17,loc_home_milu,잠
+char_milu,rain,10,All,All,Bad,7,loc_swamp_boardwalk,빗방울 받아 마시기
+char_milu,rain,10,All,All,Bad,12,loc_swamp_hut,빗소리 흉내 내기
+char_milu,rain,10,All,All,Bad,16,loc_swamp_boardwalk,웅덩이에서 춤추기
+char_milu,rain,10,All,All,Bad,20,loc_home_milu,잠
+char_kasumi,default,0,All,All,Any,6,loc_snow_shrine,사당 청소와 기도
+char_kasumi,default,0,All,All,Any,10,loc_village_square,마을 소문 모으기
+char_kasumi,default,0,All,All,Any,14,loc_cafe,차 한 잔과 사람 관찰
+char_kasumi,default,0,All,All,Any,17,loc_snow_camp,늑대족 야영지 살피기
+char_kasumi,default,0,All,All,Any,19,loc_snow_shrine,석등 불 밝히기
+char_kasumi,default,0,All,All,Any,21,loc_home_kasumi,잠
+char_kasumi,rest,5,Saturday,All,Any,7,loc_snow_shrine,아침 참배
+char_kasumi,rest,5,Saturday,All,Any,11,loc_village_square,점괘 봐 주기
+char_kasumi,rest,5,Saturday,All,Any,16,loc_snow_shrine,제물 준비
+char_kasumi,rest,5,Saturday,All,Any,21,loc_home_kasumi,잠
+char_kasumi,rain,10,All,All,Bad,7,loc_snow_shrine,빗속 기도
+char_kasumi,rain,10,All,All,Bad,13,loc_home_kasumi,처마 밑에서 부적 쓰기
+char_kasumi,rain,10,All,All,Bad,18,loc_snow_shrine,안개 속 등불 지키기
+char_kasumi,rain,10,All,All,Bad,21,loc_home_kasumi,잠
+char_seira,default,0,All,All,Any,6,loc_ruins_library,고대 문서 지키기
+char_seira,default,0,All,All,Any,10,loc_ruins_plaza,햇볕에 비늘 데우기
+char_seira,default,0,All,All,Any,13,loc_forest_edge,독초 채집
+char_seira,default,0,All,All,Any,16,loc_ruins_library,독 연구 기록
+char_seira,default,0,All,All,Any,20,loc_home_seira,잠
+char_seira,winter,5,All,Winter,Any,8,loc_ruins_library,따뜻한 곳에서 몸 웅크리기
+char_seira,winter,5,All,Winter,Any,11,loc_cafe,따뜻한 차로 몸 녹이기
+char_seira,winter,5,All,Winter,Any,16,loc_ruins_library,겨울 해독제 연구
+char_seira,winter,5,All,Winter,Any,20,loc_home_seira,잠
+char_seira,rain,10,All,All,Bad,7,loc_ruins_library,빗소리 속 해독제 연구
+char_seira,rain,10,All,All,Bad,14,loc_ruins_gate,지하 수로 살피기
+char_seira,rain,10,All,All,Bad,20,loc_home_seira,잠
+char_pipi,default,0,All,All,Any,6,loc_scrap_yard,폐품 분해
+char_pipi,default,0,All,All,Any,10,loc_village_square,폐품 사고팔기 흥정
+char_pipi,default,0,All,All,Any,13,loc_smithy,대장간 고철 얻기
+char_pipi,default,0,All,All,Any,15,loc_scrap_yard,발명품 만들기
+char_pipi,default,0,All,All,Any,19,loc_cafe,하루 수입 계산
+char_pipi,default,0,All,All,Any,21,loc_home_pipi,잠
+char_pipi,scrap,5,Tuesday,All,Any,6,loc_coast_beach,해변 표류물 줍기
+char_pipi,scrap,5,Tuesday,All,Any,11,loc_coast_dock,부서진 배 부품 구경
+char_pipi,scrap,5,Tuesday,All,Any,15,loc_scrap_yard,주운 물건 고치기
+char_pipi,scrap,5,Tuesday,All,Any,21,loc_home_pipi,잠
+char_pipi,rain,10,All,All,Bad,7,loc_scrap_yard,비 새는 지붕 고치기
+char_pipi,rain,10,All,All,Bad,12,loc_cafe,비 피하며 설계도 그리기
+char_pipi,rain,10,All,All,Bad,16,loc_scrap_yard,빗물받이 발명
+char_pipi,rain,10,All,All,Bad,21,loc_home_pipi,잠
+char_safira,default,0,All,All,Any,6,loc_desert_oasis,새벽 오아시스 약초 살피기
+char_safira,default,0,All,All,Any,9,loc_desert_camp,독 조제
+char_safira,default,0,All,All,Any,12,loc_village_square,사막 길 안내 손님 찾기
+char_safira,default,0,All,All,Any,16,loc_desert_camp,해 질 녘 독 달이기
+char_safira,default,0,All,All,Any,19,loc_desert_oasis,모래에 도형 그리기
+char_safira,default,0,All,All,Any,21,loc_home_safira,잠
+char_safira,summer,5,All,Summer,Any,5,loc_desert_oasis,뜨거워지기 전 약초 채집
+char_safira,summer,5,All,Summer,Any,10,loc_desert_camp,그늘에서 조제
+char_safira,summer,5,All,Summer,Any,17,loc_desert_oasis,선선한 저녁 산책
+char_safira,summer,5,All,Summer,Any,21,loc_home_safira,잠
+char_safira,rain,10,All,All,Bad,7,loc_desert_camp,천막 모래주머니 쌓기
+char_safira,rain,10,All,All,Bad,12,loc_home_safira,비를 피해 천막 안 정리
+char_safira,rain,10,All,All,Bad,18,loc_desert_camp,젖은 모래 말리기
+char_safira,rain,10,All,All,Bad,21,loc_home_safira,잠

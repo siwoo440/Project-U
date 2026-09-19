@@ -29,6 +29,12 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 34ed2068e680c3e47b192431c37799db, type: 2}
     preference: 0
     source: tag:metal_tool
+  - item: {fileID: 11400000, guid: f256d7e940b86444db7d46375d22f42c, type: 2}
+    preference: 1
+    source: tag:gear
+  - item: {fileID: 11400000, guid: 63a6ccd99ac6288459462be53a4919a5, type: 2}
+    preference: 1
+    source: tag:gear
   - item: {fileID: 11400000, guid: c593f671b9ae9d24e96e6cd5ee7b2a1c, type: 2}
     preference: 1
     source: item_iron_ore
@@ -38,6 +44,9 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 479a7e7a5dbb8df4a9ea663d4e582a1b, type: 2}
     preference: 1
     source: resource_stone
+  - item: {fileID: 11400000, guid: 28689924401732340b18d9b6429728b1, type: 2}
+    preference: 1
+    source: tag:gear
   - item: {fileID: 11400000, guid: f82cfee3161243747ad3a92e8c7418ba, type: 2}
     preference: 3
     source: resource_worm_bait

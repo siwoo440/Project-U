@@ -148,6 +148,8 @@ public static partial class StylizedModelLibrary
         Register("build_npc_house", FitMode.UniformHeight, BuildNpcHouse);
         Register("prop_npc_wagon", FitMode.UniformHeight, BuildNpcWagon);
         Register("prop_village_board", FitMode.UniformHeight, BuildVillageBoard);
+        Register("build_npc_alchemy", FitMode.UniformHeight, BuildNpcAlchemyLab); // 101일차: 벨라모르타의 연금술 공방
+        Register("build_npc_scrap_yard", FitMode.UniformHeight, BuildNpcScrapYard); // 101일차: 피피의 폐품 작업장
     }
 
     private static void RegisterNpcModel(string id, NpcLook look)
@@ -710,6 +712,134 @@ public static partial class StylizedModelLibrary
         // 뒤쪽 상자 짐
         b.AddBeveledBox(StylizedColor.WoodLight, new Vector3(-1.45f, 0.3f, 0.3f), new Vector3(0.5f, 0.6f, 0.5f), 0.04f);
         b.AddBeveledBox(StylizedColor.Leather, new Vector3(-1.4f, 0.2f, -0.35f), new Vector3(0.4f, 0.4f, 0.4f), 0.06f);
+    }
+
+    // 101일차: 연금술 공방 (5 × 4m, 보랏빛 뾰족 지붕 · 초록 연기 굴뚝 · 둥근 창 · 약병 카운터 · 가마솥, 문은 앞면 왼쪽)
+    private static void BuildNpcAlchemyLab(LowPolyMeshBuilder b)
+    {
+        b.AddBox(StylizedColor.StoneDark, new Vector3(0f, 0.1f, 0f), new Vector3(5.2f, 0.2f, 4.2f));
+        b.AddBox(StylizedColor.Stone, new Vector3(0f, 0.6f, 0f), new Vector3(5f, 0.8f, 4f));
+        b.AddBox(StylizedColor.Bark, new Vector3(0f, 1.8f, 0f), new Vector3(5f, 1.6f, 4f));
+
+        foreach (float x in new[] { -2.45f, -0.2f, 2.45f })
+        {
+            b.AddBox(StylizedColor.BarkDark, new Vector3(x, 1.8f, 2.01f), new Vector3(0.14f, 1.6f, 0.06f));
+        }
+
+        b.AddBox(StylizedColor.BerryPurple, new Vector3(0f, 2.62f, 2.01f), new Vector3(5f, 0.1f, 0.06f));
+
+        // 뾰족한 보랏빛 지붕 · 굴뚝 · 초록 연기
+        b.AddWedge(StylizedColor.BerryPurple, new Vector3(0f, 3.25f, 0f), new Vector3(5.6f, 1.5f, 4.6f));
+        b.AddBox(StylizedColor.Gold, new Vector3(0f, 4.02f, 0f), new Vector3(5.62f, 0.05f, 0.08f));
+        b.AddBox(StylizedColor.StoneDark, new Vector3(1.7f, 3.7f, -1f), new Vector3(0.5f, 1.4f, 0.5f));
+
+        for (int index = 0; index < 3; index++)
+        {
+            b.AddLowPolySphere(StylizedColor.SpitterSac, new Vector3(1.7f + index * 0.12f, 4.55f + index * 0.35f, -1f + index * 0.08f), Vector3.one * (0.18f - index * 0.04f), 0, 0f, 9150 + index);
+        }
+
+        // 문 (왼쪽) · 둥근 창 (오른쪽 위) · 간판
+        b.AddBox(StylizedColor.WoodDark, new Vector3(-0.9f, 1.15f, 2.02f), new Vector3(0.95f, 1.9f, 0.06f));
+        b.AddLowPolySphere(StylizedColor.Gold, new Vector3(-0.58f, 1.1f, 2.07f), Vector3.one * 0.05f, 0, 0f, 9153);
+        b.Push(new Vector3(1.6f, 1.95f, 2.02f), Euler(90f, 0f, 0f), Vector3.one);
+        b.AddCylinder(StylizedColor.WoodDark, Vector3.zero, 0.42f, 0.06f, 10);
+        b.AddDisc(StylizedColor.LampGlow, new Vector3(0f, 0.065f, 0f), 0.34f, 10);
+        b.Pop();
+        b.AddLimb(StylizedColor.WoodDark, new Vector3(-2.2f, 2.3f, 2.05f), new Vector3(-2.2f, 2.3f, 2.7f), 0.03f, 0.03f, 5);
+        b.AddBox(StylizedColor.WoodLight, new Vector3(-2.2f, 1.95f, 2.7f), new Vector3(0.06f, 0.5f, 0.6f));
+        b.AddCylinder(StylizedColor.Crystal, new Vector3(-2.16f, 1.8f, 2.7f), 0.08f, 0.22f, 6);
+
+        // 약병 카운터 (NPC는 카운터와 벽 사이에 선다)
+        b.AddBox(StylizedColor.WoodDark, new Vector3(1.6f, 0.5f, 3.6f), new Vector3(1.6f, 1f, 0.55f));
+        b.AddBox(StylizedColor.BerryPurple, new Vector3(1.6f, 1.02f, 3.6f), new Vector3(1.7f, 0.06f, 0.65f));
+        StylizedColor[] potions = { StylizedColor.AppleRed, StylizedColor.Crystal, StylizedColor.SpitterSac, StylizedColor.BerryPurple, StylizedColor.FlowerYellow };
+
+        for (int index = 0; index < potions.Length; index++)
+        {
+            Vector3 bottle = new Vector3(1.0f + index * 0.3f, 1.05f, 3.55f + (index % 2) * 0.12f);
+            b.AddCylinder(StylizedColor.Glass, bottle, 0.07f, 0.24f, 6);
+            b.AddCylinder(potions[index], bottle + new Vector3(0f, 0.02f, 0f), 0.06f, 0.14f, 6);
+            b.AddCylinder(StylizedColor.Leather, bottle + new Vector3(0f, 0.24f, 0f), 0.03f, 0.05f, 5);
+        }
+
+        // 말린 약초 · 가마솥
+        for (int index = 0; index < 3; index++)
+        {
+            b.AddLimb(StylizedColor.Herb, new Vector3(-0.1f + index * 0.25f, 2.55f, 2.2f), new Vector3(-0.1f + index * 0.25f, 2.2f, 2.22f), 0.05f, 0.02f, 4);
+        }
+
+        b.AddLowPolySphere(StylizedColor.IronDark, new Vector3(-2.3f, 0.4f, 2.8f), new Vector3(0.42f, 0.36f, 0.42f), 1, 0f, 9154);
+        b.AddDisc(StylizedColor.SpitterSac, new Vector3(-2.3f, 0.7f, 2.8f), 0.33f, 10);
+        b.AddLowPolySphere(StylizedColor.Fire, new Vector3(-2.3f, 0.06f, 2.8f), new Vector3(0.25f, 0.08f, 0.25f), 0, 0f, 9155);
+    }
+
+    // 101일차: 폐품 작업장 (5 × 4m 열린 창고, 함석 벽 · 기울어진 지붕 · 작업대 · 고철 더미 · 풍차 안테나)
+    private static void BuildNpcScrapYard(LowPolyMeshBuilder b)
+    {
+        b.AddBox(StylizedColor.StoneDark, new Vector3(0f, 0.05f, 0f), new Vector3(5f, 0.1f, 4f));
+        b.AddBox(StylizedColor.IronDark, new Vector3(0f, 1.2f, -1.85f), new Vector3(5f, 2.4f, 0.2f));
+
+        for (int index = 0; index < 9; index++)
+        {
+            b.AddBox(index % 3 == 0 ? StylizedColor.Copper : StylizedColor.Iron, new Vector3(-2.2f + index * 0.55f, 1.2f, -1.73f), new Vector3(0.1f, 2.3f, 0.05f));
+        }
+
+        foreach (float x in new[] { -2.35f, 2.35f })
+        {
+            foreach (float z in new[] { 1.85f, -1.7f })
+            {
+                b.AddBox(StylizedColor.WoodDark, new Vector3(x, 1.3f, z), new Vector3(0.18f, 2.6f, 0.18f));
+            }
+        }
+
+        b.Push(new Vector3(0f, 2.75f, 0f), Euler(-8f, 0f, 0f), Vector3.one);
+        b.AddBox(StylizedColor.IronDark, Vector3.zero, new Vector3(5.5f, 0.08f, 4.5f));
+        b.AddBox(StylizedColor.Copper, new Vector3(-1.2f, 0.05f, 0.8f), new Vector3(1.4f, 0.03f, 1.1f));
+        b.AddBox(StylizedColor.Copper, new Vector3(1.5f, 0.05f, -1f), new Vector3(0.9f, 0.03f, 0.8f));
+        b.Pop();
+
+        // 작업대 · 바이스 · 공구 · 등불
+        b.AddBox(StylizedColor.WoodPlank, new Vector3(0.8f, 0.95f, -1.05f), new Vector3(2.1f, 0.1f, 0.8f));
+
+        foreach (float x in new[] { -0.15f, 1.75f })
+        {
+            b.AddBox(StylizedColor.WoodDark, new Vector3(x, 0.45f, -1.05f), new Vector3(0.1f, 0.9f, 0.7f));
+        }
+
+        b.AddBeveledBox(StylizedColor.IronDark, new Vector3(1.5f, 1.08f, -0.8f), new Vector3(0.24f, 0.16f, 0.2f), 0.02f);
+        b.AddLimb(StylizedColor.Iron, new Vector3(0.3f, 1.02f, -1.2f), new Vector3(0.75f, 1.02f, -0.9f), 0.02f, 0.02f, 5);
+        b.Push(new Vector3(0.9f, 1.03f, -1.2f), Quaternion.identity, Vector3.one);
+        b.AddTorus(StylizedColor.Copper, Vector3.zero, 0.12f, 0.03f, 8, 4);
+        b.Pop();
+        b.AddLimb(StylizedColor.IronDark, new Vector3(-0.1f, 2.7f, -1f), new Vector3(-0.1f, 2.1f, -1f), 0.01f, 0.01f, 3);
+        b.AddLowPolySphere(StylizedColor.LampGlow, new Vector3(-0.1f, 2.02f, -1f), Vector3.one * 0.09f, 0, 0f, 9160);
+
+        // 고철 더미 (상자 · 통 · 바퀴 · 관 · 톱니)
+        b.AddBeveledBox(StylizedColor.WoodLight, new Vector3(-1.9f, 0.3f, -1.2f), new Vector3(0.7f, 0.6f, 0.6f), 0.03f);
+        b.AddBeveledBox(StylizedColor.WoodPlank, new Vector3(-1.75f, 0.85f, -1.15f), new Vector3(0.55f, 0.5f, 0.5f), 0.03f);
+        b.AddCylinder(StylizedColor.IronDark, new Vector3(-2.0f, 0f, -0.4f), 0.3f, 0.8f, 8);
+        b.Push(new Vector3(-1.4f, 0.35f, -0.3f), Euler(90f, 20f, 0f), Vector3.one);
+        b.AddTorus(StylizedColor.Black, Vector3.zero, 0.3f, 0.1f, 10, 5);
+        b.Pop();
+        b.AddLimb(StylizedColor.Iron, new Vector3(-2.3f, 0.1f, 0.2f), new Vector3(-1.2f, 0.5f, -0.1f), 0.06f, 0.06f, 6);
+        b.Push(new Vector3(-1.9f, 1.25f, -1.1f), Euler(80f, 0f, 10f), Vector3.one);
+        b.AddTorus(StylizedColor.Copper, Vector3.zero, 0.2f, 0.05f, 10, 4);
+        b.Pop();
+
+        // 지붕 위 풍차 안테나 · 간판
+        b.AddLimb(StylizedColor.WoodDark, new Vector3(2f, 2.9f, -1.5f), new Vector3(2f, 4.2f, -1.5f), 0.05f, 0.04f, 5);
+
+        for (int blade = 0; blade < 4; blade++)
+        {
+            b.Push(new Vector3(2f, 4.2f, -1.4f), Euler(0f, 0f, blade * 90f + 20f), Vector3.one);
+            b.AddBox(StylizedColor.Iron, new Vector3(0f, 0.3f, 0f), new Vector3(0.12f, 0.55f, 0.02f));
+            b.Pop();
+        }
+
+        b.AddBox(StylizedColor.WoodLight, new Vector3(0f, 2.55f, 1.95f), new Vector3(1.6f, 0.4f, 0.06f));
+        b.Push(new Vector3(0.55f, 2.55f, 2f), Euler(90f, 0f, 0f), Vector3.one);
+        b.AddTorus(StylizedColor.Copper, Vector3.zero, 0.12f, 0.03f, 8, 3);
+        b.Pop();
     }
 
     private static void BuildVillageBoard(LowPolyMeshBuilder b)

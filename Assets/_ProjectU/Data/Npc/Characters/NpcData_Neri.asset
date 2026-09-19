@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: "\uB124\uB9AC"
   englishName: Neri
   isAlphaCast: 0
+  castWave: 0
   isAvailable: 1
   profile:
     raceId: race_frogkin

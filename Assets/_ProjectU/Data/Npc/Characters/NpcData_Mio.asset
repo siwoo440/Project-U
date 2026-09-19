@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: "\uBBF8\uC624"
   englishName: Mio
   isAlphaCast: 1
+  castWave: 1
   isAvailable: 1
   profile:
     raceId: race_catkin

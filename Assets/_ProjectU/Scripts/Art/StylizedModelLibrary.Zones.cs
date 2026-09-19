@@ -57,6 +57,7 @@ public static partial class StylizedModelLibrary
         Register("zone_torii", FitMode.UniformHeight, BuildTorii);
         Register("zone_stone_lantern", FitMode.UniformHeight, BuildStoneLantern);
         Register("zone_hokora", FitMode.UniformHeight, BuildHokora);
+        Register("zone_shrine_house", FitMode.UniformHeight, BuildShrineHouse); // 101일차: 카스미의 사당 집
 
         // 사막
         Register("zone_cactus", FitMode.UniformHeight, BuildCactus);
@@ -789,6 +790,60 @@ public static partial class StylizedModelLibrary
         b.AddCylinder(StylizedColor.White, new Vector3(-0.2f, 0.5f, 0.62f), 0.05f, 0.18f, 6);
         b.AddCylinder(StylizedColor.White, new Vector3(0.2f, 0.5f, 0.62f), 0.05f, 0.18f, 6);
         b.AddLowPolySphere(StylizedColor.AppleRed, new Vector3(0f, 0.55f, 0.64f), Vector3.one * 0.06f, 0, 0f, 1450);
+    }
+
+    // 101일차: 사당 옆 무녀의 집 (4 × 3.4m, 돌 기단 · 툇마루 · 붉은 기둥 · 장지문 · 눈 덮인 검은 지붕 · 금줄 · 등불)
+    private static void BuildShrineHouse(LowPolyMeshBuilder b)
+    {
+        b.AddBox(StylizedColor.StoneDark, new Vector3(0f, 0.18f, 0f), new Vector3(4.2f, 0.36f, 3.6f));
+        b.AddBox(StylizedColor.WoodPlank, new Vector3(0f, 0.42f, 1.95f), new Vector3(4.2f, 0.12f, 0.7f));
+        b.AddBox(StylizedColor.StoneLight, new Vector3(0f, 0.12f, 2.55f), new Vector3(1.1f, 0.24f, 0.5f));
+        b.AddBox(StylizedColor.WoodLight, new Vector3(0f, 1.4f, 0f), new Vector3(3.8f, 2.0f, 3.2f));
+
+        foreach (float x in new[] { -1.95f, 1.95f })
+        {
+            foreach (float z in new[] { -1.65f, 1.65f, 2.25f })
+            {
+                b.AddCylinder(StylizedColor.ClothRed, new Vector3(x, 0.36f, z), 0.1f, 2.1f, 6);
+            }
+        }
+
+        // 장지문 두 짝 (흰 종이 · 나무 격자)
+        for (int side = -1; side <= 1; side += 2)
+        {
+            b.AddBox(StylizedColor.White, new Vector3(side * 0.45f, 1.3f, 1.61f), new Vector3(0.85f, 1.6f, 0.03f));
+
+            for (int bar = 0; bar < 3; bar++)
+            {
+                b.AddBox(StylizedColor.WoodDark, new Vector3(side * 0.45f, 0.75f + bar * 0.55f, 1.63f), new Vector3(0.87f, 0.03f, 0.02f));
+            }
+
+            b.AddBox(StylizedColor.WoodDark, new Vector3(side * 0.45f, 1.3f, 1.63f), new Vector3(0.03f, 1.6f, 0.02f));
+        }
+
+        // 지붕 · 눈 · 처마 끝
+        b.AddWedge(StylizedColor.Black, new Vector3(0f, 3.0f, 0.2f), new Vector3(4.8f, 1.2f, 4.6f));
+        b.AddWedge(StylizedColor.Snow, new Vector3(0f, 3.28f, 0.2f), new Vector3(4.5f, 0.7f, 3.6f));
+
+        for (int side = -1; side <= 1; side += 2)
+        {
+            b.Push(new Vector3(side * 2.45f, 2.45f, 2.45f), Euler(0f, 0f, side * 12f), Vector3.one);
+            b.AddBox(StylizedColor.Black, Vector3.zero, new Vector3(0.3f, 0.12f, 0.3f));
+            b.Pop();
+            b.AddLimb(StylizedColor.IronDark, new Vector3(side * 1.6f, 2.45f, 2.3f), new Vector3(side * 1.6f, 2.15f, 2.3f), 0.01f, 0.01f, 3);
+            b.AddCylinder(StylizedColor.ClothRed, new Vector3(side * 1.6f, 1.8f, 2.3f), 0.13f, 0.35f, 8);
+            b.AddLowPolySphere(StylizedColor.LampGlow, new Vector3(side * 1.6f, 1.97f, 2.3f), Vector3.one * 0.1f, 0, 0f, 1455 + side);
+        }
+
+        // 금줄 · 흰 종이
+        b.AddLimb(StylizedColor.Rope, new Vector3(-1.3f, 2.3f, 1.7f), new Vector3(1.3f, 2.3f, 1.7f), 0.05f, 0.05f, 6);
+
+        for (int index = 0; index < 5; index++)
+        {
+            b.Push(new Vector3(-1f + index * 0.5f, 2.1f, 1.74f), Euler(0f, 0f, index % 2 == 0 ? 10f : -10f), Vector3.one);
+            b.AddBox(StylizedColor.White, Vector3.zero, new Vector3(0.07f, 0.28f, 0.01f));
+            b.Pop();
+        }
     }
 
     // ---------------------------------------------------------------- 사막

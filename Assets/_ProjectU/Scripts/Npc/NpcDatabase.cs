@@ -18,16 +18,19 @@ public sealed class NpcDatabase : ScriptableObject // 89일차: 전체 NPC 목�
         [SerializeField] private string zoneId = VillageZoneId; // 구역
         [Tooltip("100일차: 물가 위치 (인어 · 크라켄 · 상어족은 물가에만 섭니다).")]
         [SerializeField] private bool waterside; // 물가 여부
+        [Tooltip("101일차: 집 위치 (밤에는 NPC가 안으로 들어가 보이지 않습니다).")]
+        [SerializeField] private bool home; // 집 여부
 
         public const string VillageZoneId = "village"; // 마을 구역 ID
 
-        public Location(string locationId, string displayName, string description, string zoneId = VillageZoneId, bool waterside = false) // 생성 도구에서 사용
+        public Location(string locationId, string displayName, string description, string zoneId = VillageZoneId, bool waterside = false, bool home = false) // 생성 도구에서 사용
         {
             this.locationId = locationId;
             this.displayName = displayName;
             this.description = description;
             this.zoneId = string.IsNullOrEmpty(zoneId) ? VillageZoneId : zoneId;
             this.waterside = waterside;
+            this.home = home;
         }
 
         public string LocationId => locationId; // ID 제공
@@ -36,6 +39,7 @@ public sealed class NpcDatabase : ScriptableObject // 89일차: 전체 NPC 목�
         public string ZoneId => string.IsNullOrEmpty(zoneId) ? VillageZoneId : zoneId; // 구역 제공
         public bool IsVillage => ZoneId == VillageZoneId; // 마을 위치인지
         public bool IsWaterside => waterside; // 물가 여부 제공
+        public bool IsHome => home; // 집 여부 제공 (101일차)
     }
 
     [Header("Characters")] // 캐릭터
@@ -88,9 +92,19 @@ public sealed class NpcDatabase : ScriptableObject // 89일차: 전체 NPC 목�
         return !string.IsNullOrEmpty(characterId) && lookup.TryGetValue(characterId, out character);
     }
 
-    public List<NpcCharacterData> GetAlphaCast() // 알파 마을에 배치하는 NPC
+    public List<NpcCharacterData> GetAlphaCast() // 알파 마을에 배치하는 NPC (1차 7명 : 의뢰 · 이벤트까지 갖춤)
     {
         return characters.FindAll(data => data != null && data.IsAlphaCast && data.IsAvailable);
+    }
+
+    public List<NpcCharacterData> GetPlacedCast() // 101일차: 섬에 배치되는 모든 NPC (1차 + 2차 ...)
+    {
+        return characters.FindAll(data => data != null && data.IsPlaced && data.IsAvailable);
+    }
+
+    public List<NpcCharacterData> GetCastWave(int wave) // 101일차: 한 차수의 NPC
+    {
+        return characters.FindAll(data => data != null && data.IsAvailable && data.CastWave == wave);
     }
 
     public bool HasLocation(string locationId) // 위치 ID 확인

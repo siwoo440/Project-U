@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: "\uB77C\uADF8"
   englishName: Ragh
   isAlphaCast: 0
+  castWave: 0
   isAvailable: 1
   profile:
     raceId: race_wolfkin

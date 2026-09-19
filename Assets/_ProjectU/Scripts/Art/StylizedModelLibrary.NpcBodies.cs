@@ -79,6 +79,26 @@ public static partial class StylizedModelLibrary
         return (NpcBaseHeight + lowered) * look.Height / NpcBaseHeight;
     }
 
+    // 101일차: 대화 창 초상에 담을 부분 (가슴 위 상반신, 날개 · 뒤쪽 몸통 · 꼬리는 뺌).
+    // 사람 다리이고 날개가 없으면 false 를 돌려 예전 방식(모델 높이 60% 위)을 그대로 쓴다.
+    public static bool TryGetNpcPortraitBox(string modelId, out Bounds box)
+    {
+        box = default;
+
+        if (!TryGetNpcLook(modelId, out NpcLook look) || look.Body == NpcBody.Legs && look.Wings == NpcWings.None && look.Species != NpcSpecies.Dullahan)
+        {
+            return false;
+        }
+
+        NpcBodyShape shape = GetBodyShape(look.Body);
+        float scale = look.Height / NpcBaseHeight;
+        float lift = shape.Lift + shape.Hover;
+        float bottom = (look.Species == NpcSpecies.Dullahan ? 0.8f : 1.08f) + lift; // 듀라한은 손에 든 머리까지
+        float top = 2.6f + lift; // 모자 · 뿔 · 더듬이까지
+        box = new Bounds(new Vector3(0f, (bottom + top) * 0.5f, shape.Shift) * scale, new Vector3(0.9f, top - bottom, 1.0f) * scale);
+        return true;
+    }
+
     private static StylizedColor GetNpcSkin(NpcSpecies species)
     {
         switch (species)

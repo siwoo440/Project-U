@@ -332,7 +332,7 @@ public static class DataAudit
 
         foreach (NpcCharacterData character in assets[typeof(NpcCharacterData)].Cast<NpcCharacterData>())
         {
-            if (character.IsAlphaCast && character.Portrait == null)
+            if (character.IsPlaced && character.Portrait == null)
             {
                 result.Add(section, Severity.Error, character.CharacterId, "마을에 나오는 NPC인데 초상이 없습니다.");
             }

@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94295176dd2bda648968d83c1418a684, type: 3}
+  m_Name: NpcSchedule_Seira
+  m_EditorClassIdentifier: Assembly-CSharp::NpcScheduleData
+  scheduleId: schedule_seira
+  plans:
+  - planId: default
+    priority: 0
+    days: 127
+    seasons: 15
+    weather: 0
+    stops:
+    - hour: 6
+      locationId: loc_ruins_library
+      activity: "\uACE0\uB300 \uBB38\uC11C \uC9C0\uD0A4\uAE30"
+    - hour: 10
+      locationId: loc_ruins_plaza
+      activity: "\uD587\uBCD5\uC5D0 \uBE44\uB298 \uB370\uC6B0\uAE30"
+    - hour: 13
+      locationId: loc_forest_edge
+      activity: "\uB3C5\uCD08 \uCC44\uC9D1"
+    - hour: 16
+      locationId: loc_ruins_library
+      activity: "\uB3C5 \uC5F0\uAD6C \uAE30\uB85D"
+    - hour: 20
+      locationId: loc_home_seira
+      activity: "\uC7A0"
+  - planId: winter
+    priority: 5
+    days: 127
+    seasons: 8
+    weather: 0
+    stops:
+    - hour: 8
+      locationId: loc_ruins_library
+      activity: "\uB530\uB73B\uD55C \uACF3\uC5D0\uC11C \uBAB8 \uC6C5\uD06C\uB9AC\uAE30"
+    - hour: 11
+      locationId: loc_cafe
+      activity: "\uB530\uB73B\uD55C \uCC28\uB85C \uBAB8 \uB179\uC774\uAE30"
+    - hour: 16
+      locationId: loc_ruins_library
+      activity: "\uACA8\uC6B8 \uD574\uB3C5\uC81C \uC5F0\uAD6C"
+    - hour: 20
+      locationId: loc_home_seira
+      activity: "\uC7A0"
+  - planId: rain
+    priority: 10
+    days: 127
+    seasons: 15
+    weather: 2
+    stops:
+    - hour: 7
+      locationId: loc_ruins_library
+      activity: "\uBE57\uC18C\uB9AC \uC18D \uD574\uB3C5\uC81C \uC5F0\uAD6C"
+    - hour: 14
+      locationId: loc_ruins_gate
+      activity: "\uC9C0\uD558 \uC218\uB85C \uC0B4\uD53C\uAE30"
+    - hour: 20
+      locationId: loc_home_seira
+      activity: "\uC7A0"

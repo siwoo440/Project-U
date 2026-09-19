@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: "\uC138\uB808\uB098"
   englishName: Serena
   isAlphaCast: 0
+  castWave: 0
   isAvailable: 1
   profile:
     raceId: race_ghost

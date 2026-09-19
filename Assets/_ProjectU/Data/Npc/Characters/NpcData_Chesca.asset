@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: "\uCCB4\uC2A4\uCE74"
   englishName: Chesca
   isAlphaCast: 0
+  castWave: 0
   isAvailable: 1
   profile:
     raceId: race_mimickin

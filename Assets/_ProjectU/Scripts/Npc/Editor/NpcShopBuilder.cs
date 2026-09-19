@@ -448,7 +448,7 @@ public static class NpcShopBuilder
             }
         }
 
-        foreach (NpcCharacterData character in database.GetAlphaCast().Where(character => character.HasRole(NpcRole.Merchant)))
+        foreach (NpcCharacterData character in database.GetAlphaCast().Where(character => character.HasRole(NpcRole.Merchant))) // 2차 상인 상점은 102일차
         {
             if (!shops.Any(shop => shop.OwnerId == character.CharacterId))
             {
@@ -494,7 +494,7 @@ public static class NpcShopBuilder
             error($"{id} : 주인 {owner.CharacterId} 의 상점 ID · 상인 역할 · 거래 상호작용이 맞지 않습니다.");
         }
 
-        if (!owner.IsAlphaCast || owner.Schedule == null)
+        if (!owner.IsPlaced || owner.Schedule == null)
         {
             error($"{id} : 주인 {owner.CharacterId} 이(가) 마을에 배치되지 않았거나 일정이 없습니다.");
             return;

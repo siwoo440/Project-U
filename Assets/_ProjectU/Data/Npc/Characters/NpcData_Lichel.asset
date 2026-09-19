@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: "\uB9AC\uCCBC"
   englishName: Lichel
   isAlphaCast: 1
+  castWave: 1
   isAvailable: 1
   profile:
     raceId: race_ratkin

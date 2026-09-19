@@ -304,10 +304,12 @@ MonoBehaviour:
   lookDistance: 4.5
   nameTagDistance: 14
   stuckSeconds: 4
+  motionStyle: 0
   currentLocationId: 
   currentActivity: 
   isInside: 0
   arrived: 1
+  isTalking: 0
 --- !u!114 &1842567902369355649
 MonoBehaviour:
   m_ObjectHideFlags: 0

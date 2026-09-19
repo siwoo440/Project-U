@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94295176dd2bda648968d83c1418a684, type: 3}
+  m_Name: NpcSchedule_Pipi
+  m_EditorClassIdentifier: Assembly-CSharp::NpcScheduleData
+  scheduleId: schedule_pipi
+  plans:
+  - planId: default
+    priority: 0
+    days: 127
+    seasons: 15
+    weather: 0
+    stops:
+    - hour: 6
+      locationId: loc_scrap_yard
+      activity: "\uD3D0\uD488 \uBD84\uD574"
+    - hour: 10
+      locationId: loc_village_square
+      activity: "\uD3D0\uD488 \uC0AC\uACE0\uD314\uAE30 \uD765\uC815"
+    - hour: 13
+      locationId: loc_smithy
+      activity: "\uB300\uC7A5\uAC04 \uACE0\uCCA0 \uC5BB\uAE30"
+    - hour: 15
+      locationId: loc_scrap_yard
+      activity: "\uBC1C\uBA85\uD488 \uB9CC\uB4E4\uAE30"
+    - hour: 19
+      locationId: loc_cafe
+      activity: "\uD558\uB8E8 \uC218\uC785 \uACC4\uC0B0"
+    - hour: 21
+      locationId: loc_home_pipi
+      activity: "\uC7A0"
+  - planId: scrap
+    priority: 5
+    days: 2
+    seasons: 15
+    weather: 0
+    stops:
+    - hour: 6
+      locationId: loc_coast_beach
+      activity: "\uD574\uBCC0 \uD45C\uB958\uBB3C \uC90D\uAE30"
+    - hour: 11
+      locationId: loc_coast_dock
+      activity: "\uBD80\uC11C\uC9C4 \uBC30 \uBD80\uD488 \uAD6C\uACBD"
+    - hour: 15
+      locationId: loc_scrap_yard
+      activity: "\uC8FC\uC6B4 \uBB3C\uAC74 \uACE0\uCE58\uAE30"
+    - hour: 21
+      locationId: loc_home_pipi
+      activity: "\uC7A0"
+  - planId: rain
+    priority: 10
+    days: 127
+    seasons: 15
+    weather: 2
+    stops:
+    - hour: 7
+      locationId: loc_scrap_yard
+      activity: "\uBE44 \uC0C8\uB294 \uC9C0\uBD95 \uACE0\uCE58\uAE30"
+    - hour: 12
+      locationId: loc_cafe
+      activity: "\uBE44 \uD53C\uD558\uBA70 \uC124\uACC4\uB3C4 \uADF8\uB9AC\uAE30"
+    - hour: 16
+      locationId: loc_scrap_yard
+      activity: "\uBE57\uBB3C\uBC1B\uC774 \uBC1C\uBA85"
+    - hour: 21
+      locationId: loc_home_pipi
+      activity: "\uC7A0"

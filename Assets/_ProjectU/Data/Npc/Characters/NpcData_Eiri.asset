@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: "\uC5D0\uC774\uB9AC"
   englishName: Eiri
   isAlphaCast: 0
+  castWave: 0
   isAvailable: 1
   profile:
     raceId: race_harpy

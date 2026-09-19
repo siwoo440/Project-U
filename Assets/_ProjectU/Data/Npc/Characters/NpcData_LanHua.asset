@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: "\uB780\uD6C4\uC544"
   englishName: LanHua
   isAlphaCast: 0
+  castWave: 0
   isAvailable: 1
   profile:
     raceId: race_tigerkin

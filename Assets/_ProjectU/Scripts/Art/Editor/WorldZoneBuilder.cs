@@ -31,6 +31,8 @@ public static class WorldZoneBuilder
     private const int Seed = 10023;
     private const float TerrainLimit = 121f; // 소품을 둘 수 있는 섬 안쪽 한계
     private const float SeaLine = 100f; // 이 x보다 동쪽은 바다
+    private const float ShrineHouseYaw = 270f; // 101일차: 카스미의 사당 집 (문이 사당 쪽 서쪽)
+    private static readonly Vector3 ShrineHousePosition = new Vector3(50f, 0f, 104f); // 아래 위치 표보다 먼저 초기화되어야 한다
 
     public static readonly string[] ZoneLayerNames = { "ZoneSand", "ZoneSnow", "ZoneMud", "ZoneFlagstone" };
 
@@ -71,7 +73,13 @@ public static class WorldZoneBuilder
         { "loc_desert_oasis", (new Vector3(80.2f, 0f, -91.4f), new Vector3(86f, 0f, -94f)) },
         { "loc_desert_camp", (Local(new Vector3(68f, 0f, -79f), 315f, new Vector3(0f, 0f, 3.4f)), new Vector3(68f, 0f, -79f)) },
         { "loc_swamp_boardwalk", (new Vector3(-62f, 0f, -98f), new Vector3(-62f, 0f, -103f)) },
-        { "loc_swamp_hut", (Local(new Vector3(-72f, 0f, -106f), 45f, new Vector3(0f, 0f, 3.8f)), new Vector3(-72f, 0f, -106f)) }
+        { "loc_swamp_hut", (Local(new Vector3(-72f, 0f, -106f), 45f, new Vector3(0f, 0f, 3.8f)), new Vector3(-72f, 0f, -106f)) },
+        // 101일차: 2차 NPC 집 (밤에는 안으로 들어감)
+        { "loc_home_seira", (new Vector3(-73.7f, 0f, 93.3f), new Vector3(-73f, 0f, 97f)) },
+        { "loc_home_arachne", (new Vector3(-70.3f, 0f, 93.3f), new Vector3(-71f, 0f, 97f)) },
+        { "loc_home_milu", (new Vector3(-64.6f, 0f, -86f), new Vector3(-68f, 0f, -86f)) },
+        { "loc_home_kasumi", (Local(ShrineHousePosition, ShrineHouseYaw, new Vector3(0f, 0f, 2.9f)), ShrineHousePosition) },
+        { "loc_home_safira", (Local(new Vector3(68f, 0f, -79f), 315f, new Vector3(0f, 0f, 0.3f)), Local(new Vector3(68f, 0f, -79f), 315f, new Vector3(0f, 0f, 3f))) }
     };
 
     // 물 (물가 검사 · 지도) : 가운데 · 반지름
@@ -223,6 +231,26 @@ public static class WorldZoneBuilder
     private static Vector3 Local(Vector3 origin, float yaw, Vector3 local)
     {
         return origin + Quaternion.Euler(0f, yaw, 0f) * local;
+    }
+
+    // 101일차: 새 구역 위치만 지금 위치 목록(CSV)대로 다시 만든다 (NPC 마을 배치 도구에서 사용). 새 구역이 없으면 빈 문자열
+    public static string RefreshLocations(Scene scene)
+    {
+        GameObject root = scene.GetRootGameObjects().FirstOrDefault(item => item.name == RootName);
+
+        if (root == null)
+        {
+            return string.Empty;
+        }
+
+        Transform group = Group(root.transform, LocationsName);
+
+        foreach (Transform child in group.Cast<Transform>().ToList())
+        {
+            Object.DestroyImmediate(child.gameObject);
+        }
+
+        return BuildLocations(scene, group);
     }
 
     public static NpcLocationPoint FindZonePoint(Scene scene, string locationId) // NPC 마을 배치 도구가 새 구역 위치를 찾을 때 사용
@@ -563,10 +591,13 @@ public static class WorldZoneBuilder
         }
 
         Place(parent, "zone_hokora", new Vector3(42f, 0f, 106.5f), 180f, 1f, PropCollider.Bounds, building).name = "Hokora";
-        count += 13;
+        GameObject shrineHouse = Place(parent, "zone_shrine_house", ShrineHousePosition, ShrineHouseYaw, 1f, PropCollider.None, building); // 101일차: 카스미의 집
+        AddBox(shrineHouse, new Vector3(0f, 1.3f, 0f), new Vector3(4.2f, 2.6f, 3.6f));
+        shrineHouse.name = "ShrineHouse_Kasumi";
+        count += 14;
 
         System.Random random = new System.Random(Seed + 4);
-        (Vector3, float)[] blocked = { (fire, 9f), (new Vector3(42f, 0f, 102f), 8f) };
+        (Vector3, float)[] blocked = { (fire, 9f), (new Vector3(42f, 0f, 102f), 8f), (ShrineHousePosition, 6f) };
         List<Vector3> placed = new List<Vector3>();
         count += Scatter(random, parent, new[] { "zone_snow_pine" }, 20, () => new Vector3(Rand(random, -26f, 70f), 0f, Rand(random, 90f, 119f)), blocked, 5f, 0.85f, 1.3f, PropCollider.Trunk, 0, placed);
         count += Scatter(random, parent, new[] { "zone_ice_rock" }, 6, () => new Vector3(Rand(random, -20f, 66f), 0f, Rand(random, 88f, 118f)), blocked, 6f, 0.8f, 1.3f, PropCollider.Bounds, building, placed);
@@ -1127,7 +1158,7 @@ public static class WorldZoneBuilder
             Vector3 facing = spec.lookAt - spec.position;
             holder.transform.SetPositionAndRotation(spec.position, Quaternion.Euler(0f, Mathf.Atan2(facing.x, facing.z) * Mathf.Rad2Deg, 0f));
             NpcLocationPoint point = holder.AddComponent<NpcLocationPoint>();
-            point.EditorAssign(location.LocationId, location.DisplayName, false, NpcLocationAnchor.Fixed);
+            point.EditorAssign(location.LocationId, location.DisplayName, location.IsHome, NpcLocationAnchor.Fixed); // 101일차: 집이면 밤에 안으로
             created.Add(point);
         }
 
@@ -1200,8 +1231,8 @@ public static class WorldZoneBuilder
 
     // ---------------------------------------------------------------- NavMesh
 
-    // 즉시 굽고 기존 NavMesh Asset에 덮어써 GUID를 유지한다
-    private static string RebakeNavMesh()
+    // 즉시 굽고 기존 NavMesh Asset에 덮어써 GUID를 유지한다 (101일차: NPC 마을 배치 도구도 사용)
+    public static string RebakeNavMesh()
     {
         NavMeshSurface surface = Object.FindFirstObjectByType<NavMeshSurface>();
 

@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: "\uC0E4\uB9AC\uC544"
   englishName: Sharia
   isAlphaCast: 0
+  castWave: 0
   isAvailable: 1
   profile:
     raceId: race_sharkkin

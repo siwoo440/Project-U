@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: "\uB8E8\uB124\uD2B8"
   englishName: Lunette
   isAlphaCast: 1
+  castWave: 1
   isAvailable: 1
   profile:
     raceId: race_rabbitkin

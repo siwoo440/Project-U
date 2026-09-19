@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94295176dd2bda648968d83c1418a684, type: 3}
+  m_Name: NpcSchedule_Safira
+  m_EditorClassIdentifier: Assembly-CSharp::NpcScheduleData
+  scheduleId: schedule_safira
+  plans:
+  - planId: default
+    priority: 0
+    days: 127
+    seasons: 15
+    weather: 0
+    stops:
+    - hour: 6
+      locationId: loc_desert_oasis
+      activity: "\uC0C8\uBCBD \uC624\uC544\uC2DC\uC2A4 \uC57D\uCD08 \uC0B4\uD53C\uAE30"
+    - hour: 9
+      locationId: loc_desert_camp
+      activity: "\uB3C5 \uC870\uC81C"
+    - hour: 12
+      locationId: loc_village_square
+      activity: "\uC0AC\uB9C9 \uAE38 \uC548\uB0B4 \uC190\uB2D8 \uCC3E\uAE30"
+    - hour: 16
+      locationId: loc_desert_camp
+      activity: "\uD574 \uC9C8 \uB158 \uB3C5 \uB2EC\uC774\uAE30"
+    - hour: 19
+      locationId: loc_desert_oasis
+      activity: "\uBAA8\uB798\uC5D0 \uB3C4\uD615 \uADF8\uB9AC\uAE30"
+    - hour: 21
+      locationId: loc_home_safira
+      activity: "\uC7A0"
+  - planId: summer
+    priority: 5
+    days: 127
+    seasons: 2
+    weather: 0
+    stops:
+    - hour: 5
+      locationId: loc_desert_oasis
+      activity: "\uB728\uAC70\uC6CC\uC9C0\uAE30 \uC804 \uC57D\uCD08 \uCC44\uC9D1"
+    - hour: 10
+      locationId: loc_desert_camp
+      activity: "\uADF8\uB298\uC5D0\uC11C \uC870\uC81C"
+    - hour: 17
+      locationId: loc_desert_oasis
+      activity: "\uC120\uC120\uD55C \uC800\uB141 \uC0B0\uCC45"
+    - hour: 21
+      locationId: loc_home_safira
+      activity: "\uC7A0"
+  - planId: rain
+    priority: 10
+    days: 127
+    seasons: 15
+    weather: 2
+    stops:
+    - hour: 7
+      locationId: loc_desert_camp
+      activity: "\uCC9C\uB9C9 \uBAA8\uB798\uC8FC\uBA38\uB2C8 \uC313\uAE30"
+    - hour: 12
+      locationId: loc_home_safira
+      activity: "\uBE44\uB97C \uD53C\uD574 \uCC9C\uB9C9 \uC548 \uC815\uB9AC"
+    - hour: 18
+      locationId: loc_desert_camp
+      activity: "\uC816\uC740 \uBAA8\uB798 \uB9D0\uB9AC\uAE30"
+    - hour: 21
+      locationId: loc_home_safira
+      activity: "\uC7A0"

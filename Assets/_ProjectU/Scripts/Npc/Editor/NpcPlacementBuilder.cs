@@ -9,10 +9,12 @@ using UnityEngine;
 using UnityEngine.AI;
 
 // 90일차: NPC 마을 배치 도구
-// 1. NPC 데이터(7번 메뉴)를 먼저 갱신하고, 알파 NPC 7명의 저폴리 모델 · Prefab을 만든다
+// 1. NPC 데이터(7번 메뉴)를 먼저 갱신하고, 섬에 배치되는 NPC의 저폴리 모델 · Prefab을 만든다
 // 2. 게임 Scene(20_Gameplay)의 캠프 북쪽에 마을(카페 · 대장간 · 게시판 · 짐마차)과 NPC 집 4채를 짓는다
 // 3. 일정 위치 17곳 · NPC 7명 · NPC 관리자를 배치한다
 // 여러 번 실행해도 같은 Asset·오브젝트를 갱신한다. 실행 후 Ctrl+S로 Scene을 저장해야 반영된다.
+// 101일차: 섬에 배치되는 모든 NPC(1차 알파 7명 + 2차 7명)를 배치하고, 연금술 공방 · 폐품 작업장을 더 짓는다.
+//          새 구역 위치는 18번 메뉴 구성을 기준으로 다시 만들고, 마지막에 NavMesh를 다시 굽는다.
 public static class NpcPlacementBuilder
 {
     public const string BuildMenuRoot = "Tools/Project U/Build Content/";
@@ -27,7 +29,7 @@ public static class NpcPlacementBuilder
     private const string InteractableLayer = "Interactable";
     private const string BuildingLayer = "Building";
 
-    // 알파 NPC 머리 색 (캐릭터 시트 외형 설명 기준)
+    // NPC 머리 색 (캐릭터 시트 외형 설명 기준)
     private static readonly Dictionary<string, Color> HairColors = new Dictionary<string, Color>
     {
         { "char_lunette", Hex(0xC9CCD1) }, // 은발에 가까운 연회색
@@ -111,6 +113,17 @@ public static class NpcPlacementBuilder
             Name = "LichelWagon", ModelId = "prop_npc_wagon", Position = new Vector3(21f, 0f, 24.5f), Yaw = 0f,
             Blocks = new[] { (new Vector3(0f, 1.1f, 0f), new Vector3(2.4f, 2.2f, 1.4f)) }
         },
+        new BuildingSpec
+        {
+            Name = "AlchemyLab", ModelId = "build_npc_alchemy", Position = new Vector3(-25f, 0f, 25f), Yaw = 90f, Label = "벨라모르타의 연금술 공방", LabelPosition = new Vector3(0f, 3.3f, 2.55f),
+            Blocks = new[] { (new Vector3(0f, 1.3f, 0f), new Vector3(5.2f, 2.6f, 4.2f)), (new Vector3(1.6f, 0.5f, 3.6f), new Vector3(1.7f, 1f, 0.65f)) }
+        },
+        new BuildingSpec
+        {
+            Name = "ScrapYard", ModelId = "build_npc_scrap_yard", Position = new Vector3(31f, 0f, 26f), Yaw = 270f, Label = "피피의 폐품 작업장", LabelPosition = new Vector3(0f, 3.2f, 2.3f),
+            Blocks = new[] { (new Vector3(0f, 1.2f, -1.85f), new Vector3(5f, 2.4f, 0.4f)), (new Vector3(0.8f, 0.5f, -1.05f), new Vector3(2.1f, 1f, 0.8f)), (new Vector3(-1.85f, 0.6f, -0.9f), new Vector3(1.3f, 1.2f, 1.6f)),
+                (new Vector3(-2.35f, 1.3f, 1.85f), new Vector3(0.2f, 2.6f, 0.2f)), (new Vector3(2.35f, 1.3f, 1.85f), new Vector3(0.2f, 2.6f, 0.2f)) }
+        },
         HouseSpec("House_Lunette", new Vector3(-28f, 0f, -14f), 90f, "루네트의 오두막"),
         HouseSpec("House_Verona", new Vector3(28f, 0f, -9f), 270f, "베로나의 농가"),
         HouseSpec("House_Mio", new Vector3(34f, 0f, 14f), 180f, "미오의 오두막"),
@@ -145,7 +158,12 @@ public static class NpcPlacementBuilder
         new LocationSpec { Id = "loc_home_mireille", Building = "House_Mireille", Position = new Vector3(0.6f, 0f, 3.1f), Yaw = 0f, Home = true },
         new LocationSpec { Id = "loc_home_milky", Building = "SunsetCafe", Position = new Vector3(0f, 0f, -3.4f), Yaw = 180f, Home = true },
         new LocationSpec { Id = "loc_home_dravia", Building = "Smithy", Position = new Vector3(0f, 0f, -2.9f), Yaw = 180f, Home = true },
-        new LocationSpec { Id = "loc_lichel_camp", Building = "LichelWagon", Position = new Vector3(0f, 0f, -1.6f), Yaw = 180f, Home = true }
+        new LocationSpec { Id = "loc_lichel_camp", Building = "LichelWagon", Position = new Vector3(0f, 0f, -1.6f), Yaw = 180f, Home = true },
+        // 101일차: 2차 NPC (마을 안)
+        new LocationSpec { Id = "loc_home_bellamorta", Building = "AlchemyLab", Position = new Vector3(-0.9f, 0f, 3.0f), Yaw = 0f, Home = true },
+        new LocationSpec { Id = "loc_alchemy_lab", Building = "AlchemyLab", Position = new Vector3(1.6f, 0f, 2.95f), Yaw = 0f },
+        new LocationSpec { Id = "loc_home_pipi", Building = "ScrapYard", Position = new Vector3(0.9f, 0f, 0.3f), Yaw = 180f, Home = true },
+        new LocationSpec { Id = "loc_scrap_yard", Building = "ScrapYard", Position = new Vector3(-0.8f, 0f, 1.3f), Yaw = 0f }
     };
 
     private static BuildingSpec HouseSpec(string name, Vector3 position, float yaw, string label)
@@ -164,8 +182,8 @@ public static class NpcPlacementBuilder
     {
         bool confirmed = EditorUtility.DisplayDialog(
             DialogTitle,
-            "NPC 데이터를 갱신하고 알파 NPC 7명의 모델·Prefab을 만든 뒤,\n"
-            + "현재 게임 Scene(20_Gameplay)의 캠프 북쪽에 마을 건물 · NPC 집 · 일정 위치 · NPC · NPC 관리자를 배치합니다.\n"
+            "NPC 데이터를 갱신하고 섬에 배치되는 NPC(1차 알파 7명 · 2차 7명)의 모델·Prefab을 만든 뒤,\n"
+            + "현재 게임 Scene(20_Gameplay)에 마을 건물 · NPC 집 · 일정 위치 · NPC · NPC 관리자를 배치하고 NavMesh를 다시 굽습니다.\n"
             + "마을 자리의 나무·바위·풀은 숨깁니다.\n\n"
             + "실행 전에 Scene을 저장해 두세요. 실행 후 Ctrl+S로 Scene을 저장해야 반영됩니다.",
             "실행",
@@ -208,7 +226,7 @@ public static class NpcPlacementBuilder
                 return report.ToString();
             }
 
-            List<NpcCharacterData> cast = database.GetAlphaCast();
+            List<NpcCharacterData> cast = database.GetPlacedCast(); // 101일차: 1차 + 2차
 
             EditorUtility.DisplayProgressBar(DialogTitle, "저폴리 모델", 0.2f);
             StylizedArtAssetFactory.EnsureFolder(PrefabFolder);
@@ -421,7 +439,15 @@ public static class NpcPlacementBuilder
         }
 
         int cleared = ClearEnvironment(scene, buildings.Values);
-        report.AppendLine($"마을 건물 {Buildings.Length}개 (카페 · 대장간 · 게시판 · 짐마차 · 집 4채), 자리의 나무·바위·풀 {cleared}개 숨김");
+        report.AppendLine($"마을 건물 {Buildings.Length}개 (카페 · 대장간 · 게시판 · 짐마차 · 집 4채 · 연금술 공방 · 폐품 작업장), 자리의 나무·바위·풀 {cleared}개 숨김");
+
+        // 101일차: 새 구역 위치를 지금 위치 목록(CSV)대로 다시 만든다 (새 집 위치 포함)
+        string zoneReport = WorldZoneBuilder.RefreshLocations(scene);
+
+        if (!string.IsNullOrEmpty(zoneReport))
+        {
+            report.AppendLine(zoneReport);
+        }
 
         // 일정 위치
         List<NpcLocationPoint> points = new List<NpcLocationPoint>();
@@ -464,7 +490,7 @@ public static class NpcPlacementBuilder
             }
 
             NpcLocationPoint point = GetOrAdd<NpcLocationPoint>(holder.gameObject);
-            point.EditorAssign(location.LocationId, location.DisplayName, spec.Home, spec.Anchor);
+            point.EditorAssign(location.LocationId, location.DisplayName, spec.Home || location.IsHome, spec.Anchor);
             EditorUtility.SetDirty(point);
             points.Add(point);
         }
@@ -515,6 +541,7 @@ public static class NpcPlacementBuilder
         EditorUtility.SetDirty(manager);
         report.AppendLine($"NPC {agents.Count}명 배치 · NPC 관리자 연결 (낮밤 {(dayNight != null ? "O" : "X")} · 계절 {(season != null ? "O" : "X")} · 날씨 {(weather != null ? "O" : "X")})");
 
+        report.AppendLine(WorldZoneBuilder.RebakeNavMesh()); // 101일차: 새 건물 반영
         EditorSceneManager.MarkSceneDirty(scene);
         report.AppendLine("Scene 변경 완료 : Ctrl+S로 저장하세요.");
         return report.ToString();
@@ -677,7 +704,7 @@ public static class NpcPlacementBuilder
         }
 
         NpcDatabase database = AssetDatabase.LoadAssetAtPath<NpcDatabase>(NpcContentBuilder.DatabasePath);
-        List<NpcCharacterData> cast = database != null ? database.GetAlphaCast() : new List<NpcCharacterData>();
+        List<NpcCharacterData> cast = database != null ? database.GetPlacedCast() : new List<NpcCharacterData>();
 
         foreach (NpcCharacterData character in cast)
         {
@@ -784,5 +811,79 @@ public static class NpcPlacementBuilder
         }
 
         report.AppendLine($"일정 위치 {onNavMesh}/{database.Locations.Count}곳 정상 · NPC {placed}/{cast.Count}명 배치");
+        ValidateTravel(manager, cast, error, report);
+    }
+
+    // 101일차: 일정 이동 시간 - 다음 일정이 시작되기 전에 실제 걷는 속도로 도착할 수 있는지 (NavMesh 길 길이 기준)
+    private static void ValidateTravel(NpcManager manager, List<NpcCharacterData> cast, System.Action<string> error, StringBuilder report)
+    {
+        DayNightCycle dayNight = new SerializedObject(manager).FindProperty("dayNightCycle").objectReferenceValue as DayNightCycle;
+        float daySeconds = dayNight != null ? Mathf.Max(1f, new SerializedObject(dayNight).FindProperty("fullDayDurationSeconds").floatValue) : 600f;
+        float secondsPerHour = daySeconds / 24f;
+        Dictionary<string, NpcLocationPoint> points = manager.Locations.Where(point => point != null).GroupBy(point => point.LocationId).ToDictionary(group => group.Key, group => group.First());
+        int legs = 0;
+        float longest = 0f;
+        string longestText = string.Empty;
+
+        foreach (NpcCharacterData character in cast)
+        {
+            NpcAgent agent = manager.Agents.FirstOrDefault(entry => entry != null && entry.Character == character);
+
+            if (agent == null || character.Schedule == null)
+            {
+                continue;
+            }
+
+            float speed = Mathf.Max(0.2f, agent.WalkSpeed);
+
+            foreach (NpcScheduleData.Plan plan in character.Schedule.Plans)
+            {
+                for (int index = 0; index + 1 < plan.Stops.Count; index++)
+                {
+                    NpcScheduleData.Stop from = plan.Stops[index];
+                    NpcScheduleData.Stop to = plan.Stops[index + 1];
+
+                    if (from.LocationId == to.LocationId || !points.TryGetValue(from.LocationId, out NpcLocationPoint start) || !points.TryGetValue(to.LocationId, out NpcLocationPoint end))
+                    {
+                        continue;
+                    }
+
+                    NavMeshPath path = new NavMeshPath();
+
+                    if (!NavMesh.SamplePosition(start.transform.position, out NavMeshHit a, 2f, NavMesh.AllAreas)
+                        || !NavMesh.SamplePosition(end.transform.position, out NavMeshHit b, 2f, NavMesh.AllAreas)
+                        || !NavMesh.CalculatePath(a.position, b.position, NavMesh.AllAreas, path)
+                        || path.status != NavMeshPathStatus.PathComplete)
+                    {
+                        error($"{character.CharacterId} : '{plan.PlanId}' {from.LocationId} → {to.LocationId} 걸어갈 길이 없습니다.");
+                        continue;
+                    }
+
+                    float length = 0f;
+
+                    for (int corner = 1; corner < path.corners.Length; corner++)
+                    {
+                        length += Vector3.Distance(path.corners[corner - 1], path.corners[corner]);
+                    }
+
+                    float hours = length / speed / secondsPerHour;
+                    float slot = index + 2 < plan.Stops.Count ? plan.Stops[index + 2].Hour - to.Hour : 24f; // 도착한 뒤 머무를 시간
+                    legs++;
+
+                    if (hours > longest)
+                    {
+                        longest = hours;
+                        longestText = $"{character.DisplayName} {from.LocationId} → {to.LocationId}";
+                    }
+
+                    if (hours > slot)
+                    {
+                        error($"{character.CharacterId} : '{plan.PlanId}' {to.Hour}시 {to.LocationId} 까지 {hours:0.0}시간 걸려 머무를 시간({slot:0.#}시간) 안에 도착하지 못합니다.");
+                    }
+                }
+            }
+        }
+
+        report.AppendLine($"일정 이동 {legs}구간 확인 (게임 1시간 = {secondsPerHour:0}초, 가장 먼 이동 {longest:0.0}시간 : {longestText})");
     }
 }

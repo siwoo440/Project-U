@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: "\uB9B4\uB9AC\uCE74"
   englishName: Lilica
   isAlphaCast: 0
+  castWave: 0
   isAvailable: 1
   profile:
     raceId: race_vampire

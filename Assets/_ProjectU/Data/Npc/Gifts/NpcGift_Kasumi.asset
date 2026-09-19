@@ -26,9 +26,18 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: eef1b375027259b42834d2262ce9dd96, type: 2}
     preference: 1
     source: food_apple
+  - item: {fileID: 11400000, guid: 95ca44aa8a27d41448c511db6fa0a55c, type: 2}
+    preference: 1
+    source: food_strawberry
+  - item: {fileID: 11400000, guid: 361f6079362891a468aae059667ddd1c, type: 2}
+    preference: 1
+    source: item_herbal_tea
   - item: {fileID: 11400000, guid: cc96d25a17a973747bb1d11fe6839e7b, type: 2}
     preference: 3
     source: tag:metal_tool
+  - item: {fileID: 11400000, guid: c593f671b9ae9d24e96e6cd5ee7b2a1c, type: 2}
+    preference: 3
+    source: item_iron_ore
   - item: {fileID: 11400000, guid: d801a65a4ac6aa9488b8fe9ba94ccb15, type: 2}
     preference: 3
     source: tag:metal_tool

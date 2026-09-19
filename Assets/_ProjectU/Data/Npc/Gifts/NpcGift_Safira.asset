@@ -22,7 +22,10 @@ MonoBehaviour:
     source: item_wild_mushroom
   - item: {fileID: 11400000, guid: 361f6079362891a468aae059667ddd1c, type: 2}
     preference: 1
-    source: tag:herb
+    source: item_herbal_tea
+  - item: {fileID: 11400000, guid: 2e83945f5dda2f34bb4e993074cfc81c, type: 2}
+    preference: 1
+    source: medicine_bandage
   - item: {fileID: 11400000, guid: 233c5c7467d9daa41bab4b59439b9465, type: 2}
     preference: 4
     source: drink_water_bottle

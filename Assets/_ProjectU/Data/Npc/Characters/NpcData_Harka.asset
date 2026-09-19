@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: "\uD558\uB974\uCE74"
   englishName: Harka
   isAlphaCast: 0
+  castWave: 0
   isAvailable: 1
   profile:
     raceId: race_dogkin

@@ -35,6 +35,7 @@ public static class NpcContentBuilder
 
     private const string CommonDialogueId = "*"; // 모든 NPC 공통 대사 (자기 대사가 없을 때 사용)
     public const int ExpectedAlphaCast = 7;
+    public static readonly int[] ExpectedCastPerWave = { 7, 7 }; // 101일차: 차수별 배치 인원 (1차 알파 · 2차 상인 · 제작형)
 
     private static readonly Regex IdPattern = new Regex("^char_[a-z0-9]+(?:_[a-z0-9]+)*$");
     private static readonly Regex ColorPattern = new Regex("#[0-9A-Fa-f]{6}");
@@ -124,7 +125,7 @@ public static class NpcContentBuilder
             database.EditorAssign(characters, source.Locations);
             EditorUtility.SetDirty(database);
             AssetDatabase.SaveAssets();
-            int alphaCount = characters.Count(character => character.IsAlphaCast);
+            int alphaCount = characters.Count(character => character.IsPlaced);
             report.AppendLine($"NPC {characters.Count}명 (알파 배치 {alphaCount}명) · 대사 {lineCount}줄 · 선물 반응 {giftCount}개 · 일정 {scheduleCount}개 · 위치 {source.Locations.Count}곳");
 
             EditorUtility.DisplayProgressBar(DialogTitle, "한글 글꼴", 0.75f);
@@ -203,7 +204,8 @@ public static class NpcContentBuilder
 
             foreach (NpcCsv.Row row in NpcCsv.Read(LocationCsv, data.Errors))
             {
-                data.Locations.Add(new NpcDatabase.Location(row["LocationID"], row["DisplayName"], row["Description"], row["Zone"], row["Waterside"].Equals("TRUE", StringComparison.OrdinalIgnoreCase))); // 100일차: 구역 · 물가
+                data.Locations.Add(new NpcDatabase.Location(row["LocationID"], row["DisplayName"], row["Description"], row["Zone"],
+                    row["Waterside"].Equals("TRUE", StringComparison.OrdinalIgnoreCase), row["Home"].Equals("TRUE", StringComparison.OrdinalIgnoreCase))); // 100일차: 구역 · 물가 / 101일차: 집
             }
 
             report.AppendLine($"원본 CSV : 캐릭터 시트 {data.CharacterIds.Count}명, 대사 {data.Dialogue.Count}줄, 선물 규칙 {data.Gifts.Count}개, 일정 {data.Schedules.Count}칸, 위치 {data.Locations.Count}곳");
@@ -234,9 +236,10 @@ public static class NpcContentBuilder
     {
         NpcCharacterData character = LoadOrCreateAsset<NpcCharacterData>($"{CharacterFolder}/NpcData_{assetKey}.asset");
         source.Extras.TryGetValue(id, out NpcCsv.Row extras);
-        bool alpha = extras != null && extras["AlphaCast"].Equals("TRUE", StringComparison.OrdinalIgnoreCase);
+        int wave = ParseWave(extras);
+        bool alpha = wave > 0;
         bool available = !Field(sheet, "IsAvailable").Equals("FALSE", StringComparison.OrdinalIgnoreCase);
-        character.EditorAssignIdentity(id, Field(sheet, "DisplayName"), Field(sheet, "EnglishName"), alpha, available);
+        character.EditorAssignIdentity(id, Field(sheet, "DisplayName"), Field(sheet, "EnglishName"), wave, available);
 
         NpcCharacterData.ProfileText profile = new NpcCharacterData.ProfileText
         {
@@ -296,10 +299,28 @@ public static class NpcContentBuilder
             ids, startAffinity, maxAffinity, birthdaySeason, birthdayDay, home, work);
 
         string filled = alpha ? "생일 · 집·일터 · 하루 일정 · 추가 대사 · 선물 반응" : "생일 · 공통 계절·날씨·선물 대사 · 선물 반응";
-        string note = $"캐릭터 시트 검토일 {Field(sheet, "LastReviewedDate")}. 89일차 임시 작성: {filled}. 시트의 선호 물건은 게임 아이템으로 대신 연결.";
+        int[] writtenDays = { 89, 89, 101, 103, 108, 110 }; // 차수별 작성일 (2차 101일차 · 3차 103일차 · 4차 108일차 · 5차 110일차)
+        string written = $"{writtenDays[Mathf.Clamp(wave, 0, writtenDays.Length - 1)]}일차";
+        string note = $"캐릭터 시트 검토일 {Field(sheet, "LastReviewedDate")}. {written} 임시 작성: {filled}. 시트의 선호 물건은 게임 아이템으로 대신 연결.";
         character.EditorAssignLinks(gifts, dialogue, schedule, Field(sheet, "DataStatus"), note);
         EditorUtility.SetDirty(character);
         return character;
+    }
+
+    // 101일차: 배치 차수 (CastWave 칸, 없으면 예전 AlphaCast 칸 TRUE = 1차)
+    private static int ParseWave(NpcCsv.Row extras)
+    {
+        if (extras == null)
+        {
+            return 0;
+        }
+
+        if (int.TryParse(extras["CastWave"], out int wave))
+        {
+            return Mathf.Max(0, wave);
+        }
+
+        return extras["AlphaCast"].Equals("TRUE", StringComparison.OrdinalIgnoreCase) ? 1 : 0;
     }
 
     private static TFlags ParseFlags<TFlags>(string text) where TFlags : struct, Enum
@@ -665,16 +686,30 @@ public static class NpcContentBuilder
             ValidateGifts(character, Error);
             lines += ValidateDialogue(character, Error);
 
-            if (character.IsAlphaCast)
+            if (character.IsPlaced)
             {
                 alpha++;
                 ValidateAlpha(character, database, Error);
             }
         }
 
-        if (alpha != ExpectedAlphaCast)
+        // 101일차: 차수별 배치 인원 (1차 알파 7명 · 2차 7명 ...)
+        int lastWave = database.Characters.Where(character => character != null).Select(character => character.CastWave).DefaultIfEmpty(0).Max();
+
+        for (int wave = 1; wave <= Mathf.Max(lastWave, ExpectedCastPerWave.Length); wave++)
         {
-            Error($"알파 배치 NPC가 {alpha}명입니다 (기준 {ExpectedAlphaCast}명).");
+            int count = database.Characters.Count(character => character != null && character.CastWave == wave);
+            int expected = wave <= ExpectedCastPerWave.Length ? ExpectedCastPerWave[wave - 1] : 0;
+
+            if (count != expected)
+            {
+                Error($"{wave}차 배치 NPC가 {count}명입니다 (기준 {expected}명).");
+            }
+        }
+
+        if (database.Characters.Count(character => character != null && character.IsAlphaCast) != ExpectedAlphaCast)
+        {
+            Error($"알파(1차) NPC가 {ExpectedAlphaCast}명이 아닙니다.");
         }
 
         foreach (NpcDatabase.Location location in database.Locations)
@@ -685,7 +720,7 @@ public static class NpcContentBuilder
             }
         }
 
-        report.AppendLine($"NPC {database.Characters.Count}명 (알파 배치 {alpha}명) · 대사 {lines}줄 · 위치 {database.Locations.Count}곳");
+        report.AppendLine($"NPC {database.Characters.Count}명 (섬 배치 {alpha}명 : {string.Join(" · ", Enumerable.Range(1, Mathf.Max(1, lastWave)).Select(wave => $"{wave}차 {database.Characters.Count(character => character != null && character.CastWave == wave)}명"))}) · 대사 {lines}줄 · 위치 {database.Locations.Count}곳");
         KoreanFontBuilder.Validate(CollectDisplayTexts(database), Error, report);
         errorCount = errors;
         report.AppendLine(errors == 0 ? "결과 : 오류 0개" : $"결과 : 오류 {errors}개");
@@ -715,9 +750,9 @@ public static class NpcContentBuilder
             error($"{character.CharacterId} : 매우 좋아함·좋아함 선물이 각각 하나 이상 필요합니다.");
         }
 
-        if (character.IsAlphaCast && gifts.Count(GiftPreference.Disliked) + gifts.Count(GiftPreference.Hated) == 0)
+        if (character.IsPlaced && gifts.Count(GiftPreference.Disliked) + gifts.Count(GiftPreference.Hated) == 0)
         {
-            error($"{character.CharacterId} : 알파 NPC는 싫어하는 선물이 하나 이상 필요합니다.");
+            error($"{character.CharacterId} : 섬에 배치되는 NPC는 싫어하는 선물이 하나 이상 필요합니다.");
         }
     }
 
@@ -772,9 +807,9 @@ public static class NpcContentBuilder
             }
         }
 
-        if (character.IsAlphaCast && (dialogue.Count(NpcDialogueKind.Greeting) < 2 || dialogue.Count(NpcDialogueKind.Talk) < 3))
+        if (character.IsPlaced && (dialogue.Count(NpcDialogueKind.Greeting) < 2 || dialogue.Count(NpcDialogueKind.Talk) < 3))
         {
-            error($"{id} : 알파 NPC는 인사 2줄·잡담 3줄 이상이 필요합니다.");
+            error($"{id} : 섬에 배치되는 NPC는 인사 2줄·잡담 3줄 이상이 필요합니다.");
         }
 
         return dialogue.Lines.Count;

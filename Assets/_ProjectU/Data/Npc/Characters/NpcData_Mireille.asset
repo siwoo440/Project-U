@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: "\uBBF8\uB808\uC720"
   englishName: Mireille
   isAlphaCast: 1
+  castWave: 1
   isAvailable: 1
   profile:
     raceId: race_sheepkin

@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: "\uC138\uC774\uB77C"
   englishName: Seira
   isAlphaCast: 0
+  castWave: 2
   isAvailable: 1
   profile:
     raceId: race_lamia
@@ -64,7 +65,7 @@ MonoBehaviour:
       \uC720\uC801 \uB0B4\uBD80, \uBC40\uC758 \uAF2C\uB9AC\uAC00 \uAC10\uAE34 \uC790\uC138,
       \uAE08\uBE5B \uB208\uACFC \uBCF4\uB78F\uBE5B \uC870\uBA85, \uBE44\uB298\uC758
       \uC9C8\uAC10 \uAC15\uC870, \uC740\uC740\uD55C \uC720\uD639 \uD3EC\uC988 \uCD94\uCC9C"
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: b83e6ceee6c7b2249b8149a549a4b1d9, type: 3}
   themeColor: {r: 0.36862746, g: 0.24313726, b: 0.46666667, a: 1}
   accentColor: {r: 0.7490196, g: 0.6313726, b: 0.27058825, a: 1}
   personality:
@@ -113,13 +114,14 @@ MonoBehaviour:
   maxAffinity: 100
   birthdaySeason: 0
   birthdayDay: 10
-  homeLocationId: 
-  workLocationId: 
+  homeLocationId: loc_home_seira
+  workLocationId: loc_ruins_library
   giftProfile: {fileID: 11400000, guid: d2c95951360a8954f933bdda9c430215, type: 2}
   dialogueSet: {fileID: 11400000, guid: f70b017549465484c968eb88047fafb0, type: 2}
-  schedule: {fileID: 0}
+  schedule: {fileID: 11400000, guid: f739a320f975e80499cf77ac7c182cee, type: 2}
   dataStatus: "\uAE30\uD68D \uAE30\uBC18 \uC784\uC2DC\uAC12 \uD3EC\uD568"
-  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 89\uC77C\uCC28
-    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uACF5\uD1B5 \uACC4\uC808\xB7\uB0A0\uC528\xB7\uC120\uBB3C
-    \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758 \uC120\uD638
-    \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0 \uC5F0\uACB0."
+  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 101\uC77C\uCC28
+    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uC9D1\xB7\uC77C\uD130 \xB7 \uD558\uB8E8
+    \uC77C\uC815 \xB7 \uCD94\uAC00 \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758
+    \uC120\uD638 \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0
+    \uC5F0\uACB0."
