@@ -46,35 +46,6 @@ public static class NpcContentBuilder
         { "애정", AffinityStage.Affection }, { "사랑", AffinityStage.Love }
     };
 
-    // ---------------------------------------------------------------- 메뉴
-
-    [MenuItem(BuildMenuRoot + "7. NPC (Character Sheet + Dialogue + Gifts + Korean Font)", false, 26)]
-    private static void BuildAllMenu()
-    {
-        bool confirmed = EditorUtility.DisplayDialog(
-            DialogTitle,
-            "캐릭터 시트(Data/Npc/Source)의 NPC 35명을 NPC 데이터로 가져오고\n"
-            + "선물 반응 · 대사 · 알파 NPC 7명의 일정과 한글 글꼴을 만듭니다.\n\n"
-            + "Scene은 바뀌지 않습니다.",
-            "실행",
-            "취소");
-
-        if (!confirmed)
-        {
-            return;
-        }
-
-        string report = BuildAll();
-        Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, Shorten(report), "확인");
-    }
-
-    private static string Shorten(string report)
-    {
-        const int limit = 1800;
-        return report.Length <= limit ? report : report.Substring(0, limit) + "\n... (전체 내용은 Console 참고)";
-    }
-
     // ---------------------------------------------------------------- 전체 생성
 
     public static string BuildAll()

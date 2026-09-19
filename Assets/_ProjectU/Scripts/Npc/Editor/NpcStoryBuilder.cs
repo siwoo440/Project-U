@@ -14,37 +14,6 @@ public static class NpcStoryBuilder
     private const string ScenePath = "Assets/_ProjectU/Scenes/20_Gameplay.unity";
     private const string DialogTitle = "Project U 섬 NPC 이야기";
 
-    [MenuItem(MarketContentBuilder.BuildMenuRoot + "21. Island NPC Stories (Heart Events + Quests)", false, 40)]
-    private static void BuildAllMenu()
-    {
-        bool confirmed = EditorUtility.DisplayDialog(
-            DialogTitle,
-            $"1 ~ {NpcDatabase.StoryReadyWave}차 NPC의 하트 이벤트와 의뢰를 한 번에 갱신합니다.\n"
-            + "12번(하트 이벤트) → 11번(의뢰) 순서로 실행하고 게임 Scene을 저장합니다.\n\n"
-            + "먼저 19번(섬 NPC 차수) · 20번(가게) 메뉴를 실행해 두어야 합니다. 게임 Scene을 열고 실행하세요.",
-            "실행",
-            "취소");
-
-        if (!confirmed)
-        {
-            return;
-        }
-
-        if (EditorSceneManager.GetActiveScene().path != ScenePath)
-        {
-            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
-            {
-                return;
-            }
-
-            EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
-        }
-
-        string report = BuildAll(true);
-        Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, report.Length <= 1800 ? report : report.Substring(0, 1800) + "\n... (전체 내용은 Console 참고)", "확인");
-    }
-
     public static string BuildAll(bool saveScene)
     {
         StringBuilder report = new StringBuilder("[섬 NPC 이야기 갱신]\n");

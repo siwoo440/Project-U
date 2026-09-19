@@ -63,37 +63,6 @@ public static class IslandNatureBuilder
 
     // ---------------------------------------------------------------- 메뉴
 
-    [MenuItem(MarketContentBuilder.BuildMenuRoot + "24. Island Nature (Trees + Rocks + Field Enemies + Map)", false, 43)]
-    private static void BuildAllMenu()
-    {
-        bool confirmed = EditorUtility.DisplayDialog(
-            DialogTitle,
-            "섬 곳곳에 나무 · 바위 · 덤불(Terrain 나무)과 숲 바닥을 칠하고,\n"
-            + "흙길 옆 채집 나무 · 돌, 구역 사이 들판의 적 생성 지점을 만들고, 지도를 섬 전체로 넓힌 뒤\n"
-            + "NavMesh를 다시 굽고 게임 Scene을 저장합니다. (22번 메뉴를 실행하면 함께 만들어집니다)",
-            "실행",
-            "취소");
-
-        if (!confirmed)
-        {
-            return;
-        }
-
-        if (EditorSceneManager.GetActiveScene().path != ScenePath)
-        {
-            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
-            {
-                return;
-            }
-
-            EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
-        }
-
-        string report = BuildAll(true);
-        Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, report.Length <= 1800 ? report : report.Substring(0, 1800) + "\n... (전체 내용은 Console 참고)", "확인");
-    }
-
     public static string BuildAll(bool saveScene)
     {
         StringBuilder report = new StringBuilder("[섬 자연 · 들판 만들기]\n");

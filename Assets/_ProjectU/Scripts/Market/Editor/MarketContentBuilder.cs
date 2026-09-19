@@ -122,36 +122,6 @@ public static class MarketContentBuilder
         Ingredients = new[] { ("item_wood", 18), ("item_plant_fiber", 8), ("resource_stone", 6) }
     };
 
-    // ---------------------------------------------------------------- 메뉴
-
-    [MenuItem(BuildMenuRoot + "6. Market (Prices + Shipping Bin + Stall + UI)", false, 25)]
-    private static void BuildAllMenu()
-    {
-        bool confirmed = EditorUtility.DisplayDialog(
-            DialogTitle,
-            "판매 가격표와 상인 재고, 판매 상자·상인 가판대 건축물을 만들고\n"
-            + "현재 게임 Scene(20_Gameplay)에 상점 관리자·지갑·상인 창·코인 표시를 추가합니다.\n"
-            + "보관함 창 Prefab에는 판매 상자 안내 문구가 추가됩니다.\n\n"
-            + "실행 전에 Scene을 저장해 두세요. 실행 후 Ctrl+S로 Scene을 저장해야 반영됩니다.",
-            "실행",
-            "취소");
-
-        if (!confirmed)
-        {
-            return;
-        }
-
-        string report = BuildAll();
-        Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, Shorten(report), "확인");
-    }
-
-    private static string Shorten(string report)
-    {
-        const int limit = 1800;
-        return report.Length <= limit ? report : report.Substring(0, limit) + "\n... (전체 내용은 Console 참고)";
-    }
-
     // ---------------------------------------------------------------- 전체 생성
 
     public static string BuildAll()

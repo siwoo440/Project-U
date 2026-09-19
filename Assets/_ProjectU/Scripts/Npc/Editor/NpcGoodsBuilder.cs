@@ -67,36 +67,6 @@ public static class NpcGoodsBuilder
             Health = 35f, Stack = 5, Description = "Aliune's soft pink balm pressed from healing petals. Soothes scrapes and bruises." }
     };
 
-    [MenuItem(MarketContentBuilder.BuildMenuRoot + "20. Island NPC Shops (Goods + Shops + Craft Orders)", false, 39)]
-    private static void BuildAllMenu()
-    {
-        bool confirmed = EditorUtility.DisplayDialog(
-            DialogTitle,
-            "NPC 가게 물건(2 · 3차)을 만들고, 1번(아이템 외형) → 판매 상자 가격표 → 10번(NPC 상점 · 제작 주문 · 작업장) 순서로 실행한 뒤 게임 Scene을 저장합니다.\n\n"
-            + "먼저 19번(섬 NPC 차수) 메뉴를 실행해 두어야 합니다. 게임 Scene을 열고 실행하세요 (1분 정도 걸릴 수 있습니다).",
-            "실행",
-            "취소");
-
-        if (!confirmed)
-        {
-            return;
-        }
-
-        if (EditorSceneManager.GetActiveScene().path != ScenePath)
-        {
-            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
-            {
-                return;
-            }
-
-            EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
-        }
-
-        string report = BuildAll(true);
-        Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, report.Length <= 1800 ? report : report.Substring(0, 1800) + "\n... (전체 내용은 Console 참고)", "확인");
-    }
-
     public static string BuildAll(bool saveScene)
     {
         StringBuilder report = new StringBuilder("[섬 NPC 가게 갱신]\n");

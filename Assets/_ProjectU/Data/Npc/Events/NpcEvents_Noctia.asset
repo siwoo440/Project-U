@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c705680e20332f5478f3a6911a134984, type: 3}
+  m_Name: NpcEvents_Noctia
+  m_EditorClassIdentifier: Assembly-CSharp::NpcEventBook
+  ownerId: char_noctia
+  events:
+  - eventId: event_noctia_curious
+    title: "\uAE4C\uB9C8\uADC0\uC758 \uC120\uBB3C"
+    requiredStage: 1
+    locationId: loc_forest_witch_hut
+    fromHour: 7
+    toHour: 10
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\u2026\uAE4C\uB9C8\uADC0\uAC00 \uC624\uB298 \uC544\uCE68 \uBC18\uC9DD\uC774\uB294
+        \uAC83\uC744 \uBB3C\uC5B4 \uC654\uC5B4\uC694. \uB2F9\uC2E0 \uBC1C\uC790\uAD6D
+        \uC606\uC5D0\uC11C \uC8FC\uC6E0\uB300\uC694."
+    - fromPlayer: 0
+      text: "\uAE4C\uB9C8\uADC0\uB294 \uB9C8\uC74C\uC5D0 \uB4DC\uB294 \uC0AC\uB78C\uC5D0\uAC8C\uB9CC
+        \uC120\uBB3C\uC744 \uD574\uC694. \u2026\uB098\uC5D0\uAC8C\uAC00 \uC544\uB2C8\uB77C,
+        \uB2F9\uC2E0\uC5D0\uAC8C\uC694."
+    choices:
+    - label: "\uAE4C\uB9C8\uADC0\uC5D0\uAC8C \uACE0\uB9D9\uB2E4\uACE0 \uC804\uD574
+        \uC918."
+      reply: "\uD6C4\uD6C4\u2026 \uBC29\uAE08 \uC800 \uB140\uC11D\uC774 \uB0A0\uAC1C\uB97C
+        \uD3C8\uC5B4\uC694. \uC54C\uC544\uB4E4\uC5C8\uB098 \uBD10\uC694."
+      affinity: 5
+    - label: "\uBB34\uC12D\uAC8C \uC0DD\uAE34 \uC0C8\uB124."
+      reply: "\u2026\uAE4C\uB9C8\uADC0\uB4E4\uC774 \uC090\uC84C\uC5B4\uC694. \uB2E4\uC74C\uC5D4
+        \uBAA8\uC774\uB77C\uB3C4 \uB4E4\uACE0 \uC624\uC138\uC694."
+      affinity: 2
+    afterLines:
+    - fromPlayer: 0
+      text: "\uAE4C\uB9C8\uADC0\uAC00 \uB2F9\uC2E0 \uC774\uB984\uC744 \uC678\uC6B0\uAE30
+        \uC2DC\uC791\uD588\uC5B4\uC694."
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_noctia_trust
+    title: "\uC608\uC5B8\uC758 \uB300\uAC00"
+    requiredStage: 2
+    locationId: loc_village_square
+    fromHour: 14
+    toHour: 17
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC608\uC804\uC5D0 \uD55C \uC655\uC5D0\uAC8C \uC608\uC5B8\uC744 \uC804\uD588\uC5B4\uC694.
+        \uADF8 \uC608\uC5B8\uB300\uB85C \uB418\uC5C8\uACE0\u2026 \uC0AC\uB78C\uB4E4\uC740
+        \uB098\uB97C \uD0D3\uD588\uC9C0\uC694."
+    - fromPlayer: 0
+      text: "\uC9C4\uC2E4\uC744 \uB9D0\uD55C \uB300\uAC00\uAC00 \uACE0\uB3C5\uC774\uB77C\uBA74,
+        \uCC28\uB77C\uB9AC \uC785\uC744 \uB2EB\uB294 \uAC8C \uB098\uC744\uAE4C\uC694?"
+    choices:
+    - label: "\uB124 \uB9D0\uC744 \uB4E4\uC5B4 \uC904 \uC0AC\uB78C\uC774 \uC5EC\uAE30
+        \uC788\uC5B4."
+      reply: "\u2026\uADF8\uB7F0 \uB9D0\uC740 \uC608\uC5B8\uC5D0\uB3C4 \uC5C6\uC5C8\uC5B4\uC694.
+        \uC870\uAE08\uB9CC, \uBBFF\uC5B4 \uBCFC\uAC8C\uC694."
+      affinity: 8
+    - label: "\uC608\uC5B8\uC744 \uC880 \uBD80\uB4DC\uB7FD\uAC8C \uB9D0\uD574 \uBCF4\uBA74?"
+      reply: "\uD6C4\uD6C4, \uD604\uC2E4\uC801\uC778 \uC870\uC5B8\uC774\uB124\uC694.
+        \uBE44\uADF9\uC744 \uD3EC\uC7A5\uD558\uB294 \uBC95\uB3C4 \uBC30\uC6CC\uC57C\uACA0\uC5B4\uC694."
+      affinity: 4
+    afterLines:
+    - fromPlayer: 0
+      text: "\uC624\uB298\uC740 \uC6B4\uC138 \uB300\uC2E0 \uCC28\uB97C \uB300\uC811\uD560\uAC8C\uC694.
+        \uC608\uC5B8 \uC5C6\uC774\uC694."
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_noctia_affection
+    title: "\uB2EC\uBE5B \uC57D\uCD08\uCC28"
+    requiredStage: 3
+    locationId: loc_forest_witch_hut
+    fromHour: 17
+    toHour: 21
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uB2EC\uC774 \uB728\uB294 \uC2DC\uAC04\uC5D4 \uC57D\uCD08\uAC00 \uAC00\uC7A5
+        \uD5A5\uAE30\uB85C\uC6CC\uC694. \uC624\uB298\uC740 \uB2F9\uC2E0 \uBAAB\uB3C4
+        \uB2EC\uC600\uC5B4\uC694."
+    - fromPlayer: 0
+      text: "\uC6B4\uBA85\uC744 \uC77D\uC9C0 \uC54A\uACE0 \uB204\uAD70\uAC00\uC640
+        \uCC28\uB97C \uB9C8\uC2DC\uB294 \uAC74\u2026 \uCC98\uC74C\uC774\uC5D0\uC694."
+    choices:
+    - label: "\uC55E\uC73C\uB85C\uB3C4 \uAC19\uC774 \uB9C8\uC2DC\uC790."
+      reply: "\u2026\uC55E\uC73C\uB85C\uB77C\uB294 \uB9D0, \uC88B\uB124\uC694. \uAE4C\uB9C8\uADC0\uB4E4\uB3C4
+        \uC870\uC6A9\uD788 \uB4E3\uACE0 \uC788\uC5B4\uC694."
+      affinity: 10
+    - label: "\uC4F4 \uAC70 \uC544\uB2C8\uC9C0?"
+      reply: "\uD6C4\uD6C4, \uC870\uAE08 \uC368\uC694. \uC778\uC0DD\uCC98\uB7FC\uC694.
+        \uADF8\uB798\uB3C4 \uB05D\uB9DB\uC740 \uB2EC\uC544\uC694."
+      affinity: 8
+    afterLines:
+    - fromPlayer: 0
+      text: "\uB0A8\uC740 \uC57D\uCD08\uCC28\uC608\uC694. \uAE34 \uBC24\uC5D0 \uB9C8\uC154\uC694."
+    rewardItem: {fileID: 11400000, guid: 361f6079362891a468aae059667ddd1c, type: 2}
+    rewardItemAmount: 4

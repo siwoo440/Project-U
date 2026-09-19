@@ -44,31 +44,6 @@ public static class BuildableVisualProfileBuilder
         ("Assets/_ProjectU/Prefabs/Gathering/StoneResource_01.prefab", "visual_resource_stone", "VP_Resource_Stone", "STONE ROCK")
     };
 
-    // ---------------------------------------------------------------- 메뉴
-
-    [MenuItem(MarketContentBuilder.BuildMenuRoot + "16. Buildable + Resource Visual Profiles", false, 35)]
-    private static void BuildAllMenu()
-    {
-        bool confirmed = EditorUtility.DisplayDialog(
-            DialogTitle,
-            "건축물 20종과 나무 · 돌 자원의 외형을 외형 설정(Visual Profile) 카드로 정리합니다.\n"
-            + "· 처음에는 지금 모양 그대로 카드를 만듭니다 (모양은 바뀌지 않음).\n"
-            + "· 카드를 고친 뒤 다시 실행하면 Prefab 모양이 카드대로 바뀝니다.\n"
-            + "· 돌벽 설치 미리보기 연결을 고칩니다.\n\n"
-            + "Prefab과 데이터만 바뀌고 Scene은 바뀌지 않습니다.",
-            "실행",
-            "취소");
-
-        if (!confirmed)
-        {
-            return;
-        }
-
-        string report = BuildAll();
-        Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, report.Length <= 1800 ? report : report.Substring(0, 1800) + "\n... (전체 내용은 Console 참고)", "확인");
-    }
-
     // ---------------------------------------------------------------- 전체 적용
 
     public static string BuildAll()

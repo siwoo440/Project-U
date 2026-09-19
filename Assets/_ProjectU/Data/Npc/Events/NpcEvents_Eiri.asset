@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c705680e20332f5478f3a6911a134984, type: 3}
+  m_Name: NpcEvents_Eiri
+  m_EditorClassIdentifier: Assembly-CSharp::NpcEventBook
+  ownerId: char_eiri
+  events:
+  - eventId: event_eiri_curious
+    title: "\uAD11\uC7A5 \uACF5\uC5F0"
+    requiredStage: 1
+    locationId: loc_village_square
+    fromHour: 12
+    toHour: 15
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uD6C4\uD6D7, \uC624\uB298 \uCCAB \uC190\uB2D8\uC774\uB2E4~! \uD55C
+        \uACE1 \uB4E4\uC5B4 \uBCFC\uB798? \uBC14\uB2F7\uBC14\uB78C \uB178\uB798\uC57C."
+    - fromPlayer: 0
+      text: "\uB77C~ \uB77C\uB77C~ \u2026\uC5B4\uB54C? \uD558\uB298 \uB0C4\uC0C8
+        \uB0AC\uC5B4?"
+    choices:
+    - label: "\uC815\uB9D0 \uC88B\uC740 \uB178\uB798\uC57C."
+      reply: "\uD5E4\uD5E4, \uBC15\uC218 \uC18C\uB9AC\uAC00 \uBC14\uB78C\uBCF4\uB2E4
+        \uC88B\uB124~!"
+      affinity: 5
+    - label: "\uAC00\uC0AC\uAC00 \uC880 \uC5B4\uB835\uB124."
+      reply: "\uADF8\uCE58? \uBC14\uB78C \uB9D0\uC774\uB77C\uC11C \uADF8\uB798~ \uB2E4\uC74C\uC5D4
+        \uC26C\uC6B4 \uACE1\uC73C\uB85C!"
+      affinity: 3
+    afterLines:
+    - fromPlayer: 0
+      text: "\uB2E4\uC74C \uACF5\uC5F0 \uB54C \uB9E8 \uC55E\uC790\uB9AC \uB9E1\uC544
+        \uB458\uAC8C~"
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_eiri_trust
+    title: "\uB2E4\uCE5C \uB0A0\uAC1C"
+    requiredStage: 2
+    locationId: loc_coast_beach
+    fromHour: 9
+    toHour: 12
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC774 \uD749\uD130 \uBCF4\uC5EC? \uC608\uC804\uC5D0 \uD3ED\uD48D\uC5D0
+        \uB0A0\uAC1C\uB97C \uB2E4\uCCD0\uC11C\u2026 \uB2E4\uC2DC\uB294 \uBABB \uB0A0
+        \uBED4\uD588\uC5B4."
+    - fromPlayer: 0
+      text: "\uADF8\uB54C \uC54C\uC558\uC5B4. \uC790\uC720\uB294 \uB2F9\uC5F0\uD55C
+        \uAC8C \uC544\uB2C8\uB77C\uB294 \uAC78."
+    choices:
+    - label: "\uC9C0\uAE08 \uC774\uB807\uAC8C \uB178\uB798\uD558\uC796\uC544."
+      reply: "\uC751! \uB0A0\uAC1C\uBCF4\uB2E4 \uBAA9\uC18C\uB9AC\uAC00 \uBA3C\uC800
+        \uB0A0\uC544\uC62C\uB790\uC5B4. \uD6C4\uD6D7."
+      affinity: 8
+    - label: "\uBB34\uC11C\uC6E0\uACA0\uB2E4."
+      reply: "\uBB34\uC11C\uC6E0\uC5B4. \u2026\uADF8\uB798\uB3C4 \uB108\uD55C\uD150
+        \uB9D0\uD560 \uC218 \uC788\uB124. \uC2E0\uAE30\uD558\uB2E4."
+      affinity: 6
+    afterLines:
+    - fromPlayer: 0
+      text: "\uC624\uB298 \uB178\uB798\uB294 \uB108\uD55C\uD14C \uBC14\uCE58\uB294
+        \uACE1\uC774\uC57C~"
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_eiri_affection
+    title: "\uB178\uC744 \uB178\uB798"
+    requiredStage: 3
+    locationId: loc_coast_rocks
+    fromHour: 17
+    toHour: 21
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uB178\uC744 \uC9C8 \uB54C \uBD80\uB974\uB294 \uB178\uB798\uB294 \uD558\uB298\uC758
+        \uC77C\uAE30\uC57C. \uC624\uB298 \uC77C\uAE30\uC5D4 \uB124\uAC00 \uC788\uC5B4."
+    - fromPlayer: 0
+      text: "\uB2E4\uB978 \uD558\uB298\uB85C \uB0A0\uC544\uAC00\uB3C4\u2026 \uB10C
+        \uB0B4 \uB178\uB798 \uC18D\uC5D0 \uB0A8\uC744 \uAC70\uC57C."
+    choices:
+    - label: "\uBA40\uB9AC \uAC00\uC9C0 \uB9C8."
+      reply: "\u2026\uD6C4\uD6D7. \uADF8 \uB9D0 \uD55C\uB9C8\uB514\uC5D0 \uBC14\uB78C\uC774
+        \uBA48\uCDC4\uC5B4. \uC5EC\uAE30 \uC788\uC744\uAC8C."
+      affinity: 10
+    - label: "\uB098\uB3C4 \uD55C \uC18C\uC808 \uBD88\uB7EC \uBCFC\uAC8C."
+      reply: "\uC640~! \uC74C\uC774 \uC880 \uD754\uB4E4\uB824\uB3C4 \uAD1C\uCC2E\uC544.
+        \uADF8\uAC8C \uB124 \uB178\uB798\uB2C8\uAE4C!"
+      affinity: 8
+    afterLines:
+    - fromPlayer: 0
+      text: "\uB2EC\uCF64\uD55C \uAC70 \uC88B\uC544\uD558\uC9C0? \uBAA9 \uC544\uD50C
+        \uB54C \uBA39\uC5B4~"
+    rewardItem: {fileID: 11400000, guid: 79f4e609f841fa44e80c8947008b3560, type: 2}
+    rewardItemAmount: 2

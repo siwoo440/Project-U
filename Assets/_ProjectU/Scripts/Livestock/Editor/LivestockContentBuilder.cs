@@ -131,36 +131,6 @@ public static class LivestockContentBuilder
         }
     };
 
-    // ---------------------------------------------------------------- 메뉴
-
-    [MenuItem(BuildMenuRoot + "5. Livestock (Animals + Pens + UI)", false, 24)]
-    private static void BuildAllMenu()
-    {
-        bool confirmed = EditorUtility.DisplayDialog(
-            DialogTitle,
-            "달걀·우유·사료와 닭·소 데이터, 닭장·외양간 건축물을 만들고\n"
-            + "현재 게임 Scene(20_Gameplay)에 가축 관리자·우리 창·머리 위 상태 표시를 추가합니다.\n"
-            + "이어서 요리 생성 도구(달걀·우유 요리)와 아이템 외형 생성 도구를 실행합니다.\n\n"
-            + "실행 전에 Scene을 저장해 두세요. 실행 후 Ctrl+S로 Scene을 저장해야 반영됩니다.",
-            "실행",
-            "취소");
-
-        if (!confirmed)
-        {
-            return;
-        }
-
-        string report = BuildAll();
-        Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, Shorten(report), "확인");
-    }
-
-    private static string Shorten(string report)
-    {
-        const int limit = 1800;
-        return report.Length <= limit ? report : report.Substring(0, limit) + "\n... (전체 내용은 Console 참고)";
-    }
-
     // ---------------------------------------------------------------- 전체 생성
 
     public static string BuildAll()

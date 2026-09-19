@@ -81,16 +81,6 @@ public static class BalanceReport
 
     // ---------------------------------------------------------------- 메뉴
 
-    [MenuItem("Tools/Project U/Balance Report", false, 1)]
-    private static void ReportMenu()
-    {
-        Snapshot snapshot = Analyze();
-        string path = WriteMarkdown(snapshot);
-        string text = Summary(snapshot);
-        Debug.Log(text + $"\n표 : {path}");
-        EditorUtility.DisplayDialog("Project U 밸런스 보고서", (text.Length <= 1800 ? text : text.Substring(0, 1800) + "\n...") + $"\n\n표 : {path}", "확인");
-    }
-
     // ContentIntegrationValidator · 13번 메뉴에서 사용
     public static string Validate(out int errorCount)
     {

@@ -84,38 +84,6 @@ public static class MenuSceneBuilder
         ("mountain", new Vector3(42f, 0f, 36f), 200f, 22f)
     };
 
-    // ---------------------------------------------------------------- 메뉴
-
-    [MenuItem(MarketContentBuilder.BuildMenuRoot + "17. Menu Scenes (Boot + Main Menu + Settings + Loading)", false, 36)]
-    private static void BuildAllMenu()
-    {
-        if (EditorApplication.isPlayingOrWillChangePlaymode)
-        {
-            EditorUtility.DisplayDialog(DialogTitle, "Play 중에는 실행할 수 없습니다.", "확인");
-            return;
-        }
-
-        bool confirmed = EditorUtility.DisplayDialog(
-            DialogTitle,
-            "메뉴 화면을 게임 UI 스타일로 다시 만듭니다.\n"
-            + "· 공용 설정 창 Prefab (메인 메뉴 · 일시정지 메뉴)\n"
-            + "· 00_Bootstrap : 로딩 화면\n"
-            + "· 10_MainMenu : 배경 마을 · 새 게임 · 이어하기 · 설정 · 게임 종료\n\n"
-            + "00_Bootstrap · 10_MainMenu Scene은 이 도구가 직접 저장합니다.\n"
-            + "지금 열린 Scene에 저장하지 않은 변경이 있으면 먼저 저장할지 묻습니다.",
-            "실행",
-            "취소");
-
-        if (!confirmed || !EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
-        {
-            return;
-        }
-
-        string report = BuildAll();
-        Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, report.Length <= 1800 ? report : report.Substring(0, 1800) + "\n... (전체 내용은 Console 참고)", "확인");
-    }
-
     // ---------------------------------------------------------------- 전체 생성
 
     public static string BuildAll()

@@ -178,38 +178,6 @@ public static class WorldZoneBuilder
 
     // ---------------------------------------------------------------- 메뉴
 
-    [MenuItem(MarketContentBuilder.BuildMenuRoot + "18. World Zones (Special NPC Bodies + Coast/Ruins/Forest/Snow/Desert/Swamp)", false, 37)]
-    private static void BuildAllMenu()
-    {
-        bool confirmed = EditorUtility.DisplayDialog(
-            DialogTitle,
-            "NPC 35명의 저폴리 모델(특수 체형 포함)과 새 구역 소품을 만들고,\n"
-            + "게임 Scene(20_Gameplay) 섬 바깥쪽에 해안 · 고대 폐허 · 깊은 숲 · 설산 기슭 · 붉은 사막 · 안개 습지와 흙길을 만듭니다.\n"
-            + "바닥을 칠하고, 구역 자리의 나무 · 풀을 숨기고, 섬 경계 벽 · 바다 · 지도 이름 · 적 생성 지점 2곳을 넣은 뒤 NavMesh를 다시 굽습니다.\n\n"
-            + "게임 Scene을 열고 실행하세요. 도구가 Scene을 저장합니다 (1~2분 걸릴 수 있습니다).",
-            "실행",
-            "취소");
-
-        if (!confirmed)
-        {
-            return;
-        }
-
-        if (EditorSceneManager.GetActiveScene().path != ScenePath)
-        {
-            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
-            {
-                return;
-            }
-
-            EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
-        }
-
-        string report = BuildAll(true);
-        Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, report.Length <= 1800 ? report : report.Substring(0, 1800) + "\n... (전체 내용은 Console 참고)", "확인");
-    }
-
     // ---------------------------------------------------------------- 전체 생성
 
     public static string BuildAll(bool saveScene)

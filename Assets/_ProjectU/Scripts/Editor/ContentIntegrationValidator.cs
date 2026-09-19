@@ -23,44 +23,6 @@ public static class ContentIntegrationValidator
     private const string ItemDatabasePath = "Assets/_ProjectU/Data/Databases/ItemDatabase.asset";
     private const string PickupRegistryPath = "Assets/_ProjectU/Prefabs/Items/Day75/WorldItemPickupRegistry_Day75.asset";
 
-    [MenuItem("Tools/Project U/Validate All Content", false, 0)]
-    private static void ValidateAllMenu()
-    {
-        string report = ValidateAll(out int errors, out int warnings);
-
-        if (errors > 0)
-        {
-            Debug.LogError(report);
-        }
-        else if (warnings > 0)
-        {
-            Debug.LogWarning(report);
-        }
-        else
-        {
-            Debug.Log(report);
-        }
-
-        EditorUtility.DisplayDialog(DialogTitle, Summarize(report, errors, warnings), "확인");
-    }
-
-    private static string Summarize(string report, int errors, int warnings)
-    {
-        StringBuilder summary = new StringBuilder();
-
-        foreach (string line in report.Split('\n'))
-        {
-            // 대화상자에는 제목·결과 줄과 오류·경고만 보여준다 (전체 내용은 Console)
-            if (line.StartsWith("[") || line.StartsWith("  ·") || line.StartsWith("결과"))
-            {
-                summary.AppendLine(line);
-            }
-        }
-
-        string text = summary.ToString();
-        return text.Length <= 1800 ? text : text.Substring(0, 1800) + "\n... (전체 내용은 Console 참고)";
-    }
-
     public static string ValidateAll(out int errorCount, out int warningCount)
     {
         StringBuilder report = new StringBuilder("[전체 콘텐츠 검사]\n");

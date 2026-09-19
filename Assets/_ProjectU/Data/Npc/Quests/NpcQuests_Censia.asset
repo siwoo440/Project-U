@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4bf3c4498412d4d8c95a03bab470e9, type: 3}
+  m_Name: NpcQuests_Censia
+  m_EditorClassIdentifier: Assembly-CSharp::NpcQuestBook
+  groupId: quest_censia
+  ownerId: char_censia
+  quests:
+  - questId: quest_censia_apple
+    title: "\uC6B4\uC1A1\uB300 \uAC04\uC2DD"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: eef1b375027259b42834d2262ce9dd96, type: 2}
+      amount: 4
+    rewardCoins: 25
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uBA3C \uAE38\uC5D4 \uC0AC\uACFC\uAC00 \uCD5C\uACE0\uB2E4. \uB124
+      \uAC1C\uB9CC \uBD80\uD0C1\uD558\uC9C0."
+    thanksLine: "\uC88B\uC544. \uC774\uBC88 \uC6B4\uC1A1\uC740 \uB4E0\uB4E0\uD558\uAC8C
+      \uAC00\uACA0\uAD70."
+    requiredEventId: 
+  - questId: quest_censia_water
+    title: "\uC0AC\uB9C9 \uBB3C\uD1B5"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 233c5c7467d9daa41bab4b59439b9465, type: 2}
+      amount: 4
+    rewardCoins: 18
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uC0AC\uB9C9 \uC6B4\uC1A1\uC5D4 \uBB3C\uC774 \uBA3C\uC800\uB2E4.
+      \uBB3C \uB124 \uBCD1."
+    thanksLine: "\uACE0\uB9D9\uB2E4. \uC774 \uBB3C\uC774 \uB204\uAD70\uAC00\uB97C
+      \uC0B4\uB9B4 \uAC70\uC57C."
+    requiredEventId: 
+  - questId: quest_censia_wood
+    title: "\uC9D0\uC218\uB808 \uC218\uB9AC"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: b9e78781ff8b2aa4bae6df0fa3d2e1c9, type: 2}
+      amount: 15
+    rewardCoins: 25
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uC9D0\uC218\uB808 \uBC14\uD034\uAC00 \uAE08\uC774 \uAC14\uB2E4.
+      \uB098\uBB34 \uC5F4\uB2E4\uC12F \uAC1C\uBA74 \uACE0\uCE60 \uC218 \uC788\uC5B4."
+    thanksLine: "\uBC14\uD034\uAC00 \uC0C8\uAC83 \uAC19\uAD70. \uB2E4\uC74C \uC6B4\uC1A1\uC740
+      \uC548\uC804\uD558\uACA0\uC5B4."
+    requiredEventId: 
+  - questId: quest_censia_special
+    title: "\uC548\uC804\uD55C \uAE38 \uD45C\uC9C0"
+    kind: 1
+    requirements:
+    - item: {fileID: 11400000, guid: 479a7e7a5dbb8df4a9ea663d4e582a1b, type: 2}
+      amount: 20
+    - item: {fileID: 11400000, guid: b9e78781ff8b2aa4bae6df0fa3d2e1c9, type: 2}
+      amount: 15
+    - item: {fileID: 11400000, guid: bc991e404803cba4292542d6a52ddd7a, type: 2}
+      amount: 10
+    rewardCoins: 120
+    rewardAffinity: 10
+    rewardItem: {fileID: 11400000, guid: f256d7e940b86444db7d46375d22f42c, type: 2}
+    rewardItemAmount: 1
+    days: 5
+    seasons: 
+    requiredStage: 2
+    requestLine: "\uC12C \uACF3\uACF3 \uAE38\uBAA9\uC5D0 \uD45C\uC9C0\uB97C \uC138\uC6B0\uACE0
+      \uC2F6\uB2E4. \uB3CC \uC2A4\uBB3C, \uB098\uBB34 \uC5F4\uB2E4\uC12F, \uBB36\uC744
+      \uC12C\uC720 \uC5F4. \uC544\uBB34\uB3C4 \uAE38\uC744 \uC783\uC9C0 \uC54A\uAC8C."
+    thanksLine: "\uD45C\uC9C0\uAC00 \uB2E4 \uC130\uB2E4. \uC774\uC81C \uC774 \uC12C\uC5D0\uC11C
+      \uAE38 \uC783\uB294 \uC0AC\uB78C\uC740 \uC5C6\uC744 \uAC70\uC57C. \uC774 \uAC00\uBC29\uC740
+      \uC6B4\uC1A1\uB300 \uD45C\uC900\uD488\uC774\uB2E4. \uB108\uB3C4 \uAC00\uC838."
+    requiredEventId: event_censia_trust

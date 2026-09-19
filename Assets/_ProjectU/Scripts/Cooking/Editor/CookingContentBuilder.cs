@@ -144,35 +144,6 @@ public static class CookingContentBuilder
             Station = CookingStationTier.Campfire, ResultId = "food_warm_milk", Seconds = 5f, Ingredients = new[] { ("drink_milk", 1) } }
     };
 
-    // ---------------------------------------------------------------- 메뉴
-
-    [MenuItem(BuildMenuRoot + "4. Cooking (Recipes + Campfires + UI)", false, 23)]
-    private static void BuildAllMenu()
-    {
-        bool confirmed = EditorUtility.DisplayDialog(
-            DialogTitle,
-            "요리 음식·요리법 데이터를 만들고 모닥불·돌 모닥불 Prefab에 연결합니다.\n"
-            + "음식 모델·아이콘을 만들고, 현재 게임 Scene(20_Gameplay)에 요리 창·진행 고리·음식 효과 표시를 추가합니다.\n\n"
-            + "실행 전에 Scene을 저장해 두세요. 실행 후 Ctrl+S로 Scene을 저장해야 반영됩니다.",
-            "실행",
-            "취소");
-
-        if (!confirmed)
-        {
-            return;
-        }
-
-        string report = BuildAll();
-        Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, Shorten(report), "확인");
-    }
-
-    private static string Shorten(string report)
-    {
-        const int limit = 1800;
-        return report.Length <= limit ? report : report.Substring(0, limit) + "\n... (전체 내용은 Console 참고)";
-    }
-
     // ---------------------------------------------------------------- 전체 생성
 
     public static string RefreshRecipes() // 95일차: 요리법 데이터만 다시 만들기 (13번 밸런스 메뉴에서 사용)

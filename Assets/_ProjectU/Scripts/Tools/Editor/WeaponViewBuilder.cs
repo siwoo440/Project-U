@@ -49,31 +49,6 @@ public static class WeaponViewBuilder
         }
     };
 
-    // ---------------------------------------------------------------- 메뉴
-
-    [MenuItem(MarketContentBuilder.BuildMenuRoot + "15. Weapon Views (Axe + Bow 1st/3rd Person)", false, 34)]
-    private static void BuildAllMenu()
-    {
-        bool confirmed = EditorUtility.DisplayDialog(
-            DialogTitle,
-            "도끼 · 활 외형 설정에 3인칭(몸 옆) · 1인칭(화면 앞) 모양을 넣고,\n"
-            + "현재 게임 Scene(20_Gameplay)의 Main Camera 아래에 1인칭 무기 거치대를 만들어\n"
-            + "장착 외형 · 휘두르기 연출에 연결합니다.\n\n"
-            + "먼저 14번(데이터 점검 수정) 메뉴를 실행해 두어야 합니다.\n"
-            + "실행 후 Ctrl+S로 Scene을 저장해야 반영됩니다.",
-            "실행",
-            "취소");
-
-        if (!confirmed)
-        {
-            return;
-        }
-
-        string report = BuildAll();
-        Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, report.Length <= 1800 ? report : report.Substring(0, 1800) + "\n... (전체 내용은 Console 참고)", "확인");
-    }
-
     // ---------------------------------------------------------------- 전체 적용
 
     public static string BuildAll()

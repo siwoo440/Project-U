@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c705680e20332f5478f3a6911a134984, type: 3}
+  m_Name: NpcEvents_Censia
+  m_EditorClassIdentifier: Assembly-CSharp::NpcEventBook
+  ownerId: char_censia
+  events:
+  - eventId: event_censia_curious
+    title: "\uC0C8\uBCBD \uBB3C \uAE37\uAE30"
+    requiredStage: 1
+    locationId: loc_desert_oasis
+    fromHour: 5
+    toHour: 8
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC0C8\uBCBD \uBB3C\uC740 \uCC28\uAC11\uACE0 \uAE68\uB057\uD574. \uC6B4\uC1A1\uB300\uB294
+        \uD574 \uB728\uAE30 \uC804\uC5D0 \uBB3C\uBD80\uD130 \uCC59\uAE34\uB2E4."
+    - fromPlayer: 0
+      text: "\uBB3C\uD1B5 \uD558\uB098 \uB4E4\uC5B4 \uBD10. \uC0DD\uAC01\uBCF4\uB2E4
+        \uBB34\uAC81\uC9C0?"
+    choices:
+    - label: "\uBB3C\uD1B5 \uB098\uB974\uB294 \uAC70 \uB3C4\uC6B8\uAC8C."
+      reply: "\uC88B\uC544. \uBC1C\uAC78\uC74C\uC774 \uB9DE\uC73C\uBA74 \uC9D0\uB3C4
+        \uAC00\uBCBC\uC6CC\uC9C0\uC9C0."
+      affinity: 5
+    - label: "\uCF04\uC2DC\uC544\uB294 \uC548 \uBB34\uAC70\uC6CC?"
+      reply: "\uB098\uB294 \uBAB8\uC774 \uB450 \uC0AC\uB78C \uBAAB\uC774\uB2C8\uAE4C.
+        \u2026\uB18D\uB2F4\uC774\uB2E4. \uBB34\uAC81\uAE34 \uD574."
+      affinity: 3
+    afterLines:
+    - fromPlayer: 0
+      text: "\uB0B4\uC77C \uC0C8\uBCBD\uC5D0\uB3C4 \uC624\uC544\uC2DC\uC2A4\uC5D0
+        \uC788\uC744 \uAC70\uC57C."
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_censia_trust
+    title: "\uC9C0\uD0A4\uC9C0 \uBABB\uD55C \uC6B4\uC1A1\uB300"
+    requiredStage: 2
+    locationId: loc_village_square
+    fromHour: 14
+    toHour: 17
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC608\uC804 \uC6B4\uC1A1 \uC911\uC5D0 \uBAA8\uB798\uD3ED\uD48D\uC744
+        \uB9CC\uB0AC\uB2E4. \uC11C\uB450\uB974\uB2E4 \uAE38\uC744 \uC798\uBABB \uB4E4\uC5C8\uACE0\u2026
+        \uB3D9\uB8CC\uB97C \uC783\uC5C8\uC9C0."
+    - fromPlayer: 0
+      text: "\uADF8\uB798\uC11C \uB09C \uBE60\uB978 \uAE38\uC744 \uBBFF\uC9C0 \uC54A\uC544.
+        \uC548\uC804\uD55C \uAE38\uB9CC \uBBFF\uB294\uB2E4."
+    choices:
+    - label: "\uADF8 \uC120\uD0DD\uC774 \uBAA8\uB450\uB97C \uC9C0\uD0A4\uACE0 \uC788\uC5B4."
+      reply: "\u2026\uADF8\uB807\uAC8C \uB9D0\uD574 \uC8FC\uB2C8 \uBC1C\uAD7D\uC774
+        \uAC00\uBCBC\uC6CC\uC9C0\uB294\uAD70."
+      affinity: 8
+    - label: "\uAC00\uB054\uC740 \uC11C\uB458\uB7EC\uB3C4 \uAD1C\uCC2E\uC9C0 \uC54A\uC544?"
+      reply: "\uD558. \uB108\uB791 \uAC00\uB294 \uAE38\uC774\uB77C\uBA74\u2026 \uC870\uAE08\uC740
+        \uC11C\uB458\uB7EC \uBCF4\uC9C0."
+      affinity: 5
+    afterLines:
+    - fromPlayer: 0
+      text: "\uC0C8 \uC6B4\uC1A1\uB85C \uC9C0\uB3C4\uC5D0 \uB124 \uC9D1\uB3C4 \uD45C\uC2DC\uD574
+        \uB480\uB2E4."
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_censia_affection
+    title: "\uBC24\uAE38 \uC6B4\uC1A1 \uC9C0\uB3C4"
+    requiredStage: 3
+    locationId: loc_desert_camp
+    fromHour: 17
+    toHour: 21
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC12C \uC804\uCCB4 \uC6B4\uC1A1\uB85C \uC9C0\uB3C4\uB97C \uB2E4\uC2DC
+        \uADF8\uB838\uB2E4. \uBAA8\uB4E0 \uAE38 \uB05D\uC5D0 \uB3CC\uC544\uC62C \uACF3\uC774
+        \uC788\uC5B4."
+    - fromPlayer: 0
+      text: "\u2026\uADF8 \uB3CC\uC544\uC62C \uACF3 \uC911 \uD558\uB098\uAC00 \uB108\uB77C\uB294
+        \uAC78 \uC54C\uC558\uB2E4."
+    choices:
+    - label: "\uB098\uB3C4 \uC5B8\uC81C\uB4E0 \uAE30\uB2E4\uB9B4\uAC8C."
+      reply: "\u2026\uC774\uBC88 \uAE38\uC758 \uB05D\uAE4C\uC9C0 \uD568\uAED8 \uAC00\uC790.
+        \uC57D\uC18D\uC774\uB2E4."
+      affinity: 10
+    - label: "\uC9C0\uB3C4 \uBA4B\uC9C0\uB2E4!"
+      reply: "\uADF8\uB807\uC9C0? \uBC1C\uAD7D\uC73C\uB85C \uBC15\uC790 \uB9DE\uCDB0
+        \uAC00\uBA70 \uADF8\uB838\uB2E4."
+      affinity: 8
+    afterLines:
+    - fromPlayer: 0
+      text: "\uC6B4\uC1A1\uB300 \uAC04\uC2DD\uC774\uB2E4. \uAE38 \uB5A0\uB0A0 \uB54C
+        \uBA39\uC5B4."
+    rewardItem: {fileID: 11400000, guid: 070f5d6a3c56070488a27144388e461c, type: 2}
+    rewardItemAmount: 3

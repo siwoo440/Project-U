@@ -29,37 +29,6 @@ public static class NpcCompanionBuilder
 
     // ---------------------------------------------------------------- 메뉴
 
-    [MenuItem(NpcContentBuilder.BuildMenuRoot + "25. NPC Companions (Follow + Fight/Gather/Heal + Dialogue Button)", false, 44)]
-    private static void BuildAllMenu()
-    {
-        bool confirmed = EditorUtility.DisplayDialog(
-            DialogTitle,
-            "NPC 동료를 만듭니다.\n"
-            + "동료 정보(NpcCompanions.csv)를 읽고, 동료 관리자를 연결하고, NPC 대화 창을 다시 만들어 '함께 가자' 버튼을 넣고,\n"
-            + "화면 왼쪽 아래 동료 표시를 만든 뒤 게임 Scene을 저장합니다.",
-            "실행",
-            "취소");
-
-        if (!confirmed)
-        {
-            return;
-        }
-
-        if (EditorSceneManager.GetActiveScene().path != ScenePath)
-        {
-            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
-            {
-                return;
-            }
-
-            EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
-        }
-
-        string report = BuildAll(true);
-        Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, report.Length <= 1800 ? report : report.Substring(0, 1800) + "\n... (전체 내용은 Console 참고)", "확인");
-    }
-
     public static string BuildAll(bool saveScene)
     {
         StringBuilder report = new StringBuilder("[NPC 동료 만들기]\n");

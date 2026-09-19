@@ -98,29 +98,6 @@ public static class DataAudit
 
     // ---------------------------------------------------------------- 메뉴
 
-    [MenuItem("Tools/Project U/Data Audit", false, 2)]
-    private static void AuditMenu()
-    {
-        Result result = Analyze();
-        string path = WriteMarkdown(result);
-        string text = Summary(result);
-
-        if (result.Errors > 0)
-        {
-            Debug.LogError(text + $"\n표 : {path}");
-        }
-        else if (result.Warnings > 0)
-        {
-            Debug.LogWarning(text + $"\n표 : {path}");
-        }
-        else
-        {
-            Debug.Log(text + $"\n표 : {path}");
-        }
-
-        EditorUtility.DisplayDialog("Project U 데이터 점검", (text.Length <= 1800 ? text : text.Substring(0, 1800) + "\n...") + $"\n\n표 : {path}", "확인");
-    }
-
     // ContentIntegrationValidator · 14번 메뉴에서 사용 (오류 수만 센다)
     public static string Validate(out int errorCount)
     {

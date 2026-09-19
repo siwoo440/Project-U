@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4bf3c4498412d4d8c95a03bab470e9, type: 3}
+  m_Name: NpcQuests_Sharia
+  m_EditorClassIdentifier: Assembly-CSharp::NpcQuestBook
+  groupId: quest_sharia
+  ownerId: char_sharia
+  quests:
+  - questId: quest_sharia_crucian
+    title: "\uAD6C\uC870 \uC5F0\uC2B5 \uBBF8\uB07C"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: bad80e6a70bf78a4a81937454f7a8f95, type: 2}
+      amount: 2
+    rewardCoins: 45
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 000000000100000002000000
+    requiredStage: 0
+    requestLine: "\uAD6C\uC870 \uC5F0\uC2B5\uC6A9 \uBBF8\uB07C\uAC00 \uD544\uC694\uD574!
+      \uBD95\uC5B4 \uB450 \uB9C8\uB9AC. \uC0C1\uC5B4 \uB3D9\uB8CC\uB4E4\uC774 \uB3C4\uC640\uC8FC\uAC70\uB4E0,
+      \uD06C\uD558!"
+    thanksLine: "\uC88B\uC544! \uC624\uB298 \uC5F0\uC2B5\uC740 \uB300\uC131\uACF5\uC774\uACA0\uB2E4!"
+    requiredEventId: 
+  - questId: quest_sharia_smelt
+    title: "\uACA8\uC6B8 \uBC14\uB2E4 \uB3C4\uC2DC\uB77D"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 83e8c92974737c246a6f55d31325f68b, type: 2}
+      amount: 2
+    rewardCoins: 45
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 03000000
+    requiredStage: 0
+    requestLine: "\uACA8\uC6B8 \uBC14\uB2E4 \uADFC\uBB34\uB294 \uBC30\uAC00 \uAE08\uBC29
+      \uACE0\uD30C. \uBE59\uC5B4 \uB450 \uB9C8\uB9AC\uB9CC!"
+    thanksLine: "\uD06C\uD558\uD558! \uC774\uAC70\uBA74 \uB9DD\uB8E8\uC5D0\uC11C
+      \uD558\uB8E8 \uC885\uC77C \uBC84\uD2F4\uB2E4!"
+    requiredEventId: 
+  - questId: quest_sharia_fiber
+    title: "\uAD6C\uBA85\uC904 \uC5EE\uAE30"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: bc991e404803cba4292542d6a52ddd7a, type: 2}
+      amount: 10
+    rewardCoins: 25
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uAD6C\uBA85\uC904\uC774 \uB2F3\uC558\uC5B4. \uD480 \uC12C\uC720
+      \uC5F4 \uAC1C\uBA74 \uC0C8\uB85C \uC5EE\uC744 \uC218 \uC788\uC5B4."
+    thanksLine: "\uD2BC\uD2BC\uD558\uB2E4! \uC774 \uC904\uC774\uBA74 \uB204\uAD6C\uB4E0
+      \uAC74\uC838 \uC62C\uB9B4 \uC218 \uC788\uC5B4."
+    requiredEventId: 
+  - questId: quest_sharia_special
+    title: "\uC0C8 \uAD6C\uBA85 \uD29C\uBE0C"
+    kind: 1
+    requirements:
+    - item: {fileID: 11400000, guid: bc991e404803cba4292542d6a52ddd7a, type: 2}
+      amount: 15
+    - item: {fileID: 11400000, guid: a3a22e114d5dd36498ccd4cc83dd2ffb, type: 2}
+      amount: 3
+    - item: {fileID: 11400000, guid: b9e78781ff8b2aa4bae6df0fa3d2e1c9, type: 2}
+      amount: 10
+    rewardCoins: 120
+    rewardAffinity: 10
+    rewardItem: {fileID: 11400000, guid: 2e83945f5dda2f34bb4e993074cfc81c, type: 2}
+    rewardItemAmount: 3
+    days: 5
+    seasons: 
+    requiredStage: 2
+    requestLine: "\uB9DD\uB8E8\uC5D0 \uAD6C\uBA85 \uD29C\uBE0C\uB97C \uB354 \uAC78\uACE0
+      \uC2F6\uC5B4. \uC12C\uC720 \uC5F4\uB2E4\uC12F, \uD2BC\uD2BC\uD55C \uC2E4 \uC14B,
+      \uB098\uBB34 \uC5F4 \uAC1C! \uC774\uBC88\uC5D4 \uD55C \uBA85\uB3C4 \uB193\uCE58\uC9C0
+      \uC54A\uC744 \uAC70\uC57C."
+    thanksLine: "\uD29C\uBE0C\uAC00 \uB2E4 \uAC78\uB838\uC5B4! \uC774\uC81C \uBC14\uB2E4\uAC00
+      \uC870\uAE08 \uB35C \uBB34\uC12D\uB2E4. \uC774 \uBD95\uB300\uB294 \uAD6C\uC870\uB300
+      \uD544\uC218\uD488\uC774\uC57C, \uB108\uB3C4 \uCC59\uACA8!"
+    requiredEventId: event_sharia_trust

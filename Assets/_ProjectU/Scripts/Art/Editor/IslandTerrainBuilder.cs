@@ -54,38 +54,6 @@ public static class IslandTerrainBuilder
 
     // ---------------------------------------------------------------- 메뉴
 
-    [MenuItem(MarketContentBuilder.BuildMenuRoot + "22. Island Terrain (Sea + Beaches + Shipwreck Start)", false, 41)]
-    private static void BuildAllMenu()
-    {
-        bool confirmed = EditorUtility.DisplayDialog(
-            DialogTitle,
-            "Terrain을 2km 무인도로 바꿉니다.\n"
-            + "섬 모양 · 해변 · 사방 바다 · 남쪽 해변 난파선 · 새 시작 위치를 만들고,\n"
-            + "19번(구역 · NPC 배치 · NavMesh · 초상)까지 이어서 실행한 뒤 게임 Scene을 저장합니다.\n\n"
-            + "마을과 기존 구역 자리는 지금처럼 평평하게 유지됩니다. 2 ~ 3분 정도 걸릴 수 있습니다.",
-            "실행",
-            "취소");
-
-        if (!confirmed)
-        {
-            return;
-        }
-
-        if (EditorSceneManager.GetActiveScene().path != ScenePath)
-        {
-            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
-            {
-                return;
-            }
-
-            EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
-        }
-
-        string report = BuildAll(true);
-        Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, report.Length <= 1800 ? report : report.Substring(0, 1800) + "\n... (전체 내용은 Console 참고)", "확인");
-    }
-
     public static string BuildAll(bool saveScene)
     {
         StringBuilder report = new StringBuilder("[무인도 만들기]\n");

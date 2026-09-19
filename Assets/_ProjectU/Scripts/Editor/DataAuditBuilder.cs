@@ -16,31 +16,6 @@ public static class DataAuditBuilder
     private const string OldAxeProfileName = "VP_Weapon_StoneAxe";
     private const string AxeModelId = "tool_stone_axe";
 
-    // ---------------------------------------------------------------- 메뉴
-
-    [MenuItem(MarketContentBuilder.BuildMenuRoot + "14. Data Audit Fixes (Visual IDs + Registry)", false, 33)]
-    private static void BuildAllMenu()
-    {
-        bool confirmed = EditorUtility.DisplayDialog(
-            DialogTitle,
-            "데이터 점검에서 찾은 연결 문제를 고칩니다.\n"
-            + "· 도끼 외형 설정 ID를 도구 아이템 규칙(visual_weapon_axe)에 맞추고 돌도끼 모델을 연결합니다.\n"
-            + "· GameDataRegistry 등록 목록을 다시 모읍니다.\n"
-            + "마지막에 전체 데이터 점검을 하고 Docs/Audit/DataAudit.md 표를 만듭니다.\n\n"
-            + "Scene은 바뀌지 않습니다.",
-            "실행",
-            "취소");
-
-        if (!confirmed)
-        {
-            return;
-        }
-
-        string report = BuildAll();
-        Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, report.Length <= 1800 ? report : report.Substring(0, 1800) + "\n... (전체 내용은 Console 참고)", "확인");
-    }
-
     // ---------------------------------------------------------------- 전체 적용
 
     public static string BuildAll()

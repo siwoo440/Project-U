@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c705680e20332f5478f3a6911a134984, type: 3}
+  m_Name: NpcEvents_Ragh
+  m_EditorClassIdentifier: Assembly-CSharp::NpcEventBook
+  ownerId: char_ragh
+  events:
+  - eventId: event_ragh_curious
+    title: "\uC0C8\uBCBD \uACBD\uACC4"
+    requiredStage: 1
+    locationId: loc_snow_camp
+    fromHour: 6
+    toHour: 9
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\u2026\uC77C\uCC0D \uC654\uAD70. \uC0C8\uBCBD\uC5D4 \uC9D0\uC2B9\uB4E4\uC774
+        \uC57C\uC601\uC9C0 \uAC00\uAE4C\uC774 \uB0B4\uB824\uC628\uB2E4."
+    - fromPlayer: 0
+      text: "\uBC1C\uC790\uAD6D\uC744 \uBD10. \uB291\uB300\uAC00 \uC544\uB2C8\uC57C.
+        \uC5EC\uC6B0\uB2E4. \uAC81\uB0BC \uD544\uC694 \uC5C6\uC5B4."
+    choices:
+    - label: "\uAC19\uC774 \uACBD\uACC4 \uC124\uAC8C."
+      reply: "\u2026\uD760. \uB124 \uBC1C\uC18C\uB9AC\uAC00 \uC880 \uD06C\uC9C0\uB9CC,
+        \uB098\uC058\uC9C0 \uC54A\uB2E4."
+      affinity: 5
+    - label: "\uB291\uB300 \uBC1C\uC790\uAD6D\uC774\uB791 \uC5B4\uB5BB\uAC8C \uB2EC\uB77C?"
+      reply: "\uBC1C\uAC00\uB77D \uBAA8\uC591\uC774 \uB2E4\uB974\uB2E4. \u2026\uAD00\uC2EC
+        \uC788\uC73C\uBA74 \uB2E4\uC74C\uC5D0 \uAC00\uB974\uCCD0 \uC8FC\uC9C0."
+      affinity: 3
+    afterLines:
+    - fromPlayer: 0
+      text: "\uBD88\uC740 \uACC4\uC18D \uC9C0\uD3B4 \uB46C. \uC0C8\uBCBD \uACBD\uACC4\uC758
+        \uAE30\uBCF8\uC774\uB2E4."
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_ragh_trust
+    title: "\uD63C\uC790 \uB0A8\uC740 \uB291\uB300"
+    requiredStage: 2
+    locationId: loc_village_square
+    fromHour: 9
+    toHour: 13
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC608\uC804\uC5D0 \uBCC0\uBC29\uC744 \uC9C0\uD0A4\uB294 \uBB34\uB9AC\uC758
+        \uC6B0\uB450\uBA38\uB9AC\uC600\uB2E4. \uC804\uC7C1\uC5D0\uC11C\u2026 \uB098\uB9CC
+        \uC0B4\uC544\uB0A8\uC558\uC9C0."
+    - fromPlayer: 0
+      text: "\uADF8 \uB4A4\uB85C \uB204\uAD6C\uC640\uB3C4 \uBB34\uB9AC\uB97C \uC9D3\uC9C0
+        \uC54A\uC558\uB2E4. \uB610 \uC783\uB294 \uAC8C \uC2EB\uC5B4\uC11C."
+    choices:
+    - label: "\uC774 \uC12C \uC0AC\uB78C\uB4E4\uC774 \uC0C8 \uBB34\uB9AC\uC57C."
+      reply: "\u2026\uBB34\uB9AC\uB77C. \uADF8 \uB9D0\uC744 \uB2E4\uC2DC \uB4E3\uAC8C
+        \uB420 \uC904\uC740 \uBAB0\uB790\uB2E4."
+      affinity: 8
+    - label: "\uD63C\uC790\uAC00 \uD3B8\uD558\uBA74 \uADF8\uB798\uB3C4 \uB3FC."
+      reply: "\u2026\uACE0\uB9D9\uAD70. \uD558\uC9C0\uB9CC \uC694\uC998\uC740 \uD63C\uC790\uAC00
+        \uADF8\uB807\uAC8C \uD3B8\uD558\uC9C0 \uC54A\uC544."
+      affinity: 5
+    afterLines:
+    - fromPlayer: 0
+      text: "\uC21C\uCC30 \uB3CC \uB54C \uB124 \uC9D1 \uC55E\uB3C4 \uC9C0\uB098\uAC00
+        \uC8FC\uC9C0."
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_ragh_affection
+    title: "\uBAA8\uB2E5\uBD88 \uACC1\uC5D0\uC11C"
+    requiredStage: 3
+    locationId: loc_snow_camp
+    fromHour: 16
+    toHour: 21
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC0AC\uB0E5\uD55C \uAC78 \uC190\uC9C8\uD588\uB2E4. \uC624\uB298\uC740
+        \uB458\uC774 \uBA39\uC744 \uB9CC\uD07C \uAD6C\uC6E0\uC5B4."
+    - fromPlayer: 0
+      text: "\u2026\uB124 \uACC1\uC5D0\uC120 \uC2F8\uC6C0\uBCF4\uB2E4 \uC228\uC774
+        \uACE0\uB974\uB2E4. \uC774\uC0C1\uD55C \uC77C\uC774\uC9C0."
+    choices:
+    - label: "\uB124 \uBB34\uB9AC\uAC00 \uB418\uC5B4 \uC904\uAC8C."
+      reply: "\u2026\uADF8\uB798. \uC774\uBC88\uC5D4 \uB05D\uAE4C\uC9C0 \uC9C0\uD0A8\uB2E4.
+        \uC57D\uC18D\uC774\uB2E4."
+      affinity: 10
+    - label: "\uACE0\uAE30 \uB0C4\uC0C8 \uC88B\uB2E4!"
+      reply: "\uD558. \uBA39\uC744 \uB54C\uB9CC \uC194\uC9C1\uD558\uAD70. \u2026\uB9CE\uC774
+        \uBA39\uC5B4\uB77C."
+      affinity: 8
+    afterLines:
+    - fromPlayer: 0
+      text: "\uB0A8\uC740 \uAF2C\uCE58\uB2E4. \uAC00\uC838\uAC00. \uC0AC\uB0E5\uAFBC\uC740
+        \uB098\uB220 \uBA39\uB294\uB2E4."
+    rewardItem: {fileID: 11400000, guid: 2168b2ceb2540714c8bcfcadd543b478, type: 2}
+    rewardItemAmount: 2

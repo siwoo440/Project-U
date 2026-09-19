@@ -559,13 +559,47 @@ public sealed class NpcQuestManager : MonoBehaviour // 93일차: 마을 게시�
             }
         }
 
-        foreach ((NpcQuestBook book, NpcQuestBook.Quest quest) in regular)
+        HashSet<string> due = OwnersDueOn(day); // 111일차: 오늘 차례인 NPC의 의뢰를 먼저
+
+        foreach (bool dueFirst in new[] { true, false })
         {
-            if (board.Count < boardSize && owners.Add(book.OwnerId))
+            foreach ((NpcQuestBook book, NpcQuestBook.Quest quest) in regular)
             {
-                board.Add(quest.QuestId);
+                if (due.Contains(book.OwnerId) == dueFirst && board.Count < boardSize && owners.Add(book.OwnerId))
+                {
+                    board.Add(quest.QuestId);
+                }
             }
         }
+    }
+
+    // 111일차: 공정한 순번 — 의뢰하는 NPC가 많아도(28명 · 하루 3칸) 며칠 안에 한 번은 게시판에 오르도록
+    // 날짜를 '한 바퀴'(NPC 수 ÷ 게시판 칸 수 일) 단위로 묶고, 바퀴마다 NPC 순서를 섞어 그날 차례인 NPC를 돌려준다 (같은 날이면 항상 같음)
+    private HashSet<string> OwnersDueOn(int day)
+    {
+        List<string> rotation = new List<string>();
+
+        foreach (NpcQuestBook book in books)
+        {
+            if (book != null && !string.IsNullOrEmpty(book.OwnerId) && !rotation.Contains(book.OwnerId))
+            {
+                rotation.Add(book.OwnerId);
+            }
+        }
+
+        rotation.Sort(StringComparer.Ordinal);
+        int size = Mathf.Max(1, boardSize);
+        int cycleDays = Mathf.Max(1, Mathf.CeilToInt(rotation.Count / (float)size));
+        int index = Mathf.Max(0, day - 1);
+        Shuffle(rotation, new System.Random(unchecked(index / cycleDays * 104729 + boardSeed)));
+        HashSet<string> due = new HashSet<string>(StringComparer.Ordinal);
+
+        for (int slot = index % cycleDays * size; slot < rotation.Count && due.Count < size; slot++)
+        {
+            due.Add(rotation[slot]);
+        }
+
+        return due;
     }
 
     private static bool RequiredEventSeen(NpcQuestBook.Quest quest) // 94일차: 필요한 하트 이벤트를 봤는지 (이벤트 기능이 없는 Scene은 통과)

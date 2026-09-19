@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c705680e20332f5478f3a6911a134984, type: 3}
+  m_Name: NpcEvents_Sharia
+  m_EditorClassIdentifier: Assembly-CSharp::NpcEventBook
+  ownerId: char_sharia
+  events:
+  - eventId: event_sharia_curious
+    title: "\uC0C8\uBCBD \uC218\uC601 \uD6C8\uB828"
+    requiredStage: 1
+    locationId: loc_coast_rocks
+    fromHour: 6
+    toHour: 9
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC5B4\uC774! \uC774 \uC2DC\uAC04\uC5D0 \uAC2F\uBC14\uC704\uAE4C\uC9C0
+        \uC654\uC5B4? \uC218\uC601 \uC880 \uD574?"
+    - fromPlayer: 0
+      text: "\uAD6C\uC870\uB300\uB294 \uB9E4\uC77C \uD30C\uB3C4\uB791 \uC2F8\uC6CC.
+        \uD30C\uB3C4\uAC00 \uC57D\uD55C \uB0A0\uB3C4 \uD6C8\uB828\uC740 \uC26C\uBA74
+        \uC548 \uB3FC."
+    choices:
+    - label: "\uB098\uB3C4 \uAC19\uC774 \uD6C8\uB828\uD560\uB798."
+      reply: "\uD06C\uD558\uD558! \uC88B\uC544! \uB300\uC2E0 \uD798\uB4E4\uB2E4\uACE0
+        \uC6B8\uBA74 \uC548 \uB41C\uB2E4?"
+      affinity: 5
+    - label: "\uBCF4\uB294 \uAC83\uB9CC \uD560\uAC8C."
+      reply: "\uBB50, \uAD6C\uACBD\uB3C4 \uACF5\uBD80\uC57C. \uB0B4 \uD5E4\uC5C4
+        \uC798 \uBD10 \uB46C!"
+      affinity: 3
+    afterLines:
+    - fromPlayer: 0
+      text: "\uB2E4\uC74C\uC5D4 \uBD80\uD45C\uAE4C\uC9C0 \uB204\uAC00 \uBA3C\uC800
+        \uAC00\uB098 \uC2DC\uD569\uD558\uC790!"
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_sharia_trust
+    title: "\uAD6C\uD558\uC9C0 \uBABB\uD55C \uD55C \uC0AC\uB78C"
+    requiredStage: 2
+    locationId: loc_pond_dock
+    fromHour: 13
+    toHour: 17
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC608\uC804\uC5D0 \uB09C\uD30C\uC120\uC5D0\uC11C \uC0AC\uB78C\uB4E4\uC744
+        \uAC74\uC84C\uC5B4. \uB2E4 \uAD6C\uD588\uB2E4\uACE0 \uC0DD\uAC01\uD588\uB294\uB370\u2026
+        \uD55C \uBA85\uC774 \uC5C6\uC5C8\uC5B4."
+    - fromPlayer: 0
+      text: "\uADF8\uB0A0\uBD80\uD130 \uB9DD\uB8E8\uC5D0\uC11C \uB208\uC744 \uB5BC\uC9C0
+        \uC54A\uC544. \uB610 \uB204\uAC00 \uB5A0\uB0B4\uB824\uC62C\uAE4C \uBD10."
+    choices:
+    - label: "\uB124 \uB355\uBD84\uC5D0 \uC0B0 \uC0AC\uB78C\uB3C4 \uB9CE\uC796\uC544."
+      reply: "\u2026\uADF8\uB807\uC9C0. \uADF8 \uC0AC\uB78C\uB4E4 \uC5BC\uAD74\uC744
+        \uB5A0\uC62C\uB9AC\uBA74 \uC870\uAE08 \uAD1C\uCC2E\uC544\uC838."
+      affinity: 8
+    - label: "\uB098\uB3C4 \uBC14\uB2E4\uC5D0\uC11C \uB5A0\uB0B4\uB824\uC654\uC5B4."
+      reply: "\uC54C\uC544. \uD558\uB974\uCE74\uAC00 \uB9D0\uD574 \uC92C\uC5B4. \u2026\uADF8\uB798\uC11C
+        \uB124\uAC00 \uC2E0\uACBD \uC4F0\uC600\uB098 \uBD10."
+      affinity: 6
+    afterLines:
+    - fromPlayer: 0
+      text: "\uC624\uB298\uC740 \uC544\uC774\uB4E4 \uC218\uC601 \uC218\uC5C5\uC744
+        \uB354 \uC5F4\uC2EC\uD788 \uD560\uAC8C."
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_sharia_affection
+    title: "\uB178\uC744 \uAD6C\uC870 \uC5F0\uC2B5"
+    requiredStage: 3
+    locationId: loc_coast_dock
+    fromHour: 17
+    toHour: 21
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uB178\uC744 \uC9C8 \uB54C \uAD6C\uC870 \uC5F0\uC2B5\uD558\uBA74 \uBC14\uB2E4\uAC00
+        \uC628\uD1B5 \uAE08\uC0C9\uC774\uC57C. \uC608\uC058\uC9C0?"
+    - fromPlayer: 0
+      text: "\u2026\uC788\uC796\uC544. \uB110 \uAD6C\uD55C \uAC8C \uC544\uB2C8\uB77C,
+        \uB098\uB3C4 \uB124\uAC8C \uAD6C\uC6D0\uBC1B\uC740 \uAC83 \uAC19\uC544."
+    choices:
+    - label: "\uADF8\uB7FC \uC11C\uB85C \uAD6C\uD55C \uAC70\uB124."
+      reply: "\uD06C\uD558, \uADF8 \uB9D0 \uC88B\uB2E4! \uC6B0\uB9B0 \uC11C\uB85C\uC758
+        \uAD6C\uC870\uB300\uC57C!"
+      affinity: 10
+    - label: "\uC624\uB298 \uC5F0\uC2B5\uC740 \uB0B4\uAC00 \uAD6C\uC870 \uB300\uC0C1
+        \uD560\uAC8C."
+      reply: "\uC88B\uC544! \uB300\uC2E0 \uC9C4\uC9DC\uB85C \uBE60\uC9C0\uC9C4 \uB9C8!
+        \u2026\uADF8\uAC74 \uBB34\uC12D\uAC70\uB4E0."
+      affinity: 8
+    afterLines:
+    - fromPlayer: 0
+      text: "\uC624\uB298 \uC7A1\uC740 \uC81C\uC77C \uC608\uC05C \uBB3C\uACE0\uAE30\uC57C.
+        \uB108 \uAC00\uC838."
+    rewardItem: {fileID: 11400000, guid: 535bf968045572f408e41892f2d80b93, type: 2}
+    rewardItemAmount: 1

@@ -102,7 +102,7 @@ public sealed class NpcDatabase : ScriptableObject // 89일차: 전체 NPC 목�
         return characters.FindAll(data => data != null && data.IsPlaced && data.IsAvailable);
     }
 
-    public const int StoryReadyWave = 3; // 103일차: 의뢰 · 하트 이벤트까지 갖춘 마지막 차수 (새 차수는 등장 → 가게 → 이야기 순서로 붙임, 104일차: 3차)
+    public const int StoryReadyWave = 4; // 103일차: 의뢰 · 하트 이벤트까지 갖춘 마지막 차수 (새 차수는 등장 → 가게 → 이야기 순서로 붙임, 104일차: 3차, 111일차: 4차)
 
     public List<NpcCharacterData> GetStoryCast() // 103일차: 의뢰 · 하트 이벤트를 갖춘 NPC (1 · 2차)
     {

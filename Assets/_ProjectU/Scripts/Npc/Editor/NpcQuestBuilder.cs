@@ -38,31 +38,6 @@ public static class NpcQuestBuilder
         "오늘은 붙어 있는 의뢰가 없어요. 내일 다시 확인해 보세요.", "의뢰는 동시에 개까지 · 물건을 모아 의뢰한 주민에게 말을 걸어 전달하세요", "게시판 창이 없어요"
     };
 
-    // ---------------------------------------------------------------- 메뉴
-
-    [MenuItem(NpcContentBuilder.BuildMenuRoot + "11. NPC Quests (Board + Requests + Delivery)", false, 30)]
-    private static void BuildAllMenu()
-    {
-        bool confirmed = EditorUtility.DisplayDialog(
-            DialogTitle,
-            "1 · 2차 NPC 14명의 의뢰(게시판 의뢰 · 특별 의뢰)를 원본 CSV로 만들고,\n"
-            + "현재 게임 Scene(20_Gameplay)에 의뢰 관리자 · 광장 게시판 상호작용 · 게시판 창 · 진행 중 의뢰 표시를 추가합니다.\n"
-            + "NPC 대화 창은 의뢰 전달 버튼을 넣어 다시 만듭니다.\n\n"
-            + "먼저 8번(NPC 배치) · 9번(NPC 대화) · 10번(NPC 상점) 메뉴를 실행해 두어야 합니다.\n"
-            + "실행 후 Ctrl+S로 Scene을 저장해야 반영됩니다.",
-            "실행",
-            "취소");
-
-        if (!confirmed)
-        {
-            return;
-        }
-
-        string report = BuildAll();
-        Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, report.Length <= 1800 ? report : report.Substring(0, 1800) + "\n... (전체 내용은 Console 참고)", "확인");
-    }
-
     // ---------------------------------------------------------------- 전체 생성
 
     public static string BuildAll()

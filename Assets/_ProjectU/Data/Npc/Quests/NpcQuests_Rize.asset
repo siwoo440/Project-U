@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4bf3c4498412d4d8c95a03bab470e9, type: 3}
+  m_Name: NpcQuests_Rize
+  m_EditorClassIdentifier: Assembly-CSharp::NpcQuestBook
+  groupId: quest_rize
+  ownerId: char_rize
+  quests:
+  - questId: quest_rize_ore
+    title: "\uC5D0\uB108\uC9C0 \uCF54\uC5B4 \uB300\uC2E0"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: c593f671b9ae9d24e96e6cd5ee7b2a1c, type: 2}
+      amount: 2
+    rewardCoins: 30
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uC5D0\uB108\uC9C0 \uCF54\uC5B4\uAC00 \uBD80\uC871\uD574\uC694.
+      \uAD11\uC11D \uB450 \uAC1C\uBA74 \uB300\uC2E0 \uC4F8 \uC218 \uC788\uC5B4\uC694.
+      \uBD80\uD0C1\uD574\uB3C4 \uB420\uAE4C\uC694?"
+    thanksLine: "\uCDA9\uC804 \uC644\uB8CC. \u2026\uC774\uAC74 \uAE30\uB2A5 \uBCF4\uACE0\uAC00
+      \uC544\uB2C8\uB77C, \uC9C4\uC2EC\uC73C\uB85C \uACE0\uB9D9\uB2E4\uB294 \uB9D0\uC774\uC5D0\uC694."
+    requiredEventId: 
+  - questId: quest_rize_scrap
+    title: "\uAD00\uC808 \uBD80\uD488"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 342d1ac3d9605574e949adea087b15eb, type: 2}
+      amount: 3
+    rewardCoins: 40
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uC67C\uCABD \uBB34\uB98E \uAD00\uC808\uC5D0\uC11C \uC18C\uB9AC\uAC00
+      \uB098\uC694. \uACE0\uCCA0 \uBD80\uD488 \uC138 \uAC1C\uBA74 \uACE0\uCE60 \uC218
+      \uC788\uC5B4\uC694."
+    thanksLine: "\uC18C\uC74C 0. \uAC78\uC74C\uC774 \uAC00\uBCBC\uC6CC\uC694. \uB2F9\uC2E0
+      \uB355\uBD84\uC774\uC5D0\uC694."
+    requiredEventId: 
+  - questId: quest_rize_strawberry
+    title: "\uC6C3\uC74C \uC5F0\uAD6C \uC7AC\uB8CC"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 95ca44aa8a27d41448c511db6fa0a55c, type: 2}
+      amount: 3
+    rewardCoins: 28
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 0000000001000000
+    requiredStage: 0
+    requestLine: "\uC0AC\uB78C\uB4E4\uC740 \uB538\uAE30\uB97C \uBA39\uC744 \uB54C
+      \uAC00\uC7A5 \uB9CE\uC774 \uC6C3\uC5B4\uC694. \uC138 \uAC1C\uB85C \uC2E4\uD5D8\uD574
+      \uBCF4\uACE0 \uC2F6\uC5B4\uC694."
+    thanksLine: "\uC2E4\uD5D8 \uACB0\uACFC : \uB2F9\uC2E0\uC774 \uC6C3\uC744 \uB54C
+      \uC81C \uC6C3\uC74C \uD655\uB960\uB3C4 \uC62C\uB77C\uAC00\uC694."
+    requiredEventId: 
+  - questId: quest_rize_special
+    title: "\uAC10\uC815 \uAE30\uB85D \uC7A5\uCE58"
+    kind: 1
+    requirements:
+    - item: {fileID: 11400000, guid: c593f671b9ae9d24e96e6cd5ee7b2a1c, type: 2}
+      amount: 5
+    - item: {fileID: 11400000, guid: 342d1ac3d9605574e949adea087b15eb, type: 2}
+      amount: 3
+    - item: {fileID: 11400000, guid: 361f6079362891a468aae059667ddd1c, type: 2}
+      amount: 2
+    rewardCoins: 130
+    rewardAffinity: 10
+    rewardItem: {fileID: 11400000, guid: 23d094edda8e80c47baf710a0785816f, type: 2}
+    rewardItemAmount: 2
+    days: 5
+    seasons: 
+    requiredStage: 2
+    requestLine: "\uAC10\uC815\uC744 \uC9C0\uC6B0\uC9C0 \uC54A\uACE0 \uC800\uC7A5\uD558\uB294
+      \uC7A5\uCE58\uB97C \uB9CC\uB4E4\uACE0 \uC2F6\uC5B4\uC694. \uAD11\uC11D \uB2E4\uC12F,
+      \uBD80\uD488 \uC14B, \uADF8\uB9AC\uACE0\u2026 \uB9C8\uC74C\uC774 \uD3B8\uD574\uC9C0\uB294
+      \uCC28 \uB450 \uC794. \uCC28\uB294 \uC81C \uC5F0\uAD6C\uC5D0 \uAF2D \uD544\uC694\uD574\uC694."
+    thanksLine: "\uC7A5\uCE58 \uAC00\uB3D9. \uCCAB \uBC88\uC9F8\uB85C \uC800\uC7A5\uB41C
+      \uAC10\uC815\uC740 '\uACE0\uB9C8\uC6C0'\uC774\uC5D0\uC694. \uC774 \uBB3C\uC57D\uC740
+      \uB2F9\uC2E0 \uAE30\uC6B4\uC744 \uC704\uD574\uC11C\uC694."
+    requiredEventId: event_rize_trust

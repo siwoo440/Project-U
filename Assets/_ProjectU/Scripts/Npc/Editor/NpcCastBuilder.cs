@@ -16,37 +16,6 @@ public static class NpcCastBuilder
     private const string ScenePath = "Assets/_ProjectU/Scenes/20_Gameplay.unity";
     private const string DialogTitle = "Project U 섬 NPC";
 
-    [MenuItem(MarketContentBuilder.BuildMenuRoot + "19. Island NPC Cast (Zones + Village + Portraits)", false, 38)]
-    private static void BuildAllMenu()
-    {
-        bool confirmed = EditorUtility.DisplayDialog(
-            DialogTitle,
-            "섬에 배치되는 NPC(1차 알파 · 2차 ...)를 한 번에 갱신합니다.\n"
-            + "18번(새 구역 · 구역 안 집) → 8번(NPC 마을 배치 · Prefab · NavMesh) → 9번(초상 · 대화 창) 순서로 실행하고 게임 Scene을 저장합니다.\n\n"
-            + "게임 Scene을 열고 실행하세요 (1분 정도 걸릴 수 있습니다).",
-            "실행",
-            "취소");
-
-        if (!confirmed)
-        {
-            return;
-        }
-
-        if (EditorSceneManager.GetActiveScene().path != ScenePath)
-        {
-            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
-            {
-                return;
-            }
-
-            EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
-        }
-
-        string report = BuildAll(true);
-        Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, report.Length <= 1800 ? report : report.Substring(0, 1800) + "\n... (전체 내용은 Console 참고)", "확인");
-    }
-
     public static string BuildAll(bool saveScene)
     {
         StringBuilder report = new StringBuilder("[섬 NPC 갱신]\n");

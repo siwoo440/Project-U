@@ -158,36 +158,6 @@ public static class FarmingContentBuilder
 
     private static readonly string[] StageNames = { "SEEDED", "SPROUT", "GROWING", "MATURE" };
 
-    // ---------------------------------------------------------------- 메뉴
-
-    [MenuItem(BuildMenuRoot + "2. Farming (Crops + Plots + Tools)", false, 21)]
-    private static void BuildAllMenu()
-    {
-        bool confirmed = EditorUtility.DisplayDialog(
-            DialogTitle,
-            "씨앗·작물·수확물·괭이·물뿌리개 데이터와 Prefab, 밭 건축물, 제작법을 만들고\n"
-            + "밭 심기·물주기 기능(밭 관리자, 칸 표시, 우물, 물 게이지)까지\n"
-            + "현재 열린 게임 Scene(20_Gameplay)에 연결합니다.\n\n"
-            + "실행 전에 Scene을 저장해 두세요. 실행 후 Ctrl+S로 Scene을 저장해야 반영됩니다.",
-            "실행",
-            "취소");
-
-        if (!confirmed)
-        {
-            return;
-        }
-
-        string report = BuildAll();
-        Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, Shorten(report), "확인");
-    }
-
-    private static string Shorten(string report)
-    {
-        const int limit = 1800;
-        return report.Length <= limit ? report : report.Substring(0, limit) + "\n... (전체 내용은 Console 참고)";
-    }
-
     // ---------------------------------------------------------------- 전체 생성
 
     public static string BuildAll()

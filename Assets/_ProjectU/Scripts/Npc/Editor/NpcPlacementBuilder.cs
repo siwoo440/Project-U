@@ -175,36 +175,6 @@ public static class NpcPlacementBuilder
         };
     }
 
-    // ---------------------------------------------------------------- 메뉴
-
-    [MenuItem(BuildMenuRoot + "8. NPC Placement (Village + Models + Manager)", false, 27)]
-    private static void BuildAllMenu()
-    {
-        bool confirmed = EditorUtility.DisplayDialog(
-            DialogTitle,
-            "NPC 데이터를 갱신하고 섬에 배치되는 NPC(1차 알파 7명 · 2차 7명)의 모델·Prefab을 만든 뒤,\n"
-            + "현재 게임 Scene(20_Gameplay)에 마을 건물 · NPC 집 · 일정 위치 · NPC · NPC 관리자를 배치하고 NavMesh를 다시 굽습니다.\n"
-            + "마을 자리의 나무·바위·풀은 숨깁니다.\n\n"
-            + "실행 전에 Scene을 저장해 두세요. 실행 후 Ctrl+S로 Scene을 저장해야 반영됩니다.",
-            "실행",
-            "취소");
-
-        if (!confirmed)
-        {
-            return;
-        }
-
-        string report = BuildAll();
-        Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, Shorten(report), "확인");
-    }
-
-    private static string Shorten(string report)
-    {
-        const int limit = 1800;
-        return report.Length <= limit ? report : report.Substring(0, limit) + "\n... (전체 내용은 Console 참고)";
-    }
-
     // ---------------------------------------------------------------- 전체 생성
 
     public static string BuildAll()

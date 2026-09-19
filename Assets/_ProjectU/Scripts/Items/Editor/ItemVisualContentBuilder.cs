@@ -214,35 +214,6 @@ public static class ItemVisualContentBuilder
         }
     }
 
-    // ---------------------------------------------------------------- 메뉴
-
-    [MenuItem(BuildMenuRoot + "1. Items (Models + Icons + Pickups)", false, 20)]
-    private static void BuildAllMenu()
-    {
-        bool confirmed = EditorUtility.DisplayDialog(
-            DialogTitle,
-            "모든 아이템의 저폴리 모델·바닥용 Prefab·아이콘을 만들고\n"
-            + "현재 게임 Scene(20_Gameplay)의 핫바·버리기 기능과 인벤토리 팝업에 연결합니다.\n\n"
-            + "실행 후 Ctrl+S로 Scene을 저장해야 반영됩니다.",
-            "실행",
-            "취소");
-
-        if (!confirmed)
-        {
-            return;
-        }
-
-        string report = BuildAll();
-        Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, Shorten(report), "확인");
-    }
-
-    private static string Shorten(string report)
-    {
-        const int limit = 1800;
-        return report.Length <= limit ? report : report.Substring(0, limit) + "\n... (전체 내용은 Console 참고)";
-    }
-
     // ---------------------------------------------------------------- 전체 생성
 
     public static string BuildAll()

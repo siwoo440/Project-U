@@ -34,30 +34,6 @@ public static class NpcDialogueBuilder
     private const float ButtonWidth = 168f;
     private const float GiftHeight = 176f;
 
-    // ---------------------------------------------------------------- 메뉴
-
-    [MenuItem(BuildMenuRoot + "9. NPC Dialogue (Portraits + Popup + Relationships)", false, 28)]
-    private static void BuildAllMenu()
-    {
-        bool confirmed = EditorUtility.DisplayDialog(
-            DialogTitle,
-            "알파 NPC 7명의 초상을 만들고,\n"
-            + "현재 게임 Scene(20_Gameplay)에 NPC 대화 창과 관계(호감도) 관리자를 추가합니다.\n\n"
-            + "먼저 8번 메뉴(NPC 마을 배치)를 실행해 두어야 합니다.\n"
-            + "실행 후 Ctrl+S로 Scene을 저장해야 반영됩니다.",
-            "실행",
-            "취소");
-
-        if (!confirmed)
-        {
-            return;
-        }
-
-        string report = BuildAll();
-        Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, report.Length <= 1800 ? report : report.Substring(0, 1800) + "\n... (전체 내용은 Console 참고)", "확인");
-    }
-
     // ---------------------------------------------------------------- 전체 생성
 
     public static string BuildAll()

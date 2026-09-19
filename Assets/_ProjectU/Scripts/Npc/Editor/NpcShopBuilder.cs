@@ -47,31 +47,6 @@ public static class NpcShopBuilder
         "' 단계부터 주문할 수 있어요", "제작", "제작 (닫힘)", "오늘 제작 : ", "제작 창을 열 수 없어요. Build Content > 20번 메뉴를 실행하세요."
     };
 
-    // ---------------------------------------------------------------- 메뉴
-
-    [MenuItem(NpcContentBuilder.BuildMenuRoot + "10. NPC Shops (Stock + Prices + Hours + Trade)", false, 29)]
-    private static void BuildAllMenu()
-    {
-        bool confirmed = EditorUtility.DisplayDialog(
-            DialogTitle,
-            "섬 NPC 상점 10곳(밀키 · 드라비아 · 리첼 + 2차 7명)의 판매 목록 · 가격 · 제작 주문을 원본 CSV로 만들고,\n"
-            + "현재 게임 Scene(20_Gameplay)의 NPC 관리자에 상점 관리자를 붙입니다.\n"
-            + "상인 창은 NPC 한마디 칸을 넣어 다시 만듭니다.\n\n"
-            + "먼저 6번(판매·상점) · 8번(NPC 배치) · 9번(NPC 대화) 메뉴를 실행해 두어야 합니다.\n"
-            + "실행 후 Ctrl+S로 Scene을 저장해야 반영됩니다.",
-            "실행",
-            "취소");
-
-        if (!confirmed)
-        {
-            return;
-        }
-
-        string report = BuildAll();
-        Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, report.Length <= 1800 ? report : report.Substring(0, 1800) + "\n... (전체 내용은 Console 참고)", "확인");
-    }
-
     // ---------------------------------------------------------------- 전체 생성
 
     public static string BuildAll()

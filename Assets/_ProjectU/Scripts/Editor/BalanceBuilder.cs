@@ -42,33 +42,6 @@ public static class BalanceBuilder
         ("Enemy_RangedSpitter", 240f)
     };
 
-    // ---------------------------------------------------------------- 메뉴
-
-    [MenuItem(MarketContentBuilder.BuildMenuRoot + "13. Balance Pass (Prices + Loot + Respawn + Gifts)", false, 32)]
-    private static void BuildAllMenu()
-    {
-        bool confirmed = EditorUtility.DisplayDialog(
-            DialogTitle,
-            "1차 밸런스 조정을 적용합니다.\n"
-            + "· 요리법 · 판매 가격표 · 의뢰 보상을 다시 읽습니다.\n"
-            + "· 적 전리품 확률을 낮추고, 원거리 적 전리품 표를 연결합니다.\n"
-            + "· 현재 게임 Scene(20_Gameplay)의 적 재생성 시간을 늘립니다.\n"
-            + "· NPC 선물을 한 주에 2번까지로 정합니다.\n"
-            + "마지막에 밸런스 검사를 하고 Docs/Balance/BalanceReport.md 표를 만듭니다.\n\n"
-            + "실행 후 Ctrl+S로 Scene을 저장해야 반영됩니다.",
-            "실행",
-            "취소");
-
-        if (!confirmed)
-        {
-            return;
-        }
-
-        string report = BuildAll();
-        Debug.Log(report);
-        EditorUtility.DisplayDialog(DialogTitle, report.Length <= 1800 ? report : report.Substring(0, 1800) + "\n... (전체 내용은 Console 참고)", "확인");
-    }
-
     // ---------------------------------------------------------------- 전체 적용
 
     public static string BuildAll()

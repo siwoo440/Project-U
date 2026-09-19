@@ -84,3 +84,31 @@ quest_aliune_water,char_aliune,Board,새싹의 물,drink_water_bottle:3,14,3,,2,
 quest_aliune_seeds,char_aliune,Board,새 정원 씨앗,seed_potato:4,18,3,,3,Spring,,봄 정원에 심을 감자 씨앗 네 개… 부탁해도 될까요.,좋은 씨앗이에요. 튼튼하게 자랄 거예요.,
 quest_aliune_fiber,char_aliune,Board,덩굴 지지대,item_plant_fiber:8,20,3,,3,All,,덩굴이 기댈 지지대를 묶으려고요. 섬유 여덟 개면 돼요.,덩굴이 편안해 보여요. 고마워요.,
 quest_aliune_special,char_aliune,Special,섬의 치유 정원,seed_pumpkin:4|food_berry:10,120,10,medicine_flower_balm:3,5,All,Trust,섬 전체를 치유 정원으로 만드는 첫걸음이에요. 호박 씨앗 네 개와 열매 열 개… 함께 심어 줄래요?,첫 정원이 생겼어요. 이 꽃잎 연고는… 당신 손을 위해 만든 거예요.,event_aliune_trust
+quest_noctia_mushroom,char_noctia,Board,까마귀 버섯 수프,item_wild_mushroom:4,38,4,,3,All,,숲 그늘에서 자란 버섯 네 개가 필요해요. 까마귀들이 좋아하는 수프를 끓이려고요.,…좋은 버섯이에요. 까마귀들이 오늘 밤 조용하겠네요.,
+quest_noctia_tea,char_noctia,Board,달빛 약초차,item_herbal_tea:2,25,3,,2,All,,약초차 두 잔만 구해 줄래요? 달이 뜨는 밤엔 차가 있어야 예언서가 잘 읽혀요.,고마워요. 오늘 밤 예언서엔 좋은 문장만 적힐 것 같아요.,
+quest_noctia_ore,char_noctia,Board,수정 구슬 대신,item_iron_ore:2,30,3,,3,All,,수정 구슬이 깨졌어요. 대신 반짝이는 광석 두 개면… 별빛을 비춰 볼 수 있을 거예요.,…광석 속에도 작은 별이 있네요. 고마워요.,
+quest_noctia_special,char_noctia,Special,예언서의 새 장,item_wild_mushroom:6|item_spider_silk:2,120,10,item_pearl:1,5,All,Trust,새 예언서를 엮고 싶어요. 먹물을 낼 버섯 여섯 개와 책을 묶을 실 두 개. 이번 책엔… 비극이 아닌 걸 적고 싶어요.,첫 장에 당신 이름을 적었어요. 예언이 아니라 기록으로요. 이 진주는 내 수정 구슬 대신이에요.,event_noctia_trust
+quest_ragh_wood,char_ragh,Board,모닥불 장작,item_wood:15,25,3,,2,All,,야영지 불이 약해졌다. 장작 열다섯 개. 밤새 버틸 만큼.,…충분하군. 오늘 밤은 따뜻하겠어.,
+quest_ragh_ore,char_ragh,Board,칼 벼릴 광석,item_iron_ore:3,45,4,,3,All,,칼날이 무뎌졌다. 대장간에 맡기려면 광석 세 개가 필요해.,좋은 광석이다. 이 칼로 네 뒤도 지켜 주지.,
+quest_ragh_trout,char_ragh,Board,사냥꾼의 저녁,resource_fish_trout:1,55,4,,3,Spring|Autumn,,사냥감이 안 보이는 날엔 물고기다. 송어 한 마리. 기름진 걸로.,…잘 골랐군. 오늘 저녁은 제대로 먹겠다.,
+quest_ragh_special,char_ragh,Special,무리의 깃발,item_wood:20|item_spider_silk:2|item_iron_ore:3,130,10,item_arrow:15,5,All,Trust,"야영지에 깃발을 세우려 한다. 깃대 나무 스물, 깃발 실 둘, 받침 광석 셋. …새 무리의 깃발이다.",깃발이 섰다. 저 깃발 아래엔 너도 있다. 이 화살은 무리의 몫이다.,event_ragh_trust
+quest_rize_ore,char_rize,Board,에너지 코어 대신,item_iron_ore:2,30,3,,3,All,,에너지 코어가 부족해요. 광석 두 개면 대신 쓸 수 있어요. 부탁해도 될까요?,"충전 완료. …이건 기능 보고가 아니라, 진심으로 고맙다는 말이에요.",
+quest_rize_scrap,char_rize,Board,관절 부품,item_scrap_parts:3,40,4,,3,All,,왼쪽 무릎 관절에서 소리가 나요. 고철 부품 세 개면 고칠 수 있어요.,소음 0. 걸음이 가벼워요. 당신 덕분이에요.,
+quest_rize_strawberry,char_rize,Board,웃음 연구 재료,food_strawberry:3,28,3,,2,Spring|Summer,,사람들은 딸기를 먹을 때 가장 많이 웃어요. 세 개로 실험해 보고 싶어요.,실험 결과 : 당신이 웃을 때 제 웃음 확률도 올라가요.,
+quest_rize_special,char_rize,Special,감정 기록 장치,item_iron_ore:5|item_scrap_parts:3|item_herbal_tea:2,130,10,item_vitality_potion:2,5,All,Trust,"감정을 지우지 않고 저장하는 장치를 만들고 싶어요. 광석 다섯, 부품 셋, 그리고… 마음이 편해지는 차 두 잔. 차는 제 연구에 꼭 필요해요.",장치 가동. 첫 번째로 저장된 감정은 '고마움'이에요. 이 물약은 당신 기운을 위해서요.,event_rize_trust
+quest_sharia_crucian,char_sharia,Board,구조 연습 미끼,resource_fish_crucian:2,45,4,,3,Spring|Summer|Autumn,,"구조 연습용 미끼가 필요해! 붕어 두 마리. 상어 동료들이 도와주거든, 크하!",좋아! 오늘 연습은 대성공이겠다!,
+quest_sharia_smelt,char_sharia,Board,겨울 바다 도시락,resource_fish_smelt:2,45,4,,3,Winter,,겨울 바다 근무는 배가 금방 고파. 빙어 두 마리만!,크하하! 이거면 망루에서 하루 종일 버틴다!,
+quest_sharia_fiber,char_sharia,Board,구명줄 엮기,item_plant_fiber:10,25,3,,3,All,,구명줄이 닳았어. 풀 섬유 열 개면 새로 엮을 수 있어.,튼튼하다! 이 줄이면 누구든 건져 올릴 수 있어.,
+quest_sharia_special,char_sharia,Special,새 구명 튜브,item_plant_fiber:15|item_spider_silk:3|item_wood:10,120,10,medicine_bandage:3,5,All,Trust,"망루에 구명 튜브를 더 걸고 싶어. 섬유 열다섯, 튼튼한 실 셋, 나무 열 개! 이번엔 한 명도 놓치지 않을 거야.","튜브가 다 걸렸어! 이제 바다가 조금 덜 무섭다. 이 붕대는 구조대 필수품이야, 너도 챙겨!",event_sharia_trust
+quest_censia_apple,char_censia,Board,운송대 간식,food_apple:4,25,3,,2,All,,먼 길엔 사과가 최고다. 네 개만 부탁하지.,좋아. 이번 운송은 든든하게 가겠군.,
+quest_censia_water,char_censia,Board,사막 물통,drink_water_bottle:4,18,3,,2,All,,사막 운송엔 물이 먼저다. 물 네 병.,고맙다. 이 물이 누군가를 살릴 거야.,
+quest_censia_wood,char_censia,Board,짐수레 수리,item_wood:15,25,3,,3,All,,짐수레 바퀴가 금이 갔다. 나무 열다섯 개면 고칠 수 있어.,바퀴가 새것 같군. 다음 운송은 안전하겠어.,
+quest_censia_special,char_censia,Special,안전한 길 표지,resource_stone:20|item_wood:15|item_plant_fiber:10,120,10,equipment_small_backpack:1,5,All,Trust,"섬 곳곳 길목에 표지를 세우고 싶다. 돌 스물, 나무 열다섯, 묶을 섬유 열. 아무도 길을 잃지 않게.",표지가 다 섰다. 이제 이 섬에서 길 잃는 사람은 없을 거야. 이 가방은 운송대 표준품이다. 너도 가져.,event_censia_trust
+quest_harka_egg,char_harka,Board,추적자 도시락,food_egg:3,40,4,,2,All,,"순찰 나가기 전에 달걀 세 개! 힘이 나는 거 먹어야 코도 잘 돌아가거든, 멍!",냠! 오늘 순찰은 두 바퀴 돌 수 있겠어!,
+quest_harka_mushroom,char_harka,Board,냄새 훈련,item_wild_mushroom:4,38,4,,3,All,,버섯 냄새로 추적 훈련을 할 거야! 네 개만 구해 줄래?,"킁킁… 좋아, 이 냄새 완벽하게 외웠어!",
+quest_harka_fiber,char_harka,Board,발자국 표시 끈,item_plant_fiber:8,20,3,,3,All,,안개 속에서 길 표시할 끈이 필요해. 풀 섬유 여덟 개!,이제 안개가 짙어도 안 헤매! 멍멍!,
+quest_harka_special,char_harka,Special,탐사대 배낭,item_spider_silk:3|item_plant_fiber:12|item_iron_ore:3,120,10,food_mushroom_skewer:3,5,All,Trust,"우리 무리용 탐사 배낭을 만들고 싶어! 튼튼한 실 셋, 섬유 열둘, 버클용 광석 셋! 같이 탐험 가려면 필요하잖아, 멍!","완성! 이제 어디든 같이 갈 수 있어! 이건 탐험 도시락이야, 꼬치 세 개!",event_harka_trust
+quest_eiri_strawberry,char_eiri,Board,향긋한 가사,food_strawberry:3,28,3,,2,Spring|Summer,,딸기 향을 맡으면 노래 가사가 떠올라~ 세 개만 가져다줄래?,음~ 향긋해! 벌써 한 소절 생각났어~,
+quest_eiri_berry,char_eiri,Board,목소리 열매,food_berry:5,22,3,,2,All,,열매 다섯 개면 목소리가 맑아져~ 오늘 공연 전에 먹고 싶어!,고마워~ 오늘 고음은 하늘까지 닿을 거야!,
+quest_eiri_tea,char_eiri,Board,목 풀기 차,item_herbal_tea:2,25,3,,2,All,,바닷바람에 목이 칼칼해~ 약초차 두 잔만 부탁해!,후~ 따뜻해. 이제 노래 부를 준비 완료~,
+quest_eiri_special,char_eiri,Special,바람의 하프 줄,item_spider_silk:3|item_wood:10|food_strawberry:4,120,10,item_pearl:1,5,Spring|Summer,Trust,"새 하프를 만들고 싶어! 줄로 쓸 실 셋, 몸통 나무 열, 그리고… 첫 곡을 위한 딸기 넷! 첫 곡은 너한테 바칠 거야~","하프 완성~! 첫 곡 제목은 '바람이 멈춘 날'이야. 이 진주는 하프 장식에서 남은 거야, 가져!",event_eiri_trust

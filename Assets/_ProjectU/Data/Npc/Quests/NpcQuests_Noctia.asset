@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4bf3c4498412d4d8c95a03bab470e9, type: 3}
+  m_Name: NpcQuests_Noctia
+  m_EditorClassIdentifier: Assembly-CSharp::NpcQuestBook
+  groupId: quest_noctia
+  ownerId: char_noctia
+  quests:
+  - questId: quest_noctia_mushroom
+    title: "\uAE4C\uB9C8\uADC0 \uBC84\uC12F \uC218\uD504"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: ce6c806808c6dfb4ca5fb2217dce497c, type: 2}
+      amount: 4
+    rewardCoins: 38
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uC232 \uADF8\uB298\uC5D0\uC11C \uC790\uB780 \uBC84\uC12F \uB124
+      \uAC1C\uAC00 \uD544\uC694\uD574\uC694. \uAE4C\uB9C8\uADC0\uB4E4\uC774 \uC88B\uC544\uD558\uB294
+      \uC218\uD504\uB97C \uB053\uC774\uB824\uACE0\uC694."
+    thanksLine: "\u2026\uC88B\uC740 \uBC84\uC12F\uC774\uC5D0\uC694. \uAE4C\uB9C8\uADC0\uB4E4\uC774
+      \uC624\uB298 \uBC24 \uC870\uC6A9\uD558\uACA0\uB124\uC694."
+    requiredEventId: 
+  - questId: quest_noctia_tea
+    title: "\uB2EC\uBE5B \uC57D\uCD08\uCC28"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 361f6079362891a468aae059667ddd1c, type: 2}
+      amount: 2
+    rewardCoins: 25
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uC57D\uCD08\uCC28 \uB450 \uC794\uB9CC \uAD6C\uD574 \uC904\uB798\uC694?
+      \uB2EC\uC774 \uB728\uB294 \uBC24\uC5D4 \uCC28\uAC00 \uC788\uC5B4\uC57C \uC608\uC5B8\uC11C\uAC00
+      \uC798 \uC77D\uD600\uC694."
+    thanksLine: "\uACE0\uB9C8\uC6CC\uC694. \uC624\uB298 \uBC24 \uC608\uC5B8\uC11C\uC5D4
+      \uC88B\uC740 \uBB38\uC7A5\uB9CC \uC801\uD790 \uAC83 \uAC19\uC544\uC694."
+    requiredEventId: 
+  - questId: quest_noctia_ore
+    title: "\uC218\uC815 \uAD6C\uC2AC \uB300\uC2E0"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: c593f671b9ae9d24e96e6cd5ee7b2a1c, type: 2}
+      amount: 2
+    rewardCoins: 30
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uC218\uC815 \uAD6C\uC2AC\uC774 \uAE68\uC84C\uC5B4\uC694. \uB300\uC2E0
+      \uBC18\uC9DD\uC774\uB294 \uAD11\uC11D \uB450 \uAC1C\uBA74\u2026 \uBCC4\uBE5B\uC744
+      \uBE44\uCDB0 \uBCFC \uC218 \uC788\uC744 \uAC70\uC608\uC694."
+    thanksLine: "\u2026\uAD11\uC11D \uC18D\uC5D0\uB3C4 \uC791\uC740 \uBCC4\uC774
+      \uC788\uB124\uC694. \uACE0\uB9C8\uC6CC\uC694."
+    requiredEventId: 
+  - questId: quest_noctia_special
+    title: "\uC608\uC5B8\uC11C\uC758 \uC0C8 \uC7A5"
+    kind: 1
+    requirements:
+    - item: {fileID: 11400000, guid: ce6c806808c6dfb4ca5fb2217dce497c, type: 2}
+      amount: 6
+    - item: {fileID: 11400000, guid: a3a22e114d5dd36498ccd4cc83dd2ffb, type: 2}
+      amount: 2
+    rewardCoins: 120
+    rewardAffinity: 10
+    rewardItem: {fileID: 11400000, guid: 2f1df630320255844a0117b89edfaaae, type: 2}
+    rewardItemAmount: 1
+    days: 5
+    seasons: 
+    requiredStage: 2
+    requestLine: "\uC0C8 \uC608\uC5B8\uC11C\uB97C \uC5EE\uACE0 \uC2F6\uC5B4\uC694.
+      \uBA39\uBB3C\uC744 \uB0BC \uBC84\uC12F \uC5EC\uC12F \uAC1C\uC640 \uCC45\uC744
+      \uBB36\uC744 \uC2E4 \uB450 \uAC1C. \uC774\uBC88 \uCC45\uC5D4\u2026 \uBE44\uADF9\uC774
+      \uC544\uB2CC \uAC78 \uC801\uACE0 \uC2F6\uC5B4\uC694."
+    thanksLine: "\uCCAB \uC7A5\uC5D0 \uB2F9\uC2E0 \uC774\uB984\uC744 \uC801\uC5C8\uC5B4\uC694.
+      \uC608\uC5B8\uC774 \uC544\uB2C8\uB77C \uAE30\uB85D\uC73C\uB85C\uC694. \uC774
+      \uC9C4\uC8FC\uB294 \uB0B4 \uC218\uC815 \uAD6C\uC2AC \uB300\uC2E0\uC774\uC5D0\uC694."
+    requiredEventId: event_noctia_trust
