@@ -53,6 +53,7 @@ public static partial class StylizedModelLibrary
                 RegisterLivestock();
                 RegisterMarket();
                 RegisterNpc();
+                RegisterZones();
             }
 
             return catalog;

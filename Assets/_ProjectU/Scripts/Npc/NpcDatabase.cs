@@ -14,17 +14,28 @@ public sealed class NpcDatabase : ScriptableObject // 89일차: 전체 NPC 목�
         [SerializeField] private string displayName; // 표시 이름
         [Tooltip("어디에 두는지 설명.")]
         [SerializeField] private string description; // 설명
+        [Tooltip("100일차: 위치가 속한 구역 (village = 마을, 그 밖은 18번 메뉴가 만드는 새 구역).")]
+        [SerializeField] private string zoneId = VillageZoneId; // 구역
+        [Tooltip("100일차: 물가 위치 (인어 · 크라켄 · 상어족은 물가에만 섭니다).")]
+        [SerializeField] private bool waterside; // 물가 여부
 
-        public Location(string locationId, string displayName, string description) // 생성 도구에서 사용
+        public const string VillageZoneId = "village"; // 마을 구역 ID
+
+        public Location(string locationId, string displayName, string description, string zoneId = VillageZoneId, bool waterside = false) // 생성 도구에서 사용
         {
             this.locationId = locationId;
             this.displayName = displayName;
             this.description = description;
+            this.zoneId = string.IsNullOrEmpty(zoneId) ? VillageZoneId : zoneId;
+            this.waterside = waterside;
         }
 
         public string LocationId => locationId; // ID 제공
         public string DisplayName => displayName; // 이름 제공
         public string Description => description; // 설명 제공
+        public string ZoneId => string.IsNullOrEmpty(zoneId) ? VillageZoneId : zoneId; // 구역 제공
+        public bool IsVillage => ZoneId == VillageZoneId; // 마을 위치인지
+        public bool IsWaterside => waterside; // 물가 여부 제공
     }
 
     [Header("Characters")] // 캐릭터
@@ -85,6 +96,11 @@ public sealed class NpcDatabase : ScriptableObject // 89일차: 전체 NPC 목�
     public bool HasLocation(string locationId) // 위치 ID 확인
     {
         return locations.Exists(location => location != null && location.LocationId == locationId);
+    }
+
+    public Location GetLocation(string locationId) // 100일차: 위치 ID → 위치 (없으면 null)
+    {
+        return locations.Find(location => location != null && location.LocationId == locationId);
     }
 
     public AffinityStage GetStage(int affinity) // 호감도 → 단계

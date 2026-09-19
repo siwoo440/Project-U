@@ -45,6 +45,7 @@ MonoBehaviour:
       \uC774\uB3D9\uACFC \uC6B4\uC1A1\uC5D0 \uB2A5\uD568"
     illustrationStyle: "\uC77C\uBCF8 \uC560\uB2C8\uD48D \uACE0\uC815 \u2013 \uB113\uC740
       \uCD08\uC6D0, \uB9D0 \uD558\uBC18\uC2E0\uACFC \uC6B4\uC1A1 \uC7A5\uBE44"
+  portrait: {fileID: 0}
   themeColor: {r: 0.5411765, g: 0.3529412, b: 0.23137255, a: 1}
   accentColor: {r: 0.84313726, g: 0.7607843, b: 0.47843137, a: 1}
   personality:

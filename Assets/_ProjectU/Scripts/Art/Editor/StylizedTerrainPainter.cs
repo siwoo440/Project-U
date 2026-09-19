@@ -209,9 +209,9 @@ public static class StylizedTerrainPainter
 
     // ------------------------------------------------------------------ 텍스처
 
-    private delegate Color PixelFunction(float u, float v);
+    public delegate Color PixelFunction(float u, float v);
 
-    private static TerrainLayer GetOrCreateLayer(string name, PixelFunction pixel, float tileSize)
+    public static TerrainLayer GetOrCreateLayer(string name, PixelFunction pixel, float tileSize) // 100일차: 새 구역 바닥도 사용
     {
         StylizedArtAssetFactory.EnsureFolders();
         string layerPath = $"{StylizedArtAssetFactory.TextureFolder}/TL_{name}.terrainlayer";
@@ -272,7 +272,7 @@ public static class StylizedTerrainPainter
     }
 
     // 반복 타일이 되도록 경계를 감싸는 노이즈
-    private static float TileNoise(float u, float v, float frequency, float seed)
+    public static float TileNoise(float u, float v, float frequency, float seed)
     {
         float angleU = u * Mathf.PI * 2f;
         float angleV = v * Mathf.PI * 2f;
@@ -284,7 +284,7 @@ public static class StylizedTerrainPainter
         return (Mathf.PerlinNoise(x + z, y + w) + Mathf.PerlinNoise(x - w, z + y)) * 0.5f;
     }
 
-    private static float Hash(float u, float v, int size)
+    public static float Hash(float u, float v, int size)
     {
         int x = Mathf.FloorToInt(u * size);
         int y = Mathf.FloorToInt(v * size);

@@ -36,8 +36,42 @@ public static class NpcPlacementBuilder
         { "char_mireille", Hex(0xF1E6CC) }, // 크림색 곱슬
         { "char_milky", Hex(0xE3D2BA) }, // 우유빛 백갈색
         { "char_dravia", Hex(0x8A3324) }, // 적갈색
-        { "char_lichel", Hex(0xD0CCC6) } // 회백색
+        { "char_lichel", Hex(0xD0CCC6) }, // 회백색
+        // 100일차: 확장 NPC 28명
+        { "char_bellamorta", Hex(0x7A3A8C) }, // 자줏빛 웨이브
+        { "char_serena", Hex(0xE3E3EA) }, // 은백색
+        { "char_eiri", Hex(0xA9D6E8) }, // 하늘색 · 은빛
+        { "char_rize", Hex(0xB5BCC6) }, // 은회색 단발
+        { "char_liriel", Hex(0xD8E4C0) }, // 연푸른 금발
+        { "char_ragh", Hex(0xB8BCC4) }, // 은회색
+        { "char_arachne", Hex(0x3A2446) }, // 검은 자색
+        { "char_erina", Hex(0xEDE3C4) }, // 백금빛
+        { "char_lilica", Hex(0x3B2140) }, // 흑자색 트윈테일
+        { "char_milu", Hex(0x75D8E1) }, // 푸른 투명빛 (슬라임 색을 씀)
+        { "char_harka", Hex(0xC8913F) }, // 황갈색
+        { "char_beatrice", Hex(0xE0B23A) }, // 금흑 줄무늬의 금색
+        { "char_kasumi", Hex(0xB0705A) }, // 붉은빛 은갈색
+        { "char_chesca", Hex(0x4A3426) }, // 짙은 갈색
+        { "char_lanhua", Hex(0x2E2230) }, // 흑자색
+        { "char_noctia", Hex(0x23283F) }, // 짙은 흑청색
+        { "char_seira", Hex(0x3E2A55) }, // 어두운 보라
+        { "char_marielle", Hex(0x3FA8A6) }, // 청록색
+        { "char_censia", Hex(0x5E3A24) }, // 밤갈색
+        { "char_ravenna", Hex(0x3A3D48) }, // 은흑색
+        { "char_akane", Hex(0x5E1F22) }, // 검붉은색
+        { "char_pipi", Hex(0x6F7A3C) }, // 올리브색
+        { "char_safira", Hex(0xA8784E) }, // 사막빛 갈색
+        { "char_lumina", Hex(0xEFB6D6) }, // 연분홍
+        { "char_neri", Hex(0x3E6B45) }, // 짙은 초록
+        { "char_sharia", Hex(0x22416A) }, // 남청색
+        { "char_aliune", Hex(0x9CCB7A) }, // 연녹색
+        { "char_octavia", Hex(0x3A2E52) } // 먹빛 보라
     };
+
+    public static bool HasHairColor(string characterId) // 100일차: 검사용
+    {
+        return HairColors.ContainsKey(characterId ?? string.Empty);
+    }
 
     public static Color GetHairColor(string characterId) // 91일차: 초상에도 같은 머리 색 사용
     {
@@ -240,11 +274,13 @@ public static class NpcPlacementBuilder
         {
             root.layer = LayerMask.NameToLayer(InteractableLayer);
 
+            NpcBodyRules.TryGet(character.CharacterId, out NpcBodyMetrics metrics); // 100일차: 하반신 모양별 크기 · 움직임
+
             NavMeshAgent agent = root.AddComponent<NavMeshAgent>();
             agent.agentTypeID = agentType;
-            agent.radius = 0.3f;
-            agent.height = 1.7f;
-            agent.speed = 2.2f;
+            agent.radius = metrics.AgentRadius;
+            agent.height = metrics.Height;
+            agent.speed = 2.2f * metrics.SpeedScale;
             agent.angularSpeed = 540f;
             agent.acceleration = 10f;
             agent.stoppingDistance = 0.2f;
@@ -252,12 +288,17 @@ public static class NpcPlacementBuilder
             agent.avoidancePriority = 40 + Mathf.Abs(character.CharacterId.GetHashCode() % 20);
 
             CapsuleCollider body = root.AddComponent<CapsuleCollider>();
-            body.center = new Vector3(0f, 0.85f, 0f);
-            body.radius = 0.32f;
-            body.height = 1.7f;
+            body.center = new Vector3(0f, metrics.Height * 0.5f, 0f);
+            body.radius = metrics.ColliderRadius;
+            body.height = metrics.Height;
 
             GameObject model = (GameObject)PrefabUtility.InstantiatePrefab(modelPrefab, root.transform);
             model.name = "Model";
+
+            if (metrics.NeedsBodyBlock)
+            {
+                AddBodyBlock(model.transform); // 뒤로 긴 몸통 (말 · 뱀 · 전갈 · 거미 · 촉수)
+            }
 
             float height = model.GetComponentInChildren<Renderer>().bounds.max.y;
             TMP_Text nameTag = CreateWorldText(root.transform, "NameTag", height + 0.32f, 2.2f, 3.5f);
@@ -273,6 +314,7 @@ public static class NpcPlacementBuilder
 
             NpcAgent npc = root.AddComponent<NpcAgent>();
             npc.EditorAssign(character, model.transform, nameTag, speech, body);
+            npc.EditorAssignBody(metrics.Motion, 2.2f * metrics.SpeedScale);
             root.AddComponent<NpcInteractable>();
 
             return PrefabUtility.SaveAsPrefabAsset(root, path);
@@ -281,6 +323,45 @@ public static class NpcPlacementBuilder
         {
             Object.DestroyImmediate(root);
         }
+    }
+
+    // 100일차: 모델 아랫부분(허리 아래) 크기의 상자 충돌체. 모델 아래에 두어 집 안에 들어가 모델이 꺼지면 같이 꺼진다.
+    private static void AddBodyBlock(Transform model)
+    {
+        Bounds bounds = new Bounds();
+        bool has = false;
+
+        foreach (MeshFilter filter in model.GetComponentsInChildren<MeshFilter>())
+        {
+            if (filter.sharedMesh == null)
+            {
+                continue;
+            }
+
+            Bounds mesh = filter.sharedMesh.bounds;
+
+            if (!has)
+            {
+                bounds = mesh;
+                has = true;
+            }
+            else
+            {
+                bounds.Encapsulate(mesh);
+            }
+        }
+
+        if (!has)
+        {
+            return;
+        }
+
+        float top = Mathf.Min(bounds.max.y, 1.3f);
+        GameObject block = new GameObject("BodyBlock");
+        block.transform.SetParent(model, false);
+        BoxCollider box = block.AddComponent<BoxCollider>();
+        box.center = new Vector3(bounds.center.x, top * 0.5f, bounds.center.z);
+        box.size = new Vector3(Mathf.Min(bounds.size.x, 1.8f), top, Mathf.Min(bounds.size.z, 2.4f));
     }
 
     private static TMP_Text CreateWorldText(Transform parent, string name, float height, float fontSize, float width)
@@ -345,8 +426,24 @@ public static class NpcPlacementBuilder
         // 일정 위치
         List<NpcLocationPoint> points = new List<NpcLocationPoint>();
 
+        int zonePoints = 0;
+
         foreach (NpcDatabase.Location location in database.Locations)
         {
+            if (!location.IsVillage)
+            {
+                // 100일차: 새 구역 위치는 18번 메뉴(WorldZoneBuilder)가 배치한다. 이미 있으면 관리자에 그대로 연결
+                NpcLocationPoint zonePoint = WorldZoneBuilder.FindZonePoint(scene, location.LocationId);
+
+                if (zonePoint != null)
+                {
+                    points.Add(zonePoint);
+                    zonePoints++;
+                }
+
+                continue;
+            }
+
             LocationSpec spec = LocationLayout.FirstOrDefault(entry => entry.Id == location.LocationId);
 
             if (spec == null)
@@ -372,7 +469,8 @@ public static class NpcPlacementBuilder
             points.Add(point);
         }
 
-        report.AppendLine($"일정 위치 {points.Count}곳");
+        int zoneTotal = database.Locations.Count(location => !location.IsVillage);
+        report.AppendLine($"일정 위치 {points.Count}곳 (마을 {points.Count - zonePoints}곳 · 새 구역 {zonePoints}/{zoneTotal}곳{(zonePoints < zoneTotal ? ", 나머지는 18번 메뉴가 배치" : string.Empty)})");
 
         // NPC
         List<NpcAgent> agents = new List<NpcAgent>();
@@ -644,7 +742,9 @@ public static class NpcPlacementBuilder
 
             if (point == null)
             {
-                error($"일정 위치가 Scene에 없습니다: {location.LocationId}");
+                error(location.IsVillage
+                    ? $"일정 위치가 Scene에 없습니다: {location.LocationId}"
+                    : $"새 구역 위치가 Scene에 없습니다: {location.LocationId} (Build Content > 18. World Zones를 실행하세요)");
                 continue;
             }
 

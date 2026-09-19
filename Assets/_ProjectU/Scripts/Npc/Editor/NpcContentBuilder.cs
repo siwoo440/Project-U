@@ -203,7 +203,7 @@ public static class NpcContentBuilder
 
             foreach (NpcCsv.Row row in NpcCsv.Read(LocationCsv, data.Errors))
             {
-                data.Locations.Add(new NpcDatabase.Location(row["LocationID"], row["DisplayName"], row["Description"]));
+                data.Locations.Add(new NpcDatabase.Location(row["LocationID"], row["DisplayName"], row["Description"], row["Zone"], row["Waterside"].Equals("TRUE", StringComparison.OrdinalIgnoreCase))); // 100일차: 구역 · 물가
             }
 
             report.AppendLine($"원본 CSV : 캐릭터 시트 {data.CharacterIds.Count}명, 대사 {data.Dialogue.Count}줄, 선물 규칙 {data.Gifts.Count}개, 일정 {data.Schedules.Count}칸, 위치 {data.Locations.Count}곳");

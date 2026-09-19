@@ -59,6 +59,7 @@ MonoBehaviour:
       \uBE5B\uB0A8"
     illustrationStyle: "\uC77C\uBCF8 \uC560\uB2C8\uD48D \uACE0\uC815 \u2013 \uBC1D\uC740
       \uC232 \uBC30\uACBD, \uBE5B\uC758 \uC785\uC790, \uD30C\uC2A4\uD154\uD1A4 \uCC44\uC0C9"
+  portrait: {fileID: 0}
   themeColor: {r: 0.65882355, g: 0.9607843, b: 0.8156863, a: 1}
   accentColor: {r: 1, g: 0.95686275, b: 0.8235294, a: 1}
   personality:

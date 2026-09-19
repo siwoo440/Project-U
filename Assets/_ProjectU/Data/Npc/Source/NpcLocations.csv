@@ -1,18 +1,33 @@
-LocationID,DisplayName,Description
-loc_village_square,마을 광장,마을 가운데 공터 (모닥불과 게시판 근처)
-loc_farm_fields,농장 밭,플레이어 밭 옆 길
-loc_pond_dock,연못 선착장,낚시 연못 가장자리
-loc_animal_pens,가축 우리,닭장과 외양간 앞
-loc_market_stall,상인 가판대,떠돌이 상인 가판대 자리
-loc_forest_edge,숲 가장자리,약초가 자라는 숲 입구
-loc_cafe,선셋 카페,카페 카운터 앞 (손님 자리)
-loc_cafe_counter,카페 카운터,카운터 안쪽 (밀키 자리)
-loc_smithy,대장간,대장간 앞 (손님 자리)
-loc_smithy_anvil,대장간 모루,모루 뒤 (드라비아 자리)
-loc_home_lunette,루네트의 오두막,숲 가장자리 근처 작은 오두막
-loc_home_verona,베로나의 농가,밭 옆 농가
-loc_home_mio,미오의 오두막,연못가 오두막
-loc_home_mireille,미레유의 양치기 집,가축 우리 옆 작은 집
-loc_home_milky,카페 2층,선셋 카페 위층
-loc_home_dravia,대장간 뒤채,대장간 뒤쪽 방
-loc_lichel_camp,리첼의 짐마차,마을 외곽 공터
+LocationID,DisplayName,Description,Zone,Waterside
+loc_village_square,마을 광장,마을 가운데 공터 (모닥불과 게시판 근처),village,FALSE
+loc_farm_fields,농장 밭,플레이어 밭 옆 길,village,FALSE
+loc_pond_dock,연못 선착장,낚시 연못 가장자리,village,TRUE
+loc_animal_pens,가축 우리,닭장과 외양간 앞,village,FALSE
+loc_market_stall,상인 가판대,떠돌이 상인 가판대 자리,village,FALSE
+loc_forest_edge,숲 가장자리,약초가 자라는 숲 입구,village,FALSE
+loc_cafe,선셋 카페,카페 카운터 앞 (손님 자리),village,FALSE
+loc_cafe_counter,카페 카운터,카운터 안쪽 (밀키 자리),village,FALSE
+loc_smithy,대장간,대장간 앞 (손님 자리),village,FALSE
+loc_smithy_anvil,대장간 모루,모루 뒤 (드라비아 자리),village,FALSE
+loc_home_lunette,루네트의 오두막,숲 가장자리 근처 작은 오두막,village,FALSE
+loc_home_verona,베로나의 농가,밭 옆 농가,village,FALSE
+loc_home_mio,미오의 오두막,연못가 오두막,village,FALSE
+loc_home_mireille,미레유의 양치기 집,가축 우리 옆 작은 집,village,FALSE
+loc_home_milky,카페 2층,선셋 카페 위층,village,FALSE
+loc_home_dravia,대장간 뒤채,대장간 뒤쪽 방,village,FALSE
+loc_lichel_camp,리첼의 짐마차,마을 외곽 공터,village,FALSE
+loc_coast_dock,해안 부두,바다로 뻗은 나무 부두 앞,coast,TRUE
+loc_coast_beach,모래 해변,어부 오두막 앞 모래밭,coast,FALSE
+loc_coast_rocks,갯바위,물가 바위 웅덩이 옆,coast,TRUE
+loc_ruins_gate,유적 입구,지하 유적으로 내려가는 봉인된 문 앞,ruins,FALSE
+loc_ruins_library,무너진 도서관,책장이 남은 옛 도서관 터,ruins,FALSE
+loc_ruins_plaza,유적 광장,석상이 선 옛 광장,ruins,FALSE
+loc_forest_fairy_ring,요정의 버섯 고리,깊은 숲 빈터의 버섯 고리,forest,FALSE
+loc_forest_flower_garden,빛나는 꽃밭,밤에 빛나는 꽃이 핀 화원,forest,FALSE
+loc_forest_witch_hut,마녀의 오두막,숲 깊은 곳 까마귀 오두막 앞,forest,FALSE
+loc_snow_camp,설원 야영지,설산 기슭의 천막과 모닥불,snow,FALSE
+loc_snow_shrine,산기슭 사당,붉은 문과 석등이 있는 사당,snow,FALSE
+loc_desert_oasis,사막 오아시스,야자수가 둘러싼 샘가,desert,TRUE
+loc_desert_camp,사막 천막,붉은 바위 옆 상인 천막,desert,FALSE
+loc_swamp_boardwalk,습지 나무길,안개 습지를 건너는 나무 길 위,swamp,TRUE
+loc_swamp_hut,습지 오두막,기둥 위에 지은 관측 오두막 앞,swamp,FALSE

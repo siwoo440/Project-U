@@ -64,6 +64,7 @@ MonoBehaviour:
       \uC720\uC801 \uB0B4\uBD80, \uBC40\uC758 \uAF2C\uB9AC\uAC00 \uAC10\uAE34 \uC790\uC138,
       \uAE08\uBE5B \uB208\uACFC \uBCF4\uB78F\uBE5B \uC870\uBA85, \uBE44\uB298\uC758
       \uC9C8\uAC10 \uAC15\uC870, \uC740\uC740\uD55C \uC720\uD639 \uD3EC\uC988 \uCD94\uCC9C"
+  portrait: {fileID: 0}
   themeColor: {r: 0.36862746, g: 0.24313726, b: 0.46666667, a: 1}
   accentColor: {r: 0.7490196, g: 0.6313726, b: 0.27058825, a: 1}
   personality:

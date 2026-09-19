@@ -31,6 +31,8 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
     [SerializeField, Min(1f)] private float nameTagDistance = 14f; // 이름표 거리
     [Tooltip("길이 막혀 이 시간(초) 동안 움직이지 못하면 목적지로 옮깁니다.")]
     [SerializeField, Min(0.5f)] private float stuckSeconds = 4f; // 막힘 시간
+    [Tooltip("100일차: 하반신 모양별 움직임 (걷기 · 미끄러지기 · 떠다니기 · 말 걸음 · 여러 다리 · 젤리 · 깡충).")]
+    [SerializeField] private NpcMotionStyle motionStyle = NpcMotionStyle.Walk; // 움직임
 
     [Header("Runtime")] // 실행 상태
     [SerializeField] private string currentLocationId; // 현재 위치 ID
@@ -67,6 +69,8 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
     public NpcQuestMarker QuestMarker => questMarker; // 의뢰 표시 제공 (93일차)
     public bool HasEventMarker => hasEventMarker; // 이벤트 표시 제공 (94일차)
     public Vector3 TargetPosition => targetPosition; // 목적지 제공
+    public NpcMotionStyle MotionStyle => motionStyle; // 움직임 제공 (100일차)
+    public float WalkSpeed => walkSpeed; // 걷기 속도 제공 (100일차)
     public string StopKey { get; set; } // 관리자가 쓰는 현재 일정 칸 키
 
     private void Awake() // 준비
@@ -386,21 +390,71 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
         }
 
         float speed = agent.velocity.magnitude;
-        motionTime += deltaTime * (speed > 0.1f ? 7.5f : 2f);
+        bool moving = speed > 0.1f;
+        motionTime += deltaTime * (moving ? MotionFrequency() : 2f);
+        float wave = Mathf.Sin(motionTime);
+        Vector3 offset = Vector3.zero;
+        Vector3 euler = Vector3.zero;
+        Vector3 scale = modelBaseScale;
 
-        if (speed > 0.1f)
+        switch (motionStyle)
         {
-            float bob = Mathf.Abs(Mathf.Sin(motionTime)) * 0.045f;
-            model.localPosition = modelBasePosition + Vector3.up * bob;
-            model.localRotation = Quaternion.Euler(0f, 0f, Mathf.Sin(motionTime) * 3f);
-            model.localScale = modelBaseScale;
+            case NpcMotionStyle.Slither: // 위아래 대신 좌우로 흔들림
+                euler = new Vector3(0f, wave * (moving ? 7f : 2f), wave * (moving ? 2f : 0f));
+                scale.y *= moving ? 1f : 1f + wave * 0.01f;
+                break;
+            case NpcMotionStyle.Hover: // 멈춰 있어도 둥실 떠다님, 움직일 때 앞으로 기울어짐
+                offset = Vector3.up * (0.06f + Mathf.Sin(Time.time * 1.6f + motionTime * 0.2f) * 0.05f);
+                euler = new Vector3(moving ? 6f : 0f, 0f, wave * 1.5f);
+                break;
+            case NpcMotionStyle.Gallop: // 크게 오르내리고 앞뒤로 기울어짐
+                offset = moving ? Vector3.up * Mathf.Abs(wave) * 0.07f : Vector3.zero;
+                euler = moving ? new Vector3(wave * 2.5f, 0f, 0f) : Vector3.zero;
+                scale.y *= moving ? 1f : 1f + wave * 0.01f;
+                break;
+            case NpcMotionStyle.Skitter: // 빠르고 작은 떨림
+                offset = moving ? Vector3.up * Mathf.Abs(wave) * 0.02f : Vector3.zero;
+                euler = moving ? new Vector3(0f, 0f, wave * 1.2f) : Vector3.zero;
+                scale.y *= moving ? 1f : 1f + wave * 0.01f;
+                break;
+            case NpcMotionStyle.Jelly: // 눌렸다 늘어남 (부피 유지)
+                float squash = wave * (moving ? 0.06f : 0.025f);
+                scale = new Vector3(modelBaseScale.x * (1f - squash * 0.5f), modelBaseScale.y * (1f + squash), modelBaseScale.z * (1f - squash * 0.5f));
+                break;
+            case NpcMotionStyle.Hop: // 깡충깡충
+                offset = moving ? Vector3.up * Mathf.Max(0f, wave) * 0.12f : Vector3.zero;
+                scale.y *= moving ? 1f - Mathf.Max(0f, -wave) * 0.05f : 1f + wave * 0.008f;
+                break;
+            default: // 걷기 (90일차)
+                if (moving)
+                {
+                    offset = Vector3.up * Mathf.Abs(wave) * 0.045f;
+                    euler = new Vector3(0f, 0f, wave * 3f);
+                }
+                else
+                {
+                    scale.y *= 1f + wave * 0.012f;
+                }
+
+                break;
         }
-        else
+
+        model.localPosition = modelBasePosition + offset;
+        model.localRotation = Quaternion.Euler(euler);
+        model.localScale = scale;
+    }
+
+    private float MotionFrequency() // 움직일 때 박자
+    {
+        switch (motionStyle)
         {
-            float breath = 1f + Mathf.Sin(motionTime) * 0.012f;
-            model.localPosition = modelBasePosition;
-            model.localRotation = Quaternion.identity;
-            model.localScale = new Vector3(modelBaseScale.x, modelBaseScale.y * breath, modelBaseScale.z);
+            case NpcMotionStyle.Slither: return 4.5f;
+            case NpcMotionStyle.Hover: return 3f;
+            case NpcMotionStyle.Gallop: return 9f;
+            case NpcMotionStyle.Skitter: return 14f;
+            case NpcMotionStyle.Jelly: return 6f;
+            case NpcMotionStyle.Hop: return 8f;
+            default: return 7.5f;
         }
     }
 
@@ -423,6 +477,12 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
         nameTag = tag;
         speech = bubble;
         bodyCollider = body;
+    }
+
+    public void EditorAssignBody(NpcMotionStyle motion, float speed) // 100일차: 하반신 모양별 움직임 · 속도 (생성 도구 전용)
+    {
+        motionStyle = motion;
+        walkSpeed = Mathf.Max(0.2f, speed);
     }
 #endif
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 // 90일차: 알파 마을 NPC 7명 · 마을 건물 (카페 · 대장간 · 오두막 · 짐마차 · 게시판)
+// 100일차: 나머지 28명의 종족 · 하반신 · 날개는 StylizedModelLibrary.NpcBodies.cs 에 있다.
 // NPC는 미터 단위, 발바닥 y = 0, 앞 +Z. 옷·머리 색은 NpcOutfit / NpcAccent / NpcHair 칸으로 만들고
 // NpcAppearance가 NPC마다 캐릭터 시트 색으로 덮어쓴다.
 // 건물도 미터 단위이며 문이 있는 앞면이 +Z 이다.
@@ -14,7 +15,36 @@ public static partial class StylizedModelLibrary
         Bull,
         Cow,
         Dragon,
-        Rat
+        Rat,
+        // 100일차: 나머지 28명 종족
+        Succubus,
+        Ghost,
+        Harpy,
+        Android,
+        Fairy,
+        Wolf,
+        Arachne,
+        Elf,
+        Vampire,
+        Slime,
+        Dog,
+        Bee,
+        Fox,
+        Mimic,
+        Tiger,
+        Witch,
+        Lamia,
+        Mermaid,
+        Centaur,
+        Dullahan,
+        Oni,
+        Goblin,
+        Scorpion,
+        Butterfly,
+        Frog,
+        Shark,
+        Flower,
+        Kraken
     }
 
     public enum NpcHairStyle
@@ -23,7 +53,9 @@ public static partial class StylizedModelLibrary
         Bob,
         Short,
         Curly,
-        Wavy
+        Wavy,
+        Twin,
+        Ponytail
     }
 
     public enum NpcOutfitStyle
@@ -33,7 +65,39 @@ public static partial class StylizedModelLibrary
         Robe,
         Apron,
         Smith,
-        Cape
+        Cape,
+        // 100일차
+        Armor,
+        Kimono,
+        Suit,
+        Wrap,
+        Gothic
+    }
+
+    // 100일차: 하반신 모양 (사람 다리 외의 체형)
+    public enum NpcBody
+    {
+        Legs,
+        SnakeTail,
+        SpiderLegs,
+        HorseBody,
+        FishTail,
+        Tentacles,
+        ScorpionBody,
+        Floating,
+        SlimeBase,
+        MimicChest
+    }
+
+    // 100일차: 등 부속 (날개)
+    public enum NpcWings
+    {
+        None,
+        Bird,
+        Bat,
+        Fairy,
+        Butterfly,
+        Bee
     }
 
     public readonly struct NpcLook
@@ -41,14 +105,18 @@ public static partial class StylizedModelLibrary
         public readonly NpcSpecies Species;
         public readonly NpcHairStyle Hair;
         public readonly NpcOutfitStyle Outfit;
-        public readonly float Height;
+        public readonly float Height; // 상반신 기준 키 (사람 체형이면 전체 키)
+        public readonly NpcBody Body;
+        public readonly NpcWings Wings;
 
-        public NpcLook(NpcSpecies species, NpcHairStyle hair, NpcOutfitStyle outfit, float height)
+        public NpcLook(NpcSpecies species, NpcHairStyle hair, NpcOutfitStyle outfit, float height, NpcBody body = NpcBody.Legs, NpcWings wings = NpcWings.None)
         {
             Species = species;
             Hair = hair;
             Outfit = outfit;
             Height = height;
+            Body = body;
+            Wings = wings;
         }
     }
 
@@ -73,6 +141,7 @@ public static partial class StylizedModelLibrary
         RegisterNpcModel("npc_milky", new NpcLook(NpcSpecies.Cow, NpcHairStyle.Long, NpcOutfitStyle.Apron, 1.66f));
         RegisterNpcModel("npc_dravia", new NpcLook(NpcSpecies.Dragon, NpcHairStyle.Long, NpcOutfitStyle.Smith, 1.78f));
         RegisterNpcModel("npc_lichel", new NpcLook(NpcSpecies.Rat, NpcHairStyle.Bob, NpcOutfitStyle.Cape, 1.52f));
+        RegisterExpansionNpcs(); // 100일차: 나머지 28명 (StylizedModelLibrary.NpcBodies.cs)
 
         Register("build_npc_cafe", FitMode.UniformHeight, BuildNpcCafe);
         Register("build_npc_smithy", FitMode.UniformHeight, BuildNpcSmithy);
@@ -83,6 +152,8 @@ public static partial class StylizedModelLibrary
 
     private static void RegisterNpcModel(string id, NpcLook look)
     {
+        npcLooks ??= new System.Collections.Generic.Dictionary<string, NpcLook>(System.StringComparer.Ordinal);
+        npcLooks[id] = look;
         Register(id, FitMode.UniformHeight, b => BuildNpc(b, look));
     }
 
@@ -91,25 +162,58 @@ public static partial class StylizedModelLibrary
     private static void BuildNpc(LowPolyMeshBuilder b, NpcLook look)
     {
         float scale = look.Height / NpcBaseHeight;
+        NpcBodyShape shape = GetBodyShape(look.Body);
+        StylizedColor skin = GetNpcSkin(look.Species);
+        bool upperOnly = look.Body != NpcBody.Legs;
         b.Push(Vector3.zero, Quaternion.identity, Vector3.one * scale);
+        b.Push(new Vector3(0f, shape.Hover, shape.Shift));
 
-        AddNpcLegs(b, look.Outfit);
-        AddNpcOutfit(b, look.Outfit);
-        AddNpcArms(b, look.Outfit);
-        AddNpcHead(b);
-        AddNpcHair(b, look.Hair);
-        AddNpcSpecies(b, look.Species);
+        if (upperOnly)
+        {
+            AddNpcLowerBody(b, look, skin, NpcHipHeight + shape.Lift);
+        }
+        else
+        {
+            AddNpcLegs(b, look.Outfit, skin);
+        }
+
+        b.Push(new Vector3(0f, shape.Lift, 0f));
+        AddNpcOutfit(b, look.Outfit, upperOnly, skin);
+        AddNpcArms(b, look.Outfit, skin, look.Species == NpcSpecies.Dullahan);
+
+        if (look.Species == NpcSpecies.Dullahan)
+        {
+            // 듀라한 : 머리를 왼손에 들고, 목에는 푸른 영혼 불꽃
+            b.Push(new Vector3(-0.2f, 1.2f, 0.34f), Euler(0f, 18f, 0f), Vector3.one * 0.92f);
+            b.Push(new Vector3(0f, -1.58f, 0f));
+            AddNpcHead(b, skin);
+            AddNpcHair(b, look.Hair, GetNpcHairColor(look.Species));
+            b.Pop();
+            b.Pop();
+        }
+        else
+        {
+            AddNpcHead(b, skin);
+            AddNpcHair(b, look.Hair, GetNpcHairColor(look.Species));
+        }
+
+        AddNpcSpecies(b, look);
+        AddNpcWings(b, look.Wings);
         AddNpcProps(b, look);
+        b.Pop();
 
+        b.Pop();
         b.Pop();
     }
 
-    private static void AddNpcLegs(LowPolyMeshBuilder b, NpcOutfitStyle outfit)
+    private static void AddNpcLegs(LowPolyMeshBuilder b, NpcOutfitStyle outfit, StylizedColor skin)
     {
-        StylizedColor leg = outfit == NpcOutfitStyle.Apron ? StylizedColor.Black
+        StylizedColor leg = outfit == NpcOutfitStyle.Apron || outfit == NpcOutfitStyle.Gothic ? StylizedColor.Black
             : outfit == NpcOutfitStyle.Smith ? StylizedColor.WoodDark
-            : StylizedColor.Skin;
-        StylizedColor shoe = outfit == NpcOutfitStyle.Apron ? StylizedColor.Black : StylizedColor.Leather;
+            : outfit == NpcOutfitStyle.Armor ? StylizedColor.IronDark
+            : outfit == NpcOutfitStyle.Suit ? StylizedColor.NpcOutfit
+            : skin;
+        StylizedColor shoe = outfit == NpcOutfitStyle.Apron || outfit == NpcOutfitStyle.Suit || outfit == NpcOutfitStyle.Gothic ? StylizedColor.Black : StylizedColor.Leather;
 
         for (int side = -1; side <= 1; side += 2)
         {
@@ -118,42 +222,81 @@ public static partial class StylizedModelLibrary
         }
     }
 
-    private static void AddNpcOutfit(LowPolyMeshBuilder b, NpcOutfitStyle outfit)
+    // upperOnly : 사람 다리가 아닌 체형은 허리 아래 옷(치마 · 바지)을 빼고 상반신만 입힌다
+    private static void AddNpcOutfit(LowPolyMeshBuilder b, NpcOutfitStyle outfit, bool upperOnly, StylizedColor skin)
     {
         switch (outfit)
         {
             case NpcOutfitStyle.Dress:
-                b.AddFrustum(StylizedColor.NpcOutfit, new Vector3(0f, 0.5f, 0f), 0.31f, 0.2f, 0.44f, 10);
+                if (!upperOnly)
+                {
+                    b.AddFrustum(StylizedColor.NpcOutfit, new Vector3(0f, 0.5f, 0f), 0.31f, 0.2f, 0.44f, 10);
+                }
+
                 b.AddBeveledBox(StylizedColor.NpcOutfit, new Vector3(0f, 1.1f, 0f), new Vector3(0.4f, 0.52f, 0.26f), 0.08f);
                 b.AddBox(StylizedColor.NpcAccent, new Vector3(0f, 0.92f, 0f), new Vector3(0.41f, 0.07f, 0.27f));
                 b.AddBox(StylizedColor.NpcAccent, new Vector3(0f, 1.3f, 0.132f), new Vector3(0.2f, 0.1f, 0.01f));
                 break;
             case NpcOutfitStyle.Shorts:
             case NpcOutfitStyle.Cape:
-                b.AddBeveledBox(StylizedColor.NpcAccent, new Vector3(0f, 0.8f, 0f), new Vector3(0.36f, 0.22f, 0.24f), 0.05f);
+                if (!upperOnly)
+                {
+                    b.AddBeveledBox(StylizedColor.NpcAccent, new Vector3(0f, 0.8f, 0f), new Vector3(0.36f, 0.22f, 0.24f), 0.05f);
+                }
+
                 b.AddBeveledBox(StylizedColor.NpcOutfit, new Vector3(0f, 1.12f, 0f), new Vector3(0.36f, 0.46f, 0.24f), 0.07f);
                 b.AddBox(StylizedColor.Leather, new Vector3(0f, 0.9f, 0f), new Vector3(0.37f, 0.05f, 0.25f));
                 break;
             case NpcOutfitStyle.Robe:
-                b.AddFrustum(StylizedColor.NpcOutfit, new Vector3(0f, 0.08f, 0f), 0.3f, 0.22f, 0.86f, 10);
+                if (!upperOnly)
+                {
+                    b.AddFrustum(StylizedColor.NpcOutfit, new Vector3(0f, 0.08f, 0f), 0.3f, 0.22f, 0.86f, 10);
+                }
+
                 b.AddBeveledBox(StylizedColor.NpcOutfit, new Vector3(0f, 1.12f, 0f), new Vector3(0.44f, 0.52f, 0.28f), 0.08f);
                 b.AddBeveledBox(StylizedColor.NpcAccent, new Vector3(0f, 1.18f, 0.06f), new Vector3(0.4f, 0.32f, 0.2f), 0.06f);
                 b.AddBox(StylizedColor.Gold, new Vector3(0f, 0.93f, 0f), new Vector3(0.46f, 0.06f, 0.3f));
-                b.AddBox(StylizedColor.NpcAccent, new Vector3(0f, 0.55f, 0.21f), new Vector3(0.16f, 0.72f, 0.02f));
+
+                if (!upperOnly)
+                {
+                    b.AddBox(StylizedColor.NpcAccent, new Vector3(0f, 0.55f, 0.21f), new Vector3(0.16f, 0.72f, 0.02f));
+                }
+
                 break;
             case NpcOutfitStyle.Apron:
-                b.AddFrustum(StylizedColor.NpcOutfit, new Vector3(0f, 0.46f, 0f), 0.32f, 0.2f, 0.48f, 10);
+                if (!upperOnly)
+                {
+                    b.AddFrustum(StylizedColor.NpcOutfit, new Vector3(0f, 0.46f, 0f), 0.32f, 0.2f, 0.48f, 10);
+                }
+
                 b.AddBeveledBox(StylizedColor.NpcOutfit, new Vector3(0f, 1.1f, 0f), new Vector3(0.4f, 0.52f, 0.26f), 0.08f);
-                b.AddBox(StylizedColor.White, new Vector3(0f, 0.72f, 0.24f), new Vector3(0.3f, 0.42f, 0.02f));
+
+                if (!upperOnly)
+                {
+                    b.AddBox(StylizedColor.White, new Vector3(0f, 0.72f, 0.24f), new Vector3(0.3f, 0.42f, 0.02f));
+                }
+
                 b.AddBox(StylizedColor.White, new Vector3(0f, 1.1f, 0.135f), new Vector3(0.24f, 0.3f, 0.01f));
                 b.AddBox(StylizedColor.White, new Vector3(0f, 0.93f, 0f), new Vector3(0.41f, 0.05f, 0.27f));
                 b.AddLowPolySphere(StylizedColor.NpcAccent, new Vector3(0f, 1.33f, 0.14f), new Vector3(0.07f, 0.035f, 0.03f), 0, 0f, 9001);
                 break;
             case NpcOutfitStyle.Smith:
-                b.AddBeveledBox(StylizedColor.WoodDark, new Vector3(0f, 0.82f, 0f), new Vector3(0.38f, 0.2f, 0.25f), 0.05f);
+                if (!upperOnly)
+                {
+                    b.AddBeveledBox(StylizedColor.WoodDark, new Vector3(0f, 0.82f, 0f), new Vector3(0.38f, 0.2f, 0.25f), 0.05f);
+                }
+
                 b.AddBeveledBox(StylizedColor.NpcOutfit, new Vector3(0f, 1.12f, 0f), new Vector3(0.44f, 0.5f, 0.27f), 0.08f);
-                b.AddBox(StylizedColor.Leather, new Vector3(0f, 0.86f, 0.14f), new Vector3(0.34f, 0.7f, 0.02f));
+
+                if (!upperOnly)
+                {
+                    b.AddBox(StylizedColor.Leather, new Vector3(0f, 0.86f, 0.14f), new Vector3(0.34f, 0.7f, 0.02f));
+                }
+
                 b.AddBox(StylizedColor.NpcAccent, new Vector3(0f, 0.93f, 0f), new Vector3(0.45f, 0.06f, 0.28f));
+                break;
+            default:
+                AddNpcOutfitExtra(b, outfit, upperOnly, skin); // 100일차 옷 (StylizedModelLibrary.NpcBodies.cs)
                 break;
         }
 
@@ -169,29 +312,42 @@ public static partial class StylizedModelLibrary
         }
     }
 
-    private static void AddNpcArms(LowPolyMeshBuilder b, NpcOutfitStyle outfit)
+    // holdHead : 듀라한은 왼팔을 앞으로 굽혀 머리를 든다
+    private static void AddNpcArms(LowPolyMeshBuilder b, NpcOutfitStyle outfit, StylizedColor skin, bool holdHead)
     {
-        bool bareArms = outfit == NpcOutfitStyle.Shorts || outfit == NpcOutfitStyle.Cape;
+        bool bareArms = outfit == NpcOutfitStyle.Shorts || outfit == NpcOutfitStyle.Cape || outfit == NpcOutfitStyle.Wrap;
 
         for (int side = -1; side <= 1; side += 2)
         {
-            StylizedColor sleeve = bareArms ? StylizedColor.Skin : StylizedColor.NpcOutfit;
-            b.AddLimb(sleeve, new Vector3(side * 0.24f, 1.3f, 0f), new Vector3(side * 0.29f, 1.03f, 0.02f), 0.062f, 0.052f, 6);
-            b.AddLimb(StylizedColor.Skin, new Vector3(side * 0.29f, 1.03f, 0.02f), new Vector3(side * 0.3f, 0.85f, 0.05f), 0.047f, 0.042f, 6);
-            b.AddLowPolySphere(StylizedColor.Skin, new Vector3(side * 0.305f, 0.81f, 0.05f), Vector3.one * 0.05f, 0, 0f, 9010 + side);
+            StylizedColor sleeve = bareArms ? skin : StylizedColor.NpcOutfit;
+            bool holding = holdHead && side < 0;
+            Vector3 elbow = holding ? new Vector3(-0.3f, 1.08f, 0.12f) : new Vector3(side * 0.29f, 1.03f, 0.02f);
+            Vector3 wrist = holding ? new Vector3(-0.24f, 1.0f, 0.3f) : new Vector3(side * 0.3f, 0.85f, 0.05f);
+            Vector3 hand = holding ? new Vector3(-0.22f, 0.99f, 0.34f) : new Vector3(side * 0.305f, 0.81f, 0.05f);
+            b.AddLimb(sleeve, new Vector3(side * 0.24f, 1.3f, 0f), elbow, 0.062f, 0.052f, 6);
+            b.AddLimb(skin, elbow, wrist, 0.047f, 0.042f, 6);
+            b.AddLowPolySphere(skin, hand, Vector3.one * 0.05f, 0, 0f, 9010 + side);
 
             if (outfit == NpcOutfitStyle.Smith)
             {
                 b.AddCylinder(StylizedColor.Leather, new Vector3(side * 0.295f, 0.92f, 0.035f), 0.052f, 0.08f, 6);
             }
+            else if (outfit == NpcOutfitStyle.Armor)
+            {
+                b.AddLimb(StylizedColor.IronDark, Vector3.Lerp(elbow, wrist, 0.35f), Vector3.Lerp(elbow, wrist, 0.95f), 0.056f, 0.05f, 6); // 건틀릿
+            }
+            else if (outfit == NpcOutfitStyle.Kimono || outfit == NpcOutfitStyle.Gothic)
+            {
+                b.AddLimb(StylizedColor.NpcOutfit, elbow + new Vector3(0f, 0.02f, 0f), Vector3.Lerp(elbow, wrist, 0.75f) + new Vector3(0f, -0.04f, -0.02f), 0.07f, 0.11f, 6); // 넓은 소매
+            }
         }
 
-        b.AddCylinder(StylizedColor.Skin, new Vector3(0f, 1.34f, 0f), 0.06f, 0.1f, 6);
+        b.AddCylinder(skin, new Vector3(0f, 1.34f, 0f), 0.06f, 0.1f, 6);
     }
 
-    private static void AddNpcHead(LowPolyMeshBuilder b)
+    private static void AddNpcHead(LowPolyMeshBuilder b, StylizedColor skin)
     {
-        b.AddBeveledBox(StylizedColor.Skin, new Vector3(0f, 1.58f, 0f), new Vector3(0.34f, 0.34f, 0.32f), 0.09f);
+        b.AddBeveledBox(skin, new Vector3(0f, 1.58f, 0f), new Vector3(0.34f, 0.34f, 0.32f), 0.09f);
 
         for (int side = -1; side <= 1; side += 2)
         {
@@ -203,9 +359,8 @@ public static partial class StylizedModelLibrary
         b.AddBox(StylizedColor.AppleRed, new Vector3(0f, 1.485f, 0.162f), new Vector3(0.045f, 0.012f, 0.01f));
     }
 
-    private static void AddNpcHair(LowPolyMeshBuilder b, NpcHairStyle hair)
+    private static void AddNpcHair(LowPolyMeshBuilder b, NpcHairStyle hair, StylizedColor color)
     {
-        const StylizedColor color = StylizedColor.NpcHair;
         b.AddBeveledBox(color, new Vector3(0f, 1.73f, -0.01f), new Vector3(0.37f, 0.12f, 0.35f), 0.05f);
         b.AddBeveledBox(color, new Vector3(0f, 1.62f, -0.145f), new Vector3(0.37f, 0.3f, 0.08f), 0.03f);
         b.AddBox(color, new Vector3(0f, 1.7f, 0.162f), new Vector3(0.34f, 0.07f, 0.03f));
@@ -247,11 +402,31 @@ public static partial class StylizedModelLibrary
                 b.AddBeveledBox(color, new Vector3(-0.02f, 1.02f, -0.17f), new Vector3(0.32f, 0.34f, 0.08f), 0.04f);
                 b.AddLowPolySphere(StylizedColor.AppleBaked, new Vector3(0f, 0.86f, -0.17f), new Vector3(0.15f, 0.06f, 0.05f), 0, 0f, 9031);
                 break;
+            case NpcHairStyle.Twin:
+                // 양 갈래 : 머리 옆 매듭 · 늘어진 머리 · 리본
+                for (int side = -1; side <= 1; side += 2)
+                {
+                    b.AddLowPolySphere(color, new Vector3(side * 0.19f, 1.7f, -0.08f), Vector3.one * 0.07f, 0, 0f, 9032 + side);
+                    b.AddLimb(color, new Vector3(side * 0.2f, 1.68f, -0.09f), new Vector3(side * 0.27f, 1.38f, -0.13f), 0.06f, 0.05f, 6);
+                    b.AddLimb(color, new Vector3(side * 0.27f, 1.38f, -0.13f), new Vector3(side * 0.25f, 1.12f, -0.11f), 0.05f, 0.015f, 6);
+                    b.AddTorus(StylizedColor.NpcAccent, new Vector3(side * 0.2f, 1.7f, -0.08f), 0.055f, 0.018f, 6, 3);
+                }
+
+                break;
+            case NpcHairStyle.Ponytail:
+                // 뒤로 높게 묶은 머리
+                b.AddLowPolySphere(color, new Vector3(0f, 1.72f, -0.19f), Vector3.one * 0.07f, 0, 0f, 9035);
+                b.AddLimb(color, new Vector3(0f, 1.72f, -0.2f), new Vector3(0f, 1.46f, -0.3f), 0.065f, 0.055f, 6);
+                b.AddLimb(color, new Vector3(0f, 1.46f, -0.3f), new Vector3(0.02f, 1.16f, -0.26f), 0.055f, 0.015f, 6);
+                b.AddTorus(StylizedColor.NpcAccent, new Vector3(0f, 1.72f, -0.2f), 0.06f, 0.02f, 6, 3);
+                break;
         }
     }
 
-    private static void AddNpcSpecies(LowPolyMeshBuilder b, NpcSpecies species)
+    private static void AddNpcSpecies(LowPolyMeshBuilder b, NpcLook look)
     {
+        NpcSpecies species = look.Species;
+
         switch (species)
         {
             case NpcSpecies.Rabbit:
@@ -339,6 +514,9 @@ public static partial class StylizedModelLibrary
                 b.AddLimb(StylizedColor.CowPink, new Vector3(0.05f, 0.5f, -0.42f), new Vector3(0.16f, 0.16f, -0.58f), 0.017f, 0.013f, 5);
                 b.AddLimb(StylizedColor.CowPink, new Vector3(0.16f, 0.16f, -0.58f), new Vector3(0.34f, 0.05f, -0.6f), 0.013f, 0.008f, 5);
                 break;
+            default:
+                AddNpcSpeciesExtra(b, look); // 100일차 종족 (StylizedModelLibrary.NpcBodies.cs)
+                break;
         }
     }
 
@@ -375,6 +553,9 @@ public static partial class StylizedModelLibrary
                 // 대장장이 망치 (오른손)
                 b.AddLimb(StylizedColor.WoodDark, new Vector3(0.3f, 0.76f, 0.06f), new Vector3(0.3f, 0.46f, 0.16f), 0.018f, 0.018f, 5);
                 b.AddBeveledBox(StylizedColor.IronDark, new Vector3(0.3f, 0.44f, 0.17f), new Vector3(0.14f, 0.07f, 0.07f), 0.015f);
+                break;
+            default:
+                AddNpcPropsExtra(b, look); // 100일차 소지품 (StylizedModelLibrary.NpcBodies.cs)
                 break;
         }
     }

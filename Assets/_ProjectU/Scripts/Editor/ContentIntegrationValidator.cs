@@ -104,6 +104,7 @@ public static class ContentIntegrationValidator
             ("무기 외형", Feature(WeaponViewBuilder.Validate)),
             ("건축물·자원 외형", Feature(BuildableVisualProfileBuilder.Validate)),
             ("메뉴 화면", Feature(MenuSceneBuilder.Validate)),
+            ("새 구역 · 특수 체형", Feature(WorldZoneBuilder.Validate)),
             ("데이터 점검", Feature(DataAuditBuilder.Validate)),
             ("아이템 데이터 (ID 규칙)", ItemDataValidator.ValidateAllItemData),
             ("Game Data Registry", () => CountLoggedErrors(GameDataRegistryEditor.ValidateDefaultRegistry, details))

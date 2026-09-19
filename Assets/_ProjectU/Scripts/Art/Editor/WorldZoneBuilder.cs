@@ -1,0 +1,1570 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using TMPro;
+using Unity.AI.Navigation;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
+
+// 100일차: 확장 준비 - 특수 체형 NPC 모델 · 새 구역
+// 1. NPC 데이터 갱신(새 위치) → NPC 35명 모델 · 새 구역 소품 모델 생성
+// 2. 게임 Scene 섬 바깥쪽에 6개 구역 (해안 · 고대 폐허 · 깊은 숲 · 설산 기슭 · 붉은 사막 · 안개 습지) 과 마을에서 이어지는 흙길
+// 3. 바닥 칠하기 (모래 · 눈 · 진흙 · 돌바닥) · 풀과 기존 나무 정리 · 소품 · 충돌체
+// 4. NPC 일정 위치 등록 · 섬 경계 벽과 바다 · 지도 구역 이름 · 적 생성 지점 2곳 · NavMesh 다시 굽기
+// 여러 번 실행해도 같은 결과가 된다 (구역 오브젝트는 지우고 다시 만든다). 게임 Scene은 도구가 저장한다.
+public static class WorldZoneBuilder
+{
+    public const string RootName = "=== World Zones ===";
+    public const string MapLabelLayerName = "MapLabel";
+    private const string ScenePath = "Assets/_ProjectU/Scenes/20_Gameplay.unity";
+    private const string DialogTitle = "Project U 새 구역 · 특수 체형";
+    private const string BuildingLayerName = "Building";
+    private const string WaterLayerName = "Water";
+    private const string EnvironmentRootName = "=== Stylized Environment ===";
+    private const string SpawnRootName = "=== Enemy Spawn Points ===";
+    private const string LocationsName = "Locations";
+    private const int Seed = 10023;
+    private const float TerrainLimit = 121f; // 소품을 둘 수 있는 섬 안쪽 한계
+    private const float SeaLine = 100f; // 이 x보다 동쪽은 바다
+
+    public static readonly string[] ZoneLayerNames = { "ZoneSand", "ZoneSnow", "ZoneMud", "ZoneFlagstone" };
+
+    public sealed class ZoneInfo
+    {
+        public string Id; // 위치 CSV의 Zone 값
+        public string ObjectName; // Scene 오브젝트 이름
+        public string DisplayName; // 지도 · 표지판 이름
+        public Vector3 Center; // 구역 가운데
+        public Vector3 PathStart; // 마을 쪽 흙길 시작
+        public Vector3 Entrance; // 구역 입구 (흙길 끝)
+    }
+
+    public static readonly ZoneInfo[] Zones =
+    {
+        new ZoneInfo { Id = "coast", ObjectName = "Coast", DisplayName = "해안 · 부두", Center = new Vector3(94f, 0f, 4f), PathStart = new Vector3(38f, 0f, 10f), Entrance = new Vector3(86f, 0f, 10f) },
+        new ZoneInfo { Id = "ruins", ObjectName = "Ruins", DisplayName = "고대 폐허", Center = new Vector3(-78f, 0f, 78f), PathStart = new Vector3(-22f, 0f, 36f), Entrance = new Vector3(-66f, 0f, 66f) },
+        new ZoneInfo { Id = "forest", ObjectName = "DeepForest", DisplayName = "깊은 숲", Center = new Vector3(-88f, 0f, -32f), PathStart = new Vector3(-32f, 0f, -22f), Entrance = new Vector3(-74f, 0f, -30f) },
+        new ZoneInfo { Id = "snow", ObjectName = "SnowFoothills", DisplayName = "설산 기슭 · 사당", Center = new Vector3(26f, 0f, 100f), PathStart = new Vector3(4f, 0f, 38f), Entrance = new Vector3(12f, 0f, 86f) },
+        new ZoneInfo { Id = "desert", ObjectName = "Desert", DisplayName = "붉은 사막", Center = new Vector3(78f, 0f, -86f), PathStart = new Vector3(32f, 0f, -14f), Entrance = new Vector3(64f, 0f, -73f) },
+        new ZoneInfo { Id = "swamp", ObjectName = "Swamp", DisplayName = "안개 습지", Center = new Vector3(-60f, 0f, -94f), PathStart = new Vector3(-18f, 0f, -32f), Entrance = new Vector3(-50f, 0f, -84f) }
+    };
+
+    // NPC 일정 위치 (서는 곳 · 바라보는 곳)
+    private static readonly Dictionary<string, (Vector3 position, Vector3 lookAt)> PointLayout = new Dictionary<string, (Vector3, Vector3)>
+    {
+        { "loc_coast_dock", (new Vector3(96.9f, 0f, 10f), new Vector3(110f, 0f, 10f)) },
+        { "loc_coast_beach", (new Vector3(91f, 0f, 13.5f), new Vector3(100f, 0f, 13f)) },
+        { "loc_coast_rocks", (new Vector3(97.1f, 0f, -7.3f), new Vector3(100f, 0f, -8f)) },
+        { "loc_ruins_gate", (new Vector3(-72f, 0f, 91.6f), new Vector3(-72f, 0f, 97f)) },
+        { "loc_ruins_library", (new Vector3(-92f, 0f, 86.6f), new Vector3(-92f, 0f, 90f)) },
+        { "loc_ruins_plaza", (new Vector3(-75.2f, 0f, 75.2f), new Vector3(-78f, 0f, 78f)) },
+        { "loc_forest_fairy_ring", (new Vector3(-86f, 0f, -28f), new Vector3(-88f, 0f, -33f)) },
+        { "loc_forest_flower_garden", (new Vector3(-78f, 0f, -40.8f), new Vector3(-78f, 0f, -44f)) },
+        { "loc_forest_witch_hut", (Local(new Vector3(-100f, 0f, -18f), 135f, new Vector3(0.5f, 0f, 3.6f)), new Vector3(-100f, 0f, -18f)) },
+        { "loc_snow_camp", (new Vector3(14f, 0f, 93.2f), new Vector3(14f, 0f, 96f)) },
+        { "loc_snow_shrine", (new Vector3(42f, 0f, 102.4f), new Vector3(42f, 0f, 106f)) },
+        { "loc_desert_oasis", (new Vector3(80.2f, 0f, -91.4f), new Vector3(86f, 0f, -94f)) },
+        { "loc_desert_camp", (Local(new Vector3(68f, 0f, -79f), 315f, new Vector3(0f, 0f, 3.4f)), new Vector3(68f, 0f, -79f)) },
+        { "loc_swamp_boardwalk", (new Vector3(-62f, 0f, -98f), new Vector3(-62f, 0f, -103f)) },
+        { "loc_swamp_hut", (Local(new Vector3(-72f, 0f, -106f), 45f, new Vector3(0f, 0f, 3.8f)), new Vector3(-72f, 0f, -106f)) }
+    };
+
+    // 물 (물가 검사 · 지도) : 가운데 · 반지름
+    private static readonly (string name, Vector3 center, float radius)[] Pools =
+    {
+        ("Oasis", new Vector3(86f, 0f, -94f), StylizedModelLibrary.ZoneOasisRadius),
+        ("SwampPool_A", new Vector3(-62f, 0f, -98f), StylizedModelLibrary.ZoneSwampPoolRadius),
+        ("SwampPool_B", new Vector3(-49f, 0f, -104f), StylizedModelLibrary.ZoneSwampPoolRadius * 0.7f),
+        ("SwampPool_C", new Vector3(-68f, 0f, -86f), StylizedModelLibrary.ZoneSwampPoolRadius * 0.6f)
+    };
+
+    private static readonly (string id, string template, Vector3 position)[] ZoneSpawns =
+    {
+        ("spawn_zone_ruins_grunt", "Spawn_MeleeGrunt_01", new Vector3(-60f, 0f, 82f)),
+        ("spawn_zone_swamp_spitter", "Spawn_RangedSpitter_01", new Vector3(-46f, 0f, -104f))
+    };
+
+    private enum PropCollider
+    {
+        None,
+        Bounds,
+        Trunk
+    }
+
+    // ---------------------------------------------------------------- 메뉴
+
+    [MenuItem(MarketContentBuilder.BuildMenuRoot + "18. World Zones (Special NPC Bodies + Coast/Ruins/Forest/Snow/Desert/Swamp)", false, 37)]
+    private static void BuildAllMenu()
+    {
+        bool confirmed = EditorUtility.DisplayDialog(
+            DialogTitle,
+            "NPC 35명의 저폴리 모델(특수 체형 포함)과 새 구역 소품을 만들고,\n"
+            + "게임 Scene(20_Gameplay) 섬 바깥쪽에 해안 · 고대 폐허 · 깊은 숲 · 설산 기슭 · 붉은 사막 · 안개 습지와 흙길을 만듭니다.\n"
+            + "바닥을 칠하고, 구역 자리의 나무 · 풀을 숨기고, 섬 경계 벽 · 바다 · 지도 이름 · 적 생성 지점 2곳을 넣은 뒤 NavMesh를 다시 굽습니다.\n\n"
+            + "게임 Scene을 열고 실행하세요. 도구가 Scene을 저장합니다 (1~2분 걸릴 수 있습니다).",
+            "실행",
+            "취소");
+
+        if (!confirmed)
+        {
+            return;
+        }
+
+        if (EditorSceneManager.GetActiveScene().path != ScenePath)
+        {
+            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
+            {
+                return;
+            }
+
+            EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
+        }
+
+        string report = BuildAll(true);
+        Debug.Log(report);
+        EditorUtility.DisplayDialog(DialogTitle, report.Length <= 1800 ? report : report.Substring(0, 1800) + "\n... (전체 내용은 Console 참고)", "확인");
+    }
+
+    // ---------------------------------------------------------------- 전체 생성
+
+    public static string BuildAll(bool saveScene)
+    {
+        StringBuilder report = new StringBuilder("[새 구역 · 특수 체형]\n");
+
+        try
+        {
+            EditorUtility.DisplayProgressBar(DialogTitle, "NPC 데이터 (새 위치)", 0.05f);
+            string dataReport = NpcContentBuilder.BuildAll();
+            report.AppendLine($"NPC 데이터 갱신 ({(dataReport.Split('\n').LastOrDefault(line => line.StartsWith("결과")) ?? "결과 없음").Trim()})");
+
+            EditorUtility.DisplayProgressBar(DialogTitle, "NPC 모델", 0.15f);
+            int npcModels = StylizedModelLibrary.NpcModelIds.Count(id => StylizedArtAssetFactory.GetOrCreateModelPrefab(id, true) != null);
+            EditorUtility.DisplayProgressBar(DialogTitle, "구역 소품 모델", 0.25f);
+            int zoneModels = StylizedModelLibrary.Catalog.Keys.Where(id => id.StartsWith("zone_", StringComparison.Ordinal)).Count(id => StylizedArtAssetFactory.GetOrCreateModelPrefab(id, true) != null);
+            AssetDatabase.SaveAssets();
+            report.AppendLine($"저폴리 모델 : NPC {npcModels}명 · 구역 소품 {zoneModels}종");
+
+            Scene scene = EditorSceneManager.GetActiveScene();
+
+            if (scene.path != ScenePath)
+            {
+                report.AppendLine($"✗ 게임 Scene({ScenePath})을 열고 다시 실행하세요. 모델만 만들었습니다.");
+                return report.ToString();
+            }
+
+            EditorUtility.DisplayProgressBar(DialogTitle, "구역 정리", 0.3f);
+            GameObject root = scene.GetRootGameObjects().FirstOrDefault(item => item.name == RootName) ?? new GameObject(RootName);
+            root.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+
+            foreach (Transform child in root.transform.Cast<Transform>().ToList())
+            {
+                Object.DestroyImmediate(child.gameObject);
+            }
+
+            EditorUtility.DisplayProgressBar(DialogTitle, "바닥 칠하기", 0.35f);
+            report.AppendLine(PaintTerrain());
+            report.AppendLine(HideEnvironment(scene));
+
+            EditorUtility.DisplayProgressBar(DialogTitle, "구역 소품", 0.5f);
+            int building = LayerMask.NameToLayer(BuildingLayerName);
+            int props = 0;
+            props += BuildCoast(Group(root.transform, "Coast"), building);
+            props += BuildRuins(Group(root.transform, "Ruins"), building);
+            props += BuildForest(Group(root.transform, "DeepForest"), building);
+            props += BuildSnow(Group(root.transform, "SnowFoothills"), building);
+            props += BuildDesert(Group(root.transform, "Desert"), building);
+            props += BuildSwamp(Group(root.transform, "Swamp"), building);
+            props += BuildSignposts(Group(root.transform, "Signposts"));
+            report.AppendLine($"구역 6곳 · 소품 {props}개 · 흙길 {Zones.Length}개 · 표지판 {Zones.Length}개");
+
+            report.AppendLine(BuildBoundary(Group(root.transform, "Boundary")));
+            report.AppendLine(BuildMapLabels(scene, Group(root.transform, "MapLabels")));
+            report.AppendLine(BuildLocations(scene, Group(root.transform, LocationsName)));
+            report.AppendLine(BuildEnemySpawns(scene));
+
+            EditorUtility.DisplayProgressBar(DialogTitle, "NavMesh 다시 굽기", 0.8f);
+            report.AppendLine(RebakeNavMesh());
+            EditorSceneManager.MarkSceneDirty(scene);
+
+            if (saveScene)
+            {
+                EditorSceneManager.SaveScene(scene);
+                report.AppendLine("게임 Scene 저장 완료");
+            }
+        }
+        finally
+        {
+            EditorUtility.ClearProgressBar();
+        }
+
+        report.Append(Validate(out _));
+        return report.ToString();
+    }
+
+    private static Transform Group(Transform parent, string name)
+    {
+        Transform child = parent.Find(name);
+
+        if (child == null)
+        {
+            child = new GameObject(name).transform;
+            child.SetParent(parent, false);
+        }
+
+        return child;
+    }
+
+    // 로컬 좌표 → 월드 (건물 기준 위치 계산)
+    private static Vector3 Local(Vector3 origin, float yaw, Vector3 local)
+    {
+        return origin + Quaternion.Euler(0f, yaw, 0f) * local;
+    }
+
+    public static NpcLocationPoint FindZonePoint(Scene scene, string locationId) // NPC 마을 배치 도구가 새 구역 위치를 찾을 때 사용
+    {
+        GameObject root = scene.GetRootGameObjects().FirstOrDefault(item => item.name == RootName);
+
+        if (root == null)
+        {
+            return null;
+        }
+
+        return root.GetComponentsInChildren<NpcLocationPoint>(true).FirstOrDefault(point => point.LocationId == locationId);
+    }
+
+    // ---------------------------------------------------------------- 배치 도우미
+
+    private static GameObject Place(Transform parent, string modelId, Vector3 position, float yaw, float scale, PropCollider collider, int layer)
+    {
+        return Place(parent, modelId, position, yaw, Vector3.one * scale, collider, layer);
+    }
+
+    private static GameObject Place(Transform parent, string modelId, Vector3 position, float yaw, Vector3 scale, PropCollider collider, int layer)
+    {
+        GameObject prefab = StylizedArtAssetFactory.LoadModelPrefab(modelId) ?? StylizedArtAssetFactory.GetOrCreateModelPrefab(modelId, false);
+
+        if (prefab == null)
+        {
+            return null;
+        }
+
+        GameObject instance = (GameObject)PrefabUtility.InstantiatePrefab(prefab, parent);
+        instance.transform.SetPositionAndRotation(position, Quaternion.Euler(0f, yaw, 0f));
+        instance.transform.localScale = scale;
+        instance.layer = layer;
+        GameObjectUtility.SetStaticEditorFlags(instance, StaticEditorFlags.BatchingStatic | StaticEditorFlags.OccludeeStatic);
+        Bounds mesh = instance.GetComponent<MeshFilter>().sharedMesh.bounds;
+
+        if (collider == PropCollider.Bounds)
+        {
+            BoxCollider box = instance.AddComponent<BoxCollider>();
+            box.center = mesh.center;
+            box.size = Vector3.Scale(mesh.size, new Vector3(0.85f, 0.95f, 0.85f));
+        }
+        else if (collider == PropCollider.Trunk)
+        {
+            CapsuleCollider capsule = instance.AddComponent<CapsuleCollider>();
+            capsule.radius = 0.32f;
+            capsule.height = Mathf.Min(3f, mesh.size.y);
+            capsule.center = new Vector3(0f, capsule.height * 0.5f, 0f);
+        }
+
+        return instance;
+    }
+
+    private static void AddBox(GameObject target, Vector3 center, Vector3 size, Vector3 euler = default)
+    {
+        if (euler == default)
+        {
+            BoxCollider box = target.AddComponent<BoxCollider>();
+            box.center = center;
+            box.size = size;
+            return;
+        }
+
+        GameObject child = new GameObject("Collider");
+        child.layer = target.layer;
+        child.transform.SetParent(target.transform, false);
+        child.transform.localPosition = center;
+        child.transform.localRotation = Quaternion.Euler(euler);
+        child.AddComponent<BoxCollider>().size = size;
+    }
+
+    private static void AddCapsule(GameObject target, Vector3 center, float radius, float height)
+    {
+        CapsuleCollider capsule = target.AddComponent<CapsuleCollider>();
+        capsule.center = center;
+        capsule.radius = radius;
+        capsule.height = height;
+    }
+
+    private static float Rand(System.Random random, float min, float max)
+    {
+        return min + (float)random.NextDouble() * (max - min);
+    }
+
+    private static bool InsideIsland(Vector3 position, float margin = 0f)
+    {
+        return Mathf.Abs(position.x) < TerrainLimit - margin && Mathf.Abs(position.z) < TerrainLimit - margin && position.x < SeaLine - 3f;
+    }
+
+    private static float PathDistance(Vector3 position)
+    {
+        float best = float.MaxValue;
+
+        foreach (ZoneInfo zone in Zones)
+        {
+            best = Mathf.Min(best, StylizedTerrainPainter.DistanceToSegmentXZ(position, zone.PathStart, zone.Entrance));
+            best = Mathf.Min(best, StylizedTerrainPainter.DistanceToSegmentXZ(position, zone.Entrance, zone.Center));
+        }
+
+        return best;
+    }
+
+    // 무작위 흩뿌리기 (막힌 곳 · 길 · 서로 간격 피하기)
+    private static int Scatter(System.Random random, Transform parent, string[] models, int count, Func<Vector3> sample, (Vector3 center, float radius)[] blocked,
+        float spacing, float minScale, float maxScale, PropCollider collider, int layer, List<Vector3> placed)
+    {
+        int made = 0;
+
+        for (int attempt = 0; attempt < count * 30 && made < count; attempt++)
+        {
+            Vector3 position = sample();
+
+            if (!InsideIsland(position, 1f) || PathDistance(position) < 3f || blocked.Any(block => Flat(position, block.center) < block.radius) || placed.Any(other => Flat(other, position) < spacing))
+            {
+                continue;
+            }
+
+            string model = models[random.Next(models.Length)];
+
+            if (Place(parent, model, position, Rand(random, 0f, 360f), Rand(random, minScale, maxScale), collider, layer) != null)
+            {
+                placed.Add(position);
+                made++;
+            }
+        }
+
+        return made;
+    }
+
+    private static float Flat(Vector3 a, Vector3 b)
+    {
+        return new Vector2(a.x - b.x, a.z - b.z).magnitude;
+    }
+
+    private static Vector3 InEllipse(System.Random random, Vector3 center, float radiusX, float radiusZ)
+    {
+        float angle = Rand(random, 0f, Mathf.PI * 2f);
+        float distance = Mathf.Sqrt((float)random.NextDouble());
+        return center + new Vector3(Mathf.Cos(angle) * radiusX * distance, 0f, Mathf.Sin(angle) * radiusZ * distance);
+    }
+
+    // ---------------------------------------------------------------- 구역별 소품
+
+    private static int BuildCoast(Transform parent, int building)
+    {
+        int water = LayerMask.NameToLayer(WaterLayerName);
+        int count = 0;
+
+        // 바다 · 바다 밑 · 물가 거품 (섬 밖까지 넓게, 그림자 없음)
+        GameObject sea = Place(parent, "zone_sea", new Vector3(280f, 0.08f, 0f), 0f, new Vector3(360f, 1f, 700f), PropCollider.None, water);
+        GameObject seabed = Place(parent, "zone_seabed", new Vector3(280f, -1.5f, 0f), 0f, new Vector3(360f, 1f, 700f), PropCollider.None, water);
+
+        foreach (GameObject flat in new[] { sea, seabed })
+        {
+            MeshRenderer renderer = flat.GetComponent<MeshRenderer>();
+            renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            GameObjectUtility.SetStaticEditorFlags(flat, 0);
+        }
+
+        sea.name = "Sea";
+        seabed.name = "Seabed";
+
+        for (int index = 0; index < 13; index++)
+        {
+            Place(parent, "zone_shore_foam", new Vector3(SeaLine + 0.1f, 0.09f, -120f + index * 20f), 0f, 1f, PropCollider.None, water);
+        }
+
+        count += 15;
+
+        // 부두 (동쪽으로 뻗음) : 널빤지 · 경사로 · 난간 벽
+        GameObject dock = Place(parent, "zone_dock", new Vector3(SeaLine - 3f, 0f, 10f), 90f, 1f, PropCollider.None, building);
+        float half = StylizedModelLibrary.ZoneDockWidth * 0.5f;
+        float length = StylizedModelLibrary.ZoneDockLength;
+        AddBox(dock, new Vector3(0f, StylizedModelLibrary.ZoneDockDeckHeight * 0.5f, 1.2f + (length - 1.2f) * 0.5f), new Vector3(StylizedModelLibrary.ZoneDockWidth, StylizedModelLibrary.ZoneDockDeckHeight, length - 1.2f));
+        AddBox(dock, new Vector3(0f, 0.12f, 0.6f), new Vector3(StylizedModelLibrary.ZoneDockWidth - 0.4f, 0.06f, 1.3f), new Vector3(-14f, 0f, 0f));
+
+        for (int side = -1; side <= 1; side += 2)
+        {
+            AddBox(dock, new Vector3(side * (half + 0.1f), 0.9f, 3.1f + (length - 3.1f) * 0.5f), new Vector3(0.2f, 1.8f, length - 3.1f));
+        }
+
+        AddBox(dock, new Vector3(0f, 0.9f, length + 0.1f), new Vector3(StylizedModelLibrary.ZoneDockWidth + 0.4f, 1.8f, 0.2f));
+        dock.name = "Dock";
+        count++;
+
+        Place(parent, "zone_boat", new Vector3(104.5f, 0.02f, 4f), 20f, 1f, PropCollider.None, 0).name = "Boat_A";
+        Place(parent, "zone_boat", new Vector3(106.5f, 0.02f, 17f), -35f, 1f, PropCollider.None, 0).name = "Boat_B";
+        GameObject hut = Place(parent, "zone_fisher_hut", new Vector3(90f, 0f, 20f), 270f, 1f, PropCollider.None, building);
+        AddBox(hut, new Vector3(0f, 1.3f, 0f), new Vector3(4.2f, 2.6f, 4.2f));
+        hut.name = "FisherHut";
+        Place(parent, "zone_net_rack", new Vector3(92.5f, 0f, 3f), 0f, 1f, PropCollider.Bounds, building);
+        GameObject lighthouse = Place(parent, "zone_lighthouse", new Vector3(95.5f, 0f, -24f), 30f, 1f, PropCollider.None, building);
+        AddCapsule(lighthouse, new Vector3(0f, 4f, 0f), 1.4f, 8f);
+        lighthouse.name = "Lighthouse";
+        Place(parent, "zone_tide_rocks", new Vector3(99.9f, 0f, -8f), 180f, 1f, PropCollider.Bounds, building);
+        Place(parent, "prop_crate", new Vector3(95f, 0f, 7f), 15f, 1f, PropCollider.Bounds, building);
+        Place(parent, "prop_barrel", new Vector3(95.6f, 0f, 6.2f), 0f, 1f, PropCollider.Bounds, building);
+        Place(parent, "prop_barrel", new Vector3(95.4f, 0f, 13.3f), 0f, 1f, PropCollider.Bounds, building);
+        Place(parent, "prop_lantern_post", new Vector3(95.5f, 0f, 11.9f), 90f, 1f, PropCollider.Bounds, building);
+        count += 10;
+
+        System.Random random = new System.Random(Seed + 1);
+        List<Vector3> placed = new List<Vector3> { new Vector3(90f, 0f, 20f), new Vector3(95.5f, 0f, -24f) };
+        count += Scatter(random, parent, new[] { "rock_large", "rock_small", "pebbles" }, 10, () => new Vector3(Rand(random, 88f, 98.5f), 0f, Rand(random, -60f, 60f)),
+            new[] { (new Vector3(95f, 0f, 10f), 6f), (new Vector3(91f, 0f, 16f), 5f), (new Vector3(97f, 0f, -8f), 4f) }, 4f, 0.8f, 1.6f, PropCollider.None, 0, placed);
+        return count;
+    }
+
+    private static int BuildRuins(Transform parent, int building)
+    {
+        int count = 0;
+        Vector3 center = new Vector3(-78f, 0f, 78f);
+        Place(parent, "zone_ruin_floor", center, 45f, 1.4f, PropCollider.None, 0);
+        GameObject statue = Place(parent, "zone_ruin_statue", center, 135f, 1f, PropCollider.Bounds, building);
+        statue.name = "Statue";
+
+        // 기둥 고리 (마을 쪽 남동 방향은 입구라 비움)
+        for (int index = 0; index < 10; index++)
+        {
+            float angle = index * 36f + 18f;
+
+            if (Mathf.Abs(Mathf.DeltaAngle(angle, 315f)) < 40f)
+            {
+                continue;
+            }
+
+            Vector3 position = center + Quaternion.Euler(0f, angle, 0f) * Vector3.forward * 9.5f;
+            bool broken = index % 3 == 1;
+            GameObject pillar = Place(parent, broken ? "zone_ruin_pillar_broken" : "zone_ruin_pillar", position, angle, 1f, PropCollider.None, building);
+            AddBox(pillar, new Vector3(0f, broken ? 1f : 2.1f, 0f), new Vector3(1.0f, broken ? 2f : 4.2f, 1.0f));
+            count++;
+        }
+
+        GameObject arch = Place(parent, "zone_ruin_arch", center + new Vector3(8.8f, 0f, -8.8f), 135f, 1f, PropCollider.None, building);
+        AddBox(arch, new Vector3(-2.05f, 1.7f, 0f), new Vector3(0.9f, 3.4f, 1.0f));
+        AddBox(arch, new Vector3(2.05f, 1.7f, 0f), new Vector3(0.9f, 3.4f, 1.0f));
+        AddBox(arch, new Vector3(0f, 4.9f, 0f), new Vector3(5f, 1.4f, 1.0f));
+        arch.name = "EntranceArch";
+
+        // 무너진 벽 · 도서관 (책장 3개) · 지하 입구 · 오벨리스크 · 보물 · 룬 결정
+        Place(parent, "zone_ruin_wall", new Vector3(-92f, 0f, 90f), 0f, 1f, PropCollider.Bounds, building);
+        Place(parent, "zone_ruin_wall", new Vector3(-95.6f, 0f, 86.2f), 90f, 1f, PropCollider.Bounds, building);
+        Place(parent, "zone_ruin_wall", new Vector3(-96f, 0f, 72f), 80f, 1f, PropCollider.Bounds, building);
+        Place(parent, "zone_ruin_wall", new Vector3(-84f, 0f, 95f), 200f, 1f, PropCollider.Bounds, building);
+
+        for (int index = 0; index < 3; index++)
+        {
+            Place(parent, "zone_ruin_bookshelf", new Vector3(-94.1f + index * 2.05f, 0f, 89.2f), 0f, 1f, PropCollider.Bounds, building);
+        }
+
+        GameObject gate = Place(parent, "zone_ruin_gate", new Vector3(-72f, 0f, 97f), 180f, 1f, PropCollider.None, building);
+        AddBox(gate, new Vector3(0f, 1.4f, -0.2f), new Vector3(5.6f, 2.8f, 4.4f));
+        gate.name = "UndergroundGate";
+        Place(parent, "zone_ruin_obelisk", new Vector3(-95f, 0f, 63f), 20f, 1f, PropCollider.Bounds, building).name = "Obelisk";
+        Place(parent, "zone_ruin_treasure", new Vector3(-80f, 0f, 97.5f), 160f, 1f, PropCollider.None, 0).name = "Treasure";
+
+        foreach (Vector3 crystal in new[] { new Vector3(-86f, 0f, 70f), new Vector3(-67f, 0f, 90f), new Vector3(-90f, 0f, 94f), new Vector3(-70f, 0f, 82f) })
+        {
+            Place(parent, "zone_rune_crystals", crystal, crystal.x * 7f, 1f, PropCollider.Bounds, building);
+        }
+
+        count += 16;
+        System.Random random = new System.Random(Seed + 2);
+        List<Vector3> placed = new List<Vector3>();
+        count += Scatter(random, parent, new[] { "rock_large", "rock_small", "bush", "fallen_log" }, 12, () => InEllipse(random, center, 20f, 20f),
+            new[] { (center, 12f), (new Vector3(-92f, 0f, 88f), 5f), (new Vector3(-72f, 0f, 95f), 5f), (new Vector3(-95f, 0f, 63f), 3f) }, 3.5f, 0.8f, 1.5f, PropCollider.None, 0, placed);
+        return count;
+    }
+
+    private static int BuildForest(Transform parent, int building)
+    {
+        int count = 0;
+        Vector3 center = new Vector3(-88f, 0f, -32f);
+        Vector3 ring = new Vector3(-86f, 0f, -28f);
+        Vector3 garden = new Vector3(-78f, 0f, -44f);
+        Vector3 hutPosition = new Vector3(-100f, 0f, -18f);
+        Vector3 stump = new Vector3(-97f, 0f, -38f);
+
+        Place(parent, "zone_fairy_ring", ring, 0f, 1f, PropCollider.None, 0).name = "FairyRing";
+        Place(parent, "zone_glow_flowers", garden, 0f, 1.3f, PropCollider.None, 0).name = "GlowFlowerGarden";
+        Place(parent, "zone_glow_flowers", garden + new Vector3(3.2f, 0f, -1.5f), 90f, 1f, PropCollider.None, 0);
+        GameObject hut = Place(parent, "zone_witch_hut", hutPosition, 135f, 1f, PropCollider.None, building);
+        AddBox(hut, new Vector3(0f, 1.5f, 0f), new Vector3(3.9f, 3f, 3.7f));
+        AddCapsule(hut, new Vector3(1.9f, 0.5f, 2.3f), 0.5f, 1f);
+        hut.name = "WitchHut";
+        GameObject great = Place(parent, "zone_great_stump", stump, 30f, 1f, PropCollider.None, building);
+        AddCapsule(great, new Vector3(0f, 1.3f, 0f), 2.9f, 2.6f);
+        great.name = "GreatStump";
+
+        foreach ((Vector3 position, float scale) in new[] { (new Vector3(-81f, 0f, -24f), 1f), (new Vector3(-93f, 0f, -25f), 1.25f), (new Vector3(-82f, 0f, -37f), 0.8f), (new Vector3(-96f, 0f, -29f), 0.9f) })
+        {
+            GameObject mushroom = Place(parent, "zone_giant_mushroom", position, position.z * 11f, scale, PropCollider.None, building);
+            AddCapsule(mushroom, new Vector3(0f, 1.3f, 0f), 0.45f, 2.6f);
+        }
+
+        foreach (Vector3 position in new[] { new Vector3(-75f, 0f, -41f), new Vector3(-81.5f, 0f, -46f), new Vector3(-97f, 0f, -21f), new Vector3(-92f, 0f, -35f), new Vector3(-84f, 0f, -31f), new Vector3(-100f, 0f, -34f) })
+        {
+            Place(parent, "zone_glow_mushrooms", position, position.x * 13f, 1f, PropCollider.None, 0);
+        }
+
+        count += 16;
+
+        // 빈터를 둘러싼 큰 나무 숲
+        System.Random random = new System.Random(Seed + 3);
+        (Vector3, float)[] clearings = { (ring, 5f), (garden, 5.5f), (hutPosition, 7f), (stump, 6f), (center, 9f), (new Vector3(-81f, 0f, -24f), 2.5f), (new Vector3(-93f, 0f, -25f), 2.5f) };
+        List<Vector3> placed = new List<Vector3>();
+        count += Scatter(random, parent, new[] { "tree_round", "tree_round_b", "tree_pine", "tree_round" }, 46, () => InEllipse(random, center, 32f, 30f), clearings, 3.4f, 1.5f, 2.1f, PropCollider.Trunk, 0, placed);
+        count += Scatter(random, parent, new[] { "bush", "bush_berry", "mushroom_cluster", "fallen_log", "stump" }, 22, () => InEllipse(random, center, 30f, 28f), clearings, 2.2f, 0.9f, 1.4f, PropCollider.None, 0, placed);
+        return count;
+    }
+
+    private static int BuildSnow(Transform parent, int building)
+    {
+        int count = 0;
+        Vector3 fire = new Vector3(14f, 0f, 96f);
+        Place(parent, "build_campfire_stone", fire, 0f, 1f, PropCollider.None, 0).name = "Campfire";
+        Place(parent, "fx_flame", fire + Vector3.up * 0.1f, 0f, 1f, PropCollider.None, 0);
+
+        foreach ((Vector3 position, float yaw) in new[] { (new Vector3(9.5f, 0f, 100f), 140f), (new Vector3(18.5f, 0f, 100.5f), 220f), (new Vector3(14f, 0f, 103.5f), 180f) })
+        {
+            Place(parent, "zone_snow_tent", position, yaw, 1f, PropCollider.Bounds, building);
+        }
+
+        Place(parent, "zone_fur_rack", new Vector3(20f, 0f, 94.5f), 290f, 1f, PropCollider.Bounds, building);
+        Place(parent, "prop_woodpile", new Vector3(8.5f, 0f, 94f), 30f, 1f, PropCollider.Bounds, building);
+        Place(parent, "prop_banner", new Vector3(11f, 0f, 92.5f), 180f, 1f, PropCollider.None, 0);
+
+        // 사당 : 붉은 문 · 석등 두 쌍 · 호코라
+        GameObject torii = Place(parent, "zone_torii", new Vector3(42f, 0f, 97f), 0f, 1f, PropCollider.None, building);
+        AddCapsule(torii, new Vector3(-1.9f, 2.2f, 0f), 0.3f, 4.4f);
+        AddCapsule(torii, new Vector3(1.9f, 2.2f, 0f), 0.3f, 4.4f);
+        torii.name = "Torii";
+
+        foreach (Vector3 lantern in new[] { new Vector3(39.6f, 0f, 100.2f), new Vector3(44.4f, 0f, 100.2f), new Vector3(39.6f, 0f, 104f), new Vector3(44.4f, 0f, 104f) })
+        {
+            Place(parent, "zone_stone_lantern", lantern, 0f, 1f, PropCollider.Bounds, building);
+        }
+
+        Place(parent, "zone_hokora", new Vector3(42f, 0f, 106.5f), 180f, 1f, PropCollider.Bounds, building).name = "Hokora";
+        count += 13;
+
+        System.Random random = new System.Random(Seed + 4);
+        (Vector3, float)[] blocked = { (fire, 9f), (new Vector3(42f, 0f, 102f), 8f) };
+        List<Vector3> placed = new List<Vector3>();
+        count += Scatter(random, parent, new[] { "zone_snow_pine" }, 20, () => new Vector3(Rand(random, -26f, 70f), 0f, Rand(random, 90f, 119f)), blocked, 5f, 0.85f, 1.3f, PropCollider.Trunk, 0, placed);
+        count += Scatter(random, parent, new[] { "zone_ice_rock" }, 6, () => new Vector3(Rand(random, -20f, 66f), 0f, Rand(random, 88f, 118f)), blocked, 6f, 0.8f, 1.3f, PropCollider.Bounds, building, placed);
+        count += Scatter(random, parent, new[] { "zone_snow_pile" }, 8, () => new Vector3(Rand(random, -24f, 68f), 0f, Rand(random, 86f, 119f)), blocked, 4f, 0.8f, 1.5f, PropCollider.None, 0, placed);
+        return count;
+    }
+
+    private static int BuildDesert(Transform parent, int building)
+    {
+        int count = 0;
+        Vector3 oasis = Pools[0].center;
+        GameObject pool = Place(parent, "zone_oasis_pool", oasis, 0f, 1f, PropCollider.None, 0);
+        AddCapsule(pool, new Vector3(0f, 1f, 0f), StylizedModelLibrary.ZoneOasisRadius, 2f);
+        pool.name = "Water_Oasis";
+
+        foreach ((Vector3 offset, float yaw) in new[] { (new Vector3(5.6f, 0f, 2f), 200f), (new Vector3(-3.5f, 0f, 5.2f), 120f), (new Vector3(2.5f, 0f, -6f), 300f), (new Vector3(-6.4f, 0f, -2.6f), 40f) })
+        {
+            Place(parent, "zone_palm", oasis + offset, yaw, 1f, PropCollider.Trunk, 0);
+        }
+
+        GameObject tent = Place(parent, "zone_desert_tent", new Vector3(68f, 0f, -79f), 315f, 1f, PropCollider.None, building);
+        AddBox(tent, new Vector3(0f, 1.2f, -1.95f), new Vector3(3.9f, 2.4f, 0.2f));
+
+        foreach (Vector2 post in new[] { new Vector2(-1.9f, -1.9f), new Vector2(1.9f, -1.9f), new Vector2(-1.9f, 1.9f), new Vector2(1.9f, 1.9f) })
+        {
+            AddCapsule(tent, new Vector3(post.x, 1.2f, post.y), 0.12f, 2.4f);
+        }
+
+        tent.name = "MerchantTent";
+
+        foreach ((Vector3 position, float yaw, float scale) in new[] { (new Vector3(92f, 0f, -76f), 20f, 1.2f), (new Vector3(62f, 0f, -98f), 110f, 1f), (new Vector3(98f, 0f, -108f), 200f, 1.4f), (new Vector3(74f, 0f, -110f), 300f, 0.9f) })
+        {
+            Place(parent, "zone_mesa_rock", position, yaw, scale, PropCollider.Bounds, building);
+        }
+
+        foreach ((Vector3 position, float yaw) in new[] { (new Vector3(84f, 0f, -80f), 30f), (new Vector3(70f, 0f, -100f), 80f), (new Vector3(96f, 0f, -92f), 160f), (new Vector3(58f, 0f, -86f), 10f), (new Vector3(88f, 0f, -114f), 120f) })
+        {
+            GameObject dune = Place(parent, "zone_dune", position, yaw, 1f, PropCollider.None, 0);
+            dune.AddComponent<MeshCollider>().sharedMesh = dune.GetComponent<MeshFilter>().sharedMesh;
+        }
+
+        Place(parent, "zone_bones", new Vector3(76f, 0f, -92f), 60f, 1f, PropCollider.None, 0);
+        Place(parent, "zone_bones", new Vector3(100f, 0f, -84f), 200f, 0.8f, PropCollider.None, 0);
+        count += 17;
+
+        System.Random random = new System.Random(Seed + 5);
+        (Vector3, float)[] blocked = { (oasis, 8f), (new Vector3(68f, 0f, -79f), 6f), (new Vector3(76f, 0f, -92f), 2f) };
+        List<Vector3> placed = new List<Vector3> { new Vector3(92f, 0f, -76f), new Vector3(62f, 0f, -98f), new Vector3(98f, 0f, -108f), new Vector3(74f, 0f, -110f) };
+        count += Scatter(random, parent, new[] { "zone_cactus" }, 12, () => InEllipse(random, new Vector3(80f, 0f, -90f), 30f, 26f), blocked, 5f, 0.7f, 1.2f, PropCollider.Trunk, 0, placed);
+        count += Scatter(random, parent, new[] { "rock_small", "pebbles" }, 8, () => InEllipse(random, new Vector3(80f, 0f, -90f), 30f, 26f), blocked, 3f, 0.8f, 1.4f, PropCollider.None, 0, placed);
+        return count;
+    }
+
+    private static int BuildSwamp(Transform parent, int building)
+    {
+        int count = 0;
+
+        foreach ((string name, Vector3 poolCenter, float poolRadius) in Pools.Skip(1))
+        {
+            Place(parent, "zone_swamp_pool", poolCenter, poolCenter.x * 17f, poolRadius / StylizedModelLibrary.ZoneSwampPoolRadius, PropCollider.None, 0).name = "Water_" + name;
+        }
+
+        // 나무길 (웅덩이 A를 동서로 가로지름)
+        GameObject walk = Place(parent, "zone_boardwalk", new Vector3(-67.5f, 0f, -98f), 90f, 1f, PropCollider.None, building);
+        AddBox(walk, new Vector3(0f, StylizedModelLibrary.ZoneBoardwalkDeckHeight * 0.5f, StylizedModelLibrary.ZoneBoardwalkLength * 0.5f), new Vector3(StylizedModelLibrary.ZoneBoardwalkWidth, StylizedModelLibrary.ZoneBoardwalkDeckHeight, StylizedModelLibrary.ZoneBoardwalkLength - 1.6f));
+        walk.name = "Boardwalk";
+        GameObject hut = Place(parent, "zone_stilt_hut", new Vector3(-72f, 0f, -106f), 45f, 1f, PropCollider.None, building);
+        AddBox(hut, new Vector3(0f, 1.7f, 0f), new Vector3(3.8f, 3.4f, 3.8f));
+        hut.name = "StiltHut";
+        count += 5;
+
+        System.Random random = new System.Random(Seed + 6);
+        Vector3 center = new Vector3(-60f, 0f, -94f);
+        (Vector3, float)[] blocked = Pools.Skip(1).Select(pool => (pool.center, pool.radius + 1f)).Concat(new[] { (new Vector3(-72f, 0f, -106f), 4.5f), (new Vector3(-62f, 0f, -98f), 6f) }).ToArray();
+        List<Vector3> placed = new List<Vector3>();
+        count += Scatter(random, parent, new[] { "zone_dead_tree" }, 8, () => InEllipse(random, center, 26f, 20f), blocked, 5f, 0.8f, 1.3f, PropCollider.Trunk, 0, placed);
+        count += Scatter(random, parent, new[] { "zone_glow_mushrooms", "mushroom_cluster", "rock_small" }, 8, () => InEllipse(random, center, 24f, 18f), blocked, 3f, 0.8f, 1.2f, PropCollider.None, 0, placed);
+
+        // 웅덩이 가장자리 갈대
+        foreach ((string _, Vector3 poolCenter, float poolRadius) in Pools.Skip(1))
+        {
+            for (int index = 0; index < 6; index++)
+            {
+                float angle = index * 1.05f + poolCenter.z;
+                Vector3 position = poolCenter + new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle)) * (poolRadius + 0.4f);
+
+                if (Flat(position, new Vector3(-62f, 0f, -98f)) < poolRadius + 1f && Mathf.Abs(position.z + 98f) < 1.4f)
+                {
+                    continue; // 나무길 끝은 비움
+                }
+
+                Place(parent, "reeds", position, angle * 50f, Rand(random, 1.2f, 1.8f), PropCollider.None, 0);
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    // 마을 쪽 길 시작의 표지판 (구역 이름, 마을에서 읽히게)
+    private static int BuildSignposts(Transform parent)
+    {
+        foreach (ZoneInfo zone in Zones)
+        {
+            Vector3 along = (zone.Entrance - zone.PathStart).normalized;
+            Vector3 side = Vector3.Cross(Vector3.up, along);
+            Vector3 position = zone.PathStart + along * 2.5f + side * 2.4f;
+            float yaw = Mathf.Atan2(along.x, along.z) * Mathf.Rad2Deg - 90f;
+            GameObject post = Place(parent, "prop_signpost", position, yaw, 1f, PropCollider.None, 0);
+            AddBox(post, new Vector3(0f, 0.9f, 0f), new Vector3(0.2f, 1.8f, 0.2f));
+            post.name = "Sign_" + zone.ObjectName;
+            Vector3 toVillage = -along;
+            TMP_Text label = CreateText(post.transform.parent, "SignLabel_" + zone.ObjectName, $"<mark=#3A2A20C0 padding=\"16,16,6,6\">{zone.DisplayName} →</mark>", 3.2f, 6f);
+            label.transform.SetPositionAndRotation(position + Vector3.up * 2.35f, Quaternion.Euler(0f, Mathf.Atan2(-toVillage.x, -toVillage.z) * Mathf.Rad2Deg, 0f));
+        }
+
+        return Zones.Length;
+    }
+
+    private static TMP_Text CreateText(Transform parent, string name, string text, float fontSize, float width)
+    {
+        GameObject holder = new GameObject(name, typeof(RectTransform));
+        holder.transform.SetParent(parent, false);
+        TextMeshPro label = holder.AddComponent<TextMeshPro>();
+        label.rectTransform.sizeDelta = new Vector2(width, 1f);
+        label.fontSize = fontSize;
+        label.alignment = TextAlignmentOptions.Center;
+        label.textWrappingMode = TextWrappingModes.NoWrap;
+        label.color = Color.white;
+        label.richText = true;
+        label.text = text;
+        MeshRenderer renderer = holder.GetComponent<MeshRenderer>();
+        renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        renderer.receiveShadows = false;
+        return label;
+    }
+
+    // ---------------------------------------------------------------- 바닥 (모래 · 눈 · 진흙 · 돌바닥 · 흙길)
+
+    private static float Smooth(float edge0, float edge1, float value)
+    {
+        return Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(edge0, edge1, value));
+    }
+
+    private static float Ellipse(float x, float z, float cx, float cz, float rx, float rz, float fade, float noise)
+    {
+        float dx = (x - cx) / rx;
+        float dz = (z - cz) / rz;
+        float distance = Mathf.Sqrt(dx * dx + dz * dz) + noise * 0.12f;
+        return 1f - Smooth(1f - fade, 1f, distance);
+    }
+
+    // 좌표의 구역 바닥 비율 (모래 · 눈 · 진흙 · 돌바닥)과 흙 비율 (흙길 · 숲 바닥)
+    public static void GroundWeights(float x, float z, float[] zone, out float dirt)
+    {
+        float noise = Mathf.PerlinNoise(x * 0.07f + 31.7f, z * 0.07f + 12.9f) - 0.5f;
+        float coast = Smooth(84.5f, 90.5f, x + noise * 5f);
+        float desert = Ellipse(x, z, 80f, -90f, 38f, 32f, 0.25f, noise);
+        zone[0] = Mathf.Max(coast, desert);
+        zone[1] = Ellipse(x, z, 24f, 120f, 64f, 36f, 0.3f, noise);
+        zone[2] = Ellipse(x, z, -60f, -96f, 29f, 23f, 0.3f, noise);
+        zone[3] = Ellipse(x, z, -80f, 80f, 21f, 21f, 0.25f, noise) * (0.35f + 0.65f * Mathf.PerlinNoise(x * 0.35f + 5.1f, z * 0.35f + 8.3f));
+        float sum = zone[0] + zone[1] + zone[2] + zone[3];
+
+        if (sum > 1f)
+        {
+            for (int index = 0; index < 4; index++)
+            {
+                zone[index] /= sum;
+            }
+        }
+
+        float path = 0f;
+        Vector3 point = new Vector3(x, 0f, z);
+
+        foreach (ZoneInfo info in Zones)
+        {
+            float distance = StylizedTerrainPainter.DistanceToSegmentXZ(point, info.PathStart, info.Entrance);
+            float half = 1.6f + noise * 0.8f;
+            path = Mathf.Max(path, 1f - Smooth(half * 0.55f, half, distance));
+        }
+
+        float forest = Ellipse(x, z, -88f, -32f, 32f, 30f, 0.3f, noise) * 0.42f;
+        dirt = Mathf.Max(path, forest);
+    }
+
+    private static string PaintTerrain()
+    {
+        Terrain terrain = Terrain.activeTerrain != null ? Terrain.activeTerrain : Object.FindFirstObjectByType<Terrain>();
+
+        if (terrain == null || terrain.terrainData == null)
+        {
+            return "✗ Terrain이 없어 바닥 칠하기를 건너뜀";
+        }
+
+        TerrainData data = terrain.terrainData;
+        List<TerrainLayer> baseLayers = data.terrainLayers.Where(layer => layer != null && !layer.name.StartsWith("TL_Zone", StringComparison.Ordinal)).ToList();
+        TerrainLayer[] zoneLayers =
+        {
+            StylizedTerrainPainter.GetOrCreateLayer(ZoneLayerNames[0], SandPixel, 6f),
+            StylizedTerrainPainter.GetOrCreateLayer(ZoneLayerNames[1], SnowPixel, 7f),
+            StylizedTerrainPainter.GetOrCreateLayer(ZoneLayerNames[2], MudPixel, 5f),
+            StylizedTerrainPainter.GetOrCreateLayer(ZoneLayerNames[3], FlagstonePixel, 4f)
+        };
+
+        // 기존 비율을 층 이름으로 옮겨 담고 층 목록을 (기본 층 + 구역 층 4개)로 맞춘다
+        int resolution = data.alphamapResolution;
+        float[,,] previous = data.GetAlphamaps(0, 0, resolution, resolution);
+        TerrainLayer[] oldLayers = data.terrainLayers;
+        data.terrainLayers = baseLayers.Concat(zoneLayers).ToArray();
+        int baseCount = baseLayers.Count;
+        int dirtIndex = baseLayers.FindIndex(layer => layer.name == "TL_Dirt");
+        int[] oldIndexOf = data.terrainLayers.Select(layer => Array.IndexOf(oldLayers, layer)).ToArray();
+        float[,,] alphas = new float[resolution, resolution, data.terrainLayers.Length];
+        Vector3 origin = terrain.transform.position;
+        Vector3 size = data.size;
+        float[] zone = new float[4];
+        float[] bases = new float[baseCount];
+
+        for (int y = 0; y < resolution; y++)
+        {
+            float z = origin.z + y / (float)(resolution - 1) * size.z;
+
+            for (int x = 0; x < resolution; x++)
+            {
+                float worldX = origin.x + x / (float)(resolution - 1) * size.x;
+                GroundWeights(worldX, z, zone, out float dirt);
+                float baseSum = 0f;
+
+                for (int index = 0; index < baseCount; index++)
+                {
+                    bases[index] = oldIndexOf[index] >= 0 ? previous[y, x, oldIndexOf[index]] : 0f;
+                    baseSum += bases[index];
+                }
+
+                if (baseSum < 0.0001f)
+                {
+                    Array.Clear(bases, 0, baseCount);
+                    bases[0] = 1f;
+                }
+                else
+                {
+                    for (int index = 0; index < baseCount; index++)
+                    {
+                        bases[index] /= baseSum; // 이전 실행의 구역 비율을 빼고 원래 바닥 비율로 되돌림
+                    }
+                }
+
+                if (dirtIndex >= 0 && dirt > bases[dirtIndex])
+                {
+                    float rest = 1f - bases[dirtIndex];
+                    float scale = rest > 0.0001f ? (1f - dirt) / rest : 0f;
+
+                    for (int index = 0; index < baseCount; index++)
+                    {
+                        bases[index] = index == dirtIndex ? dirt : bases[index] * scale;
+                    }
+                }
+
+                float zoneSum = zone[0] + zone[1] + zone[2] + zone[3];
+
+                for (int index = 0; index < baseCount; index++)
+                {
+                    alphas[y, x, index] = bases[index] * (1f - zoneSum);
+                }
+
+                for (int index = 0; index < 4; index++)
+                {
+                    alphas[y, x, baseCount + index] = zone[index];
+                }
+            }
+        }
+
+        data.SetAlphamaps(0, 0, alphas);
+
+        // 구역 바닥 · 흙길의 풀 없애기
+        int removed = 0;
+
+        if (data.detailPrototypes.Length > 0)
+        {
+            int detailResolution = data.detailResolution;
+            int[,] density = data.GetDetailLayer(0, 0, detailResolution, detailResolution, 0);
+
+            for (int y = 0; y < detailResolution; y++)
+            {
+                float z = origin.z + (y + 0.5f) / detailResolution * size.z;
+
+                for (int x = 0; x < detailResolution; x++)
+                {
+                    if (density[y, x] == 0)
+                    {
+                        continue;
+                    }
+
+                    float worldX = origin.x + (x + 0.5f) / detailResolution * size.x;
+                    GroundWeights(worldX, z, zone, out float dirt);
+
+                    if (zone[0] + zone[1] + zone[2] + zone[3] > 0.3f || dirt > 0.4f || worldX > SeaLine - 1f)
+                    {
+                        removed += density[y, x];
+                        density[y, x] = 0;
+                    }
+                }
+            }
+
+            data.SetDetailLayer(0, 0, 0, density);
+        }
+
+        EditorUtility.SetDirty(data);
+        return $"바닥 칠하기 : 층 {data.terrainLayers.Length}개 (기본 {baseCount} + 모래 · 눈 · 진흙 · 돌바닥), 해상도 {resolution}, 풀 {removed}포기 정리";
+    }
+
+    private static Color SandPixel(float u, float v)
+    {
+        float large = StylizedTerrainPainter.TileNoise(u, v, 4f, 2.4f);
+        float ripple = Mathf.Sin((v + StylizedTerrainPainter.TileNoise(u, v, 3f, 6.1f) * 0.3f) * Mathf.PI * 2f * 10f) * 0.5f + 0.5f;
+        Color color = Color.Lerp(new Color(0.84f, 0.74f, 0.52f), new Color(0.9f, 0.81f, 0.6f), large);
+        color = Color.Lerp(color, new Color(0.76f, 0.66f, 0.46f), ripple * 0.18f);
+
+        if (StylizedTerrainPainter.Hash(u, v, 256) > 0.97f)
+        {
+            color = Color.Lerp(color, new Color(0.62f, 0.55f, 0.46f), 0.6f);
+        }
+
+        return color;
+    }
+
+    private static Color SnowPixel(float u, float v)
+    {
+        float large = StylizedTerrainPainter.TileNoise(u, v, 4f, 9.2f);
+        float small = StylizedTerrainPainter.TileNoise(u, v, 16f, 3.3f);
+        Color color = Color.Lerp(new Color(0.86f, 0.9f, 0.95f), new Color(0.97f, 0.98f, 1f), large);
+        return Color.Lerp(color, new Color(0.8f, 0.86f, 0.94f), small * 0.3f);
+    }
+
+    private static Color MudPixel(float u, float v)
+    {
+        float large = StylizedTerrainPainter.TileNoise(u, v, 5f, 4.8f);
+        float wet = StylizedTerrainPainter.TileNoise(u, v, 9f, 1.4f);
+        Color color = Color.Lerp(new Color(0.3f, 0.27f, 0.2f), new Color(0.4f, 0.37f, 0.26f), large);
+
+        if (wet > 0.6f)
+        {
+            color = Color.Lerp(color, new Color(0.24f, 0.28f, 0.22f), 0.6f);
+        }
+
+        return color;
+    }
+
+    private static Color FlagstonePixel(float u, float v)
+    {
+        // 4 × 4 돌판 (줄마다 반 칸 어긋남) · 이음새 · 돌마다 다른 밝기
+        float row = Mathf.Floor(v * 4f);
+        float shifted = u * 4f + (row % 2f) * 0.5f;
+        float column = Mathf.Floor(shifted);
+        float localU = shifted - column;
+        float localV = v * 4f - row;
+        bool seam = localU < 0.05f || localU > 0.95f || localV < 0.05f || localV > 0.95f;
+        float tone = StylizedTerrainPainter.Hash((column % 4f + 0.5f) / 4f, (row + 0.5f) / 4f, 4);
+        Color color = Color.Lerp(new Color(0.55f, 0.54f, 0.49f), new Color(0.7f, 0.68f, 0.61f), tone);
+        color = Color.Lerp(color, new Color(0.45f, 0.44f, 0.4f), StylizedTerrainPainter.TileNoise(u, v, 12f, 7.4f) * 0.25f);
+        return seam ? color * 0.62f : color;
+    }
+
+    // ---------------------------------------------------------------- 기존 나무 · 바위 · 풀 정리
+
+    private static bool IsZoneCore(Vector3 position)
+    {
+        if (position.x > 86f)
+        {
+            return true; // 해안 · 바다
+        }
+
+        float[] zone = new float[4];
+        GroundWeights(position.x, position.z, zone, out _);
+
+        if (zone[0] > 0.4f || zone[1] > 0.4f || zone[2] > 0.4f || zone[3] > 0.2f)
+        {
+            return true; // 모래 · 눈 · 진흙 · 돌바닥 위
+        }
+
+        return PathDistance(position) < 2.6f || Flat(position, new Vector3(-88f, 0f, -32f)) < 16f; // 흙길 · 숲 빈터
+    }
+
+    private static string HideEnvironment(Scene scene)
+    {
+        GameObject environment = scene.GetRootGameObjects().FirstOrDefault(item => item.name == EnvironmentRootName);
+
+        if (environment == null)
+        {
+            return "기존 나무 정리 : 환경 오브젝트 없음";
+        }
+
+        int hidden = 0;
+
+        foreach (Transform group in environment.transform)
+        {
+            if (group.name != "Trees" && group.name != "Rocks" && group.name != "Plants")
+            {
+                continue;
+            }
+
+            foreach (Transform item in group)
+            {
+                if (item.gameObject.activeSelf && IsZoneCore(item.position))
+                {
+                    item.gameObject.SetActive(false);
+                    hidden++;
+                }
+            }
+        }
+
+        return $"기존 나무 · 바위 · 풀 정리 : 구역 · 흙길 자리 {hidden}개 숨김";
+    }
+
+    // ---------------------------------------------------------------- 섬 경계 · 바다 벽
+
+    private static string BuildBoundary(Transform parent)
+    {
+        void Wall(string name, Vector3 center, Vector3 size)
+        {
+            GameObject wall = new GameObject(name);
+            wall.transform.SetParent(parent, false);
+            wall.transform.position = center;
+            wall.AddComponent<BoxCollider>().size = size;
+        }
+
+        Wall("Edge_North", new Vector3(0f, 3f, 124.8f), new Vector3(252f, 6f, 0.6f));
+        Wall("Edge_South", new Vector3(0f, 3f, -124.8f), new Vector3(252f, 6f, 0.6f));
+        Wall("Edge_West", new Vector3(-124.8f, 3f, 0f), new Vector3(0.6f, 6f, 252f));
+        Wall("Edge_East", new Vector3(124.8f, 3f, 0f), new Vector3(0.6f, 6f, 252f));
+
+        // 물가 벽 (부두 자리만 비움)
+        float gapHalf = StylizedModelLibrary.ZoneDockWidth * 0.5f + 0.2f;
+        float north = 125f - (10f + gapHalf);
+        float south = (10f - gapHalf) + 125f;
+        Wall("SeaWall_North", new Vector3(SeaLine + 0.3f, 1.5f, 10f + gapHalf + north * 0.5f), new Vector3(0.6f, 3f, north));
+        Wall("SeaWall_South", new Vector3(SeaLine + 0.3f, 1.5f, 10f - gapHalf - south * 0.5f), new Vector3(0.6f, 3f, south));
+
+        // 바다는 NPC가 걷지 않는 곳 (NavMesh 제외)
+        GameObject noWalk = new GameObject("Sea_NotWalkable");
+        noWalk.transform.SetParent(parent, false);
+        noWalk.transform.position = new Vector3((SeaLine + 0.3f + 125f) * 0.5f, 1f, 0f);
+        NavMeshModifierVolume volume = noWalk.AddComponent<NavMeshModifierVolume>();
+        volume.size = new Vector3(125f - SeaLine - 0.3f, 4f, 252f);
+        volume.center = Vector3.zero;
+        volume.area = NavMesh.GetAreaFromName("Not Walkable");
+        return "섬 경계 벽 4개 · 바다 벽 2개 (부두 자리 비움) · 바다 NavMesh 제외";
+    }
+
+    // ---------------------------------------------------------------- 지도 구역 이름
+
+    private static int EnsureMapLabelLayer()
+    {
+        int existing = LayerMask.NameToLayer(MapLabelLayerName);
+
+        if (existing >= 0)
+        {
+            return existing;
+        }
+
+        SerializedObject tagManager = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset")[0]);
+        SerializedProperty layers = tagManager.FindProperty("layers");
+
+        for (int index = 19; index < layers.arraySize; index++)
+        {
+            SerializedProperty layer = layers.GetArrayElementAtIndex(index);
+
+            if (string.IsNullOrEmpty(layer.stringValue))
+            {
+                layer.stringValue = MapLabelLayerName;
+                tagManager.ApplyModifiedPropertiesWithoutUndo();
+                return index;
+            }
+        }
+
+        return -1;
+    }
+
+    private static string BuildMapLabels(Scene scene, Transform parent)
+    {
+        int layer = EnsureMapLabelLayer();
+
+        if (layer < 0)
+        {
+            return "✗ 지도 이름용 레이어를 만들 빈 칸이 없습니다.";
+        }
+
+        List<(string text, Vector3 position)> labels = Zones.Select(zone => (zone.DisplayName, zone.Center)).ToList();
+        labels.Add(("마을", new Vector3(0f, 0f, 14f)));
+
+        foreach ((string text, Vector3 position) in labels)
+        {
+            TMP_Text label = CreateText(parent, "MapLabel_" + text, $"<mark=#1C1C20B0 padding=\"20,20,8,8\"><b>{text}</b></mark>", 60f, 80f);
+            label.transform.SetPositionAndRotation(new Vector3(position.x, 40f, position.z), Quaternion.Euler(90f, 0f, 0f));
+            label.gameObject.layer = layer;
+        }
+
+        // 지도 카메라만 이 레이어를 그리고, 다른 카메라는 그리지 않는다
+        int bit = 1 << layer;
+        MinimapCameraController map = Object.FindFirstObjectByType<MinimapCameraController>(FindObjectsInactive.Include);
+        Camera mapCamera = null;
+
+        if (map != null)
+        {
+            SerializedObject serialized = new SerializedObject(map);
+            SerializedProperty mask = serialized.FindProperty("mapLayerMask");
+            mask.intValue |= bit;
+            mapCamera = serialized.FindProperty("mapCamera").objectReferenceValue as Camera;
+            serialized.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        int excluded = 0;
+
+        foreach (GameObject root in scene.GetRootGameObjects())
+        {
+            foreach (Camera camera in root.GetComponentsInChildren<Camera>(true))
+            {
+                if (camera == mapCamera || (map != null && camera.transform.IsChildOf(map.transform)))
+                {
+                    camera.cullingMask |= bit;
+                    continue;
+                }
+
+                camera.cullingMask &= ~bit;
+                EditorUtility.SetDirty(camera);
+                excluded++;
+            }
+        }
+
+        return $"지도 구역 이름 {labels.Count}개 (레이어 {MapLabelLayerName}, 지도 카메라에만 표시 · 다른 카메라 {excluded}개 제외)";
+    }
+
+    // ---------------------------------------------------------------- NPC 일정 위치
+
+    private static string BuildLocations(Scene scene, Transform parent)
+    {
+        NpcDatabase database = AssetDatabase.LoadAssetAtPath<NpcDatabase>(NpcContentBuilder.DatabasePath);
+
+        if (database == null)
+        {
+            return "✗ NpcDatabase가 없습니다.";
+        }
+
+        List<NpcLocationPoint> created = new List<NpcLocationPoint>();
+        StringBuilder report = new StringBuilder();
+
+        foreach (NpcDatabase.Location location in database.Locations.Where(item => !item.IsVillage))
+        {
+            if (!PointLayout.TryGetValue(location.LocationId, out (Vector3 position, Vector3 lookAt) spec))
+            {
+                report.AppendLine($"✗ 새 구역 위치 배치 정보가 없습니다: {location.LocationId}");
+                continue;
+            }
+
+            GameObject holder = new GameObject(location.LocationId);
+            holder.transform.SetParent(parent, false);
+            Vector3 facing = spec.lookAt - spec.position;
+            holder.transform.SetPositionAndRotation(spec.position, Quaternion.Euler(0f, Mathf.Atan2(facing.x, facing.z) * Mathf.Rad2Deg, 0f));
+            NpcLocationPoint point = holder.AddComponent<NpcLocationPoint>();
+            point.EditorAssign(location.LocationId, location.DisplayName, false, NpcLocationAnchor.Fixed);
+            created.Add(point);
+        }
+
+        // NPC 관리자 위치 목록 = 마을 위치 + 새 구역 위치
+        NpcManager manager = Object.FindFirstObjectByType<NpcManager>(FindObjectsInactive.Include);
+
+        if (manager == null)
+        {
+            report.AppendLine($"새 구역 위치 {created.Count}곳 (NPC 관리자가 없어 연결 생략 : 8번 메뉴를 먼저 실행하세요)");
+            return report.ToString().TrimEnd();
+        }
+
+        List<NpcLocationPoint> merged = manager.Locations.Where(point => point != null && !created.Any(item => item.LocationId == point.LocationId) && !point.transform.IsChildOf(parent.parent)).ToList();
+        int village = merged.Count;
+        merged.AddRange(created);
+        SerializedObject serialized = new SerializedObject(manager);
+        SerializedProperty list = serialized.FindProperty("locations");
+        list.arraySize = merged.Count;
+
+        for (int index = 0; index < merged.Count; index++)
+        {
+            list.GetArrayElementAtIndex(index).objectReferenceValue = merged[index];
+        }
+
+        serialized.ApplyModifiedPropertiesWithoutUndo();
+        report.AppendLine($"새 구역 위치 {created.Count}곳 · NPC 관리자 위치 {merged.Count}곳 (마을 {village} + 새 구역 {created.Count})");
+        return report.ToString().TrimEnd();
+    }
+
+    // ---------------------------------------------------------------- 적 생성 지점
+
+    private static string BuildEnemySpawns(Scene scene)
+    {
+        GameObject root = scene.GetRootGameObjects().FirstOrDefault(item => item.name == SpawnRootName);
+
+        if (root == null)
+        {
+            return "적 생성 지점 : 적 생성 루트가 없어 건너뜀";
+        }
+
+        int made = 0;
+
+        foreach ((string id, string templateName, Vector3 position) in ZoneSpawns)
+        {
+            string objectName = "Spawn_" + id.Replace("spawn_", string.Empty);
+            Transform existing = root.transform.Find(objectName);
+            Transform template = root.transform.Find(templateName);
+
+            if (template == null)
+            {
+                continue;
+            }
+
+            if (existing != null)
+            {
+                Object.DestroyImmediate(existing.gameObject);
+            }
+
+            GameObject clone = Object.Instantiate(template.gameObject, root.transform);
+            clone.name = objectName;
+            clone.transform.SetPositionAndRotation(position, template.rotation);
+            SerializedObject serialized = new SerializedObject(clone.GetComponent<EnemySpawnPoint>());
+            serialized.FindProperty("spawnPointId").stringValue = id;
+            serialized.ApplyModifiedPropertiesWithoutUndo();
+            made++;
+        }
+
+        return $"적 생성 지점 {made}곳 (고대 폐허 근접형 · 안개 습지 원거리형)";
+    }
+
+    // ---------------------------------------------------------------- NavMesh
+
+    // 즉시 굽고 기존 NavMesh Asset에 덮어써 GUID를 유지한다
+    private static string RebakeNavMesh()
+    {
+        NavMeshSurface surface = Object.FindFirstObjectByType<NavMeshSurface>();
+
+        if (surface == null)
+        {
+            return "✗ NavMeshSurface가 없어 NavMesh를 굽지 못했습니다.";
+        }
+
+        Physics.SyncTransforms();
+        NavMeshData previous = surface.navMeshData;
+        string path = previous != null ? AssetDatabase.GetAssetPath(previous) : null;
+        float started = Time.realtimeSinceStartup;
+        surface.BuildNavMesh();
+        NavMeshData built = surface.navMeshData;
+
+        if (built == null)
+        {
+            return "✗ NavMesh 굽기에 실패했습니다.";
+        }
+
+        if (!string.IsNullOrEmpty(path) && built != previous)
+        {
+            surface.RemoveData();
+            EditorUtility.CopySerialized(built, previous);
+            previous.name = System.IO.Path.GetFileNameWithoutExtension(path);
+            surface.navMeshData = previous;
+            surface.AddData();
+            Object.DestroyImmediate(built);
+            EditorUtility.SetDirty(previous);
+            AssetDatabase.SaveAssetIfDirty(previous);
+        }
+        else if (string.IsNullOrEmpty(path))
+        {
+            string folder = System.IO.Path.ChangeExtension(ScenePath, null);
+
+            if (!AssetDatabase.IsValidFolder(folder))
+            {
+                AssetDatabase.CreateFolder(System.IO.Path.GetDirectoryName(folder), System.IO.Path.GetFileName(folder));
+            }
+
+            AssetDatabase.CreateAsset(built, $"{folder}/NavMesh-{surface.name}.asset");
+        }
+
+        EditorUtility.SetDirty(surface);
+        NavMeshTriangulation triangulation = NavMesh.CalculateTriangulation();
+        return $"NavMesh 다시 굽기 완료 ({Time.realtimeSinceStartup - started:0.0}초, 삼각형 {triangulation.indices.Length / 3}개)";
+    }
+
+    // ---------------------------------------------------------------- 검증
+
+    public static IEnumerable<string> CollectTexts()
+    {
+        foreach (ZoneInfo zone in Zones)
+        {
+            yield return zone.DisplayName + " →";
+        }
+
+        yield return "마을";
+    }
+
+    public static string Validate(out int errorCount)
+    {
+        StringBuilder report = new StringBuilder("[새 구역 · 특수 체형 검증]\n");
+        int errors = 0;
+
+        void Error(string message)
+        {
+            errors++;
+            report.AppendLine("✗ " + message);
+        }
+
+        // 1. NPC 모델 (35명)
+        NpcDatabase database = AssetDatabase.LoadAssetAtPath<NpcDatabase>(NpcContentBuilder.DatabasePath);
+        Dictionary<StylizedModelLibrary.NpcBody, int> bodies = new Dictionary<StylizedModelLibrary.NpcBody, int>();
+        int models = 0;
+        int waterBound = 0;
+
+        if (database == null)
+        {
+            Error("NpcDatabase가 없습니다.");
+        }
+        else
+        {
+            LowPolyMeshBuilder builder = new LowPolyMeshBuilder();
+
+            foreach (NpcCharacterData character in database.Characters.Where(item => item != null))
+            {
+                string modelId = StylizedModelLibrary.GetNpcModelId(character.CharacterId);
+
+                if (!StylizedModelLibrary.TryGetNpcLook(modelId, out StylizedModelLibrary.NpcLook look))
+                {
+                    Error($"{character.CharacterId} : 모양 값(모델 도감)이 없습니다 ({modelId}).");
+                    continue;
+                }
+
+                models++;
+                bodies[look.Body] = bodies.TryGetValue(look.Body, out int used) ? used + 1 : 1;
+
+                if (StylizedArtAssetFactory.LoadModelPrefab(modelId) == null)
+                {
+                    Error($"{character.CharacterId} : 모델 Prefab이 없습니다. 18번 메뉴를 실행하세요.");
+                }
+
+                if (!NpcPlacementBuilder.HasHairColor(character.CharacterId))
+                {
+                    Error($"{character.CharacterId} : 머리 색이 정해지지 않았습니다.");
+                }
+
+                StylizedModelLibrary.TryBuild(modelId, builder);
+                Bounds bounds = builder.CalculateBounds();
+
+                if (bounds.size.y < 1.0f || bounds.size.y > 3.2f || bounds.size.x > 3f || bounds.size.z > 3.4f || bounds.min.y < -0.02f)
+                {
+                    Error($"{character.CharacterId} : 모델 크기가 범위를 벗어났습니다 (높이 {bounds.size.y:0.00} · 폭 {bounds.size.x:0.00} · 길이 {bounds.size.z:0.00} · 바닥 {bounds.min.y:0.00}).");
+                }
+
+                NpcBodyMetrics metrics = NpcBodyRules.Get(look);
+
+                if (metrics.AgentRadius > 0.6f || metrics.Height < 1.2f || metrics.Height > 3f)
+                {
+                    Error($"{character.CharacterId} : 길찾기 크기가 범위를 벗어났습니다 (반지름 {metrics.AgentRadius:0.00} · 높이 {metrics.Height:0.00}).");
+                }
+
+                if (metrics.WaterBound)
+                {
+                    waterBound++;
+                    ValidateWaterside(character, database, Error);
+                }
+            }
+
+            report.AppendLine($"NPC 모델 {models}/{database.Characters.Count}명 · 하반신 {string.Join(" · ", bodies.OrderBy(pair => pair.Key).Select(pair => $"{BodyName(pair.Key)} {pair.Value}"))} · 물가 NPC {waterBound}명");
+
+            // 새 구역 위치 데이터
+            foreach (ZoneInfo zone in Zones)
+            {
+                if (!database.Locations.Any(location => location.ZoneId == zone.Id))
+                {
+                    Error($"{zone.DisplayName} 구역에 NPC 위치가 없습니다 (NpcLocations.csv).");
+                }
+            }
+
+            foreach (NpcDatabase.Location location in database.Locations.Where(item => !item.IsVillage))
+            {
+                if (!Zones.Any(zone => zone.Id == location.ZoneId))
+                {
+                    Error($"{location.LocationId} : 알 수 없는 구역입니다 ({location.ZoneId}).");
+                }
+
+                if (!PointLayout.ContainsKey(location.LocationId))
+                {
+                    Error($"{location.LocationId} : 새 구역 배치 정보가 없습니다 (WorldZoneBuilder.PointLayout).");
+                }
+            }
+        }
+
+        int zoneModels = StylizedModelLibrary.Catalog.Keys.Count(id => id.StartsWith("zone_", StringComparison.Ordinal));
+        int missingZoneModels = StylizedModelLibrary.Catalog.Keys.Count(id => id.StartsWith("zone_", StringComparison.Ordinal) && StylizedArtAssetFactory.LoadModelPrefab(id) == null);
+
+        if (missingZoneModels > 0)
+        {
+            Error($"구역 소품 모델 Prefab {missingZoneModels}개가 없습니다. 18번 메뉴를 실행하세요.");
+        }
+
+        report.AppendLine($"구역 소품 모델 {zoneModels - missingZoneModels}/{zoneModels}종");
+        KoreanFontBuilder.Validate(CollectTexts(), Error, new StringBuilder());
+
+        // 2. 게임 Scene
+        Scene scene = EditorSceneManager.GetActiveScene();
+
+        if (scene.path != ScenePath)
+        {
+            report.AppendLine("Scene 검사 생략 (게임 Scene이 열려 있지 않음)");
+        }
+        else if (database != null)
+        {
+            ValidateScene(scene, database, Error, report);
+        }
+
+        errorCount = errors;
+        report.AppendLine(errors == 0 ? "결과 : 오류 0개" : $"결과 : 오류 {errors}개");
+        return report.ToString();
+    }
+
+    private static string BodyName(StylizedModelLibrary.NpcBody body)
+    {
+        switch (body)
+        {
+            case StylizedModelLibrary.NpcBody.SnakeTail: return "뱀 꼬리";
+            case StylizedModelLibrary.NpcBody.SpiderLegs: return "거미 다리";
+            case StylizedModelLibrary.NpcBody.HorseBody: return "말 몸";
+            case StylizedModelLibrary.NpcBody.FishTail: return "물고기 꼬리";
+            case StylizedModelLibrary.NpcBody.Tentacles: return "촉수";
+            case StylizedModelLibrary.NpcBody.ScorpionBody: return "전갈 몸";
+            case StylizedModelLibrary.NpcBody.Floating: return "떠 있음";
+            case StylizedModelLibrary.NpcBody.SlimeBase: return "슬라임";
+            case StylizedModelLibrary.NpcBody.MimicChest: return "보물상자";
+            default: return "사람 다리";
+        }
+    }
+
+    // 물가 NPC(인어 · 크라켄 · 상어족)의 집 · 일터 · 일정 위치는 모두 물가여야 한다
+    private static void ValidateWaterside(NpcCharacterData character, NpcDatabase database, Action<string> error)
+    {
+        IEnumerable<string> locations = new[] { character.HomeLocationId, character.WorkLocationId };
+
+        if (character.Schedule != null)
+        {
+            locations = locations.Concat(character.Schedule.Plans.SelectMany(plan => plan.Stops).Select(stop => stop.LocationId));
+        }
+
+        foreach (string locationId in locations.Where(id => !string.IsNullOrEmpty(id)).Distinct())
+        {
+            NpcDatabase.Location location = database.GetLocation(locationId);
+
+            if (location != null && !location.IsWaterside)
+            {
+                error($"{character.CharacterId} : 물가 NPC인데 물가가 아닌 위치가 있습니다 ({locationId}).");
+            }
+        }
+    }
+
+    private static float DistanceToWater(Vector3 position)
+    {
+        float best = Mathf.Max(0f, SeaLine - position.x);
+
+        foreach ((string _, Vector3 center, float radius) in Pools)
+        {
+            best = Mathf.Min(best, Mathf.Max(0f, Flat(position, center) - radius));
+        }
+
+        return best;
+    }
+
+    private static void ValidateScene(Scene scene, NpcDatabase database, Action<string> error, StringBuilder report)
+    {
+        GameObject root = scene.GetRootGameObjects().FirstOrDefault(item => item.name == RootName);
+
+        if (root == null)
+        {
+            error("게임 Scene에 새 구역이 없습니다. Build Content > 18. World Zones를 실행하세요.");
+            return;
+        }
+
+        foreach (ZoneInfo zone in Zones)
+        {
+            Transform group = root.transform.Find(zone.ObjectName);
+
+            if (group == null || group.childCount < 5)
+            {
+                error($"{zone.DisplayName} 구역 소품이 없습니다.");
+            }
+        }
+
+        Physics.SyncTransforms();
+        int building = LayerMask.GetMask(BuildingLayerName);
+        NpcManager manager = Object.FindFirstObjectByType<NpcManager>(FindObjectsInactive.Include);
+        int good = 0;
+        List<NpcDatabase.Location> zoneLocations = database.Locations.Where(item => !item.IsVillage).ToList();
+
+        foreach (NpcDatabase.Location location in zoneLocations)
+        {
+            NpcLocationPoint point = root.GetComponentsInChildren<NpcLocationPoint>(true).FirstOrDefault(item => item.LocationId == location.LocationId);
+
+            if (point == null)
+            {
+                error($"새 구역 위치가 Scene에 없습니다: {location.LocationId}");
+                continue;
+            }
+
+            Vector3 position = point.transform.position;
+
+            if (!NavMesh.SamplePosition(position, out NavMeshHit _, 2f, NavMesh.AllAreas))
+            {
+                error($"새 구역 위치가 걸을 수 있는 곳(NavMesh) 밖입니다: {location.LocationId} {position}");
+                continue;
+            }
+
+            if (Physics.CheckSphere(position + Vector3.up * 0.9f, 0.3f, building, QueryTriggerInteraction.Ignore))
+            {
+                error($"새 구역 위치가 건물 · 소품 안에 있습니다: {location.LocationId}");
+                continue;
+            }
+
+            if (location.IsWaterside && DistanceToWater(position) > 3.5f)
+            {
+                error($"물가 위치인데 물에서 {DistanceToWater(position):0.0}m 떨어져 있습니다: {location.LocationId}");
+                continue;
+            }
+
+            if (manager != null && !manager.Locations.Contains(point))
+            {
+                error($"NPC 관리자에 새 구역 위치가 연결되지 않았습니다: {location.LocationId}");
+                continue;
+            }
+
+            good++;
+        }
+
+        // 흙길 · 입구가 걸을 수 있는지, 바다는 걸을 수 없는지
+        int reachable = 0;
+
+        foreach (ZoneInfo zone in Zones)
+        {
+            NavMeshPath path = new NavMeshPath();
+            bool fromVillage = NavMesh.SamplePosition(zone.PathStart, out NavMeshHit start, 3f, NavMesh.AllAreas);
+            bool toZone = NavMesh.SamplePosition(zone.Entrance, out NavMeshHit end, 3f, NavMesh.AllAreas);
+
+            if (!fromVillage || !toZone || !NavMesh.CalculatePath(start.position, end.position, NavMesh.AllAreas, path) || path.status != NavMeshPathStatus.PathComplete)
+            {
+                error($"마을에서 {zone.DisplayName} 입구까지 걸어갈 수 없습니다 (NavMesh 길 없음).");
+                continue;
+            }
+
+            reachable++;
+        }
+
+        if (NavMesh.SamplePosition(new Vector3(113f, 0f, 60f), out NavMeshHit sea, 1f, NavMesh.AllAreas))
+        {
+            error($"바다가 걸을 수 있는 곳으로 되어 있습니다 ({sea.position}). 18번 메뉴로 NavMesh를 다시 구우세요.");
+        }
+
+        int walls = root.transform.Find("Boundary") != null ? root.transform.Find("Boundary").GetComponentsInChildren<BoxCollider>().Length : 0;
+
+        if (walls < 6)
+        {
+            error($"섬 경계 · 바다 벽이 {walls}/6개입니다.");
+        }
+
+        Terrain terrain = Terrain.activeTerrain != null ? Terrain.activeTerrain : Object.FindFirstObjectByType<Terrain>();
+        int zoneLayers = terrain != null && terrain.terrainData != null ? terrain.terrainData.terrainLayers.Count(layer => layer != null && layer.name.StartsWith("TL_Zone", StringComparison.Ordinal)) : 0;
+
+        if (zoneLayers != ZoneLayerNames.Length)
+        {
+            error($"Terrain 구역 바닥 층이 {zoneLayers}/{ZoneLayerNames.Length}개입니다.");
+        }
+
+        int labelLayer = LayerMask.NameToLayer(MapLabelLayerName);
+        Camera main = Camera.main != null ? Camera.main : Object.FindObjectsByType<Camera>(FindObjectsInactive.Include, FindObjectsSortMode.None).FirstOrDefault(camera => camera.CompareTag("MainCamera"));
+
+        if (labelLayer < 0)
+        {
+            error("지도 이름 레이어(MapLabel)가 없습니다.");
+        }
+        else if (main != null && (main.cullingMask & (1 << labelLayer)) != 0)
+        {
+            error("게임 카메라가 지도 이름을 그립니다 (MapLabel 레이어를 빼야 합니다).");
+        }
+
+        EnemySpawnPoint[] spawns = Object.FindObjectsByType<EnemySpawnPoint>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+        foreach ((string id, string _, Vector3 _) in ZoneSpawns)
+        {
+            if (!spawns.Any(spawn => spawn.SpawnPointId == id))
+            {
+                error($"새 구역 적 생성 지점이 없습니다: {id}");
+            }
+        }
+
+        if (spawns.Select(spawn => spawn.SpawnPointId).Distinct().Count() != spawns.Length)
+        {
+            error("적 생성 지점 ID가 겹칩니다.");
+        }
+
+        report.AppendLine($"새 구역 위치 {good}/{zoneLocations.Count}곳 정상 · 마을→입구 길 {reachable}/{Zones.Length}개 · 경계 벽 {walls}개 · 바닥 층 {zoneLayers}개 · 적 생성 지점 {spawns.Length}곳");
+    }
+}

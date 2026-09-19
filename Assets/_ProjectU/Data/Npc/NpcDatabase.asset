@@ -53,56 +53,170 @@ MonoBehaviour:
     displayName: "\uB9C8\uC744 \uAD11\uC7A5"
     description: "\uB9C8\uC744 \uAC00\uC6B4\uB370 \uACF5\uD130 (\uBAA8\uB2E5\uBD88\uACFC
       \uAC8C\uC2DC\uD310 \uADFC\uCC98)"
+    zoneId: village
+    waterside: 0
   - locationId: loc_farm_fields
     displayName: "\uB18D\uC7A5 \uBC2D"
     description: "\uD50C\uB808\uC774\uC5B4 \uBC2D \uC606 \uAE38"
+    zoneId: village
+    waterside: 0
   - locationId: loc_pond_dock
     displayName: "\uC5F0\uBABB \uC120\uCC29\uC7A5"
     description: "\uB09A\uC2DC \uC5F0\uBABB \uAC00\uC7A5\uC790\uB9AC"
+    zoneId: village
+    waterside: 1
   - locationId: loc_animal_pens
     displayName: "\uAC00\uCD95 \uC6B0\uB9AC"
     description: "\uB2ED\uC7A5\uACFC \uC678\uC591\uAC04 \uC55E"
+    zoneId: village
+    waterside: 0
   - locationId: loc_market_stall
     displayName: "\uC0C1\uC778 \uAC00\uD310\uB300"
     description: "\uB5A0\uB3CC\uC774 \uC0C1\uC778 \uAC00\uD310\uB300 \uC790\uB9AC"
+    zoneId: village
+    waterside: 0
   - locationId: loc_forest_edge
     displayName: "\uC232 \uAC00\uC7A5\uC790\uB9AC"
     description: "\uC57D\uCD08\uAC00 \uC790\uB77C\uB294 \uC232 \uC785\uAD6C"
+    zoneId: village
+    waterside: 0
   - locationId: loc_cafe
     displayName: "\uC120\uC14B \uCE74\uD398"
     description: "\uCE74\uD398 \uCE74\uC6B4\uD130 \uC55E (\uC190\uB2D8 \uC790\uB9AC)"
+    zoneId: village
+    waterside: 0
   - locationId: loc_cafe_counter
     displayName: "\uCE74\uD398 \uCE74\uC6B4\uD130"
     description: "\uCE74\uC6B4\uD130 \uC548\uCABD (\uBC00\uD0A4 \uC790\uB9AC)"
+    zoneId: village
+    waterside: 0
   - locationId: loc_smithy
     displayName: "\uB300\uC7A5\uAC04"
     description: "\uB300\uC7A5\uAC04 \uC55E (\uC190\uB2D8 \uC790\uB9AC)"
+    zoneId: village
+    waterside: 0
   - locationId: loc_smithy_anvil
     displayName: "\uB300\uC7A5\uAC04 \uBAA8\uB8E8"
     description: "\uBAA8\uB8E8 \uB4A4 (\uB4DC\uB77C\uBE44\uC544 \uC790\uB9AC)"
+    zoneId: village
+    waterside: 0
   - locationId: loc_home_lunette
     displayName: "\uB8E8\uB124\uD2B8\uC758 \uC624\uB450\uB9C9"
     description: "\uC232 \uAC00\uC7A5\uC790\uB9AC \uADFC\uCC98 \uC791\uC740 \uC624\uB450\uB9C9"
+    zoneId: village
+    waterside: 0
   - locationId: loc_home_verona
     displayName: "\uBCA0\uB85C\uB098\uC758 \uB18D\uAC00"
     description: "\uBC2D \uC606 \uB18D\uAC00"
+    zoneId: village
+    waterside: 0
   - locationId: loc_home_mio
     displayName: "\uBBF8\uC624\uC758 \uC624\uB450\uB9C9"
     description: "\uC5F0\uBABB\uAC00 \uC624\uB450\uB9C9"
+    zoneId: village
+    waterside: 0
   - locationId: loc_home_mireille
     displayName: "\uBBF8\uB808\uC720\uC758 \uC591\uCE58\uAE30 \uC9D1"
     description: "\uAC00\uCD95 \uC6B0\uB9AC \uC606 \uC791\uC740 \uC9D1"
+    zoneId: village
+    waterside: 0
   - locationId: loc_home_milky
     displayName: "\uCE74\uD398 2\uCE35"
     description: "\uC120\uC14B \uCE74\uD398 \uC704\uCE35"
+    zoneId: village
+    waterside: 0
   - locationId: loc_home_dravia
     displayName: "\uB300\uC7A5\uAC04 \uB4A4\uCC44"
     description: "\uB300\uC7A5\uAC04 \uB4A4\uCABD \uBC29"
+    zoneId: village
+    waterside: 0
   - locationId: loc_lichel_camp
     displayName: "\uB9AC\uCCBC\uC758 \uC9D0\uB9C8\uCC28"
     description: "\uB9C8\uC744 \uC678\uACFD \uACF5\uD130"
+    zoneId: village
+    waterside: 0
+  - locationId: loc_coast_dock
+    displayName: "\uD574\uC548 \uBD80\uB450"
+    description: "\uBC14\uB2E4\uB85C \uBED7\uC740 \uB098\uBB34 \uBD80\uB450 \uC55E"
+    zoneId: coast
+    waterside: 1
+  - locationId: loc_coast_beach
+    displayName: "\uBAA8\uB798 \uD574\uBCC0"
+    description: "\uC5B4\uBD80 \uC624\uB450\uB9C9 \uC55E \uBAA8\uB798\uBC2D"
+    zoneId: coast
+    waterside: 0
+  - locationId: loc_coast_rocks
+    displayName: "\uAC2F\uBC14\uC704"
+    description: "\uBB3C\uAC00 \uBC14\uC704 \uC6C5\uB369\uC774 \uC606"
+    zoneId: coast
+    waterside: 1
+  - locationId: loc_ruins_gate
+    displayName: "\uC720\uC801 \uC785\uAD6C"
+    description: "\uC9C0\uD558 \uC720\uC801\uC73C\uB85C \uB0B4\uB824\uAC00\uB294
+      \uBD09\uC778\uB41C \uBB38 \uC55E"
+    zoneId: ruins
+    waterside: 0
+  - locationId: loc_ruins_library
+    displayName: "\uBB34\uB108\uC9C4 \uB3C4\uC11C\uAD00"
+    description: "\uCC45\uC7A5\uC774 \uB0A8\uC740 \uC61B \uB3C4\uC11C\uAD00 \uD130"
+    zoneId: ruins
+    waterside: 0
+  - locationId: loc_ruins_plaza
+    displayName: "\uC720\uC801 \uAD11\uC7A5"
+    description: "\uC11D\uC0C1\uC774 \uC120 \uC61B \uAD11\uC7A5"
+    zoneId: ruins
+    waterside: 0
+  - locationId: loc_forest_fairy_ring
+    displayName: "\uC694\uC815\uC758 \uBC84\uC12F \uACE0\uB9AC"
+    description: "\uAE4A\uC740 \uC232 \uBE48\uD130\uC758 \uBC84\uC12F \uACE0\uB9AC"
+    zoneId: forest
+    waterside: 0
+  - locationId: loc_forest_flower_garden
+    displayName: "\uBE5B\uB098\uB294 \uAF43\uBC2D"
+    description: "\uBC24\uC5D0 \uBE5B\uB098\uB294 \uAF43\uC774 \uD540 \uD654\uC6D0"
+    zoneId: forest
+    waterside: 0
+  - locationId: loc_forest_witch_hut
+    displayName: "\uB9C8\uB140\uC758 \uC624\uB450\uB9C9"
+    description: "\uC232 \uAE4A\uC740 \uACF3 \uAE4C\uB9C8\uADC0 \uC624\uB450\uB9C9
+      \uC55E"
+    zoneId: forest
+    waterside: 0
+  - locationId: loc_snow_camp
+    displayName: "\uC124\uC6D0 \uC57C\uC601\uC9C0"
+    description: "\uC124\uC0B0 \uAE30\uC2AD\uC758 \uCC9C\uB9C9\uACFC \uBAA8\uB2E5\uBD88"
+    zoneId: snow
+    waterside: 0
+  - locationId: loc_snow_shrine
+    displayName: "\uC0B0\uAE30\uC2AD \uC0AC\uB2F9"
+    description: "\uBD89\uC740 \uBB38\uACFC \uC11D\uB4F1\uC774 \uC788\uB294 \uC0AC\uB2F9"
+    zoneId: snow
+    waterside: 0
+  - locationId: loc_desert_oasis
+    displayName: "\uC0AC\uB9C9 \uC624\uC544\uC2DC\uC2A4"
+    description: "\uC57C\uC790\uC218\uAC00 \uB458\uB7EC\uC2FC \uC0D8\uAC00"
+    zoneId: desert
+    waterside: 1
+  - locationId: loc_desert_camp
+    displayName: "\uC0AC\uB9C9 \uCC9C\uB9C9"
+    description: "\uBD89\uC740 \uBC14\uC704 \uC606 \uC0C1\uC778 \uCC9C\uB9C9"
+    zoneId: desert
+    waterside: 0
+  - locationId: loc_swamp_boardwalk
+    displayName: "\uC2B5\uC9C0 \uB098\uBB34\uAE38"
+    description: "\uC548\uAC1C \uC2B5\uC9C0\uB97C \uAC74\uB108\uB294 \uB098\uBB34
+      \uAE38 \uC704"
+    zoneId: swamp
+    waterside: 1
+  - locationId: loc_swamp_hut
+    displayName: "\uC2B5\uC9C0 \uC624\uB450\uB9C9"
+    description: "\uAE30\uB465 \uC704\uC5D0 \uC9C0\uC740 \uAD00\uCE21 \uC624\uB450\uB9C9
+      \uC55E"
+    zoneId: swamp
+    waterside: 0
   stageThresholds: 14000000280000003c00000050000000
   giftPoints: 080000000400000001000000fbfffffff6ffffff
   birthdayMultiplier: 3
   dailyTalkPoints: 1
   giftsPerDay: 1
+  giftsPerWeek: 2

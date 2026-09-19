@@ -63,6 +63,7 @@ MonoBehaviour:
     illustrationStyle: "\uC77C\uBCF8 \uC560\uB2C8\uD48D \uACE0\uC815 \u2013 \uBAA8\uB798\uAE38
       \uBC30\uACBD, \uBD89\uC740 \uC2A4\uCE74\uD504, \uAC1C \uADC0\uC640 \uAF2C\uB9AC
       \uAC15\uC870, \uBC1D\uC740 \uD587\uBE5B \uC5F0\uCD9C"
+  portrait: {fileID: 0}
   themeColor: {r: 0.9019608, g: 0.7607843, b: 0.47843137, a: 1}
   accentColor: {r: 0.9529412, g: 0.8784314, b: 0.63529414, a: 1}
   personality:

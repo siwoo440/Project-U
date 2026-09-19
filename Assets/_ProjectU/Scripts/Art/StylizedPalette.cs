@@ -95,7 +95,31 @@ public enum StylizedColor
     // 90일차: NPC 색 칸 (NpcAppearance가 NPC마다 캐릭터 시트 색으로 덮어씀)
     NpcOutfit = 120,
     NpcAccent = 121,
-    NpcHair = 122
+    NpcHair = 122,
+    // 100일차: 특수 체형 NPC (피부 · 비늘 · 날개 · 반투명 몸)
+    SkinPale = 123,
+    SkinGoblin = 124,
+    SkinCeramic = 125,
+    SpiritMist = 126,
+    SlimeJelly = 127,
+    SoulFlame = 128,
+    SnakeScale = 129,
+    MermaidScale = 130,
+    Chitin = 131,
+    HorseCoat = 132,
+    KrakenSkin = 133,
+    ScorpionShell = 134,
+    SharkSkin = 135,
+    WingGlass = 136,
+    // 100일차: 새 구역 (폐허 · 사막 · 설산 · 습지 · 숲)
+    Sandstone = 137,
+    RuinStone = 138,
+    Ice = 139,
+    SwampMud = 140,
+    SwampWater = 141,
+    Coral = 142,
+    GlowMushroom = 143,
+    RuneGlow = 144
 }
 
 public static class StylizedPalette
@@ -207,6 +231,28 @@ public static class StylizedPalette
             case StylizedColor.NpcOutfit: return new Entry(Hex(0x8FA7C4));
             case StylizedColor.NpcAccent: return new Entry(Hex(0xE9DDC0));
             case StylizedColor.NpcHair: return new Entry(Hex(0x5A3A26));
+            case StylizedColor.SkinPale: return new Entry(Hex(0xF4E6E4));
+            case StylizedColor.SkinGoblin: return new Entry(Hex(0x9DB064));
+            case StylizedColor.SkinCeramic: return new Entry(Hex(0xEEF2F6), 0.55f);
+            case StylizedColor.SpiritMist: return new Entry(new Color(0.84f, 0.83f, 0.93f, 0.5f), 0.3f, 0f, 0.25f, true);
+            case StylizedColor.SlimeJelly: return new Entry(new Color(0.46f, 0.85f, 0.88f, 0.72f), 0.9f, 0f, 0.15f, true);
+            case StylizedColor.SoulFlame: return new Entry(Hex(0x5E9FEA), 0f, 0f, 1.1f);
+            case StylizedColor.SnakeScale: return new Entry(Hex(0x2E8F6A), 0.55f);
+            case StylizedColor.MermaidScale: return new Entry(Hex(0x4FA9B0), 0.65f, 0.2f);
+            case StylizedColor.Chitin: return new Entry(Hex(0x2B2233), 0.5f);
+            case StylizedColor.HorseCoat: return new Entry(Hex(0x8A5A3B), 0.2f);
+            case StylizedColor.KrakenSkin: return new Entry(Hex(0x7A62A6), 0.45f);
+            case StylizedColor.ScorpionShell: return new Entry(Hex(0x8A4632), 0.5f);
+            case StylizedColor.SharkSkin: return new Entry(Hex(0x5F8299), 0.4f);
+            case StylizedColor.WingGlass: return new Entry(new Color(0.72f, 0.97f, 0.88f, 0.45f), 0.8f, 0f, 0.35f, true);
+            case StylizedColor.Sandstone: return new Entry(Hex(0xC98A5C));
+            case StylizedColor.RuinStone: return new Entry(Hex(0xA8A28C));
+            case StylizedColor.Ice: return new Entry(Hex(0xBFE3F0), 0.8f);
+            case StylizedColor.SwampMud: return new Entry(Hex(0x51483A), 0.3f);
+            case StylizedColor.SwampWater: return new Entry(new Color(0.22f, 0.33f, 0.26f, 0.82f), 0.85f, 0f, 0f, true);
+            case StylizedColor.Coral: return new Entry(Hex(0xF07F6B), 0.35f);
+            case StylizedColor.GlowMushroom: return new Entry(Hex(0x7FE0D0), 0.4f, 0f, 0.9f);
+            case StylizedColor.RuneGlow: return new Entry(Hex(0x9A6BFF), 0f, 0f, 0.65f);
             default: return new Entry(Color.magenta);
         }
     }

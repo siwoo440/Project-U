@@ -63,6 +63,7 @@ MonoBehaviour:
       \uD478\uB978 \uC232, \uAE4C\uB9C8\uADC0 \uAE43\uD138, \uC790\uC90F\uBE5B \uB9C8\uBC95\uC9C4,
       \uB2EC\uBE5B \uBC30\uACBD, \uB9DD\uD1A0\uAC00 \uB0A0\uAC1C\uCC98\uB7FC \uD3BC\uCCD0\uC9C4
       \uAD6C\uB3C4 \uCD94\uCC9C."
+  portrait: {fileID: 0}
   themeColor: {r: 0.17254902, g: 0.17254902, b: 0.21960784, a: 1}
   accentColor: {r: 0.41960785, g: 0.30588236, b: 0.61960787, a: 1}
   personality:
