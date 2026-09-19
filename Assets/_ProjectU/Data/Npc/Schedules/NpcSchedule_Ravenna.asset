@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94295176dd2bda648968d83c1418a684, type: 3}
+  m_Name: NpcSchedule_Ravenna
+  m_EditorClassIdentifier: Assembly-CSharp::NpcScheduleData
+  scheduleId: schedule_ravenna
+  plans:
+  - planId: default
+    priority: 0
+    days: 127
+    seasons: 15
+    weather: 0
+    stops:
+    - hour: 7
+      locationId: loc_home_ravenna
+      activity: "\uCD08\uC18C\uC5D0\uC11C \uD734\uC2DD"
+    - hour: 11
+      locationId: loc_ruins_library
+      activity: "\uC61B \uAE30\uC0AC \uAE30\uB85D \uC77D\uAE30"
+    - hour: 14
+      locationId: loc_village_square
+      activity: "\uB9C8\uC744 \uACBD\uBE44 \uC778\uC0AC"
+    - hour: 17
+      locationId: loc_ruins_gate
+      activity: "\uD574 \uC9C8 \uB158 \uC720\uC801 \uC21C\uCC30"
+    - hour: 21
+      locationId: loc_home_ravenna
+      activity: "\uCD08\uC18C\uC5D0\uC11C \uC7A0"
+  - planId: friday
+    priority: 5
+    days: 16
+    seasons: 15
+    weather: 0
+    stops:
+    - hour: 9
+      locationId: loc_home_ravenna
+      activity: "\uAC11\uC637 \uC190\uC9C8"
+    - hour: 13
+      locationId: loc_ruins_plaza
+      activity: "\uAE30\uC0AC\uC758 \uB9F9\uC138 \uC758\uC2DD"
+    - hour: 17
+      locationId: loc_village_square
+      activity: "\uC8FC\uB9D0 \uC800\uB141 \uC21C\uCC30"
+    - hour: 21
+      locationId: loc_home_ravenna
+      activity: "\uCD08\uC18C\uC5D0\uC11C \uC7A0"
+  - planId: rain
+    priority: 10
+    days: 127
+    seasons: 15
+    weather: 2
+    stops:
+    - hour: 7
+      locationId: loc_home_ravenna
+      activity: "\uAC11\uC637 \uB179 \uB2E6\uAE30"
+    - hour: 12
+      locationId: loc_ruins_gate
+      activity: "\uBE57\uC18D \uACBD\uBE44"
+    - hour: 17
+      locationId: loc_home_ravenna
+      activity: "\uCD08\uC18C \uC9C0\uD0A4\uAE30"

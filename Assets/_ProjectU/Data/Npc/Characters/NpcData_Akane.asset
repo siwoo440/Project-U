@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: "\uC544\uCE74\uB124"
   englishName: Akane
   isAlphaCast: 0
-  castWave: 0
+  castWave: 5
   isAvailable: 1
   profile:
     raceId: race_oni
@@ -46,7 +46,7 @@ MonoBehaviour:
       \uC4F8 \uB54C \uD53C\uBD80\uC5D0 \uAE08\uBE5B \uBB38\uC591\uC774 \uB098\uD0C0\uB0A8"
     illustrationStyle: "\uC77C\uBCF8 \uC560\uB2C8\uD48D \uACE0\uC815 \u2013 \uC77C\uBCF8
       \uCD95\uC81C\uC640 \uB2E8\uD48D, \uBD89\uC740 \uBFD4\uACFC \uD558\uC624\uB9AC"
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 6104d5da2c1b458458d72a2b9b962718, type: 3}
   themeColor: {r: 0.64705884, g: 0.16470589, b: 0.16470589, a: 1}
   accentColor: {r: 0.9019608, g: 0.72156864, b: 0.2901961, a: 1}
   personality:
@@ -83,13 +83,14 @@ MonoBehaviour:
   maxAffinity: 100
   birthdaySeason: 1
   birthdayDay: 19
-  homeLocationId: 
-  workLocationId: 
+  homeLocationId: loc_home_akane
+  workLocationId: loc_snow_shrine
   giftProfile: {fileID: 11400000, guid: 9b954f1dec20f004c9a096c949fd5557, type: 2}
   dialogueSet: {fileID: 11400000, guid: 0cbd49388f9bef14e9d3defbb8d8412a, type: 2}
-  schedule: {fileID: 0}
+  schedule: {fileID: 11400000, guid: 65446e9df617a7d48a77ed4e52dc75a5, type: 2}
   dataStatus: "\uAE30\uD68D \uAE30\uBC18 \uC784\uC2DC\uAC12 \uD3EC\uD568"
-  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 89\uC77C\uCC28
-    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uACF5\uD1B5 \uACC4\uC808\xB7\uB0A0\uC528\xB7\uC120\uBB3C
-    \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758 \uC120\uD638
-    \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0 \uC5F0\uACB0."
+  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 110\uC77C\uCC28
+    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uC9D1\xB7\uC77C\uD130 \xB7 \uD558\uB8E8
+    \uC77C\uC815 \xB7 \uCD94\uAC00 \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758
+    \uC120\uD638 \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0
+    \uC5F0\uACB0."

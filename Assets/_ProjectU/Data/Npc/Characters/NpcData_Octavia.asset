@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: "\uC625\uD0C0\uBE44\uC544"
   englishName: Octavia
   isAlphaCast: 0
-  castWave: 0
+  castWave: 5
   isAvailable: 1
   profile:
     raceId: race_krakenkin
@@ -46,7 +46,7 @@ MonoBehaviour:
       \uC9C0\uB3C4\uC640 \uAE30\uC5B5\uC744 \uAE30\uB85D\uD568"
     illustrationStyle: "\uC77C\uBCF8 \uC560\uB2C8\uD48D \uACE0\uC815 \u2013 \uC2EC\uD574
       \uC720\uC801, \uC5EC\uB35F \uCD09\uC218\uC640 \uBA39\uBB3C \uBB38\uC591"
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 7c490f2a459cc4642a6096a91ed4042d, type: 3}
   themeColor: {r: 0.2509804, g: 0.21176471, b: 0.37254903, a: 1}
   accentColor: {r: 0.5019608, g: 0.4, b: 0.65882355, a: 1}
   personality:
@@ -83,13 +83,14 @@ MonoBehaviour:
   maxAffinity: 100
   birthdaySeason: 0
   birthdayDay: 16
-  homeLocationId: 
-  workLocationId: 
+  homeLocationId: loc_home_octavia
+  workLocationId: loc_coast_rocks
   giftProfile: {fileID: 11400000, guid: 273cd03da1534b54a914c390521b990d, type: 2}
   dialogueSet: {fileID: 11400000, guid: 4af1ff76eba4bf6498799ced440b81f5, type: 2}
-  schedule: {fileID: 0}
+  schedule: {fileID: 11400000, guid: f929f3f40dfcd8c419b291ab13591a51, type: 2}
   dataStatus: "\uAE30\uD68D \uAE30\uBC18 \uC784\uC2DC\uAC12 \uD3EC\uD568"
-  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 89\uC77C\uCC28
-    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uACF5\uD1B5 \uACC4\uC808\xB7\uB0A0\uC528\xB7\uC120\uBB3C
-    \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758 \uC120\uD638
-    \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0 \uC5F0\uACB0."
+  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 110\uC77C\uCC28
+    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uC9D1\xB7\uC77C\uD130 \xB7 \uD558\uB8E8
+    \uC77C\uC815 \xB7 \uCD94\uAC00 \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758
+    \uC120\uD638 \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0
+    \uC5F0\uACB0."

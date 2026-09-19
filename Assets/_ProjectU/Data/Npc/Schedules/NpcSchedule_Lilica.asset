@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94295176dd2bda648968d83c1418a684, type: 3}
+  m_Name: NpcSchedule_Lilica
+  m_EditorClassIdentifier: Assembly-CSharp::NpcScheduleData
+  scheduleId: schedule_lilica
+  plans:
+  - planId: default
+    priority: 0
+    days: 127
+    seasons: 15
+    weather: 0
+    stops:
+    - hour: 7
+      locationId: loc_home_lilica
+      activity: "\uCEE4\uD2BC \uCE5C \uBC29\uC5D0\uC11C \uACE0\uC11C \uC77D\uAE30"
+    - hour: 11
+      locationId: loc_swamp_boardwalk
+      activity: "\uC548\uAC1C \uC18D \uC591\uC0B0 \uC0B0\uCC45"
+    - hour: 16
+      locationId: loc_cafe
+      activity: "\uD574 \uC9C8 \uB158 \uD64D\uCC28"
+    - hour: 19
+      locationId: loc_village_square
+      activity: "\uB2EC \uBCF4\uBA70 \uC0B0\uCC45"
+    - hour: 21
+      locationId: loc_home_lilica
+      activity: "\uC800\uD0DD\uC5D0\uC11C \uC7A0"
+  - planId: saturday
+    priority: 5
+    days: 32
+    seasons: 15
+    weather: 0
+    stops:
+    - hour: 8
+      locationId: loc_home_lilica
+      activity: "\uC8FC\uB9D0 \uB2A6\uC7A0"
+    - hour: 13
+      locationId: loc_cafe
+      activity: "\uC8FC\uB9D0 \uB538\uAE30 \uB514\uC800\uD2B8"
+    - hour: 17
+      locationId: loc_village_square
+      activity: "\uAD11\uC7A5 \uC74C\uC545 \uAD6C\uACBD"
+    - hour: 21
+      locationId: loc_home_lilica
+      activity: "\uC800\uD0DD\uC5D0\uC11C \uC7A0"
+  - planId: rain
+    priority: 10
+    days: 127
+    seasons: 15
+    weather: 2
+    stops:
+    - hour: 7
+      locationId: loc_home_lilica
+      activity: "\uBE57\uC18C\uB9AC \uB4E4\uC73C\uBA70 \uD53C\uC544\uB178"
+    - hour: 12
+      locationId: loc_swamp_boardwalk
+      activity: "\uD587\uBE5B \uC5C6\uB294 \uB0A0 \uC0B0\uCC45"
+    - hour: 17
+      locationId: loc_home_lilica
+      activity: "\uCD1B\uBD88 \uCF1C\uACE0 \uD3B8\uC9C0 \uC4F0\uAE30"

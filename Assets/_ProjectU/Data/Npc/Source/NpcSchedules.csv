@@ -374,3 +374,92 @@ char_eiri,rain,10,All,All,Bad,7,loc_home_eiri,등대 안 노래 연습
 char_eiri,rain,10,All,All,Bad,12,loc_coast_dock,빗소리 듣기
 char_eiri,rain,10,All,All,Bad,16,loc_home_eiri,젖은 깃털 말리기
 char_eiri,rain,10,All,All,Bad,21,loc_home_eiri,잠
+char_erina,default,0,All,All,Any,5,loc_home_erina,새벽 활시위 점검
+char_erina,default,0,All,All,Any,7,loc_forest_fairy_ring,숲의 소리 듣기
+char_erina,default,0,All,All,Any,11,loc_forest_edge,숲 가장자리 순찰
+char_erina,default,0,All,All,Any,15,loc_village_square,인간 마을 살피기
+char_erina,default,0,All,All,Any,18,loc_forest_witch_hut,노크티아와 약초 이야기
+char_erina,default,0,All,All,Any,21,loc_home_erina,그루터기 망루에서 잠
+char_erina,autumn,5,All,Autumn,Any,5,loc_home_erina,새벽 활 수련
+char_erina,autumn,5,All,Autumn,Any,8,loc_forest_flower_garden,낙엽 소리 기록
+char_erina,autumn,5,All,Autumn,Any,13,loc_forest_edge,가을 사냥 순찰
+char_erina,autumn,5,All,Autumn,Any,18,loc_home_erina,화살 깃 손질
+char_erina,rain,10,All,All,Bad,6,loc_home_erina,활 손질
+char_erina,rain,10,All,All,Bad,12,loc_forest_fairy_ring,빗속 숲 살피기
+char_erina,rain,10,All,All,Bad,17,loc_home_erina,젖은 화살 말리기
+char_lilica,default,0,All,All,Any,7,loc_home_lilica,커튼 친 방에서 고서 읽기
+char_lilica,default,0,All,All,Any,11,loc_swamp_boardwalk,안개 속 양산 산책
+char_lilica,default,0,All,All,Any,16,loc_cafe,해 질 녘 홍차
+char_lilica,default,0,All,All,Any,19,loc_village_square,달 보며 산책
+char_lilica,default,0,All,All,Any,21,loc_home_lilica,저택에서 잠
+char_lilica,saturday,5,Saturday,All,Any,8,loc_home_lilica,주말 늦잠
+char_lilica,saturday,5,Saturday,All,Any,13,loc_cafe,주말 딸기 디저트
+char_lilica,saturday,5,Saturday,All,Any,17,loc_village_square,광장 음악 구경
+char_lilica,saturday,5,Saturday,All,Any,21,loc_home_lilica,저택에서 잠
+char_lilica,rain,10,All,All,Bad,7,loc_home_lilica,빗소리 들으며 피아노
+char_lilica,rain,10,All,All,Bad,12,loc_swamp_boardwalk,햇빛 없는 날 산책
+char_lilica,rain,10,All,All,Bad,17,loc_home_lilica,촛불 켜고 편지 쓰기
+char_beatrice,default,0,All,All,Any,5,loc_desert_oasis,벌들 물 먹이기
+char_beatrice,default,0,All,All,Any,8,loc_home_beatrice,벌통 점검
+char_beatrice,default,0,All,All,Any,11,loc_farm_fields,밭 꽃가루 조사
+char_beatrice,default,0,All,All,Any,15,loc_forest_edge,꿀벌 정찰
+char_beatrice,default,0,All,All,Any,18,loc_desert_oasis,저녁 꽃 살피기
+char_beatrice,default,0,All,All,Any,21,loc_home_beatrice,벌통 옆에서 잠
+char_beatrice,spring,5,All,Spring,Any,5,loc_desert_oasis,봄 정찰 준비
+char_beatrice,spring,5,All,Spring,Any,8,loc_forest_flower_garden,봄꽃 정찰
+char_beatrice,spring,5,All,Spring,Any,13,loc_farm_fields,딸기꽃 수분
+char_beatrice,spring,5,All,Spring,Any,17,loc_desert_oasis,벌 떼 불러 모으기
+char_beatrice,spring,5,All,Spring,Any,21,loc_home_beatrice,벌통 옆에서 잠
+char_beatrice,rain,10,All,All,Bad,6,loc_home_beatrice,벌통 덮개 씌우기
+char_beatrice,rain,10,All,All,Bad,12,loc_desert_camp,사피라와 벌통 수리
+char_beatrice,rain,10,All,All,Bad,17,loc_home_beatrice,벌들과 비 피하기
+char_lanhua,default,0,All,All,Any,5,loc_home_lanhua,새벽 수련
+char_lanhua,default,0,All,All,Any,9,loc_snow_shrine,사당 계단 오르기 수련
+char_lanhua,default,0,All,All,Any,12,loc_village_square,마을 아이들 무술 지도
+char_lanhua,default,0,All,All,Any,16,loc_smithy,무기 손질
+char_lanhua,default,0,All,All,Any,18,loc_home_lanhua,저녁 명상
+char_lanhua,winter,5,All,Winter,Any,5,loc_home_lanhua,눈 속 수련
+char_lanhua,winter,5,All,Winter,Any,10,loc_snow_camp,라그와 대련
+char_lanhua,winter,5,All,Winter,Any,14,loc_snow_shrine,설산 명상
+char_lanhua,winter,5,All,Winter,Any,18,loc_home_lanhua,저녁 명상
+char_lanhua,rain,10,All,All,Bad,6,loc_home_lanhua,처마 밑 수련
+char_lanhua,rain,10,All,All,Bad,12,loc_snow_camp,모닥불 옆 호흡 수련
+char_lanhua,rain,10,All,All,Bad,17,loc_home_lanhua,빗소리 명상
+char_ravenna,default,0,All,All,Any,7,loc_home_ravenna,초소에서 휴식
+char_ravenna,default,0,All,All,Any,11,loc_ruins_library,옛 기사 기록 읽기
+char_ravenna,default,0,All,All,Any,14,loc_village_square,마을 경비 인사
+char_ravenna,default,0,All,All,Any,17,loc_ruins_gate,해 질 녘 유적 순찰
+char_ravenna,default,0,All,All,Any,21,loc_home_ravenna,초소에서 잠
+char_ravenna,friday,5,Friday,All,Any,9,loc_home_ravenna,갑옷 손질
+char_ravenna,friday,5,Friday,All,Any,13,loc_ruins_plaza,기사의 맹세 의식
+char_ravenna,friday,5,Friday,All,Any,17,loc_village_square,주말 저녁 순찰
+char_ravenna,friday,5,Friday,All,Any,21,loc_home_ravenna,초소에서 잠
+char_ravenna,rain,10,All,All,Bad,7,loc_home_ravenna,갑옷 녹 닦기
+char_ravenna,rain,10,All,All,Bad,12,loc_ruins_gate,빗속 경비
+char_ravenna,rain,10,All,All,Bad,17,loc_home_ravenna,초소 지키기
+char_akane,default,0,All,All,Any,6,loc_home_akane,아침 체조
+char_akane,default,0,All,All,Any,8,loc_snow_shrine,사당 청소
+char_akane,default,0,All,All,Any,11,loc_smithy,대장간 일 돕기
+char_akane,default,0,All,All,Any,15,loc_village_square,축제 준비
+char_akane,default,0,All,All,Any,18,loc_snow_camp,모닥불 먹방
+char_akane,default,0,All,All,Any,21,loc_home_akane,사당 집에서 잠
+char_akane,saturday,5,Saturday,All,Any,6,loc_home_akane,축제 날 아침 체조
+char_akane,saturday,5,Saturday,All,Any,9,loc_village_square,토요 축제 수호
+char_akane,saturday,5,Saturday,All,Any,15,loc_cafe,축제 뒤풀이
+char_akane,saturday,5,Saturday,All,Any,18,loc_snow_shrine,등불 켜기
+char_akane,saturday,5,Saturday,All,Any,21,loc_home_akane,사당 집에서 잠
+char_akane,rain,10,All,All,Bad,6,loc_home_akane,처마 밑 떡 굽기
+char_akane,rain,10,All,All,Bad,10,loc_snow_shrine,빗속 부적 붙이기
+char_akane,rain,10,All,All,Bad,15,loc_home_akane,빗소리 들으며 낮잠
+char_octavia,default,0,All,All,Any,6,loc_home_octavia,새벽 먹물 정리
+char_octavia,default,0,All,All,Any,9,loc_coast_rocks,바위 웅덩이 기록
+char_octavia,default,0,All,All,Any,13,loc_pond_dock,마을 연못 민물 기록
+char_octavia,default,0,All,All,Any,17,loc_coast_dock,노을 바다 기록
+char_octavia,default,0,All,All,Any,21,loc_home_octavia,갯바위 서고에서 잠
+char_octavia,summer,5,All,Summer,Any,5,loc_home_octavia,물속에서 새벽 기록
+char_octavia,summer,5,All,Summer,Any,8,loc_coast_dock,부두 아래 기록
+char_octavia,summer,5,All,Summer,Any,12,loc_coast_rocks,한낮 그늘 쉬기
+char_octavia,summer,5,All,Summer,Any,17,loc_home_octavia,먹물 말리기
+char_octavia,rain,10,All,All,Bad,7,loc_home_octavia,빗소리 기록
+char_octavia,rain,10,All,All,Bad,12,loc_coast_rocks,빗속 조수 기록
+char_octavia,rain,10,All,All,Bad,16,loc_home_octavia,촉촉한 서고 정리

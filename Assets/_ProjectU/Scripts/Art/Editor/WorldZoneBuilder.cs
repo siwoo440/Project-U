@@ -57,6 +57,20 @@ public static class WorldZoneBuilder
     private const float CampTentYaw = 180f;
     private static readonly Vector3 LighthousePosition = new Vector3(95.5f, 0f, -24f); // 에이리 (해안 등대, 100일차)
     private const float LighthouseYaw = 30f;
+    // 112일차: 5차 NPC 집
+    private static readonly Vector3 GothicManorPosition = new Vector3(-49f, 0f, -118f); // 릴리카 (습지 남쪽 끝 안개 속)
+    private const float GothicManorYaw = 339f;
+    private static readonly Vector3 BeehiveHutPosition = new Vector3(106f, 0f, -96f); // 베아트리체 (오아시스 동쪽)
+    private const float BeehiveHutYaw = 276f;
+    private static readonly Vector3 TrainingYardPosition = new Vector3(26f, 0f, 116f); // 란후아 (설원 야영지 북쪽)
+    private const float TrainingYardYaw = 180f;
+    private static readonly Vector3 AkaneShrineHousePosition = new Vector3(58f, 0f, 94f); // 아카네 (카스미 사당 집 남쪽, 같은 모양)
+    private const float AkaneShrineHouseYaw = 270f;
+    private static readonly Vector3 GateWatchpostPosition = new Vector3(-103f, 0f, 84f); // 레이븐나 (폐허 서쪽 무너진 성문)
+    private const float GateWatchpostYaw = 90f;
+    private static readonly Vector3 GreatStumpPosition = new Vector3(-97f, 0f, -38f); // 에리나 (깊은 숲 큰 그루터기, 100일차)
+    private const float GreatStumpYaw = 30f;
+    private static readonly Vector3 TidePoolHomePosition = new Vector3(96.9f, 0f, -1.5f); // 옥타비아 (갯바위 북쪽 물가, 바다에서 3.1m)
 
     public static readonly string[] ZoneLayerNames = { "ZoneSand", "ZoneSnow", "ZoneMud", "ZoneFlagstone" };
 
@@ -119,7 +133,15 @@ public static class WorldZoneBuilder
         { "loc_home_sharia", (Local(LifeguardTowerPosition, LifeguardTowerYaw, new Vector3(0.9f, 0f, 2.8f)), LifeguardTowerPosition) }, // 망루 사다리 옆 (물가)
         { "loc_home_censia", (Local(CaravanStablePosition, CaravanStableYaw, new Vector3(0f, 0f, 3.0f)), CaravanStablePosition) }, // 마구간 앞
         { "loc_home_harka", (Local(HunterHutPosition, HunterHutYaw, new Vector3(1.2f, 0f, 2.6f)), HunterHutPosition) }, // 기둥 오두막 사다리 옆
-        { "loc_home_eiri", (Local(LighthousePosition, LighthouseYaw, new Vector3(0f, 0f, 2.2f)), LighthousePosition) } // 등대 문 앞
+        { "loc_home_eiri", (Local(LighthousePosition, LighthouseYaw, new Vector3(0f, 0f, 2.2f)), LighthousePosition) }, // 등대 문 앞
+        // 112일차: 5차 NPC 집
+        { "loc_home_erina", (Local(GreatStumpPosition, GreatStumpYaw, new Vector3(0f, 0f, 3.8f)), GreatStumpPosition) }, // 큰 그루터기 아래
+        { "loc_home_lilica", (Local(GothicManorPosition, GothicManorYaw, new Vector3(0f, 0f, 3.0f)), GothicManorPosition) }, // 저택 울타리 문 앞
+        { "loc_home_beatrice", (Local(BeehiveHutPosition, BeehiveHutYaw, new Vector3(-0.3f, 0f, 2.8f)), BeehiveHutPosition) }, // 벌통 오두막 문 앞
+        { "loc_home_lanhua", (Local(TrainingYardPosition, TrainingYardYaw, new Vector3(0f, 0f, 2.9f)), TrainingYardPosition) }, // 수련장 계단 앞
+        { "loc_home_akane", (Local(AkaneShrineHousePosition, AkaneShrineHouseYaw, new Vector3(0f, 0f, 2.9f)), AkaneShrineHousePosition) }, // 사당 집 툇마루 앞
+        { "loc_home_ravenna", (Local(GateWatchpostPosition, GateWatchpostYaw, new Vector3(-1.9f, 0f, 2.3f)), GateWatchpostPosition) }, // 성문 초소 차양 앞
+        { "loc_home_octavia", (TidePoolHomePosition, TidePoolHomePosition + new Vector3(12f, 0f, 0f)) } // 갯바위 물가 (바다를 봄)
     };
 
     // 물 (물가 검사 · 지도) : 가운데 · 반지름
@@ -175,8 +197,6 @@ public static class WorldZoneBuilder
         Bounds,
         Trunk
     }
-
-    // ---------------------------------------------------------------- 메뉴
 
     // ---------------------------------------------------------------- 전체 생성
 
@@ -527,7 +547,7 @@ public static class WorldZoneBuilder
         System.Random random = new System.Random(Seed + 1);
         List<Vector3> placed = new List<Vector3> { new Vector3(90f, 0f, 20f), new Vector3(95.5f, 0f, -24f) };
         count += Scatter(random, parent, new[] { "rock_large", "rock_small", "pebbles" }, 10, () => new Vector3(Rand(random, 88f, 98.5f), 0f, Rand(random, -60f, 60f)),
-            new[] { (new Vector3(95f, 0f, 10f), 6f), (new Vector3(91f, 0f, 16f), 5f), (new Vector3(97f, 0f, -8f), 4f), (CoralGrottoPosition, 4.5f), (LifeguardTowerPosition, 5f), (LighthousePosition + new Vector3(1.1f, 0f, 1.9f), 3f) }, 4f, 0.8f, 1.6f, PropCollider.None, 0, placed);
+            new[] { (new Vector3(95f, 0f, 10f), 6f), (new Vector3(91f, 0f, 16f), 5f), (new Vector3(97f, 0f, -8f), 4f), (CoralGrottoPosition, 4.5f), (LifeguardTowerPosition, 5f), (LighthousePosition + new Vector3(1.1f, 0f, 1.9f), 3f), (TidePoolHomePosition, 3f) }, 4f, 0.8f, 1.6f, PropCollider.None, 0, placed);
         return count;
     }
 
@@ -582,17 +602,25 @@ public static class WorldZoneBuilder
         AddBox(pod, new Vector3(0f, 0.9f, -0.2f), new Vector3(3.8f, 1.8f, 1.6f));
         AddBox(pod, new Vector3(1.95f, 0.45f, 0.85f), new Vector3(0.5f, 0.9f, 0.35f));
         pod.name = "RepairPod_Rize";
+        GameObject watchpost = Place(parent, "zone_gate_watchpost", GateWatchpostPosition, GateWatchpostYaw, 1f, PropCollider.None, building); // 112일차: 레이븐나의 집
+        AddBox(watchpost, new Vector3(-1.9f, 1.7f, -0.4f), new Vector3(1.3f, 3.4f, 1.3f));
+        AddBox(watchpost, new Vector3(1.9f, 1.3f, -0.4f), new Vector3(1.3f, 2.6f, 1.3f));
+        AddCapsule(watchpost, new Vector3(-2.6f, 1f, 1.4f), 0.1f, 2f);
+        AddCapsule(watchpost, new Vector3(-1.2f, 1f, 1.4f), 0.1f, 2f);
+        AddCapsule(watchpost, new Vector3(0.4f, 0.85f, 1.6f), 0.08f, 1.7f);
+        AddBox(watchpost, new Vector3(2.4f, 0.5f, 1.3f), new Vector3(0.9f, 1.0f, 0.3f));
+        watchpost.name = "GateWatchpost_Ravenna";
 
         foreach (Vector3 crystal in new[] { new Vector3(-86f, 0f, 70f), new Vector3(-67f, 0f, 90f), new Vector3(-90f, 0f, 94f), new Vector3(-70f, 0f, 82f) })
         {
             Place(parent, "zone_rune_crystals", crystal, crystal.x * 7f, 1f, PropCollider.Bounds, building);
         }
 
-        count += 17;
+        count += 18;
         System.Random random = new System.Random(Seed + 2);
         List<Vector3> placed = new List<Vector3>();
         count += Scatter(random, parent, new[] { "rock_large", "rock_small", "bush", "fallen_log" }, 12, () => InEllipse(random, center, 20f, 20f),
-            new[] { (center, 12f), (new Vector3(-92f, 0f, 88f), 5f), (new Vector3(-72f, 0f, 95f), 5f), (new Vector3(-95f, 0f, 63f), 3f), (RepairPodPosition, 5f) }, 3.5f, 0.8f, 1.5f, PropCollider.None, 0, placed);
+            new[] { (center, 12f), (new Vector3(-92f, 0f, 88f), 5f), (new Vector3(-72f, 0f, 95f), 5f), (new Vector3(-95f, 0f, 63f), 3f), (RepairPodPosition, 5f), (GateWatchpostPosition, 5f) }, 3.5f, 0.8f, 1.5f, PropCollider.None, 0, placed);
         return count;
     }
 
@@ -603,7 +631,7 @@ public static class WorldZoneBuilder
         Vector3 ring = new Vector3(-86f, 0f, -28f);
         Vector3 garden = new Vector3(-78f, 0f, -44f);
         Vector3 hutPosition = WitchHutPosition; // 110일차: 노크티아의 집
-        Vector3 stump = new Vector3(-97f, 0f, -38f);
+        Vector3 stump = GreatStumpPosition; // 112일차: 에리나의 집
 
         Place(parent, "zone_fairy_ring", ring, 0f, 1f, PropCollider.None, 0).name = "FairyRing";
         Place(parent, "zone_glow_flowers", garden, 0f, 1.3f, PropCollider.None, 0).name = "GlowFlowerGarden";
@@ -619,7 +647,7 @@ public static class WorldZoneBuilder
         GameObject greenhouse = Place(parent, "zone_flower_greenhouse", GreenhousePosition, GreenhouseYaw, 1f, PropCollider.None, building); // 103일차: 알리우네의 집
         AddCapsule(greenhouse, new Vector3(0f, 1.3f, 0f), 1.95f, 2.6f);
         greenhouse.name = "Greenhouse_Aliune";
-        GameObject great = Place(parent, "zone_great_stump", stump, 30f, 1f, PropCollider.None, building);
+        GameObject great = Place(parent, "zone_great_stump", stump, GreatStumpYaw, 1f, PropCollider.None, building);
         AddCapsule(great, new Vector3(0f, 1.3f, 0f), 2.9f, 2.6f);
         great.name = "GreatStump";
 
@@ -677,10 +705,20 @@ public static class WorldZoneBuilder
         GameObject shrineHouse = Place(parent, "zone_shrine_house", ShrineHousePosition, ShrineHouseYaw, 1f, PropCollider.None, building); // 101일차: 카스미의 집
         AddBox(shrineHouse, new Vector3(0f, 1.3f, 0f), new Vector3(4.2f, 2.6f, 3.6f));
         shrineHouse.name = "ShrineHouse_Kasumi";
-        count += 14;
+        GameObject akaneHouse = Place(parent, "zone_shrine_house", AkaneShrineHousePosition, AkaneShrineHouseYaw, 1f, PropCollider.None, building); // 112일차: 아카네의 집 (같은 모양)
+        AddBox(akaneHouse, new Vector3(0f, 1.3f, 0f), new Vector3(4.2f, 2.6f, 3.6f));
+        akaneHouse.name = "ShrineHouse_Akane";
+        GameObject yard = Place(parent, "zone_training_yard", TrainingYardPosition, TrainingYardYaw, 1f, PropCollider.None, building); // 112일차: 란후아의 집
+        AddBox(yard, new Vector3(0f, 0.22f, 0f), new Vector3(5.4f, 0.44f, 4.2f));
+        AddBox(yard, new Vector3(0f, 1.8f, -1.0f), new Vector3(4.8f, 2.8f, 1.8f));
+        AddCapsule(yard, new Vector3(-1.2f, 1.3f, 1.0f), 0.2f, 1.8f);
+        AddCapsule(yard, new Vector3(1.3f, 1.2f, 1.1f), 0.2f, 1.6f);
+        AddBox(yard, new Vector3(2.4f, 1.3f, 0.9f), new Vector3(0.3f, 1.8f, 1.4f));
+        yard.name = "TrainingYard_Lanhua";
+        count += 16;
 
         System.Random random = new System.Random(Seed + 4);
-        (Vector3, float)[] blocked = { (fire, 9f), (new Vector3(42f, 0f, 102f), 8f), (ShrineHousePosition, 6f) };
+        (Vector3, float)[] blocked = { (fire, 9f), (new Vector3(42f, 0f, 102f), 8f), (ShrineHousePosition, 6f), (AkaneShrineHousePosition, 6f), (TrainingYardPosition, 6.5f) };
         List<Vector3> placed = new List<Vector3>();
         count += Scatter(random, parent, new[] { "zone_snow_pine" }, 20, () => new Vector3(Rand(random, -26f, 70f), 0f, Rand(random, 90f, 119f)), blocked, 5f, 0.85f, 1.3f, PropCollider.Trunk, 0, placed);
         count += Scatter(random, parent, new[] { "zone_ice_rock" }, 6, () => new Vector3(Rand(random, -20f, 66f), 0f, Rand(random, 88f, 118f)), blocked, 6f, 0.8f, 1.3f, PropCollider.Bounds, building, placed);
@@ -723,6 +761,15 @@ public static class WorldZoneBuilder
         }
 
         stable.name = "CaravanStable_Censia";
+        GameObject beehive = Place(parent, "zone_beehive_hut", BeehiveHutPosition, BeehiveHutYaw, 1f, PropCollider.None, building); // 112일차: 베아트리체의 집
+        AddCapsule(beehive, new Vector3(0f, 1.5f, 0f), 1.8f, 3f);
+
+        foreach (Vector3 hive in new[] { new Vector3(-1.9f, 0f, 1.3f), new Vector3(2.0f, 0f, 1.1f), new Vector3(2.2f, 0f, -0.4f) })
+        {
+            AddBox(beehive, hive + new Vector3(0f, 0.5f, 0f), new Vector3(0.65f, 1.0f, 0.65f));
+        }
+
+        beehive.name = "BeehiveHut_Beatrice";
 
         foreach ((Vector3 position, float yaw, float scale) in new[] { (new Vector3(92f, 0f, -76f), 20f, 1.2f), (new Vector3(62f, 0f, -98f), 110f, 1f), (new Vector3(98f, 0f, -108f), 200f, 1.4f), (new Vector3(74f, 0f, -110f), 300f, 0.9f) })
         {
@@ -737,10 +784,10 @@ public static class WorldZoneBuilder
 
         Place(parent, "zone_bones", new Vector3(76f, 0f, -92f), 60f, 1f, PropCollider.None, 0);
         Place(parent, "zone_bones", new Vector3(100f, 0f, -84f), 200f, 0.8f, PropCollider.None, 0);
-        count += 18;
+        count += 19;
 
         System.Random random = new System.Random(Seed + 5);
-        (Vector3, float)[] blocked = { (oasis, 8f), (new Vector3(68f, 0f, -79f), 6f), (new Vector3(76f, 0f, -92f), 2f), (CaravanStablePosition, 7f) };
+        (Vector3, float)[] blocked = { (oasis, 8f), (new Vector3(68f, 0f, -79f), 6f), (new Vector3(76f, 0f, -92f), 2f), (CaravanStablePosition, 7f), (BeehiveHutPosition, 5f) };
         List<Vector3> placed = new List<Vector3> { new Vector3(92f, 0f, -76f), new Vector3(62f, 0f, -98f), new Vector3(98f, 0f, -108f), new Vector3(74f, 0f, -110f) };
         count += Scatter(random, parent, new[] { "zone_cactus" }, 12, () => InEllipse(random, new Vector3(80f, 0f, -90f), 30f, 26f), blocked, 5f, 0.7f, 1.2f, PropCollider.Trunk, 0, placed);
         count += Scatter(random, parent, new[] { "rock_small", "pebbles" }, 8, () => InEllipse(random, new Vector3(80f, 0f, -90f), 30f, 26f), blocked, 3f, 0.8f, 1.4f, PropCollider.None, 0, placed);
@@ -766,11 +813,16 @@ public static class WorldZoneBuilder
         GameObject hunterHut = Place(parent, "zone_stilt_hut", HunterHutPosition, HunterHutYaw, 1f, PropCollider.None, building); // 110일차: 하르카의 집
         AddBox(hunterHut, new Vector3(0f, 1.7f, 0f), new Vector3(3.8f, 3.4f, 3.8f));
         hunterHut.name = "StiltHut_Harka";
-        count += 6;
+        GameObject manor = Place(parent, "zone_gothic_manor", GothicManorPosition, GothicManorYaw, 1f, PropCollider.None, building); // 112일차: 릴리카의 집
+        AddBox(manor, new Vector3(0f, 1.6f, -0.1f), new Vector3(4.6f, 3.2f, 3.2f));
+        AddBox(manor, new Vector3(-1.45f, 0.45f, 2.45f), new Vector3(1.7f, 0.9f, 0.12f));
+        AddBox(manor, new Vector3(1.45f, 0.45f, 2.45f), new Vector3(1.7f, 0.9f, 0.12f));
+        manor.name = "GothicManor_Lilica";
+        count += 7;
 
         System.Random random = new System.Random(Seed + 6);
         Vector3 center = new Vector3(-60f, 0f, -94f);
-        (Vector3, float)[] blocked = Pools.Skip(1).Select(pool => (pool.center, pool.radius + 1f)).Concat(new[] { (new Vector3(-72f, 0f, -106f), 4.5f), (new Vector3(-62f, 0f, -98f), 6f), (HunterHutPosition, 5f) }).ToArray();
+        (Vector3, float)[] blocked = Pools.Skip(1).Select(pool => (pool.center, pool.radius + 1f)).Concat(new[] { (new Vector3(-72f, 0f, -106f), 4.5f), (new Vector3(-62f, 0f, -98f), 6f), (HunterHutPosition, 5f), (GothicManorPosition, 5.5f) }).ToArray();
         List<Vector3> placed = new List<Vector3>();
         count += Scatter(random, parent, new[] { "zone_dead_tree" }, 8, () => InEllipse(random, center, 26f, 20f), blocked, 5f, 0.8f, 1.3f, PropCollider.Trunk, 0, placed);
         count += Scatter(random, parent, new[] { "zone_glow_mushrooms", "mushroom_cluster", "rock_small" }, 8, () => InEllipse(random, center, 24f, 18f), blocked, 3f, 0.8f, 1.2f, PropCollider.None, 0, placed);
@@ -1428,11 +1480,24 @@ public static class WorldZoneBuilder
             return "✗ NavMeshSurface가 없어 NavMesh를 굽지 못했습니다.";
         }
 
+        // 112일차: NPC는 돌아다니므로 길(NavMesh)에 구멍을 내지 않게 굽는 동안 잠시 숨긴다 (물가에 선 옥타비아 자리에 길이 끊기던 문제)
+        List<GameObject> hiddenNpcs = Object.FindObjectsByType<NpcAgent>(FindObjectsInactive.Exclude, FindObjectsSortMode.None).Select(agent => agent.gameObject).ToList();
+        hiddenNpcs.ForEach(npc => npc.SetActive(false));
         Physics.SyncTransforms();
         NavMeshData previous = surface.navMeshData;
         string path = previous != null ? AssetDatabase.GetAssetPath(previous) : null;
         float started = Time.realtimeSinceStartup;
-        surface.BuildNavMesh();
+
+        try
+        {
+            surface.BuildNavMesh();
+        }
+        finally
+        {
+            hiddenNpcs.ForEach(npc => npc.SetActive(true));
+            Physics.SyncTransforms();
+        }
+
         NavMeshData built = surface.navMeshData;
 
         if (built == null)

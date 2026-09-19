@@ -525,3 +525,129 @@ char_eiri,Gift,Liked,달콤하다~ 고마워! 목소리가 더 맑아질 것 같
 char_eiri,Gift,Neutral,음~ 이건 무슨 노래에 어울릴까?
 char_eiri,Gift,Disliked,"으으, 무거워… 이걸 들고는 못 날겠어."
 char_eiri,Birthday,,내 생일이야~! 오늘은 널 위한 노래를 부를게. 하늘까지 닿도록!
+char_erina,FirstMeeting,,"…인간이군. 나는 에리나. 이 숲의 균형을 지켜보는 자다. 나무를 함부로 베지만 않는다면, 적이 될 일은 없어."
+char_erina,Greeting,Curious,또 왔군. 오늘은 숲이 조용하다. 네 발걸음도 제법 조용해졌어.
+char_erina,Greeting,Trust,기다렸다… 는 건 아니다. 다만 네가 오는 소리는 이제 구별할 수 있지.
+char_erina,Talk,,"숲은 언제나 말을 한다. 바람, 새, 나뭇잎. 들을 귀가 없는 자가 많을 뿐이지."
+char_erina,Talk,Curious,인간과 엘프 사이에서 중재하려 했던 적이 있다. …양쪽 모두를 잃었지.
+char_erina,Talk,Trust,너를 보면 인간을 다시 믿어 보고 싶어진다. …이상한 일이지.
+char_erina,Season,Spring,봄에는 새싹을 밟지 않도록 조심해라. 숲의 아이들이다.
+char_erina,Season,Summer,여름 숲은 소리가 많다. 활을 쏘기엔 좋지 않은 계절이지.
+char_erina,Season,Autumn,가을바람은 화살을 흔든다. 그래서 수련하기 좋다.
+char_erina,Season,Winter,겨울 숲은 잠들어 있다. 깨우지 않도록 조용히 걸어라.
+char_erina,Weather,Rain,비가 오면 숲이 숨을 쉰다. 오늘은 활을 쉬게 하지.
+char_erina,Weather,Snow,"눈 위에서는 모든 발자국이 드러난다. 사냥꾼에게도, 사냥감에게도."
+char_erina,Weather,Storm,폭풍은 균형을 깨뜨린다. …쓰러진 나무들을 살피러 가야겠군.
+char_erina,Gift,Loved,…활이군. 좋은 나무를 썼어. 소중히 쓰겠다. 고맙다.
+char_erina,Gift,Liked,쓸모 있는 선물이군. 받아 두지.
+char_erina,Gift,Neutral,음… 이건 숲에서 쓸 곳을 찾아봐야겠군.
+char_erina,Gift,Disliked,곡괭이는 숲을 시끄럽게 한다. 가져가라.
+char_erina,Birthday,,…생일을 기억했나. 백 년 넘게 아무도 챙기지 않던 날이다. …고맙다.
+char_lilica,FirstMeeting,,"후훗, 이 릴리카 님의 저택에 손님이라니! 겁도 없이 찾아온 인간, 이름을 기억해 주지. …무, 무섭지 않아?"
+char_lilica,Greeting,Curious,"또 왔구나? 흥, 심심하던 참은 아니었어. …조금 심심했지만."
+char_lilica,Greeting,Trust,"기다렸다고? 누, 누가! 그냥 창문 밖을 보고 있었을 뿐이야!"
+char_lilica,Talk,,밤이야말로 진짜 세상이지. 빛은 너무 솔직해서 재미없거든.
+char_lilica,Talk,Curious,"수백 년 동안 모두가 떠났어. 나만 늙지도 않고… 흥, 익숙해."
+char_lilica,Talk,Trust,너는 나를 무서워하지 않지? …그 점만은 칭찬해 주지.
+char_lilica,Season,Spring,봄 햇살은 너무 밝아. 양산 없이는 한 발짝도 못 나가!
+char_lilica,Season,Summer,여름은 최악이야. 해가 너무 길어서 밤이 짧잖아!
+char_lilica,Season,Autumn,가을밤은 길고 서늘해서 좋아. 이 릴리카 님의 계절이지.
+char_lilica,Season,Winter,겨울밤이 제일 좋아. 눈 위의 달빛은 보석 같거든.
+char_lilica,Weather,Rain,비 오는 날은 햇빛이 없어서 좋아! 오늘은 밖에 나가 볼까?
+char_lilica,Weather,Snow,"눈이다! …흥, 들뜬 거 아니야. 그냥 반짝여서 보는 거야."
+char_lilica,Weather,Storm,천둥 따위 무섭지 않아! …창문은 좀 닫아 줄래?
+char_lilica,Gift,Loved,"딸기! 후훗, 이 릴리카 님의 취향을 잘 아는구나. 칭찬해 주지!"
+char_lilica,Gift,Liked,"달콤한 거네? 흥, 받아 주지. 특별히."
+char_lilica,Gift,Neutral,"…이게 뭐야? 뭐, 버리진 않을게."
+char_lilica,Gift,Disliked,물이라니! 성수라도 섞였으면 어쩌려고! 치워!
+char_lilica,Birthday,,"내 생일을 기억했어? …몇백 년 만이야. 흥, 울고 있는 거 아니야!"
+char_beatrice,FirstMeeting,,정찰 보고. 새 인물 확인. …베아트리체라고 해요. 이 사막 꿀벌 정착지를 맡고 있어요.
+char_beatrice,Greeting,Curious,"임무 보고하러 온 건가요? …아, 그냥 인사였군요. 반가워요."
+char_beatrice,Greeting,Trust,당신이 오면 벌들이 조용해져요. 좋은 신호예요.
+char_beatrice,Talk,,꿀벌은 혼자선 살 수 없어요. 군체가 곧 가족이죠.
+char_beatrice,Talk,Curious,예전엔 여왕벌 근위대장이었어요. 반란이 일어났고… 지키지 못했죠.
+char_beatrice,Talk,Trust,새 군체를 만들고 싶어요. …당신도 그 안에 있었으면 해요.
+char_beatrice,Season,Spring,봄은 꽃가루 모으는 철이에요. 가장 바쁜 계절이죠.
+char_beatrice,Season,Summer,여름 사막은 벌들에게 가혹해요. 오아시스 물을 자주 먹여야 해요.
+char_beatrice,Season,Autumn,가을엔 꿀을 거두고 겨울 준비를 해요. 계획대로 진행 중이에요.
+char_beatrice,Season,Winter,겨울엔 벌들이 뭉쳐서 서로를 데워요. …사람도 그래야 하는데.
+char_beatrice,Weather,Rain,비 오는 날은 벌들이 나가지 않아요. 저도 오늘은 벌통 곁에 있을게요.
+char_beatrice,Weather,Snow,눈이라니. 벌통 보온 작업을 서둘러야겠어요.
+char_beatrice,Weather,Storm,폭풍 경보. 모든 벌통 고정. …당신도 조심해요.
+char_beatrice,Gift,Loved,열매네요. 꿀 대신 벌들 간식으로 딱이에요. 고마워요.
+char_beatrice,Gift,Liked,달콤하네요. 군체 창고에 넣어 둘게요.
+char_beatrice,Gift,Neutral,…쓸모를 생각 중이에요. 어딘가 쓸 데가 있겠죠.
+char_beatrice,Gift,Disliked,곡괭이 소리는 벌들을 놀라게 해요. 사양할게요.
+char_beatrice,Birthday,,"생일을… 기억했군요. 군체가 무너진 뒤로 처음이에요. …고마워요, 정말로."
+char_lanhua,FirstMeeting,,처음 보는 얼굴이군. 란후아다. 이 산에서 수련하고 있지. 몸이 약해 보이는데… 수련하고 싶으면 새벽에 오게.
+char_lanhua,Greeting,Curious,또 왔군. 오늘은 자세가 조금 나아졌어.
+char_lanhua,Greeting,Trust,왔나. 오늘은 같이 호흡부터 가다듬지.
+char_lanhua,Talk,,힘이란 누군가를 지키기 위해 존재한다. 그렇지 않다면 폭력일 뿐이지.
+char_lanhua,Talk,Curious,전쟁에서 제자를 잃었다. 그 뒤로는 혼자서만 수련해 왔지.
+char_lanhua,Talk,Trust,자네를 보면… 다시 누군가를 가르쳐도 될 것 같군.
+char_lanhua,Season,Spring,봄바람은 부드럽지. 몸을 풀기 좋은 계절이다.
+char_lanhua,Season,Summer,여름 수련은 땀이 스승이다. 물을 챙겨라.
+char_lanhua,Season,Autumn,가을 낙엽을 떨어지기 전에 잡아 보게. 집중력 수련이다.
+char_lanhua,Season,Winter,눈 속 수련이야말로 진짜 수련이지. 추위를 이겨 내라.
+char_lanhua,Weather,Rain,비는 마음을 가라앉힌다. 오늘은 명상이다.
+char_lanhua,Weather,Snow,눈이 쌓였군. 발자국 없이 걸어 보게. …농담이다.
+char_lanhua,Weather,Storm,"폭풍 속에서도 흔들리지 않는 것, 그게 무인의 마음이다."
+char_lanhua,Gift,Loved,…차로군. 향이 좋아. 수련 뒤에 마시겠네. 고맙다.
+char_lanhua,Gift,Liked,좋은 무기군. 손질은 내가 하지.
+char_lanhua,Gift,Neutral,"음, 받아 두지."
+char_lanhua,Gift,Disliked,붕대는 필요 없다. 다치지 않도록 수련하는 게 먼저지.
+char_lanhua,Birthday,,생일이라… 제자들이 챙겨 주던 날이지. 오랜만이군. 고맙다.
+char_ravenna,FirstMeeting,,"처음 뵙겠습니다. 레이븐나, 옛 성의 마지막 기사입니다. …머리를 들고 있어 놀라셨습니까? 곧 익숙해지실 겁니다."
+char_ravenna,Greeting,Curious,또 오셨군요. 오늘도 이 유적은 평온합니다.
+char_ravenna,Greeting,Trust,당신이 오면 이상하게 마음이 편해집니다. 기사로서 부끄러운 일이지만.
+char_ravenna,Talk,,머리가 떨어져도 명예는 떨어지지 않습니다.
+char_ravenna,Talk,Curious,제가 지키던 성은 함락되었습니다. 그날 밤을 아직도 기억합니다.
+char_ravenna,Talk,Trust,이번에는 끝까지 지킬 대상을 찾은 것 같습니다. …당신입니다.
+char_ravenna,Season,Spring,봄밤은 짧습니다. 순찰 시간도 짧아지지요.
+char_ravenna,Season,Summer,여름 햇볕은 갑옷을 달굽니다. 그늘에서 경비하겠습니다.
+char_ravenna,Season,Autumn,가을밤은 길고 고요합니다. 순찰하기 가장 좋은 계절입니다.
+char_ravenna,Season,Winter,겨울 유적은 적막합니다. 푸른 불꽃이 따뜻하게 느껴질 정도지요.
+char_ravenna,Weather,Rain,비가 와도 경비는 쉬지 않습니다. 갑옷이 녹슬지 않게 손질만 하면 됩니다.
+char_ravenna,Weather,Snow,눈 덮인 성벽을 보면… 옛 성이 떠오릅니다.
+char_ravenna,Weather,Storm,폭풍의 밤은 적이 움직이기 좋은 밤입니다. 경계를 강화하겠습니다.
+char_ravenna,Gift,Loved,차로군요. 순찰 뒤의 한 잔만큼 좋은 것은 없습니다. 감사합니다.
+char_ravenna,Gift,Liked,훌륭한 무기입니다. 기사의 예를 다해 받겠습니다.
+char_ravenna,Gift,Neutral,감사히 받겠습니다.
+char_ravenna,Gift,Disliked,…지렁이는 사양하겠습니다. 기사에게도 싫은 것은 있습니다.
+char_ravenna,Birthday,,"제 생일을… 기억해 주셨습니까. 죽은 뒤로 처음 받는 축하입니다. 이 은혜, 잊지 않겠습니다."
+char_akane,FirstMeeting,,"오오! 새 얼굴이다! 나는 아카네, 축제 수호자다! 힘쓸 일 있으면 언제든 불러! 하하하!"
+char_akane,Greeting,Curious,왔구나! 오늘도 힘차게 가자!
+char_akane,Greeting,Trust,기다렸어! 같이 떡 구워 먹을래? 내가 제일 잘 굽거든!
+char_akane,Talk,,힘은 축제처럼 즐겁게 써야지! 그래야 모두가 웃잖아!
+char_akane,Talk,Curious,예전에 힘 조절을 못 해서 친구를 다치게 했어. …그래서 지금은 조심하는 중이야.
+char_akane,Talk,Trust,"너랑 있으면 힘을 빼도 괜찮은 기분이야. 하하, 이상하지?"
+char_akane,Season,Spring,봄 축제다! 벚꽃 대신 딸기꽃이지만 괜찮아!
+char_akane,Season,Summer,여름밤 불꽃놀이! 이 섬에서도 해 보고 싶어!
+char_akane,Season,Autumn,가을은 수확 축제! 호박 들기 시합 할래?
+char_akane,Season,Winter,겨울엔 따뜻한 국이 최고야! 추위 따위 날려 버리자!
+char_akane,Weather,Rain,비 오는 날엔 처마 밑에서 떡 굽기지! 하하!
+char_akane,Weather,Snow,"눈싸움 하자! …아, 살살 던질게! 약속!"
+char_akane,Weather,Storm,"폭풍? 좋아, 사당은 내가 지킨다!"
+char_akane,Gift,Loved,호박 수프! 따뜻해! 너 최고다! 하하하!
+char_akane,Gift,Liked,맛있어 보인다! 잘 먹을게!
+char_akane,Gift,Neutral,"오, 고마워! 어디 쓸지는 나중에 생각하자!"
+char_akane,Gift,Disliked,차가운 건 별로야… 오니는 따뜻한 게 좋거든.
+char_akane,Birthday,,내 생일?! 하하하! 오늘은 섬 전체가 축제다! 고마워!
+char_octavia,FirstMeeting,,"어머, 손님이네요. 저는 옥타비아, 심해의 기억을 먹물로 남기는 기록가예요. 당신 이야기도 한 줄 적어도 될까요?"
+char_octavia,Greeting,Curious,또 오셨네요. 오늘 파도는 어떤 이야기를 들려줄까요?
+char_octavia,Greeting,Trust,당신을 기다리며 먹물을 새로 갈아 두었어요. 후후.
+char_octavia,Talk,,먹물은 어둠이 아니라 기억의 색이에요.
+char_octavia,Talk,Curious,심해에서 군체를 잃고 저만 남았어요. 그래서 기록을 멈출 수가 없어요.
+char_octavia,Talk,Trust,당신과의 기록은 심해 기록 옆에 두었어요. 가장 밝은 장이에요.
+char_octavia,Season,Spring,봄 바다는 새 생명으로 가득해요. 기록할 게 너무 많아요.
+char_octavia,Season,Summer,여름 햇볕은 제 촉수를 말려요. 물가에서 쉬엄쉬엄 할게요.
+char_octavia,Season,Autumn,가을 바다는 깊은 색이 돼요. 제 먹물 색과 닮았죠.
+char_octavia,Season,Winter,겨울 바다는 조용해요. 심해랑 비슷해서 편안해요.
+char_octavia,Weather,Rain,비 오는 날은 촉수가 촉촉해서 좋아요. 기록도 잘 돼요.
+char_octavia,Weather,Snow,바다에 내리는 눈은 금방 사라져요. 그래서 꼭 적어 둬야 해요.
+char_octavia,Weather,Storm,폭풍의 파도 소리도 기록이에요. …조금 무섭지만요.
+char_octavia,Gift,Loved,"송어네요! 후후, 촉수가 저절로 춤을 춰요. 고마워요."
+char_octavia,Gift,Liked,물고기 선물이네요. 바다 냄새가 좋아요.
+char_octavia,Gift,Neutral,음… 이건 기록할 거리가 될까요?
+char_octavia,Gift,Disliked,섬유는 촉수에 감겨서 싫어요. 미안해요.
+char_octavia,Birthday,,"제 생일을 기록해 두셨군요. 후후, 이번엔 제가 당신을 기록할 차례예요."

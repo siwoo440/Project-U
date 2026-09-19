@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: "\uB808\uC774\uBE10\uB098"
   englishName: Ravenna
   isAlphaCast: 0
-  castWave: 0
+  castWave: 5
   isAvailable: 1
   profile:
     raceId: race_dullahan
@@ -48,7 +48,7 @@ MonoBehaviour:
       \uC788\uC74C"
     illustrationStyle: "\uC77C\uBCF8 \uC560\uB2C8\uD48D \uACE0\uC815 \u2013 \uD3D0\uC131\uC758
       \uBC24, \uAC80\uC740 \uAC11\uC637\uACFC \uD478\uB978 \uC601\uD63C\uBD88\uAF43"
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: f4f5d2aa7a1fc834c8a734775e07bc2f, type: 3}
   themeColor: {r: 0.17254902, g: 0.19215687, b: 0.2509804, a: 1}
   accentColor: {r: 0.47058824, g: 0.6509804, b: 0.81960785, a: 1}
   personality:
@@ -85,13 +85,14 @@ MonoBehaviour:
   maxAffinity: 100
   birthdaySeason: 3
   birthdayDay: 5
-  homeLocationId: 
-  workLocationId: 
+  homeLocationId: loc_home_ravenna
+  workLocationId: loc_ruins_gate
   giftProfile: {fileID: 11400000, guid: 889cd01da5c573b4482551eb3681d3d4, type: 2}
   dialogueSet: {fileID: 11400000, guid: 8270c684790a7824a9f7d99b484f6a69, type: 2}
-  schedule: {fileID: 0}
+  schedule: {fileID: 11400000, guid: c14d9844afb80c6448f63f9dfc59b8ea, type: 2}
   dataStatus: "\uAE30\uD68D \uAE30\uBC18 \uC784\uC2DC\uAC12 \uD3EC\uD568"
-  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 89\uC77C\uCC28
-    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uACF5\uD1B5 \uACC4\uC808\xB7\uB0A0\uC528\xB7\uC120\uBB3C
-    \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758 \uC120\uD638
-    \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0 \uC5F0\uACB0."
+  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 110\uC77C\uCC28
+    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uC9D1\xB7\uC77C\uD130 \xB7 \uD558\uB8E8
+    \uC77C\uC815 \xB7 \uCD94\uAC00 \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758
+    \uC120\uD638 \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0
+    \uC5F0\uACB0."

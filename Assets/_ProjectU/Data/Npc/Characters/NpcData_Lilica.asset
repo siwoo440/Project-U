@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: "\uB9B4\uB9AC\uCE74"
   englishName: Lilica
   isAlphaCast: 0
-  castWave: 0
+  castWave: 5
   isAvailable: 1
   profile:
     raceId: race_vampire
@@ -61,7 +61,7 @@ MonoBehaviour:
     illustrationStyle: "\uC77C\uBCF8 \uC560\uB2C8\uD48D \uACE0\uC815 \u2013 \uACE0\uB515\uD48D
       \uC800\uD0DD \uBC30\uACBD, \uAC80\uC815 \uB9DD\uD1A0, \uD2B8\uC708\uD14C\uC77C,
       \uBD80\uCC44, \uBC24\uC758 \uB2EC\uBE5B \uAC15\uC870"
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: eddac322a1116c34980b1f5eed65c63f, type: 3}
   themeColor: {r: 0.22745098, g: 0.12156863, b: 0.2, a: 1}
   accentColor: {r: 0.7882353, g: 0.24705882, b: 0.34509805, a: 1}
   personality:
@@ -107,13 +107,14 @@ MonoBehaviour:
   maxAffinity: 100
   birthdaySeason: 0
   birthdayDay: 6
-  homeLocationId: 
-  workLocationId: 
+  homeLocationId: loc_home_lilica
+  workLocationId: loc_swamp_boardwalk
   giftProfile: {fileID: 11400000, guid: 7e3c6d8aeed41d3428d3a26d4e9e5d37, type: 2}
   dialogueSet: {fileID: 11400000, guid: 1b9b41fbb966fc34b8e2ce68e84165f9, type: 2}
-  schedule: {fileID: 0}
+  schedule: {fileID: 11400000, guid: 80cd645abf4411d40a2274a42eb5be16, type: 2}
   dataStatus: "\uAE30\uD68D \uAE30\uBC18 \uC784\uC2DC\uAC12 \uD3EC\uD568"
-  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 89\uC77C\uCC28
-    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uACF5\uD1B5 \uACC4\uC808\xB7\uB0A0\uC528\xB7\uC120\uBB3C
-    \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758 \uC120\uD638
-    \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0 \uC5F0\uACB0."
+  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 110\uC77C\uCC28
+    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uC9D1\xB7\uC77C\uD130 \xB7 \uD558\uB8E8
+    \uC77C\uC815 \xB7 \uCD94\uAC00 \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758
+    \uC120\uD638 \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0
+    \uC5F0\uACB0."

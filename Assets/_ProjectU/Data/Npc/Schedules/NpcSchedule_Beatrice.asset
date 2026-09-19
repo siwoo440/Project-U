@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94295176dd2bda648968d83c1418a684, type: 3}
+  m_Name: NpcSchedule_Beatrice
+  m_EditorClassIdentifier: Assembly-CSharp::NpcScheduleData
+  scheduleId: schedule_beatrice
+  plans:
+  - planId: default
+    priority: 0
+    days: 127
+    seasons: 15
+    weather: 0
+    stops:
+    - hour: 5
+      locationId: loc_desert_oasis
+      activity: "\uBC8C\uB4E4 \uBB3C \uBA39\uC774\uAE30"
+    - hour: 8
+      locationId: loc_home_beatrice
+      activity: "\uBC8C\uD1B5 \uC810\uAC80"
+    - hour: 11
+      locationId: loc_farm_fields
+      activity: "\uBC2D \uAF43\uAC00\uB8E8 \uC870\uC0AC"
+    - hour: 15
+      locationId: loc_forest_edge
+      activity: "\uAFC0\uBC8C \uC815\uCC30"
+    - hour: 18
+      locationId: loc_desert_oasis
+      activity: "\uC800\uB141 \uAF43 \uC0B4\uD53C\uAE30"
+    - hour: 21
+      locationId: loc_home_beatrice
+      activity: "\uBC8C\uD1B5 \uC606\uC5D0\uC11C \uC7A0"
+  - planId: spring
+    priority: 5
+    days: 127
+    seasons: 1
+    weather: 0
+    stops:
+    - hour: 5
+      locationId: loc_desert_oasis
+      activity: "\uBD04 \uC815\uCC30 \uC900\uBE44"
+    - hour: 8
+      locationId: loc_forest_flower_garden
+      activity: "\uBD04\uAF43 \uC815\uCC30"
+    - hour: 13
+      locationId: loc_farm_fields
+      activity: "\uB538\uAE30\uAF43 \uC218\uBD84"
+    - hour: 17
+      locationId: loc_desert_oasis
+      activity: "\uBC8C \uB5BC \uBD88\uB7EC \uBAA8\uC73C\uAE30"
+    - hour: 21
+      locationId: loc_home_beatrice
+      activity: "\uBC8C\uD1B5 \uC606\uC5D0\uC11C \uC7A0"
+  - planId: rain
+    priority: 10
+    days: 127
+    seasons: 15
+    weather: 2
+    stops:
+    - hour: 6
+      locationId: loc_home_beatrice
+      activity: "\uBC8C\uD1B5 \uB36E\uAC1C \uC50C\uC6B0\uAE30"
+    - hour: 12
+      locationId: loc_desert_camp
+      activity: "\uC0AC\uD53C\uB77C\uC640 \uBC8C\uD1B5 \uC218\uB9AC"
+    - hour: 17
+      locationId: loc_home_beatrice
+      activity: "\uBC8C\uB4E4\uACFC \uBE44 \uD53C\uD558\uAE30"

@@ -398,6 +398,53 @@ MonoBehaviour:
     zoneId: coast
     waterside: 0
     home: 1
+  - locationId: loc_home_erina
+    displayName: "\uC5D0\uB9AC\uB098\uC758 \uD070 \uADF8\uB8E8\uD130\uAE30"
+    description: "\uAE4A\uC740 \uC232 \uD070 \uADF8\uB8E8\uD130\uAE30 \uC544\uB798
+      \uB9DD\uB8E8"
+    zoneId: forest
+    waterside: 0
+    home: 1
+  - locationId: loc_home_lilica
+    displayName: "\uB9B4\uB9AC\uCE74\uC758 \uACE0\uB515 \uC800\uD0DD"
+    description: "\uC548\uAC1C \uC2B5\uC9C0 \uB0A8\uCABD \uB05D \uC791\uC740 \uC800\uD0DD
+      \uC6B8\uD0C0\uB9AC \uBB38 \uC55E"
+    zoneId: swamp
+    waterside: 0
+    home: 1
+  - locationId: loc_home_beatrice
+    displayName: "\uBCA0\uC544\uD2B8\uB9AC\uCCB4\uC758 \uBC8C\uD1B5 \uC624\uB450\uB9C9"
+    description: "\uC624\uC544\uC2DC\uC2A4 \uB3D9\uCABD \uB465\uADFC \uBC8C\uD1B5
+      \uC624\uB450\uB9C9"
+    zoneId: desert
+    waterside: 0
+    home: 1
+  - locationId: loc_home_lanhua
+    displayName: "\uB780\uD6C4\uC544\uC758 \uC218\uB828\uC7A5"
+    description: "\uC124\uC6D0 \uC57C\uC601\uC9C0 \uBD81\uCABD \uB208 \uB36E\uC778
+      \uC218\uB828\uC7A5"
+    zoneId: snow
+    waterside: 0
+    home: 1
+  - locationId: loc_home_akane
+    displayName: "\uC544\uCE74\uB124\uC758 \uC0AC\uB2F9 \uC9D1"
+    description: "\uC0B0\uAE30\uC2AD \uC0AC\uB2F9 \uB0A8\uCABD \uB450 \uBC88\uC9F8
+      \uC0AC\uB2F9 \uC9D1"
+    zoneId: snow
+    waterside: 0
+    home: 1
+  - locationId: loc_home_ravenna
+    displayName: "\uB808\uC774\uBE10\uB098\uC758 \uC131\uBB38 \uCD08\uC18C"
+    description: "\uD3D0\uD5C8 \uC11C\uCABD \uBB34\uB108\uC9C4 \uC131\uBB38 \uCD08\uC18C"
+    zoneId: ruins
+    waterside: 0
+    home: 1
+  - locationId: loc_home_octavia
+    displayName: "\uC625\uD0C0\uBE44\uC544\uC758 \uAC2F\uBC14\uC704 \uC11C\uACE0"
+    description: "\uAC2F\uBC14\uC704 \uBD81\uCABD \uBB3C\uAC00 \uBA39\uBB3C \uC11C\uACE0"
+    zoneId: coast
+    waterside: 1
+    home: 1
   stageThresholds: 14000000280000003c00000050000000
   giftPoints: 080000000400000001000000fbfffffff6ffffff
   birthdayMultiplier: 3

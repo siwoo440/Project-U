@@ -32,7 +32,8 @@ public static class ProjectUAutoContent
     // 적용할 콘텐츠 목록 (위에서부터 차례대로)
     private static readonly Update[] Updates =
     {
-        new Update { Id = "111-island-npc-stories", Title = "111일차 : 4차 NPC 의뢰 · 하트 이벤트 (21번)", Apply = () => NpcStoryBuilder.BuildAll(false) }
+        new Update { Id = "111-island-npc-stories", Title = "111일차 : 4차 NPC 의뢰 · 하트 이벤트 (21번)", Apply = () => NpcStoryBuilder.BuildAll(false) },
+        new Update { Id = "112-wave5-cast", Title = "112일차 : 5차 NPC 7명 등장 · 새 집 4채 (구역 · 배치 · 초상 · 동료)", Apply = () => NpcCastBuilder.BuildAll(false) }
     };
 
     [Serializable]

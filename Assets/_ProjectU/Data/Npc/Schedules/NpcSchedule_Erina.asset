@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94295176dd2bda648968d83c1418a684, type: 3}
+  m_Name: NpcSchedule_Erina
+  m_EditorClassIdentifier: Assembly-CSharp::NpcScheduleData
+  scheduleId: schedule_erina
+  plans:
+  - planId: default
+    priority: 0
+    days: 127
+    seasons: 15
+    weather: 0
+    stops:
+    - hour: 5
+      locationId: loc_home_erina
+      activity: "\uC0C8\uBCBD \uD65C\uC2DC\uC704 \uC810\uAC80"
+    - hour: 7
+      locationId: loc_forest_fairy_ring
+      activity: "\uC232\uC758 \uC18C\uB9AC \uB4E3\uAE30"
+    - hour: 11
+      locationId: loc_forest_edge
+      activity: "\uC232 \uAC00\uC7A5\uC790\uB9AC \uC21C\uCC30"
+    - hour: 15
+      locationId: loc_village_square
+      activity: "\uC778\uAC04 \uB9C8\uC744 \uC0B4\uD53C\uAE30"
+    - hour: 18
+      locationId: loc_forest_witch_hut
+      activity: "\uB178\uD06C\uD2F0\uC544\uC640 \uC57D\uCD08 \uC774\uC57C\uAE30"
+    - hour: 21
+      locationId: loc_home_erina
+      activity: "\uADF8\uB8E8\uD130\uAE30 \uB9DD\uB8E8\uC5D0\uC11C \uC7A0"
+  - planId: autumn
+    priority: 5
+    days: 127
+    seasons: 4
+    weather: 0
+    stops:
+    - hour: 5
+      locationId: loc_home_erina
+      activity: "\uC0C8\uBCBD \uD65C \uC218\uB828"
+    - hour: 8
+      locationId: loc_forest_flower_garden
+      activity: "\uB099\uC5FD \uC18C\uB9AC \uAE30\uB85D"
+    - hour: 13
+      locationId: loc_forest_edge
+      activity: "\uAC00\uC744 \uC0AC\uB0E5 \uC21C\uCC30"
+    - hour: 18
+      locationId: loc_home_erina
+      activity: "\uD654\uC0B4 \uAE43 \uC190\uC9C8"
+  - planId: rain
+    priority: 10
+    days: 127
+    seasons: 15
+    weather: 2
+    stops:
+    - hour: 6
+      locationId: loc_home_erina
+      activity: "\uD65C \uC190\uC9C8"
+    - hour: 12
+      locationId: loc_forest_fairy_ring
+      activity: "\uBE57\uC18D \uC232 \uC0B4\uD53C\uAE30"
+    - hour: 17
+      locationId: loc_home_erina
+      activity: "\uC816\uC740 \uD654\uC0B4 \uB9D0\uB9AC\uAE30"

@@ -54,3 +54,10 @@ loc_home_sharia,샤리아의 구조대 망루,해안 북쪽 물가의 구조대 
 loc_home_censia,켄시아의 운송대 마구간,붉은 사막 북동쪽 운송대 천막 마구간,desert,FALSE,TRUE
 loc_home_harka,하르카의 추적자 오두막,안개 습지 서쪽 기둥 오두막,swamp,FALSE,TRUE
 loc_home_eiri,에이리의 등대,해안 등대 문 앞,coast,FALSE,TRUE
+loc_home_erina,에리나의 큰 그루터기,깊은 숲 큰 그루터기 아래 망루,forest,FALSE,TRUE
+loc_home_lilica,릴리카의 고딕 저택,안개 습지 남쪽 끝 작은 저택 울타리 문 앞,swamp,FALSE,TRUE
+loc_home_beatrice,베아트리체의 벌통 오두막,오아시스 동쪽 둥근 벌통 오두막,desert,FALSE,TRUE
+loc_home_lanhua,란후아의 수련장,설원 야영지 북쪽 눈 덮인 수련장,snow,FALSE,TRUE
+loc_home_akane,아카네의 사당 집,산기슭 사당 남쪽 두 번째 사당 집,snow,FALSE,TRUE
+loc_home_ravenna,레이븐나의 성문 초소,폐허 서쪽 무너진 성문 초소,ruins,FALSE,TRUE
+loc_home_octavia,옥타비아의 갯바위 서고,갯바위 북쪽 물가 먹물 서고,coast,TRUE,TRUE

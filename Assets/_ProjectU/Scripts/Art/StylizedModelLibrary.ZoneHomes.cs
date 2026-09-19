@@ -10,6 +10,7 @@ public static partial class StylizedModelLibrary
         Register("zone_cocoon_house", FitMode.UniformHeight, BuildCocoonHouse);
         Register("zone_flower_greenhouse", FitMode.UniformHeight, BuildFlowerGreenhouse);
         RegisterZoneHomesWave4(); // 110일차: 4차 NPC 집
+        RegisterZoneHomesWave5(); // 112일차: 5차 NPC 집
     }
 
     // 마리엘 : 바닷물이 드나드는 바위 동굴 (둥근 바위 지붕 · 안쪽 물웅덩이 · 산호 · 조개 발 · 진주 등불)
