@@ -16,6 +16,7 @@ using Object = UnityEngine.Object;
 // 3. 사방 바다 · 먼 바다 밑 · 남쪽 해변 난파선 · 떠밀려 온 물건 · 시작 위치 · 기본 부활 위치 · 바다 경계 · 안개
 // 106일차: 바다 경계는 먼 바다 파도, 물속 수면 · 바닷속(해초 · 산호 · 잠수 물건)은 23번 메뉴와 같은 코드로 함께 만든다
 // 107일차: 높이에 구역 터 · 흙길(IslandZoneLayout)을 더하고, NavMesh는 섬 뭍 전체(수면 위)를 굽는다
+// 108일차: 섬 바닥에 숲 바닥을 칠하고, 섬 자연(IslandNatureBuilder : 나무 · 바위 · 채집 자원 · 들판 적 · 지도)을 함께 만든다
 // 여러 번 실행해도 같은 결과가 나온다 (섬 묶음을 지우고 다시 만듦).
 public static class IslandTerrainBuilder
 {
@@ -122,8 +123,10 @@ public static class IslandTerrainBuilder
             EditorUtility.DisplayProgressBar(DialogTitle, "기본 바닥 칠하기", 0.3f);
             report.AppendLine(StylizedSceneDresser.RepaintTerrain());
 
-            EditorUtility.DisplayProgressBar(DialogTitle, "해변 · 바다 밑 · 눈 칠하기", 0.45f);
+            EditorUtility.DisplayProgressBar(DialogTitle, "해변 · 바다 밑 · 눈 · 숲 바닥 칠하기", 0.45f);
             report.AppendLine(PaintIsland(terrain));
+            EditorUtility.DisplayProgressBar(DialogTitle, "섬 자연 (나무 · 바위 · 채집 자원 · 들판 적 · 지도)", 0.5f);
+            report.Append(IslandNatureBuilder.PlantAll(terrain)); // 108일차 : NavMesh는 이어지는 19번이 굽는다
         }
         finally
         {
@@ -393,12 +396,27 @@ public static class IslandTerrainBuilder
         return best;
     }
 
+    public static string RepaintIslandGround(Terrain terrain) // 108일차: 24번 메뉴가 숲 바닥을 다시 칠할 때 사용 (구역 바닥은 그대로)
+    {
+        return PaintIsland(terrain);
+    }
+
+    private static Color ForestPixel(float u, float v) // 108일차: 숲 바닥 (짙은 풀 · 낙엽)
+    {
+        float large = StylizedTerrainPainter.TileNoise(u, v, 4f, 3.9f);
+        float small = StylizedTerrainPainter.TileNoise(u, v, 14f, 8.8f);
+        Color color = Color.Lerp(new Color(0.2f, 0.36f, 0.17f), new Color(0.27f, 0.44f, 0.2f), large);
+        color = Color.Lerp(color, new Color(0.36f, 0.3f, 0.17f), small * 0.3f);
+        return StylizedTerrainPainter.Hash(u, v, 128) > 0.95f ? Color.Lerp(color, new Color(0.55f, 0.36f, 0.16f), 0.5f) : color; // 낙엽
+    }
+
     private static string PaintIsland(Terrain terrain)
     {
         TerrainData data = terrain.terrainData;
         TerrainLayer sand = StylizedTerrainPainter.GetOrCreateLayer("IslandSand", SandPixel, 5f);
         TerrainLayer seabed = StylizedTerrainPainter.GetOrCreateLayer("IslandSeabed", SeabedPixel, 7f);
         TerrainLayer snow = StylizedTerrainPainter.GetOrCreateLayer("IslandSnow", SnowPixel, 8f);
+        TerrainLayer forestFloor = StylizedTerrainPainter.GetOrCreateLayer("IslandForest", ForestPixel, 6f); // 108일차
         List<TerrainLayer> layers = data.terrainLayers.Where(layer => layer != null && !layer.name.StartsWith("TL_Island", StringComparison.Ordinal)).ToList();
         int rockIndex = layers.FindIndex(layer => layer.name == "TL_Rock");
         int dirtIndex = layers.FindIndex(layer => layer.name == "TL_Dirt");
@@ -409,11 +427,14 @@ public static class IslandTerrainBuilder
         layers.Add(sand);
         layers.Add(seabed);
         layers.Add(snow);
+        layers.Add(forestFloor);
         data.terrainLayers = layers.ToArray();
         int count = layers.Count;
-        int sandIndex = count - 3;
-        int seabedIndex = count - 2;
-        int snowIndex = count - 1;
+        int sandIndex = count - 4;
+        int seabedIndex = count - 3;
+        int snowIndex = count - 2;
+        int forestIndex = count - 1;
+        int forestTexels = 0;
         float[,,] alphas = new float[resolution, resolution, count];
         float[] weights = new float[count];
         List<Vector3> trail = TrailPoints();
@@ -464,6 +485,9 @@ public static class IslandTerrainBuilder
                     float rockAmount = SmoothStep(30f, 42f, steepness);
                     float trailAmount = 1f - SmoothStep(1.1f, 1.8f, TrailDistance(new Vector3(worldX, 0f, z), trail));
 
+                    float forestAmount = IslandNatureBuilder.ForestFloor(worldX, z, height) * (1f - rockAmount); // 108일차
+                    Paint(forestIndex, forestAmount);
+                    forestTexels += forestAmount > 0.5f ? 1 : 0;
                     Paint(snowIndex, snowAmount);
                     Paint(sandIndex, sandAmount);
                     Paint(dirtIndex, trailAmount * (1f - sandAmount) * 0.85f);
@@ -536,7 +560,7 @@ public static class IslandTerrainBuilder
         }
 
         EditorUtility.SetDirty(data);
-        return $"섬 바닥 : 층 {count}개 (해변 모래 · 바다 밑 · 눈 추가), 해변 칸 {beachTexels}, 풀 {removed}포기 정리, 오솔길 {trail.Count - 1}구간";
+        return $"섬 바닥 : 층 {count}개 (해변 모래 · 바다 밑 · 눈 · 숲 바닥 추가), 해변 칸 {beachTexels}, 숲 바닥 칸 {forestTexels}, 풀 {removed}포기 정리, 오솔길 {trail.Count - 1}구간";
     }
 
     // ---------------------------------------------------------------- 바다

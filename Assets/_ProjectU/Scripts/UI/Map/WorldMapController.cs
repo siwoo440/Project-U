@@ -45,6 +45,7 @@ public sealed class WorldMapController : MonoBehaviour // 미니맵 크기 전�
 
     public bool IsFullMapOpen => isFullMapOpen; // 현재 전체 지도 패널 열림 여부 제공
     public WorldMapPanelView WorldMapPanelInstance => worldMapPanelInstance; // 생성된 전체 지도 인스턴스 제공
+    public MinimapCameraController CameraController => minimapCameraController; // 108일차: 지도 가운데 · 플레이어 위치 계산
 
     private void Awake() // 지도 시스템 초기화
     {

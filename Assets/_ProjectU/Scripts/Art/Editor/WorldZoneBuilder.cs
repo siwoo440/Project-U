@@ -243,6 +243,7 @@ public static class WorldZoneBuilder
             if (islandLayout) // 107일차: 섬 곳곳으로 옮기기 · 석호 선착장
             {
                 report.AppendLine(MoveZonesToIsland(root.transform));
+                report.AppendLine($"둘레길 · 갈림길 표지판 {BuildRoadSigns(Group(root.transform, "Signposts"))}개 (108일차 길망)");
                 report.AppendLine(BuildLagoonPier(Group(root.transform, "LagoonPier"), building));
             }
 
@@ -794,7 +795,7 @@ public static class WorldZoneBuilder
             AddBox(post, new Vector3(0f, 0.9f, 0f), new Vector3(0.2f, 1.8f, 0.2f));
             post.name = "Sign_" + zone.ObjectName;
             Vector3 toVillage = -along;
-            int road = Array.FindIndex(IslandZoneLayout.Sites, site => site.ZoneId == zone.Id);
+            int road = IslandZoneLayout.MainRoadIndex(zone.Id);
             string distance = islandLayout && road >= 0 ? $" {Mathf.RoundToInt(IslandZoneLayout.RoadLength(road) / 10f) * 10}m" : string.Empty; // 107일차: 흙길 길이
             TMP_Text label = CreateText(post.transform.parent, "SignLabel_" + zone.ObjectName, $"<mark=#3A2A20C0 padding=\"16,16,6,6\">{zone.DisplayName} →{distance}</mark>", 3.2f, 7.5f);
             label.transform.SetPositionAndRotation(position + Vector3.up * 2.35f, Quaternion.Euler(0f, Mathf.Atan2(-toVillage.x, -toVillage.z) * Mathf.Rad2Deg, 0f));
@@ -1247,6 +1248,19 @@ public static class WorldZoneBuilder
         List<(string text, Vector3 position)> labels = Zones.Select(zone => (zone.DisplayName, ZoneCenterWorld(zone))).ToList(); // 107일차: 옮긴 자리
         labels.Add(("마을", new Vector3(0f, 0f, 14f)));
 
+        if (islandLayout) // 108일차: 섬 전체 지도 이름 (난파선 해변 · 석호)
+        {
+            (_, Vector3 wreck, _) = IslandTerrainBuilder.StartPoints();
+            Vector2 lagoon = (IslandTerrainBuilder.LagoonMin + IslandTerrainBuilder.LagoonMax) * 0.5f;
+            labels.Add((WreckLabel, wreck + new Vector3(0f, 0f, 40f)));
+            labels.Add((LagoonLabel, new Vector3(lagoon.x, 0f, lagoon.y)));
+        }
+
+        if (parent.GetComponent<MapLabelScaler>() == null) // 108일차: 섬 전체를 볼수록 이름을 크게
+        {
+            parent.gameObject.AddComponent<MapLabelScaler>();
+        }
+
         foreach ((string text, Vector3 position) in labels)
         {
             TMP_Text label = CreateText(parent, "MapLabel_" + text, $"<mark=#1C1C20B0 padding=\"20,20,8,8\"><b>{text}</b></mark>", 60f, 80f);
@@ -1477,6 +1491,54 @@ public static class WorldZoneBuilder
         return report.ToString().TrimEnd(' ', '·');
     }
 
+    // 108일차: 둘레길 · 갈림길 양 끝 표지판 (반대쪽 끝 이름과 거리)
+    private static int BuildRoadSigns(Transform parent)
+    {
+        int made = 0;
+
+        for (int road = 0; road < IslandZoneLayout.RoadCount; road++)
+        {
+            IslandZoneLayout.Road info = IslandZoneLayout.Roads[road];
+
+            if (info.Kind == IslandZoneLayout.RoadKind.Main)
+            {
+                continue;
+            }
+
+            float length = IslandZoneLayout.RoadLength(road);
+            int distance = Mathf.RoundToInt(length / 10f) * 10;
+
+            for (int end = 0; end < 2; end++)
+            {
+                float at = end == 0 ? 7f : length - 7f;
+                Vector3 point = IslandZoneLayout.RoadPoint(road, at);
+                Vector3 next = IslandZoneLayout.RoadPoint(road, end == 0 ? at + 4f : at - 4f);
+                Vector3 along = next - point;
+                along.y = 0f;
+                along.Normalize();
+                Vector3 side = Vector3.Cross(Vector3.up, along);
+                Vector3 position = point + side * 2.6f;
+                position.y = GroundY(position);
+                float yaw = Mathf.Atan2(along.x, along.z) * Mathf.Rad2Deg - 90f;
+                GameObject post = Place(parent, "prop_signpost", position, yaw, 1f, PropCollider.None, 0);
+
+                if (post == null)
+                {
+                    continue;
+                }
+
+                AddBox(post, new Vector3(0f, 0.9f, 0f), new Vector3(0.2f, 1.8f, 0.2f));
+                post.name = $"Sign_{info.Id}_{(end == 0 ? "start" : "end")}";
+                string target = end == 0 ? info.EndName : info.StartName;
+                TMP_Text label = CreateText(parent, $"SignLabel_{info.Id}_{(end == 0 ? "start" : "end")}", $"<mark=#3A2A20C0 padding=\"16,16,6,6\">{target} → {distance}m</mark>", 3.2f, 7.5f);
+                label.transform.SetPositionAndRotation(position + Vector3.up * 2.35f, Quaternion.Euler(0f, Mathf.Atan2(along.x, along.z) * Mathf.Rad2Deg, 0f));
+                made++;
+            }
+        }
+
+        return made;
+    }
+
     // 석호 : 해안 구역이 떠난 자리에 작은 선착장과 작은 배
     private static string BuildLagoonPier(Transform parent, int building)
     {
@@ -1572,7 +1634,7 @@ public static class WorldZoneBuilder
         string steepestRoad = string.Empty;
         float totalLength = 0f;
 
-        for (int road = 0; road < IslandZoneLayout.Sites.Length; road++)
+        for (int road = 0; road < IslandZoneLayout.RoadCount; road++)
         {
             float length = IslandZoneLayout.RoadLength(road);
             totalLength += length;
@@ -1588,7 +1650,7 @@ public static class WorldZoneBuilder
                 if (grade > steepest)
                 {
                     steepest = grade;
-                    steepestRoad = IslandZoneLayout.Sites[road].ZoneId;
+                    steepestRoad = IslandZoneLayout.Roads[road].Id;
                 }
 
                 previousHeight = height;
@@ -1605,13 +1667,25 @@ public static class WorldZoneBuilder
             error("석호 선착장이 없습니다. 18번 메뉴를 실행하세요.");
         }
 
-        report.AppendLine($"섬 구역 자리 {Zones.Length}곳 · 터 평평함 (가장 큰 차이 {worstPad:0.00}m) · 흙길 {IslandZoneLayout.Sites.Length}개 {totalLength:0}m (가장 가파른 곳 {steepest:0}°)");
+        report.AppendLine($"섬 구역 자리 {Zones.Length}곳 · 터 평평함 (가장 큰 차이 {worstPad:0.00}m) · 흙길 {IslandZoneLayout.RoadCount}개 {totalLength:0}m (가장 가파른 곳 {steepest:0}°)");
     }
 
     // ---------------------------------------------------------------- 검증
 
+    private const string WreckLabel = "난파선 해변"; // 108일차 지도 이름
+    private const string LagoonLabel = "석호";
+
     public static IEnumerable<string> CollectTexts()
     {
+        yield return WreckLabel;
+        yield return LagoonLabel;
+
+        foreach (IslandZoneLayout.Road road in IslandZoneLayout.Roads.Where(item => item.Kind != IslandZoneLayout.RoadKind.Main)) // 108일차 길망 표지판
+        {
+            yield return road.StartName + " →";
+            yield return road.EndName + " →";
+        }
+
         foreach (ZoneInfo zone in Zones)
         {
             yield return zone.DisplayName + " →";

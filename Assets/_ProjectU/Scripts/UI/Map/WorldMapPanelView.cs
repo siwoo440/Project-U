@@ -123,6 +123,16 @@ public sealed class WorldMapPanelView : MonoBehaviour // M과 Alt+N에서 공통
         playerDirectionIcon.localRotation =
             Quaternion.Euler(0f, 0f, iconRotation); // 플레이어 방향 화살표 회전 적용
 
+        MinimapCameraController mapCameraController = controller != null ? controller.CameraController : null; // 108일차: 섬 전체를 볼 때는 지도 가운데가 플레이어가 아님
+
+        if (mapCameraController != null && mapCameraController.IsInitialized)
+        {
+            Vector2 viewport = mapCameraController.WorldToViewport(playerTarget.position); // 지도 영상 안 비율
+            Rect rect = mapImage.rectTransform.rect;
+            Vector2 local = new Vector2(Mathf.Lerp(rect.xMin, rect.xMax, Mathf.Clamp(viewport.x, 0.02f, 0.98f)), Mathf.Lerp(rect.yMin, rect.yMax, Mathf.Clamp(viewport.y, 0.02f, 0.98f)));
+            playerDirectionIcon.position = mapImage.rectTransform.TransformPoint(local); // 플레이어 자리로 화살표 이동
+        }
+
         if (coordinateText != null) // 선택 좌표 Text 연결 여부 확인
         {
             Vector3 playerPosition = playerTarget.position; // 현재 플레이어 월드 위치 조회

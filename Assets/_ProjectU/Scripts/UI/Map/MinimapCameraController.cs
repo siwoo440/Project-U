@@ -1,4 +1,5 @@
 using UnityEngine; // Unity 기본 기능
+using UnityEngine.Rendering; // 108일차: 지도 카메라에서만 나무 숨기기
 
 public enum MapCameraViewMode // 지도 카메라 표시 범위
 {
@@ -44,6 +45,16 @@ public sealed class MinimapCameraController : MonoBehaviour // 미니맵 전용 
     [Tooltip("마우스 휠 한 번에 변경할 Orthographic Size 값입니다.")]
     [SerializeField, Min(0.1f)] private float fullMapZoomStep = 12f; // 전체 지도 휠 줌 변화량
 
+    [Header("Island Map")] // 108일차: 2km 무인도 전체 지도
+    [Tooltip("휠 한 칸에 전체 지도 범위를 곱하거나 나누는 비율 (넓은 섬에서 고르게 확대 · 축소).")]
+    [SerializeField, Range(1.02f, 2f)] private float fullMapZoomFactor = 1.2f; // 전체 지도 줌 비율
+    [Tooltip("전체 지도를 멀리 볼수록 가운데가 이 위치(섬 가운데)로 옮겨 갑니다.")]
+    [SerializeField] private Vector3 fullMapCenter = Vector3.zero; // 섬 가운데
+    [Tooltip("지도 카메라의 가장 낮은 높이 (북쪽 산꼭대기보다 높게).")]
+    [SerializeField, Min(10f)] private float minimumCameraHeight = 260f; // 지도 카메라 최소 높이
+    [Tooltip("지도에서는 Terrain 나무 · 풀을 그리지 않습니다 (숲 바닥 색으로 표시).")]
+    [SerializeField] private bool hideTreesOnMap = true; // 지도에서 나무 숨김
+
     [Header("Rendering")] // 지도 렌더링 설정 묶음
     [Tooltip("지도 카메라가 표시할 월드 레이어입니다.")]
     [SerializeField] private LayerMask mapLayerMask = ~0; // 지도 카메라 렌더링 레이어
@@ -67,11 +78,87 @@ public sealed class MinimapCameraController : MonoBehaviour // 미니맵 전용 
     private MapCameraViewMode currentViewMode = MapCameraViewMode.Compact; // 현재 지도 카메라 범위
     private float currentFullMapOrthographicSize; // 현재 전체 지도 휠 줌 범위
     private bool initialized; // 지도 카메라 초기화 완료 여부
+    private Vector3 viewCenter; // 지금 지도 가운데 (월드)
+    private Terrain hiddenTerrain; // 지도 카메라가 그리는 동안 나무를 숨긴 Terrain
+    private bool fogHidden; // 지도 카메라가 그리는 동안 안개를 껐는지
+    private bool savedFog; // 끄기 전 안개
 
     public RenderTexture OutputTexture => runtimeRenderTexture; // UI에서 사용할 지도 RenderTexture 제공
     public MapCameraViewMode CurrentViewMode => currentViewMode; // 현재 지도 표시 범위 제공
     public float CurrentFullMapOrthographicSize => currentFullMapOrthographicSize; // 현재 전체 지도 줌 수치 제공
     public bool IsInitialized => initialized; // 지도 카메라 초기화 상태 제공
+    public Vector3 ViewCenter => viewCenter; // 지금 지도 가운데 (108일차)
+    public float FullMapMaximumSize => fullMapMaximumOrthographicSize; // 전체 지도 가장 넓은 범위 (108일차)
+
+    public Vector2 WorldToViewport(Vector3 world) // 108일차: 월드 위치 → 지도 영상 안 비율 (0 ~ 1, 북쪽 위)
+    {
+        float size = mapCamera != null ? mapCamera.orthographicSize : 1f;
+        return new Vector2((world.x - viewCenter.x) / (size * 2f) + 0.5f, (world.z - viewCenter.z) / (size * 2f) + 0.5f);
+    }
+
+    private void OnEnable() // 108일차: 지도 카메라에서만 나무 숨김
+    {
+        RenderPipelineManager.beginCameraRendering += HandleBeginCamera;
+        RenderPipelineManager.endCameraRendering += HandleEndCamera;
+    }
+
+    private void OnDisable()
+    {
+        RenderPipelineManager.beginCameraRendering -= HandleBeginCamera;
+        RenderPipelineManager.endCameraRendering -= HandleEndCamera;
+        RestoreTrees();
+    }
+
+    private void HandleBeginCamera(ScriptableRenderContext context, Camera camera)
+    {
+        if (camera != mapCamera)
+        {
+            return;
+        }
+
+        if (!fogHidden) // 108일차: 지도는 날씨 · 물속 안개 없이 선명하게
+        {
+            savedFog = RenderSettings.fog;
+            fogHidden = true;
+            RenderSettings.fog = false;
+        }
+
+        if (!hideTreesOnMap)
+        {
+            return;
+        }
+
+        Terrain terrain = Terrain.activeTerrain;
+
+        if (terrain != null && terrain.drawTreesAndFoliage)
+        {
+            hiddenTerrain = terrain;
+            terrain.drawTreesAndFoliage = false;
+        }
+    }
+
+    private void HandleEndCamera(ScriptableRenderContext context, Camera camera)
+    {
+        if (camera == mapCamera)
+        {
+            RestoreTrees();
+        }
+    }
+
+    private void RestoreTrees()
+    {
+        if (fogHidden)
+        {
+            RenderSettings.fog = savedFog;
+            fogHidden = false;
+        }
+
+        if (hiddenTerrain != null)
+        {
+            hiddenTerrain.drawTreesAndFoliage = true;
+            hiddenTerrain = null;
+        }
+    }
 
     private void Awake() // 지도 카메라 기본 참조 검사
     {
@@ -141,8 +228,9 @@ public sealed class MinimapCameraController : MonoBehaviour // 미니맵 전용 
 
         float zoomDirection = Mathf.Sign(scrollDelta); // 휠 위쪽과 아래쪽 방향 계산
 
-        currentFullMapOrthographicSize -=
-            zoomDirection * fullMapZoomStep; // 휠 위쪽은 줌인하고 아래쪽은 줌아웃
+        currentFullMapOrthographicSize = zoomDirection > 0f
+            ? currentFullMapOrthographicSize / fullMapZoomFactor
+            : currentFullMapOrthographicSize * fullMapZoomFactor; // 108일차: 넓은 섬은 비율로 줌 (휠 위쪽은 줌인)
 
         currentFullMapOrthographicSize =
             Mathf.Clamp(
@@ -198,10 +286,25 @@ public sealed class MinimapCameraController : MonoBehaviour // 미니맵 전용 
     private void SnapToTarget() // 플레이어 위 지도 카메라 위치와 회전 적용
     {
         Vector3 targetPosition = target.position; // 현재 플레이어 위치 조회
+        Vector3 center = targetPosition; // 지도 가운데
+
+        if (currentViewMode == MapCameraViewMode.FullMap) // 108일차: 멀리 볼수록 섬 가운데로
+        {
+            float blend = Mathf.InverseLerp(fullMapDefaultOrthographicSize, fullMapMaximumOrthographicSize, currentFullMapOrthographicSize);
+            center = Vector3.Lerp(targetPosition, fullMapCenter, blend * blend * (3f - 2f * blend));
+        }
+
+        viewCenter = center;
+        float height = Mathf.Max(targetPosition.y + cameraHeight, minimumCameraHeight); // 108일차: 산보다 높게
         Vector3 cameraPosition = new Vector3(
-            targetPosition.x,
-            targetPosition.y + cameraHeight,
-            targetPosition.z); // 플레이어 바로 위 카메라 위치 계산
+            center.x,
+            height,
+            center.z); // 지도 가운데 바로 위 카메라 위치 계산
+
+        if (mapCamera != null)
+        {
+            mapCamera.farClipPlane = Mathf.Max(farClipPlane, height + 60f); // 바다 밑까지 보이게
+        }
 
         transform.SetPositionAndRotation(
             cameraPosition,
