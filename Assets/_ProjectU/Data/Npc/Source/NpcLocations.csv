@@ -47,3 +47,10 @@ loc_home_lumina,루미나의 고치 집,빛나는 꽃밭 옆 나뭇가지에 매
 loc_home_aliune,알리우네의 온실,깊은 숲 남쪽 유리 온실,forest,FALSE,TRUE
 loc_home_marielle,마리엘의 산호 동굴,등대 아래 바닷물이 드나드는 산호 동굴,coast,TRUE,TRUE
 loc_home_neri,네리의 관측 오두막,습지 기둥 오두막 안 (빗물 측정기 옆),swamp,FALSE,TRUE
+loc_home_noctia,노크티아의 까마귀 오두막,숲 깊은 곳 까마귀 오두막 문 앞,forest,FALSE,TRUE
+loc_home_ragh,라그의 털가죽 천막,설원 야영지 모닥불 뒤 천막,snow,FALSE,TRUE
+loc_home_rize,리제의 정비 캡슐,폐허 북서쪽 모퉁이의 옛 문명 정비 캡슐,ruins,FALSE,TRUE
+loc_home_sharia,샤리아의 구조대 망루,해안 북쪽 물가의 구조대 망루,coast,TRUE,TRUE
+loc_home_censia,켄시아의 운송대 마구간,붉은 사막 북동쪽 운송대 천막 마구간,desert,FALSE,TRUE
+loc_home_harka,하르카의 추적자 오두막,안개 습지 서쪽 기둥 오두막,swamp,FALSE,TRUE
+loc_home_eiri,에이리의 등대,해안 등대 문 앞,coast,FALSE,TRUE

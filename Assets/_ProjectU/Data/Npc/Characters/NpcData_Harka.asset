@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: "\uD558\uB974\uCE74"
   englishName: Harka
   isAlphaCast: 0
-  castWave: 0
+  castWave: 4
   isAvailable: 1
   profile:
     raceId: race_dogkin
@@ -64,7 +64,7 @@ MonoBehaviour:
     illustrationStyle: "\uC77C\uBCF8 \uC560\uB2C8\uD48D \uACE0\uC815 \u2013 \uBAA8\uB798\uAE38
       \uBC30\uACBD, \uBD89\uC740 \uC2A4\uCE74\uD504, \uAC1C \uADC0\uC640 \uAF2C\uB9AC
       \uAC15\uC870, \uBC1D\uC740 \uD587\uBE5B \uC5F0\uCD9C"
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 5a83a29d18fbbcb4aa59f1bae7519b71, type: 3}
   themeColor: {r: 0.9019608, g: 0.7607843, b: 0.47843137, a: 1}
   accentColor: {r: 0.9529412, g: 0.8784314, b: 0.63529414, a: 1}
   personality:
@@ -111,13 +111,14 @@ MonoBehaviour:
   maxAffinity: 100
   birthdaySeason: 2
   birthdayDay: 20
-  homeLocationId: 
-  workLocationId: 
+  homeLocationId: loc_home_harka
+  workLocationId: loc_swamp_boardwalk
   giftProfile: {fileID: 11400000, guid: d97420d96677d8d41ae7143b49a00483, type: 2}
   dialogueSet: {fileID: 11400000, guid: 3ac3657aadc037e498ecb0307772bc5b, type: 2}
-  schedule: {fileID: 0}
+  schedule: {fileID: 11400000, guid: 05e185aa9f8b67445b09698ea973c3a6, type: 2}
   dataStatus: "\uAE30\uD68D \uAE30\uBC18 \uC784\uC2DC\uAC12 \uD3EC\uD568"
-  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 89\uC77C\uCC28
-    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uACF5\uD1B5 \uACC4\uC808\xB7\uB0A0\uC528\xB7\uC120\uBB3C
-    \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758 \uC120\uD638
-    \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0 \uC5F0\uACB0."
+  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 108\uC77C\uCC28
+    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uC9D1\xB7\uC77C\uD130 \xB7 \uD558\uB8E8
+    \uC77C\uC815 \xB7 \uCD94\uAC00 \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758
+    \uC120\uD638 \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0
+    \uC5F0\uACB0."

@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: "\uC5D0\uC774\uB9AC"
   englishName: Eiri
   isAlphaCast: 0
-  castWave: 0
+  castWave: 4
   isAvailable: 1
   profile:
     raceId: race_harpy
@@ -59,7 +59,7 @@ MonoBehaviour:
     illustrationStyle: "\uC77C\uBCF8 \uC560\uB2C8\uD48D \uACE0\uC815 \u2013 \uAD6C\uB984\uACFC
       \uD558\uB298 \uBC30\uACBD, \uBC1D\uC740 \uC870\uBA85, \uC5ED\uB3D9\uC801\uC778
       \uD3EC\uC988 \uAC15\uC870"
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 6fb98153d3674c74fa643b820e6d51de, type: 3}
   themeColor: {r: 0.69803923, g: 0.8862745, b: 0.9490196, a: 1}
   accentColor: {r: 0.95686275, g: 0.9764706, b: 0.9843137, a: 1}
   personality:
@@ -100,13 +100,14 @@ MonoBehaviour:
   maxAffinity: 100
   birthdaySeason: 2
   birthdayDay: 16
-  homeLocationId: 
-  workLocationId: 
+  homeLocationId: loc_home_eiri
+  workLocationId: loc_coast_beach
   giftProfile: {fileID: 11400000, guid: 57f8a0cc640b5a445ae1d24a8105292c, type: 2}
   dialogueSet: {fileID: 11400000, guid: b6c9ce88ad2ac414e94eeec88ffffb63, type: 2}
-  schedule: {fileID: 0}
+  schedule: {fileID: 11400000, guid: ec534f45ec8bbc34da38b0d4beb47dc2, type: 2}
   dataStatus: "\uAE30\uD68D \uAE30\uBC18 \uC784\uC2DC\uAC12 \uD3EC\uD568"
-  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 89\uC77C\uCC28
-    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uACF5\uD1B5 \uACC4\uC808\xB7\uB0A0\uC528\xB7\uC120\uBB3C
-    \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758 \uC120\uD638
-    \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0 \uC5F0\uACB0."
+  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 108\uC77C\uCC28
+    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uC9D1\xB7\uC77C\uD130 \xB7 \uD558\uB8E8
+    \uC77C\uC815 \xB7 \uCD94\uAC00 \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758
+    \uC120\uD638 \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0
+    \uC5F0\uACB0."

@@ -399,3 +399,129 @@ char_aliune,Gift,Liked,고마워요. 잎이 기뻐서 흔들리네요.
 char_aliune,Gift,Neutral,고마워요. 어디에 두면 좋을지 생각해 볼게요.
 char_aliune,Gift,Disliked,나무 장작은… 불이 생각나요. 미안해요.
 char_aliune,Birthday,,제 생일에 와 줬네요. 오늘 핀 꽃은… 전부 당신 거예요.
+char_noctia,FirstMeeting,,"…까마귀들이 오늘 손님이 온다고 하더군요. 나는 노크티아. 숲의 마녀라고 불리지요. 두렵다면, 지금 돌아가도 괜찮아요."
+char_noctia,Greeting,Curious,또 왔군요. 까마귀들이 당신 발소리를 기억하기 시작했어요.
+char_noctia,Greeting,Trust,"기다리고 있었어요… 아니, 까마귀가요. 후후, 그렇다고 해 두죠."
+char_noctia,Talk,,예언은 저주가 아니에요. 다가올 비를 먼저 알려 주는 구름 같은 거지요.
+char_noctia,Talk,Curious,예전에 한 마을이 내 예언을 믿지 않았어요. 그리고… 나를 탓했지요.
+char_noctia,Talk,Trust,당신 앞에서는 운명을 읽지 않기로 했어요. 모르는 채로 걷는 것도 나쁘지 않네요.
+char_noctia,Season,Spring,봄에는 까마귀들이 둥지를 틀어요. 이 계절엔 나도 조금 말이 많아지지요.
+char_noctia,Season,Summer,여름밤은 짧아서 아쉬워요. 별을 읽을 시간이 모자라거든요.
+char_noctia,Season,Autumn,가을 낙엽은 예언서 같아요. 떨어지는 모양마다 뜻이 있지요.
+char_noctia,Season,Winter,"겨울은 내 계절이에요. 긴 밤, 조용한 숲… 그리고 따뜻한 약초차."
+char_noctia,Weather,Rain,비 오는 날엔 까마귀들이 처마 아래 모여요. 나도 그 틈에 끼어 있지요.
+char_noctia,Weather,Snow,눈 위의 발자국은 거짓말을 못 해요. 오늘 누가 숲에 왔는지 다 보이지요.
+char_noctia,Weather,Storm,천둥이 울면 까마귀들은 입을 다물어요. 폭풍은 예언조차 삼키니까요.
+char_noctia,Gift,Loved,"…버섯이군요. 숲의 가장 어두운 곳에서 자란 것. 고마워요, 정말로."
+char_noctia,Gift,Liked,좋은 선물이에요. 까마귀들도 부러워하겠네요.
+char_noctia,Gift,Neutral,음… 이건 어디에 쓸지 까마귀에게 물어봐야겠어요.
+char_noctia,Gift,Disliked,…이건 받을 수 없어요. 내게는 너무 맑은 물건이에요.
+char_noctia,Birthday,,"내 생일을 기억했군요… 예언에도 없던 일이에요. 이런 놀라움이라면, 나쁘지 않네요."
+char_ragh,FirstMeeting,,"…누구냐. 아, 섬에 새로 온 녀석이군. 라그다. 이 야영지는 내가 지킨다. 볼일 없으면 불 옆에서 몸이나 녹이고 가."
+char_ragh,Greeting,Curious,또 왔군. 오는 길에 이상한 건 없었나?
+char_ragh,Greeting,Trust,왔나. 불은 피워 뒀다. 앉아.
+char_ragh,Talk,,눈 위에선 발소리를 죽여. 짐승들은 소리보다 냄새에 먼저 반응하지만.
+char_ragh,Talk,Curious,예전엔 무리가 있었다. 지금은… 이 모닥불 하나가 전부야.
+char_ragh,Talk,Trust,네 등 뒤는 내가 본다. 그러니 앞만 봐.
+char_ragh,Season,Spring,눈이 녹으면 길이 미끄러워진다. 산에 올 땐 조심해.
+char_ragh,Season,Summer,여름 산엔 짐승이 많아. 사냥하기엔 좋지.
+char_ragh,Season,Autumn,"가을엔 겨울 준비다. 장작, 가죽, 고기. 게으르면 얼어 죽는다."
+char_ragh,Season,Winter,겨울 산은 정직하다. 약한 건 버티지 못하지. …너는 버텨라.
+char_ragh,Weather,Rain,비는 냄새를 지운다. 오늘 같은 날엔 경계를 두 배로.
+char_ragh,Weather,Snow,눈이군. 발자국이 잘 남는다. 사냥하기 좋은 날이야.
+char_ragh,Weather,Storm,폭풍엔 천막 줄부터 확인해. …내 걱정은 말고.
+char_ragh,Gift,Loved,…고기 요리냐. 흠. 고맙다. 제대로 먹는 건 오랜만이군.
+char_ragh,Gift,Liked,쓸 만하군. 받아 두지.
+char_ragh,Gift,Neutral,"…뭐, 받긴 하지."
+char_ragh,Gift,Disliked,단 건 입에 안 맞는다. 다른 녀석한테 줘.
+char_ragh,Birthday,,…생일? 그런 걸 챙긴 게 몇 년 만이지. …고맙다. 진심이야.
+char_rize,FirstMeeting,,"시스템 온라인. 새로운 개체를 확인했습니다. 저는 리제, 탐험 지원 기체입니다. …아, '반가워요'라고 말하는 게 맞겠죠?"
+char_rize,Greeting,Curious,방문 기록 갱신. 당신이 오는 시각을 예측하는 게 조금 즐거워졌어요.
+char_rize,Greeting,Trust,"기다렸어요. …이건 연산 결과가 아니라, 그냥 제 말이에요."
+char_rize,Talk,,이 유적의 문자는 제 기억 장치에 있는 것과 73% 같아요. 여기는 제 고향일지도 몰라요.
+char_rize,Talk,Curious,저는 '감정 오류' 때문에 폐기될 뻔했어요. 지금은 그 오류가 조금 소중해요.
+char_rize,Talk,Trust,당신과 이야기할 때 제 눈 색이 보라색이 된대요. 무슨 뜻인지 알려 줄 수 있나요?
+char_rize,Season,Spring,"봄에는 관측 자료가 넘쳐요. 꽃, 새, 사람들의 웃음… 기록할 게 많아요."
+char_rize,Season,Summer,여름 햇빛은 제 겉판을 뜨겁게 해요. 그늘을 찾는 건 사람과 같네요.
+char_rize,Season,Autumn,가을 낙엽이 떨어지는 모양은 예측이 어려워요. 그래서 계속 보게 돼요.
+char_rize,Season,Winter,겨울엔 관절 기름이 굳어요. 천천히 움직이는 건… 오류가 아니에요.
+char_rize,Weather,Rain,경고. 습도가 높습니다. …농담이에요. 방수는 완벽해요.
+char_rize,Weather,Snow,눈 결정은 모두 다르대요. 저도 그런 존재가 되고 싶어요.
+char_rize,Weather,Storm,번개는 제 회로에 좋지 않아요. 오늘은 캡슐 안에 있을게요.
+char_rize,Gift,Loved,광석이네요! 에너지 코어 대신 쓸 수 있어요. 고마워요… 정말로 기뻐요.
+char_rize,Gift,Liked,쓸모 있는 선물이에요. 제 기록에 '좋은 날'로 남길게요.
+char_rize,Gift,Neutral,분석 중… 용도를 찾는 데 시간이 걸릴 것 같아요.
+char_rize,Gift,Disliked,먼지와 습기는 제 부품에 해로워요. 미안해요.
+char_rize,Birthday,,만들어진 날을 생일이라고 불러 주는군요. …처리할 수 없는 감정이 넘쳐요. 이게 기쁨인가요?
+char_sharia,FirstMeeting,,"어이, 뭍사람! 난 샤리아, 이 바다 구조대야. 물에 빠지면 소리 질러. 어디서든 건지러 갈게. 크하하!"
+char_sharia,Greeting,Curious,또 왔네! 오늘 파도는 얌전해. 수영하기 딱 좋아.
+char_sharia,Greeting,Trust,너 오는 거 망루에서 다 보였어. 손 흔드는 거 봤지?
+char_sharia,Talk,,"바다에서 제일 무서운 건 상어가 아니야. 방심이지. …뭐, 난 상어지만."
+char_sharia,Talk,Curious,예전에 난파선에서 한 명을 못 구했어. 그래서 매일 망루에 올라.
+char_sharia,Talk,Trust,네가 헤엄치는 거 보면 불안해서 못 참겠어. …그러니까 내가 곁에 있을게.
+char_sharia,Season,Spring,봄 바다는 아직 차가워. 오래 들어가 있지 마.
+char_sharia,Season,Summer,여름이다! 바다가 제일 반짝이는 계절이지. 같이 헤엄칠래?
+char_sharia,Season,Autumn,가을엔 물살이 세져. 부두 끝에는 가지 마.
+char_sharia,Season,Winter,겨울 바다는 거칠어. 그래도 구조대는 쉬지 않아.
+char_sharia,Weather,Rain,비 오는 바다는 잔잔해 보여도 속은 달라. 조심해.
+char_sharia,Weather,Snow,"눈 내리는 바다라니, 멋지지? 물은 얼음장이지만."
+char_sharia,Weather,Storm,폭풍이다! 다들 물가에서 떨어져! …난 망루로 간다!
+char_sharia,Gift,Loved,"우와, 생선이다! 크하, 이런 걸 주면 반하잖아!"
+char_sharia,Gift,Liked,"오, 고마워! 바다 냄새 나는 선물 좋아."
+char_sharia,Gift,Neutral,"음, 이건… 물에 뜨려나?"
+char_sharia,Gift,Disliked,열매는 별로야. 이빨 사이에 끼거든.
+char_sharia,Birthday,,내 생일 기억한 거야? 크하하! 오늘은 바다가 날 위해 파도를 치는 것 같네!
+char_censia,FirstMeeting,,"켄시아다. 이 섬의 짐과 길은 내가 맡고 있지. 옮길 게 있으면 말해. 단, 안전한 길로만 간다."
+char_censia,Greeting,Curious,왔군. 오늘 짐은 가볍나? 발걸음이 가벼워 보여.
+char_censia,Greeting,Trust,기다렸다. 네 몫의 물은 따로 챙겨 뒀어.
+char_censia,Talk,,"빠른 길보다 안전한 길이 중요해. 늦게 도착하는 건 괜찮지만, 못 도착하는 건 안 돼."
+char_censia,Talk,Curious,예전에 운송 중에 동료를 잃었다. 그 뒤로는 길을 먼저 걸어 보고 짐을 싣지.
+char_censia,Talk,Trust,"네가 가는 길이라면, 내가 먼저 밟아 두지."
+char_censia,Season,Spring,봄에는 풀이 좋아. 나도 기운이 난다.
+char_censia,Season,Summer,여름 사막은 낮에 움직이면 안 돼. 새벽과 저녁이 운송 시간이다.
+char_censia,Season,Autumn,가을은 수확물 운송철이야. 제일 바쁜 계절이지.
+char_censia,Season,Winter,겨울 길은 얼어 있어. 발굽에 헝겊을 감고 다닌다.
+char_censia,Weather,Rain,비 오면 모래가 무거워진다. 짐을 반으로 줄여.
+char_censia,Weather,Snow,사막에 눈이라니… 길 표시부터 다시 해야겠군.
+char_censia,Weather,Storm,폭풍엔 기다리는 게 답이다. 마구간 안에서 쉬어.
+char_censia,Gift,Loved,사료로군! …곡물은 언제나 반가워. 고맙다.
+char_censia,Gift,Liked,좋은 선물이야. 짐에 넣어 두지.
+char_censia,Gift,Neutral,"음, 무게는 적당하네."
+char_censia,Gift,Disliked,돌은 이미 충분히 나르고 있어. 사양하지.
+char_censia,Birthday,,생일을 챙겨 주다니… 발굽이 저절로 박자를 타는군. 고맙다.
+char_harka,FirstMeeting,,"킁킁… 어라, 이 냄새! 해변에 쓰러져 있던 그 사람이지? 나 하르카야! 널 처음 찾은 게 나라고, 멍!"
+char_harka,Greeting,Curious,왔다! 네 냄새는 멀리서도 알아. 오늘도 킁킁 합격!
+char_harka,Greeting,Trust,오늘은 어디 갈 거야? 앞장설게! 멍멍!
+char_harka,Talk,,안개 속에서도 냄새는 길을 알려 줘. 코만 있으면 절대 길을 안 잃어!
+char_harka,Talk,Curious,예전에 대장을 끝까지 못 찾았어. 그래서 이번엔… 누구도 놓치지 않을 거야.
+char_harka,Talk,Trust,너는 내 무리야. 무리는 서로 지키는 거고! 멍!
+char_harka,Season,Spring,"봄 냄새 좋아! 꽃, 흙, 새싹… 코가 바빠!"
+char_harka,Season,Summer,더워… 혀가 절로 나와. 습지 물에 발 담그고 싶어.
+char_harka,Season,Autumn,가을엔 발자국 찾기 쉬워! 낙엽이 바스락거리거든.
+char_harka,Season,Winter,눈밭 뛰기 최고야! 꼬리가 멈추질 않아!
+char_harka,Weather,Rain,비 오면 냄새가 흐려져서 싫어… 그래도 순찰은 해야지!
+char_harka,Weather,Snow,눈이다! 멍멍! 발자국 따라가기 놀이 할래?
+char_harka,Weather,Storm,"천둥 무서워… 아, 아니야! 안 무서워! 지킬 거야!"
+char_harka,Gift,Loved,"고기다! 멍! 너 최고야! 꼬리 봐, 꼬리!"
+char_harka,Gift,Liked,"와, 탐험에 쓸 수 있겠다! 고마워!"
+char_harka,Gift,Neutral,"킁킁… 음, 냄새는 별로 없네. 그래도 고마워!"
+char_harka,Gift,Disliked,"으엑, 썩은 냄새… 코가 아파. 미안, 이건 못 받겠어."
+char_harka,Birthday,,내 생일이야?! 멍멍멍! 오늘은 네 옆에서 하루 종일 꼬리 흔들 거야!
+char_eiri,FirstMeeting,,"후훗, 새 얼굴이다~! 나는 에이리, 바람을 노래하는 음유시인이야. 등대 꼭대기가 내 무대지!"
+char_eiri,Greeting,Curious,안녕~! 오늘 바람 냄새 맡았어? 노래가 절로 나와~
+char_eiri,Greeting,Trust,왔구나! 새 노래 만들었어. 제목은… 아직 비밀~
+char_eiri,Talk,,하늘은 매일 다른 노래를 불러. 난 그걸 받아 적을 뿐이야~
+char_eiri,Talk,Curious,"예전에 날개를 다쳐서 못 날 뻔했어. 그때 알았지, 자유는 당연한 게 아니라는 걸."
+char_eiri,Talk,Trust,너랑 있으면 바람이 부드러워져. 이상하지? 후훗.
+char_eiri,Season,Spring,봄바람은 간지러워~ 깃털이 저절로 부풀어!
+char_eiri,Season,Summer,여름 하늘은 높고 파래! 구름 위까지 노래가 닿을 것 같아~
+char_eiri,Season,Autumn,가을바람엔 쓸쓸한 가락이 어울려. 한 곡 들려줄까?
+char_eiri,Season,Winter,겨울바람은 차갑지만 맑아. 목소리가 멀리멀리 퍼져~
+char_eiri,Weather,Rain,비 오면 깃털이 젖어서… 오늘은 등대 안에서 노래 연습!
+char_eiri,Weather,Snow,눈송이가 춤춰! 하늘이 조용한 노래를 부르는 날이야~
+char_eiri,Weather,Storm,폭풍 바람은 너무 거칠어! 날개 꼭 접고 있을래…
+char_eiri,Gift,Loved,딸기! 향긋해~ 이걸로 새 노래 하나 만들 수 있겠어!
+char_eiri,Gift,Liked,달콤하다~ 고마워! 목소리가 더 맑아질 것 같아.
+char_eiri,Gift,Neutral,음~ 이건 무슨 노래에 어울릴까?
+char_eiri,Gift,Disliked,"으으, 무거워… 이걸 들고는 못 날겠어."
+char_eiri,Birthday,,내 생일이야~! 오늘은 널 위한 노래를 부를게. 하늘까지 닿도록!

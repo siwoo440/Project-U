@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94295176dd2bda648968d83c1418a684, type: 3}
+  m_Name: NpcSchedule_Harka
+  m_EditorClassIdentifier: Assembly-CSharp::NpcScheduleData
+  scheduleId: schedule_harka
+  plans:
+  - planId: default
+    priority: 0
+    days: 127
+    seasons: 15
+    weather: 0
+    stops:
+    - hour: 6
+      locationId: loc_swamp_boardwalk
+      activity: "\uC548\uAC1C \uC18D \uBC1C\uC790\uAD6D \uC21C\uCC30"
+    - hour: 9
+      locationId: loc_forest_edge
+      activity: "\uC232 \uAC00\uC7A5\uC790\uB9AC \uB0C4\uC0C8 \uCD94\uC801"
+    - hour: 13
+      locationId: loc_village_square
+      activity: "\uB9C8\uC744 \uC21C\uCC30 \uBCF4\uACE0"
+    - hour: 17
+      locationId: loc_swamp_hut
+      activity: "\uB124\uB9AC\uC640 \uB0A0\uC528 \uD655\uC778"
+    - hour: 21
+      locationId: loc_home_harka
+      activity: "\uC624\uB450\uB9C9\uC5D0\uC11C \uC7A0"
+  - planId: tuesday
+    priority: 5
+    days: 2
+    seasons: 15
+    weather: 0
+    stops:
+    - hour: 6
+      locationId: loc_swamp_boardwalk
+      activity: "\uC0C8\uBCBD \uC21C\uCC30"
+    - hour: 9
+      locationId: loc_coast_beach
+      activity: "\uD574\uBCC0 \uD45C\uB958\uBB3C \uB0C4\uC0C8 \uB9E1\uAE30"
+    - hour: 14
+      locationId: loc_village_square
+      activity: "\uC21C\uCC30 \uBCF4\uACE0"
+    - hour: 18
+      locationId: loc_swamp_boardwalk
+      activity: "\uC800\uB141 \uC21C\uCC30"
+    - hour: 21
+      locationId: loc_home_harka
+      activity: "\uC624\uB450\uB9C9\uC5D0\uC11C \uC7A0"
+  - planId: rain
+    priority: 10
+    days: 127
+    seasons: 15
+    weather: 2
+    stops:
+    - hour: 6
+      locationId: loc_swamp_hut
+      activity: "\uBE44 \uB0C4\uC0C8 \uD655\uC778"
+    - hour: 10
+      locationId: loc_village_square
+      activity: "\uBE44\uC637 \uC785\uACE0 \uC21C\uCC30"
+    - hour: 15
+      locationId: loc_swamp_boardwalk
+      activity: "\uC816\uC740 \uBC1C\uC790\uAD6D \uCAD3\uAE30"
+    - hour: 21
+      locationId: loc_home_harka
+      activity: "\uC7A0"

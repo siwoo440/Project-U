@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: "\uB77C\uADF8"
   englishName: Ragh
   isAlphaCast: 0
-  castWave: 0
+  castWave: 4
   isAvailable: 1
   profile:
     raceId: race_wolfkin
@@ -58,7 +58,7 @@ MonoBehaviour:
       \uC67C\uD314. \uC6C3\uC744 \uB54C \uC1A1\uACF3\uB2C8\uAC00 \uC0B4\uC9DD \uB4DC\uB7EC\uB0A8"
     illustrationStyle: "\uC77C\uBCF8 \uC560\uB2C8\uD48D \uACE0\uC815 \u2013 \uC124\uC0B0\xB7\uB2EC\uBE5B
       \uBC30\uACBD, \uC9D9\uC740 \uD68C\uC0C9 \uAC11\uC637, \uAC15\uC778\uD55C \uC2E4\uB8E8\uC5E3"
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: ec8f55f5c3e71024187fc776f3ede87b, type: 3}
   themeColor: {r: 0.78039217, g: 0.78039217, b: 0.81960785, a: 1}
   accentColor: {r: 0.21176471, g: 0.22745098, b: 0.2784314, a: 1}
   personality:
@@ -99,13 +99,14 @@ MonoBehaviour:
   maxAffinity: 100
   birthdaySeason: 1
   birthdayDay: 11
-  homeLocationId: 
-  workLocationId: 
+  homeLocationId: loc_home_ragh
+  workLocationId: loc_snow_camp
   giftProfile: {fileID: 11400000, guid: 04f8eb26f45c1c74a9fc428e29353dd1, type: 2}
   dialogueSet: {fileID: 11400000, guid: 6ab8125d2ab107d40bace76dde11a775, type: 2}
-  schedule: {fileID: 0}
+  schedule: {fileID: 11400000, guid: 699f1a71fa4dc8b4d936744dfd7c44ba, type: 2}
   dataStatus: "\uAE30\uD68D \uAE30\uBC18 \uC784\uC2DC\uAC12 \uD3EC\uD568"
-  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 89\uC77C\uCC28
-    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uACF5\uD1B5 \uACC4\uC808\xB7\uB0A0\uC528\xB7\uC120\uBB3C
-    \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758 \uC120\uD638
-    \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0 \uC5F0\uACB0."
+  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 108\uC77C\uCC28
+    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uC9D1\xB7\uC77C\uD130 \xB7 \uD558\uB8E8
+    \uC77C\uC815 \xB7 \uCD94\uAC00 \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758
+    \uC120\uD638 \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0
+    \uC5F0\uACB0."

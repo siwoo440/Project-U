@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94295176dd2bda648968d83c1418a684, type: 3}
+  m_Name: NpcSchedule_Censia
+  m_EditorClassIdentifier: Assembly-CSharp::NpcScheduleData
+  scheduleId: schedule_censia
+  plans:
+  - planId: default
+    priority: 0
+    days: 127
+    seasons: 15
+    weather: 0
+    stops:
+    - hour: 5
+      locationId: loc_desert_oasis
+      activity: "\uBB3C \uAE37\uAE30"
+    - hour: 8
+      locationId: loc_desert_camp
+      activity: "\uC0AC\uD53C\uB77C\uC758 \uC9D0 \uC2E3\uAE30"
+    - hour: 11
+      locationId: loc_market_stall
+      activity: "\uAC00\uD310\uB300\uC5D0 \uBB3C\uAC74 \uBC30\uB2EC"
+    - hour: 14
+      locationId: loc_village_square
+      activity: "\uC6B4\uC1A1 \uC8FC\uBB38 \uBC1B\uAE30"
+    - hour: 17
+      locationId: loc_desert_camp
+      activity: "\uC9D0 \uC815\uB9AC"
+    - hour: 21
+      locationId: loc_home_censia
+      activity: "\uB9C8\uAD6C\uAC04\uC5D0\uC11C \uC7A0"
+  - planId: summer
+    priority: 5
+    days: 127
+    seasons: 2
+    weather: 0
+    stops:
+    - hour: 5
+      locationId: loc_desert_camp
+      activity: "\uC0C8\uBCBD \uC6B4\uC1A1 \uCD9C\uBC1C"
+    - hour: 8
+      locationId: loc_market_stall
+      activity: "\uC774\uB978 \uBC30\uB2EC"
+    - hour: 12
+      locationId: loc_home_censia
+      activity: "\uD55C\uB0AE \uB354\uC704 \uD53C\uD574 \uC26C\uAE30"
+    - hour: 17
+      locationId: loc_desert_oasis
+      activity: "\uC800\uB141 \uBB3C \uAE37\uAE30"
+    - hour: 21
+      locationId: loc_home_censia
+      activity: "\uB9C8\uAD6C\uAC04\uC5D0\uC11C \uC7A0"
+  - planId: rain
+    priority: 10
+    days: 127
+    seasons: 15
+    weather: 2
+    stops:
+    - hour: 7
+      locationId: loc_home_censia
+      activity: "\uB9C8\uAD6C\uAC04 \uC9C0\uBD95 \uC190\uBCF4\uAE30"
+    - hour: 11
+      locationId: loc_desert_camp
+      activity: "\uC816\uC740 \uC9D0 \uB9D0\uB9AC\uAE30"
+    - hour: 16
+      locationId: loc_home_censia
+      activity: "\uBC1C\uAD7D \uC190\uC9C8"
+    - hour: 21
+      locationId: loc_home_censia
+      activity: "\uC7A0"

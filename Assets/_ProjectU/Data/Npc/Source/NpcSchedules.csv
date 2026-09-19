@@ -276,3 +276,101 @@ char_aliune,summer,5,All,Summer,Any,19,loc_home_aliune,온실에서 잠
 char_aliune,rain,10,All,All,Bad,7,loc_home_aliune,온실 창문 닫기
 char_aliune,rain,10,All,All,Bad,11,loc_forest_flower_garden,빗물 모으기
 char_aliune,rain,10,All,All,Bad,16,loc_home_aliune,젖은 뿌리 쉬게 하기
+char_noctia,default,0,All,All,Any,7,loc_forest_witch_hut,까마귀에게 모이 주기
+char_noctia,default,0,All,All,Any,10,loc_ruins_library,옛 예언 기록 읽기
+char_noctia,default,0,All,All,Any,14,loc_village_square,광장 구석에서 운세 봐 주기
+char_noctia,default,0,All,All,Any,17,loc_forest_witch_hut,달빛 약초 달이기
+char_noctia,default,0,All,All,Any,21,loc_home_noctia,까마귀와 잠
+char_noctia,winter,5,All,Winter,Any,8,loc_forest_witch_hut,눈 위 발자국 읽기
+char_noctia,winter,5,All,Winter,Any,12,loc_forest_fairy_ring,겨울 별자리 점
+char_noctia,winter,5,All,Winter,Any,16,loc_forest_witch_hut,약초차 끓이기
+char_noctia,winter,5,All,Winter,Any,20,loc_home_noctia,긴 밤 예언서 읽기
+char_noctia,rain,10,All,All,Bad,7,loc_forest_witch_hut,처마 밑 까마귀와 비 피하기
+char_noctia,rain,10,All,All,Bad,12,loc_home_noctia,오두막 안에서 예언서 옮겨 쓰기
+char_noctia,rain,10,All,All,Bad,17,loc_forest_witch_hut,빗물 모으기
+char_noctia,rain,10,All,All,Bad,21,loc_home_noctia,잠
+char_ragh,default,0,All,All,Any,6,loc_snow_camp,새벽 경계
+char_ragh,default,0,All,All,Any,9,loc_village_square,마을 순찰
+char_ragh,default,0,All,All,Any,13,loc_smithy,무기 손질 맡기기
+char_ragh,default,0,All,All,Any,16,loc_snow_camp,사냥감 손질
+char_ragh,default,0,All,All,Any,21,loc_home_ragh,천막에서 잠
+char_ragh,winter,5,All,Winter,Any,6,loc_snow_camp,눈길 발자국 살피기
+char_ragh,winter,5,All,Winter,Any,10,loc_snow_shrine,사당 둘레 순찰
+char_ragh,winter,5,All,Winter,Any,14,loc_snow_camp,장작 패기
+char_ragh,winter,5,All,Winter,Any,21,loc_home_ragh,천막에서 잠
+char_ragh,rain,10,All,All,Bad,6,loc_snow_camp,천막 줄 점검
+char_ragh,rain,10,All,All,Bad,11,loc_home_ragh,천막 안에서 칼 갈기
+char_ragh,rain,10,All,All,Bad,16,loc_snow_camp,비 그친 뒤 순찰
+char_ragh,rain,10,All,All,Bad,21,loc_home_ragh,잠
+char_rize,default,0,All,All,Any,6,loc_ruins_gate,봉인된 문 분석
+char_rize,default,0,All,All,Any,10,loc_ruins_library,옛 문자 대조
+char_rize,default,0,All,All,Any,13,loc_village_square,사람들 표정 관찰
+char_rize,default,0,All,All,Any,17,loc_ruins_plaza,석상 자료 기록
+char_rize,default,0,All,All,Any,21,loc_home_rize,정비 캡슐에서 충전
+char_rize,spring,5,All,Spring,Any,6,loc_ruins_gate,봄 관측 준비
+char_rize,spring,5,All,Spring,Any,9,loc_farm_fields,새싹 자라는 모습 기록
+char_rize,spring,5,All,Spring,Any,14,loc_cafe,사람들 웃음 관찰
+char_rize,spring,5,All,Spring,Any,18,loc_ruins_plaza,관측 자료 정리
+char_rize,spring,5,All,Spring,Any,21,loc_home_rize,정비 캡슐에서 충전
+char_rize,rain,10,All,All,Bad,6,loc_ruins_library,옛 문자 해독
+char_rize,rain,10,All,All,Bad,11,loc_home_rize,캡슐 안 방수 점검
+char_rize,rain,10,All,All,Bad,16,loc_ruins_gate,빗소리 녹음
+char_rize,rain,10,All,All,Bad,21,loc_home_rize,충전
+char_sharia,default,0,All,All,Any,6,loc_coast_rocks,새벽 수영 훈련
+char_sharia,default,0,All,All,Any,9,loc_home_sharia,망루 근무
+char_sharia,default,0,All,All,Any,13,loc_pond_dock,마을 아이들 수영 가르치기
+char_sharia,default,0,All,All,Any,17,loc_coast_dock,저녁 구조 연습
+char_sharia,default,0,All,All,Any,21,loc_home_sharia,망루 아래에서 잠
+char_sharia,summer,5,All,Summer,Any,5,loc_coast_rocks,새벽 잠수
+char_sharia,summer,5,All,Summer,Any,8,loc_home_sharia,망루 근무
+char_sharia,summer,5,All,Summer,Any,12,loc_coast_dock,해수욕 안전 관리
+char_sharia,summer,5,All,Summer,Any,17,loc_home_sharia,노을 경계
+char_sharia,summer,5,All,Summer,Any,21,loc_home_sharia,망루 아래에서 잠
+char_sharia,rain,10,All,All,Bad,6,loc_home_sharia,거친 파도 경계
+char_sharia,rain,10,All,All,Bad,12,loc_coast_dock,부두 밧줄 점검
+char_sharia,rain,10,All,All,Bad,16,loc_home_sharia,망루에서 대기
+char_sharia,rain,10,All,All,Bad,21,loc_home_sharia,잠
+char_censia,default,0,All,All,Any,5,loc_desert_oasis,물 긷기
+char_censia,default,0,All,All,Any,8,loc_desert_camp,사피라의 짐 싣기
+char_censia,default,0,All,All,Any,11,loc_market_stall,가판대에 물건 배달
+char_censia,default,0,All,All,Any,14,loc_village_square,운송 주문 받기
+char_censia,default,0,All,All,Any,17,loc_desert_camp,짐 정리
+char_censia,default,0,All,All,Any,21,loc_home_censia,마구간에서 잠
+char_censia,summer,5,All,Summer,Any,5,loc_desert_camp,새벽 운송 출발
+char_censia,summer,5,All,Summer,Any,8,loc_market_stall,이른 배달
+char_censia,summer,5,All,Summer,Any,12,loc_home_censia,한낮 더위 피해 쉬기
+char_censia,summer,5,All,Summer,Any,17,loc_desert_oasis,저녁 물 긷기
+char_censia,summer,5,All,Summer,Any,21,loc_home_censia,마구간에서 잠
+char_censia,rain,10,All,All,Bad,7,loc_home_censia,마구간 지붕 손보기
+char_censia,rain,10,All,All,Bad,11,loc_desert_camp,젖은 짐 말리기
+char_censia,rain,10,All,All,Bad,16,loc_home_censia,발굽 손질
+char_censia,rain,10,All,All,Bad,21,loc_home_censia,잠
+char_harka,default,0,All,All,Any,6,loc_swamp_boardwalk,안개 속 발자국 순찰
+char_harka,default,0,All,All,Any,9,loc_forest_edge,숲 가장자리 냄새 추적
+char_harka,default,0,All,All,Any,13,loc_village_square,마을 순찰 보고
+char_harka,default,0,All,All,Any,17,loc_swamp_hut,네리와 날씨 확인
+char_harka,default,0,All,All,Any,21,loc_home_harka,오두막에서 잠
+char_harka,tuesday,5,Tuesday,All,Any,6,loc_swamp_boardwalk,새벽 순찰
+char_harka,tuesday,5,Tuesday,All,Any,9,loc_coast_beach,해변 표류물 냄새 맡기
+char_harka,tuesday,5,Tuesday,All,Any,14,loc_village_square,순찰 보고
+char_harka,tuesday,5,Tuesday,All,Any,18,loc_swamp_boardwalk,저녁 순찰
+char_harka,tuesday,5,Tuesday,All,Any,21,loc_home_harka,오두막에서 잠
+char_harka,rain,10,All,All,Bad,6,loc_swamp_hut,비 냄새 확인
+char_harka,rain,10,All,All,Bad,10,loc_village_square,비옷 입고 순찰
+char_harka,rain,10,All,All,Bad,15,loc_swamp_boardwalk,젖은 발자국 쫓기
+char_harka,rain,10,All,All,Bad,21,loc_home_harka,잠
+char_eiri,default,0,All,All,Any,6,loc_home_eiri,등대 꼭대기에서 아침 노래
+char_eiri,default,0,All,All,Any,9,loc_coast_beach,바닷바람 노래 받아 적기
+char_eiri,default,0,All,All,Any,12,loc_village_square,광장 공연
+char_eiri,default,0,All,All,Any,15,loc_cafe,카페에서 새 노래 연습
+char_eiri,default,0,All,All,Any,17,loc_coast_rocks,노을 노래
+char_eiri,default,0,All,All,Any,21,loc_home_eiri,등대에서 잠
+char_eiri,friday,5,Friday,All,Any,6,loc_home_eiri,목 풀기
+char_eiri,friday,5,Friday,All,Any,9,loc_village_square,금요일 공연 준비
+char_eiri,friday,5,Friday,All,Any,13,loc_cafe,카페 공연
+char_eiri,friday,5,Friday,All,Any,17,loc_coast_beach,해변에서 앙코르
+char_eiri,friday,5,Friday,All,Any,21,loc_home_eiri,등대에서 잠
+char_eiri,rain,10,All,All,Bad,7,loc_home_eiri,등대 안 노래 연습
+char_eiri,rain,10,All,All,Bad,12,loc_coast_dock,빗소리 듣기
+char_eiri,rain,10,All,All,Bad,16,loc_home_eiri,젖은 깃털 말리기
+char_eiri,rain,10,All,All,Bad,21,loc_home_eiri,잠

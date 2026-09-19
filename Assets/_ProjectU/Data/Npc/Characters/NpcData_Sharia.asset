@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: "\uC0E4\uB9AC\uC544"
   englishName: Sharia
   isAlphaCast: 0
-  castWave: 0
+  castWave: 4
   isAvailable: 1
   profile:
     raceId: race_sharkkin
@@ -48,7 +48,7 @@ MonoBehaviour:
       \uBBFC\uAC10"
     illustrationStyle: "\uC77C\uBCF8 \uC560\uB2C8\uD48D \uACE0\uC815 \u2013 \uAC70\uCE5C
       \uBC14\uB2E4, \uC0C1\uC5B4 \uC9C0\uB290\uB7EC\uBBF8\uC640 \uAD6C\uC870\uBCF5"
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 7fa762f030ce051499ed7c21ef6df841, type: 3}
   themeColor: {r: 0.11372549, g: 0.3647059, b: 0.47843137, a: 1}
   accentColor: {r: 0.42352942, g: 0.72156864, b: 0.84705883, a: 1}
   personality:
@@ -85,13 +85,14 @@ MonoBehaviour:
   maxAffinity: 100
   birthdaySeason: 2
   birthdayDay: 2
-  homeLocationId: 
-  workLocationId: 
+  homeLocationId: loc_home_sharia
+  workLocationId: loc_coast_dock
   giftProfile: {fileID: 11400000, guid: 9d7481ec6eee3e5409ecba98789981b1, type: 2}
   dialogueSet: {fileID: 11400000, guid: 71589fc94abbbbc49977b93c7a95a64a, type: 2}
-  schedule: {fileID: 0}
+  schedule: {fileID: 11400000, guid: bb98178a5976a63458bbf75eaab7a8af, type: 2}
   dataStatus: "\uAE30\uD68D \uAE30\uBC18 \uC784\uC2DC\uAC12 \uD3EC\uD568"
-  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 89\uC77C\uCC28
-    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uACF5\uD1B5 \uACC4\uC808\xB7\uB0A0\uC528\xB7\uC120\uBB3C
-    \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758 \uC120\uD638
-    \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0 \uC5F0\uACB0."
+  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 108\uC77C\uCC28
+    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uC9D1\xB7\uC77C\uD130 \xB7 \uD558\uB8E8
+    \uC77C\uC815 \xB7 \uCD94\uAC00 \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758
+    \uC120\uD638 \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0
+    \uC5F0\uACB0."

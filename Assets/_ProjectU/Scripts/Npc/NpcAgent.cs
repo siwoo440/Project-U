@@ -281,7 +281,7 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
                     Arrive(notThere); // 끝까지 못 가면 목적지로 옮김
                 }
             }
-            else if (agent.velocity.sqrMagnitude < 0.01f)
+            else if (agent.velocity.sqrMagnitude < 0.01f || agent.remainingDistance <= arriveDistance + 1.2f) // 110일차: 코앞에서 다른 NPC에 막혀 맴도는 경우도
             {
                 stuckTimer += deltaTime;
 

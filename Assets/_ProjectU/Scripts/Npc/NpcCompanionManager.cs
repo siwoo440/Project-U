@@ -108,7 +108,13 @@ public sealed class NpcCompanionManager : MonoBehaviour // 109일차: 동료 (�
 
     public NpcCompanionBook.Entry EntryFor(NpcCharacterData character) // 동료가 될 수 있는 NPC면 정보 (아니면 null)
     {
-        return book != null && character != null ? book.Get(character.CharacterId) : null;
+        NpcCompanionBook.Entry found = book != null && character != null ? book.Get(character.CharacterId) : null;
+        return found != null && IsUnlocked(character) ? found : null;
+    }
+
+    public static bool IsUnlocked(NpcCharacterData character) // 110일차: 의뢰 · 하트 이벤트가 붙은 차수만 동료가 됨 (4차 후보는 이야기가 붙을 때까지 잠김)
+    {
+        return character != null && character.CastWave <= NpcDatabase.StoryReadyWave;
     }
 
     public bool IsCompanion(NpcAgent agent) => agent != null && agent == companion; // 지금 동료인지

@@ -193,3 +193,63 @@ MonoBehaviour:
     - "\uD480 \uB0C4\uC0C8\uAC00 \uC88B\uC544\uC694\u2026"
     - "\uC800, \uAC81\uC774 \uB9CE\uC9C0\uB9CC\u2026 \uC624\uB298\uC740 \uAD1C\uCC2E\uC544\uC694."
     - "\uAD6C\uB984\uC774 \uC591\uCC98\uB7FC \uC0DD\uACBC\uC5B4\uC694."
+  - characterId: char_ragh
+    role: 0
+    requiredStage: 2
+    power: 16
+    interval: 1.6
+    lootItems: []
+    joinLine: "\u2026\uC88B\uB2E4. \uB124 \uB4F1 \uB4A4\uB294 \uB0B4\uAC00 \uB9E1\uC9C0."
+    leaveLine: "\uC624\uB298\uC740 \uC5EC\uAE30\uAE4C\uC9C0\uB2E4. \uBB34\uC0AC\uD788
+      \uB3CC\uC544\uAC00."
+    nightLine: "\uBC24\uC774\uB2E4. \uC57C\uC601\uC9C0 \uBD88\uC744 \uC9C0\uCF1C\uC57C
+      \uD574. \uB3CC\uC544\uAC04\uB2E4."
+    refuseLine: "\u2026\uC544\uC9C1 \uB110 \uBB34\uB9AC\uB85C \uBC1B\uC544\uB4E4\uC774\uC9C0
+      \uBABB\uD588\uC5B4."
+    roleLine: "\uBB3C\uB7EC\uC11C, \uB0B4\uAC00 \uB9C9\uB294\uB2E4!"
+    idleLines:
+    - "\uBC14\uB78C\uC5D0 \uC9D0\uC2B9 \uB0C4\uC0C8\uAC00 \uC11E\uC600\uAD70."
+    - "\uBC1C\uBC11 \uC870\uC2EC\uD574."
+    - "\u2026\uD63C\uC790 \uAC77\uB294 \uAC83\uBCF4\uB2E4 \uB0AB\uAD70."
+  - characterId: char_censia
+    role: 1
+    requiredStage: 2
+    power: 1
+    interval: 50
+    lootItems:
+    - {fileID: 11400000, guid: eef1b375027259b42834d2262ce9dd96, type: 2}
+    - {fileID: 11400000, guid: a42d6efd666a1fc40809cbcbcd3362b4, type: 2}
+    - {fileID: 11400000, guid: bc991e404803cba4292542d6a52ddd7a, type: 2}
+    - {fileID: 11400000, guid: 233c5c7467d9daa41bab4b59439b9465, type: 2}
+    joinLine: "\uC88B\uC544, \uC9D0\uC740 \uB0B4\uAC00 \uB4E4\uC9C0. \uAE38\uB9CC
+      \uC815\uD574."
+    leaveLine: "\uC6B4\uC1A1 \uB05D. \uB2E4\uC74C\uC5D0 \uB610 \uBD88\uB7EC."
+    nightLine: "\uBC24\uAE38\uC740 \uC704\uD5D8\uD574. \uB9C8\uAD6C\uAC04\uC73C\uB85C
+      \uB3CC\uC544\uAC04\uB2E4."
+    refuseLine: "\uC544\uC9C1\uC740 \uB124 \uC9D0\uC744 \uB9E1\uC744 \uC0AC\uC774\uAC00
+      \uC544\uB2C8\uC57C."
+    roleLine: "{item}, \uB124 \uBAAB\uC774\uB2E4. \uCC59\uACA8."
+    idleLines:
+    - "\uC774 \uAE38\uC740 \uB3CC\uC774 \uB9CE\uAD70. \uD45C\uC2DC\uD574 \uB450\uC9C0."
+    - "\uBC1C\uAD7D \uBC15\uC790\uAC00 \uC88B\uC544. \uC624\uB298\uC740 \uC798 \uD480\uB9AC\uACA0\uC5B4."
+    - "\uC26C\uACE0 \uC2F6\uC73C\uBA74 \uB9D0\uD574. \uAE30\uB2E4\uB824 \uC904\uAC8C."
+  - characterId: char_eiri
+    role: 2
+    requiredStage: 2
+    power: 20
+    interval: 45
+    lootItems: []
+    joinLine: "\uC88B\uC544~ \uAC19\uC774 \uAC00\uC790! \uAC00\uB294 \uAE38 \uB0B4\uB0B4
+      \uB178\uB798 \uBD88\uB7EC \uC904\uAC8C!"
+    leaveLine: "\uC624\uB298 \uC5EC\uD589\uB3C4 \uC88B\uC740 \uB178\uB798\uAC00 \uB410\uC5B4~
+      \uB610 \uBCF4\uC790!"
+    nightLine: "\uD558\uB298\uC774 \uC5B4\uB450\uC6CC\uC84C\uC5B4. \uB4F1\uB300\uB85C
+      \uB3CC\uC544\uAC08\uAC8C~"
+    refuseLine: "\uC74C~ \uC544\uC9C1\uC740 \uB108\uB97C \uC704\uD55C \uB178\uB798\uAC00
+      \uC548 \uB5A0\uC62C\uB77C. \uC870\uAE08 \uB354 \uCE5C\uD574\uC9C0\uC790!"
+    roleLine: "\uAD1C\uCC2E\uC544? \uBC14\uB78C\uC758 \uB178\uB798\uB85C \uB2EC\uB798
+      \uC904\uAC8C~"
+    idleLines:
+    - "\uD6C4\uD6D7, \uC624\uB298 \uBC14\uB78C \uC88B\uC544~"
+    - "\uC800 \uAD6C\uB984 \uBAA8\uC591, \uB178\uB798 \uC81C\uBAA9\uC73C\uB85C \uB531\uC774\uC57C!"
+    - "\uB77C~ \uB77C\uB77C~ \uB784\uB77C~"

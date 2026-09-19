@@ -352,6 +352,52 @@ MonoBehaviour:
     zoneId: swamp
     waterside: 0
     home: 1
+  - locationId: loc_home_noctia
+    displayName: "\uB178\uD06C\uD2F0\uC544\uC758 \uAE4C\uB9C8\uADC0 \uC624\uB450\uB9C9"
+    description: "\uC232 \uAE4A\uC740 \uACF3 \uAE4C\uB9C8\uADC0 \uC624\uB450\uB9C9
+      \uBB38 \uC55E"
+    zoneId: forest
+    waterside: 0
+    home: 1
+  - locationId: loc_home_ragh
+    displayName: "\uB77C\uADF8\uC758 \uD138\uAC00\uC8FD \uCC9C\uB9C9"
+    description: "\uC124\uC6D0 \uC57C\uC601\uC9C0 \uBAA8\uB2E5\uBD88 \uB4A4 \uCC9C\uB9C9"
+    zoneId: snow
+    waterside: 0
+    home: 1
+  - locationId: loc_home_rize
+    displayName: "\uB9AC\uC81C\uC758 \uC815\uBE44 \uCEA1\uC290"
+    description: "\uD3D0\uD5C8 \uBD81\uC11C\uCABD \uBAA8\uD241\uC774\uC758 \uC61B
+      \uBB38\uBA85 \uC815\uBE44 \uCEA1\uC290"
+    zoneId: ruins
+    waterside: 0
+    home: 1
+  - locationId: loc_home_sharia
+    displayName: "\uC0E4\uB9AC\uC544\uC758 \uAD6C\uC870\uB300 \uB9DD\uB8E8"
+    description: "\uD574\uC548 \uBD81\uCABD \uBB3C\uAC00\uC758 \uAD6C\uC870\uB300
+      \uB9DD\uB8E8"
+    zoneId: coast
+    waterside: 1
+    home: 1
+  - locationId: loc_home_censia
+    displayName: "\uCF04\uC2DC\uC544\uC758 \uC6B4\uC1A1\uB300 \uB9C8\uAD6C\uAC04"
+    description: "\uBD89\uC740 \uC0AC\uB9C9 \uBD81\uB3D9\uCABD \uC6B4\uC1A1\uB300
+      \uCC9C\uB9C9 \uB9C8\uAD6C\uAC04"
+    zoneId: desert
+    waterside: 0
+    home: 1
+  - locationId: loc_home_harka
+    displayName: "\uD558\uB974\uCE74\uC758 \uCD94\uC801\uC790 \uC624\uB450\uB9C9"
+    description: "\uC548\uAC1C \uC2B5\uC9C0 \uC11C\uCABD \uAE30\uB465 \uC624\uB450\uB9C9"
+    zoneId: swamp
+    waterside: 0
+    home: 1
+  - locationId: loc_home_eiri
+    displayName: "\uC5D0\uC774\uB9AC\uC758 \uB4F1\uB300"
+    description: "\uD574\uC548 \uB4F1\uB300 \uBB38 \uC55E"
+    zoneId: coast
+    waterside: 0
+    home: 1
   stageThresholds: 14000000280000003c00000050000000
   giftPoints: 080000000400000001000000fbfffffff6ffffff
   birthdayMultiplier: 3

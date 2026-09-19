@@ -291,7 +291,7 @@ public static class NpcCompanionBuilder
             return report.ToString();
         }
 
-        List<NpcCharacterData> cast = database.GetStoryCast();
+        List<NpcCharacterData> cast = database.GetPlacedCast(); // 110일차: 이야기 차수가 아닌 후보도 미리 넣을 수 있음 (잠김)
         HashSet<string> seen = new HashSet<string>(StringComparer.Ordinal);
 
         foreach (NpcCompanionBook.Entry entry in book.Entries)
@@ -305,7 +305,7 @@ public static class NpcCompanionBuilder
 
             if (!cast.Any(character => character.CharacterId == who))
             {
-                Error($"{who} : 섬에 사는 NPC(이야기 차수)가 아닙니다.");
+                Error($"{who} : 섬에 사는 NPC가 아닙니다.");
             }
 
             if (entry.power <= 0f || entry.interval <= 0.2f)
@@ -331,9 +331,9 @@ public static class NpcCompanionBuilder
 
         foreach (NpcCompanionRole role in Enum.GetValues(typeof(NpcCompanionRole)))
         {
-            if (book.Entries.Count(entry => entry.role == role) < MinimumPerRole)
+            if (book.Entries.Count(entry => entry.role == role && database.TryGet(entry.characterId, out NpcCharacterData character) && NpcCompanionManager.IsUnlocked(character)) < MinimumPerRole)
             {
-                Error($"{NpcCompanionBook.RoleName(role)} 동료가 {MinimumPerRole}명보다 적습니다.");
+                Error($"지금 데려갈 수 있는 {NpcCompanionBook.RoleName(role)} 동료가 {MinimumPerRole}명보다 적습니다.");
             }
         }
 
@@ -368,7 +368,15 @@ public static class NpcCompanionBuilder
             report.AppendLine("Scene 검사 생략 (게임 Scene이 열려 있지 않음)");
         }
 
-        report.AppendLine($"동료 {book.Entries.Count}명 : " + string.Join(" · ", book.Entries.Select(entry => $"{(database.TryGet(entry.characterId, out NpcCharacterData character) ? character.DisplayName : entry.characterId)}({NpcCompanionBook.RoleName(entry.role)})")));
+        string Describe(NpcCompanionBook.Entry entry)
+        {
+            bool found = database.TryGet(entry.characterId, out NpcCharacterData character);
+            string locked = found && !NpcCompanionManager.IsUnlocked(character) ? " · 잠김" : string.Empty;
+            return $"{(found ? character.DisplayName : entry.characterId)}({NpcCompanionBook.RoleName(entry.role)}{locked})";
+        }
+
+        int lockedCount = book.Entries.Count(entry => database.TryGet(entry.characterId, out NpcCharacterData character) && !NpcCompanionManager.IsUnlocked(character));
+        report.AppendLine($"동료 {book.Entries.Count}명 (이야기가 붙기 전이라 잠긴 후보 {lockedCount}명) : " + string.Join(" · ", book.Entries.Select(Describe)));
         errorCount = errors;
         report.AppendLine(errors == 0 ? "결과 : 오류 0개" : $"결과 : 오류 {errors}개");
         return report.ToString();

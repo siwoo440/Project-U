@@ -310,6 +310,7 @@ MonoBehaviour:
   farSpeedMultiplier: 16
   longTripMultiplier: 1.8
   longTripDistance: 40
+  followTeleportDistance: 45
   currentLocationId: 
   currentActivity: 
   isInside: 0

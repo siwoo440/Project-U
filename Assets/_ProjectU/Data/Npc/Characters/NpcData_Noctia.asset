@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: "\uB178\uD06C\uD2F0\uC544"
   englishName: Noctia
   isAlphaCast: 0
-  castWave: 0
+  castWave: 4
   isAvailable: 1
   profile:
     raceId: race_witch
@@ -64,7 +64,7 @@ MonoBehaviour:
       \uD478\uB978 \uC232, \uAE4C\uB9C8\uADC0 \uAE43\uD138, \uC790\uC90F\uBE5B \uB9C8\uBC95\uC9C4,
       \uB2EC\uBE5B \uBC30\uACBD, \uB9DD\uD1A0\uAC00 \uB0A0\uAC1C\uCC98\uB7FC \uD3BC\uCCD0\uC9C4
       \uAD6C\uB3C4 \uCD94\uCC9C."
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 0931c18403e9a464e8e2df70eac6701e, type: 3}
   themeColor: {r: 0.17254902, g: 0.17254902, b: 0.21960784, a: 1}
   accentColor: {r: 0.41960785, g: 0.30588236, b: 0.61960787, a: 1}
   personality:
@@ -119,13 +119,14 @@ MonoBehaviour:
   maxAffinity: 100
   birthdaySeason: 3
   birthdayDay: 3
-  homeLocationId: 
-  workLocationId: 
+  homeLocationId: loc_home_noctia
+  workLocationId: loc_forest_witch_hut
   giftProfile: {fileID: 11400000, guid: f35d3f354055d114aa25bb8b062a5977, type: 2}
   dialogueSet: {fileID: 11400000, guid: 34b0b7dd6aa11584e8292843ce9b9dcd, type: 2}
-  schedule: {fileID: 0}
+  schedule: {fileID: 11400000, guid: aa0ba72c98dbb034bbf6d814f5a7bed4, type: 2}
   dataStatus: "\uAE30\uD68D \uAE30\uBC18 \uC784\uC2DC\uAC12 \uD3EC\uD568"
-  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 89\uC77C\uCC28
-    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uACF5\uD1B5 \uACC4\uC808\xB7\uB0A0\uC528\xB7\uC120\uBB3C
-    \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758 \uC120\uD638
-    \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0 \uC5F0\uACB0."
+  sourceNote: "\uCE90\uB9AD\uD130 \uC2DC\uD2B8 \uAC80\uD1A0\uC77C 2026-07-31. 108\uC77C\uCC28
+    \uC784\uC2DC \uC791\uC131: \uC0DD\uC77C \xB7 \uC9D1\xB7\uC77C\uD130 \xB7 \uD558\uB8E8
+    \uC77C\uC815 \xB7 \uCD94\uAC00 \uB300\uC0AC \xB7 \uC120\uBB3C \uBC18\uC751. \uC2DC\uD2B8\uC758
+    \uC120\uD638 \uBB3C\uAC74\uC740 \uAC8C\uC784 \uC544\uC774\uD15C\uC73C\uB85C \uB300\uC2E0
+    \uC5F0\uACB0."
