@@ -78,6 +78,21 @@ public static class StylizedSceneDresser
         return report.ToString();
     }
 
+    public static string RepaintTerrain() // 105일차: 나무 · 바위 배치 없이 기본 바닥(풀 · 흙길 · 풀 심기)만 다시 칠함 (무인도 도구)
+    {
+        StringBuilder report = new StringBuilder();
+        PlacementContext context = BuildContext(report);
+
+        if (context == null)
+        {
+            return report.ToString().TrimEnd();
+        }
+
+        StylizedTerrainPainter.PaintZones zones = BuildPaintZones(context);
+        report.Append("기본 바닥 : " + StylizedTerrainPainter.Paint(context.Terrain, zones, true));
+        return report.ToString();
+    }
+
     public static string RemoveEnvironment()
     {
         GameObject root = GameObject.Find(EnvironmentRootName);
@@ -441,22 +456,30 @@ public static class StylizedSceneDresser
         Vector3 origin = terrain.transform.position;
         Vector3 size = terrain.terrainData.size;
         context.TerrainBounds = new Bounds(origin + size * 0.5f, size);
+        bool island = IslandTerrainBuilder.IsIslandTerrain(terrain);
+
+        if (island) // 105일차: 무인도에서는 104일차까지의 250m 마을 구역에만 배치 · 흙길 (시작 해변은 무인도 도구가 꾸밈)
+        {
+            context.TerrainBounds = new Bounds(new Vector3(0f, 0f, 0f), new Vector3(250f, size.y, 250f));
+        }
 
         List<Vector3> keyPoints = new List<Vector3>();
         PlayerMovement player = Object.FindFirstObjectByType<PlayerMovement>(FindObjectsInactive.Include);
 
         if (player != null)
         {
-            keyPoints.Add(player.transform.position);
-            context.Blocked.Add((player.transform.position, 7f));
+            Vector3 start = island ? IslandTerrainBuilder.LegacyStart : player.transform.position; // 시작 위치가 해변으로 옮겨도 마을 길은 그대로
+            keyPoints.Add(start);
+            context.Blocked.Add((start, 7f));
         }
 
         GameObject respawn = GameObject.Find("-- DefaultRespawnPoint --");
 
         if (respawn != null)
         {
-            keyPoints.Add(respawn.transform.position);
-            context.Blocked.Add((respawn.transform.position, 6f));
+            Vector3 point = island ? IslandTerrainBuilder.LegacyRespawn : respawn.transform.position;
+            keyPoints.Add(point);
+            context.Blocked.Add((point, 6f));
         }
 
         BuildGridArea grid = Object.FindFirstObjectByType<BuildGridArea>(FindObjectsInactive.Include);
@@ -998,6 +1021,11 @@ public static class StylizedSceneDresser
 
     private static int BuildBackdrop(PlacementContext context, Transform parent)
     {
+        if (IslandTerrainBuilder.IsIslandTerrain(context.Terrain))
+        {
+            return 0; // 105일차: 무인도에서는 섬 지형의 산이 원경을 대신함
+        }
+
         Bounds bounds = context.TerrainBounds;
         float ring = Mathf.Max(bounds.extents.x, bounds.extents.z) * 1.15f + 45f;
         int count = 16;

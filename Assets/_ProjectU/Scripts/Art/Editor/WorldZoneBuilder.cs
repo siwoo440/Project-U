@@ -414,6 +414,14 @@ public static class WorldZoneBuilder
     {
         int water = LayerMask.NameToLayer(WaterLayerName);
         int count = 0;
+        bool island = IslandTerrainBuilder.IsIslandTerrain(Terrain.activeTerrain != null ? Terrain.activeTerrain : Object.FindFirstObjectByType<Terrain>());
+        float boatHeight = island ? IslandTerrainBuilder.SeaLevel + 0.02f : 0.02f; // 105일차: 무인도는 석호 수면에 뜸
+
+        if (island) // 105일차: 사방 바다는 무인도 도구가 만들고, 부두는 석호에 둔다
+        {
+            count += BuildDockAndHarbor(parent, building, boatHeight);
+            return count;
+        }
 
         // 바다 · 바다 밑 · 물가 거품 (섬 밖까지 넓게, 그림자 없음)
         GameObject sea = Place(parent, "zone_sea", new Vector3(280f, 0.08f, 0f), 0f, new Vector3(360f, 1f, 700f), PropCollider.None, water);
@@ -435,6 +443,13 @@ public static class WorldZoneBuilder
         }
 
         count += 15;
+        count += BuildDockAndHarbor(parent, building, boatHeight);
+        return count;
+    }
+
+    private static int BuildDockAndHarbor(Transform parent, int building, float boatHeight) // 부두 · 배 · 어부 오두막 · 등대 · 소품 · 바위
+    {
+        int count = 0;
 
         // 부두 (동쪽으로 뻗음) : 널빤지 · 경사로 · 난간 벽
         GameObject dock = Place(parent, "zone_dock", new Vector3(SeaLine - 3f, 0f, 10f), 90f, 1f, PropCollider.None, building);
@@ -452,8 +467,8 @@ public static class WorldZoneBuilder
         dock.name = "Dock";
         count++;
 
-        Place(parent, "zone_boat", new Vector3(104.5f, 0.02f, 4f), 20f, 1f, PropCollider.None, 0).name = "Boat_A";
-        Place(parent, "zone_boat", new Vector3(106.5f, 0.02f, 17f), -35f, 1f, PropCollider.None, 0).name = "Boat_B";
+        Place(parent, "zone_boat", new Vector3(104.5f, boatHeight, 4f), 20f, 1f, PropCollider.None, 0).name = "Boat_A";
+        Place(parent, "zone_boat", new Vector3(106.5f, boatHeight, 17f), -35f, 1f, PropCollider.None, 0).name = "Boat_B";
         GameObject hut = Place(parent, "zone_fisher_hut", new Vector3(90f, 0f, 20f), 270f, 1f, PropCollider.None, building);
         AddBox(hut, new Vector3(0f, 1.3f, 0f), new Vector3(4.2f, 2.6f, 4.2f));
         hut.name = "FisherHut";
@@ -779,10 +794,18 @@ public static class WorldZoneBuilder
     }
 
     // 좌표의 구역 바닥 비율 (모래 · 눈 · 진흙 · 돌바닥)과 흙 비율 (흙길 · 숲 바닥)
+    private static bool islandGround; // 105일차: 바닥 칠하기 중인 Terrain이 무인도인지
+
     public static void GroundWeights(float x, float z, float[] zone, out float dirt)
     {
         float noise = Mathf.PerlinNoise(x * 0.07f + 31.7f, z * 0.07f + 12.9f) - 0.5f;
         float coast = Smooth(84.5f, 90.5f, x + noise * 5f);
+
+        if (islandGround) // 105일차: 무인도에서는 석호 둘레 해변만 모래
+        {
+            coast *= 1f - Smooth(12f, 32f, IslandTerrainBuilder.LagoonDistance(x, z) + noise * 6f);
+        }
+
         float desert = Ellipse(x, z, 80f, -90f, 38f, 32f, 0.25f, noise);
         zone[0] = Mathf.Max(coast, desert);
         zone[1] = Ellipse(x, z, 24f, 120f, 64f, 36f, 0.3f, noise);
@@ -822,6 +845,7 @@ public static class WorldZoneBuilder
         }
 
         TerrainData data = terrain.terrainData;
+        islandGround = IslandTerrainBuilder.IsIslandTerrain(terrain);
         List<TerrainLayer> baseLayers = data.terrainLayers.Where(layer => layer != null && !layer.name.StartsWith("TL_Zone", StringComparison.Ordinal)).ToList();
         TerrainLayer[] zoneLayers =
         {
@@ -903,6 +927,7 @@ public static class WorldZoneBuilder
 
         // 구역 바닥 · 흙길의 풀 없애기
         int removed = 0;
+        bool islandTerrain = IslandTerrainBuilder.IsIslandTerrain(terrain); // 105일차: 무인도는 석호만 물
 
         if (data.detailPrototypes.Length > 0)
         {
@@ -923,7 +948,7 @@ public static class WorldZoneBuilder
                     float worldX = origin.x + (x + 0.5f) / detailResolution * size.x;
                     GroundWeights(worldX, z, zone, out float dirt);
 
-                    if (zone[0] + zone[1] + zone[2] + zone[3] > 0.3f || dirt > 0.4f || worldX > SeaLine - 1f)
+                    if (zone[0] + zone[1] + zone[2] + zone[3] > 0.3f || dirt > 0.4f || (islandTerrain ? IslandTerrainBuilder.IsLagoon(worldX, z) : worldX > SeaLine - 1f))
                     {
                         removed += density[y, x];
                         density[y, x] = 0;
@@ -1051,6 +1076,21 @@ public static class WorldZoneBuilder
             wall.transform.SetParent(parent, false);
             wall.transform.position = center;
             wall.AddComponent<BoxCollider>().size = size;
+        }
+
+        if (IslandTerrainBuilder.IsIslandTerrain(Terrain.activeTerrain != null ? Terrain.activeTerrain : Object.FindFirstObjectByType<Terrain>()))
+        {
+            // 105일차: 무인도에는 가장자리 벽이 없다 (바다 경계는 무인도 도구의 ShoreGuard). 석호는 NPC가 걷지 않음
+            GameObject lagoon = new GameObject("Lagoon_NotWalkable");
+            lagoon.transform.SetParent(parent, false);
+            Vector2 center = (IslandTerrainBuilder.LagoonMin + IslandTerrainBuilder.LagoonMax) * 0.5f;
+            Vector2 extent = IslandTerrainBuilder.LagoonMax - IslandTerrainBuilder.LagoonMin;
+            lagoon.transform.position = new Vector3(center.x, IslandTerrainBuilder.SeaLevel, center.y);
+            NavMeshModifierVolume lagoonVolume = lagoon.AddComponent<NavMeshModifierVolume>();
+            lagoonVolume.size = new Vector3(extent.x, 6f, extent.y);
+            lagoonVolume.center = Vector3.zero;
+            lagoonVolume.area = NavMesh.GetAreaFromName("Not Walkable");
+            return "무인도 : 가장자리 벽 없음 · 석호 NavMesh 제외";
         }
 
         Wall("Edge_North", new Vector3(0f, 3f, 124.8f), new Vector3(252f, 6f, 0.6f));
@@ -1577,16 +1617,32 @@ public static class WorldZoneBuilder
             reachable++;
         }
 
-        if (NavMesh.SamplePosition(new Vector3(113f, 0f, 60f), out NavMeshHit sea, 1f, NavMesh.AllAreas))
+        bool island = IslandTerrainBuilder.IsIslandTerrain(Terrain.activeTerrain != null ? Terrain.activeTerrain : Object.FindFirstObjectByType<Terrain>());
+        Vector2 lagoonCenter = (IslandTerrainBuilder.LagoonMin + IslandTerrainBuilder.LagoonMax) * 0.5f;
+        Vector3 seaSample = island ? new Vector3(lagoonCenter.x, IslandTerrainBuilder.SeaLevel, lagoonCenter.y - 20f) : new Vector3(113f, 0f, 60f); // 105일차: 무인도는 석호
+
+        if (NavMesh.SamplePosition(seaSample, out NavMeshHit sea, 1f, NavMesh.AllAreas))
         {
             error($"바다가 걸을 수 있는 곳으로 되어 있습니다 ({sea.position}). 18번 메뉴로 NavMesh를 다시 구우세요.");
         }
 
-        int walls = root.transform.Find("Boundary") != null ? root.transform.Find("Boundary").GetComponentsInChildren<BoxCollider>().Length : 0;
+        Transform boundary = root.transform.Find("Boundary");
 
-        if (walls < 6)
+        if (island) // 105일차: 무인도는 가장자리 벽 대신 바다 경계(ShoreGuard) · 석호 NavMesh 제외
         {
-            error($"섬 경계 · 바다 벽이 {walls}/6개입니다.");
+            if (boundary == null || boundary.Find("Lagoon_NotWalkable") == null)
+            {
+                error("석호 NavMesh 제외 영역이 없습니다. 18번 메뉴를 실행하세요.");
+            }
+        }
+        else
+        {
+            int walls = boundary != null ? boundary.GetComponentsInChildren<BoxCollider>().Length : 0;
+
+            if (walls < 6)
+            {
+                error($"섬 경계 · 바다 벽이 {walls}/6개입니다.");
+            }
         }
 
         Terrain terrain = Terrain.activeTerrain != null ? Terrain.activeTerrain : Object.FindFirstObjectByType<Terrain>();
@@ -1624,6 +1680,6 @@ public static class WorldZoneBuilder
             error("적 생성 지점 ID가 겹칩니다.");
         }
 
-        report.AppendLine($"새 구역 위치 {good}/{zoneLocations.Count}곳 정상 · 마을→입구 길 {reachable}/{Zones.Length}개 · 경계 벽 {walls}개 · 바닥 층 {zoneLayers}개 · 적 생성 지점 {spawns.Length}곳");
+        report.AppendLine($"새 구역 위치 {good}/{zoneLocations.Count}곳 정상 · 마을→입구 길 {reachable}/{Zones.Length}개 · 경계 {(island ? "바다 경계(ShoreGuard) · 석호 제외" : "벽")} · 바닥 층 {zoneLayers}개 · 적 생성 지점 {spawns.Length}곳");
     }
 }

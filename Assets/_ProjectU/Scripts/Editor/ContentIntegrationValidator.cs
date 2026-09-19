@@ -108,6 +108,7 @@ public static class ContentIntegrationValidator
             ("섬 NPC 차수", Feature(NpcCastBuilder.Validate)),
             ("섬 NPC 가게 물건", Feature(NpcGoodsBuilder.Validate)),
             ("섬 NPC 이야기", Feature(NpcStoryBuilder.Validate)),
+            ("무인도", Feature(IslandTerrainBuilder.Validate)),
             ("데이터 점검", Feature(DataAuditBuilder.Validate)),
             ("아이템 데이터 (ID 규칙)", ItemDataValidator.ValidateAllItemData),
             ("Game Data Registry", () => CountLoggedErrors(GameDataRegistryEditor.ValidateDefaultRegistry, details))
