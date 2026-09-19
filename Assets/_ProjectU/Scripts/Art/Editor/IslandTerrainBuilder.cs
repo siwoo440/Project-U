@@ -14,6 +14,7 @@ using Object = UnityEngine.Object;
 //    해안 구역 부두 자리는 바닷물이 들어오는 석호로 파 둔다 (107일차에 해안 구역을 진짜 동쪽 해변으로 옮김)
 // 2. 바닥 칠하기 : 기본(풀 · 흙) → 섬(해변 모래 · 바다 밑 · 눈 · 절벽 · 해변 오솔길) → 19번 메뉴(구역 바닥 · NPC 배치 · NavMesh · 초상)
 // 3. 사방 바다 · 먼 바다 밑 · 남쪽 해변 난파선 · 떠밀려 온 물건 · 시작 위치 · 기본 부활 위치 · 바다 경계 · 안개
+// 106일차: 바다 경계는 먼 바다 파도, 물속 수면 · 바닷속(해초 · 산호 · 잠수 물건)은 23번 메뉴와 같은 코드로 함께 만든다
 // 여러 번 실행해도 같은 결과가 나온다 (섬 묶음을 지우고 다시 만듦).
 public static class IslandTerrainBuilder
 {
@@ -31,7 +32,6 @@ public static class IslandTerrainBuilder
     public const float PlateauHalf = 130f; // 마을 · 기존 구역 평지 (가운데 ±130m 높이 0)
     private const float PlateauBlend = 240f; // 평지에서 언덕으로 이어지는 거리
     public const float CoastRadius = 800f; // 평균 해안선 반지름
-    public const float WadeDepth = 1.1f; // 걸어 들어갈 수 있는 깊이
     private const float BeachWidth = 45f; // 모래 해변 폭
     public static readonly Vector3 LegacyStart = Vector3.zero; // 104일차까지 시작 위치 (마을 가운데)
     public static readonly Vector3 LegacyRespawn = new Vector3(5.85f, 0f, 1.43f); // 104일차까지 기본 부활 위치
@@ -137,6 +137,9 @@ public static class IslandTerrainBuilder
             Transform root = new GameObject(RootName).transform;
             report.AppendLine(BuildSea(root));
             report.AppendLine(BuildShipwreckStart(root, terrain));
+            report.AppendLine(SwimmingBuilder.ConfigureWaves(root));
+            report.AppendLine(SwimmingBuilder.EnsureOceanUnderside(root));
+            report.AppendLine(SwimmingBuilder.BuildUnderwater(root));
             report.AppendLine(ApplyAtmosphere());
         }
         finally
@@ -781,13 +784,13 @@ public static class IslandTerrainBuilder
             EditorUtility.SetDirty(main.transform);
         }
 
-        // 바다 경계 (허리 깊이까지)
+        // 바다 경계 (106일차: 먼 바다 파도 · 해안선은 SwimmingBuilder.ConfigureWaves가 채움)
         GameObject guardObject = new GameObject("ShoreGuard");
         guardObject.transform.SetParent(root, false);
         IslandShoreGuard guard = guardObject.AddComponent<IslandShoreGuard>();
-        guard.EditorAssign(SeaLevel, WadeDepth, player != null ? player.transform : null, respawnTransform);
+        guard.EditorAssign(SeaLevel, player != null ? player.transform : null, respawnTransform, SwimmingBuilder.CoastRadii());
 
-        return $"난파선 시작 해변 : 물가 z {shoreZ:0} · 난파선 {wreckPoint:F0} · 시작 {spawn:F0} (마을까지 {spawn.magnitude:0}m) · 소품 {props}개 · 떠밀려 온 물건 {pickups}개 · 바다 경계 깊이 {WadeDepth}m";
+        return $"난파선 시작 해변 : 물가 z {shoreZ:0} · 난파선 {wreckPoint:F0} · 시작 {spawn:F0} (마을까지 {spawn.magnitude:0}m) · 소품 {props}개 · 떠밀려 온 물건 {pickups}개";
     }
 
     private static string ApplyAtmosphere() // 먼 섬 · 수평선이 자연스럽게 흐려지게

@@ -54,6 +54,16 @@ public sealed class PlayerWetness : MonoBehaviour // 플레이어 젖음 수치 
         currentWetness = Mathf.Clamp(currentWetness + wetnessChange, 0f, maxWetness); // 젖음 범위 적용
     }
 
+    public void Soak(float wetnessPerSecond, float deltaTime) // 106일차: 물에 들어가 젖음
+    {
+        if (deltaTime <= 0f || wetnessPerSecond <= 0f) // 정상 값 확인
+        {
+            return; // 젖음 갱신 중단
+        }
+
+        currentWetness = Mathf.Clamp(currentWetness + wetnessPerSecond * deltaTime, 0f, maxWetness); // 젖음 범위 적용
+    }
+
     public void SetCurrentWetness(float wetnessAmount) // 저장된 젖음 수치 적용
     {
         currentWetness = Mathf.Clamp(wetnessAmount, 0f, maxWetness); // 젖음 범위 적용

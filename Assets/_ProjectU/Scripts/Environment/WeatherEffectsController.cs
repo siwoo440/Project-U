@@ -149,6 +149,19 @@ public sealed class WeatherEffectsController : MonoBehaviour // 날씨 시각과
         ClampSettings(); // 설정값 범위 보정
     }
 
+    public void SetPrecipitationHidden(bool hidden) // 106일차: 물속에서는 비 · 눈 줄기를 숨김
+    {
+        foreach (ParticleSystem particles in new[] { rainParticles, snowParticles }) // 강수 파티클 순회
+        {
+            ParticleSystemRenderer precipitationRenderer = particles != null ? particles.GetComponent<ParticleSystemRenderer>() : null; // 파티클 표시기 조회
+
+            if (precipitationRenderer != null) // 표시기 존재 확인
+            {
+                precipitationRenderer.enabled = !hidden; // 물속이면 숨김
+            }
+        }
+    }
+
     public void SetPlayerSheltered(bool isSheltered) // 플레이어 지붕 상태 적용
     {
         if (isPlayerSheltered == isSheltered) // 기존 상태와 동일한지 확인

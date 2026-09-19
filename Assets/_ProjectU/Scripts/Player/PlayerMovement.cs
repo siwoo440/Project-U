@@ -123,6 +123,7 @@ public sealed class PlayerMovement : MonoBehaviour // 플레이어 일반 이동
     private PlayerEquipment playerEquipment; // 플레이어 장비 관리자
     private PlayerTemperature playerTemperature; // 플레이어 체온 관리자
     private PlayerHealth playerHealth; // 플레이어 체력 관리자
+    private PlayerSwimming playerSwimming; // 106일차: 수영 · 잠수 관리자 (없으면 물에서도 걷기)
     private float verticalVelocity; // 수직 이동 속도
     private Vector3 groundNormal = Vector3.up; // 현재 지면의 수직 방향
     private float fallStartHeight; // 낙하 시작 높이
@@ -151,6 +152,7 @@ public sealed class PlayerMovement : MonoBehaviour // 플레이어 일반 이동
         playerEquipment = GetComponent<PlayerEquipment>(); // PlayerEquipment 가져오기
         playerTemperature = GetComponent<PlayerTemperature>(); // PlayerTemperature 가져오기
         playerHealth = GetComponent<PlayerHealth>(); // PlayerHealth 가져오기
+        playerSwimming = GetComponent<PlayerSwimming>(); // 106일차: 수영 관리자 가져오기 (선택)
 
         if (weaponAttackController == null) // 근접 공격 관리자 참조 확인
         {
@@ -246,6 +248,23 @@ public sealed class PlayerMovement : MonoBehaviour // 플레이어 일반 이동
         UpdateGroundState(); // 현재 지면 상태 검사
         UpdateLandingState(wasGrounded); // 착지와 낙하 거리 판정
 
+        if (playerSwimming != null && playerSwimming.HandleMovement( // 106일차: 깊은 물이면 헤엄으로 이동
+            moveDirection, // 매개변수 전달
+            isGrounded, // 매개변수 전달
+            ref verticalVelocity, // 매개변수 전달
+            sprintActionReference.action.IsPressed(), // 매개변수 전달
+            jumpActionReference.action.IsPressed(), // 매개변수 전달
+            jumpActionReference.action.WasPressedThisFrame(), // 매개변수 전달
+            Time.deltaTime)) // 헤엄 이동 처리
+        {
+            FinishDodge(true); // 물에 들어가면 회피 종료
+            isFalling = false; // 물에 떨어지면 낙하 피해 없음
+            wasSignificantFall = false; // 유효 낙하 결과 제거
+            fallStartHeight = transform.position.y; // 물 밖으로 나온 뒤 낙하 기준점
+            FaceCameraDirection(cameraForward); // 카메라 시선 방향 적용
+            return; // 일반 이동 처리 차단
+        }
+
         if (isDodging) // 현재 회피 이동 여부 확인
         {
             if (!CanContinueDodge()) // 회피 유지 가능 상태 확인
@@ -275,7 +294,8 @@ public sealed class PlayerMovement : MonoBehaviour // 플레이어 일반 이동
         float currentSpeed = baseMovementSpeed // 값 계산 시작
             * equipmentSpeedMultiplier // 장비 이동 속도 적용
             * temperatureSpeedMultiplier // 체온 이동 속도 적용
-            * FoodBuffController.LocalBonusMultiplier(FoodBuffType.MoveSpeed); // 음식 이동 속도 효과 적용 (85일차)
+            * FoodBuffController.LocalBonusMultiplier(FoodBuffType.MoveSpeed) // 음식 이동 속도 효과 적용 (85일차)
+            * (playerSwimming != null ? playerSwimming.WadeSpeedMultiplier : 1f); // 얕은 물 걷기 느려짐 (106일차)
 
         UpdateVerticalVelocity(true); // 점프와 중력 계산
         UpdateFallingState(); // 공중 하강 상태 검사
@@ -590,6 +610,11 @@ public sealed class PlayerMovement : MonoBehaviour // 플레이어 일반 이동
         fallStartHeight = transform.position.y; // 새로운 낙하 기준점 적용
         nextDodgeTime = 0f; // 부활 후 회피 대기시간 초기화
         dodgeCooldownRemaining = 0f; // Inspector 회피 대기시간 초기화
+
+        if (playerSwimming != null) // 수영 관리자 존재 확인
+        {
+            playerSwimming.ResetState(); // 헤엄 · 숨 상태 초기화 (106일차)
+        }
     }
 
     private Vector3 GetPlanarCameraForward() // 카메라 수평 전방 방향 계산

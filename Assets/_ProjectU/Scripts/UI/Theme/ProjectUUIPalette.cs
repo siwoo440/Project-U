@@ -31,4 +31,6 @@ public static class ProjectUUIPalette
     public static readonly Color Thirst = new Color(0.31f, 0.7f, 0.91f, 1f);
     public static readonly Color Wetness = new Color(0.45f, 0.56f, 0.86f, 1f);
     public static readonly Color Temperature = new Color(0.98f, 0.55f, 0.25f, 1f);
+    public static readonly Color Stamina = new Color(0.95f, 0.84f, 0.36f, 1f); // 106일차
+    public static readonly Color Breath = new Color(0.56f, 0.86f, 0.96f, 1f); // 106일차
 }

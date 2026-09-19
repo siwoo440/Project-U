@@ -114,10 +114,26 @@ public sealed class PlayerStamina : MonoBehaviour // 플레이어 스태미나 �
         return true; // 행동 스태미나 소비 성공 반환
     }
 
+    public void UpdateSwim(float drainPerSecond, float recoveryMultiplier, float deltaTime) // 106일차: 헤엄 스태미나 (움직이면 소비, 떠 있으면 천천히 회복)
+    {
+        if (drainPerSecond > 0f) // 헤엄 이동 확인
+        {
+            DrainOverTime(drainPerSecond, deltaTime); // 헤엄 스태미나 소비
+            return; // 회복 생략
+        }
+
+        RecoverStamina(deltaTime * Mathf.Clamp01(recoveryMultiplier)); // 떠 있을 때 느린 회복
+    }
+
     private void ConsumeSprintStamina(float deltaTime) // 달리기 스태미나 소비
     {
+        DrainOverTime(sprintDrainPerSecond, deltaTime); // 달리기 소비량 적용
+    }
+
+    private void DrainOverTime(float drainPerSecond, float deltaTime) // 초당 스태미나 소비 (달리기 · 헤엄 공통)
+    {
         float temperatureDrainMultiplier = GetTemperatureDrainMultiplier(); // 온도 소비 배율 조회
-        float drainAmount = sprintDrainPerSecond
+        float drainAmount = drainPerSecond
             * temperatureDrainMultiplier
             * deltaTime; // 체온 적용 스태미나 소비량 계산
 

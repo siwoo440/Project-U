@@ -176,6 +176,18 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
             return; // UI 조작 중 입력 차단
         }
 
+        if (PlayerSwimming.IsLocalSwimming) // 106일차: 헤엄치는 동안에는 공격 · 도구 없이 줍기 · 대화만
+        {
+            CancelAttackStates(); // 진행 중인 공격과 활 장전 취소
+
+            if (interactActionReference.action.WasPressedThisFrame()) // F키 입력 확인
+            {
+                HandleInteractInput(); // 물속 물건 줍기 · 일반 상호작용
+            }
+
+            return; // 공격 입력 차단
+        }
+
         if (attackActionReference.action.WasPressedThisFrame()) // 좌클릭 누름 입력 확인
         {
             HandleAttackPressed(); // 근접 공격 또는 활 장전 시작 처리
@@ -295,12 +307,12 @@ public sealed class PlayerInteractor : MonoBehaviour // 플레이어 공격과 �
             detectedInteractable = candidate; // 가장 가까운 상호작용 대상 저장
         }
 
-        if (detectedInteractable == null && farmingToolController != null) // 시선 앞 대상이 없을 때 발밑 앞 칸 확인
+        if (detectedInteractable == null && farmingToolController != null && !PlayerSwimming.IsLocalSwimming) // 시선 앞 대상이 없을 때 발밑 앞 칸 확인 (헤엄 중 제외)
         {
             detectedInteractable = farmingToolController.FindTargetInteractable(); // 밭 또는 경작 대상 검색
         }
 
-        if (detectedInteractable == null && fishingController != null) // 낚싯대를 들고 물가를 보는지 확인
+        if (detectedInteractable == null && fishingController != null && !PlayerSwimming.IsLocalSwimming) // 낚싯대를 들고 물가를 보는지 확인 (헤엄 중 제외)
         {
             detectedInteractable = fishingController.FindTargetInteractable(); // 던질 지점 대상 검색
         }

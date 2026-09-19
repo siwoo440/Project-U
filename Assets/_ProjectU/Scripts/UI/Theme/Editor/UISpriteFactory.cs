@@ -121,6 +121,14 @@ public static class UISpriteFactory
         WriteIcon("Check", CheckIcon);
     }
 
+    // 106일차 추가: 숨(물방울) 아이콘만 따로 만든다
+    public static void GenerateSwimIcons()
+    {
+        StylizedArtAssetFactory.EnsureFolder(IconFolder);
+        WriteIcon("Bubble", BubbleIcon);
+        AssetDatabase.SaveAssets();
+    }
+
     // 87일차 추가: 코인·가격표·상자 아이콘만 따로 만든다
     public static void GenerateMarketIcons()
     {
@@ -362,6 +370,16 @@ public static class UISpriteFactory
     }
 
     // 85일차 추가: 번개 (스태미나)
+    // 106일차 추가: 숨 (크고 작은 물방울 세 개 + 반짝임)
+    private static float BubbleIcon(float x, float y)
+    {
+        float big = Mathf.Abs(Circle(x, y, -0.2f, -0.28f, 0.48f)) - 0.1f;
+        float middle = Mathf.Abs(Circle(x, y, 0.45f, 0.36f, 0.26f)) - 0.08f;
+        float small = Circle(x, y, -0.08f, 0.66f, 0.14f);
+        float shine = Capsule(x, y, -0.44f, -0.16f, -0.3f, 0.04f, 0.06f);
+        return Union(Union(big, middle), Union(small, shine));
+    }
+
     private static float BoltIcon(float x, float y)
     {
         float upper = Capsule(x, y, 0.3f, 0.85f, -0.22f, -0.02f, 0.13f);
