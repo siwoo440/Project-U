@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4bf3c4498412d4d8c95a03bab470e9, type: 3}
+  m_Name: NpcQuests_Lilica
+  m_EditorClassIdentifier: Assembly-CSharp::NpcQuestBook
+  groupId: quest_lilica
+  ownerId: char_lilica
+  quests:
+  - questId: quest_lilica_strawberry
+    title: "\uB538\uAE30 \uB514\uC800\uD2B8"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 95ca44aa8a27d41448c511db6fa0a55c, type: 2}
+      amount: 4
+    rewardCoins: 36
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 0000000001000000
+    requiredStage: 0
+    requestLine: "\uB538\uAE30 \uB124 \uAC1C! \uC624\uB298 \uBC24 \uB514\uC800\uD2B8\uAC00
+      \uC5C6\uC73C\uBA74 \uC774 \uB9B4\uB9AC\uCE74 \uB2D8\uC740 \uC7A0\uC744 \uBABB
+      \uC790!"
+    thanksLine: "\uD6C4\uD6D7, \uD6CC\uB96D\uD574! \uCE6D\uCC2C\uD574 \uC8FC\uC9C0.
+      \u2026\uACE0, \uACE0\uB9C8\uC6CC."
+    requiredEventId: 
+  - questId: quest_lilica_berry
+    title: "\uBC24\uC758 \uC5F4\uB9E4"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 3a8ea9dc329d35c4b8b4c84410a7f15d, type: 2}
+      amount: 6
+    rewardCoins: 25
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uB2EC\uCF64\uD55C \uC5F4\uB9E4 \uC5EC\uC12F \uAC1C. \uBC24 \uC0B0\uCC45\uC5D0
+      \uBA39\uC744 \uAC70\uC57C. \uBE68\uB9AC!"
+    thanksLine: "\uD765, \uB2A6\uC9C0 \uC54A\uC558\uB124. \uC774\uBC88\uB9CC \uBD10\uC8FC\uC9C0."
+    requiredEventId: 
+  - questId: quest_lilica_milk
+    title: "\uB2EC\uBE5B \uC6B0\uC720"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 0beb83d291e4ab6438e2b2ea00a83f5d, type: 2}
+      amount: 3
+    rewardCoins: 60
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uC6B0\uC720 \uC138 \uBCD1. \uD64D\uCC28\uC5D0 \uB123\uC744 \uAC70\uC57C.
+      \u2026\uD53C \uAC19\uC740 \uAC70 \uC548 \uB9C8\uC154! \uD3B8\uACAC\uC774\uC57C!"
+    thanksLine: "\uD6C4\uD6D7, \uC774\uC81C \uC644\uBCBD\uD55C \uBC00\uD06C\uD2F0\uC57C.
+      \uB108\uB3C4 \uD55C \uC794 \uC904\uAE4C?"
+    requiredEventId: 
+  - questId: quest_lilica_special
+    title: "\uC791\uC740 \uBB34\uB3C4\uD68C"
+    kind: 1
+    requirements:
+    - item: {fileID: 11400000, guid: 3a8ea9dc329d35c4b8b4c84410a7f15d, type: 2}
+      amount: 10
+    - item: {fileID: 11400000, guid: a3a22e114d5dd36498ccd4cc83dd2ffb, type: 2}
+      amount: 3
+    - item: {fileID: 11400000, guid: 2f1df630320255844a0117b89edfaaae, type: 2}
+      amount: 1
+    rewardCoins: 130
+    rewardAffinity: 10
+    rewardItem: {fileID: 11400000, guid: 2c82bd3688707a247a1d2c303d4b2589, type: 2}
+    rewardItemAmount: 1
+    days: 5
+    seasons: 
+    requiredStage: 2
+    requestLine: "\uC800\uD0DD\uC5D0\uC11C \uBB34\uB3C4\uD68C\uB97C \uC5F4 \uAC70\uC57C.
+      \uC190\uB2D8\uC740\u2026 \uB108 \uD558\uB098\uBFD0\uC774\uC9C0\uB9CC. \uC5F4\uB9E4
+      \uC5F4, \uB4DC\uB808\uC2A4 \uC2E4 \uC14B, \uC7A5\uC2DD\uD560 \uC9C4\uC8FC \uD558\uB098.
+      \uAF2D \uC640\uC57C \uD574!"
+    thanksLine: "\uBA87\uBC31 \uB144 \uB9CC\uC758 \uBB34\uB3C4\uD68C\uC600\uC5B4.
+      \u2026\uC190\uB2D8\uC774 \uD55C \uBA85\uC774\uB77C\uB3C4, \uC81C\uC77C \uC990\uAC70\uC6E0\uC5B4.
+      \uC774\uAC74 \uBB34\uB3C4\uD68C \uB9CC\uCC2C\uC774\uC57C."
+    requiredEventId: event_lilica_trust

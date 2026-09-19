@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4bf3c4498412d4d8c95a03bab470e9, type: 3}
+  m_Name: NpcQuests_Octavia
+  m_EditorClassIdentifier: Assembly-CSharp::NpcQuestBook
+  groupId: quest_octavia
+  ownerId: char_octavia
+  quests:
+  - questId: quest_octavia_crucian
+    title: "\uBBFC\uBB3C \uD45C\uBCF8"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: bad80e6a70bf78a4a81937454f7a8f95, type: 2}
+      amount: 2
+    rewardCoins: 45
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 000000000100000002000000
+    requiredStage: 0
+    requestLine: "\uBBFC\uBB3C\uACE0\uAE30 \uAE30\uB85D\uC774 \uBE44\uC5B4 \uC788\uC5B4\uC694.
+      \uBD95\uC5B4 \uB450 \uB9C8\uB9AC\uB9CC \uBCF4\uC5EC \uC904 \uC218 \uC788\uB098\uC694?"
+    thanksLine: "\uD6C4\uD6C4, \uBE44\uB298 \uBB34\uB2AC\uAC00 \uC544\uB984\uB2E4\uC6CC\uC694.
+      \uD55C \uC7A5 \uAC00\uB4DD \uAE30\uB85D\uD588\uC5B4\uC694."
+    requiredEventId: 
+  - questId: quest_octavia_smelt
+    title: "\uACA8\uC6B8 \uBC14\uB2E4 \uD45C\uBCF8"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 83e8c92974737c246a6f55d31325f68b, type: 2}
+      amount: 2
+    rewardCoins: 45
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 03000000
+    requiredStage: 0
+    requestLine: "\uACA8\uC6B8 \uBC14\uB2E4\uC758 \uC740\uBE5B \uBB3C\uACE0\uAE30,
+      \uBE59\uC5B4 \uB450 \uB9C8\uB9AC\uB97C \uAE30\uB85D\uD558\uACE0 \uC2F6\uC5B4\uC694."
+    thanksLine: "\uCC28\uAC11\uACE0 \uBC18\uC9DD\uC5EC\uC694. \uC2EC\uD574\uC758
+      \uBCC4 \uAC19\uB124\uC694."
+    requiredEventId: 
+  - questId: quest_octavia_mushroom
+    title: "\uBA39\uBB3C \uBC84\uC12F"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: ce6c806808c6dfb4ca5fb2217dce497c, type: 2}
+      amount: 4
+    rewardCoins: 38
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uBA39\uBB3C\uC774 \uB5A8\uC5B4\uC838 \uAC00\uC694. \uC232 \uBC84\uC12F
+      \uB124 \uAC1C\uB85C \uC0C8 \uBA39\uBB3C\uC744 \uB9CC\uB4E4 \uC218 \uC788\uC5B4\uC694."
+    thanksLine: "\uC9C4\uD55C \uBA39\uBB3C\uC774 \uB098\uC654\uC5B4\uC694. \uC624\uB298
+      \uAE30\uB85D\uC740 \uB354 \uC120\uBA85\uD558\uACA0\uC5B4\uC694."
+    requiredEventId: 
+  - questId: quest_octavia_special
+    title: "\uC2EC\uD574 \uAE30\uB85D \uBCF5\uC6D0"
+    kind: 1
+    requirements:
+    - item: {fileID: 11400000, guid: eee016df450094545b4a90688d3bce9b, type: 2}
+      amount: 1
+    - item: {fileID: 11400000, guid: ce6c806808c6dfb4ca5fb2217dce497c, type: 2}
+      amount: 5
+    - item: {fileID: 11400000, guid: a3a22e114d5dd36498ccd4cc83dd2ffb, type: 2}
+      amount: 2
+    rewardCoins: 130
+    rewardAffinity: 10
+    rewardItem: {fileID: 11400000, guid: 2f1df630320255844a0117b89edfaaae, type: 2}
+    rewardItemAmount: 2
+    days: 5
+    seasons: 0000000002000000
+    requiredStage: 2
+    requestLine: "\uC783\uC5B4\uBC84\uB9B0 \uC2EC\uD574 \uAE30\uB85D\uC744 \uD55C
+      \uAD8C \uB418\uC0B4\uB9AC\uACE0 \uC2F6\uC5B4\uC694. \uAE30\uC5B5\uC744 \uAE68\uC6B8
+      \uC1A1\uC5B4 \uD558\uB098, \uBA39\uBB3C \uBC84\uC12F \uB2E4\uC12F, \uCC45\uC744
+      \uBB36\uC744 \uC2E4 \uB458. \uB9C8\uC9C0\uB9C9 \uC7A5\uC5D0\uB294\u2026 \uB2F9\uC2E0\uC744
+      \uC801\uC744\uAC8C\uC694."
+    thanksLine: "\uBCF5\uC6D0 \uC644\uB8CC. \uC2EC\uD574\uC758 \uCE5C\uAD6C\uB4E4\uC774
+      \uB2E4\uC2DC \uCC45 \uC18D\uC5D0\uC11C \uD5E4\uC5C4\uCCD0\uC694. \uC774 \uC9C4\uC8FC\uB4E4\uC740
+      \uC2EC\uD574\uC5D0\uC11C \uAC00\uC838\uC628 \uAC70\uC608\uC694."
+    requiredEventId: event_octavia_trust

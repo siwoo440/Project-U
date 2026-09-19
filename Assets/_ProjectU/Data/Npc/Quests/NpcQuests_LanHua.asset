@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4bf3c4498412d4d8c95a03bab470e9, type: 3}
+  m_Name: NpcQuests_LanHua
+  m_EditorClassIdentifier: Assembly-CSharp::NpcQuestBook
+  groupId: quest_lanhua
+  ownerId: char_lanhua
+  quests:
+  - questId: quest_lanhua_tea
+    title: "\uC218\uB828 \uB4A4 \uCC28"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 361f6079362891a468aae059667ddd1c, type: 2}
+      amount: 2
+    rewardCoins: 28
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uC218\uB828 \uB4A4\uC5D4 \uCC28 \uD55C \uC794\uC774\uB2E4. \uB450
+      \uC794 \uBD80\uD0C1\uD558\uC9C0."
+    thanksLine: "\uC88B\uC740 \uD5A5\uC774\uAD70. \uB9C8\uC74C\uC774 \uAC00\uB77C\uC549\uB294\uB2E4."
+    requiredEventId: 
+  - questId: quest_lanhua_egg
+    title: "\uC218\uB828\uC0DD \uB3C4\uC2DC\uB77D"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 475aeddadd419b64b95a40abb76444f6, type: 2}
+      amount: 3
+    rewardCoins: 40
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uB9C8\uC744 \uC544\uC774\uB4E4\uC774 \uC218\uB828 \uB4A4\uC5D0
+      \uBC30\uACE0\uD30C\uD55C\uB2E4. \uB2EC\uAC40 \uC14B\uC774\uBA74 \uB3C4\uC2DC\uB77D\uC744
+      \uB9CC\uB4E4 \uC218 \uC788\uC9C0."
+    thanksLine: "\uC544\uC774\uB4E4\uC774 \uC88B\uC544\uD558\uACA0\uAD70. \uACE0\uB9D9\uB2E4."
+    requiredEventId: 
+  - questId: quest_lanhua_wood
+    title: "\uB098\uBB34 \uC778\uD615 \uC218\uB9AC"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: b9e78781ff8b2aa4bae6df0fa3d2e1c9, type: 2}
+      amount: 15
+    rewardCoins: 25
+    rewardAffinity: 3
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uB098\uBB34 \uC778\uD615\uC758 \uD314\uC774 \uBD80\uB7EC\uC84C\uB2E4.
+      \uB098\uBB34 \uC5F4\uB2E4\uC12F \uAC1C\uAC00 \uD544\uC694\uD574."
+    thanksLine: "\uD2BC\uD2BC\uD558\uAD70. \uC774\uBC88\uC5D4 \uC27D\uAC8C \uBD80\uB7EC\uC9C0\uC9C0
+      \uC54A\uACA0\uC5B4."
+    requiredEventId: 
+  - questId: quest_lanhua_special
+    title: "\uC0C8 \uB3C4\uC7A5 \uD604\uD310"
+    kind: 1
+    requirements:
+    - item: {fileID: 11400000, guid: c593f671b9ae9d24e96e6cd5ee7b2a1c, type: 2}
+      amount: 5
+    - item: {fileID: 11400000, guid: b9e78781ff8b2aa4bae6df0fa3d2e1c9, type: 2}
+      amount: 20
+    - item: {fileID: 11400000, guid: 361f6079362891a468aae059667ddd1c, type: 2}
+      amount: 3
+    rewardCoins: 130
+    rewardAffinity: 10
+    rewardItem: {fileID: 11400000, guid: e63787b6f7de7624f9bbb93b5512905e, type: 2}
+    rewardItemAmount: 2
+    days: 5
+    seasons: 
+    requiredStage: 2
+    requestLine: "\uB2E4\uC2DC \uC81C\uC790\uB97C \uBC1B\uC744 \uC0DD\uAC01\uC774\uB2E4.
+      \uD604\uD310\uC744 \uAC78\uB824\uBA74 \uB098\uBB34 \uC2A4\uBB3C, \uD2C0\uC744
+      \uC7A1\uC744 \uAD11\uC11D \uB2E4\uC12F, \uADF8\uB9AC\uACE0\u2026 \uCCAB \uC81C\uC790\uC640
+      \uB9C8\uC2E4 \uCC28 \uC14B. \uCCAB \uC81C\uC790\uB294, \uC790\uB124\uB2E4."
+    thanksLine: "\uD604\uD310\uC774 \uAC78\uB838\uB2E4. \uC774 \uB3C4\uC7A5\uC758
+      \uCCAB \uC81C\uC790, \uC798 \uBD80\uD0C1\uD558\uB124. \uC218\uB828 \uB4A4\uC5D0
+      \uBA39\uC744 \uC2A4\uD29C\uB2E4."
+    requiredEventId: event_lanhua_trust

@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c705680e20332f5478f3a6911a134984, type: 3}
+  m_Name: NpcEvents_Lilica
+  m_EditorClassIdentifier: Assembly-CSharp::NpcEventBook
+  ownerId: char_lilica
+  events:
+  - eventId: event_lilica_curious
+    title: "\uD64D\uCC28 \uC2DC\uC74C"
+    requiredStage: 1
+    locationId: loc_cafe
+    fromHour: 16
+    toHour: 19
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uD6C4\uD6D7, \uB9C8\uCE68 \uC798 \uC654\uC5B4. \uC774 \uB9B4\uB9AC\uCE74
+        \uB2D8\uC774 \uACE0\uB978 \uD64D\uCC28\uC57C. \uB9C8\uC154 \uBD10."
+    - fromPlayer: 0
+      text: "\u2026\uC5B4\uB54C? \uB9DB\uC5C6\uB2E4\uACE0 \uD558\uBA74 \uC800\uD0DD\uC5D0
+        \uAC00\uB46C \uBC84\uB9B4 \uAC70\uC57C!"
+    choices:
+    - label: "\uC815\uB9D0 \uB9DB\uC788\uC5B4."
+      reply: "\uD750, \uD765! \uB2F9\uC5F0\uD558\uC9C0! \u2026\uB2E4\uC74C\uC5D0\uB3C4
+        \uAC19\uC774 \uB9C8\uC154 \uC904\uB798?"
+      affinity: 5
+    - label: "\uC870\uAE08 \uC4F4\uB370?"
+      reply: "\uC4F0, \uC4F0\uB2E4\uACE0?! \u2026\uC124\uD0D5 \uB123\uC5B4 \uC904\uAC8C.
+        \uC774\uBC88\uB9CC\uC774\uC57C!"
+      affinity: 3
+    afterLines:
+    - fromPlayer: 0
+      text: "\uB2E4\uC74C\uC5D4 \uB538\uAE30 \uD0C0\uB974\uD2B8\uB3C4 \uC900\uBE44\uD574
+        \uB458\uAC8C. \uAE30\uB300\uD574!"
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_lilica_trust
+    title: "\uBB34\uC11C\uC6CC\uD558\uC9C0 \uC54A\uB294 \uC0AC\uB78C"
+    requiredStage: 2
+    locationId: loc_village_square
+    fromHour: 19
+    toHour: 21
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uB2EC\uC774 \uB5B4\uB124. \u2026\uC788\uC796\uC544, \uC0AC\uB78C\uB4E4\uC740
+        \uB2E4 \uB098\uB97C \uBB34\uC11C\uC6CC\uD588\uC5B4. \uB299\uC9C0\uB3C4 \uC54A\uACE0,
+        \uBC24\uC5D0\uB9CC \uC6C3\uB294 \uC544\uC774\uB77C\uACE0."
+    - fromPlayer: 0
+      text: "\uB108\uB294 \uC65C \uB3C4\uB9DD\uAC00\uC9C0 \uC54A\uC544? \u2026\uC194\uC9C1\uD558\uAC8C
+        \uB9D0\uD574."
+    choices:
+    - label: "\uB10C \uADF8\uB0E5 \uC678\uB85C\uC6B4 \uC544\uC774\uC57C."
+      reply: "\u2026! \uB204, \uB204\uAC00 \uC678\uB86D\uB300! \u2026\uADF8\uB798\uB3C4,
+        \uB9DE\uB294 \uB9D0\uC774\uC57C."
+      affinity: 8
+    - label: "\uBB34\uC11C\uC6B8 \uAC8C \uBB50 \uC788\uC5B4?"
+      reply: "\uD6C4\uD6D7\u2026 \uADF8 \uB9D0, \uBA87\uBC31 \uB144 \uB3D9\uC548
+        \uB4E3\uACE0 \uC2F6\uC5C8\uC5B4."
+      affinity: 6
+    afterLines:
+    - fromPlayer: 0
+      text: "\uC624\uB298 \uB2EC\uC740 \uC720\uB09C\uD788 \uC608\uC058\uB124. \u2026\uB108\uB791
+        \uBD10\uC11C \uADF8\uB7F0\uAC00."
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+  - eventId: event_lilica_affection
+    title: "\uC548\uAC1C \uC18D \uC591\uC0B0 \uC0B0\uCC45"
+    requiredStage: 3
+    locationId: loc_swamp_boardwalk
+    fromHour: 11
+    toHour: 16
+    weather: 0
+    lines:
+    - fromPlayer: 0
+      text: "\uC548\uAC1C \uB080 \uB0A0\uC740 \uD587\uBE5B\uC774 \uC57D\uD574\uC11C
+        \uC88B\uC544. \uAC19\uC774 \uAC78\uC5B4 \uC904\uB798? \u2026\uC591\uC0B0\uC740
+        \uB124\uAC00 \uB4E4\uC5B4."
+    - fromPlayer: 0
+      text: "\uC218\uBC31 \uB144 \uB9CC\uC774\uC57C. \uB204\uAD70\uAC00\uC640 \uB098\uB780\uD788
+        \uAC77\uB294 \uAC70."
+    choices:
+    - label: "\uB9E4\uC77C\uC774\uB77C\uB3C4 \uAC78\uC5B4 \uC904\uAC8C."
+      reply: "\uB9E4, \uB9E4\uC77C?! \u2026\uC57D\uC18D\uC774\uC57C. \uC774 \uB9B4\uB9AC\uCE74
+        \uB2D8\uACFC\uC758 \uC57D\uC18D\uC740 \uC601\uC6D0\uD558\uAC70\uB4E0."
+      affinity: 10
+    - label: "\uC591\uC0B0\uC774 \uBB34\uAC70\uC6B4\uB370?"
+      reply: "\uD765! \uAE30\uC0AC\uB3C4\uAC00 \uC5C6\uAD6C\uB098! \u2026\uADF8\uB798\uB3C4
+        \uB05D\uAE4C\uC9C0 \uB4E4\uC5B4 \uC92C\uB124. \uACE0\uB9C8\uC6CC."
+      affinity: 8
+    afterLines:
+    - fromPlayer: 0
+      text: "\uC6B0\uB9AC \uAC00\uBB38\uC758 \uC9C4\uC8FC\uC57C. \uB108\uD55C\uD14C
+        \uB9E1\uAE38\uAC8C. \u2026\uC783\uC5B4\uBC84\uB9AC\uBA74 \uC548 \uB3FC!"
+    rewardItem: {fileID: 11400000, guid: 2f1df630320255844a0117b89edfaaae, type: 2}
+    rewardItemAmount: 1

@@ -112,3 +112,31 @@ quest_eiri_strawberry,char_eiri,Board,향긋한 가사,food_strawberry:3,28,3,,2
 quest_eiri_berry,char_eiri,Board,목소리 열매,food_berry:5,22,3,,2,All,,열매 다섯 개면 목소리가 맑아져~ 오늘 공연 전에 먹고 싶어!,고마워~ 오늘 고음은 하늘까지 닿을 거야!,
 quest_eiri_tea,char_eiri,Board,목 풀기 차,item_herbal_tea:2,25,3,,2,All,,바닷바람에 목이 칼칼해~ 약초차 두 잔만 부탁해!,후~ 따뜻해. 이제 노래 부를 준비 완료~,
 quest_eiri_special,char_eiri,Special,바람의 하프 줄,item_spider_silk:3|item_wood:10|food_strawberry:4,120,10,item_pearl:1,5,Spring|Summer,Trust,"새 하프를 만들고 싶어! 줄로 쓸 실 셋, 몸통 나무 열, 그리고… 첫 곡을 위한 딸기 넷! 첫 곡은 너한테 바칠 거야~","하프 완성~! 첫 곡 제목은 '바람이 멈춘 날'이야. 이 진주는 하프 장식에서 남은 거야, 가져!",event_eiri_trust
+quest_erina_wood,char_erina,Board,화살대 나무,item_wood:15,25,3,,3,All,,"곧은 나무 열다섯 개가 필요하다. 화살대로 쓸 거다. …숲의 나무는 베지 말고, 쓰러진 것만.",좋은 나무다. 숲도 화내지 않겠군.,
+quest_erina_tea,char_erina,Board,숲의 약초차,item_herbal_tea:2,25,3,,2,All,,약초차 두 잔. 긴 순찰에는 따뜻한 것이 필요하지.,…고맙다. 향이 숲과 닮았군.,
+quest_erina_ore,char_erina,Board,화살촉 광석,item_iron_ore:2,30,3,,3,All,,화살촉을 새로 벼려야 한다. 광석 두 개.,단단하군. 이 화살은 빗나가지 않을 거다.,
+quest_erina_special,char_erina,Special,엘프의 활,item_wood:20|item_iron_ore:3|item_spider_silk:2,120,10,weapon_bow:1,5,All,Trust,"너에게 맞는 활을 만들어 주고 싶다. 나무 스물, 광석 셋, 활시위 실 둘. …엘프가 인간에게 활을 주는 건, 백 년 만이다.",받아라. 네 손에 맞게 깎았다. 이 활로 지킬 것을 지켜라.,event_erina_trust
+quest_lilica_strawberry,char_lilica,Board,딸기 디저트,food_strawberry:4,36,4,,2,Spring|Summer,,딸기 네 개! 오늘 밤 디저트가 없으면 이 릴리카 님은 잠을 못 자!,"후훗, 훌륭해! 칭찬해 주지. …고, 고마워.",
+quest_lilica_berry,char_lilica,Board,밤의 열매,food_berry:6,25,3,,2,All,,달콤한 열매 여섯 개. 밤 산책에 먹을 거야. 빨리!,"흥, 늦지 않았네. 이번만 봐주지.",
+quest_lilica_milk,char_lilica,Board,달빛 우유,drink_milk:3,60,4,,2,All,,우유 세 병. 홍차에 넣을 거야. …피 같은 거 안 마셔! 편견이야!,"후훗, 이제 완벽한 밀크티야. 너도 한 잔 줄까?",
+quest_lilica_special,char_lilica,Special,작은 무도회,food_berry:10|item_spider_silk:3|item_pearl:1,130,10,food_golden_feast:1,5,All,Trust,"저택에서 무도회를 열 거야. 손님은… 너 하나뿐이지만. 열매 열, 드레스 실 셋, 장식할 진주 하나. 꼭 와야 해!","몇백 년 만의 무도회였어. …손님이 한 명이라도, 제일 즐거웠어. 이건 무도회 만찬이야.",event_lilica_trust
+quest_beatrice_berry,char_beatrice,Board,벌 간식,food_berry:5,22,3,,2,All,,보급 요청. 열매 다섯 개. 꽃이 적은 날 벌들 간식이에요.,보급 확인. 벌들이 기뻐해요. 고마워요.,
+quest_beatrice_seed,char_beatrice,Board,꽃 대신 씨앗,seed_potato:4,18,3,,3,Spring,,봄 정찰 임무예요. 오아시스 옆에 심을 씨앗 네 개가 필요해요.,심기 완료. 꽃이 피면 벌들이 제일 먼저 알 거예요.,
+quest_beatrice_fiber,char_beatrice,Board,벌통 덮개,item_plant_fiber:10,25,3,,3,All,,벌통 덮개가 낡았어요. 풀 섬유 열 개면 새로 엮을 수 있어요.,덮개 교체 완료. 이제 모래바람도 괜찮아요.,
+quest_beatrice_special,char_beatrice,Special,새 군체의 벌통,item_wood:15|item_plant_fiber:12|food_berry:8,120,10,item_herbal_tea:5,5,All,Trust,"새 벌통을 짓고 싶어요. 나무 열다섯, 섬유 열둘, 첫 먹이 열매 여덟. …이번 군체에는 당신 자리도 있어요.",새 벌통에 벌들이 들어갔어요. 새 군체의 시작이에요. 이 차는 꿀 대신 드리는 선물이에요.,event_beatrice_trust
+quest_lanhua_tea,char_lanhua,Board,수련 뒤 차,item_herbal_tea:2,28,3,,2,All,,수련 뒤엔 차 한 잔이다. 두 잔 부탁하지.,좋은 향이군. 마음이 가라앉는다.,
+quest_lanhua_egg,char_lanhua,Board,수련생 도시락,food_egg:3,40,4,,2,All,,마을 아이들이 수련 뒤에 배고파한다. 달걀 셋이면 도시락을 만들 수 있지.,아이들이 좋아하겠군. 고맙다.,
+quest_lanhua_wood,char_lanhua,Board,나무 인형 수리,item_wood:15,25,3,,3,All,,나무 인형의 팔이 부러졌다. 나무 열다섯 개가 필요해.,튼튼하군. 이번엔 쉽게 부러지지 않겠어.,
+quest_lanhua_special,char_lanhua,Special,새 도장 현판,item_iron_ore:5|item_wood:20|item_herbal_tea:3,130,10,food_tomato_stew:2,5,All,Trust,"다시 제자를 받을 생각이다. 현판을 걸려면 나무 스물, 틀을 잡을 광석 다섯, 그리고… 첫 제자와 마실 차 셋. 첫 제자는, 자네다.","현판이 걸렸다. 이 도장의 첫 제자, 잘 부탁하네. 수련 뒤에 먹을 스튜다.",event_lanhua_trust
+quest_ravenna_tea,char_ravenna,Board,순찰 뒤 차,item_herbal_tea:2,25,3,,2,All,,순찰을 마치면 차 한 잔이 필요합니다. 두 잔 부탁드려도 되겠습니까?,감사합니다. 따뜻한 차는 갑옷 속까지 데워 줍니다.,
+quest_ravenna_ore,char_ravenna,Board,갑옷 수선,item_iron_ore:3,45,4,,3,All,,갑옷 이음매가 헐거워졌습니다. 광석 세 개면 수선할 수 있습니다.,수선 완료. 기사의 모습을 되찾았습니다.,
+quest_ravenna_stone,char_ravenna,Board,성벽 보수,resource_stone:15,30,3,,2,All,,무너진 성문 초소를 보수하려 합니다. 돌 열다섯 개가 필요합니다.,성벽이 한결 튼튼해졌습니다. 감사합니다.,
+quest_ravenna_special,char_ravenna,Special,기사단의 묘비,resource_stone:20|item_iron_ore:5|item_wood:10,130,10,item_vitality_potion:2,5,All,Trust,"함께 싸웠던 기사들의 묘비를 세우고 싶습니다. 돌 스물, 이름을 새길 광석 다섯, 받침 나무 열. …이제야 그들을 보낼 수 있을 것 같습니다.",묘비가 섰습니다. 오늘 밤은 처음으로 순찰 없이 잠들 수 있을 것 같습니다. 이 물약은 감사의 표시입니다.,event_ravenna_trust
+quest_akane_pumpkin,char_akane,Board,축제 호박,food_pumpkin:1,40,4,,3,Autumn,,수확 축제에 쓸 커다란 호박 하나! 호박 들기 시합 할 거야!,"우와, 크다! 이번 시합은 내가 이긴다! 하하하!",
+quest_akane_egg,char_akane,Board,주먹밥 재료,food_egg:3,40,4,,2,All,,달걀 셋! 주먹밥에 넣으면 힘이 두 배가 되거든!,좋아! 오늘 주먹밥은 특별판이다!,
+quest_akane_wood,char_akane,Board,축제 장작,item_wood:20,30,3,,2,All,,축제 모닥불용 장작 스무 개! 크게 피워야 모두가 모이지!,하하! 오늘 밤 모닥불은 섬에서 제일 크다!,
+quest_akane_special,char_akane,Special,섬 축제 준비,food_egg:5|item_wood:15|food_berry:6,120,10,food_pumpkin_soup:3,5,All,Trust,"섬 전체 축제를 열 거야! 주먹밥 달걀 다섯, 모닥불 나무 열다섯, 간식 열매 여섯! 너도 수호자 역할이야!",축제 대성공! 다들 웃었어! 힘을 이렇게 쓰니까 좋다! 이건 축제 호박 수프야!,event_akane_trust
+quest_octavia_crucian,char_octavia,Board,민물 표본,resource_fish_crucian:2,45,4,,3,Spring|Summer|Autumn,,민물고기 기록이 비어 있어요. 붕어 두 마리만 보여 줄 수 있나요?,"후후, 비늘 무늬가 아름다워요. 한 장 가득 기록했어요.",
+quest_octavia_smelt,char_octavia,Board,겨울 바다 표본,resource_fish_smelt:2,45,4,,3,Winter,,"겨울 바다의 은빛 물고기, 빙어 두 마리를 기록하고 싶어요.",차갑고 반짝여요. 심해의 별 같네요.,
+quest_octavia_mushroom,char_octavia,Board,먹물 버섯,item_wild_mushroom:4,38,4,,3,All,,먹물이 떨어져 가요. 숲 버섯 네 개로 새 먹물을 만들 수 있어요.,진한 먹물이 나왔어요. 오늘 기록은 더 선명하겠어요.,
+quest_octavia_special,char_octavia,Special,심해 기록 복원,resource_fish_trout:1|item_wild_mushroom:5|item_spider_silk:2,130,10,item_pearl:2,5,Spring|Autumn,Trust,"잃어버린 심해 기록을 한 권 되살리고 싶어요. 기억을 깨울 송어 하나, 먹물 버섯 다섯, 책을 묶을 실 둘. 마지막 장에는… 당신을 적을게요.",복원 완료. 심해의 친구들이 다시 책 속에서 헤엄쳐요. 이 진주들은 심해에서 가져온 거예요.,event_octavia_trust
