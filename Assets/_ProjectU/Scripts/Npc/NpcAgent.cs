@@ -78,6 +78,7 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
     private const float ShoreSearchRadius = 90f; // 헤엄치는 플레이어 근처 물가를 찾는 거리
     private float followSide = 1f; // 플레이어 뒤 왼쪽 · 오른쪽
     private float shoreSearchTime; // 물가 찾기 다음 시각 (플레이어가 헤엄칠 때)
+    private Transform chatPartner; // 114일차: 이웃과 대화 중이면 그 이웃
 
     public NpcCharacterData Character => character; // 캐릭터 제공
     public string CharacterId => character != null ? character.CharacterId : string.Empty; // ID 제공
@@ -98,6 +99,8 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
     public float FarDistance => farDistance; // 빠른 이동 거리 (테스트용)
     public bool IsFollowing => followTarget != null; // 109일차: 동료로 따라다니는 중
     public int FollowTeleportCount { get; private set; } // 따라가다 순간이동한 횟수 (테스트용)
+    public bool IsChatting => chatPartner != null; // 114일차: 이웃과 대화 중
+    public Transform ChatPartner => chatPartner; // 대화 상대 (테스트용)
 
     private void Awake() // 준비
     {
@@ -242,6 +245,11 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
         }
     }
 
+    public void SetChatPartner(Transform partner) // 114일차: 이웃과 대화 시작 · 끝 (null)
+    {
+        chatPartner = partner;
+    }
+
     public void FaceTowards(Vector3 worldPosition) // 말을 건 사람 바라보기
     {
         Vector3 direction = worldPosition - transform.position;
@@ -307,6 +315,16 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
             if (toPartner.sqrMagnitude > 0.01f)
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(toPartner), 1f - Mathf.Exp(-8f * deltaTime));
+            }
+        }
+        else if (arrived && !isInside && chatPartner != null) // 114일차: 이웃과 대화 중이면 서로 바라봄
+        {
+            Vector3 toFriend = chatPartner.position - transform.position;
+            toFriend.y = 0f;
+
+            if (toFriend.sqrMagnitude > 0.01f)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(toFriend), 1f - Mathf.Exp(-6f * deltaTime));
             }
         }
         else if (arrived && !isInside)

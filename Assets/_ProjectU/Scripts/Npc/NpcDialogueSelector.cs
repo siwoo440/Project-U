@@ -2,7 +2,7 @@ using System.Collections.Generic; // 목록
 
 // 91일차: 대화 창에서 쓸 대사 고르기
 // 여는 말 : 처음 만남 → 생일 인사 → 현재 단계에 맞는 인사
-// 대화하기 : 나쁜 날씨 → 계절 → 현재 호감도 단계 → 잡담(단계 조건) → 이벤트(신뢰 이상) 순서로 돌아가며
+// 대화하기 : 나쁜 날씨 → 계절 → 현재 호감도 단계 → 잡담(단계 조건) → 이웃 이야기(114일차) → 이벤트(신뢰 이상) 순서로 돌아가며
 public static class NpcDialogueSelector
 {
     public const string Silent = "…"; // 대사가 없을 때
@@ -71,6 +71,8 @@ public static class NpcDialogueSelector
         {
             lines.Add(talk.Text);
         }
+
+        lines.AddRange(NpcBanterManager.MentionLinesFor(character)); // 114일차: 관계 있는 이웃 이야기
 
         if (stage >= AffinityStage.Trust)
         {

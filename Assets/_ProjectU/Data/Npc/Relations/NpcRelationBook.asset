@@ -1,0 +1,441 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4321c0f399de1343b7b9fe8aaa1d02a, type: 3}
+  m_Name: NpcRelationBook
+  m_EditorClassIdentifier: Assembly-CSharp::NpcRelationBook
+  pairs:
+  - pairId: pair_kasumi_akane
+    characterA: char_kasumi
+    characterB: char_akane
+    kind: 2
+    banters:
+    - lines:
+      - byA: 0
+        text: "\uCE74\uC2A4\uBBF8! \uC624\uB298 \uC0AC\uB2F9 \uB4F1\uBD88\uC740 \uB0B4\uAC00
+          \uCF24\uAC8C!"
+      - byA: 1
+        text: "\uD6C4\uD6C4, \uC9C0\uB09C\uBC88\uCC98\uB7FC \uB4F1\uB871\uC744 \uBD80\uC218\uC9C0\uB9CC
+          \uC54A\uC73C\uBA74\uC694."
+      - byA: 0
+        text: "\uADF8, \uADF8\uAC74 \uBC14\uB78C \uD0D3\uC774\uC5C8\uC5B4! \uD558\uD558\uD558!"
+    - lines:
+      - byA: 1
+        text: "\uC544\uCE74\uB124, \uC624\uB298 \uC810\uAD18\uC5D0 '\uD798 \uC870\uC2EC'\uC774
+          \uB098\uC654\uC5B4\uC694."
+      - byA: 0
+        text: "\uB610?! \uADF8\uAC70 \uB9E4\uC77C \uB098\uC624\uB294 \uAC70 \uC544\uB0D0?"
+      - byA: 1
+        text: "\uD6C4\uD6C4, \uB9E4\uC77C \uC870\uC2EC\uD558\uB77C\uB294 \uB73B\uC774\uC9C0\uC694."
+    mentionsByA:
+    - "\uC544\uCE74\uB124\uAC00 \uC0AC\uB2F9 \uCCAD\uC18C\uB97C \uB3C4\uC640\uC918\uC694.
+      \u2026\uD798\uC774 \uB108\uBB34 \uC138\uC11C \uBE57\uC790\uB8E8\uAC00 \uC790\uC8FC
+      \uBD80\uB7EC\uC9C0\uC9C0\uB9CC\uC694, \uD6C4\uD6C4."
+    mentionsByB:
+    - "\uCE74\uC2A4\uBBF8 \uC810\uAD18\uB294 \uC798 \uB9DE\uC544! \uADFC\uB370 \uB098\uD55C\uD150
+      \uB9E8\uB0A0 '\uD798 \uC870\uC2EC'\uC774\uB798!"
+  - pairId: pair_ragh_lanhua
+    characterA: char_ragh
+    characterB: char_lanhua
+    kind: 1
+    banters:
+    - lines:
+      - byA: 0
+        text: "\uB77C\uADF8, \uC624\uB298 \uB300\uB828 \uC5B4\uB5A4\uAC00."
+      - byA: 1
+        text: "\u2026\uB610 \uBD10\uC904 \uC0DD\uAC01\uC774\uBA74 \uC0AC\uC591\uD558\uC9C0."
+      - byA: 0
+        text: "\uBD10\uC900 \uC801 \uC5C6\uB2E4. \uC790\uB124\uAC00 \uAC15\uD574\uC84C\uC744
+          \uBFD0\uC774\uC9C0."
+    - lines:
+      - byA: 1
+        text: "\uC5B4\uC81C \uADF8 \uBC1C\uCC28\uAE30, \uC5B4\uB5BB\uAC8C \uD55C
+          \uAC70\uC9C0."
+      - byA: 0
+        text: "\uD638\uD761\uC774\uB2E4. \uD798\uC774 \uC544\uB2C8\uB77C."
+      - byA: 1
+        text: "\u2026\uD760. \uB2E4\uC74C\uC5D4 \uB9C9\uC544 \uC8FC\uC9C0."
+    mentionsByA:
+    - "\uB780\uD6C4\uC544 \uB140\uC11D, \uB300\uB828\uC5D0\uC11C \uB610 \uBD10\uC8FC\uB354\uAD70.
+      \u2026\uB2E4\uC74C\uC5D4 \uB0B4\uAC00 \uC774\uAE34\uB2E4."
+    mentionsByB:
+    - "\uB77C\uADF8\uB294 \uC88B\uC740 \uC0C1\uB300\uB2E4. \uC9C0\uD0A4\uB824\uB294
+      \uC790\uC758 \uC8FC\uBA39\uC744 \uAC00\uC84C\uC9C0."
+  - pairId: pair_noctia_erina
+    characterA: char_noctia
+    characterB: char_erina
+    kind: 0
+    banters:
+    - lines:
+      - byA: 1
+        text: "\uC5D0\uB9AC\uB098, \uC624\uB298 \uAE4C\uB9C8\uADC0\uB4E4\uC774 \uB2F9\uC2E0
+          \uC774\uC57C\uAE30\uB97C \uD558\uB354\uAD70\uC694."
+      - byA: 0
+        text: "\u2026\uBB34\uC2A8 \uC774\uC57C\uAE30\uC9C0."
+      - byA: 1
+        text: "\uD6C4\uD6C4, \uD65C \uC19C\uC528\uAC00 \uC88B\uB2E4\uACE0\uC694.
+          \uAE4C\uB9C8\uADC0\uB4E4\uB3C4 \uCE6D\uCC2C\uC740 \uD574\uC694."
+    - lines:
+      - byA: 0
+        text: "\uB178\uD06C\uD2F0\uC544, \uC57D\uCD08\uCC28 \uD55C \uC794 \uC5BB\uC5B4
+          \uAC00\uB3C4 \uB418\uB098."
+      - byA: 1
+        text: "\uBB3C\uB860\uC774\uC8E0. \uC624\uB298\uC740 \uB2EC\uB9DE\uC774\uAF43\uC744
+          \uB123\uC5C8\uC5B4\uC694."
+      - byA: 0
+        text: "\u2026\uD5A5\uC774 \uC88B\uAD70. \uC232\uC774 \uC88B\uC544\uD560 \uB9DB\uC774\uB2E4."
+    mentionsByA:
+    - "\uC5D0\uB9AC\uB098\uB294 \uB9D0\uC774 \uC801\uC9C0\uB9CC, \uC232\uC5D0 \uB300\uD574\uC11C\uB294
+      \uB204\uAD6C\uBCF4\uB2E4 \uC798 \uC54C\uC544\uC694. \uCC28 \uCE5C\uAD6C\uB85C
+      \uB531\uC774\uC9C0\uC694."
+    mentionsByB:
+    - "\uB178\uD06C\uD2F0\uC544\uC758 \uC57D\uCD08\uCC28\uB294\u2026 \uC778\uC815\uD558\uC9C0.
+      \uC232\uC758 \uB9DB\uC774 \uB09C\uB2E4."
+  - pairId: pair_marielle_sharia
+    characterA: char_marielle
+    characterB: char_sharia
+    kind: 0
+    banters:
+    - lines:
+      - byA: 0
+        text: "\uB9C8\uB9AC\uC5D8! \uC624\uB298 \uD30C\uB3C4 \uC88B\uB2E4, \uAC19\uC774
+          \uD5E4\uC5C4\uCE60\uB798?"
+      - byA: 1
+        text: "\uC74C~ \uC88B\uC544\uC694. \uB300\uC2E0 \uC800\uBCF4\uB2E4 \uBE68\uB9AC
+          \uAC00\uBA74 \uC548 \uB3FC\uC694~"
+      - byA: 0
+        text: "\uD06C\uD558\uD558! \uADF8\uAC74 \uC57D\uC18D \uBABB \uD574!"
+    - lines:
+      - byA: 1
+        text: "\uC0E4\uB9AC\uC544, \uC5B4\uC81C \uC870\uAC1C \uCE90\uB2E4\uAC00 \uC9C4\uC8FC\uB97C
+          \uBD24\uC5B4\uC694."
+      - byA: 0
+        text: "\uC9C4\uC9DC? \uC5B4\uB514\uC11C? \uB098\uB3C4 \uC7A0\uC218\uD560\uB798!"
+      - byA: 1
+        text: "\uC74C~ \uBE44\uBC00\uC774\uC5D0\uC694. \uB300\uC2E0 \uAC19\uC774
+          \uAC00\uC694~"
+    mentionsByA:
+    - "\uC0E4\uB9AC\uC544\uB294 \uBC14\uB2E4\uC5D0\uC11C \uC81C\uC77C \uB4E0\uB4E0\uD55C
+      \uCE5C\uAD6C\uC608\uC694. \uC870\uAE08 \uC2DC\uB044\uB7FD\uC9C0\uB9CC\uC694~"
+    mentionsByB:
+    - "\uB9C8\uB9AC\uC5D8 \uD5E4\uC5C4\uC740 \uC9C4\uC9DC \uC608\uBED0. \uB098\uBCF4\uB2E4
+      \uBE60\uB974\uC9C4 \uC54A\uC9C0\uB9CC! \uD06C\uD558!"
+  - pairId: pair_sharia_octavia
+    characterA: char_sharia
+    characterB: char_octavia
+    kind: 0
+    banters:
+    - lines:
+      - byA: 1
+        text: "\uC625\uD0C0\uBE44\uC544! \uC624\uB298\uB3C4 \uC5F0\uBABB \uAE30\uB85D\uC774\uC57C?"
+      - byA: 0
+        text: "\uB124, \uC624\uB298\uC740 \uC62C\uCC59\uC774 \uAE30\uB85D\uC774\uC5D0\uC694.
+          \uD6C4\uD6C4."
+      - byA: 1
+        text: "\uC62C\uCC59\uC774\uB3C4 \uC801\uC5B4? \uB300\uB2E8\uD558\uB2E4!"
+    - lines:
+      - byA: 0
+        text: "\uC0E4\uB9AC\uC544, \uAD6C\uC870\uB300 \uC774\uC57C\uAE30\uB97C \uAE30\uB85D\uD574\uB3C4
+          \uB420\uAE4C\uC694?"
+      - byA: 1
+        text: "\uB098? \uC88B\uC544! \uBA4B\uC788\uAC8C \uC801\uC5B4 \uC918!"
+      - byA: 0
+        text: "\uADF8\uB7FC '\uC6A9\uAC10\uD55C \uC0C1\uC5B4'\uB85C \uC2DC\uC791\uD560\uAC8C\uC694."
+    mentionsByA:
+    - "\uC625\uD0C0\uBE44\uC544\uB294 \uBB50\uB4E0 \uC801\uC5B4. \uB0B4 \uC218\uC601
+      \uAE30\uB85D\uB3C4 \uC788\uB300!"
+    mentionsByB:
+    - "\uC0E4\uB9AC\uC544\uC758 \uAD6C\uC870 \uAE30\uB85D\uC740 \uBC8C\uC368 \uD55C
+      \uAD8C\uC774 \uB118\uC5B4\uC694. \uD6C4\uD6C4."
+  - pairId: pair_marielle_octavia
+    characterA: char_marielle
+    characterB: char_octavia
+    kind: 0
+    banters:
+    - lines:
+      - byA: 0
+        text: "\uB9C8\uB9AC\uC5D8, \uC2EC\uD574\uC758 \uB178\uB798\uB97C \uC54C\uACE0
+          \uC788\uB098\uC694?"
+      - byA: 1
+        text: "\uC74C~ \uD560\uBA38\uB2C8\uAC00 \uBD88\uB7EC \uC8FC\uC168\uC5B4\uC694.
+          \uB4E4\uC5B4 \uBCFC\uB798\uC694?"
+      - byA: 0
+        text: "\uAE30\uB85D\uD574\uB3C4 \uB420\uAE4C\uC694? \uBA39\uBB3C\uC744 \uC900\uBE44\uD560\uAC8C\uC694."
+    - lines:
+      - byA: 1
+        text: "\uC625\uD0C0\uBE44\uC544, \uC624\uB298 \uC0B0\uD638\uAC00 \uC0C8\uB85C
+          \uC790\uB790\uC5B4\uC694~"
+      - byA: 0
+        text: "\uC815\uB9D0\uC694? \uADF8 \uBAA8\uC591, \uADF8\uB9BC\uC73C\uB85C
+          \uB0A8\uAE38\uAC8C\uC694."
+      - byA: 1
+        text: "\uC74C~ \uC608\uC058\uAC8C \uADF8\uB824 \uC918\uC694."
+    mentionsByA:
+    - "\uC625\uD0C0\uBE44\uC544\uB294 \uBC14\uB2E4 \uC774\uC57C\uAE30\uB97C \uBAA8\uC73C\uB294
+      \uCE5C\uAD6C\uC608\uC694. \uC81C \uB178\uB798\uB3C4 \uC801\uC5B4 \uC92C\uC5B4\uC694~"
+    mentionsByB:
+    - "\uB9C8\uB9AC\uC5D8\uC758 \uB178\uB798\uB294 \uC81C \uAE30\uB85D \uC911\uC5D0\uC11C
+      \uAC00\uC7A5 \uC544\uB984\uB2E4\uC6B4 \uC7A5\uC774\uC5D0\uC694."
+  - pairId: pair_harka_neri
+    characterA: char_harka
+    characterB: char_neri
+    kind: 2
+    banters:
+    - lines:
+      - byA: 0
+        text: "\uD558\uB974\uCE74! \uC624\uB298 \uBC24\uC740 \uC548\uAC1C\uAC00 \uC9D9\uC744
+          \uAC70\uC57C, \uAC1C\uAD74!"
+      - byA: 1
+        text: "\uC54C\uC558\uC5B4! \uADF8\uB7FC \uC21C\uCC30 \uAE38\uC744 \uBC14\uAFC0\uAC8C,
+          \uBA4D!"
+      - byA: 0
+        text: "\uC5ED\uC2DC \uB0B4 \uC608\uBCF4\uB294 \uCD5C\uACE0\uC57C!"
+    - lines:
+      - byA: 1
+        text: "\uB124\uB9AC, \uBE44 \uB0C4\uC0C8 \uB098! \uACE7 \uC624\uC9C0?"
+      - byA: 0
+        text: "\uAC1C\uAD74? \u2026\uB9DE\uC544, \uB450 \uC2DC\uAC04 \uB4A4! \uCF54\uAC00
+          \uB098\uBCF4\uB2E4 \uBE60\uB974\uB124!"
+      - byA: 1
+        text: "\uD5E4\uD5E4, \uCF54\uB294 \uC790\uC2E0 \uC788\uC5B4!"
+    mentionsByA:
+    - "\uB124\uB9AC \uC608\uBCF4\uB294 \uC798 \uB9DE\uC544! \uB0B4 \uCF54\uB791 \uAC19\uC774
+      \uC4F0\uBA74 \uC548\uAC1C \uC18D\uC5D0\uC11C\uB3C4 \uC548 \uD5E4\uB9E4!"
+    mentionsByB:
+    - "\uD558\uB974\uCE74\uB294 \uBE44 \uB0C4\uC0C8\uB97C \uB098\uBCF4\uB2E4 \uBA3C\uC800
+      \uB9E1\uC544! \uC5B5\uC6B8\uD574, \uAC1C\uAD74!"
+  - pairId: pair_censia_safira
+    characterA: char_censia
+    characterB: char_safira
+    kind: 2
+    banters:
+    - lines:
+      - byA: 0
+        text: "\uCF04\uC2DC\uC544. \uC9D0."
+      - byA: 1
+        text: "\uC54C\uACE0 \uC788\uB2E4. \uC624\uC544\uC2DC\uC2A4 \uBB3C\uD1B5 \uC5EC\uC12F,
+          \uC57D\uCD08 \uB450 \uC790\uB8E8."
+      - byA: 0
+        text: "\u2026\uC815\uD655\uD574. \uC88B\uC544."
+    - lines:
+      - byA: 1
+        text: "\uC0AC\uD53C\uB77C, \uC624\uB298 \uBAA8\uB798\uBC14\uB78C \uC62C \uAC83
+          \uAC19\uB098."
+      - byA: 0
+        text: "\uD574 \uC9C8 \uB158. \uC11C\uCABD."
+      - byA: 1
+        text: "\uC88B\uC544, \uC6B4\uC1A1\uC740 \uC624\uC804\uC5D0 \uB05D\uB0B4\uC9C0."
+    mentionsByA:
+    - "\uC0AC\uD53C\uB77C\uB294 \uB9D0\uC774 \uC9E7\uC9C0\uB9CC \uC0AC\uB9C9 \uAE38\uC740
+      \uB204\uAD6C\uBCF4\uB2E4 \uC815\uD655\uD558\uAC8C \uC548\uB2E4."
+    mentionsByB:
+    - "\uCF04\uC2DC\uC544. \uBBFF\uC744 \uB9CC\uD574. \u2026\uC9D0 \uC548 \uB5A8\uC5B4\uB728\uB824."
+  - pairId: pair_aliune_lunette
+    characterA: char_aliune
+    characterB: char_lunette
+    kind: 0
+    banters:
+    - lines:
+      - byA: 1
+        text: "\uB8E8\uB124\uD2B8, \uC624\uB298 \uC57D\uCD08\uAC00 \uC798 \uC790\uB790\uC5B4\uC694."
+      - byA: 0
+        text: "\uADF8, \uADF8\uB7EC\uB2C8\uAE4C\uC694\u2026 \uC800\uB3C4 \uBD24\uC5B4\uC694!
+          \uC78E\uC774 \uBC18\uC9DD\uC5EC\uC694."
+      - byA: 1
+        text: "\uD568\uAED8 \uB9D0\uB824\uC11C \uC57D\uC744 \uB9CC\uB4E4\uC5B4\uC694."
+    - lines:
+      - byA: 0
+        text: "\uC54C\uB9AC\uC6B0\uB124 \uC528, \uC774 \uD480\u2026 \uC57D\uC73C\uB85C
+          \uC368\uB3C4 \uB420\uAE4C\uC694?"
+      - byA: 1
+        text: "\uC78E\uC740 \uC88B\uC9C0\uB9CC \uBFCC\uB9AC\uB294 \uC870\uC2EC\uD574\uC694.
+          \uC798 \uBD24\uC5B4\uC694."
+      - byA: 0
+        text: "\uD5E4\uD5E4\u2026 \uCE6D\uCC2C\uBC1B\uC558\uB2E4\u2026"
+    mentionsByA:
+    - "\uB8E8\uB124\uD2B8\uB294 \uC57D\uCD08\uB97C \uBCF4\uB294 \uB208\uC774 \uC88B\uC544\uC694.
+      \uC870\uAE08 \uC218\uC90D\uC9C0\uB9CC\uC694."
+    mentionsByB:
+    - "\uC54C\uB9AC\uC6B0\uB124 \uC528\uB294\u2026 \uADF8\uB7EC\uB2C8\uAE4C\uC694,
+      \uC57D\uCD08 \uC120\uC0DD\uB2D8 \uAC19\uC544\uC694."
+  - pairId: pair_liriel_lumina
+    characterA: char_liriel
+    characterB: char_lumina
+    kind: 0
+    banters:
+    - lines:
+      - byA: 1
+        text: "\uB8E8\uBBF8\uB098! \uC624\uB298 \uAF43\uBC2D\uC5D0 \uC0C8 \uAF43\uC774
+          \uD3C8\uC5B4! \uBD24\uC5B4?"
+      - byA: 0
+        text: "\u2026\uC751. \uD5A5\uAE30\uB85C \uBA3C\uC800 \uC54C\uC558\uC5B4\uC694."
+      - byA: 1
+        text: "\uC5ED\uC2DC! \uAC19\uC774 \uBCF4\uB7EC \uAC00\uB294 \uAC70\uC57C!"
+    - lines:
+      - byA: 0
+        text: "\u2026\uB9AC\uB9AC\uC5D8, \uB0A0\uAC1C\uC5D0 \uAF43\uAC00\uB8E8\uAC00
+          \uBB3B\uC5C8\uC5B4\uC694."
+      - byA: 1
+        text: "\uD5C9! \uB610 \uAF43\uC5D0 \uBD80\uB52A\uD614\uB098 \uBD10! \uD138\uC5B4
+          \uC918!"
+      - byA: 0
+        text: "\u2026\uD6C4\uD6C4, \uAC00\uB9CC\uD788 \uC788\uC5B4\uC694."
+    mentionsByA:
+    - "\uB8E8\uBBF8\uB098\uB294 \uC870\uC6A9\uD558\uC9C0\uB9CC \uAF43\uC740 \uB204\uAD6C\uBCF4\uB2E4
+      \uC798 \uC54C\uC544! \uB0B4 \uCE5C\uAD6C\uC57C!"
+    mentionsByB:
+    - "\u2026\uB9AC\uB9AC\uC5D8\uC740 \uC232\uC758 \uD587\uC0B4 \uAC19\uC544\uC694.
+      \uC870\uAE08 \uC2DC\uB044\uB7EC\uC6B4 \uD587\uC0B4."
+  - pairId: pair_beatrice_lumina
+    characterA: char_beatrice
+    characterB: char_lumina
+    kind: 1
+    banters:
+    - lines:
+      - byA: 1
+        text: "\uC815\uCC30 \uBCF4\uACE0. \uC774 \uAF43\uBC2D, \uC624\uB298\uC740
+          \uC81C \uBC8C\uB4E4 \uCC28\uB840\uC608\uC694."
+      - byA: 0
+        text: "\u2026\uB098\uBE44\uB3C4 \uAF43\uC774 \uD544\uC694\uD574\uC694. \uBC18\uC529
+          \uB098\uB220\uC694."
+      - byA: 1
+        text: "\u2026\uD569\uC758 \uC644\uB8CC. \uB3D9\uCABD\uC740 \uBC8C, \uC11C\uCABD\uC740
+          \uB098\uBE44."
+    - lines:
+      - byA: 0
+        text: "\u2026\uBCA0\uC544\uD2B8\uB9AC\uCCB4, \uBC8C\uB4E4\uC774 \uC81C \uB0A0\uAC1C
+          \uADFC\uCC98\uB97C \uB9F4\uB3CC\uC544\uC694."
+      - byA: 1
+        text: "\uD574\uCE58\uC9C0 \uC54A\uC544\uC694. \uB2F9\uC2E0 \uB0A0\uAC1C\uAC00
+          \uAF43\uCC98\uB7FC \uBCF4\uC5EC\uC11C \uADF8\uB798\uC694."
+      - byA: 0
+        text: "\u2026\uADF8\uAC74 \uCE6D\uCC2C\uC73C\uB85C \uBC1B\uC744\uAC8C\uC694."
+    mentionsByA:
+    - "\uB8E8\uBBF8\uB098\uC640\uB294 \uAF43\uBC2D\uC744 \uB098\uB220 \uC368\uC694.
+      \uD569\uC758\uAC00 \uC798 \uB418\uB294 \uC0C1\uB300\uC608\uC694."
+    mentionsByB:
+    - "\u2026\uBCA0\uC544\uD2B8\uB9AC\uCCB4\uB294 \uC5C4\uACA9\uD558\uC9C0\uB9CC
+      \uACF5\uD3C9\uD574\uC694. \uAF43\uBC2D\uC744 \uBC18\uC529 \uB098\uB220 \uC92C\uC5B4\uC694."
+  - pairId: pair_mio_neri
+    characterA: char_mio
+    characterB: char_neri
+    kind: 0
+    banters:
+    - lines:
+      - byA: 0
+        text: "\uBBF8\uC624! \uC624\uB298 \uC5F0\uBABB\uC5D0 \uBB3C\uACE0\uAE30 \uB9CE\uC544!
+          \uAC1C\uAD74!"
+      - byA: 1
+        text: "\uC9C4\uC9DC\uB0E5? \uADF8\uB7FC \uC624\uB298 \uB09A\uC2DC\uB294 \uB300\uBC15\uC774\uB2E4\uB0E5."
+      - byA: 0
+        text: "\uB300\uC2E0 \uB098 \uC7A1\uC73C\uBA74 \uC548 \uB3FC!"
+    - lines:
+      - byA: 1
+        text: "\uB124\uB9AC, \uB0B4\uC77C \uBE44 \uC624\uB0E5? \uB09A\uC2DC\uD558\uAE30
+          \uC88B\uB2E4\uB0E5."
+      - byA: 0
+        text: "\uAC1C\uAD74! \uC624\uD6C4\uC5D0 \uC870\uAE08! \uC6B0\uBE44 \uCC59\uACA8!"
+      - byA: 1
+        text: "\uACE0\uB9D9\uB2E4\uB0E5. \uC0DD\uC120 \uD558\uB098 \uB098\uB220 \uC8FC\uACA0\uB2E4\uB0E5."
+    mentionsByA:
+    - "\uB124\uB9AC \uC608\uBCF4 \uBCF4\uACE0 \uB09A\uC2DC \uAC00\uBA74 \uD2C0\uB9BC\uC5C6\uB2E4\uB0E5.
+      \uAC00\uB054 \uD2C0\uB9AC\uC9C0\uB9CC\uB0E5."
+    mentionsByB:
+    - "\uBBF8\uC624\uB294 \uB0A0 \uBB3C\uACE0\uAE30\uB85C \uC548 \uBD10! \uC88B\uC740
+      \uCE5C\uAD6C\uC57C! \u2026\uC544\uB9C8\uB3C4, \uAC1C\uAD74."
+  - pairId: pair_eiri_lanhua
+    characterA: char_eiri
+    characterB: char_lanhua
+    kind: 0
+    banters:
+    - lines:
+      - byA: 1
+        text: "\uB780\uD6C4\uC544~ \uC218\uC5C5 \uB05D\uB098\uBA74 \uB178\uB798 \uD55C
+          \uACE1 \uB4E4\uC744\uB798?"
+      - byA: 0
+        text: "\uC88B\uB2E4. \uD638\uD761 \uC218\uB828\uC5D0 \uB178\uB798\uB3C4 \uB3C4\uC6C0\uC774
+          \uB418\uC9C0."
+      - byA: 1
+        text: "\uD6C4\uD6D7, \uADF8\uB7FC \uC228 \uAE38\uAC8C \uC26C\uB294 \uB178\uB798\uB85C!"
+    - lines:
+      - byA: 0
+        text: "\uC5D0\uC774\uB9AC, \uC544\uC774\uB4E4\uC774 \uB124 \uB178\uB798\uB97C
+          \uB530\uB77C \uBD80\uB974\uB354\uAD70."
+      - byA: 1
+        text: "\uC9C4\uC9DC? \uC218\uB828\uD558\uBA74\uC11C?"
+      - byA: 0
+        text: "\uADF8\uB798. \uBC15\uC790\uAC00 \uB9DE\uC544\uC11C \uB3D9\uC791\uC774
+          \uC88B\uC544\uC84C\uB2E4."
+    mentionsByA:
+    - "\uB780\uD6C4\uC544\uB294 \uBB34\uC11C\uC6CC \uBCF4\uC774\uC9C0\uB9CC \uB178\uB798\uB97C
+      \uC88B\uC544\uD574~ \uBE44\uBC00\uC774\uC57C!"
+    mentionsByB:
+    - "\uC5D0\uC774\uB9AC\uC758 \uB178\uB798\uB294\u2026 \uC218\uB828\uC5D0 \uBC29\uD574\uAC00
+      \uC548 \uB418\uB294 \uC720\uC77C\uD55C \uC18C\uB9AC\uB2E4."
+  - pairId: pair_lilica_ravenna
+    characterA: char_lilica
+    characterB: char_ravenna
+    kind: 0
+    banters:
+    - lines:
+      - byA: 1
+        text: "\uB808\uC774\uBE10\uB098! \uC624\uB298 \uBC24\uB3C4 \uC21C\uCC30\uC774\uC57C?
+          \uC774 \uB9B4\uB9AC\uCE74 \uB2D8\uC774 \uB3D9\uD589\uD574 \uC8FC\uC9C0!"
+      - byA: 0
+        text: "\uC601\uAD11\uC785\uB2C8\uB2E4, \uC544\uAC00\uC528. \uB2E4\uB9CC \uB2A6\uAC8C\uAE4C\uC9C0\uB294
+          \uC548 \uB429\uB2C8\uB2E4."
+      - byA: 1
+        text: "\uD765! \uB098 \uC5B4\uB9B0\uC560 \uC544\uB2C8\uAC70\uB4E0! \u2026\uBA87\uBC31
+          \uC0B4\uC774\uC57C!"
+    - lines:
+      - byA: 0
+        text: "\uC544\uAC00\uC528, \uB2EC\uC774 \uBC1D\uC2B5\uB2C8\uB2E4. \uC591\uC0B0\uC740
+          \uD544\uC694 \uC5C6\uACA0\uAD70\uC694."
+      - byA: 1
+        text: "\uD6C4\uD6D7, \uB2EC\uBE5B\uC740 \uAD1C\uCC2E\uC544. \uB108\uB3C4
+          \uBA38\uB9AC \uC870\uC2EC\uD574, \uB5A8\uC5B4\uB728\uB9AC\uC9C0 \uB9D0\uACE0!"
+      - byA: 0
+        text: "\u2026\uADF8\uAC74 \uB18D\uB2F4\uC73C\uB85C \uBC1B\uACA0\uC2B5\uB2C8\uB2E4."
+    mentionsByA:
+    - "\uB808\uC774\uBE10\uB098\uB294 \uBC24\uC5D0\uB3C4 \uB0A0 \uBB34\uC11C\uC6CC\uD558\uC9C0
+      \uC54A\uC544. \uAE30\uC0AC\uB77C\uC11C \uADF8\uB7F0\uAC00? \uD765, \uC88B\uC544."
+    mentionsByB:
+    - "\uB9B4\uB9AC\uCE74 \uC544\uAC00\uC528\uB294 \uC678\uB85C\uC6C0\uC744 \uAC10\uCD94\uB294
+      \uBD84\uC785\uB2C8\uB2E4. \uBC24 \uC21C\uCC30 \uB54C \uB9D0\uB3D9\uBB34\uAC00
+      \uB418\uC5B4 \uB4DC\uB9AC\uC9C0\uC694."
+  - pairId: pair_bellamorta_noctia
+    characterA: char_bellamorta
+    characterB: char_noctia
+    kind: 1
+    banters:
+    - lines:
+      - byA: 1
+        text: "\uC5B4\uBA38, \uAE4C\uB9C8\uADC0 \uB9C8\uB140\uB2D8. \uC624\uB298\uB3C4
+          \uBD88\uAE38\uD55C \uC608\uC5B8\uC778\uAC00\uC694?"
+      - byA: 0
+        text: "\uB2F9\uC2E0\uC758 \uBB3C\uC57D\uB9CC\uD07C \uBD88\uAE38\uD558\uC9C4
+          \uC54A\uC544\uC694."
+      - byA: 1
+        text: "\uD6C4\uD6C4, \uCE6D\uCC2C\uC73C\uB85C \uB4E4\uC744\uAC8C\uC694."
+    - lines:
+      - byA: 0
+        text: "\uBCA8\uB77C\uBAA8\uB974\uD0C0, \uADF8 \uAE08\uC11C\u2026 \uB098\uB3C4
+          \uC77D\uC5B4\uB3C4 \uB420\uAE4C\uC694?"
+      - byA: 1
+        text: "\uB300\uAC00\uB294 \uAE4C\uB9C8\uADC0 \uAE43\uD138 \uC138 \uAC1C\uC608\uC694."
+      - byA: 0
+        text: "\u2026\uD765\uC815\uC740 \uC5EC\uC804\uD558\uAD70\uC694."
+    mentionsByA:
+    - "\uC232\uC758 \uB9C8\uB140\uC694? \uD765\uBBF8\uB85C\uC6B4 \uBD84\uC774\uC8E0.
+      \uACBD\uC7C1 \uC0C1\uB300\uB85C\uB294 \uB098\uC058\uC9C0 \uC54A\uC544\uC694."
+    mentionsByB:
+    - "\uBCA8\uB77C\uBAA8\uB974\uD0C0\uC758 \uBB3C\uC57D\uC740\u2026 \uC778\uC815\uD574\uC694.
+      \uB9D0\uD22C\uB294 \uBE7C\uACE0\uC694."

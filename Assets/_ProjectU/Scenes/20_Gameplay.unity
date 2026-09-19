@@ -41859,6 +41859,7 @@ GameObject:
   - component: {fileID: 453596471}
   - component: {fileID: 453596472}
   - component: {fileID: 453596473}
+  - component: {fileID: 453596474}
   m_Layer: 0
   m_Name: === NPC Village ===
   m_TagString: Untagged
@@ -42179,6 +42180,24 @@ MonoBehaviour:
   hoursPerAffinity: 2
   dailyAffinityLimit: 3
   idleLineSeconds: {x: 35, y: 70}
+--- !u!114 &453596474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 453596466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b74154e32c3b348469a8826d95731eba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NpcBanterManager
+  book: {fileID: 11400000, guid: 26dfcfb5ea85fda43b29847896aa78cd, type: 2}
+  meetDistance: 6
+  playerRange: 30
+  lineSeconds: 3.4
+  checkInterval: 1
+  maxConversations: 4
 --- !u!1001 &454445727
 PrefabInstance:
   m_ObjectHideFlags: 0

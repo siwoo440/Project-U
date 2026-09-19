@@ -34,7 +34,8 @@ public static class ProjectUAutoContent
     {
         new Update { Id = "111-island-npc-stories", Title = "111일차 : 4차 NPC 의뢰 · 하트 이벤트 (21번)", Apply = () => NpcStoryBuilder.BuildAll(false) },
         new Update { Id = "112-wave5-cast", Title = "112일차 : 5차 NPC 7명 등장 · 새 집 4채 (구역 · 배치 · 초상 · 동료)", Apply = () => NpcCastBuilder.BuildAll(false) },
-        new Update { Id = "113-wave5-stories", Title = "113일차 : 5차 NPC 의뢰 · 하트 이벤트 (35명 모두 이야기 · 동료 잠금 해제)", Apply = () => NpcStoryBuilder.BuildAll(false) }
+        new Update { Id = "113-wave5-stories", Title = "113일차 : 5차 NPC 의뢰 · 하트 이벤트 (35명 모두 이야기 · 동료 잠금 해제)", Apply = () => NpcStoryBuilder.BuildAll(false) },
+        new Update { Id = "114-npc-relations", Title = "114일차 : 이웃끼리의 관계 (만나면 대화 · 이웃 이야기)", Apply = () => NpcRelationBuilder.BuildAll(false) }
     };
 
     [Serializable]
