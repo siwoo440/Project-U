@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 510b0c83df47b36439aa53dce257a125, type: 3}
-  m_Name: VP_Weapon_StoneAxe
+  m_Name: VP_Weapon_Axe
   m_EditorClassIdentifier: Assembly-CSharp::ContentVisualProfile
-  profileId: visual_weapon_stone_axe
-  displayName: STONE AXE VISUAL
+  profileId: visual_weapon_axe
+  displayName: AXE VISUAL
   category: 2
-  visualPrefab: {fileID: 0}
+  visualPrefab: {fileID: 8772382895775079440, guid: d0ff055341cc69441a30d54a8e096a60, type: 3}
   icon: {fileID: 0}
   materialOverride: {fileID: 0}
   animatorController: {fileID: 0}
@@ -26,7 +26,7 @@ MonoBehaviour:
   usePlaceholderColor: 0
   visualLocalPosition: {x: 0, y: 0, z: 0}
   visualLocalEulerAngles: {x: 0, y: 0, z: 0}
-  visualLocalScale: {x: 0.08, y: 0.08, z: 0.7}
+  visualLocalScale: {x: 1, y: 1, z: 1}
   interactionPointPosition: {x: 0, y: 1, z: 0}
   effectOriginPosition: {x: 0, y: 1, z: 0}
   uiAnchorPosition: {x: 0, y: 2, z: 0}

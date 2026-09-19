@@ -4,6 +4,7 @@ public static class ContentVisualProfileIdUtility // 콘텐츠 ID를 표준 Visu
 {
     private const string ItemPrefix = "item_"; // 일반 아이템 콘텐츠 ID 접두사
     private const string WeaponPrefix = "weapon_"; // 무기 전용 콘텐츠 ID 접두사
+    private const string ToolPrefix = "tool_"; // 96일차: 도구 콘텐츠 ID 접두사 (도구는 무기 외형 분류)
     private const string EnemyPrefix = "enemy_"; // 적 콘텐츠 ID 접두사
     private const string StructurePrefix = "structure_"; // 건축물 콘텐츠 ID 접두사
     private const string ResourcePrefix = "resource_"; // 채집 자원 콘텐츠 ID 접두사
@@ -108,6 +109,16 @@ public static class ContentVisualProfileIdUtility // 콘텐츠 ID를 표준 Visu
             return TryReplacePrefix( // item 접두사를 visual_weapon 접두사로 변환
                 contentId, // 원본 ItemData ID 전달
                 ItemPrefix, // 제거할 item 접두사 전달
+                VisualWeaponPrefix, // 적용할 visual_weapon 접두사 전달
+                out profileId, // 계산 결과 반환
+                out errorMessage); // 계산 오류 반환
+        }
+
+        if (contentId.StartsWith(ToolPrefix, StringComparison.Ordinal)) // 96일차: 도구 아이템(tool_axe 등)도 무기 외형을 쓴다
+        {
+            return TryReplacePrefix( // tool 접두사를 visual_weapon 접두사로 변환
+                contentId, // 원본 도구 ID 전달
+                ToolPrefix, // 제거할 tool 접두사 전달
                 VisualWeaponPrefix, // 적용할 visual_weapon 접두사 전달
                 out profileId, // 계산 결과 반환
                 out errorMessage); // 계산 오류 반환

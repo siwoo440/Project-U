@@ -13,6 +13,7 @@ using Object = UnityEngine.Object;
 // 93일차: NPC 의뢰 검사 추가, 의뢰에 필요한 물건을 구할 수 있는지 검사
 // 94일차: NPC 이벤트 검사 추가
 // 95일차: 밸런스 검사(활동별 수입 · 반복 사냥 · 의뢰 보상 · 호감도 속도) 추가
+// 96일차: 데이터 점검(외형 연결 · ID · 외형 설정 · 깨진 참조 · 쓰이지 않는 데이터) 추가
 public static class ContentIntegrationValidator
 {
     private const string DialogTitle = "Project U 전체 콘텐츠 검사";
@@ -97,6 +98,7 @@ public static class ContentIntegrationValidator
             ("NPC 의뢰", Feature(NpcQuestBuilder.Validate)),
             ("NPC 이벤트", Feature(NpcEventBuilder.Validate)),
             ("밸런스", Feature(BalanceBuilder.Validate)),
+            ("데이터 점검", Feature(DataAuditBuilder.Validate)),
             ("아이템 데이터 (ID 규칙)", ItemDataValidator.ValidateAllItemData),
             ("Game Data Registry", () => CountLoggedErrors(GameDataRegistryEditor.ValidateDefaultRegistry, details))
         };
