@@ -2,7 +2,7 @@ using System; // 이벤트 기능
 using System.Collections.Generic; // 목록 기능
 using UnityEngine; // Unity 기본 기능
 
-public sealed class NpcShopVendor : IShopVendor // 92일차: NPC 상점을 87일차 상점 창에 연결 (주인 초상 · 인사 · 할인 · 팔기)
+public sealed class NpcShopVendor : IShopVendor, ICraftVendor // 92일차: NPC 상점을 87일차 상점 창에 연결 (주인 초상 · 인사 · 할인 · 팔기) / 102일차: 제작 주문
 {
     public const float CloseDistance = 4.5f; // 플레이어가 이보다 멀어지면 창을 닫음 (대화 창과 같은 거리)
 
@@ -73,6 +73,17 @@ public sealed class NpcShopVendor : IShopVendor // 92일차: NPC 상점을 87일
     public bool TrySell(ItemData item, int quantity, PlayerInventory inventory, out string message) // 팔기
     {
         return manager.TrySell(shop, item, quantity, inventory, out message);
+    }
+
+    public IReadOnlyList<NpcCraftBook.Order> CraftOrders => manager.GetCraftOrders(shop); // 102일차: 제작 주문
+    public string CraftLine => manager.GetCraftBook(shop)?.CraftLine ?? string.Empty; // 제작 탭 한마디
+    public int GetCraftFee(NpcCraftBook.Order order) => manager.GetCraftFee(shop, order); // 수수료
+    public string GetCraftLockReason(NpcCraftBook.Order order) => manager.GetCraftLockReason(shop, order); // 잠긴 이유
+    public string GetCraftBlockReason(NpcCraftBook.Order order, PlayerInventory inventory) => manager.GetCraftBlockReason(shop, order, inventory); // 불가 이유
+
+    public bool TryCraft(NpcCraftBook.Order order, PlayerInventory inventory, out string message) // 제작 주문
+    {
+        return manager.TryCraft(shop, order, inventory, out message);
     }
 
     public void Opened(Transform playerTransform) // 창이 열리면 주인이 멈춰 플레이어를 바라봄

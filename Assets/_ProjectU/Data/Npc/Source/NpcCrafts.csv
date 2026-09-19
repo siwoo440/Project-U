@@ -1,0 +1,17 @@
+OrderID,Owner,Result,Amount,Ingredients,Fee,MinStage
+craft_bellamorta_potion,char_bellamorta,item_vitality_potion,1,item_herbal_tea:1|item_wild_mushroom:2,20,
+craft_bellamorta_potion_batch,char_bellamorta,item_vitality_potion,3,item_herbal_tea:2|item_wild_mushroom:5,45,Trust
+craft_arachne_silk,char_arachne,item_spider_silk,2,item_plant_fiber:5,8,
+craft_arachne_cap,char_arachne,equipment_cloth_cap,1,item_spider_silk:2|item_plant_fiber:2,15,
+craft_arachne_shirt,char_arachne,equipment_cloth_shirt,1,item_spider_silk:3|item_plant_fiber:4,30,Curious
+craft_milu_jelly_strawberry,char_milu,food_sweet_jelly,2,food_strawberry:2|drink_water_bottle:1,6,
+craft_milu_jelly_berry,char_milu,food_sweet_jelly,2,food_berry:4|drink_water_bottle:1,6,
+craft_seira_antidote,char_seira,medicine_antidote,1,item_wild_mushroom:2|item_herbal_tea:1,15,
+craft_seira_antidote_batch,char_seira,medicine_antidote,2,item_wild_mushroom:3|item_herbal_tea:2,25,Curious
+craft_pipi_scrap,char_pipi,item_scrap_parts,2,item_iron_ore:1|resource_stone:2,6,
+craft_pipi_arrows,char_pipi,item_arrow,10,item_wood:2|item_scrap_parts:1,4,
+craft_pipi_backpack,char_pipi,equipment_small_backpack,1,item_scrap_parts:6|item_spider_silk:4|item_plant_fiber:10,80,Trust
+craft_safira_salve,char_safira,medicine_desert_salve,1,item_herbal_tea:1|item_plant_fiber:4,12,
+craft_safira_salve_batch,char_safira,medicine_desert_salve,3,item_herbal_tea:2|item_plant_fiber:10|food_berry:3,30,Trust
+craft_dravia_iron_axe,char_dravia,item_iron_axe,1,tool_axe:1|item_iron_ore:4|item_wood:3,80,Curious
+craft_dravia_arrows,char_dravia,item_arrow,20,item_wood:2|item_iron_ore:1,5,

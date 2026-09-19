@@ -153,6 +153,16 @@ public interface IShopVendor // 92일차: 상점 창이 보여 주는 가게 (87
     event Action Changed; // 재고 · 매입 변경 알림
 }
 
+public interface ICraftVendor // 102일차: 제작 주문을 받는 가게 (상점 창 제작 탭)
+{
+    IReadOnlyList<NpcCraftBook.Order> CraftOrders { get; } // 제작 주문 목록 (없으면 탭 숨김)
+    string CraftLine { get; } // 제작 탭 한마디
+    int GetCraftFee(NpcCraftBook.Order order); // 할인 적용 수수료
+    string GetCraftLockReason(NpcCraftBook.Order order); // 아직 주문할 수 없는 이유 (없으면 null)
+    string GetCraftBlockReason(NpcCraftBook.Order order, PlayerInventory inventory); // 지금 주문할 수 없는 이유 (가능하면 null)
+    bool TryCraft(NpcCraftBook.Order order, PlayerInventory inventory, out string message); // 제작 주문
+}
+
 public interface IStorageInfoProvider // 87일차: 보관함 창 위쪽 안내 문구와 상호작용 안내 추가 문구
 {
     string StorageInfo { get; } // 보관함 창 안내 문구

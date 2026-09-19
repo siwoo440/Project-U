@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 4132525752541112089}
+  - component: {fileID: 7552197179671460244}
   m_Layer: 3
   m_Name: AnimalFeedPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 166033826506629189}
+  - {fileID: 5315974642414280901}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &4132525752541112089
+--- !u!114 &7552197179671460244
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: item_animal_feed
-  generatedVisual: {fileID: 1262875921496582236}
+  generatedVisual: {fileID: 6488946897326483676}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &4217876980329145509
+--- !u!1001 &8143375517402719269
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89c559f7d16ec174b8d46ef839271e75, type: 3}
---- !u!4 &166033826506629189 stripped
+--- !u!4 &5315974642414280901 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4090735376047572192, guid: 89c559f7d16ec174b8d46ef839271e75, type: 3}
-  m_PrefabInstance: {fileID: 4217876980329145509}
+  m_PrefabInstance: {fileID: 8143375517402719269}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1262875921496582236 stripped
+--- !u!1 &6488946897326483676 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3102498769881681145, guid: 89c559f7d16ec174b8d46ef839271e75, type: 3}
-  m_PrefabInstance: {fileID: 4217876980329145509}
+  m_PrefabInstance: {fileID: 8143375517402719269}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

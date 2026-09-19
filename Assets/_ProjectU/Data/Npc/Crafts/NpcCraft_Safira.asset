@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e0400e98af48c04c9215e63bfbc48d8, type: 3}
+  m_Name: NpcCraft_Safira
+  m_EditorClassIdentifier: Assembly-CSharp::NpcCraftBook
+  ownerId: char_safira
+  craftLine: "\uC7AC\uB8CC \uC918. \uAE08\uBC29 \uC11E\uC5B4."
+  orders:
+  - orderId: craft_safira_salve
+    result: {fileID: 11400000, guid: 2fbbf00934b2d404d946399b07a29fec, type: 2}
+    resultAmount: 1
+    ingredients:
+    - item: {fileID: 11400000, guid: 361f6079362891a468aae059667ddd1c, type: 2}
+      amount: 1
+    - item: {fileID: 11400000, guid: bc991e404803cba4292542d6a52ddd7a, type: 2}
+      amount: 4
+    fee: 12
+    requiredStage: 0
+  - orderId: craft_safira_salve_batch
+    result: {fileID: 11400000, guid: 2fbbf00934b2d404d946399b07a29fec, type: 2}
+    resultAmount: 3
+    ingredients:
+    - item: {fileID: 11400000, guid: 361f6079362891a468aae059667ddd1c, type: 2}
+      amount: 2
+    - item: {fileID: 11400000, guid: bc991e404803cba4292542d6a52ddd7a, type: 2}
+      amount: 10
+    - item: {fileID: 11400000, guid: 3a8ea9dc329d35c4b8b4c84410a7f15d, type: 2}
+      amount: 3
+    fee: 30
+    requiredStage: 2

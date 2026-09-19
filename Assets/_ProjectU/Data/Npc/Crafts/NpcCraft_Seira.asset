@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e0400e98af48c04c9215e63bfbc48d8, type: 3}
+  m_Name: NpcCraft_Seira
+  m_EditorClassIdentifier: Assembly-CSharp::NpcCraftBook
+  ownerId: char_seira
+  craftLine: "\uBC84\uC12F\uC774\uB791 \uCC28\uB97C \uC8FC\uBA74 \uD574\uB3C5\uC81C\uB97C
+    \uB9CC\uB4E4\uC5B4 \uC904\uAC8C\uC694. \uC870\uAE08\uB9CC \uAE30\uB2E4\uB824\uC694."
+  orders:
+  - orderId: craft_seira_antidote
+    result: {fileID: 11400000, guid: 46d53aca2110e46489ca54e6892f7daa, type: 2}
+    resultAmount: 1
+    ingredients:
+    - item: {fileID: 11400000, guid: ce6c806808c6dfb4ca5fb2217dce497c, type: 2}
+      amount: 2
+    - item: {fileID: 11400000, guid: 361f6079362891a468aae059667ddd1c, type: 2}
+      amount: 1
+    fee: 15
+    requiredStage: 0
+  - orderId: craft_seira_antidote_batch
+    result: {fileID: 11400000, guid: 46d53aca2110e46489ca54e6892f7daa, type: 2}
+    resultAmount: 2
+    ingredients:
+    - item: {fileID: 11400000, guid: ce6c806808c6dfb4ca5fb2217dce497c, type: 2}
+      amount: 3
+    - item: {fileID: 11400000, guid: 361f6079362891a468aae059667ddd1c, type: 2}
+      amount: 2
+    fee: 25
+    requiredStage: 1

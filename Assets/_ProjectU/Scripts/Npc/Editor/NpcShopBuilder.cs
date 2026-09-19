@@ -14,6 +14,7 @@ using Object = UnityEngine.Object;
 // 1. 원본 CSV(NpcShops · NpcShopStock)로 밀키 · 드라비아 · 리첼의 상점 데이터(판매 목록 · 가격 · 사 주는 물건 · 영업 위치 · 인사)를 만든다
 // 2. 게임 Scene의 NPC 관리자에 상점 관리자를 붙이고, 상인 창을 다시 만들어 NPC 한마디 칸을 추가한다
 // 3. 검사 : 주인 · 영업 시간(일정 데이터) · 재고 · 되팔기 이익 · 계절 씨앗 · 한글 글꼴 · Scene 연결
+// 102일차: 2차 NPC 7명 상점 + 제작 주문서(NpcCrafts.csv, 재료 + 수수료 → 물건)를 함께 만든다
 // 여러 번 실행해도 같은 Asset·오브젝트를 갱신한다. 실행 후 Ctrl+S로 Scene을 저장해야 반영된다.
 public static class NpcShopBuilder
 {
@@ -22,8 +23,15 @@ public static class NpcShopBuilder
     public const string ShopFolder = NpcContentBuilder.DataFolder + "/Shops";
     private const string ShopCsv = NpcContentBuilder.SourceFolder + "/NpcShops.csv";
     private const string StockCsv = NpcContentBuilder.SourceFolder + "/NpcShopStock.csv";
+    public const string CraftFolder = NpcContentBuilder.DataFolder + "/Crafts";
+    private const string CraftCsv = NpcContentBuilder.SourceFolder + "/NpcCrafts.csv";
 
-    public static readonly string[] ExpectedShops = { "shop_milky", "shop_dravia", "shop_lichel" };
+    public static readonly string[] ExpectedShops =
+    {
+        "shop_milky", "shop_dravia", "shop_lichel",
+        "shop_bellamorta", "shop_arachne", "shop_milu", "shop_kasumi", "shop_seira", "shop_pipi", "shop_safira"
+    };
+    private static readonly Regex OrderIdPattern = new Regex("^craft_[a-z0-9]+(?:_[a-z0-9]+)*$");
     private static readonly Regex ShopIdPattern = new Regex("^shop_[a-z0-9]+(?:_[a-z0-9]+)*$");
     private static readonly string[] WeekdayNames = { "월", "화", "수", "목", "금", "토", "일" };
 
@@ -33,7 +41,8 @@ public static class NpcShopBuilder
         "쉬는 날", "영업", "할인", "대화 · 거래", "거래", "거래 (닫힘)", "오늘 영업 : ", "내일 또 와요!",
         "가게 주인이 없어요.", "가판대가 있어야 물건을 펼칠 수 있어요. 상인 가판대를 지어 주세요.", "가게로 가는 중이에요. 도착하면 거래할 수 있어요.",
         "오늘은 쉬는 날이에요.", "오늘 영업은 끝났어요.", "지금은 영업 시간이 아니에요.", "내일 월화수목금토일요일 에 열어요.", "당분간 문을 열지 않아요.",
-        "' 단계부터 살 수 있어요", "무관심 호기심 신뢰 애정 사랑", "상점 창을 열 수 없어요. Build Content > 10. NPC Shops를 실행하세요."
+        "' 단계부터 살 수 있어요", "무관심 호기심 신뢰 애정 사랑", "상점 창을 열 수 없어요. Build Content > 10. NPC Shops를 실행하세요.",
+        "' 단계부터 주문할 수 있어요"
     };
 
     // ---------------------------------------------------------------- 메뉴
@@ -43,7 +52,7 @@ public static class NpcShopBuilder
     {
         bool confirmed = EditorUtility.DisplayDialog(
             DialogTitle,
-            "밀키(선셋 카페) · 드라비아(대장간) · 리첼(떠돌이 상점)의 판매 목록과 가격을 원본 CSV로 만들고,\n"
+            "섬 NPC 상점 10곳(밀키 · 드라비아 · 리첼 + 2차 7명)의 판매 목록 · 가격 · 제작 주문을 원본 CSV로 만들고,\n"
             + "현재 게임 Scene(20_Gameplay)의 NPC 관리자에 상점 관리자를 붙입니다.\n"
             + "상인 창은 NPC 한마디 칸을 넣어 다시 만듭니다.\n\n"
             + "먼저 6번(판매·상점) · 8번(NPC 배치) · 9번(NPC 대화) 메뉴를 실행해 두어야 합니다.\n"
@@ -67,6 +76,7 @@ public static class NpcShopBuilder
     {
         StringBuilder report = new StringBuilder("[NPC 상점 생성]\n");
         List<NpcShopData> shops;
+        List<NpcCraftBook> books;
 
         try
         {
@@ -80,6 +90,7 @@ public static class NpcShopBuilder
             }
 
             shops = CreateShops(database, report);
+            books = CreateCraftBooks(database, report);
             AssetDatabase.SaveAssets();
 
             EditorUtility.DisplayProgressBar(DialogTitle, "한글 글꼴", 0.5f);
@@ -90,7 +101,7 @@ public static class NpcShopBuilder
             EditorUtility.ClearProgressBar();
         }
 
-        report.Append(WireScene(shops));
+        report.Append(WireScene(shops, books));
         AssetDatabase.SaveAssets();
         report.Append(Validate(out _));
         return report.ToString();
@@ -98,8 +109,11 @@ public static class NpcShopBuilder
 
     // ---------------------------------------------------------------- 상점 데이터
 
+    private static readonly Dictionary<string, string> craftLines = new Dictionary<string, string>(StringComparer.Ordinal); // 주인 ID → 제작 탭 한마디 (NpcShops.csv CraftLine)
+
     private static List<NpcShopData> CreateShops(NpcDatabase database, StringBuilder report)
     {
+        craftLines.Clear();
         List<string> errors = new List<string>();
         List<NpcCsv.Row> shopRows = NpcCsv.Read(ShopCsv, errors);
         List<NpcCsv.Row> stockRows = NpcCsv.Read(StockCsv, errors);
@@ -155,6 +169,7 @@ public static class NpcShopBuilder
                 ParseInt(row["DailyBuyLimit"], 0),
                 Split(row["Greetings"]),
                 row["Farewell"]);
+            craftLines[owner.CharacterId] = row["CraftLine"];
             EditorUtility.SetDirty(shop);
             result.Add(shop);
             stockCount += stock.Count;
@@ -175,6 +190,125 @@ public static class NpcShopBuilder
         }
 
         return result;
+    }
+
+    // 102일차: 제작 주문서 (주인마다 한 권)
+    private static List<NpcCraftBook> CreateCraftBooks(NpcDatabase database, StringBuilder report)
+    {
+        List<string> errors = new List<string>();
+        List<NpcCsv.Row> rows = NpcCsv.Read(CraftCsv, errors);
+        Dictionary<string, ItemData> items = LoadItemsById();
+        Dictionary<string, List<NpcCraftBook.Order>> byOwner = new Dictionary<string, List<NpcCraftBook.Order>>(StringComparer.Ordinal);
+        HashSet<string> orderIds = new HashSet<string>(StringComparer.Ordinal);
+        StylizedArtAssetFactory.EnsureFolder(CraftFolder);
+
+        foreach (NpcCsv.Row row in rows)
+        {
+            string id = row["OrderID"];
+            string where = $"NpcCrafts.csv {row.LineNumber}줄";
+
+            if (!OrderIdPattern.IsMatch(id) || !orderIds.Add(id))
+            {
+                errors.Add($"{where} : 주문 ID가 잘못되었거나 중복입니다 ({id})");
+                continue;
+            }
+
+            if (!database.TryGet(row["Owner"], out NpcCharacterData owner))
+            {
+                errors.Add($"{where} : 주인 {row["Owner"]} 을(를) NpcDatabase에서 찾지 못했습니다.");
+                continue;
+            }
+
+            if (!items.TryGetValue(row["Result"], out ItemData result))
+            {
+                errors.Add($"{where} : 결과 아이템 {row["Result"]} 이(가) 없습니다.");
+                continue;
+            }
+
+            List<NpcCraftBook.Ingredient> ingredients = new List<NpcCraftBook.Ingredient>();
+
+            foreach (string token in Split(row["Ingredients"]))
+            {
+                string[] parts = token.Split(':');
+
+                if (parts.Length == 2 && items.TryGetValue(parts[0], out ItemData item) && int.TryParse(parts[1], out int amount) && amount > 0)
+                {
+                    ingredients.Add(new NpcCraftBook.Ingredient(item, amount));
+                }
+                else
+                {
+                    errors.Add($"{where} : 재료 {token} 을(를) 읽지 못했습니다 (아이템ID:수량).");
+                }
+            }
+
+            AffinityStage stage = AffinityStage.Uninterested;
+
+            if (!string.IsNullOrEmpty(row["MinStage"]) && !Enum.TryParse(row["MinStage"], out stage))
+            {
+                errors.Add($"{where} : 관계 단계 {row["MinStage"]} 을(를) 알 수 없습니다.");
+            }
+
+            if (!byOwner.TryGetValue(owner.CharacterId, out List<NpcCraftBook.Order> orders))
+            {
+                orders = new List<NpcCraftBook.Order>();
+                byOwner.Add(owner.CharacterId, orders);
+            }
+
+            orders.Add(new NpcCraftBook.Order(id, result, ParseInt(row["Amount"], 1), ingredients, ParseInt(row["Fee"], 0), stage));
+        }
+
+        List<NpcCraftBook> created = new List<NpcCraftBook>();
+        int orderCount = 0;
+
+        foreach (KeyValuePair<string, List<NpcCraftBook.Order>> pair in byOwner)
+        {
+            database.TryGet(pair.Key, out NpcCharacterData owner);
+            NpcCraftBook book = LoadOrCreateAsset<NpcCraftBook>($"{CraftFolder}/NpcCraft_{owner.EnglishName.Replace(" ", string.Empty)}.asset");
+            craftLines.TryGetValue(pair.Key, out string line);
+            book.EditorAssign(pair.Key, line, pair.Value);
+            EditorUtility.SetDirty(book);
+            created.Add(book);
+            orderCount += pair.Value.Count;
+        }
+
+        // CSV에서 빠진 주인의 예전 주문서는 지운다
+        foreach (NpcCraftBook stale in LoadCraftBooks().Where(book => !byOwner.ContainsKey(book.OwnerId)))
+        {
+            AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(stale));
+        }
+
+        created.Sort((left, right) => string.CompareOrdinal(left.OwnerId, right.OwnerId));
+        report.AppendLine($"제작 주문서 {created.Count}권 · 주문 {orderCount}개 ({CraftFolder})");
+
+        foreach (string error in errors)
+        {
+            report.AppendLine("✗ " + error);
+        }
+
+        return created;
+    }
+
+    public static List<NpcCraftBook> LoadCraftBooks()
+    {
+        List<NpcCraftBook> books = new List<NpcCraftBook>();
+
+        if (!AssetDatabase.IsValidFolder(CraftFolder))
+        {
+            return books;
+        }
+
+        foreach (string guid in AssetDatabase.FindAssets("t:NpcCraftBook", new[] { CraftFolder }))
+        {
+            NpcCraftBook book = AssetDatabase.LoadAssetAtPath<NpcCraftBook>(AssetDatabase.GUIDToAssetPath(guid));
+
+            if (book != null)
+            {
+                books.Add(book);
+            }
+        }
+
+        books.Sort((left, right) => string.CompareOrdinal(left.OwnerId, right.OwnerId));
+        return books;
     }
 
     private static NpcShopData.StockEntry ParseStock(NpcCsv.Row row, Dictionary<string, ItemData> items, List<string> errors)
@@ -349,6 +483,11 @@ public static class NpcShopBuilder
             }
         }
 
+        foreach (NpcCraftBook book in LoadCraftBooks())
+        {
+            yield return book.CraftLine;
+        }
+
         foreach (string text in RuntimeTexts)
         {
             yield return text;
@@ -371,7 +510,7 @@ public static class NpcShopBuilder
 
     // ---------------------------------------------------------------- Scene
 
-    private static string WireScene(List<NpcShopData> shops)
+    private static string WireScene(List<NpcShopData> shops, List<NpcCraftBook> books)
     {
         StringBuilder report = new StringBuilder();
         UnityEngine.SceneManagement.Scene scene = EditorSceneManager.GetActiveScene();
@@ -404,9 +543,9 @@ public static class NpcShopBuilder
             shopManager = npcManager.gameObject.AddComponent<NpcShopManager>();
         }
 
-        shopManager.EditorAssign(shops, npcManager, relations);
+        shopManager.EditorAssign(shops, npcManager, relations, books);
         EditorUtility.SetDirty(shopManager);
-        report.AppendLine($"상점 관리자 : {npcManager.name} (상점 {shops.Count}곳)");
+        report.AppendLine($"상점 관리자 : {npcManager.name} (상점 {shops.Count}곳 · 제작 주문서 {books.Count}권)");
         report.AppendLine(MarketPopupUIBuilder.RebuildShopPopup(out _));
         EditorSceneManager.MarkSceneDirty(scene);
         report.AppendLine("Scene 변경 완료 : Ctrl+S로 저장하세요.");
@@ -448,7 +587,7 @@ public static class NpcShopBuilder
             }
         }
 
-        foreach (NpcCharacterData character in database.GetAlphaCast().Where(character => character.HasRole(NpcRole.Merchant))) // 2차 상인 상점은 102일차
+        foreach (NpcCharacterData character in database.GetPlacedCast().Where(character => character.CastWave <= 2 && character.HasRole(NpcRole.Merchant))) // 102일차: 1 · 2차 상인 모두
         {
             if (!shops.Any(shop => shop.OwnerId == character.CharacterId))
             {
@@ -465,10 +604,12 @@ public static class NpcShopBuilder
         }
 
         ValidateResale(shops, catalog, Error);
+        List<NpcCraftBook> books = LoadCraftBooks();
+        ValidateCrafts(books, shops, database, catalog, report, Error);
         ValidateSeeds(shops, Error);
         KoreanFontBuilder.Validate(CollectShopTexts(), Error, report);
         ValidateScene(shops, report, Error);
-        report.AppendLine($"상점 {shops.Count}곳 · 판매 물건 {offers}종");
+        report.AppendLine($"상점 {shops.Count}곳 · 판매 물건 {offers}종 · 제작 주문서 {books.Count}권 (주문 {books.Sum(book => book.Orders.Count)}개)");
         errorCount = errors;
         report.AppendLine(errors == 0 ? "결과 : 오류 0개" : $"결과 : 오류 {errors}개");
         return report.ToString();
@@ -670,6 +811,157 @@ public static class NpcShopBuilder
         }
     }
 
+    // 102일차: 제작 주문서 : 주인(제작 역할 · 상점) · 재료 · 결과 · 수수료, 상점에서 재료를 사서 맡겨도 되팔기 이익이 없어야 한다
+    private static void ValidateCrafts(List<NpcCraftBook> books, List<NpcShopData> shops, NpcDatabase database, MarketCatalogData catalog, StringBuilder report, Action<string> error)
+    {
+        HashSet<string> owners = new HashSet<string>(StringComparer.Ordinal);
+        HashSet<string> orderIds = new HashSet<string>(StringComparer.Ordinal);
+
+        foreach (NpcCraftBook book in books)
+        {
+            if (!owners.Add(book.OwnerId))
+            {
+                error($"{book.name} : 주인 {book.OwnerId} 의 제작 주문서가 두 권입니다.");
+            }
+
+            if (!database.TryGet(book.OwnerId, out NpcCharacterData owner))
+            {
+                error($"{book.name} : 주인 {book.OwnerId} 이(가) 없습니다.");
+                continue;
+            }
+
+            if (!owner.HasRole(NpcRole.Crafter) || !owner.CanInteract(NpcInteraction.Craft))
+            {
+                error($"{book.name} : 주인 {owner.CharacterId} 에게 제작 역할 · 제작 상호작용이 없습니다.");
+            }
+
+            NpcShopData shop = shops.FirstOrDefault(candidate => candidate.OwnerId == owner.CharacterId);
+
+            if (shop == null)
+            {
+                error($"{book.name} : 주인 {owner.CharacterId} 의 상점이 없어 제작 탭을 열 수 없습니다.");
+                continue;
+            }
+
+            if (string.IsNullOrWhiteSpace(book.CraftLine))
+            {
+                error($"{book.name} : 제작 탭 한마디(NpcShops.csv CraftLine)가 비어 있습니다.");
+            }
+
+            if (!book.Orders.Any(order => order != null && order.RequiredStage == AffinityStage.Uninterested))
+            {
+                error($"{book.name} : 처음부터 주문할 수 있는 제작이 없습니다.");
+            }
+
+            foreach (NpcCraftBook.Order order in book.Orders)
+            {
+                if (order == null || order.Result == null)
+                {
+                    error($"{book.name} : 결과 아이템이 빈 주문이 있습니다.");
+                    continue;
+                }
+
+                if (!orderIds.Add(order.OrderId))
+                {
+                    error($"{order.OrderId} : 주문 ID 중복");
+                }
+
+                if (order.Ingredients.Count == 0 || order.Ingredients.Any(ingredient => ingredient == null || ingredient.Item == null))
+                {
+                    error($"{order.OrderId} : 재료가 없거나 빈 재료가 있습니다.");
+                    continue;
+                }
+
+                if (order.Ingredients.Any(ingredient => ingredient.Item == order.Result))
+                {
+                    error($"{order.OrderId} : 결과 아이템이 재료에 들어 있습니다.");
+                }
+
+                if (order.ResultAmount > order.Result.MaximumStack)
+                {
+                    error($"{order.OrderId} : 결과 수량 {order.ResultAmount} 이(가) 한 칸 최대 {order.Result.MaximumStack}개보다 많습니다.");
+                }
+
+                // 재료를 모두 NPC 상점에서 (최대 할인으로) 살 수 있으면, 재료 값 + 수수료가 결과를 되팔 값보다 커야 한다
+                int cost = order.Fee > 0 ? NpcShopData.DiscountedPrice(order.Fee, shop.MaxDiscountPercent) : 0;
+                bool allBuyable = true;
+
+                foreach (NpcCraftBook.Ingredient ingredient in order.Ingredients)
+                {
+                    int cheapest = CheapestShopPrice(ingredient.Item, shops);
+                    allBuyable &= cheapest > 0;
+                    cost += cheapest * ingredient.Amount;
+                }
+
+                int resale = ResaleValue(order.Result, shops, catalog) * order.ResultAmount;
+
+                if (allBuyable && resale > 0 && cost <= resale)
+                {
+                    error($"{order.OrderId} : 재료를 사서 맡기는 값 {cost} ≤ 결과 되팔 값 {resale} (되팔기 이익)");
+                }
+            }
+
+            report.AppendLine($"{book.OwnerId} 제작 {book.Orders.Count}개 : {string.Join(" / ", book.Orders.Where(order => order?.Result != null).Select(order => $"{order.Result.ItemId} x{order.ResultAmount} ({order.Fee})"))}");
+        }
+
+        // 제작 탭은 상점 창 안에 있으므로 상인 + 제작 NPC만 주문서가 꼭 필요하다 (상점 없는 제작 NPC는 나중에 따로)
+        foreach (NpcCharacterData character in database.GetPlacedCast().Where(character => character.HasRole(NpcRole.Merchant) && character.HasRole(NpcRole.Crafter) && character.CanInteract(NpcInteraction.Craft)))
+        {
+            if (!owners.Contains(character.CharacterId))
+            {
+                error($"{character.CharacterId} : 제작 역할인데 제작 주문서가 없습니다 (NpcCrafts.csv).");
+            }
+        }
+    }
+
+    private static int CheapestShopPrice(ItemData item, List<NpcShopData> shops) // NPC 상점에서 가장 싸게 살 수 있는 값 (0 = 파는 곳 없음)
+    {
+        int cheapest = 0;
+
+        foreach (NpcShopData shop in shops)
+        {
+            foreach (NpcShopData.StockEntry entry in shop.Stock)
+            {
+                if (entry?.Item == item)
+                {
+                    int price = NpcShopData.DiscountedPrice(entry.Price, shop.MaxDiscountPercent);
+                    cheapest = cheapest == 0 ? price : Mathf.Min(cheapest, price);
+                }
+            }
+        }
+
+        return cheapest;
+    }
+
+    private static int ResaleValue(ItemData item, List<NpcShopData> shops, MarketCatalogData catalog) // 판매 상자 · 모든 상점 매입 중 가장 높은 값 (제철 포함)
+    {
+        int resale = 0;
+
+        for (int season = 0; season < 4; season++)
+        {
+            MarketPriceQuote quote = catalog.GetQuote(item, (SeasonType)season);
+
+            if (!quote.Sellable)
+            {
+                continue;
+            }
+
+            resale = Mathf.Max(resale, quote.UnitPrice);
+
+            foreach (NpcShopData buyer in shops)
+            {
+                NpcShopData.BuyRule rule = buyer.FindBuyRule(item, quote.GoodsType);
+
+                if (rule != null)
+                {
+                    resale = Mathf.Max(resale, NpcShopManager.BuybackPrice(quote.UnitPrice, rule.Multiplier));
+                }
+            }
+        }
+
+        return resale;
+    }
+
     // 작물 씨앗은 재배 계절에 NPC 상점에서 살 수 있어야 한다 (87일차 떠돌이 상인 대신 리첼)
     private static void ValidateSeeds(List<NpcShopData> shops, Action<string> error)
     {
@@ -727,6 +1019,13 @@ public static class NpcShopBuilder
             error($"상점 관리자에 {shop.ShopId} 이(가) 연결되지 않았습니다.");
         }
 
+        HashSet<NpcCraftBook> assignedBooks = new HashSet<NpcCraftBook>(shopManager.CraftBooks.Where(book => book != null));
+
+        foreach (NpcCraftBook book in LoadCraftBooks().Where(book => !assignedBooks.Contains(book)))
+        {
+            error($"상점 관리자에 제작 주문서 {book.name} 이(가) 연결되지 않았습니다.");
+        }
+
         foreach (NpcShopData shop in shops)
         {
             if (npcManager.FindAgent(shop.OwnerId) == null)
@@ -750,6 +1049,10 @@ public static class NpcShopBuilder
         {
             error("GameUIManager의 상인 창이 없거나 NPC 한마디 칸이 없습니다. 10번 메뉴를 다시 실행하세요.");
         }
+        else if (new SerializedObject(popup).FindProperty("craftTabButton").objectReferenceValue == null)
+        {
+            error("상인 창에 제작 탭이 없습니다. 10번 메뉴를 다시 실행하세요.");
+        }
 
         if (uiManager != null && uiManager.NpcDialoguePopup == null)
         {
@@ -761,6 +1064,6 @@ public static class NpcShopBuilder
             error("상점 관리자(MarketManager · 코인)가 없습니다. 6번 메뉴를 실행하세요.");
         }
 
-        report.AppendLine($"Scene : 상점 관리자 상점 {assigned.Count}곳 연결");
+        report.AppendLine($"Scene : 상점 관리자 상점 {assigned.Count}곳 · 제작 주문서 {assignedBooks.Count}권 연결");
     }
 }

@@ -95,7 +95,15 @@ public static class ItemVisualContentBuilder
         { "tool_hoe", "tool_hoe" },
         { "tool_pickaxe", "tool_pickaxe" },
         { "tool_watering_can", "tool_watering_can" },
-        { "weapon_bow", "tool_bow" }
+        { "weapon_bow", "tool_bow" },
+        // 102일차 2차 NPC 가게 · 제작
+        { "item_vitality_potion", "item_vitality_potion" },
+        { "item_spider_silk", "item_spider_silk" },
+        { "food_sweet_jelly", "item_sweet_jelly" },
+        { "food_inari_sushi", "item_inari_sushi" },
+        { "medicine_antidote", "item_antidote" },
+        { "item_scrap_parts", "item_scrap_parts" },
+        { "medicine_desert_salve", "item_desert_salve" }
     };
 
     // 84·85일차에 새로 만든 모델 (코드 변경을 반영하도록 항상 다시 만든다)
@@ -103,7 +111,8 @@ public static class ItemVisualContentBuilder
     {
         "item_baked_apple", "item_arrow_bundle",
         "item_baked_potato", "item_grilled_fish", "item_mushroom_skewer", "item_pumpkin_soup", "item_tomato_stew", "item_golden_feast",
-        "item_egg", "item_milk", "item_animal_feed", "item_fried_egg", "item_veggie_omelette", "item_warm_milk"
+        "item_egg", "item_milk", "item_animal_feed", "item_fried_egg", "item_veggie_omelette", "item_warm_milk",
+        "item_vitality_potion", "item_spider_silk", "item_sweet_jelly", "item_inari_sushi", "item_antidote", "item_scrap_parts", "item_desert_salve"
     };
 
     private sealed class PickupSpec
@@ -134,7 +143,15 @@ public static class ItemVisualContentBuilder
         { "item_animal_feed", new PickupSpec { Name = "AnimalFeedPickup", Scale = 1.4f } },
         { "food_fried_egg", new PickupSpec { Name = "FriedEggPickup", Scale = 1.3f } },
         { "food_veggie_omelette", new PickupSpec { Name = "VeggieOmelettePickup", Scale = 1.4f } },
-        { "food_warm_milk", new PickupSpec { Name = "WarmMilkPickup", Scale = 1.1f } }
+        { "food_warm_milk", new PickupSpec { Name = "WarmMilkPickup", Scale = 1.1f } },
+        // 102일차 2차 NPC 가게 · 제작
+        { "item_vitality_potion", new PickupSpec { Name = "VitalityPotionPickup", Scale = 1.1f } },
+        { "item_spider_silk", new PickupSpec { Name = "SpiderSilkPickup", Scale = 1.2f } },
+        { "food_sweet_jelly", new PickupSpec { Name = "SweetJellyPickup", Scale = 1.15f } },
+        { "food_inari_sushi", new PickupSpec { Name = "InariSushiPickup", Scale = 1.4f } },
+        { "medicine_antidote", new PickupSpec { Name = "AntidotePickup", Scale = 1.1f } },
+        { "item_scrap_parts", new PickupSpec { Name = "ScrapPartsPickup", Scale = 1.3f } },
+        { "medicine_desert_salve", new PickupSpec { Name = "DesertSalvePickup", Scale = 1.1f } }
     };
 
     // 86일차: 동물 아이콘 (가축 창·HUD)

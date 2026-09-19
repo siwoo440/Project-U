@@ -54,6 +54,7 @@ public static partial class StylizedModelLibrary
                 RegisterMarket();
                 RegisterNpc();
                 RegisterZones();
+                RegisterNpcGoods();
             }
 
             return catalog;

@@ -76,6 +76,8 @@ public sealed class NpcShopManager : MonoBehaviour // 92일차: NPC 상점 (영�
     [SerializeField] private NpcManager npcManager; // NPC 관리자
     [Tooltip("호감도 (할인 · 잠긴 물건).")]
     [SerializeField] private NpcRelationshipManager relations; // 관계
+    [Tooltip("102일차: NPC 제작 주문서 (주인 ID로 상점과 연결).")]
+    [SerializeField] private List<NpcCraftBook> craftBooks = new List<NpcCraftBook>(); // 제작 주문서
 
     private sealed class ShopState // 상점 한 곳의 실행 상태
     {
@@ -93,8 +95,10 @@ public sealed class NpcShopManager : MonoBehaviour // 92일차: NPC 상점 (영�
 
     public event Action StockChanged; // 재고 · 매입 변경
     public event Action<NpcShopData, ItemData, int, int> Traded; // 거래 (상점, 아이템, 수량 : 산 수 + / 판 수 -, 코인 변화)
+    public event Action<NpcShopData, NpcCraftBook.Order> Crafted; // 102일차: 제작 주문 완료
 
     public IReadOnlyList<NpcShopData> Shops => shops; // 상점 제공
+    public IReadOnlyList<NpcCraftBook> CraftBooks => craftBooks; // 제작 주문서 제공
     public int CurrentDay => npcManager != null ? npcManager.CurrentDay : 1; // 날짜
     public float CurrentHour => npcManager != null ? npcManager.CurrentHour : 12f; // 시각
     public SeasonType CurrentSeason => npcManager != null ? npcManager.CurrentSeason : SeasonType.Spring; // 계절
@@ -648,6 +652,172 @@ public sealed class NpcShopManager : MonoBehaviour // 92일차: NPC 상점 (영�
         return true;
     }
 
+    // ------------------------------------------------------------ 제작 주문 (102일차)
+
+    public NpcCraftBook GetCraftBook(NpcShopData shop) // 상점 주인의 제작 주문서
+    {
+        if (shop == null)
+        {
+            return null;
+        }
+
+        foreach (NpcCraftBook book in craftBooks)
+        {
+            if (book != null && book.OwnerId == shop.OwnerId)
+            {
+                return book;
+            }
+        }
+
+        return null;
+    }
+
+    public IReadOnlyList<NpcCraftBook.Order> GetCraftOrders(NpcShopData shop) // 제작 주문 목록
+    {
+        NpcCraftBook book = GetCraftBook(shop);
+        return book != null ? book.Orders : (IReadOnlyList<NpcCraftBook.Order>)Array.Empty<NpcCraftBook.Order>();
+    }
+
+    public int GetCraftFee(NpcShopData shop, NpcCraftBook.Order order) // 할인 적용 수수료 (0이면 0)
+    {
+        return order == null || order.Fee <= 0 ? 0 : NpcShopData.DiscountedPrice(order.Fee, GetDiscountPercent(shop));
+    }
+
+    public string GetCraftLockReason(NpcShopData shop, NpcCraftBook.Order order) // 관계 단계가 부족하면 이유
+    {
+        if (order == null || order.RequiredStage <= GetOwnerStage(shop))
+        {
+            return null;
+        }
+
+        return $"'{NpcDialogueSelector.StageName(order.RequiredStage)}' 단계부터 주문할 수 있어요";
+    }
+
+    public static bool HasIngredients(NpcCraftBook.Order order, PlayerInventory inventory) // 재료가 모두 있는지
+    {
+        if (order == null || inventory == null)
+        {
+            return false;
+        }
+
+        foreach (NpcCraftBook.Ingredient ingredient in order.Ingredients)
+        {
+            if (ingredient == null || ingredient.Item == null || inventory.GetItemQuantity(ingredient.Item) < ingredient.Amount)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public string GetCraftBlockReason(NpcShopData shop, NpcCraftBook.Order order, PlayerInventory inventory) // 지금 주문할 수 없는 이유 (가능하면 null)
+    {
+        PlayerWallet wallet = Wallet;
+
+        if (shop == null || order == null || order.Result == null || inventory == null || wallet == null || GetCraftBook(shop) == null)
+        {
+            return "CANNOT CRAFT RIGHT NOW";
+        }
+
+        if (!IsScheduledOpenNow(shop))
+        {
+            return "THE SHOP IS CLOSED";
+        }
+
+        string locked = GetCraftLockReason(shop, order);
+
+        if (locked != null)
+        {
+            return locked;
+        }
+
+        if (!HasIngredients(order, inventory))
+        {
+            return "MISSING MATERIALS";
+        }
+
+        int fee = GetCraftFee(shop, order);
+
+        if (!wallet.CanAfford(fee))
+        {
+            return $"NEED {fee - wallet.Coins} MORE COINS";
+        }
+
+        return null;
+    }
+
+    public bool TryCraft(NpcShopData shop, NpcCraftBook.Order order, PlayerInventory inventory, out string message) // 재료 + 수수료로 제작 주문
+    {
+        IReadOnlyList<NpcCraftBook.Order> orders = GetCraftOrders(shop);
+        bool known = false;
+
+        for (int index = 0; index < orders.Count && !known; index++)
+        {
+            known = orders[index] == order;
+        }
+
+        message = known ? GetCraftBlockReason(shop, order, inventory) : "CANNOT CRAFT RIGHT NOW";
+
+        if (message != null)
+        {
+            return false;
+        }
+
+        PlayerWallet wallet = Wallet;
+        int fee = GetCraftFee(shop, order);
+
+        foreach (NpcCraftBook.Ingredient ingredient in order.Ingredients) // 재료를 먼저 빼야 가방 칸이 비는 경우가 있음
+        {
+            inventory.RemoveItem(ingredient.Item, ingredient.Amount);
+        }
+
+        if (!inventory.CanAddItem(order.Result, order.ResultAmount))
+        {
+            RestoreIngredients(order, inventory);
+            message = "NOT ENOUGH ROOM IN YOUR BAG";
+            return false;
+        }
+
+        if (!wallet.TrySpend(fee))
+        {
+            RestoreIngredients(order, inventory);
+            message = "PAYMENT FAILED";
+            return false;
+        }
+
+        int left = inventory.AddItem(order.Result, order.ResultAmount);
+
+        if (left > 0) // 예외 : 넣지 못하면 전부 되돌림
+        {
+            inventory.RemoveItem(order.Result, order.ResultAmount - left);
+            RestoreIngredients(order, inventory);
+            wallet.Add(fee);
+            message = "NOT ENOUGH ROOM IN YOUR BAG";
+            return false;
+        }
+
+        ShopState state = GetState(shop);
+
+        if (state != null && fee > 0)
+        {
+            state.TotalSpent = (int)Math.Min((long)state.TotalSpent + fee, int.MaxValue);
+        }
+
+        StockChanged?.Invoke();
+        Crafted?.Invoke(shop, order);
+        message = $"CRAFTED {order.ResultAmount} {order.Result.DisplayName}{(fee > 0 ? $"  -{fee}" : string.Empty)}";
+        return true;
+    }
+
+    private static void RestoreIngredients(NpcCraftBook.Order order, PlayerInventory inventory) // 재료 되돌리기
+    {
+        foreach (NpcCraftBook.Ingredient ingredient in order.Ingredients)
+        {
+            inventory.AddItem(ingredient.Item, ingredient.Amount);
+        }
+    }
+
     // ------------------------------------------------------------ 저장
 
     public NpcShopSaveData CaptureSaveData() // 저장 데이터
@@ -742,15 +912,21 @@ public sealed class NpcShopManager : MonoBehaviour // 92일차: NPC 상점 (영�
                 string locked = GetLockReason(shop, offer);
                 text.Append($"\n   {offer.Item.ItemId} {GetUnitPrice(shop, offer)}코인 (기본 {offer.Price}) 남은 {offer.Remaining}/{offer.DailyStock}{(offer.IsSpecial ? " 가끔" : string.Empty)}{(locked != null ? " 잠김" : string.Empty)}");
             }
+
+            foreach (NpcCraftBook.Order order in GetCraftOrders(shop))
+            {
+                text.Append($"\n   제작 {order.OrderId} → {order.Result?.ItemId} x{order.ResultAmount} 수수료 {GetCraftFee(shop, order)}{(GetCraftLockReason(shop, order) != null ? " 잠김" : string.Empty)}");
+            }
         }
 
         return text.ToString();
     }
 
 #if UNITY_EDITOR
-    public void EditorAssign(List<NpcShopData> shopList, NpcManager manager, NpcRelationshipManager relationshipManager) // 생성 도구 전용
+    public void EditorAssign(List<NpcShopData> shopList, NpcManager manager, NpcRelationshipManager relationshipManager, List<NpcCraftBook> bookList = null) // 생성 도구 전용
     {
         shops = shopList ?? new List<NpcShopData>();
+        craftBooks = bookList ?? new List<NpcCraftBook>();
         npcManager = manager;
         relations = relationshipManager;
         states.Clear();

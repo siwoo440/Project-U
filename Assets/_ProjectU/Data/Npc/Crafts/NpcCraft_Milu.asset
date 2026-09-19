@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e0400e98af48c04c9215e63bfbc48d8, type: 3}
+  m_Name: NpcCraft_Milu
+  m_EditorClassIdentifier: Assembly-CSharp::NpcCraftBook
+  ownerId: char_milu
+  craftLine: "\uC7AC\uB8CC \uC8FC\uBA74~ \uBBF8\uB8E8\uAC00 \uAFB9\uAFB9 \uB20C\uB7EC\uC11C
+    \uB9CC\uB4E4\uC5B4 \uC904\uAC8C~"
+  orders:
+  - orderId: craft_milu_jelly_strawberry
+    result: {fileID: 11400000, guid: 79f4e609f841fa44e80c8947008b3560, type: 2}
+    resultAmount: 2
+    ingredients:
+    - item: {fileID: 11400000, guid: 95ca44aa8a27d41448c511db6fa0a55c, type: 2}
+      amount: 2
+    - item: {fileID: 11400000, guid: 233c5c7467d9daa41bab4b59439b9465, type: 2}
+      amount: 1
+    fee: 6
+    requiredStage: 0
+  - orderId: craft_milu_jelly_berry
+    result: {fileID: 11400000, guid: 79f4e609f841fa44e80c8947008b3560, type: 2}
+    resultAmount: 2
+    ingredients:
+    - item: {fileID: 11400000, guid: 3a8ea9dc329d35c4b8b4c84410a7f15d, type: 2}
+      amount: 4
+    - item: {fileID: 11400000, guid: 233c5c7467d9daa41bab4b59439b9465, type: 2}
+      amount: 1
+    fee: 6
+    requiredStage: 0

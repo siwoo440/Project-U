@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e0400e98af48c04c9215e63bfbc48d8, type: 3}
+  m_Name: NpcCraft_Arachne
+  m_EditorClassIdentifier: Assembly-CSharp::NpcCraftBook
+  ownerId: char_arachne
+  craftLine: "\uC7AC\uB8CC\uB9CC \uC788\uC73C\uBA74 \uAE08\uBC29 \uC9DC \uC904\uAC8C.
+    \uAC70\uBBF8\uC904\uCC98\uB7FC \uCD18\uCD18\uD558\uAC8C."
+  orders:
+  - orderId: craft_arachne_silk
+    result: {fileID: 11400000, guid: a3a22e114d5dd36498ccd4cc83dd2ffb, type: 2}
+    resultAmount: 2
+    ingredients:
+    - item: {fileID: 11400000, guid: bc991e404803cba4292542d6a52ddd7a, type: 2}
+      amount: 5
+    fee: 8
+    requiredStage: 0
+  - orderId: craft_arachne_cap
+    result: {fileID: 11400000, guid: ced6962cfb3b9a249aadbf41f4f53d78, type: 2}
+    resultAmount: 1
+    ingredients:
+    - item: {fileID: 11400000, guid: a3a22e114d5dd36498ccd4cc83dd2ffb, type: 2}
+      amount: 2
+    - item: {fileID: 11400000, guid: bc991e404803cba4292542d6a52ddd7a, type: 2}
+      amount: 2
+    fee: 15
+    requiredStage: 0
+  - orderId: craft_arachne_shirt
+    result: {fileID: 11400000, guid: 3a8d5e1739f820a40882f0ae4c0d09f4, type: 2}
+    resultAmount: 1
+    ingredients:
+    - item: {fileID: 11400000, guid: a3a22e114d5dd36498ccd4cc83dd2ffb, type: 2}
+      amount: 3
+    - item: {fileID: 11400000, guid: bc991e404803cba4292542d6a52ddd7a, type: 2}
+      amount: 4
+    fee: 30
+    requiredStage: 1

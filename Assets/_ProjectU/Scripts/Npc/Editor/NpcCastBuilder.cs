@@ -106,6 +106,7 @@ public static class NpcCastBuilder
         NpcManager manager = sceneOpen ? Object.FindFirstObjectByType<NpcManager>(FindObjectsInactive.Include) : null;
         List<NpcCharacterData> cast = database.GetPlacedCast();
         List<NpcShopData> allShops = NpcShopBuilder.LoadShops();
+        List<NpcCraftBook> allBooks = NpcShopBuilder.LoadCraftBooks(); // 102일차
 
         foreach (IGrouping<int, NpcCharacterData> wave in cast.GroupBy(character => character.CastWave).OrderBy(group => group.Key))
         {
@@ -160,11 +161,14 @@ public static class NpcCastBuilder
                 ready += errors == before ? 1 : 0;
             }
 
-            // 상점 · 의뢰 · 이벤트는 차수마다 뒤이어 붙인다 (1차만 모두 갖춤)
+            // 상점 · 제작 · 의뢰 · 이벤트는 차수마다 뒤이어 붙인다 (102일차: 2차 상점 · 제작)
             List<NpcCharacterData> members = wave.ToList();
             int shops = members.Count(character => character.HasRole(NpcRole.Merchant) && allShops.Any(shop => shop.OwnerId == character.CharacterId));
             int merchants = members.Count(character => character.HasRole(NpcRole.Merchant));
-            report.AppendLine($"{wave.Key}차 {members.Count}명 준비 {ready}/{members.Count} ({string.Join(" · ", members.Select(character => character.DisplayName))}) · 상점 {shops}/{merchants}");
+            bool ShopCrafter(NpcCharacterData character) => character.HasRole(NpcRole.Merchant) && character.HasRole(NpcRole.Crafter) && character.CanInteract(NpcInteraction.Craft); // 상점 창 제작 탭
+            int crafters = members.Count(ShopCrafter);
+            int books = members.Count(character => ShopCrafter(character) && allBooks.Any(book => book.OwnerId == character.CharacterId));
+            report.AppendLine($"{wave.Key}차 {members.Count}명 준비 {ready}/{members.Count} ({string.Join(" · ", members.Select(character => character.DisplayName))}) · 상점 {shops}/{merchants} · 제작 {books}/{crafters}");
         }
 
         if (!sceneOpen)

@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e0400e98af48c04c9215e63bfbc48d8, type: 3}
+  m_Name: NpcCraft_Bellamorta
+  m_EditorClassIdentifier: Assembly-CSharp::NpcCraftBook
+  ownerId: char_bellamorta
+  craftLine: "\uC7AC\uB8CC\uB97C \uB450\uACE0 \uAC00\uC694. \uB2EC\uC774\uB294 \uAC74
+    \uC81C \uBAAB\uC774\uB2C8\uAE4C."
+  orders:
+  - orderId: craft_bellamorta_potion
+    result: {fileID: 11400000, guid: 23d094edda8e80c47baf710a0785816f, type: 2}
+    resultAmount: 1
+    ingredients:
+    - item: {fileID: 11400000, guid: 361f6079362891a468aae059667ddd1c, type: 2}
+      amount: 1
+    - item: {fileID: 11400000, guid: ce6c806808c6dfb4ca5fb2217dce497c, type: 2}
+      amount: 2
+    fee: 20
+    requiredStage: 0
+  - orderId: craft_bellamorta_potion_batch
+    result: {fileID: 11400000, guid: 23d094edda8e80c47baf710a0785816f, type: 2}
+    resultAmount: 3
+    ingredients:
+    - item: {fileID: 11400000, guid: 361f6079362891a468aae059667ddd1c, type: 2}
+      amount: 2
+    - item: {fileID: 11400000, guid: ce6c806808c6dfb4ca5fb2217dce497c, type: 2}
+      amount: 5
+    fee: 45
+    requiredStage: 2

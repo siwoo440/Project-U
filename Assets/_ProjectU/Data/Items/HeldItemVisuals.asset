@@ -97,6 +97,12 @@ MonoBehaviour:
     holderLocalEuler: {x: 0, y: 250, z: 0}
     modelLocalPosition: {x: 0.010579427, y: -0.029485838, z: -0}
     modelScale: 0.36857298
+  - item: {fileID: 11400000, guid: 48be12fb6511fee4f84f6ada2469834f, type: 2}
+    modelPrefab: {fileID: 418491886127014098, guid: 6a120d86c5edc954d91d7402c7ca90ec, type: 3}
+    holderLocalPosition: {x: 0, y: 0.04, z: 0.14}
+    holderLocalEuler: {x: 0, y: 250, z: 0}
+    modelLocalPosition: {x: -0, y: -0.03376934, z: -0}
+    modelScale: 0.4761905
   - item: {fileID: 11400000, guid: 2168b2ceb2540714c8bcfcadd543b478, type: 2}
     modelPrefab: {fileID: 5882322208728740047, guid: f71e8e89e519d2341b637cede5acf7e1, type: 3}
     holderLocalPosition: {x: 0, y: 0.04, z: 0.14}
@@ -127,6 +133,12 @@ MonoBehaviour:
     holderLocalEuler: {x: 0, y: 250, z: 0}
     modelLocalPosition: {x: 0.0013646138, y: -0.041505072, z: -0.035652693}
     modelScale: 0.4811597
+  - item: {fileID: 11400000, guid: 79f4e609f841fa44e80c8947008b3560, type: 2}
+    modelPrefab: {fileID: 5031790869295678754, guid: c20c3b89e1354d548bfd4e52c387248a, type: 3}
+    holderLocalPosition: {x: 0, y: 0.04, z: 0.14}
+    holderLocalEuler: {x: 0, y: 250, z: 0}
+    modelLocalPosition: {x: -0, y: -0.05109765, z: -0}
+    modelScale: 0.37850115
   - item: {fileID: 11400000, guid: 6fd5b0751520d284ba0ec2064ed5ea80, type: 2}
     modelPrefab: {fileID: 6119284078522213121, guid: ce9b8f3f53f28894caf54d52e25991b9, type: 3}
     holderLocalPosition: {x: 0, y: 0.04, z: 0.14}
@@ -193,6 +205,24 @@ MonoBehaviour:
     holderLocalEuler: {x: 0, y: 250, z: 0}
     modelLocalPosition: {x: -0.00020939458, y: -0.044937182, z: -0}
     modelScale: 0.37447655
+  - item: {fileID: 11400000, guid: 342d1ac3d9605574e949adea087b15eb, type: 2}
+    modelPrefab: {fileID: 3771613511352172671, guid: 9e7b5285aacba7945b6ce7ff5e97a7e4, type: 3}
+    holderLocalPosition: {x: 0, y: 0.04, z: 0.14}
+    holderLocalEuler: {x: 0, y: 250, z: 0}
+    modelLocalPosition: {x: 0.0044650612, y: -0.022706889, z: 0.0014578119}
+    modelScale: 0.6382824
+  - item: {fileID: 11400000, guid: a3a22e114d5dd36498ccd4cc83dd2ffb, type: 2}
+    modelPrefab: {fileID: 6577257521490578012, guid: 5ffdf6cfde1fa4748a70e749eabf4c1a, type: 3}
+    holderLocalPosition: {x: 0, y: 0.04, z: 0.14}
+    holderLocalEuler: {x: 0, y: 250, z: 0}
+    modelLocalPosition: {x: -0.057234906, y: -0.08473287, z: -0.0000000023381819}
+    modelScale: 0.6276509
+  - item: {fileID: 11400000, guid: 23d094edda8e80c47baf710a0785816f, type: 2}
+    modelPrefab: {fileID: 2974843212138899643, guid: 4b5310068b88e9e408918a9db4d787c2, type: 3}
+    holderLocalPosition: {x: 0, y: 0.04, z: 0.14}
+    holderLocalEuler: {x: 0, y: 250, z: 0}
+    modelLocalPosition: {x: -0, y: -0.1, z: -0.001842105}
+    modelScale: 0.52631575
   - item: {fileID: 11400000, guid: ce6c806808c6dfb4ca5fb2217dce497c, type: 2}
     modelPrefab: {fileID: 6132959096918259091, guid: d08f53f24c969ee4180b3839dbb8793a, type: 3}
     holderLocalPosition: {x: 0, y: 0.04, z: 0.14}
@@ -205,12 +235,24 @@ MonoBehaviour:
     holderLocalEuler: {x: 0, y: 250, z: 0}
     modelLocalPosition: {x: -0.0076606977, y: -0.08616967, z: -0.0000000064201404}
     modelScale: 0.43084833
+  - item: {fileID: 11400000, guid: 46d53aca2110e46489ca54e6892f7daa, type: 2}
+    modelPrefab: {fileID: 2007587310531050899, guid: 6d3b183632247c4499f29e70850c0bc8, type: 3}
+    holderLocalPosition: {x: 0, y: 0.04, z: 0.14}
+    holderLocalEuler: {x: 0, y: 250, z: 0}
+    modelLocalPosition: {x: -0.0008987689, y: -0.1, z: -0.0034285733}
+    modelScale: 0.5714286
   - item: {fileID: 11400000, guid: 2e83945f5dda2f34bb4e993074cfc81c, type: 2}
     modelPrefab: {fileID: 4163190344991345512, guid: f3b704ac090f0b747848589e6be99405, type: 3}
     holderLocalPosition: {x: 0, y: 0.04, z: 0.14}
     holderLocalEuler: {x: 0, y: 250, z: 0}
     modelLocalPosition: {x: -0.038571432, y: -0.050170027, z: -0}
     modelScale: 0.36734694
+  - item: {fileID: 11400000, guid: 2fbbf00934b2d404d946399b07a29fec, type: 2}
+    modelPrefab: {fileID: 6752266596367252022, guid: 6b4e026fcae8fc044bfe43c8d97597c4, type: 3}
+    holderLocalPosition: {x: 0, y: 0.04, z: 0.14}
+    holderLocalEuler: {x: 0, y: 250, z: 0}
+    modelLocalPosition: {x: -0.039089892, y: -0.017358305, z: -0.011350388}
+    modelScale: 0.46853933
   - item: {fileID: 11400000, guid: 57290689e97387440ab6d1bcbf4ef495, type: 2}
     modelPrefab: {fileID: 1264412245430839849, guid: 4a11d0c53cd66cf4b8e42b4da9974657, type: 3}
     holderLocalPosition: {x: 0, y: 0.04, z: 0.14}

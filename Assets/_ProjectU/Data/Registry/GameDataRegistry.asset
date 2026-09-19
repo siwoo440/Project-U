@@ -28,11 +28,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 97159af054bc8af498b1d461117c20e9, type: 2}
   - {fileID: 11400000, guid: 2c82bd3688707a247a1d2c303d4b2589, type: 2}
   - {fileID: 11400000, guid: b4f9d8fea40a5c741bf6bc3778083b00, type: 2}
+  - {fileID: 11400000, guid: 48be12fb6511fee4f84f6ada2469834f, type: 2}
   - {fileID: 11400000, guid: 2168b2ceb2540714c8bcfcadd543b478, type: 2}
   - {fileID: 11400000, guid: a42d6efd666a1fc40809cbcbcd3362b4, type: 2}
   - {fileID: 11400000, guid: 60a1b7725b902114381bd98a8db8ec3b, type: 2}
   - {fileID: 11400000, guid: 7f40f13453370944793fdbd691b6889d, type: 2}
   - {fileID: 11400000, guid: 95ca44aa8a27d41448c511db6fa0a55c, type: 2}
+  - {fileID: 11400000, guid: 79f4e609f841fa44e80c8947008b3560, type: 2}
   - {fileID: 11400000, guid: 6fd5b0751520d284ba0ec2064ed5ea80, type: 2}
   - {fileID: 11400000, guid: e63787b6f7de7624f9bbb93b5512905e, type: 2}
   - {fileID: 11400000, guid: e71d86e7c053a4147bd6f206b155abc2, type: 2}
@@ -44,9 +46,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cc96d25a17a973747bb1d11fe6839e7b, type: 2}
   - {fileID: 11400000, guid: c593f671b9ae9d24e96e6cd5ee7b2a1c, type: 2}
   - {fileID: 11400000, guid: bc991e404803cba4292542d6a52ddd7a, type: 2}
+  - {fileID: 11400000, guid: 342d1ac3d9605574e949adea087b15eb, type: 2}
+  - {fileID: 11400000, guid: a3a22e114d5dd36498ccd4cc83dd2ffb, type: 2}
+  - {fileID: 11400000, guid: 23d094edda8e80c47baf710a0785816f, type: 2}
   - {fileID: 11400000, guid: ce6c806808c6dfb4ca5fb2217dce497c, type: 2}
   - {fileID: 11400000, guid: b9e78781ff8b2aa4bae6df0fa3d2e1c9, type: 2}
+  - {fileID: 11400000, guid: 46d53aca2110e46489ca54e6892f7daa, type: 2}
   - {fileID: 11400000, guid: 2e83945f5dda2f34bb4e993074cfc81c, type: 2}
+  - {fileID: 11400000, guid: 2fbbf00934b2d404d946399b07a29fec, type: 2}
   - {fileID: 11400000, guid: 57290689e97387440ab6d1bcbf4ef495, type: 2}
   - {fileID: 11400000, guid: bad80e6a70bf78a4a81937454f7a8f95, type: 2}
   - {fileID: 11400000, guid: 535bf968045572f408e41892f2d80b93, type: 2}
@@ -176,7 +183,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b1e577dad44cb4046870a840e3016d1f, type: 2}
   - {fileID: 11400000, guid: c64178232ed5ced49ba75eef98101a8d, type: 2}
   - {fileID: 11400000, guid: 774a35c879bf49441ad6445c9cce1f3b, type: 2}
-  registeredItemCount: 51
+  registeredItemCount: 58
   registeredCraftingRecipeCount: 8
   registeredBuildRecipeCount: 20
   registeredEnemyCount: 3

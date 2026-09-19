@@ -137,22 +137,26 @@ public static class MarketPopupUIBuilder
         Image divider = CreateImage(w, "LP_Divider", null, Faint);
         Place(divider.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -64f), new Vector2(WindowWidth - Pad * 2f, 1f));
 
-        // 탭
+        // 탭 (102일차: 제작 탭 추가 → 탭 폭 150)
         Button buyTab = CreateButton(w, "LP_TabBuy", "BUY", 14f, ProjectUUIPalette.Accent, ProjectUUIPalette.TextDark, out Image buyTabImage, out TMP_Text buyTabLabel);
         buyTabLabel.characterSpacing = 2f;
-        TopLeft((RectTransform)buyTab.transform, new Vector2(Pad, -78f), new Vector2(190f, 34f));
+        TopLeft((RectTransform)buyTab.transform, new Vector2(Pad, -78f), new Vector2(150f, 34f));
         Button pricesTab = CreateButton(w, "LP_TabPrices", "SELL PRICES", 14f, new Color(1f, 1f, 1f, 0.06f), ProjectUUIPalette.TextSecondary, out Image pricesTabImage, out TMP_Text pricesTabLabel);
         pricesTabLabel.characterSpacing = 2f;
-        TopLeft((RectTransform)pricesTab.transform, new Vector2(Pad + 200f, -78f), new Vector2(190f, 34f));
+        TopLeft((RectTransform)pricesTab.transform, new Vector2(Pad + 158f, -78f), new Vector2(150f, 34f));
+        Button craftTab = CreateButton(w, "LP_TabCraft", "CRAFT", 14f, new Color(1f, 1f, 1f, 0.06f), ProjectUUIPalette.TextSecondary, out Image craftTabImage, out TMP_Text craftTabLabel);
+        craftTabLabel.characterSpacing = 2f;
+        TopLeft((RectTransform)craftTab.transform, new Vector2(Pad + 316f, -78f), new Vector2(150f, 34f));
+        craftTab.gameObject.SetActive(false); // 제작 주문서가 있는 NPC 상점만 표시
         TMP_Text tabHint = CreateText(w, "LP_TabHint", "TAB", 10.5f, FontStyles.Bold, TextAlignmentOptions.MidlineLeft, new Color(0.72f, 0.7f, 0.65f, 0.6f));
         tabHint.characterSpacing = 2f;
-        TopLeft(tabHint.rectTransform, new Vector2(Pad + 398f, -78f), new Vector2(60f, 34f));
+        TopLeft(tabHint.rectTransform, new Vector2(Pad + 474f, -78f), new Vector2(50f, 34f));
 
         // 92일차: NPC 상점 주인의 한마디 (탭 오른쪽, 가판대 상인은 숨김)
         TMP_Text speech = CreateText(w, "LP_Speech", "\"어서 와요\"", 15f, FontStyles.Normal, TextAlignmentOptions.MidlineRight, new Color(0.96f, 0.88f, 0.72f, 1f));
         speech.textWrappingMode = TextWrappingModes.NoWrap;
         speech.overflowMode = TextOverflowModes.Ellipsis;
-        TopLeft(speech.rectTransform, new Vector2(Pad + 460f, -78f), new Vector2(WindowWidth - Pad * 2f - 460f, 34f));
+        TopLeft(speech.rectTransform, new Vector2(Pad + 524f, -78f), new Vector2(WindowWidth - Pad * 2f - 524f, 34f));
         speech.gameObject.SetActive(false);
 
         // 왼쪽 목록
@@ -299,6 +303,9 @@ public static class MarketPopupUIBuilder
         so.FindProperty("pricesTabButton").objectReferenceValue = pricesTab;
         so.FindProperty("pricesTabImage").objectReferenceValue = pricesTabImage;
         so.FindProperty("pricesTabLabel").objectReferenceValue = pricesTabLabel;
+        so.FindProperty("craftTabButton").objectReferenceValue = craftTab;
+        so.FindProperty("craftTabImage").objectReferenceValue = craftTabImage;
+        so.FindProperty("craftTabLabel").objectReferenceValue = craftTabLabel;
         so.FindProperty("listRoot").objectReferenceValue = list;
         so.FindProperty("listScroll").objectReferenceValue = scroll;
         so.FindProperty("rowTemplate").objectReferenceValue = rowTemplate;

@@ -53,7 +53,15 @@ public static class MarketContentBuilder
         ("resource_stone", 1, MarketGoodsType.Material),
         ("item_plant_fiber", 1, MarketGoodsType.Material),
         ("item_iron_ore", 7, MarketGoodsType.Material),
-        ("item_animal_feed", 1, MarketGoodsType.Material)
+        ("item_animal_feed", 1, MarketGoodsType.Material),
+        // 102일차: 2차 NPC 가게 · 제작 물건 (NPC 상점 가격은 이보다 충분히 높게)
+        ("item_vitality_potion", 24, MarketGoodsType.Supply),
+        ("item_spider_silk", 8, MarketGoodsType.Material),
+        ("food_sweet_jelly", 9, MarketGoodsType.Cooked),
+        ("food_inari_sushi", 14, MarketGoodsType.Cooked),
+        ("medicine_antidote", 16, MarketGoodsType.Supply),
+        ("item_scrap_parts", 6, MarketGoodsType.Material),
+        ("medicine_desert_salve", 22, MarketGoodsType.Supply)
     };
 
     // 물고기 : 기본 14 × 희귀도 배율 × (1 + 난이도 × 0.5)

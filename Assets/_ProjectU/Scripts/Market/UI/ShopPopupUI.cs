@@ -5,13 +5,14 @@ using UnityEngine.InputSystem; // 키보드 입력 기능
 using UnityEngine.UI; // Unity UI 기능
 
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
-public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: 떠돌이 상인 창 (오늘 재고 사기 · 판매 가격표) / 92일차: NPC 상점 (할인 · 잠긴 물건 · 팔기)
+public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: 떠돌이 상인 창 (오늘 재고 사기 · 판매 가격표) / 92일차: NPC 상점 (할인 · 잠긴 물건 · 팔기) / 102일차: 제작 주문
 {
     public enum ShopTab // 창 탭
     {
         Buy = 0, // 사기
         Prices = 1, // 판매 가격표 (87일차 가판대)
-        Sell = 2 // 팔기 (92일차 NPC 상점)
+        Sell = 2, // 팔기 (92일차 NPC 상점)
+        Craft = 3 // 제작 주문 (102일차 NPC 상점)
     }
 
     [Header("Root")] // 루트
@@ -37,6 +38,10 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
     [SerializeField] private Button pricesTabButton; // 두 번째 탭 (가격표 · 팔기)
     [SerializeField] private Image pricesTabImage; // 두 번째 탭 배경
     [SerializeField] private TMP_Text pricesTabLabel; // 두 번째 탭 문구
+    [Tooltip("102일차: 제작 주문 탭 (제작 주문서가 있는 NPC 상점만 표시).")]
+    [SerializeField] private Button craftTabButton; // 제작 탭
+    [SerializeField] private Image craftTabImage; // 제작 탭 배경
+    [SerializeField] private TMP_Text craftTabLabel; // 제작 탭 문구
 
     [Header("List")] // 목록
     [Tooltip("목록 줄 부모.")]
@@ -106,12 +111,16 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
     public bool CanPressBuy => buyButton != null && buyButton.interactable; // 구매 가능 제공 (테스트용)
     public string MessageLabel => messageText != null && messageText.gameObject.activeSelf ? messageText.text : string.Empty; // 알림 제공 (테스트용)
     public ShopTab SecondTab => vendor != null && vendor.BuysFromPlayer ? ShopTab.Sell : ShopTab.Prices; // 두 번째 탭 종류
+    private ICraftVendor CraftVendor => vendor as ICraftVendor; // 102일차: 제작 주문 가게
+    public bool HasCraftTab => CraftVendor != null && CraftVendor.CraftOrders.Count > 0; // 제작 탭 표시 여부
+    public bool CraftTabVisible => craftTabButton != null && craftTabButton.gameObject.activeSelf; // 제작 탭 버튼 표시 (테스트용)
 
     private void Awake() // 버튼 연결
     {
         if (closeButton != null) closeButton.onClick.AddListener(RequestClose); // 닫기
         if (buyTabButton != null) buyTabButton.onClick.AddListener(() => SetTab(ShopTab.Buy)); // 사기 탭
         if (pricesTabButton != null) pricesTabButton.onClick.AddListener(() => SetTab(SecondTab)); // 두 번째 탭
+        if (craftTabButton != null) craftTabButton.onClick.AddListener(() => SetTab(ShopTab.Craft)); // 제작 탭
         if (minusButton != null) minusButton.onClick.AddListener(() => ChangeQuantity(-1)); // 감소
         if (plusButton != null) plusButton.onClick.AddListener(() => ChangeQuantity(1)); // 증가
         if (buyButton != null) buyButton.onClick.AddListener(Confirm); // 구매 · 판매
@@ -227,7 +236,7 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
 
         if (keyboard != null && keyboard.tabKey.wasPressedThisFrame) // Tab으로 탭 전환
         {
-            SetTab(tab == ShopTab.Buy ? SecondTab : ShopTab.Buy); // 전환
+            SetTab(NextTab); // 전환 (사기 → 가격표 · 팔기 → 제작 → 사기)
         }
 
         if (isDirty) // 변경 확인
@@ -261,9 +270,13 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
             return; // 생략
         }
 
-        if (next != ShopTab.Buy) // 두 번째 탭은 가게 종류에 맞춤
+        if (next == ShopTab.Prices || next == ShopTab.Sell) // 두 번째 탭은 가게 종류에 맞춤
         {
             next = SecondTab; // 가격표 또는 팔기
+        }
+        else if (next == ShopTab.Craft && !HasCraftTab) // 제작 주문이 없는 가게
+        {
+            next = ShopTab.Buy; // 사기
         }
 
         if (tab != next) // 다른 탭
@@ -288,8 +301,26 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
         Rebuild(); // 다시 그리기
     }
 
+    private ShopTab NextTab => tab == ShopTab.Buy ? SecondTab : tab != ShopTab.Craft && HasCraftTab ? ShopTab.Craft : ShopTab.Buy; // Tab 키 다음 탭
+
+    private static string TabName(ShopTab target) // 탭 이름 (안내 문구)
+    {
+        switch (target)
+        {
+            case ShopTab.Prices: return "SELL PRICES";
+            case ShopTab.Sell: return "SELL";
+            case ShopTab.Craft: return "CRAFT";
+            default: return "BUY";
+        }
+    }
+
     public void ChangeQuantity(int delta) // 수량 바꾸기 (Shift : 10개씩)
     {
+        if (tab == ShopTab.Craft) // 제작 주문은 한 번에 하나
+        {
+            return; // 생략
+        }
+
         Keyboard keyboard = Keyboard.current; // 키보드
         bool shift = keyboard != null && (keyboard.leftShiftKey.isPressed || keyboard.rightShiftKey.isPressed); // Shift
         int max; // 최대 수량
@@ -321,8 +352,14 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
         Rebuild(); // 다시 그리기
     }
 
-    public void Confirm() // 버튼 : 사기 탭이면 사기, 팔기 탭이면 팔기
+    public void Confirm() // 버튼 : 사기 탭이면 사기, 팔기 탭이면 팔기, 제작 탭이면 제작 주문
     {
+        if (tab == ShopTab.Craft) // 제작
+        {
+            Craft(); // 제작 주문
+            return; // 완료
+        }
+
         if (tab == ShopTab.Sell) // 팔기
         {
             Sell(); // 팔기
@@ -371,6 +408,22 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
 
         Rebuild(); // 다시 그리기
     }
+
+    public void Craft() // 102일차: 선택 주문 제작
+    {
+        NpcCraftBook.Order order = SelectedOrder; // 선택 주문
+
+        if (order == null || CraftVendor == null) // 확인
+        {
+            return; // 생략
+        }
+
+        bool success = CraftVendor.TryCraft(order, inventory, out string message); // 제작
+        ShowMessage(message, success ? ProjectUUIPalette.Teal : ProjectUUIPalette.Danger, messageDuration); // 알림
+        Rebuild(); // 다시 그리기
+    }
+
+    private NpcCraftBook.Order SelectedOrder => tab == ShopTab.Craft && HasCraftTab && selectedIndex >= 0 && selectedIndex < CraftVendor.CraftOrders.Count ? CraftVendor.CraftOrders[selectedIndex] : null; // 선택 주문
 
     private ShopOffer SelectedOffer => tab == ShopTab.Buy && vendor != null && selectedIndex >= 0 && selectedIndex < vendor.Offers.Count ? vendor.Offers[selectedIndex] : null; // 선택 물건
     private ItemData SelectedSellItem => tab == ShopTab.Sell && selectedIndex >= 0 && selectedIndex < sellItems.Count ? sellItems[selectedIndex] : null; // 선택한 팔 물건
@@ -472,7 +525,7 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
 
         if (speechText != null) // 한마디
         {
-            string line = vendor.SpeechLine; // 문구
+            string line = tab == ShopTab.Craft && !string.IsNullOrEmpty(CraftVendor?.CraftLine) ? CraftVendor.CraftLine : vendor.SpeechLine; // 문구 (제작 탭은 제작 한마디)
             speechText.gameObject.SetActive(!string.IsNullOrEmpty(line)); // 표시
             speechText.SetText(line ?? string.Empty); // 적용
         }
@@ -489,13 +542,30 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
         infoChip.Bind(vendor.InfoLabel, ProjectUUIPalette.Teal, crateSprite); // 가게 안내
         coinChip.Bind($"{wallet.Coins:N0}", ProjectUUIPalette.Accent, coinSprite); // 코인
         SetTabVisual(buyTabImage, buyTabLabel, tab == ShopTab.Buy); // 사기 탭
-        SetTabVisual(pricesTabImage, pricesTabLabel, tab != ShopTab.Buy); // 두 번째 탭
+        SetTabVisual(pricesTabImage, pricesTabLabel, tab == ShopTab.Prices || tab == ShopTab.Sell); // 두 번째 탭
         buyTabLabel.SetText($"BUY  ({vendor.Offers.Count})"); // 사기 탭 문구
         pricesTabLabel.SetText(SecondTab == ShopTab.Sell ? $"SELL  ({sellItems.Count})" : "SELL PRICES"); // 두 번째 탭 문구
+        bool hasCraft = HasCraftTab; // 제작 탭
+
+        if (craftTabButton != null) // 102일차: 제작 탭
+        {
+            craftTabButton.gameObject.SetActive(hasCraft); // 표시
+            SetTabVisual(craftTabImage, craftTabLabel, tab == ShopTab.Craft); // 모양
+            craftTabLabel.SetText(hasCraft ? $"CRAFT  ({CraftVendor.CraftOrders.Count})" : "CRAFT"); // 문구
+        }
+
+        if (tab == ShopTab.Craft && !hasCraft) // 주문서가 사라짐
+        {
+            tab = ShopTab.Buy; // 사기로
+        }
 
         if (tab == ShopTab.Buy) // 사기 탭
         {
             RebuildBuy(); // 그리기
+        }
+        else if (tab == ShopTab.Craft) // 제작 탭
+        {
+            RebuildCraft(); // 그리기
         }
         else if (tab == ShopTab.Sell) // 팔기 탭
         {
@@ -547,7 +617,7 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
         emptyListText.gameObject.SetActive(offers.Count == 0); // 빈 목록
         emptyListText.SetText("NOTHING FOR SALE TODAY"); // 문구
         buyGroup.SetActive(true); // 구매 묶음
-        hintText.SetText($"BUY WITH COINS  ·  SHIFT + / - FOR 10  ·  TAB: {(SecondTab == ShopTab.Sell ? "SELL" : "SELL PRICES")}"); // 안내
+        hintText.SetText($"BUY WITH COINS  ·  SHIFT + / - FOR 10  ·  TAB: {TabName(NextTab)}"); // 안내
 
         ShopOffer selected = SelectedOffer; // 선택
 
@@ -614,7 +684,7 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
         emptyListText.gameObject.SetActive(sellItems.Count == 0); // 빈 목록
         emptyListText.SetText("NOTHING IN YOUR BAG THIS SHOP BUYS"); // 문구
         buyGroup.SetActive(true); // 판매 묶음
-        hintText.SetText($"BUYS: {vendor.BuyInfo}  ·  TAB: BUY"); // 안내
+        hintText.SetText($"BUYS: {vendor.BuyInfo}  ·  TAB: {TabName(NextTab)}"); // 안내
 
         ItemData selected = SelectedSellItem; // 선택
 
@@ -647,6 +717,101 @@ public sealed class ShopPopupUI : MonoBehaviour, IGameScenePopup // 87일차: �
         buyLabel.SetText(reason ?? $"SELL x{quantity}  ·  +{selectedUnit * quantity}"); // 문구
         minusButton.interactable = quantity > 1; // 감소
         plusButton.interactable = quantity < max; // 증가
+    }
+
+    private void RebuildCraft() // 102일차: 제작 탭 (재료 + 수수료 → 물건)
+    {
+        ICraftVendor crafter = CraftVendor; // 제작 가게
+        IReadOnlyList<NpcCraftBook.Order> orders = crafter.CraftOrders; // 주문
+        selectedIndex = orders.Count == 0 ? 0 : Mathf.Clamp(selectedIndex, 0, orders.Count - 1); // 선택 보정
+
+        for (int index = 0; index < orders.Count; index++) // 줄 그리기
+        {
+            NpcCraftBook.Order order = orders[index]; // 주문
+            string locked = crafter.GetCraftLockReason(order); // 잠김
+            bool ready = NpcShopManager.HasIngredients(order, inventory); // 재료 모두 있음
+            int fee = crafter.GetCraftFee(order); // 수수료
+            string status; // 상태
+            Color statusColor; // 상태 색
+
+            if (locked != null)
+            {
+                status = locked; // 잠김
+                statusColor = ProjectUUIPalette.TextSecondary; // 회색
+            }
+            else
+            {
+                status = $"x{order.ResultAmount}  ·  {(ready ? "MATERIALS READY" : $"MISSING {MissingCount(order)}")}"; // 재료 상태
+                statusColor = ready ? ProjectUUIPalette.Teal : ProjectUUIPalette.TextSecondary; // 색
+            }
+
+            bool dim = locked != null || !ready || !wallet.CanAfford(fee); // 흐리게
+            GetRow(index).Bind(index, order.Result, status, statusColor, fee, wallet.CanAfford(fee) ? ProjectUUIPalette.Accent : ProjectUUIPalette.Danger, index == selectedIndex, dim, Select); // 표시
+        }
+
+        HideRowsFrom(orders.Count); // 남는 줄
+        emptyListText.gameObject.SetActive(orders.Count == 0); // 빈 목록
+        emptyListText.SetText("NO CRAFT ORDERS"); // 문구
+        buyGroup.SetActive(true); // 주문 묶음
+        hintText.SetText($"BRING MATERIALS + FEE  ·  MADE ON THE SPOT  ·  TAB: {TabName(NextTab)}"); // 안내
+
+        NpcCraftBook.Order selected = SelectedOrder; // 선택
+
+        if (selected == null || selected.Result == null) // 선택 없음
+        {
+            BindEmptyDetail("NOTHING TO CRAFT"); // 빈 상세
+            return; // 완료
+        }
+
+        BindItemDetail(selected.Result); // 공통 상세
+        List<string> lines = new List<string>(); // 재료 줄
+
+        foreach (NpcCraftBook.Ingredient ingredient in selected.Ingredients) // 재료
+        {
+            if (ingredient == null || ingredient.Item == null) // 빈 칸
+            {
+                continue; // 다음
+            }
+
+            int have = inventory.GetItemQuantity(ingredient.Item); // 가진 수
+            string color = have >= ingredient.Amount ? "#7FD6C2" : "#E0776B"; // 색
+            lines.Add($"<color={color}>{ingredient.Item.DisplayName} {Mathf.Min(have, 999)}/{ingredient.Amount}</color>"); // 줄
+        }
+
+        detailInfoText.SetText($"NEEDS  {string.Join("  ·  ", lines)}"); // 재료 (설명 칸 두 줄에 맞춤, 설명은 사기 탭에서)
+        string selectedLock = crafter.GetCraftLockReason(selected); // 잠김
+        typeChip.Bind(TypeLabel(selected.Result), ProjectUUIPalette.TextSecondary, tagSprite); // 분류
+        stateChip.Bind(selectedLock ?? $"MAKES {selected.ResultAmount}", selectedLock != null ? ProjectUUIPalette.TextSecondary : ProjectUUIPalette.Teal, crateSprite); // 결과 수
+        int selectedFee = crafter.GetCraftFee(selected); // 수수료
+        string was = selectedFee < selected.Fee ? $"  <size=55%><color=#9A968C><s>{selected.Fee}</s></color></size>" : string.Empty; // 할인 전
+        priceText.SetText(selectedFee > 0 ? $"{selectedFee} <size=60%>COIN FEE</size>{was}" : "FREE"); // 수수료
+        priceText.color = ProjectUUIPalette.Accent; // 색
+        int inBag = inventory.GetItemQuantity(selected.Result); // 가방 수량
+        noteText.SetText(inBag > 0 ? $"YOU HAVE {inBag} IN YOUR BAG" : "YOU DON'T HAVE ANY YET"); // 보조 안내
+        quantity = 1; // 한 번에 하나
+        quantityText.SetText($"x{selected.ResultAmount}"); // 결과 수량
+
+        string reason = crafter.GetCraftBlockReason(selected, inventory); // 불가 이유
+        if (reason != null && selectedLock != null) reason = "LOCKED"; // 관계 단계 부족
+        buyButton.interactable = reason == null; // 가능 여부
+        buyLabel.SetText(reason ?? (selectedFee > 0 ? $"CRAFT  ·  {selectedFee}" : "CRAFT")); // 문구
+        minusButton.interactable = false; // 수량 없음
+        plusButton.interactable = false; // 수량 없음
+    }
+
+    private int MissingCount(NpcCraftBook.Order order) // 모자란 재료 종류 수
+    {
+        int missing = 0; // 수
+
+        foreach (NpcCraftBook.Ingredient ingredient in order.Ingredients) // 재료
+        {
+            if (ingredient != null && ingredient.Item != null && inventory.GetItemQuantity(ingredient.Item) < ingredient.Amount) // 부족
+            {
+                missing++; // 추가
+            }
+        }
+
+        return missing; // 결과 반환
     }
 
     private void RebuildPrices(SeasonType season) // 가격표 탭
