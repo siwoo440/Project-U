@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: equipment_small_backpack
   displayName: SMALL BACKPACK
+  koreanName: "\uC791\uC740 \uAC00\uBC29"
   description: A SMALL TRAVEL BACKPACK
   icon: {fileID: 21300000, guid: 8681d9ff15222e64c90760f7e60b56f0, type: 3}
   itemCategory: 3
@@ -36,6 +37,11 @@ MonoBehaviour:
   coldResistancePercent: 0
   inventorySlotBonus: 8
   hungerRestoreAmount: 0
+  foodThirstRestoreAmount: 0
+  foodHealthRestoreAmount: 0
+  foodBuffType: 0
+  foodBuffStrength: 0
+  foodBuffDuration: 0
   thirstRestoreAmount: 0
   healthRestoreAmount: 0
   maximumStack: 1

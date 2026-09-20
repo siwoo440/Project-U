@@ -233,7 +233,7 @@ public static class NpcCompanionBuilder
 
             foreach (ItemData item in entry.lootItems.Where(item => item != null))
             {
-                yield return item.DisplayName;
+                yield return item.KoreanName; // 115일차: 말풍선에 한글 이름
             }
         }
     }

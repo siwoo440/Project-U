@@ -32,15 +32,28 @@ public sealed class NpcLocationPoint : MonoBehaviour // 90일차: NPC 일정 위
         return transform.position + GetSlotOffset(transform.right, slot, slotSpacing);
     }
 
-    public static Vector3 GetSlotOffset(Vector3 right, int slot, float spacing) // 자리 번호 → 옆 간격
+    public const int RowSize = 5; // 115일차: 한 줄에 서는 수 (넘으면 뒷줄)
+
+    public static Vector3 GetSlotOffset(Vector3 right, int slot, float spacing) // 자리 번호 → 옆 간격 (115일차: 다섯 명이 넘으면 뒤에 엇갈려 한 줄 더)
     {
         if (slot <= 0)
         {
             return Vector3.zero;
         }
 
-        int step = (slot + 1) / 2;
-        return right * (step * spacing * (slot % 2 == 1 ? 1f : -1f));
+        int row = slot / RowSize;
+        int column = slot % RowSize;
+        int step = (column + 1) / 2;
+        float side = step * spacing * (column % 2 == 1 ? 1f : -1f);
+
+        if (row == 0)
+        {
+            return right * side;
+        }
+
+        Vector3 back = -Vector3.Cross(right, Vector3.up).normalized; // 바라보는 쪽의 반대
+        float stagger = row % 2 == 1 ? spacing * 0.5f : 0f; // 앞사람 사이로 보이게
+        return right * (side + stagger) + back * (row * spacing * 1.1f);
     }
 
 #if UNITY_EDITOR

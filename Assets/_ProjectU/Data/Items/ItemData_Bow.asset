@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: weapon_bow
   displayName: BOW
+  koreanName: "\uD65C"
   description: A SIMPLE RANGED WEAPON
   icon: {fileID: 21300000, guid: d1ee321747c3a23489c4a376152301e1, type: 3}
   itemCategory: 6
@@ -36,6 +37,11 @@ MonoBehaviour:
   coldResistancePercent: 0
   inventorySlotBonus: 0
   hungerRestoreAmount: 0
+  foodThirstRestoreAmount: 0
+  foodHealthRestoreAmount: 0
+  foodBuffType: 0
+  foodBuffStrength: 0
+  foodBuffDuration: 0
   thirstRestoreAmount: 0
   healthRestoreAmount: 0
   maximumStack: 1

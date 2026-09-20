@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: seed_strawberry
   displayName: STRAWBERRY SEEDS
+  koreanName: "\uB538\uAE30 \uC528\uC557"
   description: Strawberry seeds. Plant them in a farm plot in spring.
   icon: {fileID: 21300000, guid: d072308e2d15c0244aabc9c4cc6cfb06, type: 3}
   itemCategory: 7
@@ -36,6 +37,11 @@ MonoBehaviour:
   coldResistancePercent: 0
   inventorySlotBonus: 0
   hungerRestoreAmount: 0
+  foodThirstRestoreAmount: 0
+  foodHealthRestoreAmount: 0
+  foodBuffType: 0
+  foodBuffStrength: 0
+  foodBuffDuration: 0
   thirstRestoreAmount: 0
   healthRestoreAmount: 0
   maximumStack: 99

@@ -255,6 +255,7 @@ public static class WorldZoneBuilder
             {
                 report.AppendLine(MoveZonesToIsland(root.transform));
                 report.AppendLine($"둘레길 · 갈림길 표지판 {BuildRoadSigns(Group(root.transform, "Signposts"))}개 (108일차 길망)");
+                report.AppendLine($"갈림목 표지판 {BuildJunctionSigns(Group(root.transform, "Signposts"))}개 (115일차)");
                 report.AppendLine(BuildLagoonPier(Group(root.transform, "LagoonPier"), building));
             }
 
@@ -1487,6 +1488,8 @@ public static class WorldZoneBuilder
         NavMeshData previous = surface.navMeshData;
         string path = previous != null ? AssetDatabase.GetAssetPath(previous) : null;
         float started = Time.realtimeSinceStartup;
+        GameObject treeBlockers = CreateTreeBlockers(out int treeCount); // 115일차: Terrain 나무 · 바위 자리를 길에서 뺌
+        Physics.SyncTransforms();
 
         try
         {
@@ -1495,6 +1498,12 @@ public static class WorldZoneBuilder
         finally
         {
             hiddenNpcs.ForEach(npc => npc.SetActive(true));
+
+            if (treeBlockers != null)
+            {
+                Object.DestroyImmediate(treeBlockers);
+            }
+
             Physics.SyncTransforms();
         }
 
@@ -1530,7 +1539,47 @@ public static class WorldZoneBuilder
 
         EditorUtility.SetDirty(surface);
         NavMeshTriangulation triangulation = NavMesh.CalculateTriangulation();
-        return $"NavMesh 다시 굽기 완료 ({Time.realtimeSinceStartup - started:0.0}초, 삼각형 {triangulation.indices.Length / 3}개)";
+        return $"NavMesh 다시 굽기 완료 ({Time.realtimeSinceStartup - started:0.0}초, 삼각형 {triangulation.indices.Length / 3}개, 비켜 가는 나무 · 바위 {treeCount}개)";
+    }
+
+    // 115일차: Terrain 나무는 NavMesh 굽기에 들어가지 않아 NPC가 나무 줄기를 지나갔다.
+    // 굽는 동안만 나무 · 바위(충돌체가 있는 종류) 자리에 같은 크기의 기둥 충돌체를 세워 길에서 빼고, 굽고 나면 지운다.
+    private static GameObject CreateTreeBlockers(out int count)
+    {
+        count = 0;
+        Terrain terrain = ActiveTerrain;
+
+        if (terrain == null || terrain.terrainData == null)
+        {
+            return null;
+        }
+
+        TerrainData data = terrain.terrainData;
+        TreePrototype[] prototypes = data.treePrototypes;
+        CapsuleCollider[] shapes = prototypes.Select(prototype => prototype.prefab != null ? prototype.prefab.GetComponentInChildren<CapsuleCollider>() : null).ToArray();
+        GameObject root = new GameObject("NavTreeBlockers (굽는 동안만)") { hideFlags = HideFlags.DontSave };
+
+        foreach (TreeInstance tree in data.treeInstances)
+        {
+            CapsuleCollider shape = tree.prototypeIndex >= 0 && tree.prototypeIndex < shapes.Length ? shapes[tree.prototypeIndex] : null;
+
+            if (shape == null)
+            {
+                continue; // 덤불 · 작은 돌처럼 충돌체가 없으면 지나갈 수 있음
+            }
+
+            Vector3 scale = shape.transform.lossyScale;
+            GameObject blocker = new GameObject("Tree") { hideFlags = HideFlags.DontSave };
+            blocker.transform.SetParent(root.transform, false);
+            blocker.transform.position = Vector3.Scale(tree.position, data.size) + terrain.transform.position;
+            CapsuleCollider capsule = blocker.AddComponent<CapsuleCollider>();
+            capsule.radius = Mathf.Max(0.15f, shape.radius * Mathf.Max(scale.x, scale.z) * tree.widthScale);
+            capsule.height = Mathf.Max(2.5f, shape.height * scale.y * tree.heightScale);
+            capsule.center = new Vector3(0f, capsule.height * 0.5f - 0.5f, 0f); // 땅속으로 조금 박아 경사에서도 빈틈 없게
+            count++;
+        }
+
+        return root;
     }
 
     // ---------------------------------------------------------------- 107일차: 섬 곳곳으로 옮기기
@@ -1616,6 +1665,139 @@ public static class WorldZoneBuilder
         }
 
         return made;
+    }
+
+    // 115일차: 흙길 갈림목 표지판 (큰길이 구역에 닿는 곳에서 마을 쪽 · 갈림길이 갈라지는 큰길 위에서 양쪽)
+    public const string JunctionPrefix = "junction_";
+    public const string VillageSignName = "마을";
+
+    public static string RefreshJunctionSigns(Scene scene) // 콘텐츠 자동 적용에서 사용 (다시 해도 같은 결과)
+    {
+        GameObject root = scene.GetRootGameObjects().FirstOrDefault(item => item.name == RootName);
+
+        if (root == null)
+        {
+            return "✗ 구역 묶음이 없어 갈림목 표지판을 세우지 못했습니다.";
+        }
+
+        if (!DetectIsland())
+        {
+            return "무인도가 아니어서 갈림목 표지판은 세우지 않았습니다.";
+        }
+
+        Transform parent = Group(root.transform, "Signposts");
+
+        foreach (Transform child in parent.Cast<Transform>().Where(IsJunctionSign).ToList())
+        {
+            Object.DestroyImmediate(child.gameObject);
+        }
+
+        return $"갈림목 표지판 {BuildJunctionSigns(parent)}개";
+    }
+
+    public static bool IsJunctionSign(Transform child) => child.name.StartsWith("Sign_" + JunctionPrefix, StringComparison.Ordinal) || child.name.StartsWith("SignLabel_" + JunctionPrefix, StringComparison.Ordinal);
+
+    public static int ExpectedJunctionSigns => IslandZoneLayout.Roads.Count(road => road.Kind == IslandZoneLayout.RoadKind.Main) + IslandZoneLayout.Roads.Count(road => road.Kind == IslandZoneLayout.RoadKind.Branch) * 2;
+
+    private static int BuildJunctionSigns(Transform parent)
+    {
+        List<Vector3> taken = parent.Cast<Transform>().Where(child => child.name.StartsWith("Sign_", StringComparison.Ordinal) && !IsJunctionSign(child)).Select(child => child.position).ToList();
+        int made = 0;
+
+        for (int road = 0; road < IslandZoneLayout.RoadCount; road++) // 구역 입구 : 마을로 돌아가는 큰길
+        {
+            IslandZoneLayout.Road info = IslandZoneLayout.Roads[road];
+
+            if (info.Kind == IslandZoneLayout.RoadKind.Main && JunctionSign(parent, taken, road, IslandZoneLayout.RoadLength(road) - 9f, -1, VillageSignName, $"{info.Id}_village"))
+            {
+                made++;
+            }
+        }
+
+        foreach (IslandZoneLayout.Road branch in IslandZoneLayout.Roads.Where(item => item.Kind == IslandZoneLayout.RoadKind.Branch)) // 갈림길이 갈라지는 큰길 위 : 구역 쪽 · 마을 쪽
+        {
+            if (!FindMainRoadAt(branch.Controls[0], out int road, out float at))
+            {
+                continue;
+            }
+
+            string zoneName = Zones.FirstOrDefault(zone => zone.Id == IslandZoneLayout.Roads[road].ZoneId)?.DisplayName ?? IslandZoneLayout.Roads[road].ZoneId;
+            made += JunctionSign(parent, taken, road, at + 10f, 1, zoneName, $"{branch.Id}_zone") ? 1 : 0;
+            made += JunctionSign(parent, taken, road, at - 10f, -1, VillageSignName, $"{branch.Id}_village") ? 1 : 0;
+        }
+
+        return made;
+    }
+
+    private static bool FindMainRoadAt(Vector3 point, out int road, out float at) // 갈림길이 시작하는 큰길과 그 위치
+    {
+        road = -1;
+        at = 0f;
+        float best = 6f;
+
+        for (int index = 0; index < IslandZoneLayout.RoadCount; index++)
+        {
+            if (IslandZoneLayout.Roads[index].Kind != IslandZoneLayout.RoadKind.Main)
+            {
+                continue;
+            }
+
+            float length = IslandZoneLayout.RoadLength(index);
+
+            for (float distance = 0f; distance <= length; distance += 1f)
+            {
+                Vector3 onRoad = IslandZoneLayout.RoadPoint(index, distance);
+                float gap = new Vector2(onRoad.x - point.x, onRoad.z - point.z).magnitude;
+
+                if (gap < best)
+                {
+                    best = gap;
+                    road = index;
+                    at = distance;
+                }
+            }
+        }
+
+        return road >= 0;
+    }
+
+    // 큰길 위 at 지점 오른쪽에 표지판 (direction +1 = 구역 쪽, -1 = 마을 쪽), 다른 표지판과 겹치면 뒤로 물림
+    private static bool JunctionSign(Transform parent, List<Vector3> taken, int road, float at, int direction, string target, string id)
+    {
+        float length = IslandZoneLayout.RoadLength(road);
+
+        for (int attempt = 0; attempt < 6; attempt++, at -= direction * 4f)
+        {
+            at = Mathf.Clamp(at, 6f, length - 6f);
+            Vector3 point = IslandZoneLayout.RoadPoint(road, at);
+            Vector3 along = IslandZoneLayout.RoadPoint(road, at + direction * 4f) - point;
+            along.y = 0f;
+            along.Normalize();
+            Vector3 position = point + Vector3.Cross(Vector3.up, along) * 2.6f;
+
+            if (taken.Any(other => new Vector2(other.x - position.x, other.z - position.z).magnitude < 4f))
+            {
+                continue;
+            }
+
+            position.y = GroundY(position);
+            GameObject post = Place(parent, "prop_signpost", position, Mathf.Atan2(along.x, along.z) * Mathf.Rad2Deg - 90f, 1f, PropCollider.None, 0);
+
+            if (post == null)
+            {
+                return false;
+            }
+
+            AddBox(post, new Vector3(0f, 0.9f, 0f), new Vector3(0.2f, 1.8f, 0.2f));
+            post.name = $"Sign_{JunctionPrefix}{id}";
+            int meters = Mathf.Max(10, Mathf.RoundToInt((direction > 0 ? length - at : at) / 10f) * 10);
+            TMP_Text label = CreateText(parent, $"SignLabel_{JunctionPrefix}{id}", $"<mark=#3A2A20C0 padding=\"16,16,6,6\">{target} → {meters}m</mark>", 3.2f, 7.5f);
+            label.transform.SetPositionAndRotation(position + Vector3.up * 2.35f, Quaternion.Euler(0f, Mathf.Atan2(along.x, along.z) * Mathf.Rad2Deg, 0f));
+            taken.Add(position);
+            return true;
+        }
+
+        return false;
     }
 
     // 석호 : 해안 구역이 떠난 자리에 작은 선착장과 작은 배
@@ -1769,6 +1951,8 @@ public static class WorldZoneBuilder
         {
             yield return zone.DisplayName + " →";
         }
+
+        yield return VillageSignName + " →"; // 115일차 갈림목 표지판
 
         yield return "마을";
     }

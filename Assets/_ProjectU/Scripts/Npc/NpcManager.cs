@@ -1,6 +1,7 @@
 using System.Collections.Generic; // 목록
 using System.Text; // 문자열
 using UnityEngine; // Unity 기본 기능
+using UnityEngine.AI; // 115일차: 서는 곳을 길 위로
 
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
 public sealed class NpcManager : MonoBehaviour // 90일차: 마을 NPC 일정 실행 (시간·요일·계절·날씨에 따라 위치 이동)
@@ -35,6 +36,9 @@ public sealed class NpcManager : MonoBehaviour // 90일차: 마을 NPC 일정 �
 
     private readonly Dictionary<string, NpcLocationPoint> lookup = new Dictionary<string, NpcLocationPoint>(); // 위치 검색
     private readonly Dictionary<string, int> slotCounter = new Dictionary<string, int>(); // 위치별 자리 수
+    private readonly List<Vector3> claimedStands = new List<Vector3>(); // 115일차: 이번에 정한 서는 곳 (가까운 두 위치의 자리가 겹치지 않게)
+    private const float MinimumStandGap = 0.9f; // 115일차: 서는 곳 사이 최소 거리 (m)
+    private const int StandRetries = 6; // 겹치면 다음 자리를 찾는 횟수
     private float timer; // 확인 타이머
     private int lastDay = -1; // 마지막 날짜
     private float lastHour; // 마지막 시각
@@ -115,6 +119,7 @@ public sealed class NpcManager : MonoBehaviour // 90일차: 마을 NPC 일정 �
         lastDay = day;
         lastHour = hour;
         slotCounter.Clear();
+        claimedStands.Clear();
 
         if (structureSearchTimer <= 0f || snap)
         {
@@ -136,9 +141,24 @@ public sealed class NpcManager : MonoBehaviour // 90일차: 마을 NPC 일정 �
                 continue;
             }
 
-            int slot = slotCounter.TryGetValue(point.LocationId, out int used) ? used : 0;
-            slotCounter[point.LocationId] = slot + 1;
             bool inside = point.IsHome && night;
+            int slot = NextSlot(point.LocationId);
+            ResolveStand(point, slot, out Vector3 position, out Quaternion facing);
+
+            if (!inside) // 115일차: 가까운 다른 위치(광장 · 카페 등)의 자리와 겹치면 다음 자리로 (길 위로 옮긴 자리로 비교)
+            {
+                position = SnapToPath(position);
+
+                for (int retry = 0; retry < StandRetries && IsStandTaken(position); retry++)
+                {
+                    slot = NextSlot(point.LocationId);
+                    ResolveStand(point, slot, out position, out facing);
+                    position = SnapToPath(position);
+                }
+
+                claimedStands.Add(position);
+            }
+
             string key = $"{plan.PlanId}|{stop.Hour}|{stop.LocationId}|{slot}|{inside}|{AnchorKey(point)}";
 
             if (!snap && key == agent.StopKey)
@@ -147,9 +167,36 @@ public sealed class NpcManager : MonoBehaviour // 90일차: 마을 NPC 일정 �
             }
 
             agent.StopKey = key;
-            ResolveStand(point, slot, out Vector3 position, out Quaternion facing);
             agent.GoTo(point, position, facing, stop.Activity, inside, snap);
         }
+    }
+
+    private int NextSlot(string locationId) // 위치의 다음 자리 번호
+    {
+        int slot = slotCounter.TryGetValue(locationId, out int used) ? used : 0;
+        slotCounter[locationId] = slot + 1;
+        return slot;
+    }
+
+    private static Vector3 SnapToPath(Vector3 position) // 서는 곳을 걸을 수 있는 곳으로 (NpcAgent.GoTo와 같은 방식 : 벽 · 나무 안이면 가장 가까운 길 위)
+    {
+        return NavMesh.SamplePosition(position, out NavMeshHit hit, 2.5f, NavMesh.AllAreas) ? hit.position : position;
+    }
+
+    private bool IsStandTaken(Vector3 position) // 115일차: 이미 정한 서는 곳과 너무 가까운지
+    {
+        foreach (Vector3 claimed in claimedStands)
+        {
+            float x = claimed.x - position.x;
+            float z = claimed.z - position.z;
+
+            if (x * x + z * z < MinimumStandGap * MinimumStandGap)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public bool IsSleepTime(float hour) // 집 안에서 자는 시간

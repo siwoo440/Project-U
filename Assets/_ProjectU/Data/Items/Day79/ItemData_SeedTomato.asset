@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: seed_tomato
   displayName: TOMATO SEEDS
+  koreanName: "\uD1A0\uB9C8\uD1A0 \uC528\uC557"
   description: Tomato seeds. Plant them in a farm plot in summer.
   icon: {fileID: 21300000, guid: 0aeb3a066626c7546863a05825c080a0, type: 3}
   itemCategory: 7
@@ -36,6 +37,11 @@ MonoBehaviour:
   coldResistancePercent: 0
   inventorySlotBonus: 0
   hungerRestoreAmount: 0
+  foodThirstRestoreAmount: 0
+  foodHealthRestoreAmount: 0
+  foodBuffType: 0
+  foodBuffStrength: 0
+  foodBuffDuration: 0
   thirstRestoreAmount: 0
   healthRestoreAmount: 0
   maximumStack: 99

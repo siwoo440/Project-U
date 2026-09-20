@@ -134,3 +134,57 @@ pair_bellamorta_noctia,,,,Banter2,A,대가는 까마귀 깃털 세 개예요.
 pair_bellamorta_noctia,,,,Banter2,B,…흥정은 여전하군요.
 pair_bellamorta_noctia,,,,Mention,A,숲의 마녀요? 흥미로운 분이죠. 경쟁 상대로는 나쁘지 않아요.
 pair_bellamorta_noctia,,,,Mention,B,벨라모르타의 물약은… 인정해요. 말투는 빼고요.
+pair_serena_seira,char_serena,char_seira,Partner,Pair,,
+pair_serena_seira,,,,Banter1,A,"세이라 씨… 이 문자, 어제 읽던 비문과 같은 손글씨예요."
+pair_serena_seira,,,,Banter1,B,…역시 그렇지? 같은 사람이 남긴 기록이야.
+pair_serena_seira,,,,Banter1,A,그럼 이 도서관 이야기와… 이어지는 거네요.
+pair_serena_seira,,,,Banter2,B,"세레나, 오늘은 어느 책을 펼칠까?"
+pair_serena_seira,,,,Banter2,A,마지막 장이 없는 책이요… 끝은 우리가 찾아야 하니까요.
+pair_serena_seira,,,,Banter2,B,…좋아. 끝을 찾는 건 늘 설레니까.
+pair_serena_seira,,,,Mention,A,세이라 씨는 독만큼 지식도 깊어요. 모르는 글자는… 늘 세이라 씨에게 물어요.
+pair_serena_seira,,,,Mention,B,세레나는 느리게 읽지만… 한 글자도 놓치지 않아. 같이 읽으면 마음이 편해.
+pair_arachne_chesca,char_arachne,char_chesca,Friend,Pair,,
+pair_arachne_chesca,,,,Banter1,A,"체스카, 상자 안쪽에 댈 천을 짜 봤어. 보드라운 실로."
+pair_arachne_chesca,,,,Banter1,B,…탁. 정말? 나 주려고?
+pair_arachne_chesca,,,,Banter1,A,응. 딱딱한 데서 자면 마음도 딱딱해지니까.
+pair_arachne_chesca,,,,Banter2,B,"…아라크네, 유적에서 반짝이는 실타래를 주웠어."
+pair_arachne_chesca,,,,Banter2,A,이건… 오래된 금실이네. 좋은 눈을 가졌구나.
+pair_arachne_chesca,,,,Banter2,B,탁— 칭찬… 기분 좋아. 뚜껑 조금 열게.
+pair_arachne_chesca,,,,Mention,A,체스카는 겁이 많지만 눈이 좋아. 유적에서 좋은 실을 자주 찾아 줘.
+pair_arachne_chesca,,,,Mention,B,아라크네가 상자 안에 깔 천을 짜 줬어. …폭신해. 탁.
+pair_verona_pipi,char_verona,char_pipi,Mentor,Pair,,
+pair_verona_pipi,,,,Banter1,B,베로나! 자동 물뿌리개 만들었어! 밭 전체에 한 번에 쫙!
+pair_verona_pipi,,,,Banter1,A,…지난번엔 밭이 호수가 됐지.
+pair_verona_pipi,,,,Banter1,B,"이, 이번엔 톱니를 하나 더 달았다고! 진짜야!"
+pair_verona_pipi,,,,Banter2,A,"피피, 흙을 한 줌 쥐어 봐라. 무엇이 느껴지지?"
+pair_verona_pipi,,,,Banter2,B,음… 축축하고… 돈 냄새는 안 나는데?
+pair_verona_pipi,,,,Banter2,A,그게 기다림의 냄새다. 천천히 배워라.
+pair_verona_pipi,,,,Mention,A,피피는 성급하지만 손재주는 좋다. 흙을 기다리는 법만 배우면 좋은 농부가 될 거야.
+pair_verona_pipi,,,,Mention,B,베로나는 잔소리가 많아! 그래도… 베로나 밭에서 난 감자는 제값 이상이야.
+pair_mireille_rize,char_mireille,char_rize,Friend,Pair,,
+pair_mireille_rize,,,,Banter1,B,"미레유, 양의 털 온도를 재 봤어요. 38.9도… 따뜻하네요."
+pair_mireille_rize,,,,Banter1,A,네… 안아 주면 더 따뜻해요. 해 보실래요?
+pair_mireille_rize,,,,Banter1,B,"안는 법은 기록에 없어요. …그래도, 해 볼게요."
+pair_mireille_rize,,,,Banter2,A,"리제 씨, 오늘은 기분이 어떠세요?"
+pair_mireille_rize,,,,Banter2,B,기분… 분석 중이에요. 여기 오면 수치가 조금 올라가요.
+pair_mireille_rize,,,,Banter2,A,후훗… 그건 '좋다'는 뜻이에요.
+pair_mireille_rize,,,,Mention,A,리제 씨는 양들 이름을 전부 기억해요… 저보다 더 잘요. 조금 부끄러웠어요.
+pair_mireille_rize,,,,Mention,B,미레유 곁에 있으면 제 회로 온도가 1도 올라가요. 확률상… 이게 '편안함'인 것 같아요.
+pair_lichel_dravia,char_lichel,char_dravia,Partner,Pair,,
+pair_lichel_dravia,,,,Banter1,A,"흥~ 드라비아, 유적에서 푸른 광석 가져왔어. 얼마 쳐 줄래?"
+pair_lichel_dravia,,,,Banter1,B,…불순물이 많군. 반값이다.
+pair_lichel_dravia,,,,Banter1,A,"반?! 흥, 다음엔 더 좋은 거 가져온다!"
+pair_lichel_dravia,,,,Banter2,B,"리첼, 지난번 광석으로 만든 칼날이다. 가져가라."
+pair_lichel_dravia,,,,Banter2,A,어? 공짜야? …웬일이래.
+pair_lichel_dravia,,,,Banter2,B,좋은 돌을 가져온 값이다. 다음에도 부탁하지.
+pair_lichel_dravia,,,,Mention,A,드라비아는 값을 깎는 데 선수야. 흥~ 그래도 감정은 정확해서 믿고 판다고.
+pair_lichel_dravia,,,,Mention,B,리첼의 눈은 쓸 만하다. 유적 깊은 곳 광석은 그 녀석이 제일 먼저 찾아.
+pair_milky_milu,char_milky,char_milu,Friend,Pair,,
+pair_milky_milu,,,,Banter1,B,밀키~ 우유 거품 또 만들어 줘~ 나랑 닮았잖아~
+pair_milky_milu,,,,Banter1,A,"음~ 미루, 거품에 손가락 넣으면 안 돼요~"
+pair_milky_milu,,,,Banter1,B,헤에~ 딱 한 번만~ 말랑말랑하잖아~
+pair_milky_milu,,,,Banter2,A,"미루, 오늘은 새로 만든 푸딩이 있어요~"
+pair_milky_milu,,,,Banter2,B,푸딩~?! 나보다 더 탱글탱글해~?
+pair_milky_milu,,,,Banter2,A,음~ 먹어 보고 알려 줘요~
+pair_milky_milu,,,,Mention,A,미루는 우유 거품을 제일 좋아해요~ 거품이 자기랑 닮았대요. 음~ 귀엽죠?
+pair_milky_milu,,,,Mention,B,밀키 가게 거품은 나랑 똑같이 말랑해~ 밀키도 말랑말랑 좋아~

@@ -11,6 +11,9 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
     [Tooltip("아이템 표시 이름.")] // Inspector 이름 설명
     [SerializeField] private string displayName = "NEW ITEM"; // 아이템 표시 이름
 
+    [Tooltip("115일차: 한글 이름 (NPC 대사 · 의뢰 · 선물 창에 씀, 비어 있으면 표시 이름). ItemKoreanNames.csv에서 자동 적용.")] // Inspector 한글 이름 설명
+    [SerializeField] private string koreanName = string.Empty; // 아이템 한글 이름
+
     [Tooltip("아이템 설명.")] // Inspector 설명 안내
     [TextArea(2, 4)] // 여러 줄 설명 입력
     [SerializeField] private string description = "NO DESCRIPTION"; // 아이템 설명
@@ -112,6 +115,7 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
 
     public string ItemId => itemId; // 아이템 ID 제공
     public string DisplayName => displayName; // 표시 이름 제공
+    public string KoreanName => string.IsNullOrWhiteSpace(koreanName) ? displayName : koreanName; // 115일차: 한글 이름 제공 (없으면 표시 이름)
     public string Description => description; // 아이템 설명 제공
     public Sprite Icon => icon; // 아이템 아이콘 제공
     public int MaximumStack => Mathf.Max(1, maximumStack); // 최대 중첩 수량 제공
@@ -162,6 +166,7 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
     {
         itemId = string.IsNullOrWhiteSpace(itemId) ? string.Empty : itemId.Trim(); // ID 양쪽 공백 제거
         displayName = string.IsNullOrWhiteSpace(displayName) ? string.Empty : displayName.Trim(); // 이름 양쪽 공백 제거
+        koreanName = string.IsNullOrWhiteSpace(koreanName) ? string.Empty : koreanName.Trim(); // 한글 이름 양쪽 공백 제거
         description = string.IsNullOrWhiteSpace(description) ? string.Empty : description.Trim(); // 설명 양쪽 공백 제거
         maximumStack = Mathf.Max(1, maximumStack); // 최대 중첩 최소값 적용
 

@@ -55,6 +55,18 @@ public sealed class MinimapCameraController : MonoBehaviour // 미니맵 전용 
     [Tooltip("지도에서는 Terrain 나무 · 풀을 그리지 않습니다 (숲 바닥 색으로 표시).")]
     [SerializeField] private bool hideTreesOnMap = true; // 지도에서 나무 숨김
 
+    [Header("Map Light")] // 115일차: 지도는 시간 · 날씨와 관계없이 한낮처럼 밝게
+    [Tooltip("지도 카메라가 그리는 동안만 햇빛 · 환경광을 한낮 값으로 바꿉니다 (밤 · 폭풍에도 지도가 어둡지 않게).")]
+    [SerializeField] private bool fixedMapLight = true; // 지도 전용 햇빛 사용
+    [Tooltip("지도용 햇빛 방향 (높이 · 좌우).")]
+    [SerializeField] private Vector3 mapSunEuler = new Vector3(55f, -30f, 0f); // 지도 햇빛 방향
+    [Tooltip("지도용 햇빛 밝기.")]
+    [SerializeField, Min(0f)] private float mapSunIntensity = 1f; // 지도 햇빛 밝기
+    [Tooltip("지도용 햇빛 색.")]
+    [SerializeField] private Color mapSunColor = new Color(1f, 0.97f, 0.9f, 1f); // 지도 햇빛 색
+    [Tooltip("지도용 환경광 색.")]
+    [SerializeField] private Color mapAmbientColor = new Color(0.56f, 0.59f, 0.64f, 1f); // 지도 환경광
+
     [Header("Rendering")] // 지도 렌더링 설정 묶음
     [Tooltip("지도 카메라가 표시할 월드 레이어입니다.")]
     [SerializeField] private LayerMask mapLayerMask = ~0; // 지도 카메라 렌더링 레이어
@@ -82,6 +94,13 @@ public sealed class MinimapCameraController : MonoBehaviour // 미니맵 전용 
     private Terrain hiddenTerrain; // 지도 카메라가 그리는 동안 나무를 숨긴 Terrain
     private bool fogHidden; // 지도 카메라가 그리는 동안 안개를 껐는지
     private bool savedFog; // 끄기 전 안개
+    private Light litSun; // 115일차: 지도 카메라가 그리는 동안 바꾼 햇빛
+    private Quaternion savedSunRotation; // 바꾸기 전 햇빛 방향
+    private float savedSunIntensity; // 바꾸기 전 햇빛 밝기
+    private Color savedSunColor; // 바꾸기 전 햇빛 색
+    private bool ambientChanged; // 환경광을 바꿨는지
+    private AmbientMode savedAmbientMode; // 바꾸기 전 환경광 방식
+    private Color savedAmbientColor; // 바꾸기 전 환경광 색
 
     public RenderTexture OutputTexture => runtimeRenderTexture; // UI에서 사용할 지도 RenderTexture 제공
     public MapCameraViewMode CurrentViewMode => currentViewMode; // 현재 지도 표시 범위 제공
@@ -123,6 +142,8 @@ public sealed class MinimapCameraController : MonoBehaviour // 미니맵 전용 
             RenderSettings.fog = false;
         }
 
+        UseMapLight();
+
         if (!hideTreesOnMap)
         {
             return;
@@ -145,12 +166,57 @@ public sealed class MinimapCameraController : MonoBehaviour // 미니맵 전용 
         }
     }
 
+    private void UseMapLight() // 115일차: 지도 카메라가 그리는 동안만 한낮 햇빛 · 환경광
+    {
+        if (!fixedMapLight)
+        {
+            return;
+        }
+
+        Light sun = RenderSettings.sun;
+
+        if (litSun == null && sun != null)
+        {
+            litSun = sun;
+            savedSunRotation = sun.transform.rotation;
+            savedSunIntensity = sun.intensity;
+            savedSunColor = sun.color;
+            sun.transform.rotation = Quaternion.Euler(mapSunEuler);
+            sun.intensity = mapSunIntensity;
+            sun.color = mapSunColor;
+        }
+
+        if (!ambientChanged)
+        {
+            ambientChanged = true;
+            savedAmbientMode = RenderSettings.ambientMode;
+            savedAmbientColor = RenderSettings.ambientLight;
+            RenderSettings.ambientMode = AmbientMode.Flat;
+            RenderSettings.ambientLight = mapAmbientColor;
+        }
+    }
+
     private void RestoreTrees()
     {
         if (fogHidden)
         {
             RenderSettings.fog = savedFog;
             fogHidden = false;
+        }
+
+        if (litSun != null) // 115일차: 햇빛 · 환경광 되돌림 (게임 화면은 시간 · 날씨 그대로)
+        {
+            litSun.transform.rotation = savedSunRotation;
+            litSun.intensity = savedSunIntensity;
+            litSun.color = savedSunColor;
+            litSun = null;
+        }
+
+        if (ambientChanged)
+        {
+            RenderSettings.ambientMode = savedAmbientMode;
+            RenderSettings.ambientLight = savedAmbientColor;
+            ambientChanged = false;
         }
 
         if (hiddenTerrain != null)

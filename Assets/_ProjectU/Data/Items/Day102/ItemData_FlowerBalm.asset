@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: medicine_flower_balm
   displayName: FLOWER BALM
+  koreanName: "\uAF43 \uD5A5\uC720"
   description: Aliune's soft pink balm pressed from healing petals. Soothes scrapes
     and bruises.
   icon: {fileID: 21300000, guid: d470e60c70f09dd48ad90c0b10b3e582, type: 3}

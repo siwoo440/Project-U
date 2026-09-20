@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: equipment_cloth_cap
   displayName: CLOTH CAP
+  koreanName: "\uCC9C \uBAA8\uC790"
   description: A SIMPLE CLOTH CAP
   icon: {fileID: 21300000, guid: 67efccf6fe4a38d4bba2517df3aae27a, type: 3}
   itemCategory: 3
@@ -36,6 +37,11 @@ MonoBehaviour:
   coldResistancePercent: 10
   inventorySlotBonus: 0
   hungerRestoreAmount: 0
+  foodThirstRestoreAmount: 0
+  foodHealthRestoreAmount: 0
+  foodBuffType: 0
+  foodBuffStrength: 0
+  foodBuffDuration: 0
   thirstRestoreAmount: 0
   healthRestoreAmount: 0
   maximumStack: 1

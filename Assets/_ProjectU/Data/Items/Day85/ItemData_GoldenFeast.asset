@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: food_golden_feast
   displayName: GOLDEN CARP FEAST
+  koreanName: "\uD669\uAE08 \uC789\uC5B4 \uB9CC\uCC2C"
   description: A rare golden carp grilled with vegetables. Light on your feet after
     eating.
   icon: {fileID: 21300000, guid: 046f25491fd144042bcb0683d9448ec5, type: 3}

@@ -328,7 +328,7 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
         ShowLine(NpcDialogueSelector.GiftReaction(character, result.Preference, result.Birthday));
         string birthdayText = result.Birthday ? "생일 선물 · " : string.Empty;
         Color color = result.Points > 0 ? ProjectUUIPalette.Accent : result.Points < 0 ? ProjectUUIPalette.Danger : ProjectUUIPalette.TextSecondary;
-        ShowMessage(StageMessage(character, $"{birthdayText}{item.DisplayName} · {NpcDialogueSelector.PreferenceName(result.Preference)} · 호감도 {result.Points:+0;-0;0}", before, relations.GetStage(character)), color);
+        ShowMessage(StageMessage(character, $"{birthdayText}{item.KoreanName} · {NpcDialogueSelector.PreferenceName(result.Preference)} · 호감도 {result.Points:+0;-0;0}", before, relations.GetStage(character)), color);
         RefreshHeader();
         return true;
     }
@@ -356,7 +356,7 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
         List<string> rewards = new List<string>();
         if (result.Coins > 0) rewards.Add($"코인 +{result.Coins}");
         if (result.Affinity > 0) rewards.Add($"호감도 +{result.Affinity}");
-        if (result.Item != null && result.ItemAmount > 0) rewards.Add($"{result.Item.DisplayName} x{result.ItemAmount}");
+        if (result.Item != null && result.ItemAmount > 0) rewards.Add($"{result.Item.KoreanName} x{result.ItemAmount}");
         ShowLine(string.IsNullOrEmpty(entry.Quest.ThanksLine) ? NpcDialogueSelector.Silent : entry.Quest.ThanksLine);
         ShowMessage(StageMessage(character, $"의뢰 완료 · {string.Join(" · ", rewards)}", result.Before, result.After), ProjectUUIPalette.Accent);
         RefreshHeader();
@@ -706,7 +706,7 @@ public sealed class NpcDialoguePopup : MonoBehaviour, IGameScenePopup // 91일�
 
         if (events != null && events.Complete(data.EventId, eventChoice, inventory, out NpcEventResult result))
         {
-            string item = result.Item != null && result.ItemAmount > 0 ? $" · {result.Item.DisplayName} x{result.ItemAmount}" : string.Empty;
+            string item = result.Item != null && result.ItemAmount > 0 ? $" · {result.Item.KoreanName} x{result.ItemAmount}" : string.Empty;
             Color color = result.Affinity >= 0 ? ProjectUUIPalette.Accent : ProjectUUIPalette.Danger;
             ShowMessage(StageMessage(character, $"{data.Title} · 호감도 {result.Affinity:+0;-0;0}{item}", result.Before, result.After), color);
         }

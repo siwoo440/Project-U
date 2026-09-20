@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: item_herbal_tea
   displayName: HERBAL TEA
+  koreanName: "\uC57D\uCD08\uCC28"
   description: A warm herbal drink that restores thirst.
   icon: {fileID: 21300000, guid: 55a1f6bd3f51282449895376cb0b35dd, type: 3}
   itemCategory: 4
@@ -36,6 +37,11 @@ MonoBehaviour:
   coldResistancePercent: 0
   inventorySlotBonus: 0
   hungerRestoreAmount: 0
+  foodThirstRestoreAmount: 0
+  foodHealthRestoreAmount: 0
+  foodBuffType: 0
+  foodBuffStrength: 0
+  foodBuffDuration: 0
   thirstRestoreAmount: 25
   healthRestoreAmount: 0
   maximumStack: 5

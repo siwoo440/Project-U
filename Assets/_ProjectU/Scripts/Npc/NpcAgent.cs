@@ -159,9 +159,47 @@ public sealed class NpcAgent : MonoBehaviour // 90일차: 마을 NPC 한 명 (�
             return;
         }
 
-        speech.text = $"<mark=#1C1C20D0 padding=\"14,14,6,6\">{text}</mark>";
+        speech.text = $"<mark=#1C1C20D0 padding=\"14,14,6,6\">{BalanceLines(text)}</mark>";
         speech.gameObject.SetActive(true);
         speechTimer = Mathf.Max(1f, seconds);
+    }
+
+    public const int SpeechLineChars = 20; // 115일차: 말풍선 한 줄 글자 수 (넘으면 비슷한 길이로 나눔)
+
+    public static string BalanceLines(string text, int lineChars = SpeechLineChars) // 115일차: 긴 대사를 띄어쓰기에서 비슷한 길이의 줄로 나눔
+    {
+        if (string.IsNullOrEmpty(text) || text.Length <= lineChars || text.IndexOf('\n') >= 0)
+        {
+            return text;
+        }
+
+        int lines = Mathf.Min(4, Mathf.CeilToInt(text.Length / (float)lineChars));
+        char[] characters = text.ToCharArray();
+        int lastBreak = -1;
+
+        for (int line = 1; line < lines; line++)
+        {
+            int target = text.Length * line / lines;
+            int found = -1;
+
+            for (int offset = 0; offset < lineChars && found < 0; offset++)
+            {
+                found = IsBreakable(characters, target - offset, lastBreak) ? target - offset : IsBreakable(characters, target + offset, lastBreak) ? target + offset : -1;
+            }
+
+            if (found >= 0)
+            {
+                characters[found] = '\n';
+                lastBreak = found;
+            }
+        }
+
+        return new string(characters);
+    }
+
+    private static bool IsBreakable(char[] characters, int index, int lastBreak) // 줄을 나눌 수 있는 띄어쓰기인지 (앞줄 바로 뒤 · 맨 끝 제외)
+    {
+        return index > lastBreak + 2 && index < characters.Length - 2 && characters[index] == ' ';
     }
 
     public void SetQuestMarker(NpcQuestMarker marker) // 93일차: 이름표 위 의뢰 표시 (! 전달 가능 · ? 진행 중)

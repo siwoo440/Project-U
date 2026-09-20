@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: equipment_cloth_shirt
   displayName: CLOTH SHIRT
+  koreanName: "\uCC9C \uC154\uCE20"
   description: A simple shirt made from cloth.
   icon: {fileID: 21300000, guid: e855c5343ab1e6547b7f2bce70e86aa9, type: 3}
   itemCategory: 3
@@ -36,6 +37,11 @@ MonoBehaviour:
   coldResistancePercent: 25
   inventorySlotBonus: 0
   hungerRestoreAmount: 0
+  foodThirstRestoreAmount: 0
+  foodHealthRestoreAmount: 0
+  foodBuffType: 0
+  foodBuffStrength: 0
+  foodBuffDuration: 0
   thirstRestoreAmount: 0
   healthRestoreAmount: 0
   maximumStack: 1

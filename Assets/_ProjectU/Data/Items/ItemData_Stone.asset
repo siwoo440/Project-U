@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: resource_stone
   displayName: STONE
+  koreanName: "\uB3CC"
   description: Basic crafting material gathered from rocks.
   icon: {fileID: 21300000, guid: 11ec87f2c0c4ba74497d217afb5ddb7d, type: 3}
   itemCategory: 0
@@ -36,6 +37,11 @@ MonoBehaviour:
   coldResistancePercent: 0
   inventorySlotBonus: 0
   hungerRestoreAmount: 0
+  foodThirstRestoreAmount: 0
+  foodHealthRestoreAmount: 0
+  foodBuffType: 0
+  foodBuffStrength: 0
+  foodBuffDuration: 0
   thirstRestoreAmount: 0
   healthRestoreAmount: 0
   maximumStack: 20

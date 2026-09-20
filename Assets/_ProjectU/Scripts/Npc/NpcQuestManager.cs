@@ -309,7 +309,7 @@ public sealed class NpcQuestManager : MonoBehaviour // 93일차: 마을 게시�
         {
             if (requirement?.Item != null)
             {
-                parts.Add($"{requirement.Item.DisplayName} {Mathf.Min(CountInBag(requirement.Item), requirement.Amount)}/{requirement.Amount}");
+                parts.Add($"{requirement.Item.KoreanName} {Mathf.Min(CountInBag(requirement.Item), requirement.Amount)}/{requirement.Amount}");
             }
         }
 
@@ -324,7 +324,7 @@ public sealed class NpcQuestManager : MonoBehaviour // 93일차: 마을 게시�
 
             if (requirement?.Item != null && have < requirement.Amount)
             {
-                return $"{requirement.Item.DisplayName} {requirement.Amount - have}개가 더 필요해요.";
+                return $"{requirement.Item.KoreanName} {requirement.Amount - have}개가 더 필요해요.";
             }
         }
 
@@ -337,7 +337,7 @@ public sealed class NpcQuestManager : MonoBehaviour // 93일차: 마을 게시�
 
         if (quest.RewardCoins > 0) parts.Add($"코인 {quest.RewardCoins}");
         if (quest.RewardAffinity > 0) parts.Add($"호감도 +{quest.RewardAffinity}");
-        if (quest.RewardItem != null) parts.Add($"{quest.RewardItem.DisplayName} x{quest.RewardItemAmount}");
+        if (quest.RewardItem != null) parts.Add($"{quest.RewardItem.KoreanName} x{quest.RewardItemAmount}");
         return string.Join(" · ", parts);
     }
 
@@ -425,7 +425,7 @@ public sealed class NpcQuestManager : MonoBehaviour // 93일차: 마을 게시�
 
             if (requirement?.Item == null || have < requirement.Amount)
             {
-                message = requirement?.Item != null ? $"{requirement.Item.DisplayName} {requirement.Amount - have}개가 더 필요해요." : "의뢰 데이터가 잘못되었어요.";
+                message = requirement?.Item != null ? $"{requirement.Item.KoreanName} {requirement.Amount - have}개가 더 필요해요." : "의뢰 데이터가 잘못되었어요.";
                 return false;
             }
         }

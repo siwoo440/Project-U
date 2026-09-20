@@ -75,6 +75,8 @@ public static class ContentIntegrationValidator
             ("섬 자연 · 들판", Feature(IslandNatureBuilder.Validate)),
             ("NPC 동료", Feature(NpcCompanionBuilder.Validate)),
             ("NPC 관계", Feature(NpcRelationBuilder.Validate)),
+            ("아이템 한글 이름", Feature(ItemKoreanNameBuilder.Validate)),
+            ("115일차 통합 점검", Feature(IntegrationPolishBuilder.Validate)),
             ("데이터 점검", Feature(DataAuditBuilder.Validate)),
             ("아이템 데이터 (ID 규칙)", ItemDataValidator.ValidateAllItemData),
             ("Game Data Registry", () => CountLoggedErrors(GameDataRegistryEditor.ValidateDefaultRegistry, details))

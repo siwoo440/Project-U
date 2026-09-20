@@ -1,0 +1,63 @@
+ItemID,KoreanName
+item_wood,나무
+resource_stone,돌
+item_plant_fiber,식물 섬유
+item_iron_ore,철광석
+item_arrow,화살
+item_animal_feed,가축 사료
+item_pearl,진주
+item_scrap_parts,고철 부품
+item_spider_silk,거미줄 실
+resource_worm_bait,지렁이 미끼
+resource_fish_trout,송어
+resource_fish_smelt,빙어
+resource_fish_crucian,붕어
+resource_fish_catfish,메기
+resource_fish_golden_carp,황금 잉어
+item_wild_mushroom,야생 버섯
+item_vitality_potion,활력 물약
+food_apple,사과
+food_berry,산딸기
+food_baked_apple,구운 사과
+food_potato,감자
+food_pumpkin,호박
+food_strawberry,딸기
+food_tomato,토마토
+food_winter_radish,겨울 무
+food_egg,달걀
+food_fried_egg,달걀 프라이
+food_warm_milk,따뜻한 우유
+food_veggie_omelette,채소 오믈렛
+food_baked_potato,구운 감자
+food_grilled_fish,생선구이
+food_mushroom_skewer,버섯 꼬치
+food_pumpkin_soup,호박 수프
+food_tomato_stew,토마토 스튜
+food_golden_feast,황금 잉어 만찬
+food_grilled_clams,조개구이
+food_inari_sushi,유부초밥
+food_seaweed_salad,해초 샐러드
+food_sweet_jelly,달콤한 젤리
+drink_water_bottle,물병
+drink_milk,우유
+item_herbal_tea,약초차
+medicine_bandage,붕대
+medicine_antidote,해독제
+medicine_desert_salve,사막 연고
+medicine_flower_balm,꽃 향유
+seed_potato,씨감자
+seed_pumpkin,호박 씨앗
+seed_strawberry,딸기 씨앗
+seed_tomato,토마토 씨앗
+seed_winter_radish,겨울 무 씨앗
+tool_axe,도끼
+tool_pickaxe,곡괭이
+tool_hoe,괭이
+tool_watering_can,물뿌리개
+tool_fishing_rod_basic,낚싯대
+item_iron_axe,철 도끼
+weapon_bow,활
+equipment_cloth_cap,천 모자
+equipment_cloth_shirt,천 셔츠
+equipment_work_hat,작업 모자
+equipment_small_backpack,작은 가방

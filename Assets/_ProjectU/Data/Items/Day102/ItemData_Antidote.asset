@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: medicine_antidote
   displayName: ANTIDOTE
+  koreanName: "\uD574\uB3C5\uC81C"
   description: Seira's bitter green remedy, brewed from forest mushrooms. Restores
     health.
   icon: {fileID: 21300000, guid: 8daee05387f5561498834a3a05fd01df, type: 3}

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: item_iron_axe
   displayName: IRON AXE
+  koreanName: "\uCCA0 \uB3C4\uB07C"
   description: A sturdy axe used for gathering wood and close combat.
   icon: {fileID: 21300000, guid: 14bdc7cdb8a159d4e988faf7464deac5, type: 3}
   itemCategory: 1
@@ -36,6 +37,11 @@ MonoBehaviour:
   coldResistancePercent: 0
   inventorySlotBonus: 0
   hungerRestoreAmount: 0
+  foodThirstRestoreAmount: 0
+  foodHealthRestoreAmount: 0
+  foodBuffType: 0
+  foodBuffStrength: 0
+  foodBuffDuration: 0
   thirstRestoreAmount: 0
   healthRestoreAmount: 0
   maximumStack: 1

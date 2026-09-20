@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: food_inari_sushi
   displayName: INARI SUSHI
+  koreanName: "\uC720\uBD80\uCD08\uBC25"
   description: Sweet fried tofu stuffed with rice, left over from the shrine offering.
     Warms you from inside.
   icon: {fileID: 21300000, guid: ee6daac0949d44f45b7772902b5e9c95, type: 3}

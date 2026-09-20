@@ -19,6 +19,11 @@
             "id": "114-npc-relations",
             "appliedAt": "2026-09-20 00:10",
             "ok": true
+        },
+        {
+            "id": "115-integration-polish",
+            "appliedAt": "2026-09-20 13:32",
+            "ok": true
         }
     ]
 }

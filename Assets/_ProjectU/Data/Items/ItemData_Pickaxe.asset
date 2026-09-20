@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: tool_pickaxe
   displayName: PICKAXE
+  koreanName: "\uACE1\uAD2D\uC774"
   description: A basic tool used for gathering stone.
   icon: {fileID: 21300000, guid: 155db0ef11a1f1243ac30c3476d5d55f, type: 3}
   itemCategory: 1
@@ -36,6 +37,11 @@ MonoBehaviour:
   coldResistancePercent: 0
   inventorySlotBonus: 0
   hungerRestoreAmount: 0
+  foodThirstRestoreAmount: 0
+  foodHealthRestoreAmount: 0
+  foodBuffType: 0
+  foodBuffStrength: 0
+  foodBuffDuration: 0
   thirstRestoreAmount: 0
   healthRestoreAmount: 0
   maximumStack: 1

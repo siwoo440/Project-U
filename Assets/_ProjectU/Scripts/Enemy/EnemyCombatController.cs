@@ -77,6 +77,12 @@ public sealed class EnemyCombatController : MonoBehaviour // 적 탐지와 시�
     private float attackPhaseStartedAt; // 현재 공격 단계 시작 시각
     private float attackPhaseEndsAt; // 현재 공격 단계 종료 시각
     private int attackSequenceCounter; // 적 공격 고유 번호 생성기
+    private NpcCompanionVitality companionTarget; // 115일차: 동료를 노리는 중이면 그 동료
+    private float nextCompanionCheckTime; // 플레이어 · 동료 중 누구를 노릴지 다시 정할 시각
+    private float focusUntil; // 맞으면 때린 쪽을 계속 노리는 시각
+    private const float CompanionCheckInterval = 0.5f; // 대상 다시 정하기 간격 (초)
+    private const float TargetSwitchMargin = 2f; // 이만큼 더 가까워야 대상을 바꿈 (m)
+    private const float FocusSeconds = 4f; // 때린 쪽을 노리는 시간 (초)
 
     public EnemyCombatState CurrentState => currentState; // 현재 적 전투 상태 제공
     public EnemyAttackPhase CurrentAttackPhase => currentAttackPhase; // 현재 적 공격 세부 단계 제공
@@ -84,6 +90,7 @@ public sealed class EnemyCombatController : MonoBehaviour // 적 탐지와 시�
     public Transform CurrentTarget => targetTransform; // 현재 플레이어 대상 제공
     public float CurrentTargetDistance => currentTargetDistance; // 현재 대상 거리 제공
     public bool HasTargetLock => hasTargetLock; // 플레이어 추적 여부 제공
+    public bool IsTargetingCompanion => companionTarget != null; // 115일차: 동료를 노리는 중인지 (테스트용)
     public bool IsAttackSequenceRunning => isAttackSequenceRunning; // 공격 절차 실행 여부 제공
     public float AttackPhaseNormalized => attackPhaseNormalized; // 현재 공격 단계 진행 비율 제공
     public float AttackCooldownRemaining => Mathf.Max(0f, nextAttackTime - Time.time); // 공격 대기시간 제공
@@ -184,6 +191,8 @@ public sealed class EnemyCombatController : MonoBehaviour // 적 탐지와 시�
             return; // 탐지와 공격 처리 일시 중단
         }
 
+        UpdateCompanionTarget(); // 115일차: 플레이어보다 가까운 동료도 노림
+
         if (!IsTargetValid()) // 현재 플레이어 대상 유효성 확인
         {
             TrySearchTarget(); // 설정 간격에 따른 플레이어 재검색
@@ -248,6 +257,7 @@ public sealed class EnemyCombatController : MonoBehaviour // 적 탐지와 시�
     public void AssignTarget(PlayerCombatDamageReceiver newTargetReceiver) // 외부 AI에서 플레이어 대상 지정
     {
         targetReceiver = newTargetReceiver; // 새로운 플레이어 피해 수신기 저장
+        companionTarget = null; // 115일차: 동료 대신 플레이어를 노림
         CacheTargetComponents(); // 플레이어 Transform과 Collider 저장
         hasTargetLock = IsTargetValid(); // 유효 대상 여부에 따라 추적 상태 적용
     }
@@ -256,6 +266,7 @@ public sealed class EnemyCombatController : MonoBehaviour // 적 탐지와 시�
     {
         CancelAttackSequenceInternal("대상 수동 해제", false); // 대상 해제 전 현재 공격 정리
         targetReceiver = null; // 플레이어 피해 수신기 참조 제거
+        companionTarget = null; // 115일차: 동료 대상 제거
         targetTransform = null; // 플레이어 Transform 참조 제거
         targetCollider = null; // 플레이어 Collider 참조 제거
         ClearTargetRuntime(); // 플레이어 추적 실행값 초기화
@@ -371,7 +382,9 @@ public sealed class EnemyCombatController : MonoBehaviour // 적 탐지와 시�
         AttackHitFrameReached?.Invoke(hitData); // 애니메이션과 효과용 공격 판정 시점 전달
         float validHitRange = combatData.AttackRange + combatData.AttackRangeGraceDistance; // 판정 허용 최대 거리 계산
         bool isWithinHitRange = currentTargetDistance <= validHitRange; // 판정 순간 공격 거리 확인
-        bool damageApplied = isWithinHitRange && targetReceiver.ReceiveDamage(hitData); // 거리와 무적 판정을 포함한 플레이어 피해 적용
+        bool damageApplied = isWithinHitRange && (companionTarget != null // 115일차: 동료를 노리면 동료 기력에 피해
+            ? companionTarget.ReceiveDamage(hitData) // 동료 피해 적용
+            : targetReceiver.ReceiveDamage(hitData)); // 거리와 무적 판정을 포함한 플레이어 피해 적용
         lastAttackHitApplied = damageApplied; // 마지막 공격 피해 적용 상태 저장
         AttackPerformed?.Invoke(hitData, damageApplied); // 공격 정보와 실제 피해 적용 결과 전달
 
@@ -509,6 +522,13 @@ public sealed class EnemyCombatController : MonoBehaviour // 적 탐지와 시�
 
     private void CacheTargetComponents() // 플레이어 피해 수신기에서 Transform과 Collider 저장
     {
+        if (companionTarget != null) // 115일차: 동료를 노리면 동료 위치 · 몸
+        {
+            targetTransform = companionTarget.transform; // 동료 Transform 저장
+            targetCollider = companionTarget.GetComponent<Collider>(); // 동료 몸 Collider 저장
+            return; // 동료 대상 저장 완료
+        }
+
         if (targetReceiver == null) // 플레이어 피해 수신기 존재 확인
         {
             targetTransform = null; // 플레이어 Transform 참조 제거
@@ -527,10 +547,66 @@ public sealed class EnemyCombatController : MonoBehaviour // 적 탐지와 시�
 
     private bool IsTargetValid() // 현재 플레이어 대상 사용 가능 여부 계산
     {
+        if (companionTarget != null) // 115일차: 동료를 노리는 중
+        {
+            return companionTarget.IsAlive && targetTransform != null; // 동료 기력이 남아 있는지 확인
+        }
+
+        return IsPlayerValid() // 플레이어 대상 확인
+            && targetTransform != null; // 플레이어 Transform 존재 확인
+    }
+
+    private bool IsPlayerValid() // 플레이어 피해 수신기 사용 가능 여부
+    {
         return targetReceiver != null // 플레이어 피해 수신기 존재 확인
             && targetReceiver.isActiveAndEnabled // 플레이어 피해 수신기 활성 상태 확인
-            && targetReceiver.IsAlive // 플레이어 생존 상태 확인
-            && targetTransform != null; // 플레이어 Transform 존재 확인
+            && targetReceiver.IsAlive; // 플레이어 생존 상태 확인
+    }
+
+    private void UpdateCompanionTarget() // 115일차: 플레이어와 동료 중 더 가까운 쪽 노리기 (맞으면 때린 쪽을 잠시 계속)
+    {
+        if (companionTarget != null && !companionTarget.IsAlive) // 동료가 지쳐서 돌아갔거나 헤어짐
+        {
+            SetCompanionTarget(null); // 플레이어로 돌아감
+        }
+
+        if (Time.time < nextCompanionCheckTime || Time.time < focusUntil) // 다시 정할 때가 아니거나 때린 쪽을 노리는 중
+        {
+            return; // 대상 유지
+        }
+
+        nextCompanionCheckTime = Time.time + CompanionCheckInterval; // 다음 확인 시각
+        NpcCompanionVitality candidate = NpcCompanionVitality.Active; // 지금 동료
+
+        if (candidate == null || !candidate.IsAlive) // 동료 없음
+        {
+            SetCompanionTarget(null); // 플레이어만 노림
+            return; // 확인 종료
+        }
+
+        float toCompanion = GetPlanarDistance(transform.position, candidate.transform.position); // 동료까지 거리
+        float toPlayer = IsPlayerValid() ? GetPlanarDistance(transform.position, targetReceiver.transform.position) : float.PositiveInfinity; // 플레이어까지 거리
+
+        if (companionTarget == null && toCompanion <= combatData.DetectionRange && toCompanion + TargetSwitchMargin < toPlayer) // 동료가 확실히 더 가까움
+        {
+            SetCompanionTarget(candidate); // 동료를 노림
+        }
+        else if (companionTarget != null && (toCompanion > combatData.LoseTargetRange || toPlayer + TargetSwitchMargin < toCompanion)) // 동료가 멀어지거나 플레이어가 더 가까움
+        {
+            SetCompanionTarget(null); // 플레이어를 노림
+        }
+    }
+
+    private void SetCompanionTarget(NpcCompanionVitality companion) // 115일차: 노릴 동료 바꾸기 (null = 플레이어)
+    {
+        if (companionTarget == companion) // 바뀌지 않음
+        {
+            return; // 처리 생략
+        }
+
+        CancelAttackSequenceInternal("대상 변경", false); // 준비 중인 공격 취소
+        companionTarget = companion; // 새 대상 저장
+        CacheTargetComponents(); // 대상 Transform과 Collider 다시 저장
     }
 
     private void RotateToTarget() // 적을 플레이어 수평 방향으로 부드럽게 회전
@@ -560,6 +636,13 @@ public sealed class EnemyCombatController : MonoBehaviour // 적 탐지와 시�
         if (attackerPlayer != null) // 플레이어 공격으로 피격되었는지 확인
         {
             AssignTarget(attackerPlayer); // 공격한 플레이어를 즉시 추적 대상으로 지정
+            focusUntil = Time.time + FocusSeconds; // 115일차: 잠시 플레이어를 계속 노림
+        }
+        else if (hitData.Attacker != null && hitData.Attacker.TryGetComponent(out NpcCompanionVitality attackerCompanion) && attackerCompanion.IsAlive) // 115일차: 동료에게 맞음
+        {
+            SetCompanionTarget(attackerCompanion); // 때린 동료를 노림
+            hasTargetLock = true; // 바로 추적
+            focusUntil = Time.time + FocusSeconds; // 잠시 동료를 계속 노림
         }
 
         hitReactionEndsAt = Time.time + combatData.HitReactionDuration; // 피격 상태 종료 시각 저장
@@ -601,6 +684,12 @@ public sealed class EnemyCombatController : MonoBehaviour // 적 탐지와 시�
 
     private void ClearTargetRuntime() // 플레이어 추적 실행 상태 초기화
     {
+        if (companionTarget != null) // 115일차: 동료를 놓치면 다시 플레이어 기준
+        {
+            companionTarget = null; // 동료 대상 제거
+            CacheTargetComponents(); // 플레이어 Transform과 Collider 다시 저장
+        }
+
         hasTargetLock = false; // 플레이어 추적 상태 해제
         currentTargetDistance = float.PositiveInfinity; // 대상 거리를 무한대로 초기화
     }

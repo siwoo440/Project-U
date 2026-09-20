@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: seed_potato
   displayName: POTATO SEEDS
+  koreanName: "\uC528\uAC10\uC790"
   description: Seed potatoes. Plant them in a farm plot in spring.
   icon: {fileID: 21300000, guid: 041bcfd071bbc424685683bca164d29d, type: 3}
   itemCategory: 7
@@ -36,6 +37,11 @@ MonoBehaviour:
   coldResistancePercent: 0
   inventorySlotBonus: 0
   hungerRestoreAmount: 0
+  foodThirstRestoreAmount: 0
+  foodHealthRestoreAmount: 0
+  foodBuffType: 0
+  foodBuffStrength: 0
+  foodBuffDuration: 0
   thirstRestoreAmount: 0
   healthRestoreAmount: 0
   maximumStack: 99

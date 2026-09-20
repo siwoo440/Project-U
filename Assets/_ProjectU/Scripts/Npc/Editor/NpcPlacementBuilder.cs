@@ -818,22 +818,12 @@ public static class NpcPlacementBuilder
                         continue;
                     }
 
-                    NavMeshPath path = new NavMeshPath();
-
                     if (!NavMesh.SamplePosition(start.transform.position, out NavMeshHit a, 2f, NavMesh.AllAreas)
                         || !NavMesh.SamplePosition(end.transform.position, out NavMeshHit b, 2f, NavMesh.AllAreas)
-                        || !NavMesh.CalculatePath(a.position, b.position, NavMesh.AllAreas, path)
-                        || path.status != NavMeshPathStatus.PathComplete)
+                        || !TryWalk(a.position, b.position, out float length))
                     {
                         error($"{character.CharacterId} : '{plan.PlanId}' {from.LocationId} → {to.LocationId} 걸어갈 길이 없습니다.");
                         continue;
-                    }
-
-                    float length = 0f;
-
-                    for (int corner = 1; corner < path.corners.Length; corner++)
-                    {
-                        length += Vector3.Distance(path.corners[corner - 1], path.corners[corner]);
                     }
 
                     float hours = agent.EstimateTravelSeconds(length) / secondsPerHour;
@@ -855,5 +845,44 @@ public static class NpcPlacementBuilder
         }
 
         report.AppendLine($"일정 이동 {legs}구간 확인 (게임 1시간 = {secondsPerHour:0}초, 가장 먼 이동 {longest:0.0}시간 : {longestText})");
+    }
+
+    // 115일차: 나무 자리가 빠진 NavMesh는 조각이 많아 섬 끝에서 끝까지는 한 번에 길을 다 못 찾는다 (부분 경로).
+    // 게임의 NPC처럼(NpcAgent 107일차) 부분 경로 끝에서 이어서 다시 찾아 끝까지 가는지 본다 (최대 6번).
+    private const int TravelRepaths = 6;
+
+    private static bool TryWalk(Vector3 from, Vector3 to, out float length)
+    {
+        length = 0f;
+        NavMeshPath path = new NavMeshPath();
+
+        for (int repath = 0; repath <= TravelRepaths; repath++)
+        {
+            if (!NavMesh.CalculatePath(from, to, NavMesh.AllAreas, path) || path.corners.Length == 0)
+            {
+                return false;
+            }
+
+            for (int corner = 1; corner < path.corners.Length; corner++)
+            {
+                length += Vector3.Distance(path.corners[corner - 1], path.corners[corner]);
+            }
+
+            if (path.status == NavMeshPathStatus.PathComplete)
+            {
+                return true;
+            }
+
+            Vector3 reached = path.corners[path.corners.Length - 1];
+
+            if (path.status != NavMeshPathStatus.PathPartial || Vector3.Distance(reached, from) < 1f)
+            {
+                return false; // 더 나아가지 못함
+            }
+
+            from = reached;
+        }
+
+        return false;
     }
 }

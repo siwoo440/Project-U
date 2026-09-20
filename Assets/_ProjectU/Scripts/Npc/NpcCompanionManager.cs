@@ -16,6 +16,10 @@ public sealed class NpcCompanionSaveData // 109일차: 동료 저장
     public int gatherDay; // 채집 날짜
     [Tooltip("그날 찾아 준 횟수.")]
     public int gathered; // 그날 채집 횟수
+    [Tooltip("115일차: 기력이 다 떨어져 돌아간 동료 (그날은 다시 함께 가지 않음).")]
+    public string tiredId = string.Empty; // 지친 동료 ID
+    [Tooltip("지쳐서 돌아간 날.")]
+    public int tiredDay = -1; // 지친 날
 }
 
 [DisallowMultipleComponent] // 동일 컴포넌트 중복 방지
@@ -25,6 +29,8 @@ public sealed class NpcCompanionManager : MonoBehaviour // 109일차: 동료 (�
     public const string NightMessage = "밤이 늦었어요. 내일 함께 가요."; // 밤에는 합류 안 함
     public const string JoinedMessage = "동료가 되었어요"; // 합류 알림
     public const string LeftMessage = "동료가 돌아갔어요"; // 헤어짐 알림
+    public const string TiredMessage = "오늘은 너무 지쳤어요. 내일 다시 함께 가요."; // 115일차: 지쳐서 돌아간 날
+    public const string ExhaustedText = "지쳐서 돌아갔어요"; // 115일차: 기력이 다 떨어짐 알림
 
     [Tooltip("동료 정보 (25번 메뉴가 연결).")]
     [SerializeField] private NpcCompanionBook book; // 동료 정보
@@ -56,6 +62,7 @@ public sealed class NpcCompanionManager : MonoBehaviour // 109일차: 동료 (�
     private int lastDay = -1; // 지난 날
     private int attackSequence = 900000; // 공격 번호 (적 중복 피해 방지)
     private NpcCompanionSaveData state = new NpcCompanionSaveData(); // 저장 상태
+    private NpcCompanionVitality vitality; // 115일차: 지금 동료의 기력
 
     public static NpcCompanionManager Instance { get; private set; } // Scene 관리자
     public NpcCompanionBook Book => book; // 동료 정보
@@ -66,6 +73,8 @@ public sealed class NpcCompanionManager : MonoBehaviour // 109일차: 동료 (�
     public int HealCount { get; private set; } // 치유 횟수 (테스트용)
     public int GatherCount => state.gathered; // 오늘 채집 횟수 (테스트용)
     public float HoursTogether => state.hoursTogether; // 함께한 시간 (테스트용)
+    public NpcCompanionVitality Vitality => companion != null ? vitality : null; // 115일차: 지금 동료의 기력
+    public int ExhaustedCount { get; private set; } // 지쳐서 돌아간 횟수 (테스트용)
 
     public event Action<NpcAgent> CompanionChanged; // 동료가 바뀜 (없으면 null)
 
@@ -149,6 +158,12 @@ public sealed class NpcCompanionManager : MonoBehaviour // 109일차: 동료 (�
             return false;
         }
 
+        if (state.tiredDay == manager.CurrentDay && state.tiredId == agent.CharacterId) // 115일차: 지쳐서 돌아간 날은 쉼
+        {
+            reason = TiredMessage;
+            return false;
+        }
+
         reason = string.Empty;
         return true;
     }
@@ -162,10 +177,11 @@ public sealed class NpcCompanionManager : MonoBehaviour // 109일차: 동료 (�
 
         companion = agent;
         entry = EntryFor(agent.Character);
-        state = new NpcCompanionSaveData { companionId = agent.CharacterId, affinityDay = state.affinityDay, affinityGained = state.affinityGained, gatherDay = state.gatherDay, gathered = state.gathered };
+        state = new NpcCompanionSaveData { companionId = agent.CharacterId, affinityDay = state.affinityDay, affinityGained = state.affinityGained, gatherDay = state.gatherDay, gathered = state.gathered, tiredId = state.tiredId, tiredDay = state.tiredDay };
         lastHour = -1f;
         actionTimer = 1f;
         agent.BeginFollow(player, "동행");
+        StartVitality(agent);
         message = entry.joinLine;
         CompanionChanged?.Invoke(companion);
         return true;
@@ -182,6 +198,7 @@ public sealed class NpcCompanionManager : MonoBehaviour // 109일차: 동료 (�
         string line = night ? entry.nightLine : entry.leaveLine;
         leaving.SetEngageTarget(false, Vector3.zero);
         leaving.EndFollow();
+        StopVitality();
 
         if (speak)
         {
@@ -193,6 +210,45 @@ public sealed class NpcCompanionManager : MonoBehaviour // 109일차: 동료 (�
         state.companionId = string.Empty;
         state.hoursTogether = 0f;
         CompanionChanged?.Invoke(null);
+    }
+
+    public void HandleExhausted(NpcAgent agent) // 115일차: 기력이 다 떨어지면 그날은 지쳐서 집으로 (NpcCompanionVitality)
+    {
+        NpcManager npcManager = NpcManager.Instance;
+
+        if (agent == null || agent != companion || npcManager == null)
+        {
+            return;
+        }
+
+        state.tiredId = agent.CharacterId;
+        state.tiredDay = npcManager.CurrentDay;
+        ExhaustedCount++;
+        CombatDamagePopup.SpawnText(agent.transform.position + Vector3.up * 2.6f, $"{agent.DisplayName} · {ExhaustedText}", new Color(1f, 0.72f, 0.4f, 1f), 1.6f);
+        Dismiss(false);
+    }
+
+    private void StartVitality(NpcAgent agent) // 115일차: 동료 기력 켜기 (적이 노릴 수 있음)
+    {
+        StopVitality();
+        vitality = agent.GetComponent<NpcCompanionVitality>();
+
+        if (vitality == null)
+        {
+            vitality = agent.gameObject.AddComponent<NpcCompanionVitality>();
+        }
+
+        vitality.Begin(NpcCompanionVitality.MaximumFor(entry.role));
+    }
+
+    private void StopVitality() // 동료 기력 끄기
+    {
+        if (vitality != null)
+        {
+            vitality.End();
+        }
+
+        vitality = null;
     }
 
     // ---------------------------------------------------------------- 매 프레임
@@ -362,8 +418,8 @@ public sealed class NpcCompanionManager : MonoBehaviour // 109일차: 동료 (�
         }
 
         state.gathered++;
-        companion.Say(entry.roleLine.Replace("{item}", item.DisplayName), 3f);
-        CombatDamagePopup.SpawnText(player.position + Vector3.up * 2.2f, $"+{amount} {item.DisplayName}", new Color(0.75f, 0.92f, 0.6f, 1f), 1.8f);
+        companion.Say(entry.roleLine.Replace("{item}", item.KoreanName), 3f); // 115일차: 한글 이름
+        CombatDamagePopup.SpawnText(player.position + Vector3.up * 2.2f, $"+{amount} {item.KoreanName}", new Color(0.75f, 0.92f, 0.6f, 1f), 1.8f);
     }
 
     private void UpdateHealer() // 치유 : 플레이어 체력이 낮으면 회복 (대기 시간)
@@ -387,7 +443,7 @@ public sealed class NpcCompanionManager : MonoBehaviour // 109일차: 동료 (�
     public NpcCompanionSaveData CaptureSaveData()
     {
         state.companionId = companion != null ? companion.CharacterId : string.Empty;
-        return new NpcCompanionSaveData { companionId = state.companionId, hoursTogether = state.hoursTogether, affinityDay = state.affinityDay, affinityGained = state.affinityGained, gatherDay = state.gatherDay, gathered = state.gathered };
+        return new NpcCompanionSaveData { companionId = state.companionId, hoursTogether = state.hoursTogether, affinityDay = state.affinityDay, affinityGained = state.affinityGained, gatherDay = state.gatherDay, gathered = state.gathered, tiredId = state.tiredId, tiredDay = state.tiredDay };
     }
 
     public void ApplySaveData(NpcCompanionSaveData data) // 불러오기 (동료가 있으면 다시 따라다님)
@@ -399,7 +455,7 @@ public sealed class NpcCompanionManager : MonoBehaviour // 109일차: 동료 (�
             return;
         }
 
-        state = new NpcCompanionSaveData { affinityDay = data.affinityDay, affinityGained = data.affinityGained, gatherDay = data.gatherDay, gathered = data.gathered };
+        state = new NpcCompanionSaveData { affinityDay = data.affinityDay, affinityGained = data.affinityGained, gatherDay = data.gatherDay, gathered = data.gathered, tiredId = data.tiredId ?? string.Empty, tiredDay = data.tiredDay };
         NpcManager manager = NpcManager.Instance;
         NpcAgent agent = manager != null && !string.IsNullOrEmpty(data.companionId) ? manager.FindAgent(data.companionId) : null;
 
@@ -414,6 +470,7 @@ public sealed class NpcCompanionManager : MonoBehaviour // 109일차: 동료 (�
         state.hoursTogether = Mathf.Max(0f, data.hoursTogether);
         lastHour = -1f;
         agent.BeginFollow(player, "동행");
+        StartVitality(agent);
         CompanionChanged?.Invoke(companion);
     }
 
@@ -425,6 +482,7 @@ public sealed class NpcCompanionManager : MonoBehaviour // 109일차: 동료 (�
             companion.EndFollow();
         }
 
+        StopVitality();
         companion = null;
         entry = null;
         state = new NpcCompanionSaveData();

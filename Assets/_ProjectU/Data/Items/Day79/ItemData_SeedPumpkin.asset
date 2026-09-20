@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: seed_pumpkin
   displayName: PUMPKIN SEEDS
+  koreanName: "\uD638\uBC15 \uC528\uC557"
   description: Pumpkin seeds. Plant them in a farm plot in autumn.
   icon: {fileID: 21300000, guid: 094f5956047e2414794606d3a138d60e, type: 3}
   itemCategory: 7
@@ -36,6 +37,11 @@ MonoBehaviour:
   coldResistancePercent: 0
   inventorySlotBonus: 0
   hungerRestoreAmount: 0
+  foodThirstRestoreAmount: 0
+  foodHealthRestoreAmount: 0
+  foodBuffType: 0
+  foodBuffStrength: 0
+  foodBuffDuration: 0
   thirstRestoreAmount: 0
   healthRestoreAmount: 0
   maximumStack: 99

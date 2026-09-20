@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: food_fried_egg
   displayName: FRIED EGGS
+  koreanName: "\uB2EC\uAC40 \uD504\uB77C\uC774"
   description: Two sunny-side-up eggs. A quick breakfast that keeps you going.
   icon: {fileID: 21300000, guid: ec1043ee1f438e44a9df836fa241387c, type: 3}
   itemCategory: 2

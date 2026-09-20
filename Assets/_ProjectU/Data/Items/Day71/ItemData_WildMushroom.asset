@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: item_wild_mushroom
   displayName: WILD MUSHROOM
+  koreanName: "\uC57C\uC0DD \uBC84\uC12F"
   description: A common edible mushroom found in the wild.
   icon: {fileID: 21300000, guid: 9714c836ff313804a90b6c6ce672d0a7, type: 3}
   itemCategory: 2
@@ -36,6 +37,11 @@ MonoBehaviour:
   coldResistancePercent: 0
   inventorySlotBonus: 0
   hungerRestoreAmount: 15
+  foodThirstRestoreAmount: 0
+  foodHealthRestoreAmount: 0
+  foodBuffType: 0
+  foodBuffStrength: 0
+  foodBuffDuration: 0
   thirstRestoreAmount: 0
   healthRestoreAmount: 0
   maximumStack: 10

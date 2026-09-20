@@ -18,7 +18,7 @@ public sealed class NpcQuestItemUI : MonoBehaviour // 93일차: 게시판 상세
         bool enough = have >= need;
         icon.sprite = item != null ? item.Icon : null;
         icon.color = icon.sprite != null ? Color.white : ItemIconUtility.GetFallbackColor(item != null ? item.ItemCategory : ItemCategory.CraftingMaterial);
-        nameText.text = item != null ? item.DisplayName : "?";
+        nameText.text = item != null ? item.KoreanName : "?";
         countText.text = $"{Mathf.Min(have, need)} / {need}";
         countText.color = enough ? ProjectUUIPalette.Teal : ProjectUUIPalette.TextSecondary;
         background.color = enough ? new Color(0.31f, 0.76f, 0.69f, 0.16f) : new Color(1f, 1f, 1f, 0.05f);

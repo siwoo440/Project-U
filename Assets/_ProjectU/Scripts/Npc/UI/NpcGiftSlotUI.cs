@@ -36,7 +36,7 @@ public sealed class NpcGiftSlotUI : MonoBehaviour // 91일차: 선물 목록 한
 
         if (nameText != null)
         {
-            nameText.text = item != null ? item.DisplayName : string.Empty;
+            nameText.text = item != null ? item.KoreanName : string.Empty;
         }
 
         if (countText != null)

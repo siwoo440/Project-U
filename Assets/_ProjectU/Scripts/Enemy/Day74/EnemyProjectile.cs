@@ -146,8 +146,9 @@ public sealed class EnemyProjectile : MonoBehaviour
             hit.collider.GetComponentInParent<PlayerCombatDamageReceiver>();
 
         bool damageApplied = false;
+        NpcCompanionVitality companion = playerReceiver == null ? hit.collider.GetComponentInParent<NpcCompanionVitality>() : null; // 115일차: 동료도 맞음
 
-        if (playerReceiver != null)
+        if (playerReceiver != null || (companion != null && companion.IsAlive))
         {
             CombatHitData hitData = new CombatHitData(
                 attacker,
@@ -161,7 +162,7 @@ public sealed class EnemyProjectile : MonoBehaviour
                 attackSequenceId,
                 0);
 
-            damageApplied = playerReceiver.ReceiveDamage(hitData);
+            damageApplied = playerReceiver != null ? playerReceiver.ReceiveDamage(hitData) : companion.ReceiveDamage(hitData);
         }
 
         if (logHitResults)

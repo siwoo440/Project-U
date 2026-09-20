@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: food_pumpkin_soup
   displayName: PUMPKIN SOUP
+  koreanName: "\uD638\uBC15 \uC218\uD504"
   description: A creamy pumpkin soup that warms you from the inside.
   icon: {fileID: 21300000, guid: 6e5ab706c9644db49bdbeef07a1a7cd6, type: 3}
   itemCategory: 2

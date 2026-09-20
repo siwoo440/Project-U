@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: food_mushroom_skewer
   displayName: MUSHROOM SKEWER
+  koreanName: "\uBC84\uC12F \uAF2C\uCE58"
   description: Wild mushrooms grilled on a stick. Keeps you full for a while.
   icon: {fileID: 21300000, guid: e81202d3b34e4d744875e7a4a8da4989, type: 3}
   itemCategory: 2

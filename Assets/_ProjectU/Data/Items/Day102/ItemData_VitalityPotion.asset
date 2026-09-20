@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: item_vitality_potion
   displayName: VITALITY POTION
+  koreanName: "\uD65C\uB825 \uBB3C\uC57D"
   description: Bellamorta's rose-red tonic. Heals wounds and keeps your stamina coming
     back fast.
   icon: {fileID: 21300000, guid: fa68b5dad601dc946807097a860cd55d, type: 3}
