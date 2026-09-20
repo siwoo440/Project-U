@@ -18,6 +18,24 @@ MonoBehaviour:
     \uD30C\uAD34\uC801\uC778 \uB9C8\uBC95"
   defaultPreference: 2
   entries:
+  - item: {fileID: 11400000, guid: f1b4de51110705549b40745a46c392e0, type: 2}
+    preference: 0
+    source: tag:forage
+  - item: {fileID: 11400000, guid: d8ea0d5f34558ce4aa110093993eac02, type: 2}
+    preference: 0
+    source: tag:forage
+  - item: {fileID: 11400000, guid: 3da74bc0275b7f44e8e60aaf3c50fd55, type: 2}
+    preference: 0
+    source: tag:forage
+  - item: {fileID: 11400000, guid: 31a009e0b5b876a488ac99bc876ba81a, type: 2}
+    preference: 0
+    source: tag:forage
+  - item: {fileID: 11400000, guid: bcb16687a11189c44975478eab580b78, type: 2}
+    preference: 0
+    source: tag:forage
+  - item: {fileID: 11400000, guid: 3e6b40c3781787d47bd8b6987d24cd69, type: 2}
+    preference: 0
+    source: tag:forage
   - item: {fileID: 11400000, guid: 39da177e19117c74f96b0718ec760b34, type: 2}
     preference: 0
     source: weapon_bow

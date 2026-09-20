@@ -20,6 +20,9 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 361f6079362891a468aae059667ddd1c, type: 2}
     preference: 0
     source: item_herbal_tea
+  - item: {fileID: 11400000, guid: bcb16687a11189c44975478eab580b78, type: 2}
+    preference: 0
+    source: resource_herb_leaf
   - item: {fileID: 11400000, guid: ced6962cfb3b9a249aadbf41f4f53d78, type: 2}
     preference: 1
     source: tag:cloth

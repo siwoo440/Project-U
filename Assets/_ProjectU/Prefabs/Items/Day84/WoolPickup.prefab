@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 7388823139730924163}
+  - component: {fileID: 6924937378226261750}
   m_Layer: 3
   m_Name: WoolPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 8722970151862759645}
+  - {fileID: 3904674130635599527}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &7388823139730924163
+--- !u!114 &6924937378226261750
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: resource_wool
-  generatedVisual: {fileID: 8176087799619773402}
+  generatedVisual: {fileID: 4488201812671839648}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &5294345908414247233
+--- !u!1001 &452414681621901115
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a91a3ef62b1aff4b8ea49bebf5137e2, type: 3}
---- !u!1 &8176087799619773402 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4039173635493008027, guid: 8a91a3ef62b1aff4b8ea49bebf5137e2, type: 3}
-  m_PrefabInstance: {fileID: 5294345908414247233}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8722970151862759645 stripped
+--- !u!4 &3904674130635599527 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3492397125450301852, guid: 8a91a3ef62b1aff4b8ea49bebf5137e2, type: 3}
-  m_PrefabInstance: {fileID: 5294345908414247233}
+  m_PrefabInstance: {fileID: 452414681621901115}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4488201812671839648 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4039173635493008027, guid: 8a91a3ef62b1aff4b8ea49bebf5137e2, type: 3}
+  m_PrefabInstance: {fileID: 452414681621901115}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

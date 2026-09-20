@@ -90,6 +90,24 @@ MonoBehaviour:
     seasons: 
     dailyChance: 0.15
     requiredStage: 0
+  - item: {fileID: 11400000, guid: d4ed26173a40d7245b753fb7cf9bf56d, type: 2}
+    price: 10
+    dailyStock: 12
+    seasons: 01000000
+    dailyChance: 1
+    requiredStage: 0
+  - item: {fileID: 11400000, guid: efd5e526bdec97042bcb196c51c200bc, type: 2}
+    price: 9
+    dailyStock: 12
+    seasons: 0000000002000000
+    dailyChance: 1
+    requiredStage: 0
+  - item: {fileID: 11400000, guid: d0c4902da2df192409791a8cd1b813d7, type: 2}
+    price: 11
+    dailyStock: 12
+    seasons: 02000000
+    dailyChance: 1
+    requiredStage: 0
   stockSeed: 3303
   discountByStage: 0000000000000000050000000a0000000f000000
   buyRules:

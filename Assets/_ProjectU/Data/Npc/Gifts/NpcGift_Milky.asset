@@ -30,12 +30,21 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: eef1b375027259b42834d2262ce9dd96, type: 2}
     preference: 1
     source: tag:sweet
+  - item: {fileID: 11400000, guid: 9104e250f3d836a43bc85a6b0c8bd43b, type: 2}
+    preference: 1
+    source: tag:sweet
   - item: {fileID: 11400000, guid: 3a8ea9dc329d35c4b8b4c84410a7f15d, type: 2}
+    preference: 1
+    source: tag:sweet
+  - item: {fileID: 11400000, guid: 98916df2f8bf4634ca3560aee8f2fc8f, type: 2}
     preference: 1
     source: tag:sweet
   - item: {fileID: 11400000, guid: 475aeddadd419b64b95a40abb76444f6, type: 2}
     preference: 1
     source: food_egg
+  - item: {fileID: 11400000, guid: ad1ba5fc2cd31fb45b042d4b430dac2a, type: 2}
+    preference: 1
+    source: tag:sweet
   - item: {fileID: 11400000, guid: 2e83945f5dda2f34bb4e993074cfc81c, type: 2}
     preference: 3
     source: medicine_bandage

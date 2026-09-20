@@ -69,3 +69,6 @@ shop_marielle,food_grilled_clams,40,3,All,1,
 shop_marielle,resource_worm_bait,3,20,All,1,
 shop_marielle,tool_fishing_rod_basic,70,1,All,1,Curious
 shop_marielle,item_pearl,95,1,All,0.3,Trust
+shop_lichel,seed_corn,10,12,Summer,1,
+shop_lichel,seed_cabbage,9,12,Spring|Autumn,1,
+shop_lichel,seed_sweet_potato,11,12,Autumn,1,

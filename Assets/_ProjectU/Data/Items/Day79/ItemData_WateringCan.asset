@@ -19,6 +19,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 4324d81f314129d4aa7631cea6f833f7, type: 3}
   itemCategory: 1
   toolType: 4
+  toolTier: 0
   weaponAttackType: 0
   baseDamage: 0
   attackCooldown: 0.6

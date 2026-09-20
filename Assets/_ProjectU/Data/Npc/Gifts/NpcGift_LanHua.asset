@@ -21,6 +21,9 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 361f6079362891a468aae059667ddd1c, type: 2}
     preference: 0
     source: item_herbal_tea
+  - item: {fileID: 11400000, guid: a7704c43fb0a9744190b33a177a9c82c, type: 2}
+    preference: 0
+    source: resource_wild_flower
   - item: {fileID: 11400000, guid: 1132e66db22cdae448d0dfb6dec7e8c1, type: 2}
     preference: 1
     source: tag:weapon

@@ -66,6 +66,13 @@ public static class FarmingContentBuilder
         Food("Tomato", "food_tomato", "TOMATO", "A juicy summer tomato.", 12f, 20, "item_tomato"),
         Food("Pumpkin", "food_pumpkin", "PUMPKIN", "A heavy autumn pumpkin. Great for cooking.", 30f, 10, "item_pumpkin"),
         Food("WinterRadish", "food_winter_radish", "WINTER RADISH", "A crisp radish that grows in the cold.", 14f, 20, "item_winter_radish"),
+        // 119일차 새 작물 (처음 상자에는 넣지 않는다)
+        NewSeed("SeedCorn", "seed_corn", "CORN SEEDS", "Corn seeds. Plant them in a farm plot in summer.", "item_seed_corn"),
+        NewSeed("SeedCabbage", "seed_cabbage", "CABBAGE SEEDS", "Cabbage seeds. They grow in spring and autumn.", "item_seed_cabbage"),
+        NewSeed("SeedSweetPotato", "seed_sweet_potato", "SWEET POTATO SEEDS", "Sweet potato slips. Plant them in autumn.", "item_seed_sweet_potato"),
+        Food("Corn", "food_corn", "CORN", "A sweet summer corn. Animals like it too.", 18f, 20, "food_corn"),
+        Food("Cabbage", "food_cabbage", "CABBAGE", "A round cabbage for wraps and hotpots.", 16f, 20, "food_cabbage"),
+        Food("SweetPotato", "food_sweet_potato", "SWEET POTATO", "A sweet root that bakes well.", 20f, 20, "food_sweet_potato"),
         new ItemSpec
         {
             AssetName = "ItemData_Hoe", Id = "tool_hoe", DisplayName = "HOE",
@@ -81,6 +88,13 @@ public static class FarmingContentBuilder
             ModelId = "tool_watering_can", PickupName = "WateringCanPickup", PickupScale = 1.5f, StarterQuantity = 1
         }
     };
+
+    private static ItemSpec NewSeed(string name, string id, string displayName, string description, string modelId) // 119일차: 처음 상자에 넣지 않는 씨앗
+    {
+        ItemSpec spec = Seed(name, id, displayName, description, modelId);
+        spec.StarterQuantity = 0;
+        return spec;
+    }
 
     private static ItemSpec Seed(string name, string id, string displayName, string description, string modelId)
     {
@@ -153,6 +167,25 @@ public static class FarmingContentBuilder
             AssetName = "CropData_WinterRadish", Id = "crop_winter_radish", DisplayName = "WINTER RADISH", Description = "A hardy crop that grows in winter.",
             Category = CropCategory.Seasonal, SeedId = "seed_winter_radish", HarvestId = "food_winter_radish", MinimumHarvest = 1, MaximumHarvest = 3,
             GrowthDays = 4, StageDays = new[] { 0, 1, 2, 4 }, Seasons = new[] { SeasonType.Winter }, Greenhouse = false, StormDamage = 0.1f, ModelKey = "winter_radish"
+        },
+        // 119일차 새 작물 (옥수수 · 양배추 · 고구마)
+        new CropSpec
+        {
+            AssetName = "CropData_Corn", Id = "crop_corn", DisplayName = "CORN", Description = "A tall summer crop. Its grain also feeds animals.",
+            Category = CropCategory.Cooking, SeedId = "seed_corn", HarvestId = "food_corn", MinimumHarvest = 2, MaximumHarvest = 3,
+            GrowthDays = 6, StageDays = new[] { 0, 2, 4, 6 }, Seasons = new[] { SeasonType.Summer }, Greenhouse = true, StormDamage = 0.15f, ModelKey = "corn"
+        },
+        new CropSpec
+        {
+            AssetName = "CropData_Cabbage", Id = "crop_cabbage", DisplayName = "CABBAGE", Description = "A leafy crop that grows in spring and autumn.",
+            Category = CropCategory.Basic, SeedId = "seed_cabbage", HarvestId = "food_cabbage", MinimumHarvest = 2, MaximumHarvest = 3,
+            GrowthDays = 4, StageDays = new[] { 0, 1, 2, 4 }, Seasons = new[] { SeasonType.Spring, SeasonType.Autumn }, Greenhouse = true, StormDamage = 0.1f, ModelKey = "cabbage"
+        },
+        new CropSpec
+        {
+            AssetName = "CropData_SweetPotato", Id = "crop_sweet_potato", DisplayName = "SWEET POTATO", Description = "An autumn root crop that keeps well.",
+            Category = CropCategory.Seasonal, SeedId = "seed_sweet_potato", HarvestId = "food_sweet_potato", MinimumHarvest = 2, MaximumHarvest = 4,
+            GrowthDays = 7, StageDays = new[] { 0, 2, 4, 7 }, Seasons = new[] { SeasonType.Autumn }, Greenhouse = false, StormDamage = 0.05f, ModelKey = "sweet_potato"
         }
     };
 

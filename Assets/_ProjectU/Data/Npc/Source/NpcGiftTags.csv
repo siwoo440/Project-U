@@ -71,3 +71,18 @@ hearty,food_roast_meat,든든한 요리
 hearty,food_meat_stew,든든한 요리
 hearty,food_venison_steak,든든한 요리
 hearty,food_crab_soup,든든한 요리
+forage,resource_wild_greens,제철 채집물
+forage,food_bamboo_shoot,제철 채집물
+forage,food_raspberry,제철 채집물
+forage,food_chestnut,제철 채집물
+forage,food_big_mushroom,제철 채집물
+forage,resource_herb_leaf,제철 채집물
+dish,food_greens_salad,요리
+dish,food_bamboo_stirfry,요리
+dish,food_mushroom_hotpot,요리
+dish,food_cabbage_wrap,요리
+sweet,food_berry_drink,단것
+sweet,food_roast_chestnut,단것
+sweet,food_baked_sweet_potato,단것
+hearty,food_mushroom_hotpot,든든한 요리
+hearty,food_grilled_corn,든든한 요리

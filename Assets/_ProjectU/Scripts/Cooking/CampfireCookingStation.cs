@@ -54,6 +54,7 @@ public sealed class CampfireCookingStation : InteractableBase, IBuildRemovalGuar
     public int SlotCount => Mathf.Clamp(slotCount, 1, 3); // 조리 칸 수 제공
     public int MaxBatchQuantity => Mathf.Max(1, maxBatchQuantity); // 최대 묶음 수 제공
     public ItemData FuelItem => fuelItem; // 연료 제공
+    public bool RequiresFuel => fuelItem != null; // 119일차: 연료가 필요한 시설인지 제공
     public int FuelAmount => Mathf.Max(1, fuelAmount); // 연료 수량 제공
     public IReadOnlyList<CookingRecipeData> Recipes => recipes; // 요리법 제공
     public IReadOnlyList<CookingSlot> Slots => slots; // 조리 칸 제공
@@ -113,7 +114,7 @@ public sealed class CampfireCookingStation : InteractableBase, IBuildRemovalGuar
         ClampSettings(); // 설정값 범위 보정
         EnsureSlots(); // 조리 칸 준비
 
-        bool hasMissingReference = fuelItem == null || fireVisualRoot == null; // 필수 참조 누락 확인
+        bool hasMissingReference = fireVisualRoot == null; // 필수 참조 누락 확인 (119일차: 절구처럼 연료가 없는 작업대도 있다)
 
         if (hasMissingReference) // 참조 누락 여부 확인
         {

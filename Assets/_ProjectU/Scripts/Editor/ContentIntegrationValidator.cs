@@ -80,6 +80,7 @@ public static class ContentIntegrationValidator
             ("동굴", Feature(CaveBuilder.Validate)),
             ("광물 · 제련 · 밤의 운석", Feature(MineralBuilder.Validate)),
             ("야생동물 · 사냥", Feature(WildlifeBuilder.Validate)),
+            ("계절 채집 · 과일나무", Feature(SeasonContentBuilder.Validate)),
             ("데이터 점검", Feature(DataAuditBuilder.Validate)),
             ("아이템 데이터 (ID 규칙)", ItemDataValidator.ValidateAllItemData),
             ("Game Data Registry", () => CountLoggedErrors(GameDataRegistryEditor.ValidateDefaultRegistry, details))

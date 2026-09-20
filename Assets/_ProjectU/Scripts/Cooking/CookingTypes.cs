@@ -5,7 +5,8 @@ public enum CookingStationTier // 85일차: 조리 시설 등급
     Campfire = 0, // 모닥불 (굽기)
     StoneCampfire = 1, // 돌 모닥불 (냄비 요리까지)
     Furnace = 2, // 117일차: 용광로 (광석 → 주괴)
-    TanningRack = 3 // 118일차: 무두질대 (가죽 → 무두질 가죽)
+    TanningRack = 3, // 118일차: 무두질대 (가죽 → 무두질 가죽)
+    Mortar = 4 // 119일차: 절구 (옥수수 · 도토리 → 동물 사료)
 }
 
 public enum CookingRecipeStatus // 요리법 현재 상태
@@ -34,6 +35,7 @@ public static class CookingStationUtility // 조리 시설 표시 도우미
             case CookingStationTier.StoneCampfire: return "STONE CAMPFIRE"; // 돌 모닥불
             case CookingStationTier.Furnace: return "FURNACE"; // 117일차: 용광로
             case CookingStationTier.TanningRack: return "TANNING RACK"; // 118일차: 무두질대
+            case CookingStationTier.Mortar: return "MORTAR"; // 119일차: 절구
             default: return "CAMPFIRE"; // 모닥불
         }
     }

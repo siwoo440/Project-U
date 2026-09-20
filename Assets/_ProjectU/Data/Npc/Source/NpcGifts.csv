@@ -207,3 +207,11 @@ char_noctia,Loved,resource_firefly,밤의 불빛
 char_seira,Liked,tag:fur,따뜻한 털
 char_mireille,Liked,tag:fur,따뜻한 털
 char_erina,Liked,tag:insect,숲의 친구
+char_erina,Loved,tag:forage,숲에서 난 것
+char_lunette,Loved,resource_herb_leaf,약 재료
+char_beatrice,Loved,resource_wild_flower,꽃
+char_lanhua,Loved,resource_wild_flower,꽃
+char_akane,Liked,tag:forage,제철 음식
+char_octavia,Liked,tag:forage,제철 재료
+char_noctia,Liked,resource_ice_flower,겨울 꽃
+char_seira,Liked,food_roast_chestnut,따뜻한 군밤

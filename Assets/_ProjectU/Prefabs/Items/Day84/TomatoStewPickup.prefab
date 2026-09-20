@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 772107388135444635}
+  - component: {fileID: 5993681483526984217}
   m_Layer: 3
   m_Name: TomatoStewPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 2590892294602255149}
+  - {fileID: 5935060523653628513}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &772107388135444635
+--- !u!114 &5993681483526984217
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: item_tomato_stew
-  generatedVisual: {fileID: 6836178912445414117}
+  generatedVisual: {fileID: 3420444648614843305}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &8966134213757759080
+--- !u!1001 &992827497844311844
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60087e91fd853164a8b5152a7186362e, type: 3}
---- !u!4 &2590892294602255149 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6889004674583725381, guid: 60087e91fd853164a8b5152a7186362e, type: 3}
-  m_PrefabInstance: {fileID: 8966134213757759080}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &6836178912445414117 stripped
+--- !u!1 &3420444648614843305 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2499751850217231501, guid: 60087e91fd853164a8b5152a7186362e, type: 3}
-  m_PrefabInstance: {fileID: 8966134213757759080}
+  m_PrefabInstance: {fileID: 992827497844311844}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5935060523653628513 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6889004674583725381, guid: 60087e91fd853164a8b5152a7186362e, type: 3}
+  m_PrefabInstance: {fileID: 992827497844311844}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1024ef42cf32b824a9832cc0defe6a52, type: 3}
+  m_Name: CookingRecipe_WinterTonic
+  m_EditorClassIdentifier: Assembly-CSharp::CookingRecipeData
+  recipeId: cook_winter_tonic
+  displayName: WINTER TONIC
+  sortOrder: 0
+  requiredStation: 1
+  ingredients:
+  - itemData: {fileID: 11400000, guid: a1f85f4b8822ed147b631a6fbce09b59, type: 2}
+    amount: 1
+  - itemData: {fileID: 11400000, guid: bcb16687a11189c44975478eab580b78, type: 2}
+    amount: 2
+  resultItem: {fileID: 11400000, guid: 9e56dd090a3a74c48a6314ae129b94a7, type: 2}
+  resultQuantity: 1
+  cookingSeconds: 36
+  extraBatchTimeRatio: 0.6

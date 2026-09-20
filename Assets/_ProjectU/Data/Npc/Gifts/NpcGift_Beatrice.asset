@@ -26,10 +26,22 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 9aa939ef40fc1f241889f99ebe31512d, type: 2}
     preference: 0
     source: tag:insect
+  - item: {fileID: 11400000, guid: a7704c43fb0a9744190b33a177a9c82c, type: 2}
+    preference: 0
+    source: resource_wild_flower
   - item: {fileID: 11400000, guid: eef1b375027259b42834d2262ce9dd96, type: 2}
     preference: 1
     source: tag:sweet
   - item: {fileID: 11400000, guid: 250b3288a0c4e7e428748a942a5f848a, type: 2}
+    preference: 1
+    source: tag:sweet
+  - item: {fileID: 11400000, guid: 9104e250f3d836a43bc85a6b0c8bd43b, type: 2}
+    preference: 1
+    source: tag:sweet
+  - item: {fileID: 11400000, guid: 98916df2f8bf4634ca3560aee8f2fc8f, type: 2}
+    preference: 1
+    source: tag:sweet
+  - item: {fileID: 11400000, guid: ad1ba5fc2cd31fb45b042d4b430dac2a, type: 2}
     preference: 1
     source: tag:sweet
   - item: {fileID: 11400000, guid: 95ca44aa8a27d41448c511db6fa0a55c, type: 2}

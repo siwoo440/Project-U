@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6269556682531801798}
-  - component: {fileID: 8322678548007146807}
   - component: {fileID: 3467741323118103553}
+  - component: {fileID: 1758592727635134363}
   m_Layer: 9
   m_Name: FarmPlotPreview
   m_TagString: Untagged
@@ -32,27 +32,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9093338342564097370}
-  - {fileID: 1619222696148011491}
+  - {fileID: 2755342636508883293}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8322678548007146807
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 774915256789483222}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abf3e382d224e0e4788b4ebd0b64c67c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
-  modelId: build_farm_plot
-  generatedVisual: {fileID: 3203883784534040250}
-  hiddenMeshFilters:
-  - {fileID: 5249664595214734098}
-  originalMeshes:
-  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &3467741323118103553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,6 +53,24 @@ MonoBehaviour:
   explicitVisualProfileId: 
   resolvedVisualProfileId: visual_buildable_farm_plot
   isIdentityValid: 1
+--- !u!114 &1758592727635134363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 774915256789483222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abf3e382d224e0e4788b4ebd0b64c67c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
+  modelId: build_farm_plot
+  generatedVisual: {fileID: 2031731060923416068}
+  hiddenMeshFilters:
+  - {fileID: 5249664595214734098}
+  originalMeshes:
+  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &3870812973218723246
 GameObject:
   m_ObjectHideFlags: 0
@@ -161,7 +161,7 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1001 &932700950340344824
+--- !u!1001 &4374628440310692678
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -222,13 +222,13 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c804b2d469f46d44291726dcdab44616, type: 3}
---- !u!4 &1619222696148011491 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1912126466923139611, guid: c804b2d469f46d44291726dcdab44616, type: 3}
-  m_PrefabInstance: {fileID: 932700950340344824}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3203883784534040250 stripped
+--- !u!1 &2031731060923416068 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2344094748773287234, guid: c804b2d469f46d44291726dcdab44616, type: 3}
-  m_PrefabInstance: {fileID: 932700950340344824}
+  m_PrefabInstance: {fileID: 4374628440310692678}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2755342636508883293 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1912126466923139611, guid: c804b2d469f46d44291726dcdab44616, type: 3}
+  m_PrefabInstance: {fileID: 4374628440310692678}
   m_PrefabAsset: {fileID: 0}

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 2701401420093078507}
+  - component: {fileID: 1761894391133208079}
   m_Layer: 3
   m_Name: SeedPumpkinPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 6206859186364800486}
+  - {fileID: 9094848430249978300}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &2701401420093078507
+--- !u!114 &1761894391133208079
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: item_seed_pumpkin
-  generatedVisual: {fileID: 1318085049660482128}
+  generatedVisual: {fileID: 4205960318405400074}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &1840380447306169092
+--- !u!1001 &3575310248849133406
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eee4b650ef71ff94c908155dbb442687, type: 3}
---- !u!1 &1318085049660482128 stripped
+--- !u!1 &4205960318405400074 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 846851666606430548, guid: eee4b650ef71ff94c908155dbb442687, type: 3}
-  m_PrefabInstance: {fileID: 1840380447306169092}
+  m_PrefabInstance: {fileID: 3575310248849133406}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &6206859186364800486 stripped
+--- !u!4 &9094848430249978300 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5740235539775678178, guid: eee4b650ef71ff94c908155dbb442687, type: 3}
-  m_PrefabInstance: {fileID: 1840380447306169092}
+  m_PrefabInstance: {fileID: 3575310248849133406}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

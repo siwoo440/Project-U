@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 6946259422173514692}
+  - component: {fileID: 4768346799412601969}
   m_Layer: 3
   m_Name: HoePickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 4988061661953748017}
+  - {fileID: 267790333148487180}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &6946259422173514692
+--- !u!114 &4768346799412601969
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: tool_hoe
-  generatedVisual: {fileID: 4674967182412279090}
+  generatedVisual: {fileID: 463474554437426959}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &8138884595303603459
+--- !u!1001 &3926406797977349950
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b706f729b25392419d77148a2388b3b, type: 3}
---- !u!1 &4674967182412279090 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3464378108397924401, guid: 4b706f729b25392419d77148a2388b3b, type: 3}
-  m_PrefabInstance: {fileID: 8138884595303603459}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &4988061661953748017 stripped
+--- !u!4 &267790333148487180 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3875919009115746610, guid: 4b706f729b25392419d77148a2388b3b, type: 3}
-  m_PrefabInstance: {fileID: 8138884595303603459}
+  m_PrefabInstance: {fileID: 3926406797977349950}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &463474554437426959 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3464378108397924401, guid: 4b706f729b25392419d77148a2388b3b, type: 3}
+  m_PrefabInstance: {fileID: 3926406797977349950}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

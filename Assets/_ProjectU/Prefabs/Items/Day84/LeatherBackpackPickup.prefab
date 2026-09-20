@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 8587853688172388560}
+  - component: {fileID: 2230162716814524405}
   m_Layer: 3
   m_Name: LeatherBackpackPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 1862530195327576542}
+  - {fileID: 2913614340715987170}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &8587853688172388560
+--- !u!114 &2230162716814524405
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: equipment_leather_backpack
-  generatedVisual: {fileID: 2341143308729407968}
+  generatedVisual: {fileID: 1282220743571370204}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &7728312142568794792
+--- !u!1001 &6554513602861761428
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f081a51f7b6941c44bb588a9c401feac, type: 3}
---- !u!4 &1862530195327576542 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8257758568709014390, guid: f081a51f7b6941c44bb588a9c401feac, type: 3}
-  m_PrefabInstance: {fileID: 7728312142568794792}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2341143308729407968 stripped
+--- !u!1 &1282220743571370204 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5421511095586124616, guid: f081a51f7b6941c44bb588a9c401feac, type: 3}
-  m_PrefabInstance: {fileID: 7728312142568794792}
+  m_PrefabInstance: {fileID: 6554513602861761428}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2913614340715987170 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8257758568709014390, guid: f081a51f7b6941c44bb588a9c401feac, type: 3}
+  m_PrefabInstance: {fileID: 6554513602861761428}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

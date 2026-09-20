@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 441662511881930432}
+  - component: {fileID: 4696859227759056826}
   m_Layer: 3
   m_Name: FriedEggPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 6073718094366684886}
+  - {fileID: 1968976018602487227}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &441662511881930432
+--- !u!114 &4696859227759056826
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: item_fried_egg
-  generatedVisual: {fileID: 1665669852465288039}
+  generatedVisual: {fileID: 6342403955771017226}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &3861442087443153219
+--- !u!1001 &8831420546333547054
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51085a966f22eab46a7d26074c757a49, type: 3}
---- !u!1 &1665669852465288039 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2489150261269860900, guid: 51085a966f22eab46a7d26074c757a49, type: 3}
-  m_PrefabInstance: {fileID: 3861442087443153219}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &6073718094366684886 stripped
+--- !u!4 &1968976018602487227 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7051712825103513493, guid: 51085a966f22eab46a7d26074c757a49, type: 3}
-  m_PrefabInstance: {fileID: 3861442087443153219}
+  m_PrefabInstance: {fileID: 8831420546333547054}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6342403955771017226 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2489150261269860900, guid: 51085a966f22eab46a7d26074c757a49, type: 3}
+  m_PrefabInstance: {fileID: 8831420546333547054}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

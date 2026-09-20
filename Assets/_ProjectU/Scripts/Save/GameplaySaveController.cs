@@ -269,6 +269,12 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
             return; // 파일 저장 중단
         }
 
+        if (!OrchardSaveBridge.TryCapture(saveData, out string orchardCaptureError)) // 과일나무 수집 (119일차)
+        {
+            Debug.LogError($"과일나무 저장 준비 실패\n{orchardCaptureError}", this); // 수집 오류 출력
+            return; // 파일 저장 중단
+        }
+
         if (!SaveFileService.TrySave(slotId, saveData, out string resultMessage)) // JSON 파일 저장 실행
         {
             Debug.LogError($"현재 게임 저장 실패\n{resultMessage}", this); // 저장 실패 내용 출력
@@ -416,6 +422,7 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
 
         CaveSaveBridge.Apply(saveData); // 동굴 복원 (116일차)
         MeteorSaveBridge.Apply(saveData); // 운석 복원 (117일차)
+        OrchardSaveBridge.Apply(saveData); // 과일나무 복원 (119일차, 건축물 복원 뒤)
 
         ApplyLoadedState(saveData); // 불러온 게임 상태 적용
 

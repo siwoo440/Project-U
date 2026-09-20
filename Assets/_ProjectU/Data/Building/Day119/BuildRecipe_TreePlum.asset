@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b0e46b0956bcf479f2754564f5cfa9, type: 3}
+  m_Name: BuildRecipe_TreePlum
+  m_EditorClassIdentifier: Assembly-CSharp::BuildRecipeData
+  recipeId: structure_tree_plum
+  displayName: PLUM TREE
+  structureType: 4
+  allowGroundPlacement: 1
+  placementType: 2
+  rotationStep: 90
+  previewOffset: {x: 0, y: 0, z: 0}
+  placedPrefab: {fileID: 8554289611962246252, guid: a92d0557844ba8544ba90e179e23fd64, type: 3}
+  previewPrefab: {fileID: 5099912147653720779, guid: bd4019ff36d50f443834efb24664b164, type: 3}
+  placementCheckCenter: {x: 0, y: 0.6, z: 0}
+  placementCheckHalfExtents: {x: 0.8, y: 0.6, z: 0.8}
+  maximumSlopeAngle: 20
+  maximumHeightDifference: 0.25
+  ingredients:
+  - itemData: {fileID: 11400000, guid: 65909c67e4be91e42ac2d185a3a29f56, type: 2}
+    amount: 1
+  requiredTool: 0
+  demolitionRefundRatio: 0

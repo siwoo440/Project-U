@@ -59,7 +59,8 @@ public static partial class StylizedModelLibrary
                 RegisterIsland();
                 RegisterCaves(); // 116일차: 동굴
                 RegisterMinerals();
-        RegisterWildlife(); // 117일차: 광물 · 주괴 · 도구 등급 · 용광로
+        RegisterWildlife();
+        RegisterSeasons(); // 117일차: 광물 · 주괴 · 도구 등급 · 용광로
             }
 
             return catalog;

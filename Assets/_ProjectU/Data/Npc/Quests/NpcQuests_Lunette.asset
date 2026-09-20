@@ -109,3 +109,21 @@ MonoBehaviour:
     thanksLine: "\uC870\uC2EC\uD574\uC11C \uB2E4\uB904\uC57C \uD574\uC694. \uC815\uB9D0
       \uACE0\uB9C8\uC6CC\uC694."
     requiredEventId: 
+  - questId: quest_lunette_herb
+    title: "\uC57D\uC5D0 \uC4F8 \uC57D\uCD08 \uC78E"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: bcb16687a11189c44975478eab580b78, type: 2}
+      amount: 4
+    rewardCoins: 52
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 01000000
+    requiredStage: 0
+    requestLine: "\uC57D\uCD08 \uC78E \uB124 \uC7A5\uC774 \uD544\uC694\uD574\uC694\u2026
+      \uC2B5\uC9C0 \uCABD\uC5D0 \uB9CE\uC774 \uC790\uB780\uB2E4\uACE0 \uB4E4\uC5C8\uC5B4\uC694."
+    thanksLine: "\uC774\uAC78 \uB9D0\uB824 \uB450\uBA74 \uACA8\uC6B8\uC5D0\uB3C4
+      \uC57D\uC744 \uB9CC\uB4E4 \uC218 \uC788\uC5B4\uC694."
+    requiredEventId: 

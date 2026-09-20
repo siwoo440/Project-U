@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 4015863746429553873}
+  - component: {fileID: 7792319231459727511}
   m_Layer: 3
   m_Name: SeedWinterRadishPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 5403638135040292833}
+  - {fileID: 6669817426263781607}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &4015863746429553873
+--- !u!114 &7792319231459727511
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: item_seed_winter_radish
-  generatedVisual: {fileID: 5864450174881172280}
+  generatedVisual: {fileID: 5120823130452397118}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &3493517889549619580
+--- !u!1001 &2740756893888599674
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ce037151f188ac439d83733acfd3ad3, type: 3}
---- !u!4 &5403638135040292833 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8829003895683901085, guid: 4ce037151f188ac439d83733acfd3ad3, type: 3}
-  m_PrefabInstance: {fileID: 3493517889549619580}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5864450174881172280 stripped
+--- !u!1 &5120823130452397118 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6996850400088742468, guid: 4ce037151f188ac439d83733acfd3ad3, type: 3}
-  m_PrefabInstance: {fileID: 3493517889549619580}
+  m_PrefabInstance: {fileID: 2740756893888599674}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6669817426263781607 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8829003895683901085, guid: 4ce037151f188ac439d83733acfd3ad3, type: 3}
+  m_PrefabInstance: {fileID: 2740756893888599674}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

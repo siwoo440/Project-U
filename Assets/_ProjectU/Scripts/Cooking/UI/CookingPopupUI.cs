@@ -217,7 +217,8 @@ public sealed class CookingPopupUI : MonoBehaviour, IGameScenePopup // 85일차:
 
         if (stationInfoChip != null) // 시설 정보
         {
-            stationInfoChip.Bind($"{station.SlotCount} SLOTS  ·  {station.FuelAmount} {station.FuelItem.DisplayName} / COOK", ProjectUUIPalette.Accent, iconSet != null ? iconSet.Flame : null); // 표시
+            string fuelText = station.RequiresFuel ? $"{station.FuelAmount} {station.FuelItem.DisplayName} / COOK" : "NO FUEL NEEDED"; // 119일차: 연료 없는 작업대
+            stationInfoChip.Bind($"{station.SlotCount} SLOTS  ·  {fuelText}", ProjectUUIPalette.Accent, iconSet != null ? iconSet.Flame : null); // 표시
         }
 
         List<CookingRecipeData> sorted = station.GetSortedRecipes(inventory); // 정렬 목록

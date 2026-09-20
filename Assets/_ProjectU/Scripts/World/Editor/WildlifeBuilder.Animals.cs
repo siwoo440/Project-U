@@ -412,6 +412,14 @@ public static partial class WildlifeBuilder
     {
         Transform visual = root.transform.Find("Visual") ?? root.transform.Find("VisualRoot");
 
+        if (visual != null && HasVisualProfileParts(visual.gameObject)) // 외형 카드 부품이 남아 있으면 통째로 새로 만든다
+        {
+            string name = visual.name;
+            UnityEngine.Object.DestroyImmediate(visual.gameObject);
+            visual = new GameObject(name).transform;
+            visual.SetParent(root.transform, false);
+        }
+
         if (visual == null)
         {
             visual = new GameObject("Visual").transform;
@@ -437,6 +445,14 @@ public static partial class WildlifeBuilder
         instance.transform.localPosition = Vector3.zero;
         instance.transform.localRotation = Quaternion.identity;
         instance.transform.localScale = Vector3.one * scale;
+    }
+
+    private static bool HasVisualProfileParts(GameObject target) // 외형 카드 부품이 붙어 있는지
+    {
+        return target.GetComponentsInChildren<ContentVisualRoot>(true).Length > 0
+            || target.GetComponentsInChildren<ContentVisualProfileBinder>(true).Length > 0
+            || target.GetComponentsInChildren<ContentVisualDataSourceBinder>(true).Length > 0
+            || target.GetComponentsInChildren<ContentVisualIdentity>(true).Length > 0;
     }
 
     // ---------------------------------------------------------------- 섬에 놓기

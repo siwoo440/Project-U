@@ -102,7 +102,28 @@ public static class MarketContentBuilder
         ("resource_crab_shell", 9, MarketGoodsType.Material),
         ("resource_tanned_leather", 34, MarketGoodsType.Material),
         ("resource_butterfly", 16, MarketGoodsType.Material),
-        ("resource_firefly", 20, MarketGoodsType.Material)
+        ("resource_firefly", 20, MarketGoodsType.Material),
+        // 119일차: 계절 채집물 · 과일 · 묘목 · 새 작물
+        ("resource_wild_greens", 5, MarketGoodsType.Forage),
+        ("resource_wild_flower", 4, MarketGoodsType.Forage),
+        ("food_bamboo_shoot", 7, MarketGoodsType.Forage),
+        ("food_raspberry", 6, MarketGoodsType.Forage),
+        ("resource_herb_leaf", 8, MarketGoodsType.Forage),
+        ("resource_bamboo", 6, MarketGoodsType.Material),
+        ("food_chestnut", 9, MarketGoodsType.Forage),
+        ("food_big_mushroom", 12, MarketGoodsType.Forage),
+        ("resource_acorn", 3, MarketGoodsType.Material),
+        ("resource_dry_branch", 2, MarketGoodsType.Material),
+        ("resource_ice_flower", 18, MarketGoodsType.Material),
+        ("resource_pine_cone", 3, MarketGoodsType.Material),
+        ("food_plum", 9, MarketGoodsType.Forage),
+        ("food_persimmon", 11, MarketGoodsType.Forage),
+        ("resource_sapling_apple", 40, MarketGoodsType.Material),
+        ("resource_sapling_plum", 45, MarketGoodsType.Material),
+        ("resource_sapling_persimmon", 45, MarketGoodsType.Material),
+        ("food_corn", 14, MarketGoodsType.Crop),
+        ("food_cabbage", 11, MarketGoodsType.Crop),
+        ("food_sweet_potato", 13, MarketGoodsType.Crop)
     };
 
     // 물고기 : 기본 14 × 희귀도 배율 × (1 + 난이도 × 0.5)
@@ -116,7 +137,8 @@ public static class MarketContentBuilder
     // 씨앗 가격 (상인 판매가, 판매 상자는 절반)
     private static readonly Dictionary<string, int> SeedPrices = new Dictionary<string, int>
     {
-        { "crop_potato", 6 }, { "crop_strawberry", 8 }, { "crop_tomato", 8 }, { "crop_pumpkin", 14 }, { "crop_winter_radish", 9 }
+        { "crop_potato", 6 }, { "crop_strawberry", 8 }, { "crop_tomato", 8 }, { "crop_pumpkin", 14 }, { "crop_winter_radish", 9 },
+        { "crop_corn", 10 }, { "crop_cabbage", 9 }, { "crop_sweet_potato", 11 } // 119일차
     };
 
     private const int SeedDailyStock = 12;
@@ -130,7 +152,10 @@ public static class MarketContentBuilder
         ("medicine_bandage", 18, 3, 1f),
         ("item_arrow", 2, 20, 0.5f),
         ("tool_fishing_rod_basic", 60, 1, 0.25f),
-        ("equipment_small_backpack", 450, 1, 0.15f)
+        ("equipment_small_backpack", 450, 1, 0.15f),
+        // 119일차: 과일나무 묘목 (사과 묘목은 제작으로 만든다)
+        ("resource_sapling_plum", 90, 1, 0.3f),
+        ("resource_sapling_persimmon", 90, 1, 0.3f)
     };
 
     private sealed class StructureSpec

@@ -27,6 +27,15 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 250b3288a0c4e7e428748a942a5f848a, type: 2}
     preference: 1
     source: tag:sweet
+  - item: {fileID: 11400000, guid: 9104e250f3d836a43bc85a6b0c8bd43b, type: 2}
+    preference: 1
+    source: tag:sweet
+  - item: {fileID: 11400000, guid: 98916df2f8bf4634ca3560aee8f2fc8f, type: 2}
+    preference: 1
+    source: tag:sweet
+  - item: {fileID: 11400000, guid: ad1ba5fc2cd31fb45b042d4b430dac2a, type: 2}
+    preference: 1
+    source: tag:sweet
   - item: {fileID: 11400000, guid: 95ca44aa8a27d41448c511db6fa0a55c, type: 2}
     preference: 1
     source: tag:sweet

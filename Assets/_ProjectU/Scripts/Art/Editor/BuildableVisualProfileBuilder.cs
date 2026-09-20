@@ -115,6 +115,11 @@ public static class BuildableVisualProfileBuilder
 
         foreach (BuildRecipeData recipe in LoadRecipes())
         {
+            if (recipe.PlacedPrefab != null && recipe.PlacedPrefab.GetComponent<FruitTree>() != null) // 119일차: 자라는 단계가 있는 과일나무는 외형 카드를 쓰지 않는다
+            {
+                continue;
+            }
+
             string suffix = recipe.RecipeId.StartsWith("structure_", StringComparison.Ordinal) ? recipe.RecipeId.Substring("structure_".Length) : recipe.RecipeId;
             Target target = new Target
             {

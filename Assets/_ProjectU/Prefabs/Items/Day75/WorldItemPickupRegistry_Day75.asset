@@ -235,3 +235,67 @@ MonoBehaviour:
     pickupPrefab: {fileID: 3181927310554862687, guid: 2fd470b9e316d7042b8b67bf51bbcb89, type: 3}
   - itemData: {fileID: 11400000, guid: de87df6cae121a847a7089b4c7cf56ce, type: 2}
     pickupPrefab: {fileID: 3181927310554862687, guid: 58207eb0444e07843b53e88c2eb24c29, type: 3}
+  - itemData: {fileID: 11400000, guid: d4ed26173a40d7245b753fb7cf9bf56d, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: b03e953d3649c6247b5729a123d993dc, type: 3}
+  - itemData: {fileID: 11400000, guid: efd5e526bdec97042bcb196c51c200bc, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 8cb0934fdd71e074586a3c7093949980, type: 3}
+  - itemData: {fileID: 11400000, guid: d0c4902da2df192409791a8cd1b813d7, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 380cbc23abb6bdd41b69088ee3319c7f, type: 3}
+  - itemData: {fileID: 11400000, guid: 46ff7350611e3834987a0f643c13452a, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 7aef91e7de028f04ebb50a131007518d, type: 3}
+  - itemData: {fileID: 11400000, guid: b78db88ae0ff49644a08e2b638f0a5fb, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: c2efc0b1998fdbb4ca1e487a101c0ba6, type: 3}
+  - itemData: {fileID: 11400000, guid: 9dd9b4d44a031ed468b1df1533e5b760, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 56b3b81cade90a44094f41d09adc6b5c, type: 3}
+  - itemData: {fileID: 11400000, guid: 9104e250f3d836a43bc85a6b0c8bd43b, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 5f5ed257f055c254eb157a34356b64fd, type: 3}
+  - itemData: {fileID: 11400000, guid: f1b4de51110705549b40745a46c392e0, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: c9b93031231ea6743b111f4cb51c4bbc, type: 3}
+  - itemData: {fileID: 11400000, guid: 3bbb69f1ce18a87418e329f222bb573f, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 34b1c84dc6821ca4c828121f3f991d7e, type: 3}
+  - itemData: {fileID: 11400000, guid: 98916df2f8bf4634ca3560aee8f2fc8f, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: a06179d73aba46b45b0669b60937506e, type: 3}
+  - itemData: {fileID: 11400000, guid: d8ea0d5f34558ce4aa110093993eac02, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: bfc1ccba47e420644ac9739b1b491a2e, type: 3}
+  - itemData: {fileID: 11400000, guid: 82ce4214c3f1f334c8eace961b55b267, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: f5147f75443701449bdb35a8b7df503f, type: 3}
+  - itemData: {fileID: 11400000, guid: 3da74bc0275b7f44e8e60aaf3c50fd55, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 33f9c2e7ef4f35b4a9a13a957856ff2a, type: 3}
+  - itemData: {fileID: 11400000, guid: 33ab161361bbf0f46a4b1930f885cda9, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 08d8f2a36bf05ec4d8f0e423a2bd8569, type: 3}
+  - itemData: {fileID: 11400000, guid: cf92330d245ccad4fb4e381ccef88edf, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 17ebedbbbe021ef47b4117ef866afdd3, type: 3}
+  - itemData: {fileID: 11400000, guid: 8594649b9f3bf6d4091134287cf70560, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: e25bfa8c431582e41bd7e56fd23b96dc, type: 3}
+  - itemData: {fileID: 11400000, guid: f31dfbfff25bf344aa1bce09891fb54a, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: e5d8c5ec1218ad14b9fe0c12e0cb5d90, type: 3}
+  - itemData: {fileID: 11400000, guid: 58eb0031f5757d543b640ea72029aa2e, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 7c395f3ea8327184a9a8807615df01c0, type: 3}
+  - itemData: {fileID: 11400000, guid: 31a009e0b5b876a488ac99bc876ba81a, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 84808e7c71a48574495238af9e07abcf, type: 3}
+  - itemData: {fileID: 11400000, guid: ad1ba5fc2cd31fb45b042d4b430dac2a, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 26cf37b0f443a8d4bb839ca1ad2040da, type: 3}
+  - itemData: {fileID: 11400000, guid: 9e56dd090a3a74c48a6314ae129b94a7, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 68337f99b35988846897fa6bb73eb5f5, type: 3}
+  - itemData: {fileID: 11400000, guid: 75bd62c7cf6e95141b141b316ec9f7f3, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 1828765eaee021c4a8b7705d18b8cd33, type: 3}
+  - itemData: {fileID: 11400000, guid: 991baab2f4ed73a4bbebd5e12fc48f9c, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: d75d25e1ff082e949bc94745ff6c0e6a, type: 3}
+  - itemData: {fileID: 11400000, guid: 5f76c547fca253c469f4b10c94d18db1, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: fb2dd7e8fb4c3954395454cabf980bc7, type: 3}
+  - itemData: {fileID: 11400000, guid: bcb16687a11189c44975478eab580b78, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 1ba78ae6c813d964f87d1ba67f0f0bbc, type: 3}
+  - itemData: {fileID: 11400000, guid: a1f85f4b8822ed147b631a6fbce09b59, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: c1699ab4a0dca994a83d30a8e2328bf3, type: 3}
+  - itemData: {fileID: 11400000, guid: f4e2c22cdb84e6e458a06f366fd3c051, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: d656f49406c6d3a4abd7f5fc503bf19d, type: 3}
+  - itemData: {fileID: 11400000, guid: 754fdc6e58b49b24bab4db000e6d788f, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: bf1aed1d530c19345b69ba7722002ca1, type: 3}
+  - itemData: {fileID: 11400000, guid: e37790570ba671b46becbba4ab7cb45d, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: d10410d0a8bde4f4f871cf6207beb235, type: 3}
+  - itemData: {fileID: 11400000, guid: 65909c67e4be91e42ac2d185a3a29f56, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 0ed8426819b0d6e48b4fc75b8d097c4a, type: 3}
+  - itemData: {fileID: 11400000, guid: a7704c43fb0a9744190b33a177a9c82c, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 5960b363dc0be034a8366a7d5f43fd3c, type: 3}
+  - itemData: {fileID: 11400000, guid: 3e6b40c3781787d47bd8b6987d24cd69, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 9ed4023463e01b24db4b2ee53d6c9f08, type: 3}

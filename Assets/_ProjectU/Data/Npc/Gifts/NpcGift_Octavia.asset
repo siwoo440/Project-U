@@ -20,6 +20,18 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: eee016df450094545b4a90688d3bce9b, type: 2}
     preference: 0
     source: resource_fish_trout
+  - item: {fileID: 11400000, guid: f1b4de51110705549b40745a46c392e0, type: 2}
+    preference: 1
+    source: tag:forage
+  - item: {fileID: 11400000, guid: d8ea0d5f34558ce4aa110093993eac02, type: 2}
+    preference: 1
+    source: tag:forage
+  - item: {fileID: 11400000, guid: 3da74bc0275b7f44e8e60aaf3c50fd55, type: 2}
+    preference: 1
+    source: tag:forage
+  - item: {fileID: 11400000, guid: 31a009e0b5b876a488ac99bc876ba81a, type: 2}
+    preference: 1
+    source: tag:forage
   - item: {fileID: 11400000, guid: 57290689e97387440ab6d1bcbf4ef495, type: 2}
     preference: 1
     source: tag:fish
@@ -32,6 +44,12 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 83e8c92974737c246a6f55d31325f68b, type: 2}
     preference: 1
     source: tag:fish
+  - item: {fileID: 11400000, guid: bcb16687a11189c44975478eab580b78, type: 2}
+    preference: 1
+    source: tag:forage
+  - item: {fileID: 11400000, guid: 3e6b40c3781787d47bd8b6987d24cd69, type: 2}
+    preference: 1
+    source: tag:forage
   - item: {fileID: 11400000, guid: bc991e404803cba4292542d6a52ddd7a, type: 2}
     preference: 3
     source: item_plant_fiber

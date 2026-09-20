@@ -24,10 +24,16 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 2c82bd3688707a247a1d2c303d4b2589, type: 2}
     preference: 0
     source: tag:hearty
+  - item: {fileID: 11400000, guid: cf92330d245ccad4fb4e381ccef88edf, type: 2}
+    preference: 0
+    source: tag:hearty
   - item: {fileID: 11400000, guid: b4f9d8fea40a5c741bf6bc3778083b00, type: 2}
     preference: 0
     source: tag:hearty
   - item: {fileID: 11400000, guid: cf7be651428c22542ab10a66fe9e589b, type: 2}
+    preference: 0
+    source: tag:hearty
+  - item: {fileID: 11400000, guid: 8594649b9f3bf6d4091134287cf70560, type: 2}
     preference: 0
     source: tag:hearty
   - item: {fileID: 11400000, guid: 2168b2ceb2540714c8bcfcadd543b478, type: 2}

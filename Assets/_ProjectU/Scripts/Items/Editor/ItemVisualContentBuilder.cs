@@ -158,7 +158,41 @@ public static class ItemVisualContentBuilder
         { "equipment_leather_hat", "equipment_leather_hat" },
         { "equipment_winter_coat", "equipment_winter_coat" },
         { "tool_net", "tool_net" },
-        { "weapon_fine_bow", "weapon_fine_bow" }
+        { "weapon_fine_bow", "weapon_fine_bow" },
+        // 119일차 계절 채집물 · 요리 · 과일 · 묘목
+        { "resource_wild_greens", "resource_wild_greens" },
+        { "resource_wild_flower", "resource_wild_flower" },
+        { "food_bamboo_shoot", "food_bamboo_shoot" },
+        { "food_raspberry", "food_raspberry" },
+        { "resource_herb_leaf", "resource_herb_leaf" },
+        { "resource_bamboo", "resource_bamboo" },
+        { "food_chestnut", "food_chestnut" },
+        { "food_big_mushroom", "food_big_mushroom" },
+        { "resource_acorn", "resource_acorn" },
+        { "resource_dry_branch", "resource_dry_branch" },
+        { "resource_ice_flower", "resource_ice_flower" },
+        { "resource_pine_cone", "resource_pine_cone" },
+        { "food_greens_salad", "food_greens_salad" },
+        { "food_bamboo_stirfry", "food_bamboo_stirfry" },
+        { "food_berry_drink", "food_berry_drink" },
+        { "food_roast_chestnut", "food_roast_chestnut" },
+        { "food_mushroom_hotpot", "food_mushroom_hotpot" },
+        { "medicine_winter_tonic", "medicine_winter_tonic" },
+        { "food_plum", "food_plum" },
+        { "food_persimmon", "food_persimmon" },
+        { "resource_sapling_apple", "resource_sapling_apple" },
+        { "resource_sapling_plum", "resource_sapling_plum" },
+        { "resource_sapling_persimmon", "resource_sapling_persimmon" },
+        // 119일차 새 작물
+        { "seed_corn", "item_seed_corn" },
+        { "seed_cabbage", "item_seed_cabbage" },
+        { "seed_sweet_potato", "item_seed_sweet_potato" },
+        { "food_corn", "food_corn" },
+        { "food_cabbage", "food_cabbage" },
+        { "food_sweet_potato", "food_sweet_potato" },
+        { "food_grilled_corn", "food_grilled_corn" },
+        { "food_cabbage_wrap", "food_cabbage_wrap" },
+        { "food_baked_sweet_potato", "food_baked_sweet_potato" }
     };
 
     // 84·85일차에 새로 만든 모델 (코드 변경을 반영하도록 항상 다시 만든다)
@@ -262,7 +296,34 @@ public static class ItemVisualContentBuilder
         { "equipment_leather_hat", new PickupSpec { Name = "LeatherHatPickup", Scale = 1.1f } },
         { "equipment_winter_coat", new PickupSpec { Name = "WinterCoatPickup", Scale = 1.0f } },
         { "tool_net", new PickupSpec { Name = "CatchNetPickup", Scale = 2.4f, LyingTool = true } },
-        { "weapon_fine_bow", new PickupSpec { Name = "FineBowPickup", Scale = 2.4f, LyingTool = true } }
+        { "weapon_fine_bow", new PickupSpec { Name = "FineBowPickup", Scale = 2.4f, LyingTool = true } },
+        // 119일차 계절 채집물 · 요리 · 과일 · 묘목
+        { "resource_wild_greens", new PickupSpec { Name = "WildGreensPickup", Scale = 1.5f } },
+        { "resource_wild_flower", new PickupSpec { Name = "WildFlowerPickup", Scale = 1.5f } },
+        { "food_bamboo_shoot", new PickupSpec { Name = "BambooShootPickup", Scale = 1.4f } },
+        { "food_raspberry", new PickupSpec { Name = "RaspberryPickup", Scale = 1.6f } },
+        { "resource_herb_leaf", new PickupSpec { Name = "HerbLeafPickup", Scale = 1.6f } },
+        { "resource_bamboo", new PickupSpec { Name = "BambooPickup", Scale = 1.3f } },
+        { "food_chestnut", new PickupSpec { Name = "ChestnutPickup", Scale = 1.6f } },
+        { "food_big_mushroom", new PickupSpec { Name = "BigMushroomPickup", Scale = 1.4f } },
+        { "resource_acorn", new PickupSpec { Name = "AcornPickup", Scale = 1.8f } },
+        { "resource_dry_branch", new PickupSpec { Name = "DryBranchPickup", Scale = 1.4f } },
+        { "resource_ice_flower", new PickupSpec { Name = "IceFlowerPickup", Scale = 1.6f } },
+        { "resource_pine_cone", new PickupSpec { Name = "PineConePickup", Scale = 1.7f } },
+        { "food_greens_salad", new PickupSpec { Name = "GreensSaladPickup", Scale = 1.2f } },
+        { "food_bamboo_stirfry", new PickupSpec { Name = "BambooStirfryPickup", Scale = 1.2f } },
+        { "food_berry_drink", new PickupSpec { Name = "BerryDrinkPickup", Scale = 1.2f } },
+        { "food_roast_chestnut", new PickupSpec { Name = "RoastChestnutPickup", Scale = 1.3f } },
+        { "food_mushroom_hotpot", new PickupSpec { Name = "MushroomHotpotPickup", Scale = 1.2f } },
+        { "medicine_winter_tonic", new PickupSpec { Name = "WinterTonicPickup", Scale = 1.2f } },
+        { "food_plum", new PickupSpec { Name = "PlumPickup", Scale = 1.6f } },
+        { "food_persimmon", new PickupSpec { Name = "PersimmonPickup", Scale = 1.5f } },
+        { "resource_sapling_apple", new PickupSpec { Name = "AppleSaplingPickup", Scale = 1.1f } },
+        { "resource_sapling_plum", new PickupSpec { Name = "PlumSaplingPickup", Scale = 1.1f } },
+        { "resource_sapling_persimmon", new PickupSpec { Name = "PersimmonSaplingPickup", Scale = 1.1f } },
+        { "food_grilled_corn", new PickupSpec { Name = "GrilledCornPickup", Scale = 1.3f } },
+        { "food_cabbage_wrap", new PickupSpec { Name = "CabbageWrapPickup", Scale = 1.2f } },
+        { "food_baked_sweet_potato", new PickupSpec { Name = "BakedSweetPotatoPickup", Scale = 1.3f } }
     };
 
     // 86일차: 동물 아이콘 (가축 창·HUD)

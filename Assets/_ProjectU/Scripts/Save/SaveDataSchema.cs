@@ -85,6 +85,10 @@ public sealed class SaveGameData // 전체 저장 파일 최상위 데이터
     public bool hasMeteorData; // 운석 저장 여부
     [Tooltip("섬에 남아 있는 운석 구덩이와 남은 운석 덩어리.")]
     public MeteorSaveData meteor = new MeteorSaveData(); // 운석
+    [Tooltip("과일나무 저장 데이터 존재 여부. (119일차)")]
+    public bool hasOrchardData; // 과일나무 저장 여부
+    [Tooltip("심어 둔 과일나무가 자란 정도와 남은 열매.")]
+    public OrchardSaveData orchard = new OrchardSaveData(); // 과일나무
 
     public static SaveGameData CreateNew(string newSceneName) // 새로운 저장 데이터 생성
     {

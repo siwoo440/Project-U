@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 8307986666083054821}
+  - component: {fileID: 1251490352430007747}
   m_Layer: 3
   m_Name: LeatherHatPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 1509677351645344230}
+  - {fileID: 8329369209083657852}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &8307986666083054821
+--- !u!114 &1251490352430007747
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: equipment_leather_hat
-  generatedVisual: {fileID: 4951961778101041807}
+  generatedVisual: {fileID: 2584021269787850005}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &6209642844784246097
+--- !u!1001 &3551576365757969099
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b77ab67a227fcae48a9d13a4ab26fbfa, type: 3}
---- !u!4 &1509677351645344230 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4818401665196281015, guid: b77ab67a227fcae48a9d13a4ab26fbfa, type: 3}
-  m_PrefabInstance: {fileID: 6209642844784246097}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &4951961778101041807 stripped
+--- !u!1 &2584021269787850005 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1339242839366633438, guid: b77ab67a227fcae48a9d13a4ab26fbfa, type: 3}
-  m_PrefabInstance: {fileID: 6209642844784246097}
+  m_PrefabInstance: {fileID: 3551576365757969099}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8329369209083657852 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4818401665196281015, guid: b77ab67a227fcae48a9d13a4ab26fbfa, type: 3}
+  m_PrefabInstance: {fileID: 3551576365757969099}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

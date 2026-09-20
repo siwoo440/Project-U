@@ -49,6 +49,16 @@
             "id": "118-wildlife",
             "appliedAt": "2026-09-20 18:15",
             "ok": true
+        },
+        {
+            "id": "119-season-items",
+            "appliedAt": "2026-09-20 19:18",
+            "ok": false
+        },
+        {
+            "id": "119-seasons",
+            "appliedAt": "2026-09-20 19:19",
+            "ok": true
         }
     ]
 }

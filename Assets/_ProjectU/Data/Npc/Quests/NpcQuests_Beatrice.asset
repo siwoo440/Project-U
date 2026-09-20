@@ -94,3 +94,20 @@ MonoBehaviour:
       \uC0C8 \uAD70\uCCB4\uC758 \uC2DC\uC791\uC774\uC5D0\uC694. \uC774 \uCC28\uB294
       \uAFC0 \uB300\uC2E0 \uB4DC\uB9AC\uB294 \uC120\uBB3C\uC774\uC5D0\uC694."
     requiredEventId: event_beatrice_trust
+  - questId: quest_beatrice_flower
+    title: "\uAFC0\uC744 \uBAA8\uC744 \uB4E4\uAF43"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: a7704c43fb0a9744190b33a177a9c82c, type: 2}
+      amount: 5
+    rewardCoins: 34
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 2
+    seasons: 00000000
+    requiredStage: 0
+    requestLine: "\uB4E4\uAF43 \uB2E4\uC12F \uB2E4\uBC1C! \uC77C\uBC8C\uB4E4\uC774
+      \uAFC0\uC744 \uBAA8\uC744 \uACF3\uC774 \uD544\uC694\uD574."
+    thanksLine: "\uC88B\uC544. \uC774\uBC88 \uBD04 \uAFC0\uC740 \uB124 \uB355\uC774\uC57C."
+    requiredEventId: 
