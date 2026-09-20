@@ -14,6 +14,9 @@ public sealed class GatherableResource : InteractableBase // 반복 채집 자�
     [Tooltip("채집에 필요한 도구.")]
     [SerializeField] private ToolType requiredToolType = ToolType.None; // 채집에 필요한 도구
 
+    [Tooltip("117일차: 필요한 도구 등급 (0 돌 · 1 구리 · 2 철 · 3 강철). 낮은 도구로는 캘 수 없습니다.")]
+    [SerializeField, Range(0, 3)] private int requiredToolTier; // 필요한 도구 등급
+
     [Header("Feedback")] // 채집 반응 설정 묶음
     [Tooltip("자원 타격 반응.")]
     [SerializeField] private ResourceHitFeedback hitFeedback; // 자원 타격 반응
@@ -34,8 +37,11 @@ public sealed class GatherableResource : InteractableBase // 반복 채집 자�
 
     private WorldObjectIdentity worldObjectIdentity; // 월드 고유 ID 컴포넌트
     private float respawnReadyTime; // 재생성 완료 예정 시각
+    private bool temporaryResource; // 117일차: 실행 중 생긴 임시 자원 (월드 저장 대상이 아님)
 
     public int TotalQuantity => Mathf.Max(1, totalQuantity); // 전체 자원 수량 제공
+    public int RequiredToolTier => Mathf.Clamp(requiredToolTier, 0, 3); // 117일차: 필요한 도구 등급 제공
+    public ToolType RequiredToolType => requiredToolType; // 필요한 도구 종류 제공
     public int RemainingQuantity => remainingQuantity; // 현재 남은 수량 제공
     public bool IsDepleted => isDepleted; // 현재 소진 상태 제공
 
@@ -49,6 +55,19 @@ public sealed class GatherableResource : InteractableBase // 반복 채집 자�
             }
 
             return Mathf.Max(0f, respawnReadyTime - Time.time); // 현재 기준 남은 시간 계산
+        }
+    }
+
+    public bool IsTemporary => temporaryResource; // 117일차: 실행 중 생긴 임시 자원 여부 제공 (월드 저장에서 제외)
+
+    public void MarkTemporary(string runtimeId) // 117일차: 실행 중 생긴 자원으로 표시 (운석 덩어리)
+    {
+        temporaryResource = true; // 임시 자원 표시
+        WorldObjectIdentity identity = ResolveWorldObjectIdentity(); // ID 컴포넌트 검색
+
+        if (identity != null) // ID 컴포넌트 확인
+        {
+            identity.AssignWorldObjectId(runtimeId); // 실행용 ID 적용
         }
     }
 
@@ -121,7 +140,9 @@ public sealed class GatherableResource : InteractableBase // 반복 채집 자�
             return; // 잘못된 도구 채집 차단
         }
 
-        int requestedQuantity = Mathf.Min(quantityPerInteraction, remainingQuantity); // 이번 채집 요청 수량
+        ItemData usedTool = requiredToolType == ToolType.None ? null : inventory.SelectedHotbarItem; // 117일차: 쓰고 있는 도구
+        int bonusQuantity = usedTool != null ? usedTool.GatherBonusQuantity : 0; // 좋은 도구는 한 번에 더 얻는다
+        int requestedQuantity = Mathf.Min(quantityPerInteraction + bonusQuantity, remainingQuantity); // 이번 채집 요청 수량
         int leftoverQuantity = inventory.AddItem(resourceItem, requestedQuantity); // 인벤토리 추가 후 남은 수량
         int gatheredQuantity = requestedQuantity - leftoverQuantity; // 실제 획득 수량
 
@@ -132,7 +153,8 @@ public sealed class GatherableResource : InteractableBase // 반복 채집 자�
         }
 
         remainingQuantity -= gatheredQuantity; // 남은 자원 수량 감소
-        nextGatherAllowedTime = Time.time + gatherCooldown; // 다음 채집 가능 시간 설정
+        float toolSpeed = usedTool != null ? Mathf.Max(0.5f, usedTool.GatherSpeedMultiplier) : 1f; // 117일차: 좋은 도구는 더 빠르다
+        nextGatherAllowedTime = Time.time + gatherCooldown / toolSpeed; // 다음 채집 가능 시간 설정
         PlayGatheringFeedback(); // 자원 타격 반응 실행
         Debug.Log($"{resourceItem.DisplayName} {gatheredQuantity}개 획득 / 남은 자원 {remainingQuantity}개", this); // 채집 결과 출력
 
@@ -180,7 +202,24 @@ public sealed class GatherableResource : InteractableBase // 반복 채집 자�
             return false; // 잘못된 도구 채집 차단
         }
 
+        if (selectedItem.ToolTier < RequiredToolTier) // 117일차: 도구 등급 확인 (은 · 수정 · 보석은 철 곡괭이부터)
+        {
+            Debug.Log($"{gameObject.name}은(는) 더 좋은 도구가 필요합니다 ({TierName(RequiredToolTier)} 이상).", this); // 등급 부족 안내
+            return false; // 낮은 등급 도구 차단
+        }
+
         return true; // 올바른 도구 채집 허용
+    }
+
+    public static string TierName(int tier) // 117일차: 도구 등급 이름
+    {
+        switch (tier)
+        {
+            case 1: return "구리 도구";
+            case 2: return "철 도구";
+            case 3: return "강철 도구";
+            default: return "돌 도구";
+        }
     }
 
     private void HandleDepleted() // 자원 소진 상태 처리

@@ -27,6 +27,21 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: bc991e404803cba4292542d6a52ddd7a, type: 2}
     preference: 1
     source: item_plant_fiber
+  - item: {fileID: 11400000, guid: aca4283f4b704ac43a428c42e9450fbe, type: 2}
+    preference: 1
+    source: tag:gem
+  - item: {fileID: 11400000, guid: dbfa48072e5c5cd43ad02ac4cdcabfee, type: 2}
+    preference: 1
+    source: tag:gem
+  - item: {fileID: 11400000, guid: 99e12c072a98e0848ad4886fa63c996f, type: 2}
+    preference: 1
+    source: tag:gem
+  - item: {fileID: 11400000, guid: 55b337076826aac4f9f3440c886bfa2a, type: 2}
+    preference: 1
+    source: tag:gem
+  - item: {fileID: 11400000, guid: ea17272f79d67524b8be2dc3ab20d25a, type: 2}
+    preference: 1
+    source: tag:gem
   - item: {fileID: 11400000, guid: b9e78781ff8b2aa4bae6df0fa3d2e1c9, type: 2}
     preference: 3
     source: item_wood

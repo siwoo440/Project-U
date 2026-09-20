@@ -99,6 +99,11 @@ public static class CaveBuilder
     private const float HallRing = 92f; // 넓은 방이 놓이는 반지름
     private const float TunnelWidth = 5f; // 굴 너비
     private const float TunnelHeight = 4.4f; // 굴 높이
+    public const float DeepDepth = 18f; // 117일차: 깊은층 깊이 (m)
+    private const float DeepRing = 62f; // 깊은층 방이 놓이는 반지름
+    private const float DeepRadius = 15f; // 깊은층 방 반지름
+    private const float DeepHeight = 8.5f; // 깊은층 방 높이
+    private const float DeepGreatRadius = 20f; // 깊은층 가운데 방
 
     private sealed class Room
     {
@@ -106,6 +111,7 @@ public static class CaveBuilder
         public Vector3 Center; // 동굴 맵 기준 위치 (y = 0 바닥)
         public float Radius;
         public float Height;
+        public int Layer = 1; // 117일차: 1 입구층 · 2 깊은층
         public readonly List<float> Openings = new List<float>(); // 굴이 뚫린 방향 (도)
     }
 
@@ -253,6 +259,19 @@ public static class CaveBuilder
             tunnels.Add(new Tunnel { Id = $"tunnel_ring_{index:00}", From = chambers[index], To = chambers[(index + 1) % chambers.Length] });
         }
 
+        // 117일차: 깊은층 (가운데 방에서 내려가는 비탈길 + 갈래 방 4)
+        Room deepGreat = new Room { Id = "deep_hall", Center = new Vector3(0f, -DeepDepth, 0f), Radius = DeepGreatRadius, Height = DeepHeight + 2f, Layer = 2 };
+        rooms.Add(deepGreat);
+        tunnels.Add(new Tunnel { Id = "tunnel_deep_ramp", From = great, To = deepGreat });
+
+        for (int index = 0; index < 4; index++)
+        {
+            float angle = index * 90f + 45f;
+            Room deep = new Room { Id = $"deep_{index}", Center = Direction(angle) * DeepRing + Vector3.down * DeepDepth, Radius = DeepRadius, Height = DeepHeight, Layer = 2 };
+            rooms.Add(deep);
+            tunnels.Add(new Tunnel { Id = $"tunnel_deep_{index}", From = deepGreat, To = deep });
+        }
+
         foreach (Tunnel tunnel in tunnels) // 굴이 닿는 방향에 구멍을 뚫는다
         {
             Vector3 direction = tunnel.To.Center - tunnel.From.Center;
@@ -371,7 +390,7 @@ public static class CaveBuilder
     private static bool BuildTunnelMesh(Transform parent, Tunnel tunnel)
     {
         Vector3 direction = tunnel.To.Center - tunnel.From.Center;
-        direction.y = 0f;
+        direction.y = 0f; // 층이 다르면 비탈길이 된다 (방 높이는 아래에서 이어 준다)
         float distance = direction.magnitude;
 
         if (distance < 1f)
@@ -382,7 +401,9 @@ public static class CaveBuilder
         direction /= distance;
         Vector3 right = Vector3.Cross(Vector3.up, direction);
         Vector3 start = tunnel.From.Center + direction * (tunnel.From.Radius * 0.82f);
+        start.y = tunnel.From.Center.y;
         Vector3 end = tunnel.To.Center - direction * (tunnel.To.Radius * 0.82f);
+        end.y = tunnel.To.Center.y;
         Vector3 center = (start + end) * 0.5f;
         LowPolyMeshBuilder shell = new LowPolyMeshBuilder();
         LowPolyMeshBuilder roof = new LowPolyMeshBuilder();
@@ -504,12 +525,9 @@ public static class CaveBuilder
         props.SetParent(parent, false);
         Transform veins = new GameObject("CaveResources").transform;
         veins.SetParent(parent, false);
-        GameObject stonePrefab = AssetDatabase.LoadAssetAtPath<GameObject>(StoneResourcePath);
-        ItemData ironOre = AssetDatabase.LoadAssetAtPath<ItemData>(IronOreItemPath);
         int propCount = 0;
-        int stoneVeins = 0;
-        int ironVeins = 0;
         int lights = 0;
+        Dictionary<string, int> veinCounts = new Dictionary<string, int>(StringComparer.Ordinal); // 117일차: 광물별 광맥 수
 
         foreach (Room room in rooms)
         {
@@ -564,33 +582,23 @@ public static class CaveBuilder
                 }
             }
 
-            if (stonePrefab == null)
-            {
-                continue;
-            }
-
-            int veinCount = isChamber ? 2 : 4;
+            int veinCount = isChamber ? 3 : room.Layer == 2 ? 7 : 5; // 117일차: 깊은층에 더 많다
 
             for (int index = 0; index < veinCount; index++)
             {
                 float angle = Hash(seed, index, 10) * 360f;
                 Vector3 spot = room.Center + Direction(angle) * (room.Radius * 0.9f);
-                bool iron = ironOre != null && Hash(seed, index, 11) < (isChamber ? 0.35f : 0.55f);
-                GameObject vein = (GameObject)PrefabUtility.InstantiatePrefab(stonePrefab, veins);
-                vein.transform.SetLocalPositionAndRotation(spot, Quaternion.Euler(0f, Hash(seed, index, 12) * 360f, 0f));
-                vein.name = $"CaveVein_{room.Id}_{index:00}_{(iron ? "iron" : "stone")}";
-                GatherableResource resource = vein.GetComponent<GatherableResource>();
+                MineralBuilder.VeinSpec spec = PickVein(room.Layer, Hash(seed, index, 11));
+                GameObject prefab = spec != null ? MineralBuilder.LoadVeinPrefab(spec) : null;
 
-                if (resource != null && iron)
+                if (prefab == null)
                 {
-                    SerializedObject serialized = new SerializedObject(resource);
-                    serialized.FindProperty("resourceItem").objectReferenceValue = ironOre;
-                    serialized.FindProperty("promptMessage").stringValue = "LMB - 철광석 캐기";
-                    serialized.FindProperty("totalQuantity").intValue = 3;
-                    serialized.FindProperty("respawnDelay").floatValue = 25f;
-                    serialized.ApplyModifiedPropertiesWithoutUndo();
+                    continue;
                 }
 
+                GameObject vein = (GameObject)PrefabUtility.InstantiatePrefab(prefab, veins);
+                vein.transform.SetLocalPositionAndRotation(spot, Quaternion.Euler(0f, Hash(seed, index, 12) * 360f, 0f));
+                vein.name = $"CaveVein_{room.Id}_{index:00}_{spec.Id}";
                 WorldObjectIdentity identity = vein.GetComponent<WorldObjectIdentity>();
 
                 if (identity == null)
@@ -602,30 +610,33 @@ public static class CaveBuilder
                 EditorUtility.SetDirty(identity);
                 GameObjectUtility.SetStaticEditorFlags(vein, 0);
                 SetCaveLayer(vein);
-
-                if (iron)
-                {
-                    ironVeins++;
-                }
-                else
-                {
-                    stoneVeins++;
-                }
+                veinCounts[spec.Id] = veinCounts.TryGetValue(spec.Id, out int count) ? count + 1 : 1;
             }
         }
 
-        foreach (Tunnel tunnel in tunnels) // 굴 벽에도 가끔 광석
+        foreach (Tunnel tunnel in tunnels) // 굴 벽에도 가끔 광맥
         {
-            if (stonePrefab == null || Mathf.Abs(tunnel.Id.GetHashCode()) % 3 != 0)
+            if (Mathf.Abs(tunnel.Id.GetHashCode()) % 3 != 0)
+            {
+                continue;
+            }
+
+            int layer = tunnel.From.Layer == 2 && tunnel.To.Layer == 2 ? 2 : 1;
+            MineralBuilder.VeinSpec spec = PickVein(layer, Hash(Mathf.Abs(tunnel.Id.GetHashCode()), 0, 13));
+            GameObject prefab = spec != null ? MineralBuilder.LoadVeinPrefab(spec) : null;
+
+            if (prefab == null)
             {
                 continue;
             }
 
             Vector3 spot = Vector3.Lerp(tunnel.From.Center, tunnel.To.Center, 0.5f);
-            Vector3 side = Vector3.Cross(Vector3.up, (tunnel.To.Center - tunnel.From.Center).normalized) * (TunnelWidth * 0.5f - 0.6f);
-            GameObject vein = (GameObject)PrefabUtility.InstantiatePrefab(stonePrefab, veins);
+            Vector3 flat = tunnel.To.Center - tunnel.From.Center;
+            flat.y = 0f;
+            Vector3 side = Vector3.Cross(Vector3.up, flat.normalized) * (TunnelWidth * 0.5f - 0.6f);
+            GameObject vein = (GameObject)PrefabUtility.InstantiatePrefab(prefab, veins);
             vein.transform.SetLocalPositionAndRotation(spot + side, Quaternion.identity);
-            vein.name = $"CaveVein_{tunnel.Id}";
+            vein.name = $"CaveVein_{tunnel.Id}_{spec.Id}";
             WorldObjectIdentity identity = vein.GetComponent<WorldObjectIdentity>();
 
             if (identity == null)
@@ -636,10 +647,70 @@ public static class CaveBuilder
             identity.AssignWorldObjectId($"cave_vein_{tunnel.Id}");
             EditorUtility.SetDirty(identity);
             GameObjectUtility.SetStaticEditorFlags(vein, 0);
-            stoneVeins++;
+            SetCaveLayer(vein);
+            veinCounts[spec.Id] = veinCounts.TryGetValue(spec.Id, out int count) ? count + 1 : 1;
         }
 
-        return $"동굴 소품 {propCount}개 · 길잡이 수정 불빛 {lights}개 · 돌 광맥 {stoneVeins}개 · 철 광맥 {ironVeins}개";
+        foreach (MineralBuilder.VeinSpec spec in MineralBuilder.Veins) // 117일차: 없는 광물은 그 층 방에 하나씩 채워 준다
+        {
+            if (veinCounts.ContainsKey(spec.Id))
+            {
+                continue;
+            }
+
+            Room home = rooms.FirstOrDefault(room => room.Layer == spec.Layer && room.Radius > ChamberRadius + 0.1f) ?? rooms.FirstOrDefault(room => room.Layer == spec.Layer);
+            GameObject prefab = home != null ? MineralBuilder.LoadVeinPrefab(spec) : null;
+
+            if (prefab == null)
+            {
+                continue;
+            }
+
+            float angle = Mathf.Abs(spec.Id.GetHashCode()) % 360;
+            GameObject vein = (GameObject)PrefabUtility.InstantiatePrefab(prefab, veins);
+            vein.transform.SetLocalPositionAndRotation(home.Center + Direction(angle) * (home.Radius * 0.75f), Quaternion.Euler(0f, angle, 0f));
+            vein.name = $"CaveVein_{home.Id}_fill_{spec.Id}";
+            WorldObjectIdentity identity = vein.GetComponent<WorldObjectIdentity>();
+
+            if (identity == null)
+            {
+                identity = vein.AddComponent<WorldObjectIdentity>();
+            }
+
+            identity.AssignWorldObjectId($"cave_vein_fill_{spec.Id}");
+            EditorUtility.SetDirty(identity);
+            GameObjectUtility.SetStaticEditorFlags(vein, 0);
+            SetCaveLayer(vein);
+            veinCounts[spec.Id] = 1;
+        }
+
+        return $"동굴 소품 {propCount}개 · 길잡이 수정 불빛 {lights}개 · 광맥 {veinCounts.Values.Sum()}개 ({string.Join(" · ", veinCounts.OrderByDescending(pair => pair.Value).Select(pair => $"{pair.Key} {pair.Value}"))})";
+    }
+
+    // 117일차: 층에 맞는 광물 뽑기 (깊을수록 좋은 광물)
+    private static MineralBuilder.VeinSpec PickVein(int layer, float roll)
+    {
+        MineralBuilder.VeinSpec[] pool = MineralBuilder.Veins.Where(spec => spec.Layer == layer).ToArray();
+
+        if (pool.Length == 0)
+        {
+            return null;
+        }
+
+        float total = pool.Sum(spec => spec.Weight);
+        float pick = Mathf.Clamp01(roll) * total;
+
+        foreach (MineralBuilder.VeinSpec spec in pool)
+        {
+            pick -= spec.Weight;
+
+            if (pick <= 0f)
+            {
+                return spec;
+            }
+        }
+
+        return pool[pool.Length - 1];
     }
 
     private static float Hash(int seed, int index, int salt)
@@ -1121,8 +1192,8 @@ public static class CaveBuilder
         NavMeshSurface surface = holder.AddComponent<NavMeshSurface>();
         surface.collectObjects = CollectObjects.Volume;
         surface.useGeometry = NavMeshCollectGeometry.PhysicsColliders;
-        surface.size = new Vector3(ChamberRing * 2.6f, 40f, ChamberRing * 2.6f);
-        surface.center = new Vector3(0f, 10f, 0f);
+        surface.size = new Vector3(ChamberRing * 2.6f, 80f, ChamberRing * 2.6f);
+        surface.center = new Vector3(0f, 0f, 0f); // 117일차: 깊은층까지 포함
         surface.BuildNavMesh();
         NavMeshData data = surface.navMeshData;
 

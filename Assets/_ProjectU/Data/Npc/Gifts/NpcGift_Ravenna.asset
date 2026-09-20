@@ -27,6 +27,15 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: cc96d25a17a973747bb1d11fe6839e7b, type: 2}
     preference: 1
     source: tag:weapon
+  - item: {fileID: 11400000, guid: 5bc962e624fab764dae24c92d59cf3c2, type: 2}
+    preference: 1
+    source: tag:treasure
+  - item: {fileID: 11400000, guid: 7c2a145890e4e414fa35480909d7c495, type: 2}
+    preference: 1
+    source: tag:treasure
+  - item: {fileID: 11400000, guid: b1760aba96b530f479ae0fa01f4c5390, type: 2}
+    preference: 1
+    source: tag:treasure
   - item: {fileID: 11400000, guid: 39da177e19117c74f96b0718ec760b34, type: 2}
     preference: 1
     source: tag:weapon

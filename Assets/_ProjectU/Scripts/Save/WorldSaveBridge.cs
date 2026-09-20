@@ -295,6 +295,12 @@ public sealed class WorldSaveBridge : MonoBehaviour
         for (int index = 0; index < foundResources.Length; index++)
         {
             GatherableResource resource = foundResources[index];
+
+            if (resource.IsTemporary) // 117일차: 운석 덩어리 같은 임시 자원은 따로 저장한다
+            {
+                continue;
+            }
+
             string worldObjectId = resource.WorldObjectId;
 
             if (string.IsNullOrWhiteSpace(worldObjectId))

@@ -3,7 +3,8 @@ using UnityEngine; // Unity 기본 기능
 public enum CookingStationTier // 85일차: 조리 시설 등급
 {
     Campfire = 0, // 모닥불 (굽기)
-    StoneCampfire = 1 // 돌 모닥불 (냄비 요리까지)
+    StoneCampfire = 1, // 돌 모닥불 (냄비 요리까지)
+    Furnace = 2 // 117일차: 용광로 (광석 → 주괴)
 }
 
 public enum CookingRecipeStatus // 요리법 현재 상태
@@ -30,6 +31,7 @@ public static class CookingStationUtility // 조리 시설 표시 도우미
         switch (tier) // 등급 분기
         {
             case CookingStationTier.StoneCampfire: return "STONE CAMPFIRE"; // 돌 모닥불
+            case CookingStationTier.Furnace: return "FURNACE"; // 117일차: 용광로
             default: return "CAMPFIRE"; // 모닥불
         }
     }

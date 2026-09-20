@@ -21,6 +21,21 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: c593f671b9ae9d24e96e6cd5ee7b2a1c, type: 2}
     preference: 0
     source: item_iron_ore
+  - item: {fileID: 11400000, guid: aca4283f4b704ac43a428c42e9450fbe, type: 2}
+    preference: 0
+    source: tag:gem
+  - item: {fileID: 11400000, guid: dbfa48072e5c5cd43ad02ac4cdcabfee, type: 2}
+    preference: 0
+    source: tag:gem
+  - item: {fileID: 11400000, guid: 99e12c072a98e0848ad4886fa63c996f, type: 2}
+    preference: 0
+    source: tag:gem
+  - item: {fileID: 11400000, guid: 55b337076826aac4f9f3440c886bfa2a, type: 2}
+    preference: 0
+    source: tag:gem
+  - item: {fileID: 11400000, guid: ea17272f79d67524b8be2dc3ab20d25a, type: 2}
+    preference: 0
+    source: tag:gem
   - item: {fileID: 11400000, guid: ced6962cfb3b9a249aadbf41f4f53d78, type: 2}
     preference: 1
     source: equipment_cloth_cap

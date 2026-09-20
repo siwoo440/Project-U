@@ -28,6 +28,9 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
     [Tooltip("도구 종류.")] // Inspector 도구 종류 설명
     [SerializeField] private ToolType toolType = ToolType.None; // 도구 종류
 
+    [Tooltip("117일차: 도구 등급 (0 돌 · 1 구리 · 2 철 · 3 강철). 높을수록 빨리 캐고 한 번에 더 얻습니다.")] // Inspector 도구 등급 설명
+    [SerializeField, Range(0, 3)] private int toolTier; // 도구 등급
+
     [Header("Weapon Attack")] // 무기 공통 공격 능력치 묶음
     [Tooltip("아이템의 공격 방식입니다. 도구 또는 무기 분류에서 사용합니다.")] // Inspector 공격 방식 설명
     [SerializeField] private WeaponAttackType weaponAttackType = WeaponAttackType.None; // 공격 방식
@@ -121,6 +124,9 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
     public int MaximumStack => Mathf.Max(1, maximumStack); // 최대 중첩 수량 제공
     public ItemCategory ItemCategory => itemCategory; // 아이템 분류 제공
     public ToolType ToolType => toolType; // 도구 종류 제공
+    public int ToolTier => IsTool ? Mathf.Clamp(toolTier, 0, 3) : 0; // 117일차: 도구 등급 제공
+    public float GatherSpeedMultiplier => 1f + ToolTier * 0.3f; // 등급별 채집 속도 (1 · 1.3 · 1.6 · 1.9배)
+    public int GatherBonusQuantity => ToolTier >= 3 ? 2 : ToolTier >= 2 ? 1 : 0; // 등급별 한 번에 더 얻는 수량
     public WeaponAttackType WeaponAttackType => CanAttack ? weaponAttackType : WeaponAttackType.None; // 공격 방식 제공
     public float BaseDamage => CanAttack ? Mathf.Max(0f, baseDamage) : 0f; // 기본 피해량 제공
     public float AttackCooldown => CanAttack ? Mathf.Max(0.05f, attackCooldown) : 0f; // 기본 공격 간격 제공
@@ -183,6 +189,7 @@ public sealed class ItemData : ScriptableObject // 아이템 공통 데이터
         if (itemCategory != ItemCategory.Tool) // 도구가 아닌 분류 확인
         {
             toolType = ToolType.None; // 도구 종류 제거
+            toolTier = 0; // 도구 등급 제거
         }
 
         if (!SupportsCombat) // 공격 능력치를 사용하지 않는 분류 확인

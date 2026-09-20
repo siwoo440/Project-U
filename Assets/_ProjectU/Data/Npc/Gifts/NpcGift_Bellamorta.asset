@@ -32,6 +32,21 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: ce6c806808c6dfb4ca5fb2217dce497c, type: 2}
     preference: 1
     source: item_wild_mushroom
+  - item: {fileID: 11400000, guid: aca4283f4b704ac43a428c42e9450fbe, type: 2}
+    preference: 1
+    source: tag:gem
+  - item: {fileID: 11400000, guid: dbfa48072e5c5cd43ad02ac4cdcabfee, type: 2}
+    preference: 1
+    source: tag:gem
+  - item: {fileID: 11400000, guid: 99e12c072a98e0848ad4886fa63c996f, type: 2}
+    preference: 1
+    source: tag:gem
+  - item: {fileID: 11400000, guid: 55b337076826aac4f9f3440c886bfa2a, type: 2}
+    preference: 1
+    source: tag:gem
+  - item: {fileID: 11400000, guid: ea17272f79d67524b8be2dc3ab20d25a, type: 2}
+    preference: 1
+    source: tag:gem
   - item: {fileID: 11400000, guid: 479a7e7a5dbb8df4a9ea663d4e582a1b, type: 2}
     preference: 1
     source: tag:ore

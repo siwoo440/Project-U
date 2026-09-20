@@ -78,6 +78,7 @@ public static class ContentIntegrationValidator
             ("아이템 한글 이름", Feature(ItemKoreanNameBuilder.Validate)),
             ("115일차 통합 점검", Feature(IntegrationPolishBuilder.Validate)),
             ("동굴", Feature(CaveBuilder.Validate)),
+            ("광물 · 제련 · 밤의 운석", Feature(MineralBuilder.Validate)),
             ("데이터 점검", Feature(DataAuditBuilder.Validate)),
             ("아이템 데이터 (ID 규칙)", ItemDataValidator.ValidateAllItemData),
             ("Game Data Registry", () => CountLoggedErrors(GameDataRegistryEditor.ValidateDefaultRegistry, details))
@@ -259,6 +260,18 @@ public static class ContentIntegrationValidator
             foreach (GatherableResource resource in Object.FindObjectsByType<GatherableResource>(FindObjectsInactive.Include, FindObjectsSortMode.None))
             {
                 AddSource(new SerializedObject(resource).FindProperty("resourceItem").objectReferenceValue as ItemData, "채집");
+            }
+
+            MeteorEventManager meteor = Object.FindFirstObjectByType<MeteorEventManager>(FindObjectsInactive.Include); // 117일차: 밤에 떨어지는 운석
+
+            if (meteor != null && meteor.MeteorRockPrefab != null)
+            {
+                GatherableResource meteorRock = meteor.MeteorRockPrefab.GetComponent<GatherableResource>();
+
+                if (meteorRock != null)
+                {
+                    AddSource(new SerializedObject(meteorRock).FindProperty("resourceItem").objectReferenceValue as ItemData, "밤의 운석");
+                }
             }
 
             foreach (WorldItemPickup pickup in Object.FindObjectsByType<WorldItemPickup>(FindObjectsInactive.Include, FindObjectsSortMode.None))

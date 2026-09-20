@@ -86,3 +86,57 @@ MonoBehaviour:
     thanksLine: "\uBC1B\uC544. \uB124 \uC190\uC5D0 \uB9DE\uCDB0 \uB450\uB4DC\uB9B0
       \uB3C4\uB07C\uB2E4. \uD568\uBD80\uB85C \uC4F0\uC9C0 \uB9C8."
     requiredEventId: event_dravia_trust
+  - questId: quest_dravia_coal
+    title: "\uD654\uB85C\uC5D0 \uB123\uC744 \uC11D\uD0C4"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 02b947bfdf7f9504e9e7cd2644878460, type: 2}
+      amount: 8
+    rewardCoins: 50
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uC11D\uD0C4 \uC5EC\uB35F \uAC1C. \uB098\uBB34\uBCF4\uB2E4 \uC624\uB798
+      \uD0C0\uC11C \uC1E0\uB97C \uB179\uC774\uAE30 \uC88B\uC544."
+    thanksLine: "\uC88B\uAD70. \uC774 \uC815\uB3C4\uBA74 \uC1E0\uB3C4 \uB9D0\uC744
+      \uB4E3\uACA0\uC9C0."
+    requiredEventId: 
+  - questId: quest_dravia_copper
+    title: "\uAD6C\uB9AC \uAD11\uC11D \uB0A9\uD488"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: c6211d256f18d614f8dbbc2dec219479, type: 2}
+      amount: 6
+    rewardCoins: 46
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uAD6C\uB9AC \uAD11\uC11D \uC5EC\uC12F \uAC1C\uB9CC \uAC00\uC838\uC640.
+      \uBB34\uB978 \uC1E0\uB3C4 \uC4F8 \uB370\uAC00 \uC788\uB2E4."
+    thanksLine: "\uBB34\uB978 \uC1E0\uC9C0\uB9CC \uC190\uC5D0 \uC775\uD788\uAE30\uC5D4
+      \uC88B\uC9C0. \uACE0\uB9D9\uB2E4."
+    requiredEventId: 
+  - questId: quest_dravia_steel
+    title: "\uAC15\uCCA0 \uC8FC\uAD34 \uB450 \uB369\uC774"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 95acefc30fd8d5644810bcaebf351563, type: 2}
+      amount: 2
+    rewardCoins: 180
+    rewardAffinity: 6
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 4
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uAC15\uCCA0 \uC8FC\uAD34 \uB450 \uB369\uC774. \uC6A9\uAD11\uB85C\uC5D0\uC11C
+      \uCCA0\uC744 \uD55C \uBC88 \uB354 \uB450\uB4DC\uB9AC\uBA74 \uB098\uC628\uB2E4."
+    thanksLine: "\uAC15\uCCA0\uC774\uAD70. \uC774\uAC78\uB85C \uC9C4\uC9DC \uBB3C\uAC74\uC744
+      \uB9CC\uB4E4 \uC218 \uC788\uB2E4."
+    requiredEventId: 

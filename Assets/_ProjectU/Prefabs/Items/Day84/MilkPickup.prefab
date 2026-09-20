@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 2419404106086778001}
+  - component: {fileID: 9168187332939897522}
   m_Layer: 3
   m_Name: MilkPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 6284134114686773082}
+  - {fileID: 7510693934516974366}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &2419404106086778001
+--- !u!114 &9168187332939897522
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: item_milk
-  generatedVisual: {fileID: 2036830785556660594}
+  generatedVisual: {fileID: 2543025497444341046}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &7408898733130169179
+--- !u!1001 &6475983701318676255
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0074d5b6e5f6c174dae89af4581e2ee5, type: 3}
---- !u!1 &2036830785556660594 stripped
+--- !u!1 &2543025497444341046 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8833235530515741225, guid: 0074d5b6e5f6c174dae89af4581e2ee5, type: 3}
-  m_PrefabInstance: {fileID: 7408898733130169179}
+  m_PrefabInstance: {fileID: 6475983701318676255}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &6284134114686773082 stripped
+--- !u!4 &7510693934516974366 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3595007793356151809, guid: 0074d5b6e5f6c174dae89af4581e2ee5, type: 3}
-  m_PrefabInstance: {fileID: 7408898733130169179}
+  m_PrefabInstance: {fileID: 6475983701318676255}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

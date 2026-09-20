@@ -66,7 +66,25 @@ public static class MarketContentBuilder
         ("item_pearl", 30, MarketGoodsType.Material),
         ("food_seaweed_salad", 12, MarketGoodsType.Cooked),
         ("food_grilled_clams", 16, MarketGoodsType.Cooked),
-        ("medicine_flower_balm", 14, MarketGoodsType.Supply)
+        ("medicine_flower_balm", 14, MarketGoodsType.Supply),
+        // 117일차: 광석 · 보석 · 주괴 (깊은 곳 광물일수록 비싸다)
+        ("resource_coal", 4, MarketGoodsType.Material),
+        ("resource_copper_ore", 5, MarketGoodsType.Material),
+        ("resource_silver_ore", 14, MarketGoodsType.Material),
+        ("resource_gold_ore", 26, MarketGoodsType.Material),
+        ("resource_crystal", 20, MarketGoodsType.Material),
+        ("resource_meteorite_shard", 40, MarketGoodsType.Material),
+        ("resource_gem_amethyst", 45, MarketGoodsType.Material),
+        ("resource_gem_ruby", 70, MarketGoodsType.Material),
+        ("resource_gem_sapphire", 70, MarketGoodsType.Material),
+        ("resource_gem_emerald", 80, MarketGoodsType.Material),
+        ("resource_gem_diamond", 140, MarketGoodsType.Material),
+        ("resource_ingot_copper", 16, MarketGoodsType.Material),
+        ("resource_ingot_iron", 22, MarketGoodsType.Material),
+        ("resource_ingot_silver", 38, MarketGoodsType.Material),
+        ("resource_ingot_gold", 64, MarketGoodsType.Material),
+        ("resource_ingot_steel", 60, MarketGoodsType.Material),
+        ("resource_ingot_meteorite", 170, MarketGoodsType.Material)
     };
 
     // 물고기 : 기본 14 × 희귀도 배율 × (1 + 난이도 × 0.5)

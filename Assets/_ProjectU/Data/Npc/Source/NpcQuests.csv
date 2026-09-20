@@ -140,3 +140,6 @@ quest_octavia_crucian,char_octavia,Board,민물 표본,resource_fish_crucian:2,4
 quest_octavia_smelt,char_octavia,Board,겨울 바다 표본,resource_fish_smelt:2,45,4,,3,Winter,,"겨울 바다의 은빛 물고기, 빙어 두 마리를 기록하고 싶어요.",차갑고 반짝여요. 심해의 별 같네요.,
 quest_octavia_mushroom,char_octavia,Board,먹물 버섯,item_wild_mushroom:4,38,4,,3,All,,먹물이 떨어져 가요. 숲 버섯 네 개로 새 먹물을 만들 수 있어요.,진한 먹물이 나왔어요. 오늘 기록은 더 선명하겠어요.,
 quest_octavia_special,char_octavia,Special,심해 기록 복원,resource_fish_trout:1|item_wild_mushroom:5|item_spider_silk:2,130,10,item_pearl:2,5,Spring|Autumn,Trust,"잃어버린 심해 기록을 한 권 되살리고 싶어요. 기억을 깨울 송어 하나, 먹물 버섯 다섯, 책을 묶을 실 둘. 마지막 장에는… 당신을 적을게요.",복원 완료. 심해의 친구들이 다시 책 속에서 헤엄쳐요. 이 진주들은 심해에서 가져온 거예요.,event_octavia_trust
+quest_dravia_coal,char_dravia,Board,화로에 넣을 석탄,resource_coal:8,50,4,,3,All,,석탄 여덟 개. 나무보다 오래 타서 쇠를 녹이기 좋아.,좋군. 이 정도면 쇠도 말을 듣겠지.,
+quest_dravia_copper,char_dravia,Board,구리 광석 납품,resource_copper_ore:6,46,4,,3,All,,구리 광석 여섯 개만 가져와. 무른 쇠도 쓸 데가 있다.,무른 쇠지만 손에 익히기엔 좋지. 고맙다.,
+quest_dravia_steel,char_dravia,Board,강철 주괴 두 덩이,resource_ingot_steel:2,180,6,,4,All,,강철 주괴 두 덩이. 용광로에서 철을 한 번 더 두드리면 나온다.,강철이군. 이걸로 진짜 물건을 만들 수 있다.,

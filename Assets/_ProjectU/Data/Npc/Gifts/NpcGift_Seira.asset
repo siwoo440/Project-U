@@ -30,6 +30,21 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 361f6079362891a468aae059667ddd1c, type: 2}
     preference: 1
     source: item_herbal_tea
+  - item: {fileID: 11400000, guid: aca4283f4b704ac43a428c42e9450fbe, type: 2}
+    preference: 1
+    source: tag:gem
+  - item: {fileID: 11400000, guid: dbfa48072e5c5cd43ad02ac4cdcabfee, type: 2}
+    preference: 1
+    source: tag:gem
+  - item: {fileID: 11400000, guid: 99e12c072a98e0848ad4886fa63c996f, type: 2}
+    preference: 1
+    source: tag:gem
+  - item: {fileID: 11400000, guid: 55b337076826aac4f9f3440c886bfa2a, type: 2}
+    preference: 1
+    source: tag:gem
+  - item: {fileID: 11400000, guid: ea17272f79d67524b8be2dc3ab20d25a, type: 2}
+    preference: 1
+    source: tag:gem
   - item: {fileID: 11400000, guid: 34ed2068e680c3e47b192431c37799db, type: 2}
     preference: 3
     source: tool_pickaxe

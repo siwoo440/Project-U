@@ -108,7 +108,30 @@ public static class ItemVisualContentBuilder
         { "item_pearl", "item_pearl" },
         { "food_seaweed_salad", "item_seaweed_salad" },
         { "food_grilled_clams", "item_grilled_clams" },
-        { "medicine_flower_balm", "item_flower_balm" }
+        { "medicine_flower_balm", "item_flower_balm" },
+        // 117일차 광물 · 보석 · 주괴 · 등급 도구
+        { "resource_coal", "resource_coal" },
+        { "resource_copper_ore", "resource_copper_ore" },
+        { "resource_silver_ore", "resource_silver_ore" },
+        { "resource_gold_ore", "resource_gold_ore" },
+        { "resource_crystal", "resource_crystal" },
+        { "resource_meteorite_shard", "resource_meteorite_shard" },
+        { "resource_gem_ruby", "gem_ruby" },
+        { "resource_gem_sapphire", "gem_sapphire" },
+        { "resource_gem_emerald", "gem_emerald" },
+        { "resource_gem_amethyst", "gem_amethyst" },
+        { "resource_gem_diamond", "gem_diamond" },
+        { "resource_ingot_copper", "ingot_copper" },
+        { "resource_ingot_iron", "ingot_iron" },
+        { "resource_ingot_silver", "ingot_silver" },
+        { "resource_ingot_gold", "ingot_gold" },
+        { "resource_ingot_steel", "ingot_steel" },
+        { "resource_ingot_meteorite", "ingot_meteorite" },
+        { "tool_pickaxe_copper", "tool_pickaxe_copper" },
+        { "tool_pickaxe_iron", "tool_pickaxe_iron" },
+        { "tool_pickaxe_steel", "tool_pickaxe_steel" },
+        { "tool_axe_copper", "tool_axe_copper" },
+        { "tool_axe_steel", "tool_axe_steel" }
     };
 
     // 84·85일차에 새로 만든 모델 (코드 변경을 반영하도록 항상 다시 만든다)
@@ -162,7 +185,30 @@ public static class ItemVisualContentBuilder
         { "item_pearl", new PickupSpec { Name = "PearlPickup", Scale = 1.0f } },
         { "food_seaweed_salad", new PickupSpec { Name = "SeaweedSaladPickup", Scale = 1.15f } },
         { "food_grilled_clams", new PickupSpec { Name = "GrilledClamsPickup", Scale = 1.3f } },
-        { "medicine_flower_balm", new PickupSpec { Name = "FlowerBalmPickup", Scale = 1.0f } }
+        { "medicine_flower_balm", new PickupSpec { Name = "FlowerBalmPickup", Scale = 1.0f } },
+        // 117일차 광물 · 보석 · 주괴 · 등급 도구
+        { "resource_coal", new PickupSpec { Name = "CoalPickup", Scale = 1.8f } },
+        { "resource_copper_ore", new PickupSpec { Name = "CopperOrePickup", Scale = 1.8f } },
+        { "resource_silver_ore", new PickupSpec { Name = "SilverOrePickup", Scale = 1.8f } },
+        { "resource_gold_ore", new PickupSpec { Name = "GoldOrePickup", Scale = 1.8f } },
+        { "resource_crystal", new PickupSpec { Name = "CrystalPickup", Scale = 2.2f } },
+        { "resource_meteorite_shard", new PickupSpec { Name = "MeteoriteShardPickup", Scale = 2.0f } },
+        { "resource_gem_ruby", new PickupSpec { Name = "RubyPickup", Scale = 2.2f } },
+        { "resource_gem_sapphire", new PickupSpec { Name = "SapphirePickup", Scale = 2.2f } },
+        { "resource_gem_emerald", new PickupSpec { Name = "EmeraldPickup", Scale = 2.2f } },
+        { "resource_gem_amethyst", new PickupSpec { Name = "AmethystPickup", Scale = 2.2f } },
+        { "resource_gem_diamond", new PickupSpec { Name = "DiamondPickup", Scale = 2.2f } },
+        { "resource_ingot_copper", new PickupSpec { Name = "CopperIngotPickup", Scale = 1.8f } },
+        { "resource_ingot_iron", new PickupSpec { Name = "IronIngotPickup", Scale = 1.8f } },
+        { "resource_ingot_silver", new PickupSpec { Name = "SilverIngotPickup", Scale = 1.8f } },
+        { "resource_ingot_gold", new PickupSpec { Name = "GoldIngotPickup", Scale = 1.8f } },
+        { "resource_ingot_steel", new PickupSpec { Name = "SteelIngotPickup", Scale = 1.8f } },
+        { "resource_ingot_meteorite", new PickupSpec { Name = "MeteoriteIngotPickup", Scale = 1.8f } },
+        { "tool_pickaxe_copper", new PickupSpec { Name = "CopperPickaxePickup", Scale = 2.4f, LyingTool = true } },
+        { "tool_pickaxe_iron", new PickupSpec { Name = "IronPickaxePickup", Scale = 2.4f, LyingTool = true } },
+        { "tool_pickaxe_steel", new PickupSpec { Name = "SteelPickaxePickup", Scale = 2.4f, LyingTool = true } },
+        { "tool_axe_copper", new PickupSpec { Name = "CopperAxePickup", Scale = 2.4f, LyingTool = true } },
+        { "tool_axe_steel", new PickupSpec { Name = "SteelAxePickup", Scale = 2.4f, LyingTool = true } }
     };
 
     // 86일차: 동물 아이콘 (가축 창·HUD)
@@ -178,6 +224,11 @@ public static class ItemVisualContentBuilder
             case "tool_iron_axe":
             case "tool_pickaxe":
             case "tool_hoe":
+            case "tool_pickaxe_copper": // 117일차 등급 도구
+            case "tool_pickaxe_iron":
+            case "tool_pickaxe_steel":
+            case "tool_axe_copper":
+            case "tool_axe_steel":
                 return new ItemIconRenderer.Framing(new Vector3(0f, 0f, -38f), 10f, 12f);
             case "tool_fishing_rod":
             case "tool_bow":

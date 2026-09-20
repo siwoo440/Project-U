@@ -49,3 +49,11 @@ seed,seed_strawberry,씨앗
 seed,seed_tomato,씨앗
 seed,seed_pumpkin,씨앗
 seed,seed_winter_radish,씨앗
+gem,resource_gem_ruby,보석
+gem,resource_gem_sapphire,보석
+gem,resource_gem_emerald,보석
+gem,resource_gem_amethyst,보석
+gem,resource_gem_diamond,보석
+treasure,resource_ingot_gold,귀금속
+treasure,resource_ingot_silver,귀금속
+treasure,resource_gold_ore,귀금속

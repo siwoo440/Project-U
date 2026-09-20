@@ -62,3 +62,25 @@ equipment_cloth_shirt,천 셔츠
 equipment_work_hat,작업 모자
 equipment_small_backpack,작은 가방
 item_torch,횃불
+resource_coal,석탄
+resource_copper_ore,구리 광석
+resource_silver_ore,은 광석
+resource_gold_ore,금 광석
+resource_crystal,수정
+resource_meteorite_shard,운석 조각
+resource_gem_ruby,루비
+resource_gem_sapphire,사파이어
+resource_gem_emerald,에메랄드
+resource_gem_amethyst,자수정
+resource_gem_diamond,다이아몬드
+resource_ingot_copper,구리 주괴
+resource_ingot_iron,철 주괴
+resource_ingot_silver,은 주괴
+resource_ingot_gold,금 주괴
+resource_ingot_steel,강철 주괴
+resource_ingot_meteorite,운석 주괴
+tool_pickaxe_copper,구리 곡괭이
+tool_pickaxe_iron,철 곡괭이
+tool_pickaxe_steel,강철 곡괭이
+tool_axe_copper,구리 도끼
+tool_axe_steel,강철 도끼

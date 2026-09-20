@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1024ef42cf32b824a9832cc0defe6a52, type: 3}
+  m_Name: CookingRecipe_SmeltIron
+  m_EditorClassIdentifier: Assembly-CSharp::CookingRecipeData
+  recipeId: smelt_iron
+  displayName: IRON INGOT
+  sortOrder: 0
+  requiredStation: 2
+  ingredients:
+  - itemData: {fileID: 11400000, guid: c593f671b9ae9d24e96e6cd5ee7b2a1c, type: 2}
+    amount: 2
+  - itemData: {fileID: 11400000, guid: 02b947bfdf7f9504e9e7cd2644878460, type: 2}
+    amount: 1
+  resultItem: {fileID: 11400000, guid: 6aeaabdb3337cfe40afb5711c66dcf4a, type: 2}
+  resultQuantity: 1
+  cookingSeconds: 26
+  extraBatchTimeRatio: 0.6

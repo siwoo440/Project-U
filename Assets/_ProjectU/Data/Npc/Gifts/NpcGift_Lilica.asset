@@ -30,6 +30,15 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 3a8ea9dc329d35c4b8b4c84410a7f15d, type: 2}
     preference: 1
     source: tag:sweet
+  - item: {fileID: 11400000, guid: 5bc962e624fab764dae24c92d59cf3c2, type: 2}
+    preference: 1
+    source: tag:treasure
+  - item: {fileID: 11400000, guid: 7c2a145890e4e414fa35480909d7c495, type: 2}
+    preference: 1
+    source: tag:treasure
+  - item: {fileID: 11400000, guid: b1760aba96b530f479ae0fa01f4c5390, type: 2}
+    preference: 1
+    source: tag:treasure
   - item: {fileID: 11400000, guid: 233c5c7467d9daa41bab4b59439b9465, type: 2}
     preference: 3
     source: drink_water_bottle

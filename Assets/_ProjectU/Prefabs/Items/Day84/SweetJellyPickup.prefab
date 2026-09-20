@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 7809248484548522893}
+  - component: {fileID: 971637083786992898}
   m_Layer: 3
   m_Name: SweetJellyPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 387020796154503269}
+  - {fileID: 7590162244064950817}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &7809248484548522893
+--- !u!114 &971637083786992898
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: item_sweet_jelly
-  generatedVisual: {fileID: 8279092552786691904}
+  generatedVisual: {fileID: 2228837382080568580}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &3977168772539777634
+--- !u!1001 &6573822691670382630
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c20c3b89e1354d548bfd4e52c387248a, type: 3}
---- !u!4 &387020796154503269 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3634198947695223303, guid: c20c3b89e1354d548bfd4e52c387248a, type: 3}
-  m_PrefabInstance: {fileID: 3977168772539777634}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8279092552786691904 stripped
+--- !u!1 &2228837382080568580 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5031790869295678754, guid: c20c3b89e1354d548bfd4e52c387248a, type: 3}
-  m_PrefabInstance: {fileID: 3977168772539777634}
+  m_PrefabInstance: {fileID: 6573822691670382630}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7590162244064950817 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3634198947695223303, guid: c20c3b89e1354d548bfd4e52c387248a, type: 3}
+  m_PrefabInstance: {fileID: 6573822691670382630}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:
