@@ -1474,7 +1474,7 @@ public static class WorldZoneBuilder
     // 즉시 굽고 기존 NavMesh Asset에 덮어써 GUID를 유지한다 (101일차: NPC 마을 배치 도구도 사용)
     public static string RebakeNavMesh()
     {
-        NavMeshSurface surface = Object.FindFirstObjectByType<NavMeshSurface>();
+        NavMeshSurface surface = IslandTerrainBuilder.FindIslandSurface(); // 116일차: 동굴 NavMesh는 따로 굽는다
 
         if (surface == null)
         {

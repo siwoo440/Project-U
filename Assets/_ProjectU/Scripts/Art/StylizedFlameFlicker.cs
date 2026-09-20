@@ -18,6 +18,11 @@ public sealed class StylizedFlameFlicker : MonoBehaviour
         baseScale = transform.localScale;
         seed = Random.value * 100f;
 
+        if (targetLight == null) // 116일차: 같은 오브젝트의 불빛을 자동으로 사용 (횃불처럼 코드로 붙일 때)
+        {
+            targetLight = GetComponent<Light>();
+        }
+
         if (targetLight != null)
         {
             baseIntensity = targetLight.intensity;

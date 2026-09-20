@@ -57,6 +57,7 @@ public static partial class StylizedModelLibrary
                 RegisterNpcGoods();
                 RegisterZoneHomes();
                 RegisterIsland();
+                RegisterCaves(); // 116일차: 동굴
             }
 
             return catalog;

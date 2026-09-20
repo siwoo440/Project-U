@@ -257,6 +257,12 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
             return; // 파일 저장 중단
         }
 
+        if (!CaveSaveBridge.TryCapture(saveData, out string caveCaptureError)) // 동굴 수집 (116일차)
+        {
+            Debug.LogError($"동굴 저장 준비 실패\n{caveCaptureError}", this); // 수집 오류 출력
+            return; // 파일 저장 중단
+        }
+
         if (!SaveFileService.TrySave(slotId, saveData, out string resultMessage)) // JSON 파일 저장 실행
         {
             Debug.LogError($"현재 게임 저장 실패\n{resultMessage}", this); // 저장 실패 내용 출력
@@ -401,6 +407,8 @@ public sealed class GameplaySaveController : MonoBehaviour // 게임 진행 상�
             Debug.LogError($"동료 불러오기 실패\n{companionRestoreError}", this); // 복원 오류 출력
             return; // 전체 불러오기 중단
         }
+
+        CaveSaveBridge.Apply(saveData); // 동굴 복원 (116일차)
 
         ApplyLoadedState(saveData); // 불러온 게임 상태 적용
 

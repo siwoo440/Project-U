@@ -77,6 +77,10 @@ public sealed class SaveGameData // 전체 저장 파일 최상위 데이터
     public bool hasCompanionData; // 동료 저장 여부
     [Tooltip("지금 함께 다니는 NPC · 함께한 시간 · 하루 채집 · 동행 호감도.")]
     public NpcCompanionSaveData companion = new NpcCompanionSaveData(); // 동료
+    [Tooltip("동굴 저장 데이터 존재 여부. (116일차)")]
+    public bool hasCaveData; // 동굴 저장 여부
+    [Tooltip("지금 있는 동굴 구역 · 찾아낸 동굴 입구.")]
+    public CaveSaveData cave = new CaveSaveData(); // 동굴
 
     public static SaveGameData CreateNew(string newSceneName) // 새로운 저장 데이터 생성
     {

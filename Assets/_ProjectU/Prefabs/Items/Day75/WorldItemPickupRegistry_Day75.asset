@@ -137,3 +137,5 @@ MonoBehaviour:
     pickupPrefab: {fileID: 3181927310554862687, guid: 9ef12039308dc01428d2114ac3871b39, type: 3}
   - itemData: {fileID: 11400000, guid: 0687865a489c4354db5fb1baa7331fd0, type: 2}
     pickupPrefab: {fileID: 3181927310554862687, guid: 5752ae31b06c0ec49bb03e1e79ac1011, type: 3}
+  - itemData: {fileID: 11400000, guid: 4b302439a2e82da44a3435996fd35337, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: a2a70ce92b6da584f9cd85c54f63ebef, type: 3}

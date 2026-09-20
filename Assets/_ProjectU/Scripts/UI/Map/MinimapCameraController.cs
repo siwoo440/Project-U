@@ -67,6 +67,18 @@ public sealed class MinimapCameraController : MonoBehaviour // 미니맵 전용 
     [Tooltip("지도용 환경광 색.")]
     [SerializeField] private Color mapAmbientColor = new Color(0.56f, 0.59f, 0.64f, 1f); // 지도 환경광
 
+    [Header("Cave Map")] // 116일차: 동굴 안에서는 천장을 빼고 동굴 바닥만 그린다
+    [Tooltip("동굴 안에서 그릴 레이어 (동굴 바닥 · 벽 · 소품).")]
+    [SerializeField] private LayerMask caveLayerMask = 0; // 동굴 레이어
+    [Tooltip("동굴 안에서 카메라 높이 (천장 위).")]
+    [SerializeField, Min(5f)] private float caveCameraHeight = 30f; // 동굴 카메라 높이
+    [Tooltip("동굴 안 작은 미니맵 범위.")]
+    [SerializeField, Min(5f)] private float caveCompactSize = 30f; // 동굴 미니맵 범위
+    [Tooltip("동굴 안 확장 미니맵 범위.")]
+    [SerializeField, Min(5f)] private float caveExpandedSize = 55f; // 동굴 확장 범위
+    [Tooltip("동굴 안 전체 지도 범위.")]
+    [SerializeField, Min(5f)] private float caveFullMapSize = 260f; // 동굴 전체 지도 범위
+
     [Header("Rendering")] // 지도 렌더링 설정 묶음
     [Tooltip("지도 카메라가 표시할 월드 레이어입니다.")]
     [SerializeField] private LayerMask mapLayerMask = ~0; // 지도 카메라 렌더링 레이어
@@ -103,6 +115,7 @@ public sealed class MinimapCameraController : MonoBehaviour // 미니맵 전용 
     private Color savedAmbientColor; // 바꾸기 전 환경광 색
 
     public RenderTexture OutputTexture => runtimeRenderTexture; // UI에서 사용할 지도 RenderTexture 제공
+    public bool IsCaveMap => CaveManager.Instance != null && CaveManager.Instance.IsInside; // 116일차: 동굴 안 지도인지
     public MapCameraViewMode CurrentViewMode => currentViewMode; // 현재 지도 표시 범위 제공
     public float CurrentFullMapOrthographicSize => currentFullMapOrthographicSize; // 현재 전체 지도 줌 수치 제공
     public bool IsInitialized => initialized; // 지도 카메라 초기화 상태 제공
@@ -326,6 +339,21 @@ public sealed class MinimapCameraController : MonoBehaviour // 미니맵 전용 
 
     private float GetOrthographicSize(MapCameraViewMode viewMode) // 모드별 Orthographic Size 반환
     {
+        if (IsCaveMap) // 116일차: 동굴 안은 좁으므로 가깝게 본다
+        {
+            switch (viewMode)
+            {
+                case MapCameraViewMode.Expanded:
+                    return caveExpandedSize;
+
+                case MapCameraViewMode.FullMap:
+                    return caveFullMapSize;
+
+                default:
+                    return caveCompactSize;
+            }
+        }
+
         switch (viewMode) // 지도 표시 모드 분기
         {
             case MapCameraViewMode.Expanded: // 확장 미니맵 모드
@@ -346,7 +374,24 @@ public sealed class MinimapCameraController : MonoBehaviour // 미니맵 전용 
             return; // 지도 카메라 추적 생략
         }
 
+        RefreshCullingMask(); // 116일차: 밖 · 동굴 안 전환
         SnapToTarget(); // 플레이어 중심 지도 카메라 위치 갱신
+    }
+
+    private void RefreshCullingMask() // 116일차: 동굴 안에서는 동굴 레이어(천장 제외)만 그린다
+    {
+        if (mapCamera == null)
+        {
+            return;
+        }
+
+        int wanted = IsCaveMap ? caveLayerMask.value : mapLayerMask.value;
+
+        if (mapCamera.cullingMask != wanted)
+        {
+            mapCamera.cullingMask = wanted;
+            mapCamera.orthographicSize = GetOrthographicSize(currentViewMode);
+        }
     }
 
     private void SnapToTarget() // 플레이어 위 지도 카메라 위치와 회전 적용
@@ -360,8 +405,15 @@ public sealed class MinimapCameraController : MonoBehaviour // 미니맵 전용 
             center = Vector3.Lerp(targetPosition, fullMapCenter, blend * blend * (3f - 2f * blend));
         }
 
+        if (IsCaveMap) // 116일차: 동굴 안 : 플레이어 바로 위에서, 섬 가운데로 옮기지 않는다
+        {
+            center = targetPosition;
+        }
+
         viewCenter = center;
-        float height = Mathf.Max(targetPosition.y + cameraHeight, minimumCameraHeight); // 108일차: 산보다 높게
+        float height = IsCaveMap
+            ? targetPosition.y + caveCameraHeight // 동굴 천장 위에서 아래를 봄 (천장 레이어는 그리지 않음)
+            : Mathf.Max(targetPosition.y + cameraHeight, minimumCameraHeight); // 108일차: 산보다 높게
         Vector3 cameraPosition = new Vector3(
             center.x,
             height,
@@ -404,6 +456,7 @@ public sealed class MinimapCameraController : MonoBehaviour // 미니맵 전용 
         mapCamera.clearFlags = CameraClearFlags.SolidColor; // 단색 지도 배경 적용
         mapCamera.backgroundColor = backgroundColor; // 지도 배경색 적용
         mapCamera.cullingMask = mapLayerMask.value; // 지도에 표시할 레이어 적용
+        RefreshCullingMask(); // 116일차: 동굴 안이면 동굴 레이어만
         mapCamera.nearClipPlane = nearClipPlane; // Near Clipping Plane 적용
         mapCamera.farClipPlane = Mathf.Max(farClipPlane, cameraHeight + 10f); // 카메라 높이를 포함하는 Far Plane 적용
         mapCamera.allowHDR = false; // 지도에 불필요한 HDR 비활성화

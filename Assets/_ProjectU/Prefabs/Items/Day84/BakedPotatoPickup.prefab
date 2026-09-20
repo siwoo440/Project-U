@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 4189832900783795202}
+  - component: {fileID: 161819605528346429}
   m_Layer: 3
   m_Name: BakedPotatoPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 7308237380639174694}
+  - {fileID: 619479352559461086}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &4189832900783795202
+--- !u!114 &161819605528346429
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: item_baked_potato
-  generatedVisual: {fileID: 1773899093206224012}
+  generatedVisual: {fileID: 8460823127133625972}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &4907400810170200041
+--- !u!1001 &3021441547987909905
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 352a2d747bd9d3f4498139f98e877512, type: 3}
---- !u!1 &1773899093206224012 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6666647802679485285, guid: 352a2d747bd9d3f4498139f98e877512, type: 3}
-  m_PrefabInstance: {fileID: 4907400810170200041}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &7308237380639174694 stripped
+--- !u!4 &619479352559461086 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2411259940717076431, guid: 352a2d747bd9d3f4498139f98e877512, type: 3}
-  m_PrefabInstance: {fileID: 4907400810170200041}
+  m_PrefabInstance: {fileID: 3021441547987909905}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8460823127133625972 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6666647802679485285, guid: 352a2d747bd9d3f4498139f98e877512, type: 3}
+  m_PrefabInstance: {fileID: 3021441547987909905}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

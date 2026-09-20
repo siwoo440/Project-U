@@ -132,6 +132,11 @@ public sealed class IslandShoreGuard : MonoBehaviour // 105일차: 무인도 바
             }
         }
 
+        if (CaveManager.Instance != null && CaveManager.Instance.IsInside) // 116일차: 동굴 맵은 섬 밖이라 바다 경계를 보지 않음
+        {
+            return;
+        }
+
         Vector3 position = player.position;
         bool tooFar = DistanceBeyondCoast(position) > hardLimit; // 파도를 넘어 너무 멀리 나감 (순간이동 · 오류)
         bool underGround = position.y < GroundHeight(position) - 4f; // 땅 밑으로 빠짐

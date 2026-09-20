@@ -51,6 +51,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bc991e404803cba4292542d6a52ddd7a, type: 2}
   - {fileID: 11400000, guid: 342d1ac3d9605574e949adea087b15eb, type: 2}
   - {fileID: 11400000, guid: a3a22e114d5dd36498ccd4cc83dd2ffb, type: 2}
+  - {fileID: 11400000, guid: 4b302439a2e82da44a3435996fd35337, type: 2}
   - {fileID: 11400000, guid: 23d094edda8e80c47baf710a0785816f, type: 2}
   - {fileID: 11400000, guid: ce6c806808c6dfb4ca5fb2217dce497c, type: 2}
   - {fileID: 11400000, guid: b9e78781ff8b2aa4bae6df0fa3d2e1c9, type: 2}
@@ -84,6 +85,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8a55d961b934e5747bf4db5be27aee50, type: 2}
   - {fileID: 11400000, guid: 8d0a40c64036cac4e8294093619954af, type: 2}
   - {fileID: 11400000, guid: 7e69f276b3f39af4788f2c31f54530b7, type: 2}
+  - {fileID: 11400000, guid: 11be157483a015541854d7836ce6ce2e, type: 2}
   - {fileID: 11400000, guid: 3c8a78ccdf003b744a315230934f94e8, type: 2}
   buildRecipes:
   - {fileID: 11400000, guid: b33e64bcb0ea0394cac80963b90527ba, type: 2}
@@ -187,8 +189,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b1e577dad44cb4046870a840e3016d1f, type: 2}
   - {fileID: 11400000, guid: c64178232ed5ced49ba75eef98101a8d, type: 2}
   - {fileID: 11400000, guid: 774a35c879bf49441ad6445c9cce1f3b, type: 2}
-  registeredItemCount: 62
-  registeredCraftingRecipeCount: 8
+  registeredItemCount: 63
+  registeredCraftingRecipeCount: 9
   registeredBuildRecipeCount: 20
   registeredEnemyCount: 3
   registeredCropCount: 5

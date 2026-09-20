@@ -299,9 +299,16 @@ public static class IslandTerrainBuilder
     public const float NavMeshTop = 200f; // 북쪽 산꼭대기(약 184m) 위까지
     public static float NavMeshBottom => SeaLevel + 0.1f; // 수면 아래(바다 밑 · 석호 · 항구)는 굽지 않음
 
+    // 116일차: 동굴 전용 NavMesh가 따로 있으므로 섬 NavMesh만 고른다
+    public static NavMeshSurface FindIslandSurface()
+    {
+        return Object.FindObjectsByType<NavMeshSurface>(FindObjectsInactive.Include, FindObjectsSortMode.None)
+            .FirstOrDefault(item => item.name != CaveBuilder.CaveNavMeshName);
+    }
+
     private static string ConfigureNavMeshVolume() // 105일차 : 마을 · 기존 구역 → 107일차 : 섬 뭍 전체 (NPC가 멀리 떨어진 구역까지 걸어감)
     {
-        NavMeshSurface surface = Object.FindFirstObjectByType<NavMeshSurface>(FindObjectsInactive.Include);
+        NavMeshSurface surface = FindIslandSurface();
 
         if (surface == null)
         {
@@ -986,7 +993,7 @@ public static class IslandTerrainBuilder
             Error("바다 경계(ShoreGuard)가 없거나 플레이어 · 시작 해변 연결이 비었습니다.");
         }
 
-        NavMeshSurface surface = Object.FindFirstObjectByType<NavMeshSurface>(FindObjectsInactive.Include);
+        NavMeshSurface surface = FindIslandSurface();
 
         if (surface == null || surface.collectObjects != CollectObjects.Volume || surface.size.x < NavMeshSize - 1f || Mathf.Abs(surface.transform.position.y + surface.center.y - surface.size.y * 0.5f - NavMeshBottom) > 0.05f)
         {

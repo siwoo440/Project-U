@@ -235,6 +235,12 @@ MonoBehaviour:
     holderLocalEuler: {x: 0, y: 250, z: 0}
     modelLocalPosition: {x: -0.057234906, y: -0.08473287, z: -0.0000000023381819}
     modelScale: 0.6276509
+  - item: {fileID: 11400000, guid: 4b302439a2e82da44a3435996fd35337, type: 2}
+    modelPrefab: {fileID: 6132959096918259091, guid: d08f53f24c969ee4180b3839dbb8793a, type: 3}
+    holderLocalPosition: {x: 0, y: 0.04, z: 0.14}
+    holderLocalEuler: {x: 0, y: 250, z: 0}
+    modelLocalPosition: {x: -0, y: -0.112500004, z: -0}
+    modelScale: 0.5
   - item: {fileID: 11400000, guid: 23d094edda8e80c47baf710a0785816f, type: 2}
     modelPrefab: {fileID: 2974843212138899643, guid: 4b5310068b88e9e408918a9db4d787c2, type: 3}
     holderLocalPosition: {x: 0, y: 0.04, z: 0.14}
