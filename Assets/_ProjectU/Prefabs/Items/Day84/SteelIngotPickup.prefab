@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 8861071394623567090}
+  - component: {fileID: 6806055826793452456}
   m_Layer: 3
   m_Name: SteelIngotPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 7117491798043925523}
+  - {fileID: 6563210821902289897}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &8861071394623567090
+--- !u!114 &6806055826793452456
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: ingot_steel
-  generatedVisual: {fileID: 965933826752172706}
+  generatedVisual: {fileID: 3797928520845264216}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &8455476616069657192
+--- !u!1001 &5513742136012596626
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 297b8c2631b0e164299b7193b5bf8022, type: 3}
---- !u!1 &965933826752172706 stripped
+--- !u!1 &3797928520845264216 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8660506318335697098, guid: 297b8c2631b0e164299b7193b5bf8022, type: 3}
-  m_PrefabInstance: {fileID: 8455476616069657192}
+  m_PrefabInstance: {fileID: 5513742136012596626}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &7117491798043925523 stripped
+--- !u!4 &6563210821902289897 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1698290517841686139, guid: 297b8c2631b0e164299b7193b5bf8022, type: 3}
-  m_PrefabInstance: {fileID: 8455476616069657192}
+  m_PrefabInstance: {fileID: 5513742136012596626}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

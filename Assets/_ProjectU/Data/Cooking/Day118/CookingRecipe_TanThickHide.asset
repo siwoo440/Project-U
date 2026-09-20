@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1024ef42cf32b824a9832cc0defe6a52, type: 3}
+  m_Name: CookingRecipe_TanThickHide
+  m_EditorClassIdentifier: Assembly-CSharp::CookingRecipeData
+  recipeId: tan_thick_hide
+  displayName: TANNED LEATHER
+  sortOrder: 0
+  requiredStation: 3
+  ingredients:
+  - itemData: {fileID: 11400000, guid: 272deea72691ab749ae7097cf26e3dc9, type: 2}
+    amount: 2
+  resultItem: {fileID: 11400000, guid: 08a6b2aeb2e76864fa29fdc768ec26b5, type: 2}
+  resultQuantity: 2
+  cookingSeconds: 45
+  extraBatchTimeRatio: 0.6

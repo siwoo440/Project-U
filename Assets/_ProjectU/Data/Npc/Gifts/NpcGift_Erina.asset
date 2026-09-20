@@ -33,6 +33,12 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: b9e78781ff8b2aa4bae6df0fa3d2e1c9, type: 2}
     preference: 1
     source: item_wood
+  - item: {fileID: 11400000, guid: 0401f0283512bd643bde372e6aa5acdc, type: 2}
+    preference: 1
+    source: tag:insect
+  - item: {fileID: 11400000, guid: 9aa939ef40fc1f241889f99ebe31512d, type: 2}
+    preference: 1
+    source: tag:insect
   - item: {fileID: 11400000, guid: 34ed2068e680c3e47b192431c37799db, type: 2}
     preference: 3
     source: tool_pickaxe

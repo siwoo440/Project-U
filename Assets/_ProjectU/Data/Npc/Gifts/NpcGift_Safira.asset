@@ -26,6 +26,9 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 2e83945f5dda2f34bb4e993074cfc81c, type: 2}
     preference: 1
     source: medicine_bandage
+  - item: {fileID: 11400000, guid: 5a7295558c572dd4685d50d4cf252ca6, type: 2}
+    preference: 1
+    source: resource_scale
   - item: {fileID: 11400000, guid: 233c5c7467d9daa41bab4b59439b9465, type: 2}
     preference: 4
     source: drink_water_bottle

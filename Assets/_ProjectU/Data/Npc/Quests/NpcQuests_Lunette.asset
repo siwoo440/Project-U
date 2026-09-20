@@ -90,3 +90,22 @@ MonoBehaviour:
       \uC774\uC57C\uAE30\uB97C \uD588\uC5B4\uC694. \uC774\uAC74 \uC81C\uAC00 \uB9CC\uB4E0
       \uBD95\uB300\uC608\uC694."
     requiredEventId: event_lunette_trust
+  - questId: quest_lunette_stinger
+    title: "\uC57D\uC5D0 \uC4F8 \uB3C5\uCE68"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: b66114e2e0531ee45b0bfd865b7eb5c6, type: 2}
+      amount: 2
+    rewardCoins: 62
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 4
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uC0AC\uB9C9 \uC804\uAC08\uC758 \uB3C5\uCE68\u2026 \uB450 \uAC1C\uB9CC
+      \uAD6C\uD574 \uC8FC\uC2E4 \uC218 \uC788\uC744\uAE4C\uC694? \uD574\uB3C5\uC81C\uB97C
+      \uB9CC\uB4E4\uB824\uACE0\uC694."
+    thanksLine: "\uC870\uC2EC\uD574\uC11C \uB2E4\uB904\uC57C \uD574\uC694. \uC815\uB9D0
+      \uACE0\uB9C8\uC6CC\uC694."
+    requiredEventId: 

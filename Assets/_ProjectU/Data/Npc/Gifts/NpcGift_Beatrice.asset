@@ -20,6 +20,12 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 3a8ea9dc329d35c4b8b4c84410a7f15d, type: 2}
     preference: 0
     source: food_berry
+  - item: {fileID: 11400000, guid: 0401f0283512bd643bde372e6aa5acdc, type: 2}
+    preference: 0
+    source: tag:insect
+  - item: {fileID: 11400000, guid: 9aa939ef40fc1f241889f99ebe31512d, type: 2}
+    preference: 0
+    source: tag:insect
   - item: {fileID: 11400000, guid: eef1b375027259b42834d2262ce9dd96, type: 2}
     preference: 1
     source: tag:sweet

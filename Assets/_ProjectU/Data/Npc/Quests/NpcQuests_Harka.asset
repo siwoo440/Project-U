@@ -95,3 +95,21 @@ MonoBehaviour:
       \uC218 \uC788\uC5B4! \uC774\uAC74 \uD0D0\uD5D8 \uB3C4\uC2DC\uB77D\uC774\uC57C,
       \uAF2C\uCE58 \uC138 \uAC1C!"
     requiredEventId: event_harka_trust
+  - questId: quest_harka_pelt
+    title: "\uACA8\uC6B8 \uC900\uBE44 \uD138\uAC00\uC8FD"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 25a0815f374c83a47af84904cf4eab57, type: 2}
+      amount: 2
+    rewardCoins: 95
+    rewardAffinity: 5
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 4
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uACE0\uAE09 \uD138\uAC00\uC8FD \uB450 \uC7A5\uC774 \uD544\uC694\uD574.
+      \uC5EC\uC6B0\uB098 \uB291\uB300 \uAC83\uC774\uBA74 \uB3FC."
+    thanksLine: "\uACE0\uB9D9\uB2E4. \uC774\uAC78\uB85C \uACA8\uC6B8\uC744 \uB118\uAE38
+      \uC218 \uC788\uC5B4."
+    requiredEventId: 

@@ -27,6 +27,12 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: bc991e404803cba4292542d6a52ddd7a, type: 2}
     preference: 1
     source: item_plant_fiber
+  - item: {fileID: 11400000, guid: 0401f0283512bd643bde372e6aa5acdc, type: 2}
+    preference: 1
+    source: tag:insect
+  - item: {fileID: 11400000, guid: 9aa939ef40fc1f241889f99ebe31512d, type: 2}
+    preference: 1
+    source: tag:insect
   - item: {fileID: 11400000, guid: aca4283f4b704ac43a428c42e9450fbe, type: 2}
     preference: 1
     source: tag:gem

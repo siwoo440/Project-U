@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08d47c1103dfc6548ac6257bf8d8a815, type: 3}
+  m_Name: ItemData_FineBow
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemId: weapon_fine_bow
+  displayName: FINE BOW
+  koreanName: "\uC88B\uC740 \uD65C"
+  description: A leather-wrapped bow with steel tips.
+  icon: {fileID: 21300000, guid: a8e4ad5eb4bf5d64387e519c27b3b05c, type: 3}
+  itemCategory: 6
+  toolType: 0
+  toolTier: 0
+  weaponAttackType: 2
+  baseDamage: 24
+  attackCooldown: 0.55
+  attackRange: 38
+  attackRadius: 0.1
+  staminaCost: 4
+  impactForce: 2
+  meleeComboData: {fileID: 0}
+  rangedWeaponData: {fileID: 11400000, guid: 44abcf102b72e2649be38dba845a72f1, type: 2}
+  equipmentSlotType: 0
+  defensePercent: 0
+  maximumHealthBonus: 0
+  movementSpeedBonusPercent: 0
+  hungerDepletionReductionPercent: 0
+  thirstDepletionReductionPercent: 0
+  coldResistancePercent: 0
+  inventorySlotBonus: 0
+  hungerRestoreAmount: 0
+  foodThirstRestoreAmount: 0
+  foodHealthRestoreAmount: 0
+  foodBuffType: 0
+  foodBuffStrength: 0
+  foodBuffDuration: 0
+  thirstRestoreAmount: 0
+  healthRestoreAmount: 0
+  maximumStack: 1

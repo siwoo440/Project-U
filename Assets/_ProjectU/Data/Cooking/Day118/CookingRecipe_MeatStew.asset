@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1024ef42cf32b824a9832cc0defe6a52, type: 3}
+  m_Name: CookingRecipe_MeatStew
+  m_EditorClassIdentifier: Assembly-CSharp::CookingRecipeData
+  recipeId: cook_meat_stew
+  displayName: MEAT STEW
+  sortOrder: 0
+  requiredStation: 1
+  ingredients:
+  - itemData: {fileID: 11400000, guid: a551404f4428713459ced98f6c09e2a6, type: 2}
+    amount: 2
+  - itemData: {fileID: 11400000, guid: a42d6efd666a1fc40809cbcbcd3362b4, type: 2}
+    amount: 1
+  - itemData: {fileID: 11400000, guid: 233c5c7467d9daa41bab4b59439b9465, type: 2}
+    amount: 1
+  resultItem: {fileID: 11400000, guid: cf7be651428c22542ab10a66fe9e589b, type: 2}
+  resultQuantity: 1
+  cookingSeconds: 40
+  extraBatchTimeRatio: 0.6

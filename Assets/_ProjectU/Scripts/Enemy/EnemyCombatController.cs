@@ -83,6 +83,8 @@ public sealed class EnemyCombatController : MonoBehaviour // 적 탐지와 시�
     private const float CompanionCheckInterval = 0.5f; // 대상 다시 정하기 간격 (초)
     private const float TargetSwitchMargin = 2f; // 이만큼 더 가까워야 대상을 바꿈 (m)
     private const float FocusSeconds = 4f; // 때린 쪽을 노리는 시간 (초)
+    private Vector3 territoryCenter; // 118일차: 영역 가운데 (야생동물)
+    private float territoryRadius; // 118일차: 영역 반경 (0이면 제한 없음)
 
     public EnemyCombatState CurrentState => currentState; // 현재 적 전투 상태 제공
     public EnemyAttackPhase CurrentAttackPhase => currentAttackPhase; // 현재 적 공격 세부 단계 제공
@@ -91,6 +93,16 @@ public sealed class EnemyCombatController : MonoBehaviour // 적 탐지와 시�
     public float CurrentTargetDistance => currentTargetDistance; // 현재 대상 거리 제공
     public bool HasTargetLock => hasTargetLock; // 플레이어 추적 여부 제공
     public bool IsTargetingCompanion => companionTarget != null; // 115일차: 동료를 노리는 중인지 (테스트용)
+    public float TerritoryRadius => territoryRadius; // 118일차: 영역 반경 제공 (테스트용)
+
+    public bool IsOutsideTerritory => territoryRadius > 0f // 118일차: 영역을 벗어났는지
+        && GetPlanarDistance(transform.position, territoryCenter) > territoryRadius;
+
+    public void SetTerritory(Vector3 center, float radius) // 118일차: 야생동물이 지킬 영역 (영역 밖에서는 쫓지 않는다)
+    {
+        territoryCenter = center;
+        territoryRadius = Mathf.Max(0f, radius);
+    }
     public bool IsAttackSequenceRunning => isAttackSequenceRunning; // 공격 절차 실행 여부 제공
     public float AttackPhaseNormalized => attackPhaseNormalized; // 현재 공격 단계 진행 비율 제공
     public float AttackCooldownRemaining => Mathf.Max(0f, nextAttackTime - Time.time); // 공격 대기시간 제공
@@ -218,6 +230,14 @@ public sealed class EnemyCombatController : MonoBehaviour // 적 탐지와 시�
         {
             hasTargetLock = true; // 플레이어 추적 상태 시작
             LogMessage($"{combatData.DisplayName} 플레이어 탐지 / 거리 {currentTargetDistance:0.##}"); // 플레이어 탐지 결과 출력
+        }
+
+        if (IsOutsideTerritory) // 118일차: 영역 밖까지는 쫓아가지 않는다
+        {
+            CancelAttackSequenceInternal("영역 밖", false); // 공격 절차 정리
+            ClearTargetRuntime(); // 추적 실행값 초기화
+            SetState(EnemyCombatState.Idle); // 대기 상태 복귀
+            return; // 적 전투 처리 중단
         }
 
         if (currentTargetDistance > combatData.LoseTargetRange) // 플레이어 추적 해제 거리 확인

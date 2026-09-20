@@ -57,3 +57,17 @@ gem,resource_gem_diamond,보석
 treasure,resource_ingot_gold,귀금속
 treasure,resource_ingot_silver,귀금속
 treasure,resource_gold_ore,귀금속
+fur,resource_fine_pelt,고급 털가죽
+fur,resource_thick_hide,두꺼운 가죽
+fur,resource_wool,두꺼운 털
+fur,resource_tanned_leather,무두질 가죽
+hunt,resource_antler,뿔
+hunt,resource_beast_fang,짐승 이빨
+hunt,resource_feather,깃털
+hunt,resource_stinger,독침
+insect,resource_butterfly,나비
+insect,resource_firefly,반딧불이
+hearty,food_roast_meat,든든한 요리
+hearty,food_meat_stew,든든한 요리
+hearty,food_venison_steak,든든한 요리
+hearty,food_crab_soup,든든한 요리

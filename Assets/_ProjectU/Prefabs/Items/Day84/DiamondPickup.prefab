@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 3773782481729437484}
+  - component: {fileID: 3619507740013993469}
   m_Layer: 3
   m_Name: DiamondPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 6076625772436170042}
+  - {fileID: 1387341437565505068}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &3773782481729437484
+--- !u!114 &3619507740013993469
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: gem_diamond
-  generatedVisual: {fileID: 863285535445312921}
+  generatedVisual: {fileID: 5543738455784967823}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &6526153637968081929
+--- !u!1001 &2127352097639423775
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e188aadfecb53cf47bae95ea03b963c5, type: 3}
---- !u!1 &863285535445312921 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5866659479726494096, guid: e188aadfecb53cf47bae95ea03b963c5, type: 3}
-  m_PrefabInstance: {fileID: 6526153637968081929}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &6076625772436170042 stripped
+--- !u!4 &1387341437565505068 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1064271016508739891, guid: e188aadfecb53cf47bae95ea03b963c5, type: 3}
-  m_PrefabInstance: {fileID: 6526153637968081929}
+  m_PrefabInstance: {fileID: 2127352097639423775}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5543738455784967823 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5866659479726494096, guid: e188aadfecb53cf47bae95ea03b963c5, type: 3}
+  m_PrefabInstance: {fileID: 2127352097639423775}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

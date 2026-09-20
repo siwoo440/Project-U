@@ -84,3 +84,29 @@ tool_pickaxe_iron,철 곡괭이
 tool_pickaxe_steel,강철 곡괭이
 tool_axe_copper,구리 도끼
 tool_axe_steel,강철 도끼
+food_small_meat,작은 고기
+food_red_meat,붉은 고기
+food_bear_meat,곰 고기
+food_crab_meat,게살
+resource_small_hide,작은 가죽
+resource_thick_hide,두꺼운 가죽
+resource_fine_pelt,고급 털가죽
+resource_wool,두꺼운 털
+resource_scale,도마뱀 비늘
+resource_feather,깃털
+resource_antler,뿔
+resource_beast_fang,짐승 이빨
+resource_stinger,독침
+resource_crab_shell,게 껍데기
+resource_tanned_leather,무두질 가죽
+resource_butterfly,나비
+resource_firefly,반딧불이
+food_roast_meat,구운 고기
+food_meat_stew,고기 스튜
+food_venison_steak,사슴 스테이크
+food_crab_soup,게살 수프
+equipment_leather_backpack,가죽 가방
+equipment_leather_hat,가죽 모자
+equipment_winter_coat,겨울 외투
+tool_net,채집망
+weapon_fine_bow,좋은 활

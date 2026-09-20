@@ -38,9 +38,21 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: b9e78781ff8b2aa4bae6df0fa3d2e1c9, type: 2}
     preference: 1
     source: item_wood
+  - item: {fileID: 11400000, guid: 25a0815f374c83a47af84904cf4eab57, type: 2}
+    preference: 1
+    source: tag:fur
   - item: {fileID: 11400000, guid: 479a7e7a5dbb8df4a9ea663d4e582a1b, type: 2}
     preference: 1
     source: resource_stone
+  - item: {fileID: 11400000, guid: 08a6b2aeb2e76864fa29fdc768ec26b5, type: 2}
+    preference: 1
+    source: tag:fur
+  - item: {fileID: 11400000, guid: 272deea72691ab749ae7097cf26e3dc9, type: 2}
+    preference: 1
+    source: tag:fur
+  - item: {fileID: 11400000, guid: de81a7b6861f90646a4e0bb6a0646c93, type: 2}
+    preference: 1
+    source: tag:fur
   - item: {fileID: 11400000, guid: d801a65a4ac6aa9488b8fe9ba94ccb15, type: 2}
     preference: 1
     source: tag:metal_tool

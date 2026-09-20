@@ -32,6 +32,18 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: ce6c806808c6dfb4ca5fb2217dce497c, type: 2}
     preference: 1
     source: tag:herb
+  - item: {fileID: 11400000, guid: 25a0815f374c83a47af84904cf4eab57, type: 2}
+    preference: 1
+    source: tag:fur
+  - item: {fileID: 11400000, guid: 08a6b2aeb2e76864fa29fdc768ec26b5, type: 2}
+    preference: 1
+    source: tag:fur
+  - item: {fileID: 11400000, guid: 272deea72691ab749ae7097cf26e3dc9, type: 2}
+    preference: 1
+    source: tag:fur
+  - item: {fileID: 11400000, guid: de81a7b6861f90646a4e0bb6a0646c93, type: 2}
+    preference: 1
+    source: tag:fur
   - item: {fileID: 11400000, guid: 1132e66db22cdae448d0dfb6dec7e8c1, type: 2}
     preference: 3
     source: tag:weapon

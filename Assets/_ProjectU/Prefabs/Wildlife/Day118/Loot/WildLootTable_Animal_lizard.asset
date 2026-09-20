@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af00af2eea502bf49a50325a597b50ff, type: 3}
+  m_Name: WildLootTable_Animal_lizard
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyLootTable
+  entries:
+  - itemData: {fileID: 11400000, guid: 52180c81cfa44e545b9fb26c7b1a316d, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: ba77fe3ba20f5564aae4746c9cc5529f, type: 3}
+    dropChance: 1
+    minimumQuantity: 1
+    maximumQuantity: 1
+  - itemData: {fileID: 11400000, guid: 5a7295558c572dd4685d50d4cf252ca6, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 1ff2dabc87a57a348b2349391df9eb78, type: 3}
+    dropChance: 1
+    minimumQuantity: 1
+    maximumQuantity: 2

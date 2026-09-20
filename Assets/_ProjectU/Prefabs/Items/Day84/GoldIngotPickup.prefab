@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 6635221648226592728}
+  - component: {fileID: 239937794363164101}
   m_Layer: 3
   m_Name: GoldIngotPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 3612656809930982930}
+  - {fileID: 4117503147941635821}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &6635221648226592728
+--- !u!114 &239937794363164101
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: ingot_gold
-  generatedVisual: {fileID: 9080505739071148269}
+  generatedVisual: {fileID: 8431473721850687506}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &605796410587902877
+--- !u!1001 &247359150718473058
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05cfb40a9d2eca54682f2a30fce7acea, type: 3}
---- !u!4 &3612656809930982930 stripped
+--- !u!4 &4117503147941635821 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4200315401182737807, guid: 05cfb40a9d2eca54682f2a30fce7acea, type: 3}
-  m_PrefabInstance: {fileID: 605796410587902877}
+  m_PrefabInstance: {fileID: 247359150718473058}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &9080505739071148269 stripped
+--- !u!1 &8431473721850687506 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8533291583468413808, guid: 05cfb40a9d2eca54682f2a30fce7acea, type: 3}
-  m_PrefabInstance: {fileID: 605796410587902877}
+  m_PrefabInstance: {fileID: 247359150718473058}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

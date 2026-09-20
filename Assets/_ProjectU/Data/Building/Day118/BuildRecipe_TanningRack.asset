@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b0e46b0956bcf479f2754564f5cfa9, type: 3}
+  m_Name: BuildRecipe_TanningRack
+  m_EditorClassIdentifier: Assembly-CSharp::BuildRecipeData
+  recipeId: structure_tanning_rack
+  displayName: TANNING RACK
+  structureType: 4
+  allowGroundPlacement: 1
+  placementType: 2
+  rotationStep: 45
+  previewOffset: {x: 0, y: 0, z: 0}
+  placedPrefab: {fileID: 3384596410255654593, guid: 8af24c8911eb1d348b3e6cbaaa46c032, type: 3}
+  previewPrefab: {fileID: 3384596410255654593, guid: 186afdf5d5d8adf418805daf7dcdd2d5, type: 3}
+  placementCheckCenter: {x: 0, y: 0.6, z: 0}
+  placementCheckHalfExtents: {x: 0.9, y: 0.6, z: 0.5}
+  maximumSlopeAngle: 22
+  maximumHeightDifference: 0.2
+  ingredients:
+  - itemData: {fileID: 11400000, guid: b9e78781ff8b2aa4bae6df0fa3d2e1c9, type: 2}
+    amount: 12
+  - itemData: {fileID: 11400000, guid: 479a7e7a5dbb8df4a9ea663d4e582a1b, type: 2}
+    amount: 4
+  requiredTool: 0
+  demolitionRefundRatio: 0.5

@@ -35,6 +35,9 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: ce6c806808c6dfb4ca5fb2217dce497c, type: 2}
     preference: 1
     source: tag:herb
+  - item: {fileID: 11400000, guid: b66114e2e0531ee45b0bfd865b7eb5c6, type: 2}
+    preference: 1
+    source: resource_stinger
   - item: {fileID: 11400000, guid: 1132e66db22cdae448d0dfb6dec7e8c1, type: 2}
     preference: 3
     source: tag:weapon

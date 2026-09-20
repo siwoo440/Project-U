@@ -143,3 +143,6 @@ quest_octavia_special,char_octavia,Special,심해 기록 복원,resource_fish_tr
 quest_dravia_coal,char_dravia,Board,화로에 넣을 석탄,resource_coal:8,50,4,,3,All,,석탄 여덟 개. 나무보다 오래 타서 쇠를 녹이기 좋아.,좋군. 이 정도면 쇠도 말을 듣겠지.,
 quest_dravia_copper,char_dravia,Board,구리 광석 납품,resource_copper_ore:6,46,4,,3,All,,구리 광석 여섯 개만 가져와. 무른 쇠도 쓸 데가 있다.,무른 쇠지만 손에 익히기엔 좋지. 고맙다.,
 quest_dravia_steel,char_dravia,Board,강철 주괴 두 덩이,resource_ingot_steel:2,180,6,,4,All,,강철 주괴 두 덩이. 용광로에서 철을 한 번 더 두드리면 나온다.,강철이군. 이걸로 진짜 물건을 만들 수 있다.,
+quest_ragh_meat,char_ragh,Board,사냥꾼의 고기,food_red_meat:4,75,5,,3,All,,붉은 고기 네 덩이. 사슴이든 멧돼지든 상관없다.,좋은 고기군. 오늘은 배부르게 먹겠어.,
+quest_harka_pelt,char_harka,Board,겨울 준비 털가죽,resource_fine_pelt:2,95,5,,4,All,,고급 털가죽 두 장이 필요해. 여우나 늑대 것이면 돼.,고맙다. 이걸로 겨울을 넘길 수 있어.,
+quest_lunette_stinger,char_lunette,Board,약에 쓸 독침,resource_stinger:2,62,4,,4,All,,사막 전갈의 독침… 두 개만 구해 주실 수 있을까요? 해독제를 만들려고요.,조심해서 다뤄야 해요. 정말 고마워요.,

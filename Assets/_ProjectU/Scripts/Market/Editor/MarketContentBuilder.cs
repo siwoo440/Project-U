@@ -84,7 +84,25 @@ public static class MarketContentBuilder
         ("resource_ingot_silver", 38, MarketGoodsType.Material),
         ("resource_ingot_gold", 64, MarketGoodsType.Material),
         ("resource_ingot_steel", 60, MarketGoodsType.Material),
-        ("resource_ingot_meteorite", 170, MarketGoodsType.Material)
+        ("resource_ingot_meteorite", 170, MarketGoodsType.Material),
+        // 118일차: 사냥 전리품 (고기 · 가죽 · 뿔 · 곤충)
+        ("food_small_meat", 8, MarketGoodsType.Material),
+        ("food_red_meat", 12, MarketGoodsType.Material),
+        ("food_bear_meat", 26, MarketGoodsType.Material),
+        ("food_crab_meat", 14, MarketGoodsType.Material),
+        ("resource_small_hide", 6, MarketGoodsType.Material),
+        ("resource_thick_hide", 12, MarketGoodsType.Material),
+        ("resource_fine_pelt", 30, MarketGoodsType.Material),
+        ("resource_wool", 14, MarketGoodsType.Material),
+        ("resource_scale", 10, MarketGoodsType.Material),
+        ("resource_feather", 7, MarketGoodsType.Material),
+        ("resource_antler", 22, MarketGoodsType.Material),
+        ("resource_beast_fang", 18, MarketGoodsType.Material),
+        ("resource_stinger", 20, MarketGoodsType.Material),
+        ("resource_crab_shell", 9, MarketGoodsType.Material),
+        ("resource_tanned_leather", 34, MarketGoodsType.Material),
+        ("resource_butterfly", 16, MarketGoodsType.Material),
+        ("resource_firefly", 20, MarketGoodsType.Material)
     };
 
     // 물고기 : 기본 14 × 희귀도 배율 × (1 + 난이도 × 0.5)

@@ -131,7 +131,34 @@ public static class ItemVisualContentBuilder
         { "tool_pickaxe_iron", "tool_pickaxe_iron" },
         { "tool_pickaxe_steel", "tool_pickaxe_steel" },
         { "tool_axe_copper", "tool_axe_copper" },
-        { "tool_axe_steel", "tool_axe_steel" }
+        { "tool_axe_steel", "tool_axe_steel" },
+        // 118일차 사냥 물건 · 요리 · 장비 · 도구
+        { "food_small_meat", "food_small_meat" },
+        { "food_red_meat", "food_red_meat" },
+        { "food_bear_meat", "food_bear_meat" },
+        { "food_crab_meat", "food_crab_meat" },
+        { "resource_small_hide", "resource_small_hide" },
+        { "resource_thick_hide", "resource_thick_hide" },
+        { "resource_fine_pelt", "resource_fine_pelt" },
+        { "resource_wool", "resource_wool" },
+        { "resource_scale", "resource_scale" },
+        { "resource_feather", "resource_feather" },
+        { "resource_antler", "resource_antler" },
+        { "resource_beast_fang", "resource_beast_fang" },
+        { "resource_stinger", "resource_stinger" },
+        { "resource_crab_shell", "resource_crab_shell" },
+        { "resource_tanned_leather", "resource_tanned_leather" },
+        { "resource_butterfly", "resource_butterfly" },
+        { "resource_firefly", "resource_firefly" },
+        { "food_roast_meat", "food_roast_meat" },
+        { "food_meat_stew", "food_meat_stew" },
+        { "food_venison_steak", "food_venison_steak" },
+        { "food_crab_soup", "food_crab_soup" },
+        { "equipment_leather_backpack", "equipment_leather_backpack" },
+        { "equipment_leather_hat", "equipment_leather_hat" },
+        { "equipment_winter_coat", "equipment_winter_coat" },
+        { "tool_net", "tool_net" },
+        { "weapon_fine_bow", "weapon_fine_bow" }
     };
 
     // 84·85일차에 새로 만든 모델 (코드 변경을 반영하도록 항상 다시 만든다)
@@ -208,7 +235,34 @@ public static class ItemVisualContentBuilder
         { "tool_pickaxe_iron", new PickupSpec { Name = "IronPickaxePickup", Scale = 2.4f, LyingTool = true } },
         { "tool_pickaxe_steel", new PickupSpec { Name = "SteelPickaxePickup", Scale = 2.4f, LyingTool = true } },
         { "tool_axe_copper", new PickupSpec { Name = "CopperAxePickup", Scale = 2.4f, LyingTool = true } },
-        { "tool_axe_steel", new PickupSpec { Name = "SteelAxePickup", Scale = 2.4f, LyingTool = true } }
+        { "tool_axe_steel", new PickupSpec { Name = "SteelAxePickup", Scale = 2.4f, LyingTool = true } },
+        // 118일차 사냥 물건 · 요리 · 장비 · 도구
+        { "food_small_meat", new PickupSpec { Name = "SmallMeatPickup", Scale = 1.3f } },
+        { "food_red_meat", new PickupSpec { Name = "RedMeatPickup", Scale = 1.3f } },
+        { "food_bear_meat", new PickupSpec { Name = "BearMeatPickup", Scale = 1.3f } },
+        { "food_crab_meat", new PickupSpec { Name = "CrabMeatPickup", Scale = 1.4f } },
+        { "resource_small_hide", new PickupSpec { Name = "SmallHidePickup", Scale = 1.4f } },
+        { "resource_thick_hide", new PickupSpec { Name = "ThickHidePickup", Scale = 1.3f } },
+        { "resource_fine_pelt", new PickupSpec { Name = "FinePeltPickup", Scale = 1.3f } },
+        { "resource_wool", new PickupSpec { Name = "WoolPickup", Scale = 1.5f } },
+        { "resource_scale", new PickupSpec { Name = "LizardScalePickup", Scale = 1.8f } },
+        { "resource_feather", new PickupSpec { Name = "FeatherPickup", Scale = 1.6f } },
+        { "resource_antler", new PickupSpec { Name = "AntlerPickup", Scale = 1.4f } },
+        { "resource_beast_fang", new PickupSpec { Name = "BeastFangPickup", Scale = 1.6f } },
+        { "resource_stinger", new PickupSpec { Name = "StingerPickup", Scale = 1.5f } },
+        { "resource_crab_shell", new PickupSpec { Name = "CrabShellPickup", Scale = 1.4f } },
+        { "resource_tanned_leather", new PickupSpec { Name = "TannedLeatherPickup", Scale = 1.3f } },
+        { "resource_butterfly", new PickupSpec { Name = "ButterflyPickup", Scale = 1.5f } },
+        { "resource_firefly", new PickupSpec { Name = "FireflyPickup", Scale = 1.5f } },
+        { "food_roast_meat", new PickupSpec { Name = "RoastMeatPickup", Scale = 1.3f } },
+        { "food_meat_stew", new PickupSpec { Name = "MeatStewPickup", Scale = 1.2f } },
+        { "food_venison_steak", new PickupSpec { Name = "VenisonSteakPickup", Scale = 1.3f } },
+        { "food_crab_soup", new PickupSpec { Name = "CrabSoupPickup", Scale = 1.2f } },
+        { "equipment_leather_backpack", new PickupSpec { Name = "LeatherBackpackPickup", Scale = 1.0f } },
+        { "equipment_leather_hat", new PickupSpec { Name = "LeatherHatPickup", Scale = 1.1f } },
+        { "equipment_winter_coat", new PickupSpec { Name = "WinterCoatPickup", Scale = 1.0f } },
+        { "tool_net", new PickupSpec { Name = "CatchNetPickup", Scale = 2.4f, LyingTool = true } },
+        { "weapon_fine_bow", new PickupSpec { Name = "FineBowPickup", Scale = 2.4f, LyingTool = true } }
     };
 
     // 86일차: 동물 아이콘 (가축 창·HUD)
@@ -232,6 +286,8 @@ public static class ItemVisualContentBuilder
                 return new ItemIconRenderer.Framing(new Vector3(0f, 0f, -38f), 10f, 12f);
             case "tool_fishing_rod":
             case "tool_bow":
+            case "weapon_fine_bow": // 118일차
+            case "tool_net":
                 return new ItemIconRenderer.Framing(new Vector3(0f, 0f, -42f), 8f, 10f);
             case "item_arrow_bundle":
             case "item_mushroom_skewer":

@@ -18,18 +18,42 @@ MonoBehaviour:
     \uD0DC\uB3C4"
   defaultPreference: 2
   entries:
+  - item: {fileID: 11400000, guid: 1d2a53d0edb227d47b71afbd70c70bf7, type: 2}
+    preference: 0
+    source: tag:hearty
   - item: {fileID: 11400000, guid: 2c82bd3688707a247a1d2c303d4b2589, type: 2}
     preference: 0
     source: tag:hearty
   - item: {fileID: 11400000, guid: b4f9d8fea40a5c741bf6bc3778083b00, type: 2}
     preference: 0
     source: tag:hearty
+  - item: {fileID: 11400000, guid: cf7be651428c22542ab10a66fe9e589b, type: 2}
+    preference: 0
+    source: tag:hearty
   - item: {fileID: 11400000, guid: 2168b2ceb2540714c8bcfcadd543b478, type: 2}
+    preference: 0
+    source: tag:hearty
+  - item: {fileID: 11400000, guid: c856bd7dbbe086e44a092f788fda5f13, type: 2}
     preference: 0
     source: tag:hearty
   - item: {fileID: 11400000, guid: e63787b6f7de7624f9bbb93b5512905e, type: 2}
     preference: 0
     source: tag:hearty
+  - item: {fileID: 11400000, guid: 1a3a73991e035174cbb186ca5238ef0e, type: 2}
+    preference: 0
+    source: tag:hearty
+  - item: {fileID: 11400000, guid: 609322205436043438ddba5bbf85fd75, type: 2}
+    preference: 0
+    source: tag:hunt
+  - item: {fileID: 11400000, guid: b90fd2f53d920174382542fdbcf5b8b6, type: 2}
+    preference: 0
+    source: tag:hunt
+  - item: {fileID: 11400000, guid: c126013dfb00e4a40a0d793b2c1647c1, type: 2}
+    preference: 0
+    source: tag:hunt
+  - item: {fileID: 11400000, guid: b66114e2e0531ee45b0bfd865b7eb5c6, type: 2}
+    preference: 0
+    source: tag:hunt
   - item: {fileID: 11400000, guid: ced6962cfb3b9a249aadbf41f4f53d78, type: 2}
     preference: 1
     source: equipment_cloth_cap

@@ -92,3 +92,21 @@ MonoBehaviour:
     thanksLine: "\uAE43\uBC1C\uC774 \uC130\uB2E4. \uC800 \uAE43\uBC1C \uC544\uB798\uC5D4
       \uB108\uB3C4 \uC788\uB2E4. \uC774 \uD654\uC0B4\uC740 \uBB34\uB9AC\uC758 \uBAAB\uC774\uB2E4."
     requiredEventId: event_ragh_trust
+  - questId: quest_ragh_meat
+    title: "\uC0AC\uB0E5\uAFBC\uC758 \uACE0\uAE30"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: a551404f4428713459ced98f6c09e2a6, type: 2}
+      amount: 4
+    rewardCoins: 75
+    rewardAffinity: 5
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uBD89\uC740 \uACE0\uAE30 \uB124 \uB369\uC774. \uC0AC\uC2B4\uC774\uB4E0
+      \uBA67\uB3FC\uC9C0\uB4E0 \uC0C1\uAD00\uC5C6\uB2E4."
+    thanksLine: "\uC88B\uC740 \uACE0\uAE30\uAD70. \uC624\uB298\uC740 \uBC30\uBD80\uB974\uAC8C
+      \uBA39\uACA0\uC5B4."
+    requiredEventId: 
