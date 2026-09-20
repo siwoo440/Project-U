@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 4404646389862843510}
+  - component: {fileID: 3954033570985117411}
   m_Layer: 3
   m_Name: WildFlowerPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 7052887581630336907}
+  - {fileID: 802543009509535383}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &4404646389862843510
+--- !u!114 &3954033570985117411
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: resource_wild_flower
-  generatedVisual: {fileID: 6193078680305389281}
+  generatedVisual: {fileID: 4553679363135713277}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &937485583087260091
+--- !u!1001 &7476337489874628775
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75ce47fde050bf94cbcc4b631e2fed6d, type: 3}
---- !u!1 &6193078680305389281 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6408800480496099162, guid: 75ce47fde050bf94cbcc4b631e2fed6d, type: 3}
-  m_PrefabInstance: {fileID: 937485583087260091}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &7052887581630336907 stripped
+--- !u!4 &802543009509535383 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7845971801030024752, guid: 75ce47fde050bf94cbcc4b631e2fed6d, type: 3}
-  m_PrefabInstance: {fileID: 937485583087260091}
+  m_PrefabInstance: {fileID: 7476337489874628775}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4553679363135713277 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6408800480496099162, guid: 75ce47fde050bf94cbcc4b631e2fed6d, type: 3}
+  m_PrefabInstance: {fileID: 7476337489874628775}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

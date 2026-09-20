@@ -201,8 +201,6 @@ GameObject:
   - component: {fileID: 8106212824134017428}
   - component: {fileID: 3580850875095873761}
   - component: {fileID: 1239034919610254860}
-  - component: {fileID: 5396420306963920569}
-  - component: {fileID: 1839917244321653897}
   - component: {fileID: 5570609994678453973}
   - component: {fileID: 738338726019181849}
   m_Layer: 17
@@ -357,68 +355,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &5396420306963920569
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8463353821672121884}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49fa906acb4ac3e46bf0ca7da4cf355c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ContentVisualRoot
-  visualRoot: {fileID: 3995186267996727055}
-  visualInstanceRoot: {fileID: 0}
-  interactionPoint: {fileID: 5189518978586218525}
-  effectOrigin: {fileID: 4591158733542805690}
-  uiAnchor: {fileID: 5224260860445092634}
-  appliedProfile: {fileID: 11400000, guid: 22fec522eda002541bc7f1a4a5619c64, type: 2}
-  configuredVisualPrefab: {fileID: 8122359426307237099, guid: 305eb2fddcacb74439afb82cb246f982, type: 3}
-  createPlaceholderWhenPrefabMissing: 1
-  placeholderPrimitive: 1
-  placeholderMaterial: {fileID: 2100000, guid: 34536df488b8f9041bf2df0f008e0d44, type: 2}
-  placeholderColor: {r: 1, g: 1, b: 1, a: 1}
-  usePlaceholderColor: 0
-  visualMaterialOverride: {fileID: 0}
-  applyMaterialOverrideToVisualPrefab: 1
-  animatorControllerOverride: {fileID: 0}
-  visualLocalPosition: {x: 0.022347566, y: -1, z: -0.2977528}
-  visualLocalEulerAngles: {x: 0, y: 0, z: 0}
-  visualLocalScale: {x: 1.0152284, y: 1.0152284, z: 1.0152284}
-  defaultInteractionPointPosition: {x: 0, y: 1, z: 0}
-  defaultEffectOriginPosition: {x: 0, y: 1, z: 0}
-  defaultUiAnchorPosition: {x: 0, y: 2.2, z: 0}
-  createMissingStructureOnAwake: 1
-  rebuildVisualOnAwake: 0
-  inheritRootLayer: 1
-  removeVisualColliders: 1
-  activeVisualObject: {fileID: 0}
-  isStructureReady: 0
---- !u!114 &1839917244321653897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8463353821672121884}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c3eba2ae8d262648b2b260fae7921e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ContentVisualProfileBinder
-  visualRoot: {fileID: 5396420306963920569}
-  visualProfile: {fileID: 11400000, guid: 22fec522eda002541bc7f1a4a5619c64, type: 2}
-  resolveFromContentIdentity: 1
-  contentIdentity: {fileID: 0}
-  resolveFromRegistryById: 0
-  visualProfileId: visual_enemy_melee_grunt
-  applyOnAwake: 1
-  rebuildVisualWhenApplied: 1
-  disableLegacyRootRenderersAfterApply: 1
-  appliedProfileId: visual_enemy_basic
-  lastApplySucceeded: 1
 --- !u!114 &5570609994678453973
 MonoBehaviour:
   m_ObjectHideFlags: 0

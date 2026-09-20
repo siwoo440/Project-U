@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 6898035065420997060}
+  - component: {fileID: 779441500846255511}
   m_Layer: 3
   m_Name: PersimmonPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 8700875902359248484}
+  - {fileID: 2574339218670160792}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &6898035065420997060
+--- !u!114 &779441500846255511
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: food_persimmon
-  generatedVisual: {fileID: 2942979960387087082}
+  generatedVisual: {fileID: 8345675642622656278}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &2685944644938768621
+--- !u!1001 &9097340540296377617
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ed2f1d7db7ed7d478e371f1c1ada437, type: 3}
---- !u!1 &2942979960387087082 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 977831708445837831, guid: 3ed2f1d7db7ed7d478e371f1c1ada437, type: 3}
-  m_PrefabInstance: {fileID: 2685944644938768621}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8700875902359248484 stripped
+--- !u!4 &2574339218670160792 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6771686389979365001, guid: 3ed2f1d7db7ed7d478e371f1c1ada437, type: 3}
-  m_PrefabInstance: {fileID: 2685944644938768621}
+  m_PrefabInstance: {fileID: 9097340540296377617}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8345675642622656278 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 977831708445837831, guid: 3ed2f1d7db7ed7d478e371f1c1ada437, type: 3}
+  m_PrefabInstance: {fileID: 9097340540296377617}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

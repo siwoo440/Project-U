@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 9022946204240861789}
+  - component: {fileID: 2531087599589436993}
   m_Layer: 3
   m_Name: MeteoriteShardPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 8934497784226227022}
+  - {fileID: 7280628922317489577}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &9022946204240861789
+--- !u!114 &2531087599589436993
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: resource_meteorite_shard
-  generatedVisual: {fileID: 5882889653613122523}
+  generatedVisual: {fileID: 5715195416712361276}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &4942477966033757068
+--- !u!1001 &6513188634204161387
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4233f32789825a34a989e86267ac0b84, type: 3}
---- !u!1 &5882889653613122523 stripped
+--- !u!1 &5715195416712361276 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1527579535771267159, guid: 4233f32789825a34a989e86267ac0b84, type: 3}
-  m_PrefabInstance: {fileID: 4942477966033757068}
+  m_PrefabInstance: {fileID: 6513188634204161387}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &8934497784226227022 stripped
+--- !u!4 &7280628922317489577 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4569609786138722498, guid: 4233f32789825a34a989e86267ac0b84, type: 3}
-  m_PrefabInstance: {fileID: 4942477966033757068}
+  m_PrefabInstance: {fileID: 6513188634204161387}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

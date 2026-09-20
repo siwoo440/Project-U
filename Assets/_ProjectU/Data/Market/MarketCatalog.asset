@@ -353,6 +353,18 @@ MonoBehaviour:
     basePrice: 13
     goodsType: 0
     freshSeasons: 02000000
+  - item: {fileID: 11400000, guid: be51dd37f5dd60d4aaaf1fc8a90b805b, type: 2}
+    basePrice: 12
+    goodsType: 6
+    freshSeasons: 
+  - item: {fileID: 11400000, guid: 494a30db21c25494bb1eb9b2483ed56a, type: 2}
+    basePrice: 24
+    goodsType: 6
+    freshSeasons: 
+  - item: {fileID: 11400000, guid: 46e9e90a954fa764085af7f7177b774c, type: 2}
+    basePrice: 220
+    goodsType: 6
+    freshSeasons: 
   - item: {fileID: 11400000, guid: 57290689e97387440ab6d1bcbf4ef495, type: 2}
     basePrice: 35
     goodsType: 2

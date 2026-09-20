@@ -86,3 +86,21 @@ MonoBehaviour:
     thanksLine: "\uC9C0\uB3C4\uB97C \uB2E4 \uADF8\uB838\uB2E4. \uAE38\uC740\u2026
       \uB108\uC640 \uAC19\uC774 \uAC77\uACE0 \uC2F6\uB2E4. \uC5F0\uACE0 \uBC1B\uC544."
     requiredEventId: event_safira_trust
+  - questId: quest_safira_fang
+    title: "\uAC70\uBBF8 \uB3C5\uB2C8 \uAD6C\uD558\uAE30"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: 494a30db21c25494bb1eb9b2483ed56a, type: 2}
+      amount: 3
+    rewardCoins: 92
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 4
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uB3D9\uAD74 \uAC70\uBBF8\uC758 \uB3C5\uB2C8 \uC138 \uAC1C\u2026
+      \uB3C5\uC744 \uB2E4\uB8E8\uB294 \uC5F0\uC2B5\uC5D0 \uC4F0\uB824\uACE0 \uD574."
+    thanksLine: "\uACE0\uB9C8\uC6CC. \uC774 \uB3C5\uC740 \uB0B4 \uAC83\uBCF4\uB2E4
+      \uAC70\uCE60\uC9C0\uB9CC \uC4F8 \uB9CC\uD558\uB124."
+    requiredEventId: 

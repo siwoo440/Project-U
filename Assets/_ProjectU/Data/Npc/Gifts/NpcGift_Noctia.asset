@@ -30,6 +30,9 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: c593f671b9ae9d24e96e6cd5ee7b2a1c, type: 2}
     preference: 1
     source: item_iron_ore
+  - item: {fileID: 11400000, guid: be51dd37f5dd60d4aaaf1fc8a90b805b, type: 2}
+    preference: 1
+    source: resource_bat_wing
   - item: {fileID: 11400000, guid: a1f85f4b8822ed147b631a6fbce09b59, type: 2}
     preference: 1
     source: resource_ice_flower

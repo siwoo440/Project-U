@@ -14,6 +14,7 @@ public static class ItemKoreanNameBuilder
 
     public static string Apply() // 콘텐츠 자동 적용에서 사용
     {
+        string restored = FillMissing(); // 120일차: 목록에서 빠진 줄 되살리기
         Dictionary<string, string> names = ReadNames(new List<string>());
         int changed = 0;
 
@@ -39,7 +40,46 @@ public static class ItemKoreanNameBuilder
         }
 
         AssetDatabase.SaveAssets();
-        return $"아이템 한글 이름 {names.Count}개 · 바뀐 아이템 {changed}개";
+        string result = $"아이템 한글 이름 {names.Count}개 · 바뀐 아이템 {changed}개";
+        return restored.Length > 0 ? $"{restored} · {result}" : result;
+    }
+
+    // 120일차: 아이템에는 한글 이름이 있는데 목록(csv)에서만 빠진 줄을 되살린다.
+    // 목록을 여러 만들기가 나눠 쓰다 보니 줄이 사라지면 "한글 이름이 없습니다" 오류만 남아서, 자동으로 메운다.
+    public static string FillMissing()
+    {
+        if (!File.Exists(SourcePath))
+        {
+            return string.Empty;
+        }
+
+        List<string> lines = File.ReadAllLines(SourcePath, Encoding.UTF8).ToList();
+        Dictionary<string, string> names = ReadNames(new List<string>());
+        HashSet<string> used = new HashSet<string>(names.Values, StringComparer.Ordinal);
+        int added = 0;
+
+        foreach (ItemData item in AllItems())
+        {
+            string korean = item.KoreanName;
+
+            if (string.IsNullOrEmpty(korean) || names.ContainsKey(item.ItemId) || !used.Add(korean)) // 이름이 겹치면 놔둔다 (검증에서 알려 준다)
+            {
+                continue;
+            }
+
+            names[item.ItemId] = korean;
+            lines.Add($"{item.ItemId},{korean}");
+            added++;
+        }
+
+        if (added <= 0)
+        {
+            return string.Empty;
+        }
+
+        File.WriteAllLines(SourcePath, lines, new UTF8Encoding(false));
+        AssetDatabase.ImportAsset(SourcePath);
+        return $"빠진 한글 이름 {added}개 되살림";
     }
 
     public static string Validate(out int errorCount)

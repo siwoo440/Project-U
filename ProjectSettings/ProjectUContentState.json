@@ -59,6 +59,26 @@
             "id": "119-seasons",
             "appliedAt": "2026-09-20 19:19",
             "ok": true
+        },
+        {
+            "id": "120-cave-monster-items",
+            "appliedAt": "2026-09-20 20:15",
+            "ok": true
+        },
+        {
+            "id": "120-cave-monsters",
+            "appliedAt": "2026-09-20 20:16",
+            "ok": true
+        },
+        {
+            "id": "120-korean-name-fix",
+            "appliedAt": "2026-09-20 20:40",
+            "ok": true
+        },
+        {
+            "id": "120-visual-part-fix",
+            "appliedAt": "2026-09-20 20:53",
+            "ok": true
         }
     ]
 }

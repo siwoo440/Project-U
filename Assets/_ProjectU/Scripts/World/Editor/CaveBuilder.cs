@@ -105,6 +105,30 @@ public static class CaveBuilder
     private const float DeepHeight = 8.5f; // 깊은층 방 높이
     private const float DeepGreatRadius = 20f; // 깊은층 가운데 방
 
+    public readonly struct RoomInfo // 120일차: 동굴 방 하나의 자리 (몬스터 배치에서 사용)
+    {
+        public RoomInfo(string id, Vector3 worldCenter, float radius, float height, int layer)
+        {
+            Id = id;
+            WorldCenter = worldCenter;
+            Radius = radius;
+            Height = height;
+            Layer = layer;
+        }
+
+        public string Id { get; } // 방 ID
+        public Vector3 WorldCenter { get; } // 섬 기준 방 가운데
+        public float Radius { get; } // 방 반지름
+        public float Height { get; } // 방 높이
+        public int Layer { get; } // 1 입구층 · 2 깊은층
+    }
+
+    public static List<RoomInfo> RoomPlan(Terrain terrain) // 120일차: 동굴 방 목록 (동굴 몬스터 배치용)
+    {
+        List<Room> rooms = LayoutRooms(terrain, out _, out _);
+        return rooms.Select(room => new RoomInfo(room.Id, CaveOrigin + room.Center, room.Radius, room.Height, room.Layer)).ToList();
+    }
+
     private sealed class Room
     {
         public string Id;

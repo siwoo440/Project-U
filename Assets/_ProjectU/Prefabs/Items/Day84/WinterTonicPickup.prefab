@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 6914550990139714625}
+  - component: {fileID: 6175127592224062158}
   m_Layer: 3
   m_Name: WinterTonicPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 6273331020068156769}
+  - {fileID: 1964697472399476558}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &6914550990139714625
+--- !u!114 &6175127592224062158
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: medicine_winter_tonic
-  generatedVisual: {fileID: 7595569468179845657}
+  generatedVisual: {fileID: 2676187741515604022}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &3846190461873087340
+--- !u!1001 &8731126705035645251
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37a6b34ce6fcead41bd4bae83a748ddb, type: 3}
---- !u!4 &6273331020068156769 stripped
+--- !u!4 &1964697472399476558 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7092941314306151949, guid: 37a6b34ce6fcead41bd4bae83a748ddb, type: 3}
-  m_PrefabInstance: {fileID: 3846190461873087340}
+  m_PrefabInstance: {fileID: 8731126705035645251}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7595569468179845657 stripped
+--- !u!1 &2676187741515604022 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6631704283808625013, guid: 37a6b34ce6fcead41bd4bae83a748ddb, type: 3}
-  m_PrefabInstance: {fileID: 3846190461873087340}
+  m_PrefabInstance: {fileID: 8731126705035645251}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

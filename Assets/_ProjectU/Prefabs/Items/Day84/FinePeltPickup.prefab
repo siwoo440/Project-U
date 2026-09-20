@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 6646723156268042941}
+  - component: {fileID: 2826355387808127628}
   m_Layer: 3
   m_Name: FinePeltPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 6227791864279933670}
+  - {fileID: 8050113125898681183}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &6646723156268042941
+--- !u!114 &2826355387808127628
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: resource_fine_pelt
-  generatedVisual: {fileID: 14756084614703107}
+  generatedVisual: {fileID: 4174375181929902522}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &3281440278310784219
+--- !u!1001 &1463727074031228258
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83c9db54b93692b43b90d20d217da943, type: 3}
---- !u!1 &14756084614703107 stripped
+--- !u!1 &4174375181929902522 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3296186432554771672, guid: 83c9db54b93692b43b90d20d217da943, type: 3}
-  m_PrefabInstance: {fileID: 3281440278310784219}
+  m_PrefabInstance: {fileID: 1463727074031228258}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &6227791864279933670 stripped
+--- !u!4 &8050113125898681183 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8928257860281216573, guid: 83c9db54b93692b43b90d20d217da943, type: 3}
-  m_PrefabInstance: {fileID: 3281440278310784219}
+  m_PrefabInstance: {fileID: 1463727074031228258}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

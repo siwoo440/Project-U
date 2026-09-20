@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af00af2eea502bf49a50325a597b50ff, type: 3}
+  m_Name: CaveLootTable_Monster_cave_spider
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyLootTable
+  entries:
+  - itemData: {fileID: 11400000, guid: 494a30db21c25494bb1eb9b2483ed56a, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 26e44fae271e16a468a85cd9e1c9dfb0, type: 3}
+    dropChance: 0.7
+    minimumQuantity: 1
+    maximumQuantity: 1
+  - itemData: {fileID: 11400000, guid: a3a22e114d5dd36498ccd4cc83dd2ffb, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 509809f11dbb6c545a8226724e14bc86, type: 3}
+    dropChance: 1
+    minimumQuantity: 1
+    maximumQuantity: 2

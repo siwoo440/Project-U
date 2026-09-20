@@ -36,6 +36,7 @@ public static class ProjectUAutoContent
         new Update { Id = "117-mineral-items", Title = "117일차 : 광석 · 보석 · 주괴 · 등급 도구 아이템", Apply = () => MineralBuilder.BuildItems() },
         new Update { Id = "118-wildlife-items", Title = "118일차 : 고기 · 가죽 · 곤충 · 가죽 장비 아이템", Apply = () => WildlifeBuilder.BuildItems() },
         new Update { Id = "119-season-items", Title = "119일차 : 계절 채집물 · 과일 · 새 작물 아이템", Apply = () => SeasonContentBuilder.BuildItems() },
+        new Update { Id = "120-cave-monster-items", Title = "120일차 : 동굴 전리품 · 수정 장비 아이템", Apply = () => CaveMonsterBuilder.BuildItems() },
         new Update { Id = "111-island-npc-stories", Title = "111일차 : 4차 NPC 의뢰 · 하트 이벤트 (21번)", Apply = () => NpcStoryBuilder.BuildAll(false) },
         new Update { Id = "112-wave5-cast", Title = "112일차 : 5차 NPC 7명 등장 · 새 집 4채 (구역 · 배치 · 초상 · 동료)", Apply = () => NpcCastBuilder.BuildAll(false) },
         new Update { Id = "113-wave5-stories", Title = "113일차 : 5차 NPC 의뢰 · 하트 이벤트 (35명 모두 이야기 · 동료 잠금 해제)", Apply = () => NpcStoryBuilder.BuildAll(false) },
@@ -44,7 +45,10 @@ public static class ProjectUAutoContent
         new Update { Id = "116-caves", Title = "116일차 : 동굴 (섬 밖 고정 동굴 맵 · 절벽 입구 12곳 · 횃불 · 광맥)", Apply = () => CaveBuilder.BuildAll(false) },
         new Update { Id = "117-minerals", Title = "117일차 : 광물 · 제련 · 도구 등급 · 밤의 운석 (광석 7종 · 보석 5종 · 용광로 · 동굴 2층)", Apply = () => MineralBuilder.BuildAll(false) + CaveBuilder.BuildAll(false) },
         new Update { Id = "118-wildlife", Title = "118일차 : 야생동물과 사냥 (동물 13종 · 덫 · 무두질대 · 가죽 장비)", Apply = () => WildlifeBuilder.BuildAll(false) },
-        new Update { Id = "119-seasons", Title = "119일차 : 계절 채집과 농사 (채집물 12종 · 과일나무 3종 · 새 작물 3종 · 절구)", Apply = () => SeasonContentBuilder.BuildAll(false) }
+        new Update { Id = "119-seasons", Title = "119일차 : 계절 채집과 농사 (채집물 12종 · 과일나무 3종 · 새 작물 3종 · 절구)", Apply = () => SeasonContentBuilder.BuildAll(false) },
+        new Update { Id = "120-cave-monsters", Title = "120일차 : 동굴 몬스터와 첫 보스 (박쥐 · 거미 · 돌 골렘 · 수정 골렘)", Apply = () => CaveMonsterBuilder.BuildAll(false) },
+        new Update { Id = "120-korean-name-fix", Title = "120일차 : 아이템 한글 이름 목록 되살리기", Apply = () => ItemKoreanNameBuilder.Apply() },
+        new Update { Id = "120-visual-part-fix", Title = "120일차 : 동물 Prefab 외형 카드 부품 정리", Apply = () => ContentVisualPartCleaner.Clean() }
     };
 
     [Serializable]

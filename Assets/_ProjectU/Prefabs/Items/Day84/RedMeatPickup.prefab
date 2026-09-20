@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 7924597122415265250}
+  - component: {fileID: 6120325340817940488}
   m_Layer: 3
   m_Name: RedMeatPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 9033614897281318552}
+  - {fileID: 5980468920973685518}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &7924597122415265250
+--- !u!114 &6120325340817940488
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: food_red_meat
-  generatedVisual: {fileID: 3249730999525172649}
+  generatedVisual: {fileID: 196576252482725951}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &4623006699267138620
+--- !u!1001 &8037522591538669994
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0bdead1b6bc8200449d31020074cd84a, type: 3}
---- !u!1 &3249730999525172649 stripped
+--- !u!1 &196576252482725951 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7868181320459108757, guid: 0bdead1b6bc8200449d31020074cd84a, type: 3}
-  m_PrefabInstance: {fileID: 4623006699267138620}
+  m_PrefabInstance: {fileID: 8037522591538669994}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &9033614897281318552 stripped
+--- !u!4 &5980468920973685518 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4428693174649658020, guid: 0bdead1b6bc8200449d31020074cd84a, type: 3}
-  m_PrefabInstance: {fileID: 4623006699267138620}
+  m_PrefabInstance: {fileID: 8037522591538669994}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

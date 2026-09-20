@@ -23,6 +23,9 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: c593f671b9ae9d24e96e6cd5ee7b2a1c, type: 2}
     preference: 0
     source: item_iron_ore
+  - item: {fileID: 11400000, guid: 46e9e90a954fa764085af7f7177b774c, type: 2}
+    preference: 0
+    source: resource_crystal_heart
   - item: {fileID: 11400000, guid: 5bc962e624fab764dae24c92d59cf3c2, type: 2}
     preference: 0
     source: tag:treasure

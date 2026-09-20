@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af00af2eea502bf49a50325a597b50ff, type: 3}
+  m_Name: CaveLootTable_Monster_stone_golem
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyLootTable
+  entries:
+  - itemData: {fileID: 11400000, guid: 479a7e7a5dbb8df4a9ea663d4e582a1b, type: 2}
+    pickupPrefab: {fileID: 583586894999323094, guid: a072ccfe54d922c4cb7a4b0a01b8ccbf, type: 3}
+    dropChance: 1
+    minimumQuantity: 3
+    maximumQuantity: 5
+  - itemData: {fileID: 11400000, guid: c593f671b9ae9d24e96e6cd5ee7b2a1c, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: e61a665b8bce61948b7b69c862f41150, type: 3}
+    dropChance: 1
+    minimumQuantity: 1
+    maximumQuantity: 2
+  - itemData: {fileID: 11400000, guid: 302bb7a0ae706c249ae2fc6e05377121, type: 2}
+    pickupPrefab: {fileID: 3181927310554862687, guid: 5c9df7c65e7e1d342a5747cff448a90c, type: 3}
+    dropChance: 0.5
+    minimumQuantity: 1
+    maximumQuantity: 1

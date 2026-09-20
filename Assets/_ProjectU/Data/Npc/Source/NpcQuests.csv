@@ -146,3 +146,5 @@ quest_dravia_steel,char_dravia,Board,강철 주괴 두 덩이,resource_ingot_ste
 quest_ragh_meat,char_ragh,Board,사냥꾼의 고기,food_red_meat:4,75,5,,3,All,,붉은 고기 네 덩이. 사슴이든 멧돼지든 상관없다.,좋은 고기군. 오늘은 배부르게 먹겠어.,
 quest_harka_pelt,char_harka,Board,겨울 준비 털가죽,resource_fine_pelt:2,95,5,,4,All,,고급 털가죽 두 장이 필요해. 여우나 늑대 것이면 돼.,고맙다. 이걸로 겨울을 넘길 수 있어.,
 quest_lunette_stinger,char_lunette,Board,약에 쓸 독침,resource_stinger:2,62,4,,4,All,,사막 전갈의 독침… 두 개만 구해 주실 수 있을까요? 해독제를 만들려고요.,조심해서 다뤄야 해요. 정말 고마워요.,
+quest_ragh_batwing,char_ragh,Board,동굴 박쥐 사냥,resource_bat_wing:4,62,4,,3,All,,동굴 박쥐 날개 네 장. 놈들이 자꾸 횃불을 꺼뜨려서 말이야.,잘했다. 이제 동굴이 좀 조용하겠군.,
+quest_safira_fang,char_safira,Board,거미 독니 구하기,resource_venom_fang:3,92,4,,4,All,,동굴 거미의 독니 세 개… 독을 다루는 연습에 쓰려고 해.,고마워. 이 독은 내 것보다 거칠지만 쓸 만하네.,

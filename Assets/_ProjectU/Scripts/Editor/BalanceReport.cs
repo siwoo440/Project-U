@@ -25,6 +25,7 @@ public static class BalanceReport
     private const float CombatIncomeLimit = 0.5f; // 적 사냥 수입은 낚시의 절반 이하
     private const float HuntIncomeLimit = 1f; // 118일차: 야생동물 사냥 수입은 낚시 정도까지
     private const int HuntSpotCount = 3; // 한 번에 돌 수 있는 사냥터 수
+    private const float CaveIncomeLimit = 1f; // 120일차: 동굴 몬스터 수입도 낚시 정도까지
     private const float MinRespawnHours = 4f; // 적은 게임 시간 4시간 이상 지나야 다시 나온다
     private const int MinHitsToKill = 3; // 도끼로 3 ~ 12번에 쓰러뜨림
     private const int MaxHitsToKill = 12;
@@ -69,6 +70,8 @@ public static class BalanceReport
         public float CombatPerMinute;
         public readonly List<CombatRow> Hunt = new List<CombatRow>(); // 118일차: 야생동물 사냥
         public float HuntPerMinute;
+        public readonly List<CombatRow> Cave = new List<CombatRow>(); // 120일차: 동굴 몬스터
+        public float CavePerMinute;
         public readonly List<GatherRow> Gathering = new List<GatherRow>();
         public readonly List<AnimalRow> Animals = new List<AnimalRow>();
         public readonly List<CookRow> Cooking = new List<CookRow>();
@@ -109,6 +112,7 @@ public static class BalanceReport
         if (s.SceneLoaded)
         {
             report.AppendLine($"야생동물 사냥 : 1분에 약 {s.HuntPerMinute:0.0}코인 (사냥터 {s.Hunt.Count}곳 중 좋은 {HuntSpotCount}곳, 낚시의 {Percent(s.HuntPerMinute, s.FishPerMinute)})");
+            report.AppendLine($"동굴 몬스터 : 1분에 약 {s.CavePerMinute:0.0}코인 (동굴 {s.Cave.Count}곳 중 좋은 {HuntSpotCount}곳, 낚시의 {Percent(s.CavePerMinute, s.FishPerMinute)})");
         }
 
         foreach (GatherRow row in s.Gathering)
@@ -441,6 +445,10 @@ public static class BalanceReport
             {
                 s.Hunt.Add(row);
             }
+            else if (prefab.GetComponentInChildren<CaveMonsterSense>(true) != null) // 120일차: 동굴 몬스터도 따로 센다
+            {
+                s.Cave.Add(row);
+            }
             else
             {
                 s.Combat.Add(row);
@@ -477,6 +485,13 @@ public static class BalanceReport
         if (s.FishPerMinute > 0f && s.HuntPerMinute > s.FishPerMinute * HuntIncomeLimit)
         {
             s.Errors.Add($"야생동물 사냥 수입이 1분에 약 {s.HuntPerMinute:0}코인으로 낚시({s.FishPerMinute:0})보다 많습니다. (사냥터 {HuntSpotCount}곳 기준, {HuntIncomeLimit * 100f:0}% 이하 목표)");
+        }
+
+        s.CavePerMinute = s.Cave.OrderByDescending(row => row.PerMinute).Take(HuntSpotCount).Sum(row => row.PerMinute); // 동굴 방 세 곳을 도는 수입
+
+        if (s.FishPerMinute > 0f && s.CavePerMinute > s.FishPerMinute * CaveIncomeLimit)
+        {
+            s.Errors.Add($"동굴 몬스터 수입이 1분에 약 {s.CavePerMinute:0}코인으로 낚시({s.FishPerMinute:0})보다 많습니다. (동굴 {HuntSpotCount}곳 기준, {CaveIncomeLimit * 100f:0}% 이하 목표)");
         }
 
         if (s.FishPerMinute > 0f && s.CombatPerMinute > s.FishPerMinute * CombatIncomeLimit)
@@ -864,6 +879,7 @@ public static class BalanceReport
         md.AppendLine($"| 낚시 | 1분 {F(s.FishPerMinute)}코인 | 비교 기준 |");
         md.AppendLine($"| 적 사냥 | 1분 {F(s.CombatPerMinute)}코인 | 낚시의 {CombatIncomeLimit * 100f:0}% 이하 |");
         md.AppendLine($"| 야생동물 사냥 | 1분 {F(s.HuntPerMinute)}코인 (좋은 {HuntSpotCount}곳) | 낚시의 {HuntIncomeLimit * 100f:0}% 이하 |");
+        md.AppendLine($"| 동굴 몬스터 | 1분 {F(s.CavePerMinute)}코인 (좋은 {HuntSpotCount}곳) | 낚시의 {CaveIncomeLimit * 100f:0}% 이하 |");
 
         foreach (GatherRow row in s.Gathering)
         {
@@ -898,7 +914,7 @@ public static class BalanceReport
         md.AppendLine("| 생성 지점 | 적 | 전리품 표 | 쓰러뜨리는 타수 | 걸리는 시간 | 플레이어가 버티는 타수 | 전리품 기대 값 | 다시 나옴 | 1분 수입 |");
         md.AppendLine("| --- | --- | --- | --- | --- | --- | --- | --- | --- |");
 
-        foreach (CombatRow row in s.Combat.Concat(s.Hunt))
+        foreach (CombatRow row in s.Combat.Concat(s.Hunt).Concat(s.Cave))
         {
             md.AppendLine($"| {row.Point} | {row.Enemy} | {row.Table} | {row.Hits} | {F(row.KillSeconds)}초 | {row.PlayerHits} | {F(row.Loot)} | {F(row.Respawn)}초 (게임 {F(row.RespawnHours)}시간) | {F(row.PerMinute)} |");
         }

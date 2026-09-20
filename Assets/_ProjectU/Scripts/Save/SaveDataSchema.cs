@@ -89,6 +89,10 @@ public sealed class SaveGameData // 전체 저장 파일 최상위 데이터
     public bool hasOrchardData; // 과일나무 저장 여부
     [Tooltip("심어 둔 과일나무가 자란 정도와 남은 열매.")]
     public OrchardSaveData orchard = new OrchardSaveData(); // 과일나무
+    [Tooltip("동굴 보스 저장 데이터 존재 여부. (120일차)")]
+    public bool hasCaveBossData; // 동굴 보스 저장 여부
+    [Tooltip("동굴 보스를 쓰러뜨렸는지.")]
+    public CaveBossSaveData caveBoss = new CaveBossSaveData(); // 동굴 보스
 
     public static SaveGameData CreateNew(string newSceneName) // 새로운 저장 데이터 생성
     {

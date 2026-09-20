@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 5451315995984958391}
+  - component: {fileID: 8887154840283671495}
   m_Layer: 3
   m_Name: SpiderSilkPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 1421134428529876208}
+  - {fileID: 6036325833080445255}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &5451315995984958391
+--- !u!114 &8887154840283671495
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: item_spider_silk
-  generatedVisual: {fileID: 1464301874970406566}
+  generatedVisual: {fileID: 6066219689033558801}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &5698498365172147450
+--- !u!1001 &1110302735437472077
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ffdf6cfde1fa4748a70e749eabf4c1a, type: 3}
---- !u!4 &1421134428529876208 stripped
+--- !u!4 &6036325833080445255 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6678205107196344330, guid: 5ffdf6cfde1fa4748a70e749eabf4c1a, type: 3}
-  m_PrefabInstance: {fileID: 5698498365172147450}
+  m_PrefabInstance: {fileID: 1110302735437472077}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1464301874970406566 stripped
+--- !u!1 &6066219689033558801 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6577257521490578012, guid: 5ffdf6cfde1fa4748a70e749eabf4c1a, type: 3}
-  m_PrefabInstance: {fileID: 5698498365172147450}
+  m_PrefabInstance: {fileID: 1110302735437472077}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

@@ -66,6 +66,15 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 63a6ccd99ac6288459462be53a4919a5, type: 2}
     preference: 1
     source: equipment_work_hat
+  - item: {fileID: 11400000, guid: be51dd37f5dd60d4aaaf1fc8a90b805b, type: 2}
+    preference: 1
+    source: tag:cave_trophy
+  - item: {fileID: 11400000, guid: 46e9e90a954fa764085af7f7177b774c, type: 2}
+    preference: 1
+    source: tag:cave_trophy
+  - item: {fileID: 11400000, guid: 494a30db21c25494bb1eb9b2483ed56a, type: 2}
+    preference: 1
+    source: tag:cave_trophy
   - item: {fileID: 11400000, guid: eef1b375027259b42834d2262ce9dd96, type: 2}
     preference: 3
     source: tag:sweet

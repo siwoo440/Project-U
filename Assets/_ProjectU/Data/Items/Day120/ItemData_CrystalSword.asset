@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08d47c1103dfc6548ac6257bf8d8a815, type: 3}
+  m_Name: ItemData_CrystalSword
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemId: weapon_crystal_sword
+  displayName: CRYSTAL SWORD
+  koreanName: "\uC218\uC815 \uAC80"
+  description: A blade grown from the golem's heart.
+  icon: {fileID: 21300000, guid: a0bd479eb15e9bc40ab6716503c985b2, type: 3}
+  itemCategory: 6
+  toolType: 0
+  toolTier: 0
+  weaponAttackType: 1
+  baseDamage: 34
+  attackCooldown: 0.62
+  attackRange: 2.4
+  attackRadius: 0.45
+  staminaCost: 6
+  impactForce: 3
+  meleeComboData: {fileID: 0}
+  rangedWeaponData: {fileID: 0}
+  equipmentSlotType: 0
+  defensePercent: 0
+  maximumHealthBonus: 0
+  movementSpeedBonusPercent: 0
+  hungerDepletionReductionPercent: 0
+  thirstDepletionReductionPercent: 0
+  coldResistancePercent: 0
+  inventorySlotBonus: 0
+  hungerRestoreAmount: 0
+  foodThirstRestoreAmount: 0
+  foodHealthRestoreAmount: 0
+  foodBuffType: 0
+  foodBuffStrength: 0
+  foodBuffDuration: 0
+  thirstRestoreAmount: 0
+  healthRestoreAmount: 0
+  maximumStack: 1

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 1651107625166735341}
+  - component: {fileID: 2435297638741570375}
   m_Layer: 3
   m_Name: MeteoriteIngotPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 6102463243820958322}
+  - {fileID: 5828599918289871773}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &1651107625166735341
+--- !u!114 &2435297638741570375
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: ingot_meteorite
-  generatedVisual: {fileID: 1401839974505808277}
+  generatedVisual: {fileID: 1668376154572513402}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &1055670054773065901
+--- !u!1001 &789655026868840770
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00bc674c2b1da1b469dae18a4b3510a1, type: 3}
---- !u!1 &1401839974505808277 stripped
+--- !u!1 &1668376154572513402 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2148824321078364472, guid: 00bc674c2b1da1b469dae18a4b3510a1, type: 3}
-  m_PrefabInstance: {fileID: 1055670054773065901}
+  m_PrefabInstance: {fileID: 789655026868840770}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &6102463243820958322 stripped
+--- !u!4 &5828599918289871773 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6491432738407025375, guid: 00bc674c2b1da1b469dae18a4b3510a1, type: 3}
-  m_PrefabInstance: {fileID: 1055670054773065901}
+  m_PrefabInstance: {fileID: 789655026868840770}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

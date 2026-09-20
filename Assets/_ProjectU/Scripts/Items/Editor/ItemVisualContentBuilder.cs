@@ -192,7 +192,13 @@ public static class ItemVisualContentBuilder
         { "food_sweet_potato", "food_sweet_potato" },
         { "food_grilled_corn", "food_grilled_corn" },
         { "food_cabbage_wrap", "food_cabbage_wrap" },
-        { "food_baked_sweet_potato", "food_baked_sweet_potato" }
+        { "food_baked_sweet_potato", "food_baked_sweet_potato" },
+        // 120일차 동굴 전리품 · 수정 장비
+        { "resource_bat_wing", "resource_bat_wing" },
+        { "resource_venom_fang", "resource_venom_fang" },
+        { "resource_crystal_heart", "resource_crystal_heart" },
+        { "equipment_crystal_armor", "equipment_crystal_armor" },
+        { "weapon_crystal_sword", "weapon_crystal_sword" }
     };
 
     // 84·85일차에 새로 만든 모델 (코드 변경을 반영하도록 항상 다시 만든다)
@@ -323,7 +329,13 @@ public static class ItemVisualContentBuilder
         { "resource_sapling_persimmon", new PickupSpec { Name = "PersimmonSaplingPickup", Scale = 1.1f } },
         { "food_grilled_corn", new PickupSpec { Name = "GrilledCornPickup", Scale = 1.3f } },
         { "food_cabbage_wrap", new PickupSpec { Name = "CabbageWrapPickup", Scale = 1.2f } },
-        { "food_baked_sweet_potato", new PickupSpec { Name = "BakedSweetPotatoPickup", Scale = 1.3f } }
+        { "food_baked_sweet_potato", new PickupSpec { Name = "BakedSweetPotatoPickup", Scale = 1.3f } },
+        // 120일차 동굴 전리품 · 수정 장비
+        { "resource_bat_wing", new PickupSpec { Name = "BatWingPickup", Scale = 1.5f } },
+        { "resource_venom_fang", new PickupSpec { Name = "VenomFangPickup", Scale = 1.6f } },
+        { "resource_crystal_heart", new PickupSpec { Name = "CrystalHeartPickup", Scale = 1.4f } },
+        { "equipment_crystal_armor", new PickupSpec { Name = "CrystalArmorPickup", Scale = 1.0f } },
+        { "weapon_crystal_sword", new PickupSpec { Name = "CrystalSwordPickup", Scale = 2.4f, LyingTool = true } }
     };
 
     // 86일차: 동물 아이콘 (가축 창·HUD)
@@ -344,6 +356,7 @@ public static class ItemVisualContentBuilder
             case "tool_pickaxe_steel":
             case "tool_axe_copper":
             case "tool_axe_steel":
+            case "weapon_crystal_sword": // 120일차
                 return new ItemIconRenderer.Framing(new Vector3(0f, 0f, -38f), 10f, 12f);
             case "tool_fishing_rod":
             case "tool_bow":

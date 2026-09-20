@@ -110,3 +110,20 @@ MonoBehaviour:
     thanksLine: "\uC88B\uC740 \uACE0\uAE30\uAD70. \uC624\uB298\uC740 \uBC30\uBD80\uB974\uAC8C
       \uBA39\uACA0\uC5B4."
     requiredEventId: 
+  - questId: quest_ragh_batwing
+    title: "\uB3D9\uAD74 \uBC15\uC950 \uC0AC\uB0E5"
+    kind: 0
+    requirements:
+    - item: {fileID: 11400000, guid: be51dd37f5dd60d4aaaf1fc8a90b805b, type: 2}
+      amount: 4
+    rewardCoins: 62
+    rewardAffinity: 4
+    rewardItem: {fileID: 0}
+    rewardItemAmount: 0
+    days: 3
+    seasons: 
+    requiredStage: 0
+    requestLine: "\uB3D9\uAD74 \uBC15\uC950 \uB0A0\uAC1C \uB124 \uC7A5. \uB188\uB4E4\uC774
+      \uC790\uAFB8 \uD683\uBD88\uC744 \uAEBC\uB728\uB824\uC11C \uB9D0\uC774\uC57C."
+    thanksLine: "\uC798\uD588\uB2E4. \uC774\uC81C \uB3D9\uAD74\uC774 \uC880 \uC870\uC6A9\uD558\uACA0\uAD70."
+    requiredEventId: 

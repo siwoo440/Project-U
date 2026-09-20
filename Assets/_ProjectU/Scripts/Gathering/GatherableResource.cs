@@ -59,6 +59,12 @@ public sealed class GatherableResource : InteractableBase // 반복 채집 자�
     }
 
     public bool IsTemporary => temporaryResource; // 117일차: 실행 중 생긴 임시 자원 여부 제공 (월드 저장에서 제외)
+    public float RespawnDelay => Mathf.Max(0f, respawnDelay); // 120일차: 다시 나오는 시간 제공
+
+    public void SetRespawnDelay(float seconds) // 120일차: 다시 나오는 시간 바꾸기 (보스 보상)
+    {
+        respawnDelay = Mathf.Max(1f, seconds); // 최소 1초
+    }
 
     public void MarkTemporary(string runtimeId) // 117일차: 실행 중 생긴 자원으로 표시 (운석 덩어리)
     {

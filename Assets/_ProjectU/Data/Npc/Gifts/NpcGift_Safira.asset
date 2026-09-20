@@ -29,6 +29,9 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 5a7295558c572dd4685d50d4cf252ca6, type: 2}
     preference: 1
     source: resource_scale
+  - item: {fileID: 11400000, guid: 494a30db21c25494bb1eb9b2483ed56a, type: 2}
+    preference: 1
+    source: resource_venom_fang
   - item: {fileID: 11400000, guid: 233c5c7467d9daa41bab4b59439b9465, type: 2}
     preference: 4
     source: drink_water_bottle

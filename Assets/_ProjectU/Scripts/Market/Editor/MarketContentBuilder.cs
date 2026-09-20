@@ -123,7 +123,11 @@ public static class MarketContentBuilder
         ("resource_sapling_persimmon", 45, MarketGoodsType.Material),
         ("food_corn", 14, MarketGoodsType.Crop),
         ("food_cabbage", 11, MarketGoodsType.Crop),
-        ("food_sweet_potato", 13, MarketGoodsType.Crop)
+        ("food_sweet_potato", 13, MarketGoodsType.Crop),
+        // 120일차: 동굴 전리품
+        ("resource_bat_wing", 12, MarketGoodsType.Material),
+        ("resource_venom_fang", 24, MarketGoodsType.Material),
+        ("resource_crystal_heart", 220, MarketGoodsType.Material)
     };
 
     // 물고기 : 기본 14 × 희귀도 배율 × (1 + 난이도 × 0.5)

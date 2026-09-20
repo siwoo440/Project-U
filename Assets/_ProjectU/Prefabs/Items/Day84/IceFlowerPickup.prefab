@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3181927310554862687}
   - component: {fileID: 891299890327610943}
   - component: {fileID: 7555745212318610381}
-  - component: {fileID: 8825266685537358682}
+  - component: {fileID: 8617665859414966518}
   m_Layer: 3
   m_Name: IceFlowerPickup
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3318395780468472178}
-  - {fileID: 2378017333591016690}
+  - {fileID: 5466866438745830955}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8911244092661206984
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldObjectIdentity
   worldObjectId: 
---- !u!114 &8825266685537358682
+--- !u!114 &8617665859414966518
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StylizedVisualReplacement
   modelId: resource_ice_flower
-  generatedVisual: {fileID: 4557848898154301290}
+  generatedVisual: {fileID: 6169622842275902899}
   hiddenMeshFilters:
   - {fileID: 8911244092661206984}
   originalMeshes:
   - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &8392417554488279587
+--- !u!1001 &2209445976498761978
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -264,15 +264,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 427191ee4ae3e704db62b9ea454cb782, type: 3}
---- !u!4 &2378017333591016690 stripped
+--- !u!4 &5466866438745830955 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6158586073009931985, guid: 427191ee4ae3e704db62b9ea454cb782, type: 3}
-  m_PrefabInstance: {fileID: 8392417554488279587}
+  m_PrefabInstance: {fileID: 2209445976498761978}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4557848898154301290 stripped
+--- !u!1 &6169622842275902899 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5419906374171772233, guid: 427191ee4ae3e704db62b9ea454cb782, type: 3}
-  m_PrefabInstance: {fileID: 8392417554488279587}
+  m_PrefabInstance: {fileID: 2209445976498761978}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9173948301997663996
 PrefabInstance:

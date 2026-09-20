@@ -20,6 +20,9 @@ public sealed class PlayerStamina : MonoBehaviour // 플레이어 스태미나 �
     [Tooltip("탈진 해제 필요 수치.")]
     [SerializeField] private float staminaRequiredToResume = 20f; // 탈진 해제 필요 수치
 
+    [Tooltip("120일차: 스태미나 넉넉함 배율. 최대치는 100 그대로 두고 소비를 이 값으로 나눠서, 2면 두 배로 버틴다.")]
+    [SerializeField] private float capacityMultiplier = 2f; // 스태미나 넉넉함 배율 (100 기준 · 소비 절반)
+
     [Header("Runtime")] // 실행 상태 확인 묶음
     [Tooltip("현재 스태미나.")]
     [SerializeField] private float currentStamina = 100f; // 현재 스태미나
@@ -35,6 +38,7 @@ public sealed class PlayerStamina : MonoBehaviour // 플레이어 스태미나 �
     public float NormalizedStamina => currentStamina / maxStamina; // 스태미나 비율 공개
     public bool CanSprint => !isExhausted && currentStamina > 0f; // 달리기 가능 여부 공개
     public bool IsExhausted => isExhausted; // 현재 탈진 상태 공개
+    public float CapacityMultiplier => capacityMultiplier; // 120일차: 스태미나 넉넉함 배율 공개
 
     private void Awake() // 스태미나 실행 초기화
     {
@@ -135,7 +139,8 @@ public sealed class PlayerStamina : MonoBehaviour // 플레이어 스태미나 �
         float temperatureDrainMultiplier = GetTemperatureDrainMultiplier(); // 온도 소비 배율 조회
         float drainAmount = drainPerSecond
             * temperatureDrainMultiplier
-            * deltaTime; // 체온 적용 스태미나 소비량 계산
+            * deltaTime
+            / capacityMultiplier; // 체온 적용 스태미나 소비량 계산 (120일차: 넉넉함 배율만큼 덜 쓴다)
 
         currentStamina = Mathf.Max(0f, currentStamina - drainAmount); // 스태미나 최소값 제한
         nextRecoveryTime = Time.time + recoveryDelay; // 회복 시작 시각 갱신
@@ -180,7 +185,7 @@ public sealed class PlayerStamina : MonoBehaviour // 플레이어 스태미나 �
     private float GetFinalActionCost(float baseAmount) // 체온 배율 적용 행동 비용 계산
     {
         float safeBaseAmount = Mathf.Max(0f, baseAmount); // 기본 비용 음수 방지
-        return safeBaseAmount * GetTemperatureDrainMultiplier(); // 최종 행동 비용 반환
+        return safeBaseAmount * GetTemperatureDrainMultiplier() / capacityMultiplier; // 최종 행동 비용 반환 (120일차: 넉넉함 배율 적용)
     }
 
     private float GetTemperatureDrainMultiplier() // 안전한 체온 소비 배율 조회
@@ -196,6 +201,7 @@ public sealed class PlayerStamina : MonoBehaviour // 플레이어 스태미나 �
     private void ClampSettings() // 스태미나 설정값 보정
     {
         maxStamina = Mathf.Max(1f, maxStamina); // 최대 스태미나 최소값 적용
+        capacityMultiplier = capacityMultiplier > 0.01f ? capacityMultiplier : 2f; // 넉넉함 배율 0 방지 (0이면 소비가 사라진다)
         sprintDrainPerSecond = Mathf.Max(0f, sprintDrainPerSecond); // 소비량 음수 방지
         recoveryPerSecond = Mathf.Max(0f, recoveryPerSecond); // 회복량 음수 방지
         recoveryDelay = Mathf.Max(0f, recoveryDelay); // 회복 지연 음수 방지

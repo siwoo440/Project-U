@@ -276,25 +276,7 @@ public static partial class WildlifeBuilder
         {
             root.name = "Animal_" + spec.Id;
 
-            foreach (ContentVisualRoot visual in root.GetComponentsInChildren<ContentVisualRoot>(true)) // 자동 외형 교체를 끈다
-            {
-                UnityEngine.Object.DestroyImmediate(visual, true);
-            }
-
-            foreach (ContentVisualProfileBinder binder in root.GetComponentsInChildren<ContentVisualProfileBinder>(true))
-            {
-                UnityEngine.Object.DestroyImmediate(binder, true);
-            }
-
-            foreach (ContentVisualDataSourceBinder binder in root.GetComponentsInChildren<ContentVisualDataSourceBinder>(true))
-            {
-                UnityEngine.Object.DestroyImmediate(binder, true);
-            }
-
-            foreach (ContentVisualIdentity identity in root.GetComponentsInChildren<ContentVisualIdentity>(true))
-            {
-                UnityEngine.Object.DestroyImmediate(identity, true);
-            }
+            ContentVisualPartCleaner.RemoveParts(root); // 자동 외형 교체를 끈다 (서로 요구하므로 바깥쪽부터 차례대로)
 
             foreach (EnemyNavMeshMovement movement in root.GetComponentsInChildren<EnemyNavMeshMovement>(true)) // 이동은 WildAnimalAgent가 맡는다
             {
